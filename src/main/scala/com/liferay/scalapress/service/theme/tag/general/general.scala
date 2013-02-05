@@ -2,6 +2,7 @@ package com.liferay.scalapress.service.theme.tag.general
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
+import org.joda.time.DateTime
 
 /** @author Stephen Samuel */
 object HomeTag extends ScalapressTag with TagBuilder {
@@ -47,5 +48,12 @@ object CssTag extends ScalapressTag with TagBuilder {
                      <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
                     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>"""
         Some(tag)
+    }
+}
+
+object CopyrightTag extends ScalapressTag with TagBuilder {
+
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+        Some("Copyright &copy; " + new DateTime().toString("yyyy"))
     }
 }

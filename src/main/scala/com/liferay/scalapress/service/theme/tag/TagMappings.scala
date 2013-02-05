@@ -61,5 +61,6 @@ object TagMappings {
         "comp_address" -> SiteAddressTag,
         "comp_country" -> SiteCountryTag,
         "comp_telephone" -> SitePhoneTag,
+        "copyright" -> CopyrightTag,
         "multimap" -> SiteGoogleMapTag, "comp_postcode_gmap" -> SiteGoogleMapTag)
 }
