@@ -19,12 +19,12 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
 </head>
 <body onload='document.f.j_username.focus();'>
-<h3>Scalapress Login</h3>
+
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="/">Scalapress</a>
+
         </div>
     </div>
 </div>
