@@ -50,6 +50,7 @@ object TagMappings {
         "boxes" -> WidgetsTag,
         "widgets" -> WidgetsTag,
         "widget" -> WidgetsTag,
+        "date_created" -> DateCreatedTag,
         "breadcrumbs" -> BreadcrumbsTag,
         "breadcrumb" -> BreadcrumbsTag,
         "comp_name" -> SiteNameTag,
