@@ -1,6 +1,6 @@
 package com.liferay.scalapress.section.objects
 
-import com.liferay.scalapress.domain.{Markup}
+import com.liferay.scalapress.domain.Markup
 import javax.persistence.{ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
@@ -15,7 +15,7 @@ import com.liferay.scalapress.enums.Sort
 class ObjectListSection extends Section {
 
     @Column(name = "sortType")
-    @BeanProperty var sortType: Sort = _
+    @BeanProperty var sort: Sort = _
 
     @Column(name = "itemsPerPage")
     @BeanProperty var pageSize: Int = _
@@ -31,14 +31,24 @@ class ObjectListSection extends Section {
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-        folder.objects.size match {
+        val objects = folder.objects.asScala
+        val live = objects.filter(_.status.toLowerCase == "live")
+        val sorted = sort match {
+            case Sort.Name => live.sortBy(_.name)
+            case Sort.Price => live.sortBy(_.sellPrice)
+            case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
+            case Sort.Newest => live.sortBy(_.id).reverse
+            case Sort.Oldest => live.sortBy(_.id)
+        }
+
+        sorted.size match {
             case 0 => Some("<!-- No objects in folder -->")
             case _ => {
-                val first = folder.objects.asScala.head
+                val first = sorted.head
                 Option(markup).orElse(Option(first.objectType.listItemMarkup)) match {
                     case None => Some("<!-- No markup found for folder -->")
                     case Some(m) => {
-                        Some(MarkupRenderer.renderObjects(folder.objects.asScala.toList, m, request, context))
+                        Some(MarkupRenderer.renderObjects(sorted, m, request, context))
                     }
                 }
             }

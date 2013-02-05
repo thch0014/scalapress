@@ -5,5 +5,6 @@ public enum Sort {
     Newest,
     Oldest,
     Price,
+    PriceHigh,
     Distance
 }
