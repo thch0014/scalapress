@@ -10,15 +10,17 @@ object SessionInterceptor extends HandlerInterceptorAdapter {
 
     override def preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean = {
         val cookies = request.getCookies
-        cookies.find(_.getName == ScalapressConstants.SessionCookieName) match {
-            case None => {
-                val cookie = new Cookie(ScalapressConstants.SessionCookieName, UUID.randomUUID().toString)
-                cookie.setMaxAge(Integer.MAX_VALUE)
-                cookie.setPath("/")
-                request.setAttribute(ScalapressConstants.SessionIdKey, cookie.getValue)
-                response.addCookie(cookie)
+        if (cookies != null) {
+            cookies.find(_.getName == ScalapressConstants.SessionCookieName) match {
+                case None => {
+                    val cookie = new Cookie(ScalapressConstants.SessionCookieName, UUID.randomUUID().toString)
+                    cookie.setMaxAge(Integer.MAX_VALUE)
+                    cookie.setPath("/")
+                    request.setAttribute(ScalapressConstants.SessionIdKey, cookie.getValue)
+                    response.addCookie(cookie)
+                }
+                case Some(cookie) => request.setAttribute(ScalapressConstants.SessionIdKey, cookie.getValue)
             }
-            case Some(cookie) => request.setAttribute(ScalapressConstants.SessionIdKey, cookie.getValue)
         }
         true
     }

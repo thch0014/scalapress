@@ -16,10 +16,6 @@ class Order {
 
     var card: Long = _
 
-    /**
-     * BC fields
-     * should be saleTotalInc, saleTotalEx, and saleTotalVat
-     */
     var saleVat: Int = _
     var saleSubtotal: Int = _
     var saleTotal: Int = _

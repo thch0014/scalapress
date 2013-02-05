@@ -39,15 +39,7 @@ class Form {
     @BeanProperty var cssId: String = _
     @BeanProperty var cssClass: String = _
 
-    /**
-     * BC - should be emailField really. Used when an email is rquired - for sending replies and signing people up.
-     */
-    //   @BeanProperty var emailResponseField: FormField = _
-
-
     @Column(name = "ccItemListers")
-    @BeanProperty var ccItemListers: Boolean = _
-
-    @BeanProperty var accountRequired: Boolean = _
+    @BeanProperty var emailObjectOwner: Boolean = _
 
 }

@@ -99,7 +99,6 @@ class Obj {
     @BeanProperty var inStockMsg: String = _
     @Column(columnDefinition = "TEXT")
     @BeanProperty var outStockMsg: String = _
-    //    @BeanProperty var orderingMethod: ShoppingPlugin.OrderingMethod = ShoppingPlugin.OrderingMethod.Basket
 
     @Column(name = "ourStock")
     @BeanProperty var stock: Int = _
