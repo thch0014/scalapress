@@ -58,7 +58,7 @@ object SummaryTag extends ScalapressTag with TagBuilder {
         val max = params.get("max").getOrElse("200").toInt
         val folderContent = request.folder.flatMap(arg => Option(arg.content))
         val objectContent = request.obj.flatMap(arg => Option(arg.content))
-        folderContent.orElse(objectContent).map(arg => {
+        folderContent.orElse(objectContent).map(_.replaceAll("<.*?>", "")).map(arg => {
             val summary = arg.take(max)
             val tagName = params.get("class").getOrElse("summary")
             build(summary, params + ("class" -> tagName))
