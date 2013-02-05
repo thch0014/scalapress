@@ -12,7 +12,7 @@ import com.liferay.scalapress.plugin.gallery.GalleryRenderer
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  * */
+  **/
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {
@@ -41,6 +41,7 @@ class GalleryController {
         val theme = themeService.default
 
         val page = ScalaPressPage(theme, req)
+        page.body("<h1>Galleries</h1>")
         page.body(GalleryRenderer.renderCovers(gallery))
         page
     }

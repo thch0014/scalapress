@@ -1,7 +1,7 @@
 package com.liferay.scalapress.domain.ecommerce
 
 import reflect.BeanProperty
-import javax.persistence.{Table, Entity, GenerationType, GeneratedValue, Id, Column}
+import javax.persistence.{ElementCollection, Table, Entity, GenerationType, GeneratedValue, Id, Column}
 
 /** @author Stephen Samuel */
 @Entity
@@ -30,5 +30,7 @@ class DeliveryOption {
 
     // valid for these areas only
     @BeanProperty var postcodes: String = _
+
+    @ElementCollection
     @BeanProperty var countries: java.util.Set[String] = _
 }

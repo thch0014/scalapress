@@ -2,7 +2,7 @@ package com.liferay.scalapress.controller.web.ecommerce
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.{ScalapressConstants, ScalaPressPage}
 import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired

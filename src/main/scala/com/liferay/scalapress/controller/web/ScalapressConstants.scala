@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.web.ecommerce
+package com.liferay.scalapress.controller.web
 
 /** @author Stephen Samuel */
 object ScalapressConstants {

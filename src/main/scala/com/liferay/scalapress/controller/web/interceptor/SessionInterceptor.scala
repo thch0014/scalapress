@@ -3,7 +3,7 @@ package com.liferay.scalapress.controller.web.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{Cookie, HttpServletResponse, HttpServletRequest}
 import java.util.UUID
-import com.liferay.scalapress.controller.web.ecommerce.ScalapressConstants
+import com.liferay.scalapress.controller.web.ScalapressConstants
 
 /** @author Stephen Samuel */
 object SessionInterceptor extends HandlerInterceptorAdapter {

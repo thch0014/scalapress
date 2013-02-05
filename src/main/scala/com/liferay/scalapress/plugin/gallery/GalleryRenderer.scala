@@ -24,9 +24,9 @@ object GalleryRenderer {
                 val e =
                     <li class="span2">
                         <div class="thumbnail">
-                            <p>
+                            <h3>
                                 {gallery.name}
-                            </p>
+                            </h3>
                             <a href={UrlResolver.galleryView(gallery)} class="thumbnail">
                                 <img src={src}/>
                             </a>
@@ -36,6 +36,7 @@ object GalleryRenderer {
             }
         }
     }
+
     def renderGallery(gallery: Gallery): String = {
         val sb = new ArrayBuffer[String]
         sb.append("<!--gallery " + gallery.id + " " + gallery.images.size() + " images -->")
