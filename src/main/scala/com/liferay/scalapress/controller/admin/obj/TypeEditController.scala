@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.TypeDao
 import scala.Array
-import com.liferay.scalapress.domain.{AttributeType, ObjectType}
+import com.liferay.scalapress.domain.{ObjectType}
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.domain.attr.Attribute
 import org.springframework.ui.ModelMap
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 @Controller

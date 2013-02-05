@@ -2,7 +2,7 @@ package com.liferay.scalapress.widgets
 
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.WidgetContainer
+import com.liferay.scalapress.enums.WidgetContainer
 
 /** @author Stephen Samuel */
 object WidgetRenderer extends Logging {

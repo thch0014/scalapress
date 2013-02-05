@@ -3,8 +3,9 @@ package com.liferay.scalapress.widgets
 import javax.persistence.{JoinColumn, JoinTable, CascadeType, FetchType, ManyToMany, Column, GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
 import reflect.BeanProperty
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.domain.{WidgetContainer, Folder}
+import com.liferay.scalapress.domain.{Folder}
 import scala.Array
+import com.liferay.scalapress.enums.WidgetContainer
 
 /** @author Stephen Samuel */
 @Entity

@@ -35,6 +35,7 @@ object UrlResolver {
     val galleries = "/backoffice/gallery"
     def galleryEdit(g: Gallery) = "/backoffice/gallery/" + g.id
     def galleryCreate = "/backoffice/gallery/create"
+    def galleryView(g: Gallery) = "/gallery/" + g.id
 
     val widgets = "/backoffice/widget/"
     def widgetEdit(w: Widget) = "/backoffice/widget/" + w.id

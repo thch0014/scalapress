@@ -4,8 +4,9 @@ import javax.persistence._
 import reflect.BeanProperty
 import org.hibernate.validator.constraints.NotEmpty
 import java.util
-import com.liferay.scalapress.domain.{AttributeType, ObjectType}
+import com.liferay.scalapress.domain.{ObjectType}
 import scala.Array
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 @Entity

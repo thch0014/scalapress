@@ -2,7 +2,7 @@ package com.liferay.scalapress.domain.ecommerce
 
 import javax.persistence.{Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.PaymentType
+import com.liferay.scalapress.enums.PaymentType
 
 /** @author Stephen Samuel */
 @Entity

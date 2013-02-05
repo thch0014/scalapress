@@ -3,7 +3,7 @@ package com.liferay.scalapress.domain.form
 import javax.persistence.{JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import scala.Predef.String
-import com.liferay.scalapress.domain.FormFieldType
+import com.liferay.scalapress.enums.FormFieldType
 
 /** @author Stephen Samuel */
 @Entity

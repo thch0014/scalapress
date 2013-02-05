@@ -1,12 +1,13 @@
 package com.liferay.scalapress.section.objects
 
-import com.liferay.scalapress.domain.{Markup, SortType}
+import com.liferay.scalapress.domain.{Markup}
 import javax.persistence.{ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import com.liferay.scalapress.section.Section
 import reflect.BeanProperty
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 @Entity
@@ -14,7 +15,7 @@ import reflect.BeanProperty
 class ObjectListSection extends Section {
 
     @Column(name = "sortType")
-    @BeanProperty var sortType: SortType = _
+    @BeanProperty var sortType: Sort = _
 
     @Column(name = "itemsPerPage")
     @BeanProperty var pageSize: Int = _

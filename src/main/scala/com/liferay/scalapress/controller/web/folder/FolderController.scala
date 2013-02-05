@@ -20,28 +20,6 @@ import com.liferay.scalapress.section.PluginRenderer
 @RequestMapping(Array("folder"))
 class FolderController extends Logging {
 
-    //    private def footer {
-    //        if (category.hasFooter) {
-    //            logger.debug("[FolderHandler] rendering footer from category")
-    //            doc.addBody(MarkerRenderer.render(context, category.getFooter))
-    //        }
-    //        else if (folderPlugin.hasFooter) {
-    //            logger.debug("[FolderHandler] rendering footer from cat settings")
-    //            doc.addBody(MarkerRenderer.render(context, folderPlugin.getFooter))
-    //        }
-    //    }
-    //
-    //    private def header {
-    //        if (category.hasHeader) {
-    //            logger.debug("[FolderHandler] rendering header from category")
-    //            doc.addBody(MarkerRenderer.render(context, category.getHeader))
-    //        }
-    //        else if (folderPlugin.hasHeader) {
-    //            logger.debug("[FolderHandler] rendering header from category settings")
-    //            doc.addBody(MarkerRenderer.render(context, folderPlugin.getHeader))
-    //        }
-    //    }
-
     @Autowired var folderDao: FolderDao = _
     @Autowired var folderPluginDao: FolderPluginDao = _
     @Autowired var folderService: FolderService = _

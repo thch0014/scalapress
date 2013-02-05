@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain;
+package com.liferay.scalapress.enums;
 
 public enum PaymentType {
     GoogleCheckout,

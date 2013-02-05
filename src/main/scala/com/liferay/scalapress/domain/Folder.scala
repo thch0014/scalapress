@@ -6,6 +6,7 @@ import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.section.content.FolderContentSection
+import com.liferay.scalapress.enums.FolderOrdering
 
 /** @author Stephen Samuel */
 @Entity
@@ -54,7 +55,7 @@ class Folder {
 
     @Column(name = "subcategoryordering")
     @Enumerated(EnumType.STRING)
-    @BeanProperty var subfolderOrdering: SubcategoryOrdering = SubcategoryOrdering.Alphabetical
+    @BeanProperty var subfolderOrdering: FolderOrdering = FolderOrdering.Alphabetical
 
     @BeanProperty var position: Int = _
 

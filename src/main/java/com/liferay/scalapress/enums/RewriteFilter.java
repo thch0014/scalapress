@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain;
+package com.liferay.scalapress.enums;
 
 
 import org.slf4j.Logger;

@@ -4,13 +4,13 @@ import com.liferay.scalapress.domain.form.{Form, SubmissionKeyValue, Submission}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.{Logging, ScalapressRequest}
-import com.liferay.scalapress.domain.FormFieldType
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.dao.SubmissionDao
 import org.springframework.mail.{MailSender, SimpleMailMessage}
+import com.liferay.scalapress.enums.FormFieldType
 
 /** @author Stephen Samuel */
 @Component

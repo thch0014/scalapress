@@ -3,6 +3,7 @@ package com.liferay.scalapress.domain
 import javax.persistence.{CollectionTable, Entity, Table, ElementCollection, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
 import reflect.BeanProperty
 import java.util
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 @Entity
@@ -46,7 +47,7 @@ class SavedSearch {
     @Column(name = "multipleItemTypes", nullable = false)
     @BeanProperty var multipleObjectTypes: Boolean = _
 
-    @BeanProperty var sortType: SortType = SortType.Name
+    @BeanProperty var sortType: Sort = Sort.Name
 
     @Column(name = "limit")
     @BeanProperty var maxResults: Int = _
