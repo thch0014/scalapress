@@ -25,7 +25,7 @@
         <label class="control-label">Header</label>
 
         <div class="controls">
-            #springFormTextarea("theme.header", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("theme.header", "rows='16' class='input-block-level '")
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         <label class="control-label">Footer</label>
 
         <div class="controls">
-            #springFormTextarea("theme.footer", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("theme.footer", "rows='16' class='input-block-level '")
         </div>
     </div>
 

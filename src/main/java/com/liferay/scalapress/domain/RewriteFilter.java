@@ -44,19 +44,13 @@ public class RewriteFilter implements Filter {
 
             switch (type) {
                 case "i":
-                    url.append("/obj.c?item=");
+                    url.append("/object/");
                     url.append(id);
                     //		url.append("&path=");
                     //		url.append(path.substring(1));
                     break;
                 case "c":
-                    url.append("/folder.c?category=");
-                    url.append(id);
-                    //		url.append("&path=");
-                    //		url.append(path.substring(1));
-                    break;
-                case "g":
-                    url.append("/gallery.c?gallery=");
+                    url.append("/folder/");
                     url.append(id);
                     //		url.append("&path=");
                     //		url.append(path.substring(1));
