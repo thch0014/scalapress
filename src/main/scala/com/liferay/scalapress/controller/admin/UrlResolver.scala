@@ -42,7 +42,7 @@ object UrlResolver {
     def markupEdit(m: Markup) = "/backoffice/markup/" + m.id
 
     val installationSettings = "/backoffice/settings/installation"
-    def generalSettings = "/backoffice/settings/general"
+    def generalSettings = "/backoffice/settings/site"
 
     def attributeEdit(a: Attribute) = "/backoffice/attribute/" + a.id
 
