@@ -24,9 +24,9 @@ object GalleryRenderer {
                 val e =
                     <li class="span2">
                         <div class="thumbnail">
-                            <h3>
+                            <h6>
                                 {gallery.name}
-                            </h3>
+                            </h6>
                             <a href={UrlResolver.galleryView(gallery)} class="thumbnail">
                                 <img src={src}/>
                             </a>
