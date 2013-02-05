@@ -3,7 +3,7 @@ package com.liferay.scalapress.domain.form
 import javax.persistence.{JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import scala.Predef.String
-import com.liferay.scalapress.domain.FieldType
+import com.liferay.scalapress.domain.FormFieldType
 
 /** @author Stephen Samuel */
 @Entity
@@ -35,5 +35,5 @@ class FormField {
     @BeanProperty var position: Int = _
 
     @Column(name = "type")
-    @BeanProperty var fieldType: FieldType = FieldType.Text
+    @BeanProperty var fieldType: FormFieldType = FormFieldType.Text
 }

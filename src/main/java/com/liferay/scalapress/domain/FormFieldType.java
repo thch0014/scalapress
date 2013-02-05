@@ -1,8 +1,6 @@
 package com.liferay.scalapress.domain;
 
-
-public enum FieldType {
-
+public enum FormFieldType {
     DropDownMenu,
     Text,
     TickBox,

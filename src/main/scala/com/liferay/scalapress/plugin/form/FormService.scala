@@ -4,7 +4,7 @@ import com.liferay.scalapress.domain.form.{Form, SubmissionKeyValue, Submission}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.{Logging, ScalapressRequest}
-import com.liferay.scalapress.domain.FieldType
+import com.liferay.scalapress.domain.FormFieldType
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.stereotype.Component
@@ -75,7 +75,7 @@ class FormService extends Logging {
             if (field.required || field.regExp != null) {
 
                 val regExp =
-                    if (field.fieldType == FieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+                    if (field.fieldType == FormFieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
                     else field.regExp
 
                 val value = Option(sreq.request.getParameter(field.id.toString)).filter(_.trim.length > 0)

@@ -1,7 +1,7 @@
 package com.liferay.scalapress.service.render
 
 import com.liferay.scalapress.domain.form.{FormField, Form}
-import com.liferay.scalapress.domain.{Folder, FieldType}
+import com.liferay.scalapress.domain.{Folder, FormFieldType}
 import scala.collection.JavaConverters._
 import xml.Elem
 import com.liferay.scalapress.ScalapressRequest
@@ -37,17 +37,17 @@ object FormRenderer {
         val errorMsg = req.errors.get(field.id.toString).getOrElse("")
 
         field.fieldType match {
-            case FieldType.DropDownMenu => renderSelect(field, req)
-            case FieldType.Text => renderText(field, req)
-            case FieldType.TickBox => renderCheck(field)
-            case FieldType.TickBoxes => renderChecks(field)
-            case FieldType.Radio => renderRadio(field, req)
-            case FieldType.Header =>
+            case FormFieldType.DropDownMenu => renderSelect(field, req)
+            case FormFieldType.Text => renderText(field, req)
+            case FormFieldType.TickBox => renderCheck(field)
+            case FormFieldType.TickBoxes => renderChecks(field)
+            case FormFieldType.Radio => renderRadio(field, req)
+            case FormFieldType.Header =>
                 <legend>
                     {field.name}
                 </legend>
-            case FieldType.Attachment => renderUpload(field)
-            case FieldType.Email => renderText(field, req)
+            case FormFieldType.Attachment => renderUpload(field)
+            case FormFieldType.Email => renderText(field, req)
         }
     }
 
