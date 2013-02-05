@@ -10,7 +10,7 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($f in $form)
+    #foreach ($f in $forms)
         <tr>
             <td>$f.id</td>
             <td>$f.name</td>
