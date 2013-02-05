@@ -43,11 +43,15 @@ class DatabaseUpgrader extends Logging {
             conn.prepareStatement("UPDATE forms_submissions SET " + col + "=null where " + col + "=0").execute()
         }
 
-        conn.prepareStatement("alter TABLE categories_items modify item bigint(10) null").execute()
-        conn.prepareStatement("update categories set parent=null where parent=0").execute()
+        conn.prepareStatement("ALTER TABLE categories_items modify item bigint(10) null").execute()
+        conn.prepareStatement("UPDATE categories set parent=null where parent=0").execute()
 
-        conn.prepareStatement("alter TABLE categories modify parent bigint(10) null").execute()
-        conn.prepareStatement("update categories set parent=null where parent=0").execute()
+
+        conn.prepareStatement("ALTER TABLE blocks_galleries MODIFY gallery bigint(10) null").execute()
+        conn.prepareStatement("UPDATE blocks_galleries set gallery=null where gallery=0").execute()
+
+        conn.prepareStatement("ALTER TABLE categories modify parent bigint(10) null").execute()
+        conn.prepareStatement("UPDATE categories set parent=null where parent=0").execute()
 
         <!-- update image assocations -->
         for (col <- Array("imageBox", "item", "gallery", "category")) {
