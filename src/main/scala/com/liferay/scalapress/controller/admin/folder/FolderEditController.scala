@@ -47,10 +47,14 @@ class FolderEditController {
 
     @RequestMapping(value = Array("section/{sectionId}/delete"))
     def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {
-        folder.sections.asScala.find(_.id == sectionId).foreach(_.folder = null)
-        folder.sections = folder.sections.asScala.filterNot(_.id == sectionId).asJava
-        folderDao.save(folder)
-        "redirect:" + UrlResolver.folderEdit(folder)
+        folder.sections.asScala.find(_.id == sectionId) match {
+            case None =>
+            case Some(section) =>
+                folder.sections.remove(section)
+                section.folder = null
+                folderDao.save(folder)
+        }
+        "forward:" + UrlResolver.folderEdit(folder)
     }
 
     @ModelAttribute("parents") def folder = {
