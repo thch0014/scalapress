@@ -17,7 +17,7 @@
         <label class="control-label">Start</label>
 
         <div class="controls">
-            #springFormTextarea("markup.start", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("markup.start", "rows='16' class='input-block-level '")
         </div>
     </div>
 
@@ -25,7 +25,7 @@
         <label class="control-label">Body</label>
 
         <div class="controls">
-            #springFormTextarea("markup.body", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("markup.body", "rows='16' class='input-block-level '")
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         <label class="control-label">Between</label>
 
         <div class="controls">
-            #springFormTextarea("markup.between", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("markup.between", "rows='16' class='input-block-level '")
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         <label class="control-label">End</label>
 
         <div class="controls">
-            #springFormTextarea("markup.end", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("markup.end", "rows='16' class='input-block-level '")
         </div>
     </div>
 

@@ -13,7 +13,7 @@
     #foreach ($m in $markups)
         <tr>
             <td>$m.id</td>
-            <td>$u.name</td>
+            <td>$m.name</td>
             <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
