@@ -5,8 +5,11 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 
 /** @author Stephen Samuel */
 object HomeTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        Some("/")
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+        val root = context.folderDao.root
+        val text = params.get("text").getOrElse(root.name)
+        Option(buildLink("/", text, params))
+    }
 }
 
 object TitleTag extends ScalapressTag with TagBuilder {
