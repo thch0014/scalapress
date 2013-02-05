@@ -67,7 +67,7 @@
         <label class="control-label">Content</label>
 
         <div class="controls">
-            #springFormTextarea("form.o.content", "rows='16' class='input-block-level htmleditor'")
+            #springFormTextarea("form.o.content", "rows='16' class='input-block-level tinymce'")
         </div>
     </div>
 
