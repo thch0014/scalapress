@@ -25,16 +25,15 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
       .asScala
       .toArray
 
-    @Transactional
     override def root: Folder = {
         getSession
           .createCriteria(classOf[Folder])
           .add(Restrictions.isNull("parent"))
-          .uniqueResult.asInstanceOf[Folder]
+          .list().asScala.head.asInstanceOf[Folder]
     }
 
     override def findAll: List[Folder] = super.findAll.sortWith((a, b) => a.name < b.name)
-    @Transactional
+
     override def search(query: String): Array[Folder] = {
         getSession
           .createCriteria(classOf[Folder])

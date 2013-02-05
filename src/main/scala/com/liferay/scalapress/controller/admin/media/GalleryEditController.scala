@@ -26,7 +26,7 @@ class GalleryEditController {
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("gallery") g: Gallery,
              @RequestParam(value = "upload", required = false) file: MultipartFile) = {
-        if (file != null) {
+        if (file != null && !file.isEmpty) {
             val key = assetStore.put(file.getOriginalFilename, file.getInputStream)
             val image = new Image
             image.filename = key
