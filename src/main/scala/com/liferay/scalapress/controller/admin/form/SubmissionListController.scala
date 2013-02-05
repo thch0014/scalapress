@@ -18,6 +18,6 @@ class SubmissionListController {
 
     import scala.collection.JavaConverters._
 
-    @ModelAttribute("submissions") def submissions = context.submissionDao.findAll().asJava
+    @ModelAttribute("submissions") def submissions = context.submissionDao.findAll().reverse.asJava
 
 }
