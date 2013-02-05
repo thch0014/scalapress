@@ -12,26 +12,36 @@ import com.liferay.scalapress.plugin.gallery.GalleryRenderer
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  **/
+  * */
 @Controller
-@RequestMapping(Array("gallery/{id}"))
+@RequestMapping(Array("gallery"))
 class GalleryController {
 
     @Autowired var galleryDao: GalleryDao = _
     @Autowired var themeService: ThemeService = _
 
     @ResponseBody
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping(value = Array("{id}"), produces = Array("text/html"))
     def view(@PathVariable("id") id: Long, req: HttpServletRequest): ScalaPressPage = {
 
         val gallery = galleryDao.find(id)
         val theme = themeService.default
 
-        val render = GalleryRenderer.renderGallery(gallery)
-
         val page = ScalaPressPage(theme, req)
         page.body("<h1>" + gallery.name + "</h1>")
-        page.body(render)
+        page.body(GalleryRenderer.renderGallery(gallery))
+        page
+    }
+
+    @ResponseBody
+    @RequestMapping(produces = Array("text/html"))
+    def view(req: HttpServletRequest): ScalaPressPage = {
+
+        val gallery = galleryDao.findAll()
+        val theme = themeService.default
+
+        val page = ScalaPressPage(theme, req)
+        page.body(GalleryRenderer.renderCovers(gallery))
         page
     }
 }

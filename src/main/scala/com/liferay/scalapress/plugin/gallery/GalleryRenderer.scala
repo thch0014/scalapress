@@ -23,9 +23,14 @@ object GalleryRenderer {
                 val src = "/images/" + image.filename
                 val e =
                     <li class="span2">
-                        <a href={UrlResolver.galleryView(gallery)} class="thumbnail">
-                            <img src={src}/>
-                        </a>
+                        <div class="thumbnail">
+                            <p>
+                                {gallery.name}
+                            </p>
+                            <a href={UrlResolver.galleryView(gallery)} class="thumbnail">
+                                <img src={src}/>
+                            </a>
+                        </div>
                     </li>
                 Some(e)
             }
@@ -34,7 +39,6 @@ object GalleryRenderer {
     def renderGallery(gallery: Gallery): String = {
         val sb = new ArrayBuffer[String]
         sb.append("<!--gallery " + gallery.id + " " + gallery.images.size() + " images -->")
-        sb.append("<h3 class='gallery'>" + gallery.name + "</h3>")
         sb.append("<ul id='gallery" + gallery.id + "'>" + renderImages(gallery.images.asScala) + "</ul>")
         sb.append(generateScript(gallery))
         sb.append("<!--end gallery-->")
