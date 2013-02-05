@@ -48,8 +48,8 @@ class Obj {
     @BeanProperty var content: String = _
     def content(limit: Int): String = content.take(limit)
 
-    @BeanProperty var dateCreated: Long = _
-    @BeanProperty var dateUpdated: Long = _
+    @BeanProperty var dateCreated: java.lang.Long = _
+    @BeanProperty var dateUpdated: java.lang.Long = _
 
     @Column(columnDefinition = "TEXT")
     @BeanProperty var confirmationCode: String = _

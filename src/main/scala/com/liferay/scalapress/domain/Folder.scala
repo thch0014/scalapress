@@ -41,8 +41,8 @@ class Folder {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
-    @BeanProperty var dateCreated: Long = _
-    @BeanProperty var dateUpdated: Long = _
+    @BeanProperty var dateCreated: java.lang.Long = _
+    @BeanProperty var dateUpdated: java.lang.Long = _
 
     @BeanProperty var footer: String = _
     @BeanProperty var header: String = _

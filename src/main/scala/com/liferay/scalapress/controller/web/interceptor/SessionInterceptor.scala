@@ -9,7 +9,8 @@ import com.liferay.scalapress.controller.web.ecommerce.ScalapressConstants
 object SessionInterceptor extends HandlerInterceptorAdapter {
 
     override def preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean = {
-        request.getCookies.find(_.getName == ScalapressConstants.SessionCookieName) match {
+        val cookies = request.getCookies
+        cookies.find(_.getName == ScalapressConstants.SessionCookieName) match {
             case None => {
                 val cookie = new Cookie(ScalapressConstants.SessionCookieName, UUID.randomUUID().toString)
                 cookie.setMaxAge(Integer.MAX_VALUE)

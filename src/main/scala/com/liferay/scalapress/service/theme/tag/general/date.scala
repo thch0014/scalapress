@@ -17,9 +17,13 @@ object DateCreatedTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val format = params.get("format").getOrElse("dd/MM/yyyy")
 
-        request.folder.map(_.dateCreated).orElse(request.obj.map(_.dateCreated)) match {
+        val timestamp = request.obj.map(_.dateCreated).orElse(request.folder.map(_.dateCreated))
+        timestamp match {
             case None => None
-            case Some(timestamp) => Option(new SimpleDateFormat(format).format(timestamp))
+            case Some(t) => {
+                val formatted = new DateTime(t).toString(format)
+                Option(formatted)
+            }
         }
     }
 }
