@@ -88,7 +88,7 @@
 
     <filter>
         <filter-name>RewriteFilter</filter-name>
-        <filter-class>com.liferay.scalapress.handler.filters.RewriteFilter</filter-class>
+        <filter-class>com.liferay.scalapress.domain.RewriteFilter</filter-class>
     </filter>
 
     <filter-mapping>
