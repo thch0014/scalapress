@@ -1,0 +1,27 @@
+#parse("/admin/header.vm")
+
+
+<h1>Galleries</h1>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Images</th>
+        <th></th>
+    </tr>
+    #foreach ($g in $galleries)
+        <tr>
+            <td>$g.id</td>
+            <td>$g.name</td>
+            <td>$g.images.size()</td>
+            <td>
+                <a href="$urlResolver.galleryEdit($g)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a></td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.galleryCreate()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+
+#parse("/admin/footer.vm")

@@ -1,6 +1,6 @@
 package com.liferay.scalapress.controller.admin
 
-import com.liferay.scalapress.domain.{User, Markup, ObjectType, Obj, Folder}
+import com.liferay.scalapress.domain.{Gallery, User, Markup, ObjectType, Obj, Folder}
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.domain.setup.Theme
 import com.liferay.scalapress.domain.form.{Form, Submission}
@@ -31,6 +31,10 @@ object UrlResolver {
     val createTheme = "/backoffice/theme/create"
     val themes = "/backoffice/theme/"
     def themeEdit(t: Theme) = "/backoffice/theme/" + t.id
+
+    val galleries = "/backoffice/gallery"
+    def galleryEdit(g: Gallery) = "/backoffice/gallery/" + g.id
+    def galleryCreate = "/backoffice/gallery/create"
 
     val widgets = "/backoffice/widget/"
     def widgetEdit(w: Widget) = "/backoffice/widget/" + w.id

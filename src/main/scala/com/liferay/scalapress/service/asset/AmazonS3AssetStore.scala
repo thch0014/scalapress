@@ -97,6 +97,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
             case e: com.amazonaws.AmazonClientException => key
         }
     }
+
     def add(in: InputStream): String = put(UUID.randomUUID.toString, in)
 
     def getAmazonS3Client: AmazonS3Client = {
