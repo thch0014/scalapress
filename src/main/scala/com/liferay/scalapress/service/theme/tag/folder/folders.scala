@@ -67,6 +67,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val tag = params.get("tag").getOrElse("span")
         val cssClass = params.get("class").getOrElse("cat_link")
         val exclude = params.get("exclude").getOrElse("").split(",")
+        val sep = params.get("sep").getOrElse("")
 
         val startTag = "<" + tag + " class='" + cssClass + "'>"
         val endTag = "</" + tag + ">"
@@ -75,7 +76,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val names = folders
           .map(f => startTag + "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "' class='current'>" + f
           .name + "</a>" + endTag)
-          .mkString("\n")
+          .mkString(sep)
         Some(names)
     }
 }

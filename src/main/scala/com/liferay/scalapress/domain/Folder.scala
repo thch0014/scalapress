@@ -77,7 +77,7 @@ class Folder {
     @Column(name = "friendlyUrl")
     @BeanProperty var permaLink: String = _
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
     @BeanProperty var sections: java.util.List[Section] = new util.ArrayList[Section]()
 
 }

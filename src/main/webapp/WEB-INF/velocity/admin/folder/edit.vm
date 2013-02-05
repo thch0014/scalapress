@@ -107,8 +107,11 @@
             <td>$!s.name()</td>
             <td>$s.desc()</td>
             <td>
-                <a href="$urlResolver.pluginEdit($s)" role="button" class="btn btn-mini"> <i
-                        class="icon-pencil"></i></a>
+                <a href="$urlResolver.pluginEdit($s)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+
+                <a href="$urlResolver.deleteSection($folder, $s)" role="button" class="btn btn-mini">
+                    <i class="icon-trash"></i></a>
             </td>
         </tr>
     #end
