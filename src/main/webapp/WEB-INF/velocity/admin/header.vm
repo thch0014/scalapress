@@ -27,12 +27,12 @@
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span3">
+        <div class="span2">
 
             <br/>
             #parse("/admin/navlist.vm")
 
 
         </div>
-        <div class="span9">
+        <div class="span10">
 

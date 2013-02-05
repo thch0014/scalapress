@@ -1,8 +1,9 @@
 <ul class="nav nav-tabs nav-stacked">
     <li><a href=/backoffice><i class="icon-home"></i> Dashboard</a></li>
     <li><a href=/backoffice/folder><i class="icon-folder-open"></i> Folders</a></li>
-    <li><a href=/backoffice/obj?typeId=1><i class="icon-wordpress-2"></i> Listing</a></li>
-    <li><a href=/backoffice/obj?typeId=2><i class="icon-grid-view"></i> News Article</a></li>
+    #foreach ($type in $types)
+        <li><a href=/backoffice/obj?typeId=$type.id><i class="icon-circle-blank"></i> $type.name</a></li>
+    #end
     <li><a href=/backoffice/form><i class="icon-align-center"></i> Forms</a></li>
     <li><a href=/backoffice/submission><i class="icon-pencil"></i> Submissions</a></li>
     <li><a href=/backoffice/medialib><i class="icon-picture"></i> Media Library</a></li>
@@ -11,7 +12,7 @@
 <ul class="nav nav-tabs nav-stacked">
     <li><a href=/backoffice/type><i class="icon-font"></i> Object Types</a></li>
     <li><a href=/backoffice/widget/><i class="icon-asterisk"></i> Widgets</a></li>
-    <li><a href=/backoffice/theme/><i class="icon-fullscreen"></i> Themes</a></li>
+    <li><a href=/backoffice/theme/><i class="icon-desktop"></i> Themes</a></li>
     <li><a href=/backoffice/user><i class="icon-user"></i> Users</a></li>
     <li><a href=/backoffice/markup/><i class="icon-eye-close"></i> Markups</a></li>
     <li><a href=/backoffice/settings/general><i class="icon-wrench"></i> General</a></li>

@@ -1,6 +1,6 @@
 package com.liferay.scalapress.controller
 
-import admin.interceptor.UrlResolverInterceptor
+import admin.interceptor.{TypesInterceptor, UrlResolverInterceptor}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry
@@ -39,7 +39,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     override def addInterceptors(registry: InterceptorRegistry) {
 
         val webContentInterceptor = new WebContentInterceptor
-        webContentInterceptor.setCacheSeconds(0)
+        webContentInterceptor.setCacheSeconds(60)
         webContentInterceptor.setUseExpiresHeader(true)
         webContentInterceptor.setUseCacheControlHeader(true)
         webContentInterceptor.setUseCacheControlNoStore(true)
@@ -47,6 +47,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(webContentInterceptor)
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(new UrlResolverInterceptor)
+        registry.addInterceptor(new TypesInterceptor(typeDao))
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
