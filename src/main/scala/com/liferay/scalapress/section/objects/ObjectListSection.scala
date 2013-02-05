@@ -33,7 +33,7 @@ class ObjectListSection extends Section {
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
         folder.objects.size match {
-            case 0 => Option(emptyFolderMessage).orElse(Some("<!-- No empty message for folder -->"))
+            case 0 => Some("<!-- No objects in folder -->")
             case _ => {
                 val first = folder.objects.asScala.head
                 Option(markup).orElse(Option(first.objectType.listItemMarkup)) match {
