@@ -75,7 +75,7 @@ class ObjectEditController {
         obj.objectType
           .attributes
           .asScala
-          .sortBy(_.section)
+          .sortBy(a => Option(a.section).getOrElse(""))
           .asJava
     }
 

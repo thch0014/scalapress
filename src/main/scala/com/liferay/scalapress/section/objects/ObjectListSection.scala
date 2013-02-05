@@ -6,6 +6,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import com.liferay.scalapress.section.Section
+import reflect.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -13,20 +14,17 @@ import com.liferay.scalapress.section.Section
 class ObjectListSection extends Section {
 
     @Column(name = "sortType")
-    var sortType: SortType = _
+    @BeanProperty var sortType: SortType = _
 
     @Column(name = "itemsPerPage")
-    var pageSize: Int = _
+    @BeanProperty var pageSize: Int = _
 
     @Column(name = "includeSubcategoryItems")
-    var includeSubfolderObjects: Boolean = false
+    @BeanProperty var includeSubfolderObjects: Boolean = false
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listMarkup", nullable = true)
-    var markup: Markup = _
-
-    @Column(name = "noItemsMessage")
-    var emptyFolderMessage: String = _
+    @BeanProperty var markup: Markup = _
 
     def desc = "Show a paginated list of objects that are inside this general"
 

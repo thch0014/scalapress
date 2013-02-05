@@ -21,13 +21,32 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Content</label>
-
-        <div class="controls">
-            #springFormTextarea("section.content", "rows='16' class='input-block-level htmleditor'")
+    #if ($markupable == "true")
+        <div class="control-group">
+            <label class="control-label">Markup</label>
+            <div class="controls">
+                <select id="markup" name="markup">
+                    #foreach($option in $markupMap.keySet())
+                        <option value="${option}"
+                            #if("$!section.markup.id" == "$option")
+                                selected="selected"
+                            #end>
+                            ${markupMap.get($option)}</option>
+                    #end
+                </select>
+            </div>
         </div>
-    </div>
+    #end
+
+    #if ($contentable == "true")
+        <div class="control-group">
+            <label class="control-label">Content</label>
+
+            <div class="controls">
+                #springFormTextarea("section.content", "rows='16' class='input-block-level htmleditor'")
+            </div>
+        </div>
+    #end
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>

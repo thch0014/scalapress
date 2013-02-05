@@ -3,6 +3,7 @@ package com.liferay.scalapress.section.content
 import javax.persistence.{Column, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.section.Section
+import reflect.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -10,7 +11,7 @@ import com.liferay.scalapress.section.Section
 class FolderContentSection extends Section {
 
     @Column(name = "content")
-    var content: String = _
+    @BeanProperty var content: String = _
 
     def desc = "Edit and then display a section of content when viewing this object"
 

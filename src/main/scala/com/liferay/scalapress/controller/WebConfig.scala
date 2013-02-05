@@ -14,9 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.dao.{TypeDao, FolderDao}
-import org.springframework.core.convert.converter.Converter
-import com.liferay.scalapress.domain.{ObjectType, Folder}
+import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -27,11 +25,12 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var scalapressContext: ScalapressContext = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var typeDao: TypeDao = _
+    @Autowired var markupDao: MarkupDao = _
 
     override def addFormatters(registry: FormatterRegistry) {
         registry.addConverter(new StringFolderConverter(folderDao))
         registry.addConverter(new StringObjectTypeConverter(typeDao))
-
+        registry.addConverter(new StringMarkupConverter(markupDao))
     }
 
     override def addResourceHandlers(registry: ResourceHandlerRegistry) {
@@ -70,11 +69,4 @@ class WebConfig extends WebMvcConfigurationSupport {
 
 }
 
-class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {
-    def convert(source: String): Folder = if (source == null || source == "") null else folderDao.find(source.toInt)
-}
 
-class StringObjectTypeConverter(objectTypeDao: TypeDao) extends Converter[String, ObjectType] {
-    def convert(source: String): ObjectType = if (source == null || source == "") null
-    else objectTypeDao.find(source.toInt)
-}

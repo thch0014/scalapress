@@ -14,7 +14,7 @@ class MarkupListController {
     @Autowired var markupDao: MarkupDao = _
 
     @RequestMapping(produces = Array("text/html"))
-    def list = "admin/markup/list.vm"
+    def list = "admin/theme/markup/list.vm"
 
     import scala.collection.JavaConverters._
 

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,16 +21,16 @@ class FolderEditController {
     @Autowired var folderDao: FolderDao = _
     @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute folder: Folder) = "admin/folder/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute folder: Folder) = {
         folderDao.save(folder)
         edit(folder)
     }
 
-    @RequestMapping(produces = Array("text/html"), value = Array("upload"), method = Array(RequestMethod.POST))
+    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
     def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
 
         val key = assetStore.put(upload.getOriginalFilename, upload.getInputStream)
@@ -44,7 +45,12 @@ class FolderEditController {
         "redirect:" + UrlResolver.folderEdit(folder)
     }
 
-    import scala.collection.JavaConverters._
+    @RequestMapping(value = Array("section/{sectionId}/delete"))
+    def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {
+        folder.sections = folder.sections.asScala.filterNot(_.id == sectionId).asJava
+        folderDao.save(folder)
+        "redirect:" + UrlResolver.folderEdit(folder)
+    }
 
     @ModelAttribute("parents") def folder = {
 

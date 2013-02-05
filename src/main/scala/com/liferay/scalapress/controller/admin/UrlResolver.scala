@@ -35,6 +35,7 @@ object UrlResolver {
     val widgets = "/backoffice/widget/"
     def widgetEdit(w: Widget) = "/backoffice/widget/" + w.id
 
+    def deleteSection(folder: Folder, s: Section) = folderEdit(folder) + "/section/" + s.id + "/delete"
     val plugins = "/backoffice/section"
     def pluginEdit(p: Section) = "/backoffice/section/" + p.id
 
