@@ -1,0 +1,13 @@
+package com.liferay.scalapress.controller.admin
+
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RequestMapping
+
+/** @author Stephen Samuel */
+@Controller
+@RequestMapping(Array("backlogin"))
+class AdminLoginController {
+
+    @RequestMapping
+    def login = "admin/login.vm"
+}
