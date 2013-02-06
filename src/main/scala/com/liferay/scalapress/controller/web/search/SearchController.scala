@@ -7,8 +7,8 @@ import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.Logging
 import org.elasticsearch.action.search.SearchResponse
 import javax.annotation.PostConstruct
-import com.liferay.scalapress.service.search.SearchService
 import actors.Futures
+import com.liferay.scalapress.plugin.search.SearchService
 
 /** @author Stephen Samuel */
 
@@ -22,7 +22,7 @@ class SearchController extends Logging {
 
     @ResponseBody
     @RequestMapping
-    def test(@RequestParam("q") q: String) = {
+    def search(@RequestParam("q") q: String, @RequestParam(value = "type", required = false) t: String) = {
         val response = service.search(q, 50)
         response.toString
     }

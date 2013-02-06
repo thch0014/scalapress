@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.search
+package com.liferay.scalapress.plugin.search
 
 import com.liferay.scalapress.domain.{ObjectType, Obj}
 import org.elasticsearch.common.xcontent.XContentFactory
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
+import org.elasticsearch.common.settings.ImmutableSettings
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -29,16 +30,21 @@ class ElasticSearchService extends SearchService with Logging {
 
     @Autowired var objectDao: ObjectDao = _
 
-    val node = NodeBuilder.nodeBuilder().local(true).client(false).data(true).node()
+    val settings = ImmutableSettings.settingsBuilder()
+      .put("node.http.enabled", false)
+      .put("index.gateway.type", "none")
+      .put("index.store.type", "memory")
+      .put("index.number_of_shards", 1)
+      .put("index.number_of_replicas", 0).build()
+    val node = NodeBuilder.nodeBuilder().local(true).settings(settings).node()
     val client = node.client()
-    client.prepareDelete().execute().actionGet()
 
     @Transactional
     def index() {
 
         val objs = objectDao.search(new Search(classOf[Obj])
-          .addFilterILike("status", "live")
-          .setMaxResults(5000))
+          .addFilterLike("status", "live")
+          .setMaxResults(20000))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))

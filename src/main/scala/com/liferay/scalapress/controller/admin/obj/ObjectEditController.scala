@@ -15,7 +15,7 @@ import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
-import com.liferay.scalapress.service.search.SearchService
+import com.liferay.scalapress.plugin.search.SearchService
 
 /** @author Stephen Samuel */
 @Controller
