@@ -102,6 +102,11 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("ALTER TABLE templates MODIFY header text null").execute()
         conn.prepareStatement("ALTER TABLE templates MODIFY footer text null").execute()
 
+        conn
+          .prepareStatement(
+            "update users set passwordhash='09b792e75d96dbcb3d49f5af313e9fa1' where passwordhash is null")
+          .execute()
+
         conn.close()
     }
 }

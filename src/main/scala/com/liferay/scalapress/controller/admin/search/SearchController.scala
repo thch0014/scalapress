@@ -7,6 +7,7 @@ import com.liferay.scalapress.service.search.ElasticSearchService
 import com.liferay.scalapress.dao.ObjectDao
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
+import com.liferay.scalapress.controller.admin.UrlResolver
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,11 +22,15 @@ class SearchController {
 
         val response = service.search(q)
         val results = response.hits().hits().map(hit => {
-            SearchResult(hit.id().toLong, hit.`type`(), hit.field("name").value())
+            SearchResult(hit.id().toLong,
+                hit.`type`(),
+                hit.field("name").value(),
+                UrlResolver.objectEdit(hit.id.toLong),
+                UrlResolver.objectSiteView(hit.id.toLong))
         })
         model.put("results", results.toList.asJava)
         "admin/search/results.vm"
     }
 }
 
-case class SearchResult(id: Long, ` type`: String, name: String)
+case class SearchResult(id: Long, ` type`: String, name: String, editUrl: String, viewUrl: String)

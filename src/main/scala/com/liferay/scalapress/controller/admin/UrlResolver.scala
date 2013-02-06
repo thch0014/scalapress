@@ -58,12 +58,14 @@ object UrlResolver {
     def folderSiteView(f: Folder): String = "/folder/" + f.id
     def folderCreate = "/backoffice/folder/create"
 
+    def objectSiteView(id: Long): String = "/object/" + o.id
     def objectSiteView(o: Obj): String = "/object/" + o.id
-    def objectCreate(t: ObjectType) = "/backoffice/obj/create?typeId=" + t.id
-    def objectEdit(o: Obj) = "/backoffice/obj/" + Option(o).map(_.id).getOrElse("")
-    def objects(t: Long) = "/backoffice/obj?typeId=" + t
-    def objects(t: ObjectType) = "/backoffice/obj?typeId=" + t.id
-    val objects = "/backoffice/obj"
+    def objectCreate(t: ObjectType): String = "/backoffice/obj/create?typeId=" + t.id
+    def objectEdit(o: Obj): String = "/backoffice/obj/" + Option(o).map(_.id).getOrElse("")
+    def objectEdit(id: Long): String = "/backoffice/obj/" + id
+    def objects(t: Long): String = "/backoffice/obj?typeId=" + t
+    def objects(t: ObjectType): String = "/backoffice/obj?typeId=" + t.id
+    val objects: String = "/backoffice/obj"
     def objectImageUpload(o: Obj): String = objectEdit(o) + "/upload"
 
     val types = "/backoffice/type"

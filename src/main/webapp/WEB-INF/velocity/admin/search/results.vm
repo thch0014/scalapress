@@ -11,15 +11,15 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($result in $page.java())
+    #foreach ($result in $results)
         <tr>
-            <td>$result.id</td>
-            <td>$result.type</td>
-            <td>$result.name</td>
+            <td>$result.id()</td>
+            <td>$result.type()</td>
+            <td>$result.name()</td>
             <td>
-                <a href="" role="button" class="btn btn-mini">
+                <a href="$result.editUrl()" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i></a>
-                <a href="" role="button" class="btn btn-mini">
+                <a href="$result.viewUrl()" role="button" class="btn btn-mini">
                     <i class="icon-eye-open"></i></a>
             </td>
         </tr>
