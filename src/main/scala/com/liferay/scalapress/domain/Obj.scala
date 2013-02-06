@@ -74,9 +74,6 @@ class Obj {
     @Column(columnDefinition = "TEXT")
     @BeanProperty var summary: String = _
 
-    @Column(columnDefinition = "TEXT")
-    @BeanProperty var shortName: String = _
-
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
     @BeanProperty def sellPriceInc = sellPrice * vatRate
@@ -112,19 +109,12 @@ class Obj {
     @BeanProperty var backorders: Boolean = _
     @BeanProperty var stockNotifyLevel: Int = _
 
-    @Column(columnDefinition = "TEXT")
+    // used by account types
     @BeanProperty var passwordHash: String = _
-
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var resetCode: String = _
 
-    /**
-     * The ip address used to create this objcet
-     */
     @Column(columnDefinition = "TEXT")
     @BeanProperty var ipAddress: String = _
-
-    @BeanProperty var prioritised: Boolean = false
 
     @Column(columnDefinition = "TEXT")
     @BeanProperty var referrer: String = _
@@ -132,14 +122,8 @@ class Obj {
     @Column(columnDefinition = "TEXT")
     @BeanProperty var mobilePhone: String = _
 
-    /**
-     * A manually configured permalink
-     */
     @Column(columnDefinition = "TEXT")
     @BeanProperty var permaLink: String = _
-
-    @Column(columnDefinition = "TEXT")
-    @BeanProperty var inactiveMessage: String = _
 
 }
 
