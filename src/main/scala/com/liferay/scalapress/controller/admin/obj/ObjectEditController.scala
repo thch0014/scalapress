@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.admin.obj
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestParam, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderDao, ObjectDao}
 import scala.Array
@@ -15,6 +15,7 @@ import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
+import com.liferay.scalapress.service.search.SearchService
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,6 +26,7 @@ class ObjectEditController {
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var context: ScalapressContext = _
+    @Autowired var searchService: SearchService = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def edit(@ModelAttribute("form") form: EditForm) = "admin/object/edit.vm"
@@ -67,6 +69,7 @@ class ObjectEditController {
         }
 
         objectDao.save(form.o)
+        searchService.index(form.o)
         edit(form)
     }
 

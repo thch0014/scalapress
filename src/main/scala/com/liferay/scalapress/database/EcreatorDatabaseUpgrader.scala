@@ -104,7 +104,7 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         conn
           .prepareStatement(
-            "update users set passwordhash='09b792e75d96dbcb3d49f5af313e9fa1' where passwordhash is null")
+            "update users set passwordhash='09b792e75d96dbcb3d49f5af313e9fa1', active=1 where passwordhash is null")
           .execute()
 
         // attributes
