@@ -30,7 +30,7 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
         logger.debug("Indexing [{}]", obj)
         val src = source(obj)
 
-        client.prepareIndex("objects", "object", obj.id.toString)
+        client.prepareIndex("objects", obj.objectType.id.toString, obj.id.toString)
           .setSource(src)
           .execute()
           .actionGet()
@@ -44,6 +44,7 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
         client.prepareSearch("objects")
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addFacet(facet)
+          .addField("name")
           .setQuery(QueryBuilders.termQuery("name", q))
           .setFrom(0).setSize(20).setExplain(true)
           .execute()

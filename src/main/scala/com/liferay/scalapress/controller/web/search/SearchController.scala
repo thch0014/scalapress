@@ -22,8 +22,6 @@ class SearchController extends Logging {
 
         val response = service.search(q)
 
-        val ids = response.hits.hits().map(_.id())
-        val facets = response.facets.facets().asScala.map(f => f.name() + "---" + f.`type`())
-        ids.mkString("\n") + facets
+        response.toString
     }
 }

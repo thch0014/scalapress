@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView
 import com.liferay.scalapress.controller.admin.UrlResolver
 
 /** @author Stephen Samuel */
-class UrlResolverInterceptor extends HandlerInterceptorAdapter {
+object UrlResolverInterceptor extends HandlerInterceptorAdapter {
     override def postHandle(request: HttpServletRequest,
                             response: HttpServletResponse,
                             handler: Any,
