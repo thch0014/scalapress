@@ -11,6 +11,11 @@
                 <li>
                     <a href="/">Home Page</a>
                 </li>
+                #if ($eyeball)
+                    <li>
+                        <a href="$eyeball">View on site</a>
+                    </li>
+                #end
             </ul>
         </div>
     </div>

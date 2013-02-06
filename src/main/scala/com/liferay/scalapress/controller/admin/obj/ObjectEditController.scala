@@ -100,13 +100,17 @@ class ObjectEditController {
     @ModelAttribute("statuses") def statuses =
         Map("Live" -> "Live", "Disabled" -> "Disabled", "Deleted" -> "Deleted").asJava
 
-    @ModelAttribute("form") def form(@PathVariable("id") id: Long, model: ModelMap): EditForm = {
+    @ModelAttribute def form(@PathVariable("id") id: Long, model: ModelMap) {
         val obj = objectDao.find(id)
         val form = new EditForm
         form.o = obj
         form.folderIds = Array()
         form
+
+        model.put("form", form)
+        model.put("eyeball", UrlResolver.objectSiteView(obj))
     }
+
 }
 
 class EditForm {

@@ -68,6 +68,7 @@ class FolderEditController {
     @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
         val folder = folderDao.find(id)
         val sections = folder.sections
+        map.put("eyeball", UrlResolver.folderSiteView(folder))
         map.put("folder", folder)
         map.put("sections", sections)
     }

@@ -12,7 +12,7 @@ import com.liferay.scalapress.controller.admin.UrlResolver
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/search"))
-class SearchController {
+class BackofficeSearchController {
 
     @Autowired var service: ElasticSearchService = _
     @Autowired var objectDao: ObjectDao = _

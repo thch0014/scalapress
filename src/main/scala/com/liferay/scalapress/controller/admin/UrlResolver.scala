@@ -58,7 +58,7 @@ object UrlResolver {
     def folderSiteView(f: Folder): String = "/folder/" + f.id
     def folderCreate = "/backoffice/folder/create"
 
-    def objectSiteView(id: Long): String = "/object/" + o.id
+    def objectSiteView(id: Long): String = "/object/" + id
     def objectSiteView(o: Obj): String = "/object/" + o.id
     def objectCreate(t: ObjectType): String = "/backoffice/obj/create?typeId=" + t.id
     def objectEdit(o: Obj): String = "/backoffice/obj/" + Option(o).map(_.id).getOrElse("")
