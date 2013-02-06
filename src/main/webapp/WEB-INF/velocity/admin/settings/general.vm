@@ -1,6 +1,6 @@
 #parse("/admin/header.vm")
 
-<h1>Site Settings</h1>
+<h3>Site Settings</h3>
 
 <form class="form-horizontal" method="POST">
 

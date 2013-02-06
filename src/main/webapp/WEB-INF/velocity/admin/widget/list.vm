@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Widgets</h1>
+<h3>Widgets</h3>
 
 
 <table class="table table-condensed table-hover">

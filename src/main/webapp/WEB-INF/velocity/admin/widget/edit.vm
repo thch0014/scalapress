@@ -1,7 +1,8 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit Widget</h1>
+<h3>Edit Widget</h3>
+
 
 <form class="form-horizontal" method="POST">
 

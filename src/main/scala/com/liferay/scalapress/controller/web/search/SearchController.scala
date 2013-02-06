@@ -20,7 +20,7 @@ class SearchController extends Logging {
     @RequestMapping
     def test(@RequestParam("q") q: String) = {
 
-        val response = service.search(q)
+        val response = service.search(q, 50)
 
         response.toString
     }

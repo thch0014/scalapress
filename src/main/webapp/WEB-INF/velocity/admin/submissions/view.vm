@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Submission: #$submission.id</h1>
+<h3>Submission: #$submission.id</h3>
 
 <p>Submitted at $datetool.format($submission.date)</p>
 

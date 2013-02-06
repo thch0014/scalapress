@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Forms</h1>
+<h3>Forms</h3>
 
 
 <table class="table table-condensed table-hover">

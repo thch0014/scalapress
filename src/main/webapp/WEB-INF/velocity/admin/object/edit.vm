@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit $form.o.objectType.name: $form.o.name</h1>
+<h3>Edit $form.o.objectType.name: $form.o.name</h3>
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 

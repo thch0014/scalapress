@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit Folder: $folder.name</h1>
+<h3>Edit Folder: $folder.name</h3>
 
 
 <form class="form-horizontal" method="POST">

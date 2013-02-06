@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Media Library</h1>
+<h3>Media Library</h3>
 
 <a href="#10e7a108-b33d-431b-9091-0e4cadb3b7de" role='button' class="btn btn-info" data-toggle="modal">Upload Media</a>
 

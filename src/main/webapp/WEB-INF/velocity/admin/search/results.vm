@@ -1,9 +1,7 @@
 #parse("/admin/header.vm")
 
 
-$results
-
-<h1>Search Results</h1>
+<h3>Search Results</h3>
 
 
 <table class="table table-condensed table-hover">
@@ -16,7 +14,7 @@ $results
     #foreach ($result in $results)
         <tr>
             <td>$result.id()</td>
-            <td>$result.type()</td>
+            <td>$result.t()</td>
             <td>$result.name()</td>
             <td>
                 <a href="$result.editUrl()" role="button" class="btn btn-mini">

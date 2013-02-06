@@ -2,6 +2,7 @@
     <div class="navbar-inner">
         <form class="navbar-search pull-right" method="GET" action="/backoffice/search">
             <input type="text" name="q" class="search-query" placeholder="Search">
+            <button>Go</button>
         </form>
         <div class="container" style="width: auto; padding: 0 20px;">
             <a class="brand" href="#">

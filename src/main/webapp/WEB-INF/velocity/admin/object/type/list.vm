@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Object Types</h1>
+<h3>Object Types</h3>
 
 
 <table class="table table-condensed table-hover">

@@ -4,7 +4,7 @@ import com.liferay.scalapress.domain.Obj
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.search.facet.FacetBuilders
 import org.elasticsearch.action.search.{SearchResponse, SearchType}
-import org.elasticsearch.index.query.QueryBuilders
+import org.elasticsearch.index.query.FieldQueryBuilder
 import javax.annotation.PreDestroy
 import org.elasticsearch.node.NodeBuilder
 import com.liferay.scalapress.dao.ObjectDao
@@ -38,7 +38,7 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
     }
 
     // search by the given query string and then return the matching doc ids
-    def search(q: String): SearchResponse = {
+    def search(q: String, limit: Int): SearchResponse = {
 
         val facet = FacetBuilders.termsFacet("facet1").field("name")
 
@@ -46,8 +46,8 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addFacet(facet)
           .addField("name")
-          .setQuery(QueryBuilders.termQuery("name", q))
-          .setFrom(0).setSize(20).setExplain(true)
+          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
+          .setFrom(0).setSize(limit).setExplain(true)
           .execute()
           .actionGet()
     }
