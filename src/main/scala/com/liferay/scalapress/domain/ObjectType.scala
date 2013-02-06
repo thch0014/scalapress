@@ -24,8 +24,8 @@ class ObjectType {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType")
     @BeanProperty var sections: java.util.List[Section] = new util.ArrayList[Section]()
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "listitemmarkup", nullable = true)
-    var listItemMarkup: Markup = _
+    @BeanProperty var objectListMarkup: Markup = _
 
 }

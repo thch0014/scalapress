@@ -10,7 +10,6 @@ import com.liferay.scalapress.Logging
 import org.elasticsearch.action.search.SearchType
 import org.elasticsearch.index.query.QueryBuilders
 import scala.collection.JavaConverters._
-import org.elasticsearch.search.facet.terms.TermsFacetBuilder
 import org.elasticsearch.search.facet.FacetBuilders
 
 /** @author Stephen Samuel */
@@ -35,10 +34,13 @@ class SearchController extends Logging {
               .startObject()
               .field("name", obj.name)
               .field("content", obj.content)
+              .field("status", obj.status)
+              .field("labels", obj.labels)
 
             obj.attributeValues.asScala.foreach(av => {
                 json = json.field(av.attribute.id.toString, av.value)
             })
+
 
             json.endObject()
 
@@ -67,6 +69,7 @@ class SearchController extends Logging {
         node.close()
 
         val ids = response.hits.hits().map(_.id())
-        ids.mkString("\n")
+        val facets = response.facets.facets().asScala.map(f => f.name() + "---" + f.`type`())
+        ids.mkString("\n") + facets
     }
 }

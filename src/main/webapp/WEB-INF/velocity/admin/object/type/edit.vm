@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit User</h1>
+<h1>Edit Type</h1>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +9,23 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("objectType.name")
+            #springFormInput("type.name")
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <label class="control-label">Object List Markup</label>
+        <div class="controls">
+            <select id="objectListMarkup" name="objectListMarkup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!type.objectListMarkup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${markupMap.get($option)}</option>
+                #end
+            </select>
         </div>
     </div>
 
@@ -29,7 +45,7 @@
         <th>Type</th>
         <th></th>
     </tr>
-    #foreach ($a in $attributes)
+    #foreach ($a in $type.attributes)
         <tr>
             <td>$a.id</td>
             <td>$a.section</td>

@@ -3,9 +3,9 @@ package com.liferay.scalapress.controller.admin.obj
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.TypeDao
+import com.liferay.scalapress.dao.{MarkupDao, TypeDao}
 import scala.Array
-import com.liferay.scalapress.domain.{ObjectType}
+import com.liferay.scalapress.domain.ObjectType
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.domain.attr.Attribute
@@ -18,19 +18,20 @@ import com.liferay.scalapress.enums.AttributeType
 class TypeEditController {
 
     @Autowired var typeDao: TypeDao = _
+    @Autowired var markupDao: MarkupDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute t: ObjectType) = "admin/object/type/edit.vm"
+    def edit(@ModelAttribute("type") t: ObjectType) = "admin/object/type/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute t: ObjectType) = {
+    def save(@ModelAttribute("type") t: ObjectType) = {
         typeDao.save(t)
         edit(t)
     }
 
     @RequestMapping(Array("/attribute/create"))
-    def createAttribute(@ModelAttribute t: ObjectType) = {
+    def createAttribute(@ModelAttribute("type") t: ObjectType) = {
 
         val attribute = new Attribute
         attribute.name = "new attribute"
@@ -43,7 +44,7 @@ class TypeEditController {
         "redirect:" + UrlResolver.typeEdit(t)
     }
 
-    @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) = {
+    @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
         import scala.collection.JavaConverters._
 
@@ -52,5 +53,10 @@ class TypeEditController {
 
         model.put("type", t)
         model.put("attributes", sortedAttributes)
+
+        val markups = markupDao.findAll()
+        val map = markups.map(m => (m.id, m.name)).toMap + ((0, "-None-"))
+        model.put("markups", markups.asJava)
+        model.put("markupMap", map.asJava)
     }
 }

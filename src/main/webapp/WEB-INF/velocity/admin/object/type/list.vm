@@ -10,7 +10,7 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($t in $themes)
+    #foreach ($t in $types)
         <tr>
             <td>$t.id</td>
             <td>$t.name</td>

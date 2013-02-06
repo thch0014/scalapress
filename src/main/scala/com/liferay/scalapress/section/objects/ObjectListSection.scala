@@ -46,7 +46,7 @@ class ObjectListSection extends Section {
             case 0 => Some("<!-- No objects in folder -->")
             case _ => {
                 val first = sorted.head
-                Option(markup).orElse(Option(first.objectType.listItemMarkup)) match {
+                Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
                     case None => Some("<!-- No markup found for folder -->")
                     case Some(m) => {
                         Some(MarkupRenderer.renderObjects(sorted, m, request, context))
