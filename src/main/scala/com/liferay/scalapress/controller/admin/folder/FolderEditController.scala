@@ -60,7 +60,7 @@ class FolderEditController {
     @ModelAttribute("parents") def folder = {
 
         val folders = folderDao.findAll().map(f => (f.id, f.fullName))
-        val options = (0, "-Select-") +: folders
+        val options = (0, "-None-") +: folders
         val java = options.toMap.asJava
         java
     }

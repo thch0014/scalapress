@@ -14,11 +14,20 @@
         </div>
     </div>
 
+
     <div class="control-group">
         <label class="control-label">Parent</label>
 
         <div class="controls">
-            #springFormSingleSelect("folder.parent", $parents)
+            <select id="parent" name="parent">
+                #foreach($option in $parents.keySet())
+                    <option value="${option}"
+                        #if("$!folder.parent.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${parents.get($option)}</option>
+                #end
+            </select>
         </div>
     </div>
 
