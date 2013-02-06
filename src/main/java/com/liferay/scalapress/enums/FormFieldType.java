@@ -8,5 +8,6 @@ public enum FormFieldType {
     Header,
     TickBoxes,
     Attachment,
-    Email
+    Email,
+    Description
 }

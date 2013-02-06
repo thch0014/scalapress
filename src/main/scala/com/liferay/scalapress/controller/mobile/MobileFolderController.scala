@@ -28,6 +28,6 @@ class MobileFolderController {
         "mobile/general.vm"
     }
 
-    @ModelAttribute("folders") def folders = folderDao.findAll
+    @ModelAttribute("folders") def folders = folderDao.findAll()
 }
 

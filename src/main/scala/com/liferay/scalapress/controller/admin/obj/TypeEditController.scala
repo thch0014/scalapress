@@ -15,7 +15,7 @@ import com.liferay.scalapress.enums.AttributeType
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/type/{id}"))
-class TypeEditController {
+class TypeEditController extends MarkupPopulator {
 
     @Autowired var typeDao: TypeDao = _
     @Autowired var markupDao: MarkupDao = _
@@ -53,10 +53,5 @@ class TypeEditController {
 
         model.put("type", t)
         model.put("attributes", sortedAttributes)
-
-        val markups = markupDao.findAll()
-        val map = markups.map(m => (m.id, m.name)).toMap + ((0, "-None-"))
-        model.put("markups", markups.asJava)
-        model.put("markupMap", map.asJava)
     }
 }

@@ -1,0 +1,30 @@
+#parse("/admin/header.vm")
+
+<h3>Search Plugin Settings</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Search Results Markup</label>
+
+        <div class="controls">
+            <select id="markup" name="markup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!plugin.markup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        $!{markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

@@ -9,7 +9,6 @@ import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
-@Component
 class SearchIndexer extends Logging {
 
     @Autowired var objectDao: ObjectDao = _

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin
+package com.liferay.scalapress.plugin.folder
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, Entity, Table}
 import scala.Predef.String

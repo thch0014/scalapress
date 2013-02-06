@@ -44,7 +44,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         val objs = objectDao.search(new Search(classOf[Obj])
           .addFilterLike("status", "live")
-          .setMaxResults(20000))
+          .setMaxResults(400))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
@@ -91,7 +91,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     // search by the given query string and then return the matching doc ids
-    def searchType(q: String, t: ObjectType, limit: Int): SearchResponse = {
+    override def searchType(q: String, t: ObjectType, limit: Int): SearchResponse = {
 
         val search = client.prepareSearch("objects")
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)

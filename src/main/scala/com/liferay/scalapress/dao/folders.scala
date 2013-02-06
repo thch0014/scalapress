@@ -5,9 +5,9 @@ import org.hibernate.criterion.Restrictions
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.domain.Folder
-import com.liferay.scalapress.plugin.FolderPlugin
 import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
+import com.liferay.scalapress.plugin.folder.FolderPlugin
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
