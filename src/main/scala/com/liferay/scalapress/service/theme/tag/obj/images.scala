@@ -9,17 +9,36 @@ import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
 object ImagesTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        val h = params.get("h").orElse(params.get("height")).getOrElse("120").toInt
-        val w = params.get("w").orElse(params.get("width")).getOrElse("120").toInt
-        val link = params.get("link")
-        val limit = params.get("limit").getOrElse("1").toInt
+
         request.obj match {
+
             case None => None
             case Some(obj) =>
-                val rendered = obj.images.asScala.map(i => {
+
+                val h = params.get("h").orElse(params.get("height")).getOrElse("120").toInt
+                val w = params.get("w").orElse(params.get("width")).getOrElse("120").toInt
+                val limit = params.get("limit").getOrElse("1").toInt
+
+                val rendered = obj.images.asScala.take(limit).map(i => {
                     val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
                     tag
                 })
+
+                Option(rendered.mkString("\n"))
+        }
+    }
+}
+
+object ImageUrlTag extends ScalapressTag with TagBuilder {
+
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+
+        request.obj match {
+
+            case None => None
+            case Some(obj) =>
+                val limit = params.get("limit").getOrElse("1").toInt
+                val rendered = obj.images.asScala.take(limit).map(i => "/images/" + i.filename)
                 Option(rendered.mkString("\n"))
         }
     }
