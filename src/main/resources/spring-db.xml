@@ -26,6 +26,7 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.connection.autocommit">false</prop>
                 <prop key="javax.persistence.validation.mode">none</prop>
+                <prop key="hibernate.globally_quoted_identifiers">true</prop>
                 <prop key="hibernate.c3p0.min_size">5</prop>
                 <prop key="hibernate.c3p0.max_size">20</prop>
                 <prop key="hibernate.c3p0.timeout">300</prop>
