@@ -3,7 +3,7 @@ package com.liferay.scalapress.service.theme.tag
 import ecommerce.{BasketTotalTag, BasketLinkTag, AddToBasketTag}
 import folder.{FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
-import obj.{AttributeNameTag, AttributeValueTag, LinkTag, ImageTag, ObjectStockTag, SummaryTag, ObjectSellPriceTag, ObjectTag, ColorboxTag}
+import obj.{ImagesTag, AttributeNameTag, AttributeValueTag, LinkTag, ObjectStockTag, SummaryTag, ObjectSellPriceTag, ObjectTag, ColorboxTag}
 import theme.WidgetsTag
 import user.UserStatusTag
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
@@ -11,7 +11,7 @@ import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentL
 /** @author Stephen Samuel */
 object TagMappings {
 
-    val mappings = Map("item" -> ObjectTag,
+    val mappings: Map[String, ScalapressTag] = Map("item" -> ObjectTag,
         "categories_primary" -> PrimaryFoldersTag,
         "folders_primary" -> PrimaryFoldersTag,
         "summary" -> SummaryTag,
@@ -19,7 +19,7 @@ object TagMappings {
         "price" -> ObjectSellPriceTag,
         "stock" -> ObjectStockTag,
         "folder" -> FolderTag, "category" -> FolderTag,
-        "image" -> ImageTag,
+        "image" -> ImagesTag,
         "ordering_buy" -> AddToBasketTag,
         "addtobasket" -> AddToBasketTag,
         "ordering_qty" -> AddToBasketTag,

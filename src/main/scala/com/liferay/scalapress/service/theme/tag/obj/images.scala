@@ -6,20 +6,19 @@ import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 
-object ImageTag extends ScalapressTag with TagBuilder {
+object ImagesTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        val h = params.get("h").getOrElse("120").toInt
-        val w = params.get("w").getOrElse("120").toInt
+        val h = params.get("h").orElse(params.get("height")).getOrElse("120").toInt
+        val w = params.get("w").orElse(params.get("width")).getOrElse("120").toInt
         val link = params.get("link")
         val limit = params.get("limit").getOrElse("1").toInt
-        request.obj.flatMap(_.images.asScala.headOption) match {
-            case None => None
-            case Some(i) => {
-                val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
-                Option(tag)
-            }
-        }
+        val images = request.obj.flatMap(_.images.asScala).take(limit)
+        val rendered = images.map(i => {
+            val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
+            tag
+        })
+        Option(rendered.mkString("\n"))
     }
 }
 
