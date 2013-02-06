@@ -19,11 +19,13 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
     val client = node.client()
 
     Futures.future {
+
         logger.info("Spawned thread for indexing")
         val objs = objectDao.findAll()
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
         logger.info("Indexing finished", objs.size)
+
     }
 
     def index(obj: Obj) {

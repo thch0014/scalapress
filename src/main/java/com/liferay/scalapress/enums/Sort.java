@@ -4,7 +4,12 @@ public enum Sort {
     Name,
     Newest,
     Oldest,
+    // lowest price first
     Price,
+    // highest price first
     PriceHigh,
-    Distance
+    // sort from the location set by the search
+    Distance,
+    // sort all objects randomly
+    Random
 }
