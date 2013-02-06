@@ -58,15 +58,15 @@ class EcreatorDatabaseUpgrader extends Logging {
 
 
         conn.prepareStatement("ALTER TABLE blocks_galleries MODIFY gallery bigint(10) null").execute()
-        conn.prepareStatement("UPDATE blocks_galleries set gallery=null where gallery=0").execute()
+        conn.prepareStatement("UPDATE blocks_galleries set gallery=null WHERE gallery=0").execute()
 
         conn.prepareStatement("ALTER TABLE categories modify parent bigint(10) null").execute()
-        conn.prepareStatement("UPDATE categories set parent=null where parent=0").execute()
+        conn.prepareStatement("UPDATE categories set parent=null WHERE parent=0").execute()
 
         <!-- update image assocations -->
         for (col <- Array("imageBox", "item", "gallery", "category")) {
             conn.prepareStatement("alter table images MODIFY " + col + " bigint(10) null").execute()
-            conn.prepareStatement("update images set " + col + "=null where " + col + "=0").execute()
+            conn.prepareStatement("update images set " + col + "=null WHERE " + col + "=0").execute()
         }
 
         k = 1
@@ -83,15 +83,15 @@ class EcreatorDatabaseUpgrader extends Logging {
 
             Array("ownerItemtype", "ownercategory", "ownerItem").foreach(col => {
                 conn.prepareStatement("alter table " + block + " modify " + col + " bigint(10) null").execute()
-                conn.prepareStatement("update " + block + " set " + col + "=null where " + col + "=0").execute()
+                conn.prepareStatement("update " + block + " set " + col + "=null WHERE " + col + "=0").execute()
             })
         })
 
         conn.prepareStatement("alter table blocks_subcategories modify markup bigint(10) null").execute()
-        conn.prepareStatement("update blocks_subcategories set markup=null where markup=0").execute()
+        conn.prepareStatement("update blocks_subcategories set markup=null WHERE markup=0").execute()
 
         conn.prepareStatement("alter table blocks_items modify listmarkup bigint(10) null").execute()
-        conn.prepareStatement("update blocks_items set listmarkup=null where listmarkup=0").execute()
+        conn.prepareStatement("update blocks_items set listmarkup=null WHERE listmarkup=0").execute()
 
         // update markup fields to text
         conn.prepareStatement("ALTER TABLE markup MODIFY `body` text null").execute()
@@ -106,6 +106,13 @@ class EcreatorDatabaseUpgrader extends Logging {
           .prepareStatement(
             "update users set passwordhash='09b792e75d96dbcb3d49f5af313e9fa1' where passwordhash is null")
           .execute()
+
+        // attributes
+        conn.prepareStatement("ALTER TABLE attributes_values MODIFY item bigint(10) null").execute()
+        conn.prepareStatement("UPDATE attributes_values SET item=null WHERE item=0").execute()
+
+        conn.prepareStatement("ALTER TABLE attributes MODIFY itemtype bigint(10) null").execute()
+        conn.prepareStatement("UPDATE attributes SET itemtype=null WHERE itemtype=0").execute()
 
         conn.close()
     }

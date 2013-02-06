@@ -4,7 +4,6 @@ import dao.ObjectDao
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import service.asset.AmazonS3AssetStore
 import org.springframework.context.annotation.{Configuration, Bean}
-import service.search.ElasticSearchService
 
 /** @author Stephen Samuel */
 @Configuration
@@ -18,5 +17,4 @@ class ScalaPressConfiguration {
     @Autowired var objectDao: ObjectDao = _
 
     @Bean def assetStore = new AmazonS3AssetStore(cdn, secretKey, accessKey, bucketName)
-    @Bean def elasticsearch = new ElasticSearchService(objectDao)
 }

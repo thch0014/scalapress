@@ -3,14 +3,16 @@ package com.liferay.scalapress.dao
 import org.springframework.stereotype.Component
 import org.hibernate.criterion.Restrictions
 import scala.collection.JavaConverters._
-import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.domain.{SavedSearch, Obj}
 import org.hibernate.FetchMode
 import com.googlecode.genericdao.search.Search
+import com.liferay.scalapress.Logging
+import org.springframework.transaction.annotation.Transactional
 
 /** @author Stephen Samuel */
 
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
+
     def findByFolder(folderId: Long): Array[Obj]
     def search(query: String): Array[Obj]
     def typeAhead(query: String): Array[String]
@@ -20,9 +22,8 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
 
 @Component
 @Transactional
-class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao {
+class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
 
-    @Transactional
     def findByType(id: Long): List[Obj] = {
         getSession
           .createCriteria(classOf[Obj])
@@ -35,7 +36,6 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao {
           .toList
     }
 
-    @Transactional
     override def typeAhead(query: String): Array[String] = {
         getSession
           .createSQLQuery("select name from items where name like ?")
@@ -47,7 +47,6 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao {
           .toArray
     }
 
-    @Transactional
     override def search(query: String): Array[Obj] = {
         getSession
           .createCriteria(classOf[Obj])
@@ -59,7 +58,6 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao {
           .toArray
     }
 
-    @Transactional
     override def findByFolder(folderId: Long): Array[Obj] = {
         getSession
           .createSQLQuery("select i.* from items i join categories_items ci on i.id=ci.item where ci.category=?")
@@ -93,7 +91,6 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao {
     //            (Object[]) CommentStatus.visibleStatuses()) );
     //    }
 
-    @Transactional
     override def search(ss: SavedSearch): List[Obj] = {
 
         val search = new Search(classOf[Obj])

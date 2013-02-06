@@ -4,7 +4,7 @@ import javax.persistence._
 import reflect.BeanProperty
 import org.hibernate.validator.constraints.NotEmpty
 import java.util
-import com.liferay.scalapress.domain.{ObjectType}
+import com.liferay.scalapress.domain.ObjectType
 import scala.Array
 import com.liferay.scalapress.enums.AttributeType
 
@@ -35,6 +35,9 @@ class Attribute {
     @BeanProperty var description: String = _
 
     @BeanProperty var section: String = _
+
+    @Column(name = "facet", nullable = false)
+    @BeanProperty var facet: Boolean = _
 
     @Column(name = "displayable", nullable = false)
     @BeanProperty var public: Boolean = _

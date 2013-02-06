@@ -20,7 +20,7 @@ class Obj {
     @Column(columnDefinition = "TEXT")
     @BeanProperty var email: String = _
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name = "object_labels",
         joinColumns = Array(new JoinColumn(name = "object_id"))

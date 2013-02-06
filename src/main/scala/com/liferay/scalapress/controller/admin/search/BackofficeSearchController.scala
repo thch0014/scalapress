@@ -3,7 +3,7 @@ package com.liferay.scalapress.controller.admin.search
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.search.ElasticSearchService
+import com.liferay.scalapress.service.search.SearchService
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
@@ -14,7 +14,7 @@ import com.liferay.scalapress.controller.admin.UrlResolver
 @RequestMapping(Array("backoffice/search"))
 class BackofficeSearchController {
 
-    @Autowired var service: ElasticSearchService = _
+    @Autowired var service: SearchService = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var typeDao: TypeDao = _
 
