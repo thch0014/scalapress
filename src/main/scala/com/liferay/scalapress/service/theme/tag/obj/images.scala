@@ -13,12 +13,15 @@ object ImagesTag extends ScalapressTag with TagBuilder {
         val w = params.get("w").orElse(params.get("width")).getOrElse("120").toInt
         val link = params.get("link")
         val limit = params.get("limit").getOrElse("1").toInt
-        val images = request.obj.flatMap(_.images.asScala).take(limit)
-        val rendered = images.map(i => {
-            val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
-            tag
-        })
-        Option(rendered.mkString("\n"))
+        request.obj match {
+            case None => None
+            case Some(obj) =>
+                val rendered = obj.images.asScala.map(i => {
+                    val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
+                    tag
+                })
+                Option(rendered.mkString("\n"))
+        }
     }
 }
 
