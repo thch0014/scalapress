@@ -3,7 +3,7 @@ package com.liferay.scalapress.widgets
 import javax.persistence.{JoinColumn, JoinTable, CascadeType, FetchType, ManyToMany, Column, GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
 import reflect.BeanProperty
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.domain.{Folder}
+import com.liferay.scalapress.domain.Folder
 import scala.Array
 import com.liferay.scalapress.enums.WidgetContainer
 
@@ -39,6 +39,7 @@ abstract class Widget {
 
     @BeanProperty var location: String = _
 
+    @Column(name = "visible", nullable = false)
     @BeanProperty var visible: Boolean = _
 
     @Column(name = "displayOnAllCategories")
@@ -47,7 +48,9 @@ abstract class Widget {
     @Column(name = "displayOnAllItems")
     @BeanProperty var displayOnAllObjects: Boolean = _
 
+    @Column(name = "displayOnHome", nullable = false)
     @BeanProperty var displayOnHome: Boolean = _
+    @Column(name = "displayOnOthers", nullable = false)
     @BeanProperty var displayOnOthers: Boolean = _
 
     //    @Column(name = "displayOnAllItems")
@@ -56,11 +59,8 @@ abstract class Widget {
     //  @Column(name = "displayOnAllItems")
     //   @BeanProperty var displayOnCheckout: Boolean = _
 
-    @Column(name = "restricted", nullable = false, columnDefinition = "tinyint(1) not null default 0")
+    @Column(name = "restricted", nullable = false)
     @BeanProperty var restricted: Boolean = _
-
-    @Column(name = "migrated", nullable = false, columnDefinition = "tinyint(1) not null default 0")
-    @BeanProperty var migrated: Boolean = _
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "boxes_where",

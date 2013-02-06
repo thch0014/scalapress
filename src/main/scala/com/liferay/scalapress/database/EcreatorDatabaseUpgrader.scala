@@ -25,17 +25,27 @@ class EcreatorDatabaseUpgrader extends Logging {
         })
 
         Array("boxes_custom", "categories_boxes", "boxes_images").foreach(table => {
-            conn.prepareStatement("UPDATE " + table + " SET restricted=`where`,migrated=1 WHERE migrated=0").execute()
+            try {
+                conn
+                  .prepareStatement("UPDATE " + table + " SET restricted=1, `where`=0 where `where`=1")
+                  .execute()
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
         })
 
         val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
         while (rs.next) {
-            val id = rs.getLong(1)
-            val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
-            stmt.setLong(1, id)
-            stmt.setString(2, "Featured")
-            stmt.execute()
-            stmt.close()
+            try {
+                val id = rs.getLong(1)
+                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
+                stmt.setLong(1, id)
+                stmt.setString(2, "Featured")
+                stmt.execute()
+                stmt.close()
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
         }
 
         for (col <- Array("item", "category")) {
@@ -84,9 +94,9 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("update blocks_items set listmarkup=null where listmarkup=0").execute()
 
         // update markup fields to text
-        conn.prepareStatement("ALTER TABLE markup MODIFY body text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY start text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY end text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY `body` text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY `start` text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY `end` text null").execute()
         conn.prepareStatement("ALTER TABLE markup MODIFY `between` text null").execute()
 
         conn.prepareStatement("ALTER TABLE templates MODIFY header text null").execute()
