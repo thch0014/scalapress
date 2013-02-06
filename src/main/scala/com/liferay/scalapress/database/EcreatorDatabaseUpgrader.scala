@@ -87,7 +87,7 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("ALTER TABLE markup MODIFY body text null").execute()
         conn.prepareStatement("ALTER TABLE markup MODIFY start text null").execute()
         conn.prepareStatement("ALTER TABLE markup MODIFY end text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY between text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY `between` text null").execute()
 
         conn.prepareStatement("ALTER TABLE templates MODIFY header text null").execute()
         conn.prepareStatement("ALTER TABLE templates MODIFY footer text null").execute()

@@ -39,6 +39,7 @@ class ObjectListSection extends Section {
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
             case Sort.Oldest => live.sortBy(_.id)
+            case _ => live
         }
 
         sorted.size match {
