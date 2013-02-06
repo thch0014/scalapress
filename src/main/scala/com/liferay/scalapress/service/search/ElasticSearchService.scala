@@ -2,7 +2,6 @@ package com.liferay.scalapress.service.search
 
 import com.liferay.scalapress.domain.Obj
 import org.elasticsearch.common.xcontent.XContentFactory
-import scala.collection.JavaConverters._
 import org.elasticsearch.search.facet.FacetBuilders
 import org.elasticsearch.action.search.{SearchResponse, SearchType}
 import org.elasticsearch.index.query.QueryBuilders
@@ -63,9 +62,9 @@ class ElasticSearchService(objectDao: ObjectDao) extends Logging {
           .field("status", obj.status)
           .field("labels", obj.labels)
 
-        obj.attributeValues.asScala.foreach(av => {
-            json = json.field(av.attribute.id.toString, av.value)
-        })
+        //   obj.attributeValues.asScala.foreach(av => {
+        //       json = json.field(av.attribute.id.toString, av.value)
+        //   })
 
         json.endObject()
     }
