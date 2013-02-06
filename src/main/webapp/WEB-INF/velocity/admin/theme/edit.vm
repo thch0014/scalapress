@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit Theme</h1>
+<h3>Edit Theme</h3>
 
 <form class="form-horizontal" method="POST">
 
@@ -21,19 +21,18 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Header</label>
-
-        <div class="controls">
-            #springFormTextarea("theme.header", "rows='16' class='input-block-level '")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Footer</label>
-
-        <div class="controls">
-            #springFormTextarea("theme.footer", "rows='16' class='input-block-level '")
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Header</a></li>
+            <li><a href="#tab2" data-toggle="tab">Footer</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+                #springFormTextarea("theme.header", "rows='24' class='input-block-level '")
+            </div>
+            <div class="tab-pane" id="tab2">
+                #springFormTextarea("theme.footer", "rows='24' class='input-block-level '")
+            </div>
         </div>
     </div>
 

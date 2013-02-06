@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Edit User</h1>
+<h1>Edit Form</h1>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,31 +9,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("user.name")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Active</label>
-
-        <div class="controls">
-            #springFormCheckbox("user.active")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Username</label>
-
-        <div class="controls">
-            #springFormInput("user.username")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Change Password</label>
-
-        <div class="controls">
-            #springFormInput("user.changePassword")
+            #springFormInput("form.name")
         </div>
     </div>
 
@@ -43,5 +19,28 @@
     </div>
 
 </form>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th></th>
+    </tr>
+    #foreach ($field in $form.fields)
+        <tr>
+            <td>$field.id</td>
+            <td>$field.name</td>
+            <td>$field.fieldType</td>
+            <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
+            <td>
+                <a href="" role="button" class="btn btn-mini"> <i class="icon-pencil"></i></a>
+                <a href="" role="button" class="btn btn-danger btn-mini"> <i class="icon-trash icon-white"></i></a></td>
+        </tr>
+    #end
+</table>
+
 
 #parse("/admin/footer.vm")

@@ -83,6 +83,15 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("alter table blocks_items modify listmarkup bigint(10) null").execute()
         conn.prepareStatement("update blocks_items set listmarkup=null where listmarkup=0").execute()
 
+        // update markup fields to text
+        conn.prepareStatement("ALTER TABLE markup MODIFY body text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY start text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY end text null").execute()
+        conn.prepareStatement("ALTER TABLE markup MODIFY between text null").execute()
+
+        conn.prepareStatement("ALTER TABLE templates MODIFY header text null").execute()
+        conn.prepareStatement("ALTER TABLE templates MODIFY footer text null").execute()
+
         conn.close()
     }
 }

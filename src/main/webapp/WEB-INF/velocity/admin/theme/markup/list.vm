@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h1>Markup</h1>
+<h3>Markup</h3>
 
 
 <table class="table">
@@ -13,7 +13,7 @@
     #foreach ($m in $markups)
         <tr>
             <td>$m.id</td>
-            <td>$m.name</td>
+            <td>$!m.name</td>
             <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
