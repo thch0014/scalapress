@@ -5,7 +5,8 @@ import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 /** @author Stephen Samuel */
 object TagRenderer extends Logging {
 
-    val deprecated = Array("comparison_check",
+    val deprecated = Array(
+        "comparison_check",
         "distance",
         "attributes_summary_span",
         "location",
@@ -14,15 +15,30 @@ object TagRenderer extends Logging {
         "search_end",
         "submit",
         "alternatives",
-        "gallery_image", "sitemap", "printer_friendly")
+        "gallery_image",
+        "sitemap",
+        "printer_friendly",
+        "pricing",
+        "pricing_sell",
+        "pricing_rrp",
+        "pricing_rrp_discount",
+        "stock",
+        "item",
+        "attribute",
+        "ordering_qty",
+        "ordering_buy")
 
     def erase(text: String) = {
         require(text != null)
         deprecated.foldLeft(text)((b, a) => b.replaceAll(regex(a), ""))
     }
 
-    def parseQueryString(string: String) = string.split("&").map(arg => arg.split("=")).filter(_.size == 2)
-      .map(arg => (arg(0), arg(1))).toMap
+    def parseQueryString(string: String) =
+        string.split("&")
+          .map(arg => arg.split("="))
+          .filter(_.size == 2)
+          .map(arg => (arg(0), arg(1)))
+          .toMap
 
     def regex(tag: String) = "\\[" + tag + "(\\?.*?)?\\]"
 
@@ -36,8 +52,6 @@ object TagRenderer extends Logging {
 
                     val tagname = a._1
                     val tag = a._2
-
-                    //       logger.debug("tagname " + tagname + " tag + " + tag)
 
                     regex(tagname).r.replaceAllIn(b, m => {
                         require(b != null)
