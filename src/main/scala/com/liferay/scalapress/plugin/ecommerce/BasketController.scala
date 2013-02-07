@@ -1,33 +1,39 @@
-package com.liferay.scalapress.controller.web.ecommerce
+package com.liferay.scalapress.plugin.ecommerce
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.controller.web.{ScalapressConstants, ScalaPressPage}
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.theme.ThemeService
+import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.dao.ecommerce.BasketDao
 import com.liferay.scalapress.domain.ecommerce.{BasketLine, Basket}
-import com.liferay.scalapress.dao.ObjectDao
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.dao.ObjectDao
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("basket"))
 class BasketController {
 
-    @Autowired var basketDao: BasketDao = _
     @Autowired var objectDao: ObjectDao = _
+    @Autowired var basketDao: BasketDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
+    @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @RequestMapping
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
+
+        val sreq = ScalapressRequest(req)
         val theme = themeService.default
         val page = ScalaPressPage(theme, req)
-        val basket = basketDao.find(req.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String])
-        page.body(BasketRenderer.render(basket))
+        val markup = shoppingPluginDao.get.basketMarkup
+
+        page.body("<h1>Your Shopping Bag</h1>")
+        if (markup != null)
+            page.body(MarkupRenderer.render(markup, sreq, context))
         page
     }
 

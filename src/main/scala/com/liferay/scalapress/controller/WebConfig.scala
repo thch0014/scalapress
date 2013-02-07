@@ -15,6 +15,8 @@ import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
+import com.liferay.scalapress.plugin.ecommerce.BasketInterceptor
+import com.liferay.scalapress.dao.ecommerce.BasketDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -25,6 +27,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var scalapressContext: ScalapressContext = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var typeDao: TypeDao = _
+    @Autowired var basketDao: BasketDao = _
     @Autowired var markupDao: MarkupDao = _
 
     override def addFormatters(registry: FormatterRegistry) {
@@ -48,6 +51,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao))
+        registry.addInterceptor(new BasketInterceptor(basketDao))
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {

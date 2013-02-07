@@ -29,7 +29,7 @@ class SearchController extends Logging {
     @RequestMapping
     def search(req: HttpServletRequest,
                @RequestParam("q") q: String,
-               @RequestParam(value = "type", required = false) t: String) = {
+               @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req)
         val response = service.search(q, 50)

@@ -48,7 +48,7 @@
     #foreach ($a in $type.attributes)
         <tr>
             <td>$a.id</td>
-            <td>$a.section</td>
+            <td>$!a.section</td>
             <td>$a.name</td>
             <td>$a.attributeType</td>
             <td>

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.web.ecommerce
+package com.liferay.scalapress.plugin.ecommerce
 
 import com.liferay.scalapress.domain.ecommerce.Basket
 
