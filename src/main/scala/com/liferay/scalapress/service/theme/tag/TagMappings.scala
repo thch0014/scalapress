@@ -34,6 +34,7 @@ object TagMappings {
         "url" -> LinkTag,
         "item_url" -> LinkTag,
         "quicksearch" -> QuickSearchTag,
+        "search_keywords" -> QuickSearchTag,
         "meta_title" -> TitleTagTag,
         "meta_keywords" -> KeywordsTagTag,
         "meta_description" -> DescriptionTagTag,
