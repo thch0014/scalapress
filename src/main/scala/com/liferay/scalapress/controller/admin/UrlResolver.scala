@@ -7,6 +7,7 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.domain.attr.Attribute
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.plugin.form.{Submission, Form}
+import com.liferay.scalapress.plugin.ecommerce.domain.DeliveryOption
 
 /** @author Stephen Samuel */
 
@@ -23,6 +24,9 @@ object UrlResolver {
     def submissions = "/backoffice/submission"
     def forms = "/backoffice/form"
     def editForm(form: Form) = "/backoffice/form/" + form.id
+
+    def deliveryOptions = "/backoffice/delivery"
+    def editDeliveryOption(o: DeliveryOption) = "/backoffice/delivery/" + o.id
 
     val dashboard: String = "/backoffice"
 

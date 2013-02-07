@@ -20,6 +20,7 @@ object TagRenderer extends Logging {
         "sitemap",
         "printer_friendly",
         "attribute",
+        "member",
         "ordering_qty",
         "ordering_buy")
 

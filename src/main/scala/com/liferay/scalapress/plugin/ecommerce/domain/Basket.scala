@@ -4,7 +4,6 @@ import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMa
 import reflect.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.ecommerce.Address
 
 /** @author Stephen Samuel */
 @Entity
@@ -24,12 +23,8 @@ class Basket {
     @BeanProperty var deliveryAddress: Address = _
 
     @ManyToOne
-    @JoinColumn(name = "billing_address", nullable = true)
-    @BeanProperty var billingAddress: Address = _
-
-    //   @ManyToOne
-    //   @JoinColumn(name = "account", nullable = true)
-    //   @BeanProperty var account: Object = _
+    @JoinColumn(name = "delivery_address", nullable = true)
+    @BeanProperty var deliveryOption: DeliveryOption = _
 
     def total: Int = {
         var total = 0
@@ -38,27 +33,5 @@ class Basket {
         }
         total
     }
-
-    //    @BeanProperty var card: Card = _
-    //
-    //    @BeanProperty var deliveryOption: DeliveryOption = _
-    //
-    //    @BeanProperty var customerInstructions: String = _
-    //
-    //    @BeanProperty var lastAccessTime: Long = _
-    //
-    //    @BeanProperty var paymentType: PaymentType = _
-    //
-    //    @BeanProperty var customerReference: String = _
-    //
-    //    @BeanProperty var vatable: Boolean = _
-    //
-    //    @BeanProperty var account: Item = _
-    //
-    //    @BeanProperty var name: String = _
-    //
-    //    @BeanProperty var email: String = _
-    //
-    //    @BeanProperty var telephone1: String = _
 
 }

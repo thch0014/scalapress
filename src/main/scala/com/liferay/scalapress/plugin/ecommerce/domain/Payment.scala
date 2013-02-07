@@ -1,7 +1,7 @@
-package com.liferay.scalapress.domain.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Column, Table, Entity}
-import com.liferay.scalapress.domain.{Obj}
+import com.liferay.scalapress.domain.Obj
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.PaymentType
 

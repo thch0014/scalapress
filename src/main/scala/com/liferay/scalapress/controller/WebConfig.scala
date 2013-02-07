@@ -15,7 +15,7 @@ import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.{StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
-import com.liferay.scalapress.dao.ecommerce.BasketDao
+import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

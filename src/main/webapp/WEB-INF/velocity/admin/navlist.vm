@@ -13,6 +13,7 @@
 
 <ul class="nav nav-tabs nav-stacked">
     <li><a href=/backoffice/type><i class="icon-font"></i> Object Types</a></li>
+    <li><a href=/backoffice/delivery/><i class="icon-desktop"></i> Delivery Options</a></li>
     <li><a href=/backoffice/widget/><i class="icon-asterisk"></i> Widgets</a></li>
     <li><a href=/backoffice/theme/><i class="icon-desktop"></i> Themes</a></li>
     <li><a href=/backoffice/user><i class="icon-user"></i> Users</a></li>

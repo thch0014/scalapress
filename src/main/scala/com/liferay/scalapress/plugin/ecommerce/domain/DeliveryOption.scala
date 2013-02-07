@@ -14,17 +14,17 @@ class DeliveryOption {
 
     @BeanProperty var name: String = _
 
-    @BeanProperty var location: String = _
-
-    @BeanProperty var saturdayDelivery: Boolean = _
-
     @Column(name = "flatCharge")
     @BeanProperty var charge: Int = _
+
     def chargeInc = charge + charge * vatRate
 
     // qualifying amount values
-    @BeanProperty var startPrice: Int = _
-    @BeanProperty var endPrice: Int = _
+    @Column(name = "startPrice")
+    @BeanProperty var minPrice: Int = _
+
+    @Column(name = "endPrice")
+    @BeanProperty var maxPrice: Int = _
 
     @BeanProperty var vatRate: Double = _
 
@@ -33,4 +33,6 @@ class DeliveryOption {
 
     @ElementCollection
     @BeanProperty var countries: java.util.Set[String] = _
+
+    @BeanProperty var saturdayDelivery: Boolean = _
 }

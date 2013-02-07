@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce.controller
+package com.liferay.scalapress.plugin.ecommerce.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
