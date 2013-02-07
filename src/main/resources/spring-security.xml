@@ -11,8 +11,7 @@
         <security:form-login login-page="/backlogin"/>
     </security:http>
 
-
-    <security:http auto-config="true" access-denied-page="/error/noaccess" use-expressions="true">
+    <security:http auto-config="true" access-denied-page="/error/noaccess">
         <security:intercept-url pattern="/checkout" access="ROLE_USER"/>
         <security:form-login login-page="/login"/>
     </security:http>

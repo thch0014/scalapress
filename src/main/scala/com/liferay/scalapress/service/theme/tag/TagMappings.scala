@@ -8,7 +8,7 @@ import user.UserStatusTag
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
 import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
 import com.liferay.scalapress.plugin.ecommerce.{BasketTotalTag, BasketLinkTag, AddToBasketTag}
-import com.liferay.scalapress.plugin.account.tag.RegisterTag
+import com.liferay.scalapress.plugin.account.tag.{LoginEmailTag, LoginPasswordTag, RegisterTag}
 
 /** @author Stephen Samuel */
 object TagMappings {
@@ -66,6 +66,9 @@ object TagMappings {
         "date_created" -> DateCreatedTag,
         "breadcrumbs" -> BreadcrumbsTag,
         "breadcrumb" -> BreadcrumbsTag,
+        "login_username" -> LoginEmailTag,
+        "login_email" -> LoginEmailTag,
+        "login_password" -> LoginPasswordTag,
         "comp_name" -> SiteNameTag,
         "comp_vat" -> SiteVatTag,
         "comp_number" -> SiteCompanyNumberTag,
