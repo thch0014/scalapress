@@ -63,14 +63,12 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "account")
           .addFilterNotEqual("objectType.name", "Accounts")
           .addFilterNotEqual("objectType.name", "accounts")
-          .setMaxResults(2000))
+          .setMaxResults(10))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
 
-        val folders = folderDao.findAll()
-        logger.info("Indexing {} folders", folders.size)
-        objs.foreach(index(_))
+
 
         logger.info("Indexing finished")
     }

@@ -1,12 +1,9 @@
 package com.liferay.scalapress.controller.web.image
 
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation._
 import com.liferay.scalapress.service.image.ImageService
 import org.springframework.beans.factory.annotation.{Value, Autowired}
-import org.springframework.web.bind.annotation.ResponseBody
 import javax.imageio.ImageIO
-import org.springframework.web.bind.annotation.RequestParam
 import java.io.ByteArrayOutputStream
 import net.sf.ehcache.CacheManager
 import net.sf.ehcache.Element
@@ -15,7 +12,9 @@ import org.apache.commons.io.IOUtils
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
-import com.liferay.scalapress.service.asset.{Asset, AssetStore}
+import com.liferay.scalapress.service.asset.AssetStore
+import com.liferay.scalapress.service.asset.Asset
+import scala.Some
 
 /**
  * some documentation about this class
@@ -36,6 +35,11 @@ class ImageController extends Logging {
 
     @Value("${ecreator.migration.domain}") var migrationDomain: String = _
 
+    @ExceptionHandler(Array(classOf[RuntimeException]))
+    def handleException1(e: RuntimeException, resp: HttpServletResponse) {
+        resp.setStatus(404)
+    }
+
     @ResponseBody
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
     def imageResized(@PathVariable("filename") filename: String, @RequestParam("width") width: Int,
@@ -43,16 +47,18 @@ class ImageController extends Logging {
 
         Option(cache.get(CacheElement(filename, width, height))) match {
             case None => {
+                imageProvider.get(filename) match {
+                    case None => throw new RuntimeException
+                    case Some(in) =>
+                        val image = ImageIO.read(in)
+                        val resize = imageService.resize(image, width, height)
+                        val ba = new ByteArrayOutputStream()
+                        ImageIO.write(resize, "PNG", ba)
+                        val array = ba.toByteArray
 
-                val in = imageProvider.get(filename)
-                val image = ImageIO.read(in.get)
-                val resize = imageService.resize(image, width, height)
-                val ba = new ByteArrayOutputStream()
-                ImageIO.write(resize, "PNG", ba)
-                val array = ba.toByteArray
-
-                cache.put(new Element(CacheElement(filename, width, height), array))
-                array
+                        cache.put(new Element(CacheElement(filename, width, height), array))
+                        array
+                }
             }
             case Some(e) => e.getValue.asInstanceOf[Array[Byte]]
         }

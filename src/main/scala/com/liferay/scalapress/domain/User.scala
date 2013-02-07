@@ -7,7 +7,7 @@ import reflect.BeanProperty
 /** @author Stephen Samuel */
 @Table(name = "users")
 @Entity
-class User {
+class User extends java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -15,17 +15,18 @@ import actors.Futures
 
 /** @author Stephen Samuel */
 @Component
-object EcreatorImageMigrator extends Logging {
+class EcreatorImageMigrator extends Logging {
 
     @Autowired var folderDao: FolderDao = _
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var imageDao: ImageDao = _
+    @Autowired var store: AssetStore = _
 
     private def migrateImage(domain: String, file: String, store: AssetStore) {
         try {
             val normalizedDomain = domain.replace("http://", "")
             val url = "http://" + normalizedDomain + "/images/" + file
-            logger.debug("Downloading url [{}]", url)
+            logger.info("Downloading url [{}]", url)
 
             val ba = IOUtils.toByteArray(new URL(url))
             val key = store.put(file, new ByteArrayInputStream(ba))
@@ -37,28 +38,42 @@ object EcreatorImageMigrator extends Logging {
         }
     }
 
-    def migrateCategories(domain: String, store: AssetStore, executor: ExecutorService) {
-        folderDao.findAll().foreach(arg => {
+    def migrateContent(domain: String, content: String, executor: ExecutorService) {
+        if (content != null) {
+            if (content.contains("1-marquee-logo-grey_blue.jpg")) {
+                println("hello")
+            }
+            val matches = "<img[^>]+src=\"/?images/(.*?)\"".r.findAllIn(content)
+            matches.matchData.map(arg => {
+                logger.info("Found content image {}", arg.group(1))
+                arg.group(1)
+            }).foreach(migrateImage(domain, _, store))
+        }
+    }
+
+    def migrateCategories(domain: String, executor: ExecutorService) {
+        val folders = folderDao.findAll()
+        logger.info("Migrating {} folders", folders.size)
+        folders.foreach(arg => {
+            val sections = arg.sections.asScala
+            logger.info("{} sections", sections.size)
             executor.submit(new Runnable() {
                 def run() {
-                    arg.sections.asScala
+                    sections
                       .filter(_.isInstanceOf[FolderContentSection])
                       .map(_.asInstanceOf[FolderContentSection])
-                      .map(_.getContent)
-                      .foreach(content => {
-                        val matches = "<img[^>]*src=\"images/(.*?)\"".r.findAllIn(content)
-                        matches.matchData.map(arg => {
-                            logger.debug("Found general image {}", arg.group(1))
-                            arg.group(1)
-                        }).foreach(migrateImage(domain, _, store))
-                    })
+                      .foreach(s => migrateContent(domain, s.content, executor))
+                    Option(arg.header).foreach(content => migrateContent(domain, content, executor))
+                    Option(arg.footer).foreach(content => migrateContent(domain, content, executor))
                 }
             })
         })
     }
 
-    def migrateImages(domain: String, store: AssetStore, executor: ExecutorService) {
-        imageDao.findAll().filter(_.getFilename != null).foreach(arg => {
+    def migrateImages(domain: String, executor: ExecutorService) {
+        val images = imageDao.findAll()
+        logger.info("Migrating {} images", images.size)
+        images.filter(_.getFilename != null).foreach(arg => {
             executor.submit(new Runnable() {
                 def run() {
                     migrateImage(domain, arg.getFilename, store)
@@ -67,9 +82,10 @@ object EcreatorImageMigrator extends Logging {
         })
     }
 
-    def migrateSideboxes(domain: String, store: AssetStore, executor: ExecutorService) {
-        widgetDao.findAll()
-          .filter(_.isInstanceOf[FolderContentSection])
+    def migrateSideboxes(domain: String, executor: ExecutorService) {
+        val widgets = widgetDao.findAll()
+        logger.info("Migrating {} widgets", widgets.size)
+        widgets.filter(_.isInstanceOf[FolderContentSection])
           .map(_.asInstanceOf[FolderContentSection])
           .foreach(arg => {
             executor.submit(new Runnable() {
@@ -77,7 +93,7 @@ object EcreatorImageMigrator extends Logging {
                     val content = arg.getContent
                     val matches = "<img[^>]*src=\"images/(.*?)\"".r.findAllIn(content)
                     matches.matchData.map(arg => {
-                        logger.debug("Found sidebox image {}", arg.group(1))
+                        logger.info("Found sidebox image {}", arg.group(1))
                         arg.group(1)
                     }).foreach(migrateImage(domain, _, store))
                 }
@@ -85,23 +101,21 @@ object EcreatorImageMigrator extends Logging {
         })
     }
 
-    def migrate(domain: String, assetStore: AssetStore) {
+    def migrate(domain: String) {
         require(domain != null)
-        require(assetStore != null)
         logger.info("Starting migration on {}", domain)
 
         val executor = Executors.newFixedThreadPool(8)
         logger.info("Created 8 thread pool for migrating images")
 
-
-        migrateImages(domain, assetStore, executor)
-        migrateSideboxes(domain, assetStore, executor)
-        migrateCategories(domain, assetStore, executor)
+        migrateImages(domain, executor)
+        migrateSideboxes(domain, executor)
+        migrateCategories(domain, executor)
 
         Futures.future {
             executor.shutdown()
             executor.awaitTermination(1, TimeUnit.HOURS)
-            logger.info("Migration completed")
+            logger.info("Migration completed, asset store contains {} objects", store.count)
         }
     }
 }

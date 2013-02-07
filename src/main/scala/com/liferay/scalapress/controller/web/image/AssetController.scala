@@ -31,6 +31,10 @@ class AssetController {
     private def contentType(filename: String) = FilenameUtils.getExtension(filename) match {
         case "css" => "text/css"
         case "js" => "text/javascript"
+        case "gif" => "image/gif"
+        case "jpg" => "image/jpg"
+        case "jpeg" => "image/jpeg"
+        case "png" => "image/png"
         case _ => URLConnection.guessContentTypeFromName(filename)
     }
 }

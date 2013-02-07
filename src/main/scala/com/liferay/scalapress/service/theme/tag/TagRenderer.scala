@@ -16,6 +16,7 @@ object TagRenderer extends Logging {
         "submit",
         "alternatives",
         "gallery_image",
+        "search_begin",
         "sitemap",
         "printer_friendly",
         "pricing",
