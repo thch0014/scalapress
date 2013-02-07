@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/widget/{id}"))
-class WidgetEditController {
+class WidgetEditController extends WidgetContainerMapPopulator {
 
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var context: ScalapressContext = _

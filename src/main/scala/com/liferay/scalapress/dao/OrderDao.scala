@@ -5,7 +5,7 @@ import com.googlecode.genericdao.dao.hibernate.HibernateBaseDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.hibernate.SessionFactory
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.domain.ecommerce.Order
+import com.liferay.scalapress.plugin.ecommerce.domain.Order
 
 /** @author Stephen Samuel */
 trait OrderDao {

@@ -1,9 +1,9 @@
 package com.liferay.scalapress
 
 import controller.web.ScalapressConstants
-import domain.ecommerce.Basket
 import domain.{Attachment, Folder, Obj}
 import javax.servlet.http.HttpServletRequest
+import plugin.ecommerce.domain.Basket
 
 /** @author Stephen Samuel */
 class ScalapressRequest(val request: HttpServletRequest) {

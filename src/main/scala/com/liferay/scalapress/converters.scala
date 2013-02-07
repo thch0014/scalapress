@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller
+package com.liferay.scalapress
 
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 import org.springframework.core.convert.converter.Converter

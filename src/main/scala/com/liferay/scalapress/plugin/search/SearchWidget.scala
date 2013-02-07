@@ -1,4 +1,4 @@
-package com.liferay.scalapress.widgets
+package com.liferay.scalapress.plugin.search
 
 /** @author Stephen Samuel
   *

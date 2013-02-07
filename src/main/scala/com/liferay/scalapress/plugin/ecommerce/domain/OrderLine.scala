@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag.ecommerce
+package com.liferay.scalapress.plugin.ecommerce
 
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
@@ -42,3 +42,10 @@ object AddToBasketTag extends ScalapressTag with TagBuilder {
     }
 }
 
+object BasketLinesTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = None
+
+    override def tags = Array("basket_lines")
+}

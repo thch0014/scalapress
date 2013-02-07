@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.dao.ecommerce.BasketDao
-import com.liferay.scalapress.domain.ecommerce.{BasketLine, Basket}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.dao.ObjectDao
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.liferay.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 
 /** @author Stephen Samuel */
 @Controller

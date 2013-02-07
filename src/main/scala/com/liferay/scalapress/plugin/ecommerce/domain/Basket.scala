@@ -1,13 +1,14 @@
-package com.liferay.scalapress.domain.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
 import reflect.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.domain.ecommerce.Address
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "basket")
+@Table(name = "plugin_shopping_basket")
 class Basket {
 
     @Id
@@ -26,6 +27,10 @@ class Basket {
     @JoinColumn(name = "billing_address", nullable = true)
     @BeanProperty var billingAddress: Address = _
 
+    //   @ManyToOne
+    //   @JoinColumn(name = "account", nullable = true)
+    //   @BeanProperty var account: Object = _
+
     def total: Int = {
         var total = 0
         for (line <- lines.asScala) {
@@ -34,7 +39,6 @@ class Basket {
         total
     }
 
-    //
     //    @BeanProperty var card: Card = _
     //
     //    @BeanProperty var deliveryOption: DeliveryOption = _
@@ -56,17 +60,5 @@ class Basket {
     //    @BeanProperty var email: String = _
     //
     //    @BeanProperty var telephone1: String = _
-    //
-    //    @BeanProperty var order: Order = _
-    //
-    //    @BeanProperty var guest: Boolean = _
-    //
-    //    @BeanProperty var deliveryVatRate: Double = _
-    //
-    //    @BeanProperty var vatExemptText: String = _
-    //
-    //    @BeanProperty var referrer: String = _
-    //
-    //    @BeanProperty var dispatchType: ShoppingPlugin.DispatchType = _
 
 }

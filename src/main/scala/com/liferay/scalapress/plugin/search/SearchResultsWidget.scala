@@ -1,9 +1,10 @@
-package com.liferay.scalapress.widgets
+package com.liferay.scalapress.plugin.search
 
 import javax.persistence.{JoinColumn, OneToOne}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.SavedSearch
+import com.liferay.scalapress.widgets.Widget
 
 /** @author Stephen Samuel
   *

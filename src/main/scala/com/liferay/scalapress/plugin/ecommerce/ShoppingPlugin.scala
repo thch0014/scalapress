@@ -21,6 +21,9 @@ class ShoppingPlugin {
     @ManyToOne
     @JoinColumn(name = "markup")
     @BeanProperty var basketMarkup: Markup = _
+
+    @BeanProperty var checkoutScripts: String = _
+    @BeanProperty var checkoutConfirmationText: String = _
 }
 
 trait ShoppingPluginDao extends GenericDao[ShoppingPlugin, java.lang.Long] {
@@ -34,7 +37,7 @@ class ShoppingPluginDaoImpl extends GenericDaoImpl[ShoppingPlugin, java.lang.Lon
 }
 
 @Component
-class SearchPluginDaoValidator {
+class ShoppingPluginValidator {
     @Autowired var dao: ShoppingPluginDao = _
     @PostConstruct def ensureOne() {
         if (dao.findAll().size == 0) {

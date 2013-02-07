@@ -1,6 +1,5 @@
 package com.liferay.scalapress.service.theme.tag
 
-import ecommerce.{BasketTotalTag, BasketLinkTag, AddToBasketTag}
 import folder.{FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
@@ -8,6 +7,7 @@ import theme.WidgetsTag
 import user.UserStatusTag
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
 import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
+import com.liferay.scalapress.plugin.ecommerce.{BasketTotalTag, BasketLinkTag, AddToBasketTag}
 
 /** @author Stephen Samuel */
 object TagMappings {
