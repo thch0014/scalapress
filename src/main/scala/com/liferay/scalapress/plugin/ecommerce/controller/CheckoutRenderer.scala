@@ -3,6 +3,13 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 /** @author Stephen Samuel */
 object CheckoutRenderer {
 
+    def renderPaymentOptions =
+        <div class="container">
+            <form>
+                <button type="submit" class="btn btn-primary">Protx</button>
+            </form>
+        </div>
+
     def renderDeliveryAddress =
         <div class="container">
             <form>

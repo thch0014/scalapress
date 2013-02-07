@@ -52,14 +52,14 @@ class CheckoutController {
     }
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET))
+    @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET))
     def showPayment(req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req).withTitle("Checkout - Payment")
         val theme = themeService.default
         val page = ScalaPressPage(theme, req)
 
-        page.body(CheckoutRenderer.renderDeliveryAddress)
+        page.body(CheckoutRenderer.renderPaymentOptions)
         page
     }
 

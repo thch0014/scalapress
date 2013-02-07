@@ -13,13 +13,17 @@
     #foreach ($o in $options)
         <tr>
             <td>$o.id</td>
-            <td>$o.name</td>
-            <td><a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-mini"> <i
-                    class="icon-pencil"></i>
-            </a></td>
+            <td>$!o.name</td>
+            <td>
+                <a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-small">
+                    <i class="icon-pencil"></i></a>
+            </td>
         </tr>
     #end
 </table>
 
+
+<a href="/backoffice/delivery/create" role="button" class="btn btn-small">
+    <i class="icon-plus"></i> Create Delivery Option</a>
 
 #parse("/admin/footer.vm")

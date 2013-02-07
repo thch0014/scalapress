@@ -11,8 +11,6 @@ import scala.collection.JavaConverters._
 class Basket {
 
     @Id
-    @BeanProperty var id: String = _
-
     @BeanProperty var sessionId: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "basket", cascade = Array(CascadeType.ALL))
@@ -23,7 +21,7 @@ class Basket {
     @BeanProperty var deliveryAddress: Address = _
 
     @ManyToOne
-    @JoinColumn(name = "delivery_address", nullable = true)
+    @JoinColumn(name = "delivery_option", nullable = true)
     @BeanProperty var deliveryOption: DeliveryOption = _
 
     def total: Int = {
