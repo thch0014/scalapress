@@ -22,9 +22,9 @@ class EcreatorRedirectFilter extends Filter with Logging {
                 val id = m.group(2)
 
                 val redirect = pageType match {
-                    case "i" => Some("object/" + id)
-                    case "c" => Some("folder/" + id)
-                    case "g" => Some("gallery/" + id)
+                    case "i" => Some("/object/" + id)
+                    case "c" => Some("/folder/" + id)
+                    case "g" => Some("/gallery/" + id)
                     case _ => None
                 }
 
