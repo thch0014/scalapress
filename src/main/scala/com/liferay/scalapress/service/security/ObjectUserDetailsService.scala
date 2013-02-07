@@ -7,8 +7,10 @@ import com.liferay.scalapress.domain.Obj
 import java.util
 import org.springframework.security.core.GrantedAuthority
 import scala.collection.JavaConverters._
+import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
+@Component
 class ObjectUserDetailsService extends UserDetailsService {
 
     @Autowired var objectDao: ObjectDao = _
@@ -27,7 +29,7 @@ class ObjectUserDetails(obj: Obj) extends UserDetails {
     def isAccountNonExpired: Boolean = true
     def getUsername: String = obj.email
     def getPassword: String = obj.passwordHash
-
+    def userId: Long = obj.id
     def getAuthorities: util.Collection[_ <: GrantedAuthority] = List(UserAuthority).asJava
 }
 

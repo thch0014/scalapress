@@ -13,7 +13,8 @@ import com.liferay.scalapress.plugin.ecommerce.domain.DeliveryOption
 
 object UrlResolver {
 
-    val basket = "basket"
+    def checkout = "/checkout"
+    val basket = "/basket"
     def addToBasket(obj: Obj) = "basket/add/" + obj.id
 
     def userEdit(user: User) = "/backoffice/user/" + user.id

@@ -16,7 +16,7 @@ class ScalapressRequest(val request: HttpServletRequest) {
     var folder: Option[Folder] = None
 
     def basket: Option[Basket] = {
-        //        Option(request.getAttribute(ScalapressConstants.SessionIdKey)).map(_.asInstanceOf[String]).map(sessionId => {
+//        Option(request.getAttribute(ScalapressConstants.SessionIdKey)).map(_.asInstanceOf[String]).map(sessionId => {
         //            val basket = basketDao.find(sessionId)
         //            request.setAttribute(ScalapressConstants.BasketKey, basket)
         //        })

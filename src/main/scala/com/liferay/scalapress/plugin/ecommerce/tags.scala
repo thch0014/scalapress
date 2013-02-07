@@ -9,9 +9,11 @@ object BasketLinkTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         val link = UrlResolver.basket
-        val text = params.get("text").getOrElse("basket")
+        val text = params.get("text").getOrElse("Basket")
         Some(buildLink(link, text, params))
     }
+
+    override def tags = Array("basket")
 }
 
 object BasketTotalTag extends ScalapressTag with TagBuilder {
@@ -48,4 +50,15 @@ object BasketLinesTag extends ScalapressTag {
                params: Map[String, String]): Option[String] = None
 
     override def tags = Array("basket_lines")
+}
+
+object CheckoutTag extends ScalapressTag with TagBuilder {
+
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        val link = UrlResolver.checkout
+        val text = params.get("text").getOrElse("Checkout")
+        Some(buildLink(link, text, params))
+    }
+
+    override def tags = Array("checkout")
 }

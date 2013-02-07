@@ -25,7 +25,7 @@ class BasketController {
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @ResponseBody
-    @RequestMapping
+    @RequestMapping(produces = Array("text/html"))
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req).withTitle("Your Shopping Bag")
@@ -38,7 +38,7 @@ class BasketController {
     }
 
     @ResponseBody
-    @RequestMapping(Array("add/{id}"))
+    @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))
     def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
         val obj = objectDao.find(id)
         val line = new BasketLine
@@ -51,7 +51,7 @@ class BasketController {
     }
 
     @ResponseBody
-    @RequestMapping(Array("remove/{id}"))
+    @RequestMapping(value = Array("remove/{id}"), produces = Array("text/html"))
     def remove(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
         basket.lines = basket.lines.asScala.filterNot(_.id == id).asJava
         basketDao.save(basket)

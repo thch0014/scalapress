@@ -22,7 +22,7 @@ class LoginController {
     @Autowired var objectDao: ObjectDao = _
 
     @ResponseBody
-    @RequestMapping(Array("login"), produces = Array("text/html"))
+    @RequestMapping(value = Array("login"), produces = Array("text/html"))
     def login(req: HttpServletRequest): ScalaPressPage = {
 
         val plugin = accountPluginDao.get
