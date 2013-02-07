@@ -11,6 +11,8 @@ object TagRenderer extends Logging {
         "location",
         "favourites",
         "sms",
+        "search_end",
+        "submit",
         "alternatives",
         "gallery_image", "sitemap", "printer_friendly")
 
@@ -35,7 +37,7 @@ object TagRenderer extends Logging {
                     val tagname = a._1
                     val tag = a._2
 
-                    logger.debug("tagname " + tagname + " tag + " + tag)
+                    //       logger.debug("tagname " + tagname + " tag + " + tag)
 
                     regex(tagname).r.replaceAllIn(b, m => {
                         require(b != null)

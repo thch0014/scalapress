@@ -28,4 +28,10 @@ class ObjectType {
     @JoinColumn(name = "listitemmarkup", nullable = true)
     @BeanProperty var objectListMarkup: Markup = _
 
+    def bootIcon = name.toLowerCase match {
+        case "event" | "events" => "icon-calendar"
+        case "job" | "jobs" => "icon-truck"
+        case "product" | "products" => "icon-th-large"
+        case _ => "icon-circle-blank"
+    }
 }

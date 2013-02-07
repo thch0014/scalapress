@@ -44,8 +44,8 @@ class ElasticSearchService extends SearchService with Logging {
 
     val settings = ImmutableSettings.settingsBuilder()
       .put("node.http.enabled", false)
-      .put("index.gateway.type", "none")
-      .put("gateway.type", "none")
+      //  .put("index.gateway.type", "none")
+      //    .put("gateway.type", "none")
       //   .put("index.store.type", "memory")
       .put("path.data", dataDir.getAbsolutePath)
       .put("index.number_of_shards", 1)
@@ -63,7 +63,7 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "account")
           .addFilterNotEqual("objectType.name", "Accounts")
           .addFilterNotEqual("objectType.name", "accounts")
-          .setMaxResults(10))
+          .setMaxResults(2000))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))

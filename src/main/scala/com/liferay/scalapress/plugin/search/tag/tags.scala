@@ -46,7 +46,7 @@ object AttributeSearchTag extends ScalapressTag {
     }
 
     private def options(options: Seq[AttributeOption]) = {
-        options.map(opt => {
+        options.filter(_.value != null).sortBy(_.value).map(opt => {
             <option>
                 {opt.value}
             </option>
