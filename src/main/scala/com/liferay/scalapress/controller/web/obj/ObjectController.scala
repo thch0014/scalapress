@@ -10,7 +10,7 @@ import com.liferay.scalapress.controller.NotFoundException
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.service.theme.ThemeService
+import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 
 /** @author Stephen Samuel */
 @Controller
@@ -34,12 +34,22 @@ class ObjectController extends Logging {
         if (obj.status.toLowerCase == "DELETED" || obj.status.toLowerCase == "DISABLED")
             throw new IllegalStateException()
 
+        val sreq = ScalapressRequest(obj, req)
         val theme = themeService.theme(obj)
-        val page = ScalaPressPage(theme, ScalapressRequest(obj, req))
+        val page = ScalaPressPage(theme, sreq)
+
+        Option(obj.objectType.objectViewMarkup) match {
+            case None =>
+            case Some(m) =>
+                val main = MarkupRenderer.render(obj, m, sreq, context)
+                page.body("<!-- start object markup -->")
+                page.body(main)
+                page.body("<!-- end object markup -->")
+        }
 
         for (section <- obj.objectType.sections.asScala) {
             if (section.visible) {
-                section.render(ScalapressRequest(obj, req), context) match {
+                section.render(sreq, context) match {
                     case None =>
                     case Some(output) =>
                         page.body("\n\n<!-- plugin: " + section.getClass + " -->\n\n")
@@ -47,6 +57,8 @@ class ObjectController extends Logging {
                 }
             }
         }
+
+
 
         page
     }
