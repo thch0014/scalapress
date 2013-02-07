@@ -18,11 +18,18 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
     def typeAhead(query: String): Array[String]
     def findByType(id: Long): List[Obj]
     def search(search: SavedSearch): List[Obj]
+    def byEmail(email: String): Option[Obj]
 }
 
 @Component
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
+
+    override def byEmail(email: String): Option[Obj] = {
+        val search = new Search(classOf[Obj])
+        search.addFilterEqual("email", email)
+        Option(super.searchUnique(search))
+    }
 
     def findByType(id: Long): List[Obj] = {
         getSession

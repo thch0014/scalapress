@@ -27,10 +27,11 @@ class SubfolderSection extends Section {
         default.body = "<li>[category?link=1]</li>"
         default.end = "</ul>"
 
+        val subfolders = folder.subfolders.asScala.filterNot(_.hidden)
 
         val m = Option(markup)
           .orElse(Option(context.markupDao.byName("Default subcategories markup"))).getOrElse(default)
-        val render = MarkupRenderer.renderFolders(folder.subfolders.asScala.toList, default, request, context)
+        val render = MarkupRenderer.renderFolders(subfolders, default, request, context)
         Option(render)
     }
 

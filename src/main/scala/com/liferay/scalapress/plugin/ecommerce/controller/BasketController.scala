@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.controller.web.{ScalapressConstants, ScalaPressPage}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
@@ -24,6 +24,7 @@ class BasketController {
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
+    @ResponseBody
     @RequestMapping
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
 
@@ -31,12 +32,12 @@ class BasketController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, req)
         val markup = shoppingPluginDao.get.basketMarkup
-
         if (markup != null)
             page.body(MarkupRenderer.render(markup, sreq, context))
         page
     }
 
+    @ResponseBody
     @RequestMapping(Array("add/{id}"))
     def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
         val obj = objectDao.find(id)
@@ -49,6 +50,7 @@ class BasketController {
         view(basket, req)
     }
 
+    @ResponseBody
     @RequestMapping(Array("remove/{id}"))
     def remove(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
         basket.lines = basket.lines.asScala.filterNot(_.id == id).asJava

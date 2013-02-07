@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.web.security
+package com.liferay.scalapress.plugin.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,7 +10,4 @@ class LoginController {
 
     @RequestMapping(Array("login"))
     def login = "login"
-
-    @RequestMapping(Array("register"))
-    def register = "register"
 }

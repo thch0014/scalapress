@@ -9,6 +9,8 @@ import javax.persistence._
 import reflect.BeanProperty
 
 /** @author Stephen Samuel */
+@Entity
+@Table(name = "plugins_account")
 class AccountPlugin {
 
     @Id
@@ -16,7 +18,7 @@ class AccountPlugin {
     @BeanProperty var id: Long = _
 
     @ElementCollection
-    @BeanProperty var accountTypes: java.util.List[Long] = new java.util.ArrayList[Long]()
+    @BeanProperty var accounts: java.util.List[java.lang.Long] = new java.util.ArrayList[java.lang.Long]()
 }
 
 trait AccountPluginDao extends GenericDao[AccountPlugin, java.lang.Long] {

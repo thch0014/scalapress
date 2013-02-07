@@ -5,11 +5,19 @@ import org.springframework.validation.Errors
 /** @author Stephen Samuel */
 object RegistrationRenderer {
 
-    def renderChooseAccountType(plugin: AccountPlugin): String = ""
+    def renderChooseAccountType(plugin: AccountPlugin) =
+        <div class="container-fluid">Choose Account Type
+        </div>
 
     def renderRegistrationPage(plugin: AccountPlugin, errors: Errors) = {
-        <div class="container-fluid">
-            <form class="form-horizontal" method="POST">
+        <div class="registration">
+            <form class="form-horizontal registration" method="POST">
+                <div class="control-group">
+                    <label for="email">
+                        Your name
+                    </label>
+                    <input name="name" type="text" placeholder="Your real name"/>
+                </div>
                 <div class="control-group">
                     <label for="email">
                         Email
