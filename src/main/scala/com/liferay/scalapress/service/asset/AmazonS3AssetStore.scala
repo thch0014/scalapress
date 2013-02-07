@@ -70,9 +70,12 @@ class AmazonS3AssetStore(val cdnUrl: String,
     def get(key: String): Option[InputStream] =
         Option(getAmazonS3Client.getObject(bucketName, key)).map(_.getObjectContent)
 
-    def put(key: String, in: InputStream): String = {
-
+    def add(key: String, in: InputStream): String = {
         val normalizedKey = getNormalizedKey(key)
+        put(normalizedKey, in)
+    }
+
+    def put(key: String, in: InputStream): String = {
 
         val array: Array[Byte] = IOUtils.toByteArray(in)
 
@@ -80,12 +83,12 @@ class AmazonS3AssetStore(val cdnUrl: String,
         md.setContentLength(array.length)
         md.setContentType(URLConnection.guessContentTypeFromStream(in))
 
-        val request = new PutObjectRequest(bucketName, normalizedKey, new ByteArrayInputStream(array), md)
+        val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)
         request.setStorageClass(StorageClass.ReducedRedundancy)
 
         getAmazonS3Client.putObject(request)
-        normalizedKey
+        key
     }
 
     private def getNormalizedKey(key: String): String = {

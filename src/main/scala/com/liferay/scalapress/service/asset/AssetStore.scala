@@ -6,6 +6,7 @@ import java.io.InputStream
 trait AssetStore {
 
     def add(input: InputStream): String
+    def add(key: String, input: InputStream): String
     def put(key: String, input: InputStream): String
     def get(key: String): Option[InputStream]
     def delete(key: String)

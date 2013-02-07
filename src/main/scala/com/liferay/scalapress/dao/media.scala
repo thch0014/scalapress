@@ -1,27 +1,19 @@
 package com.liferay.scalapress.dao
 
 import org.springframework.stereotype.Component
-import com.googlecode.genericdao.dao.hibernate.HibernateBaseDAO
-import org.springframework.beans.factory.annotation.Autowired
-import org.hibernate.SessionFactory
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.domain.{Gallery, Image}
 
 /** @author Stephen Samuel */
-trait ImageDao {
+trait ImageDao extends GenericDao[Image, Long] {
     def findForObject(objId: Long): Array[Image]
     def get(id: Long): Image
 }
 
 @Component
 @Transactional
-class ImageDaoImpl extends HibernateBaseDAO with ImageDao {
-
-    @Autowired
-    override def setSessionFactory(sessionFactory: SessionFactory) {
-        super.setSessionFactory(sessionFactory)
-    }
+class ImageDaoImpl extends GenericDaoImpl[Image, Long] with ImageDao {
 
     @Transactional
     override def get(id: Long) = getSession.get(classOf[Image], id).asInstanceOf[Image]
