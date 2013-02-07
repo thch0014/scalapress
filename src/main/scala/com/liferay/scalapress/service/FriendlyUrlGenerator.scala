@@ -25,6 +25,5 @@ object FriendlyUrlGenerator {
           .replaceAll("-$", "")
           .replaceAll("^-", "")
           .toLowerCase
-
     }
 }

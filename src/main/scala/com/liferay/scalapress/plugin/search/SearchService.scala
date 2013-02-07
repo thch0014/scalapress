@@ -2,10 +2,8 @@ package com.liferay.scalapress.plugin.search
 
 import com.liferay.scalapress.domain.{ObjectType, Obj}
 import org.elasticsearch.common.xcontent.XContentFactory
-import org.elasticsearch.action.search.{SearchResponse, SearchType}
-import org.elasticsearch.index.query.{PrefixQueryBuilder, FieldQueryBuilder}
+import org.elasticsearch.action.search.SearchResponse
 import javax.annotation.PreDestroy
-import org.elasticsearch.node.NodeBuilder
 import com.liferay.scalapress.dao.{FolderDao, ObjectDao}
 import com.liferay.scalapress.Logging
 import scala.collection.JavaConverters._
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
-import org.elasticsearch.common.settings.ImmutableSettings
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -34,16 +31,16 @@ class ElasticSearchService extends SearchService with Logging {
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
 
-    val settings = ImmutableSettings.settingsBuilder()
-      .put("node.http.enabled", false)
-      .put("index.gateway.type", "none")
-      .put("gateway.type", "none")
-      .put("index.store.type", "memory")
-      .put("index.number_of_shards", 1)
-      .put("index.number_of_replicas", 0)
-
-    val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
-    val client = node.client()
+    //    val settings = ImmutableSettings.settingsBuilder()
+    //      .put("node.http.enabled", false)
+    //      .put("index.gateway.type", "none")
+    //      .put("gateway.type", "none")
+    //      .put("index.store.type", "memory")
+    //      .put("index.number_of_shards", 1)
+    //      .put("index.number_of_replicas", 0)
+    //
+    //    val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
+    //    val client = node.client()
 
     @Transactional
     def index() {
@@ -90,11 +87,11 @@ class ElasticSearchService extends SearchService with Logging {
 
         try {
 
-            client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(2000)
-            client.prepareIndex(INDEX, obj.objectType.id.toString, obj.id.toString)
-              .setSource(src)
-              .execute()
-              .actionGet(2000)
+            //            client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(2000)
+            //            client.prepareIndex(INDEX, obj.objectType.id.toString, obj.id.toString)
+            //              .setSource(src)
+            //              .execute()
+            //              .actionGet(2000)
 
         } catch {
             case e: Exception => logger.warn(e.getMessage)
@@ -103,50 +100,57 @@ class ElasticSearchService extends SearchService with Logging {
 
     override def prefix(q: String, limit: Int): SearchResponse = {
 
-        client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-          .addField("name")
-          .setQuery(new PrefixQueryBuilder("name", q))
-          .setFrom(0)
-          .setSize(limit)
-          .execute()
-          .actionGet()
+        //        client.prepareSearch(INDEX)
+        //          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+        //          .addField("name")
+        //          .setQuery(new PrefixQueryBuilder("name", q))
+        //          .setFrom(0)
+        //          .setSize(limit)
+        //          .execute()
+        //          .actionGet()
+
+        new SearchResponse()
     }
 
     // search by the given query string and then return the matching doc ids
     override def search(q: String, limit: Int): SearchResponse = {
 
-        client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-          .addField("name")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
-          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
-          .setFrom(0)
-          .setSize(limit)
-          .execute()
-          .actionGet()
+        //        client.prepareSearch(INDEX)
+        //          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+        //          .addField("name")
+        //          .addField("folders")
+        //          .addField("status")
+        //          .addField("labels")
+        //          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
+        //          .setFrom(0)
+        //          .setSize(limit)
+        //          .execute()
+        //          .actionGet()
+
+
+        new SearchResponse()
     }
 
     // search by the given query string and then return the matching doc ids
     override def searchType(q: String, t: ObjectType, limit: Int): SearchResponse = {
 
-        val search = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-          .addField("name")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
-          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
-          .setFrom(0).setSize(limit)
+        //        val search = client.prepareSearch(INDEX)
+        //          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+        //          .addField("name")
+        //          .addField("folders")
+        //          .addField("status")
+        //          .addField("labels")
+        //          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
+        //          .setFrom(0).setSize(limit)
+        //
+        //        //        t.attributes.asScala.foreach(a => {
+        //        //     val facet = FacetBuilders.termsFacet(a.id.toString).field(a.id.toString)
+        //        //       search.addFacet(facet)
+        //        //     })
+        //
+        //        search.execute().actionGet()
 
-        //        t.attributes.asScala.foreach(a => {
-        //     val facet = FacetBuilders.termsFacet(a.id.toString).field(a.id.toString)
-        //       search.addFacet(facet)
-        //     })
-
-        search.execute().actionGet()
+        new SearchResponse()
     }
 
     //    private def source(folder: Folder) = {
@@ -182,7 +186,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     @PreDestroy
     def shutdown() {
-        node.close()
+        //   node.close()
     }
 }
 

@@ -7,9 +7,16 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
+
+// link to a specific folder or the one in the current context
 object FolderTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
-        request.folder.map(f => {
+        val folder = params
+          .get("id")
+          .flatMap(id => Option(context.folderDao.find(id.toLong)))
+          .orElse(request.folder)
+
+        folder.map(f => {
             params.contains("link") match {
                 case true => FriendlyUrlGenerator.friendlyLink(f)
                 case false => f.name
