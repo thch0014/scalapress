@@ -43,7 +43,12 @@ object TagRenderer extends Logging {
                             case Some(query) if query.length > 0 => parseQueryString(m.group(1).drop(1))
                             case _ => Map.empty[String, String]
                         }
-                        tag.render(request, context, params).getOrElse("")
+                        tag.render(request, context, params) match {
+                            case None => ""
+                            case Some(value) =>
+                                if (value == null) ""
+                                else value
+                        }
                     })
                 })
             }

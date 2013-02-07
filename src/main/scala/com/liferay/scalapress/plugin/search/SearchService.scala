@@ -120,8 +120,6 @@ class ElasticSearchService extends SearchService with Logging {
           .setSize(limit)
           .execute()
           .actionGet()
-
-        new SearchResponse()
     }
 
     // search by the given query string and then return the matching doc ids
@@ -138,9 +136,6 @@ class ElasticSearchService extends SearchService with Logging {
           .setSize(limit)
           .execute()
           .actionGet()
-
-
-        new SearchResponse()
     }
 
     // search by the given query string and then return the matching doc ids
@@ -161,8 +156,6 @@ class ElasticSearchService extends SearchService with Logging {
         //     })
 
         search.execute().actionGet()
-
-        new SearchResponse()
     }
 
     private def source(folder: Folder) = {
