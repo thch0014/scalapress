@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.GalleryDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.domain.Gallery
+import com.liferay.scalapress.plugin.gallery.Gallery
 
 /** @author Stephen Samuel */
 @Controller

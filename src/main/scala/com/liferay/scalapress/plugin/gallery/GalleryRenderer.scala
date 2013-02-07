@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.gallery
 
-import com.liferay.scalapress.domain.{Image, Gallery}
+import com.liferay.scalapress.domain.Image
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._

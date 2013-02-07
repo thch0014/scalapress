@@ -1,8 +1,8 @@
 package com.liferay.scalapress.dao
 
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.form.{Form, Submission}
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.plugin.form.{Submission, Form}
 
 /** @author Stephen Samuel */
 trait FormDao extends GenericDao[Form, java.lang.Long]

@@ -27,12 +27,11 @@ class BasketController {
     @RequestMapping
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req)
+        val sreq = ScalapressRequest(req).withTitle("Your Shopping Bag")
         val theme = themeService.default
         val page = ScalaPressPage(theme, req)
         val markup = shoppingPluginDao.get.basketMarkup
 
-        page.body("<h1>Your Shopping Bag</h1>")
         if (markup != null)
             page.body(MarkupRenderer.render(markup, sreq, context))
         page

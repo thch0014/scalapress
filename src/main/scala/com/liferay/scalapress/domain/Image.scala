@@ -3,6 +3,7 @@ package com.liferay.scalapress.domain
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.MediaWidget
+import com.liferay.scalapress.plugin.gallery.Gallery
 
 /** @author Stephen Samuel */
 @Entity

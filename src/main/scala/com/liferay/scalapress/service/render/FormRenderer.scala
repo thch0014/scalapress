@@ -1,11 +1,11 @@
 package com.liferay.scalapress.service.render
 
-import com.liferay.scalapress.domain.form.{FormField, Form}
 import com.liferay.scalapress.domain.{Folder}
 import scala.collection.JavaConverters._
 import xml.Elem
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.enums.FormFieldType
+import com.liferay.scalapress.plugin.form.{FormField, Form}
 
 /** @author Stephen Samuel */
 object FormRenderer {

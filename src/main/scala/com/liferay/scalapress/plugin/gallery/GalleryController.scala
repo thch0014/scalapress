@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.web.image
+package com.liferay.scalapress.plugin.gallery
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
@@ -7,7 +7,7 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.GalleryDao
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.gallery.GalleryRenderer
+import com.liferay.scalapress.ScalapressRequest
 
 /** @author Stephen Samuel
   *
@@ -26,8 +26,9 @@ class GalleryController {
 
         val gallery = galleryDao.find(id)
         val theme = themeService.default
+        val sreq = ScalapressRequest(req).withTitle(gallery.name)
 
-        val page = ScalaPressPage(theme, req)
+        val page = ScalaPressPage(theme, sreq)
         page.body("<h1>" + gallery.name + "</h1>")
         page.body(GalleryRenderer.renderGallery(gallery))
         page

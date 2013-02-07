@@ -1,10 +1,11 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.plugin.gallery
 
 import scala.Predef.String
 import reflect.BeanProperty
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
 import scala.Array
 import java.util
+import com.liferay.scalapress.domain.Image
 
 /** @author Stephen Samuel */
 @Entity

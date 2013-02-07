@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain.form
+package com.liferay.scalapress.plugin.form
 
 import javax.persistence.{FetchType, Column, ElementCollection, CascadeType, OneToMany, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty

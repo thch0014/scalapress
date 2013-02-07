@@ -1,6 +1,5 @@
 package com.liferay.scalapress.plugin.form
 
-import com.liferay.scalapress.domain.form.{Form, SubmissionKeyValue, Submission}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.{Logging, ScalapressRequest}

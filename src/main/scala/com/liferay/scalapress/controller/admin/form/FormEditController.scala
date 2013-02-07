@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.dao.UserDao
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.liferay.scalapress.domain.form.Form
+import com.liferay.scalapress.plugin.form.Form
 
 /** @author Stephen Samuel */
 @Controller

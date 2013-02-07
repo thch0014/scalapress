@@ -1,11 +1,12 @@
 package com.liferay.scalapress.controller.admin
 
-import com.liferay.scalapress.domain.{Gallery, User, Markup, ObjectType, Obj, Folder}
+import com.liferay.scalapress.domain.{User, Markup, ObjectType, Obj, Folder}
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.domain.setup.Theme
-import com.liferay.scalapress.domain.form.{Form, Submission}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.domain.attr.Attribute
+import com.liferay.scalapress.plugin.gallery.Gallery
+import com.liferay.scalapress.plugin.form.{Submission, Form}
 
 /** @author Stephen Samuel */
 

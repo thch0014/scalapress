@@ -10,6 +10,7 @@ class ScalapressRequest(val request: HttpServletRequest) {
     if (request.getAttribute("errors") == null)
         request.setAttribute("errors", scala.collection.mutable.Map.empty)
 
+    var title: Option[String] = None
     var obj: Option[Obj] = None
     var attachment: Option[Attachment] = None
     var folder: Option[Folder] = None
@@ -25,13 +26,20 @@ class ScalapressRequest(val request: HttpServletRequest) {
     def errors = request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
     def hasErrors = !errors.isEmpty
 
+    def withTitle(title: String): ScalapressRequest = {
+        this.title = Option(title)
+        this
+    }
+
     def withObject(o: Obj): ScalapressRequest = {
         this.obj = Option(o)
+        this.title = obj.map(_.name)
         this
     }
 
     def withFolder(f: Folder): ScalapressRequest = {
         this.folder = Option(f)
+        this.title = folder.map(_.name)
         this
     }
 
@@ -43,19 +51,10 @@ class ScalapressRequest(val request: HttpServletRequest) {
 }
 
 object ScalapressRequest {
-    def apply(request: HttpServletRequest) = {
-        val r = new ScalapressRequest(request)
-        r
-    }
-    def apply(obj: Obj, request: HttpServletRequest) = {
-        val r = new ScalapressRequest(request)
-        r.obj = Option(obj)
-        r
-    }
-    def apply(folder: Folder, request: HttpServletRequest) = {
-        val r = new ScalapressRequest(request)
-        r.folder = Option(folder)
-        r
-    }
+
+    def apply(request: HttpServletRequest) = new ScalapressRequest(request)
+    def apply(obj: Obj, request: HttpServletRequest) = new ScalapressRequest(request).withObject(obj)
+    def apply(folder: Folder, request: HttpServletRequest) = new ScalapressRequest(request).withFolder(folder)
+
 }
 

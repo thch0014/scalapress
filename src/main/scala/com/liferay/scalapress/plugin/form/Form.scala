@@ -1,8 +1,7 @@
-package com.liferay.scalapress.domain.form
+package com.liferay.scalapress.plugin.form
 
 import javax.persistence.{ElementCollection, Column, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import scala.Predef.String
 
 /** @author Stephen Samuel */
 @Entity
