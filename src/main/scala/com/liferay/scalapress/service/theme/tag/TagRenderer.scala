@@ -19,12 +19,6 @@ object TagRenderer extends Logging {
         "search_begin",
         "sitemap",
         "printer_friendly",
-        "pricing",
-        "pricing_sell",
-        "pricing_rrp",
-        "pricing_rrp_discount",
-        "stock",
-        "item",
         "attribute",
         "ordering_qty",
         "ordering_buy")
