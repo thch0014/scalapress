@@ -1,6 +1,5 @@
 package com.liferay.scalapress
 
-import controller.web.ScalapressConstants
 import domain.{Attachment, Folder, Obj}
 import javax.servlet.http.HttpServletRequest
 import plugin.ecommerce.domain.Basket
@@ -15,7 +14,13 @@ class ScalapressRequest(val request: HttpServletRequest) {
     var attachment: Option[Attachment] = None
     var folder: Option[Folder] = None
 
-    def basket: Option[Basket] = Option(request.getAttribute(ScalapressConstants.BasketKey)).map(_.asInstanceOf[Basket])
+    def basket: Option[Basket] = {
+        //        Option(request.getAttribute(ScalapressConstants.SessionIdKey)).map(_.asInstanceOf[String]).map(sessionId => {
+        //            val basket = basketDao.find(sessionId)
+        //            request.setAttribute(ScalapressConstants.BasketKey, basket)
+        //        })
+        None
+    }
 
     def errors = request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
     def hasErrors = !errors.isEmpty

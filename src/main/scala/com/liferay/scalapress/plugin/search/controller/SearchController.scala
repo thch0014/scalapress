@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
-import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
+import com.liferay.scalapress.{Page, ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
 import com.liferay.scalapress.plugin.search.{SearchPluginDao, SearchService}
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @RequestMapping(Array("search"))
 class SearchController extends Logging {
+
+    val PageSize = 20
 
     @Autowired var service: SearchService = _
     @Autowired var objectDao: ObjectDao = _
@@ -32,17 +34,20 @@ class SearchController extends Logging {
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req)
-        val response = service.search(q, 50)
+        val response = service.search(q, PageSize)
         val objects = response.hits.hits().map(hit => {
             val id = hit.id().toLong
             objectDao.find(id)
         }).toList
+
+        val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
 
         val markup = searchPluginDao.get.markup
         val theme = themeService.default
         val page = ScalaPressPage(theme, req)
 
         page.body("<h1>Search Results</h1>")
+        page.body(PagingRenderer.render(paging))
         if (markup != null)
             page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
         page

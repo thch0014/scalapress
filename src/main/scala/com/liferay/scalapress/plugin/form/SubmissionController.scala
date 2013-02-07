@@ -11,7 +11,6 @@ import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.controller.web.folder.FolderController
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.plugin.form.FormService
 
 /** @author Stephen Samuel */
 @Controller
