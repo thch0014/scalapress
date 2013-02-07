@@ -24,15 +24,18 @@ class BackofficeSearchController {
         val response = service.search(q, 50)
         val results = response.hits().hits().map(hit => {
 
-            val typeId = hit.getType.toLong
-            val t = typeDao.find(typeId)
+            val `type` = hit.getType.toLowerCase match {
+                case s: String if s.matches("\\d+") => typeDao.find(s.toLong).name
+                case _ => "unknown"
+            }
 
             SearchResult(hit.id().toLong,
-                t.name,
+                `type`,
                 hit.field("name").value(),
                 UrlResolver.objectEdit(hit.id.toLong),
                 UrlResolver.objectSiteView(hit.id.toLong))
         })
+
         model.put("results", results.toList.asJava)
         "admin/search/results.vm"
     }

@@ -1,6 +1,5 @@
 package com.liferay.scalapress.plugin.search
 
-import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.ObjectDao
 import org.springframework.transaction.annotation.Transactional

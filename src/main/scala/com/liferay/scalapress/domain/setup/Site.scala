@@ -1,7 +1,6 @@
 package com.liferay.scalapress.domain.setup
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity}
-import scala.Predef.String
 import reflect.BeanProperty
 
 /** @author Stephen Samuel */
