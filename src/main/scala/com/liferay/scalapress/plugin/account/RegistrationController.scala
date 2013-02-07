@@ -43,14 +43,15 @@ class RegistrationController {
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def showRegistrationPage(req: HttpServletRequest,
-                             @ModelAttribute("form") form: RegistrationForm): ScalaPressPage = {
+                             @ModelAttribute("form") form: RegistrationForm,
+                             errors: Errors): ScalaPressPage = {
 
         val plugin = accountPluginDao.get
         val sreq = ScalapressRequest(req).withTitle("Registration")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body("<h1>Registration</h1>")
-        page.body(RegistrationRenderer.renderRegistrationPage(plugin))
+        page.body(RegistrationRenderer.renderRegistrationPage(plugin, errors))
         page
     }
 
@@ -61,7 +62,7 @@ class RegistrationController {
 
         errors.hasErrors match {
 
-            case true => showRegistrationPage(req, form)
+            case true => showRegistrationPage(req, form, errors)
             case false =>
 
                 val plugin = accountPluginDao.get
