@@ -33,7 +33,7 @@ class FolderEditController {
     @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
     def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
 
-        val key = assetStore.put(upload.getOriginalFilename, upload.getInputStream)
+        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
 
         val image = new Image
         image.filename = key

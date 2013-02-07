@@ -59,7 +59,7 @@ class ObjectEditController {
         //        form.o.attributeValues = attrValues.toList.asJava
 
         if (form.upload != null) {
-            val key = assetStore.put(form.upload.getOriginalFilename, form.upload.getInputStream)
+            val key = assetStore.add(form.upload.getOriginalFilename, form.upload.getInputStream)
 
             val image = new Image
             image.filename = key

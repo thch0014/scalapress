@@ -6,14 +6,14 @@ import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.domain.{Gallery, Image}
 
 /** @author Stephen Samuel */
-trait ImageDao extends GenericDao[Image, Long] {
+trait ImageDao extends GenericDao[Image, java.lang.Long] {
     def findForObject(objId: Long): Array[Image]
     def get(id: Long): Image
 }
 
 @Component
 @Transactional
-class ImageDaoImpl extends GenericDaoImpl[Image, Long] with ImageDao {
+class ImageDaoImpl extends GenericDaoImpl[Image, java.lang.Long] with ImageDao {
 
     @Transactional
     override def get(id: Long) = getSession.get(classOf[Image], id).asInstanceOf[Image]

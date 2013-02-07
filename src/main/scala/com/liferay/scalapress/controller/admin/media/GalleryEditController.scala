@@ -27,7 +27,7 @@ class GalleryEditController {
     def save(@ModelAttribute("gallery") g: Gallery,
              @RequestParam(value = "upload", required = false) file: MultipartFile) = {
         if (file != null && !file.isEmpty) {
-            val key = assetStore.put(file.getOriginalFilename, file.getInputStream)
+            val key = assetStore.add(file.getOriginalFilename, file.getInputStream)
             val image = new Image
             image.filename = key
             image.name = file.getOriginalFilename
