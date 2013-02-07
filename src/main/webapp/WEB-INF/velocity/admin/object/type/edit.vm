@@ -13,14 +13,30 @@
         </div>
     </div>
 
-
     <div class="control-group">
         <label class="control-label">Object List Markup</label>
+
         <div class="controls">
             <select id="objectListMarkup" name="objectListMarkup">
                 #foreach($option in $markupMap.keySet())
                     <option value="${option}"
                         #if("$!type.objectListMarkup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Object View Markup</label>
+
+        <div class="controls">
+            <select id="objectViewMarkup" name="objectViewMarkup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!type.objectViewMarkup.id" == "$option")
                             selected="selected"
                         #end>
                         ${markupMap.get($option)}</option>

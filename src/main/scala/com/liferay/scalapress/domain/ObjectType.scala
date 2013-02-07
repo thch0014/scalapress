@@ -28,6 +28,10 @@ class ObjectType {
     @JoinColumn(name = "listitemmarkup", nullable = true)
     @BeanProperty var objectListMarkup: Markup = _
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "objectViewMarkup", nullable = true)
+    @BeanProperty var objectViewMarkup: Markup = _
+
     def bootIcon = name.toLowerCase match {
         case "event" | "events" => "icon-calendar"
         case "job" | "jobs" => "icon-truck"
