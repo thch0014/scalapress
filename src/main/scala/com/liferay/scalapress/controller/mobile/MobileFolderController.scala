@@ -5,7 +5,6 @@ import com.liferay.scalapress.dao.FolderDao
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.ui.ModelMap
 import org.springframework.stereotype.Controller
-import com.liferay.scalapress.service.folder.FolderService
 
 /** @author Stephen Samuel */
 @Controller
@@ -13,7 +12,6 @@ import com.liferay.scalapress.service.folder.FolderService
 class MobileFolderController {
 
     @Autowired var folderDao: FolderDao = _
-    @Autowired var folderService: FolderService = _
 
     @RequestMapping
     def home(model: ModelMap): String = {
@@ -23,8 +21,7 @@ class MobileFolderController {
     @RequestMapping(value = Array("{id}"))
     def get(@PathVariable("id") id: Long, model: ModelMap): String = {
         val folder = folderDao.find(id)
-        model.put("general", folder)
-        model.put("objects", folderService.objects(id))
+        model.put("folder", folder)
         "mobile/general.vm"
     }
 

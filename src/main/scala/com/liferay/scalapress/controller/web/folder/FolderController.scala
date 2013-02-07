@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Exce
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
-import com.liferay.scalapress.service.folder.FolderService
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.controller.{RedirectException, NotFoundException}
 import javax.servlet.http.HttpServletRequest
@@ -22,7 +21,6 @@ class FolderController extends Logging {
 
     @Autowired var folderDao: FolderDao = _
     @Autowired var folderPluginDao: FolderPluginDao = _
-    @Autowired var folderService: FolderService = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
 

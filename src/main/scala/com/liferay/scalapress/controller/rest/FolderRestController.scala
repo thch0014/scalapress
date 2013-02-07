@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.FolderDao
 import org.springframework.http.MediaType
 import com.liferay.scalapress.domain.Obj
-import com.liferay.scalapress.service.folder.FolderService
 
 /** @author Stephen Samuel */
 @Controller
@@ -14,7 +13,6 @@ import com.liferay.scalapress.service.folder.FolderService
 class FolderRestController {
 
     @Autowired var folderDao: FolderDao = _
-    @Autowired var folderService: FolderService = _
 
     @ResponseBody
     @RequestMapping(params = Array("q"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
@@ -30,6 +28,6 @@ class FolderRestController {
 
     @ResponseBody
     @RequestMapping(value = Array("{id}/obj"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-    def objects(@PathVariable("id") id: Long): Array[Obj] = folderService.objects(id)
+    def objects(@PathVariable("id") id: Long): Array[Obj] = Array()
 
 }
