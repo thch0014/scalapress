@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.widgets.Widget
+import com.liferay.scalapress.enums.WidgetContainer
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,4 +27,13 @@ class WidgetEditController {
     }
 
     @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id)
+
+}
+
+trait WidgetContainerMapPopulator {
+    @ModelAttribute("widgetContainerMap") def widgetContainerMap: java.util.Map[String, String] = WidgetContainer
+      .values()
+      .map(wc => (wc.name, wc.name))
+      .toMap
+      .asJava
 }

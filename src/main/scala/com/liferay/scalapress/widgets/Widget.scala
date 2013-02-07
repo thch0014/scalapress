@@ -50,8 +50,12 @@ abstract class Widget {
 
     @Column(name = "displayOnHome", nullable = false)
     @BeanProperty var displayOnHome: Boolean = _
+
     @Column(name = "displayOnOthers", nullable = false)
     @BeanProperty var displayOnOthers: Boolean = _
+
+    @Column(name = "displayOnSearchResults", nullable = false)
+    @BeanProperty var displayOnSearchResults: Boolean = _
 
     //    @Column(name = "displayOnAllItems")
     // @BeanProperty var displayOnBasket: Boolean = _
@@ -69,40 +73,6 @@ abstract class Widget {
     )
     @BeanProperty var whichFolders: java.util.List[Folder] = new java.util.ArrayList[Folder]
 
-    /**
-     * When set to true the selected categories will be EXCLUDED and all else will be visable, rather than normally the list is inclusive.
-     */
-    // private var excludeCategories: Boolean = false
-
-    /**
-     * Show this box on items inside the specified categories
-     */
-    // private var displayOnItemsInCategories: Boolean = false
-
-    /**
-     * Show this sidebox on all other pages not covered
-     */
-    //
-
-    // @BeanProperty var disabled: Boolean = false
-
-    // protected var markup: Markup = null
-
-    // control who sees this widget
-    //    @BeanProperty var who: Boolean = _
-    // control on which folders the widget is shown
-    //
-
-    //
-    //
-
-    // @BeanProperty var displayToGuests: Boolean = _
-    //
-    // @BeanProperty var displayOnSearchResults: Boolean = _
-
-    /**
-     * display when a user is logged in regardless of type
-     */
-    // private var displayToAllAccounts: Boolean = false
+    //  var markup: Markup = null
 
 }
