@@ -67,6 +67,6 @@ object SiteGoogleMapTag extends ScalapressTag with TagBuilder {
           .siteDao
           .findAll()
           .headOption
-          .map(site => "<a href='http://maps.google.co.uk/maps?hl=en&safe=off&q=" + site.postcode + "'>" + site
-          .postcode + "</a/>")
+          .map(site =>
+            "<a href='http://maps.google.co.uk/maps?hl=en&safe=off&q=" + site.postcode + "'>" + site.postcode + "</a/>")
 }

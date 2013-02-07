@@ -10,5 +10,6 @@ public enum AttributeType {
     Selection,
     Text,
     Boolean,
-    Image
+    Image,
+    Association
 }
