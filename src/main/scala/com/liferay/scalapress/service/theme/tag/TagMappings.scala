@@ -7,7 +7,7 @@ import obj._
 import theme.WidgetsTag
 import user.UserStatusTag
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
-import com.liferay.scalapress.plugin.search.tag.QuickSearchTag
+import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
 
 /** @author Stephen Samuel */
 object TagMappings {
@@ -44,6 +44,7 @@ object TagMappings {
         "attribute_value" -> AttributeValueTag,
         "attribute_name" -> AttributeNameTag,
         "attribute" -> AttributeNameTag,
+        "search_attribute" -> AttributeSearchTag,
         "site_name" -> SiteNameTag,
         "title" -> TitleTag,
         "css" -> CssTag,

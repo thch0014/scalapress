@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
 import dao.settings.SiteDao
-import dao.{FormDao, SubmissionDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
+import dao.{AttributeDao, FormDao, SubmissionDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
 import service.asset.AssetStore
 import service.folder.FolderService
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,6 +14,7 @@ import javax.servlet.ServletContext
 class ScalapressContext extends ServletContextAware {
 
     @Autowired var siteDao: SiteDao = _
+    @Autowired var attributeDao: AttributeDao = _
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var folderService: FolderService = _

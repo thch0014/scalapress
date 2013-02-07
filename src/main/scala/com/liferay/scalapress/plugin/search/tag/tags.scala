@@ -2,6 +2,8 @@ package com.liferay.scalapress.plugin.search.tag
 
 import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.domain.attr.AttributeOption
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object SearchFormTag extends ScalapressTag {
@@ -21,3 +23,34 @@ object QuickSearchTag extends ScalapressTag {
             <button>Go</button>
         </form>
 }
+
+object AttributeSearchTag extends ScalapressTag {
+
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        params.get("id") match {
+            case None => None
+            case Some(id) =>
+                val attribute = context.attributeDao.find(id.toLong)
+                val xml =
+                    <form method="GET" action="/search">
+                        <select name="q" action="/search">
+                            {options(attribute.options.asScala)}
+                        </select>
+                        <button>Go</button>
+                    </form>
+                Some(xml.toString())
+        }
+    }
+
+    private def options(options: Seq[AttributeOption]) = {
+        options.map(opt => {
+            <option>
+                {opt.value}
+            </option>
+        })
+    }
+}
+
