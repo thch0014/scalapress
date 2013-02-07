@@ -26,7 +26,7 @@ class SearchController extends Logging {
     @Autowired var searchPluginDao: SearchPluginDao = _
 
     @ResponseBody
-    @RequestMapping
+    @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
                @RequestParam("q") q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
