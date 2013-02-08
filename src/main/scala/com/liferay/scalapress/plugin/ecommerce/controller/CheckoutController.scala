@@ -15,6 +15,7 @@ import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, AddressDao, BasketDao}
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import com.liferay.scalapress.service.security.ObjectUserDetails
+import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,6 +23,7 @@ import com.liferay.scalapress.service.security.ObjectUserDetails
 class CheckoutController {
 
     @Autowired var objectDao: ObjectDao = _
+    @Autowired var sagepayFormPlugin: SagepayFormPluginDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var addressDao: AddressDao = _
     @Autowired var basketDao: BasketDao = _
@@ -69,11 +71,12 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showPayment(req: HttpServletRequest): ScalaPressPage = {
 
+        val plugin = sagepayFormPlugin.get
         val sreq = ScalapressRequest(req).withTitle("Checkout - Payment")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutRenderer.renderPaymentOptions)
+        page.body(CheckoutRenderer.renderPaymentOptions(plugin))
         page
     }
 
