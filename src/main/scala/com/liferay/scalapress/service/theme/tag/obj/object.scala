@@ -48,3 +48,9 @@ object LinkTag extends ScalapressTag with TagBuilder {
         objectUrl.orElse(folderUrl)
     }
 }
+
+object ContentTag extends ScalapressTag with TagBuilder {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+        request.obj.map(_.content)
+    }
+}

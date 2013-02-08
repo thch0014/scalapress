@@ -47,20 +47,22 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
 object ColorboxTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
+        val cssClass = params.get("class").getOrElse("colorboxgroup")
         request.obj.map(obj => {
 
             val images = obj.images.asScala.map(image => {
                 val link = "images/" + image.filename
                 <p>
-                    <a class="colorboxgroup" href={link} title={obj.name}>
+                    <a class={cssClass} href={link} title={obj.name}>
                         {obj.name}
                     </a>
                 </p>
             }).map(_.toString()).mkString("\n")
 
-            """<script> $(document).ready(function() {
-                    $(".colorboxgroup").colorbox({ rel: 'colorboxgroup'} );
-                </script>""" + images
+            images +
+              """<script> $(document).ready(function() {
+                    $(".colorboxgroup").colorbox({ rel: '""" + cssClass + """'} );
+                </script>"""
         })
     }
 }
