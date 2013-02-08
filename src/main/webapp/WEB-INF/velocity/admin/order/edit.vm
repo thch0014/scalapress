@@ -135,6 +135,25 @@
 </table>
 
 
+<legend>Payments</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Payment Type</th>
+        <th>Transaction Id</th>
+        <th>Date</th>
+        <th>Amount</th>
+    </tr>
+    #foreach ($payment in $order.payments)
+        <tr>
+            <td>$payment.paymentType</td>
+            <td>$payment.transactionId</td>
+            <td>$datetool.format($payment.date)</td>
+            <td>$number.currency($payment.amountDecimal())</td>
+        </tr>
+    #end
+</table>
+
+
 <legend>Comments</legend>
 <table class="table table-condensed table-hover">
     <tr>

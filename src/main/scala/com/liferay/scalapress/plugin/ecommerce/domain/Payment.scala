@@ -14,6 +14,7 @@ class Payment {
     @BeanProperty var id: Long = _
 
     @BeanProperty var amount: Int = _
+    def amountDecimal = amount / 100.0
 
     @BeanProperty var authCode: String = _
 
