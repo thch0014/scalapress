@@ -1,7 +1,7 @@
 package com.liferay.scalapress.section.objects
 
 import com.liferay.scalapress.domain.Markup
-import javax.persistence.{ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
+import javax.persistence.{EnumType, Enumerated, ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.MarkupRenderer
@@ -14,6 +14,7 @@ import com.liferay.scalapress.enums.Sort
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "sortType")
     @BeanProperty var sort: Sort = _
 
@@ -27,6 +28,8 @@ class ObjectListSection extends Section {
     @JoinColumn(name = "listMarkup", nullable = true)
     @BeanProperty var markup: Markup = _
 
+    override def backoffice: String = "/backoffice/section/objectlist/" + id
+
     def desc = "Show a paginated list of objects that are inside this general"
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
@@ -39,7 +42,7 @@ class ObjectListSection extends Section {
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
             case Sort.Oldest => live.sortBy(_.id)
-            case _ => live
+            case _ => live.sortBy(_.id).reverse
         }
 
         sorted.size match {

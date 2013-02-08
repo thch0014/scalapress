@@ -7,6 +7,7 @@ import scala.Array
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.section.content.FolderContentSection
 import com.liferay.scalapress.enums.FolderOrdering
+import com.liferay.scalapress.section.folder.SubfolderSection
 
 /** @author Stephen Samuel */
 @Entity
@@ -89,9 +90,14 @@ object Folder {
         folder.name = "new folder"
         folder.parent = root
 
-        val section = new FolderContentSection
+        val section1 = new FolderContentSection
+        section1.name = "content"
+        val section2 = new SubfolderSection
+        section2.name = "subfolders"
 
-        folder.sections.add(section)
+        folder.sections.add(section2)
+        folder.sections.add(section1)
+
         folder.dateCreated = System.currentTimeMillis
         folder.dateUpdated = System.currentTimeMillis
         folder

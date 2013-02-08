@@ -1,0 +1,71 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Section</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("section.name", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+            #springFormCheckbox("section.visible")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Sort</label>
+
+        <div class="controls">
+            <select id="sort" name="sort">
+                #foreach($option in $sortMap.keySet())
+                    <option value="${option}"
+                        #if("$!section.sort" == "$option")
+                            selected="selected"
+                        #end>
+                        ${sortMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Markup</label>
+
+        <div class="controls">
+            <select id="markup" name="markup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!section.markup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Page Size</label>
+
+        <div class="controls">
+            #springFormInput("section.pageSize", "class='input-small'")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

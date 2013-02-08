@@ -13,9 +13,6 @@ import com.liferay.scalapress.section.Section
 @Table(name = "blocks_subcategories")
 class SubfolderSection extends Section {
 
-    //   var selector: Boolean = _
-    //   var introText: String = _
-
     @ManyToOne
     @JoinColumn(name = "markup", nullable = true)
     @BeanProperty var markup: Markup = _

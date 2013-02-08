@@ -37,4 +37,5 @@ abstract class Section {
 
     def desc: String
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String]
+    def backoffice: String = "/backoffice/section/" + id
 }
