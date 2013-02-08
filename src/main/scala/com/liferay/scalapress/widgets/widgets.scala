@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag.theme
+package com.liferay.scalapress.widgets
 
 import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
