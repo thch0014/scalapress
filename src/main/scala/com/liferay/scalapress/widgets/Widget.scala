@@ -57,11 +57,11 @@ abstract class Widget {
     @Column(name = "displayOnSearchResults", nullable = false)
     @BeanProperty var displayOnSearchResults: Boolean = _
 
-    //    @Column(name = "displayOnAllItems")
-    // @BeanProperty var displayOnBasket: Boolean = _
+    @Column(name = "displayOnBasket")
+    @BeanProperty var displayOnBasket: Boolean = _
 
-    //  @Column(name = "displayOnAllItems")
-    //   @BeanProperty var displayOnCheckout: Boolean = _
+    @Column(name = "displayOnCheckout")
+    @BeanProperty var displayOnCheckout: Boolean = _
 
     @Column(name = "restricted", nullable = false)
     @BeanProperty var restricted: Boolean = _
@@ -72,7 +72,4 @@ abstract class Widget {
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
     @BeanProperty var whichFolders: java.util.List[Folder] = new java.util.ArrayList[Folder]
-
-    //  var markup: Markup = null
-
 }

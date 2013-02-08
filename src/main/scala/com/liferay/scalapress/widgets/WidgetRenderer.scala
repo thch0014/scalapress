@@ -46,8 +46,8 @@ object WidgetRenderer extends Logging {
             case None => Some("\n<!-- widget " + widget.getClass + " - no content -->\n")
             case Some(body) => {
                 val rendered = widget.container match {
-                    case WidgetContainer.Table => renderTable(widget, body).toString()
-                    case WidgetContainer.Div => renderDiv(widget, body).toString()
+                    case WidgetContainer.Table => renderTable(widget, body)
+                    case WidgetContainer.Div => renderDiv(widget, body)
                     case _ => body.toString
                 }
                 Option("\n<!-- widget: " + widget.getClass + "-->\n" + rendered + "\n<!-- end widget -->\n\n")
@@ -55,23 +55,18 @@ object WidgetRenderer extends Logging {
         }
     }
 
-    def renderDiv(widget: Widget, body: Any) = {
+    def renderDiv(widget: Widget, body: Any): String = {
         val capt = Option(widget.caption).map("<h3>" + _ + "</h3>").getOrElse("")
-        <div class={widgetContainerClass(widget)} id={normalizedContainerId(widget)}>
-            {capt}
-            \n
-            {body}
-        </div>
+        "<div class='" + widgetContainerClass(widget) + "' id='" + normalizedContainerId(widget) + "'>" + capt + body + "</div>"
     }
 
-    def renderTable(widget: Widget, body: Any) = {
-        val capt = Option(widget.caption).map("<caption>" + _ + "</caption>").getOrElse("")
-        <table cellspacing="0" cellpadding="0" id={normalizedContainerId(widget)} class={widgetContainerClass(widget)}>
-            {capt}<tr>
-            <td>
-                {body}
-            </td>
-        </tr>
-        </table>
+    def renderTable(widget: Widget, body: Any): String = {
+
+        val cssClass = widgetContainerClass(widget)
+        val id = normalizedContainerId(widget)
+
+        "<table cellspacing='0' cellpadding='0' id='" + id + "' class='" + cssClass + "'><caption>" + Option(widget
+          .caption)
+          .getOrElse("") + "</caption><tr><td>" + body + "</td></tr></table>"
     }
 }
