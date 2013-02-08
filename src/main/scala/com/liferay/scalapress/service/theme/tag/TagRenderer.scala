@@ -22,7 +22,8 @@ object TagRenderer extends Logging {
         "attribute",
         "member",
         "ordering_qty",
-        "ordering_buy")
+        "ordering_buy",
+        "external_links")
 
     def erase(text: String) = {
         require(text != null)

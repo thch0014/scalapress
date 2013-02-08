@@ -51,6 +51,8 @@ object TagMappings {
         "attachment_link" -> AttachmentLinkTag,
         "attachment_name" -> AttachmentNameTag,
         "attribute_value" -> AttributeValueTag,
+        "attribute_table" -> AttributeTableTag,
+        "attributes_table" -> AttributeTableTag,
         "attribute_name" -> AttributeNameTag,
         "attribute" -> AttributeNameTag,
         "search_attribute" -> AttributeSearchTag,
