@@ -31,6 +31,7 @@ trait SearchService {
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
+    val MaxResults = 500
     val INDEX = "obj"
 
     @Autowired var objectDao: ObjectDao = _
@@ -63,7 +64,7 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "account")
           .addFilterNotEqual("objectType.name", "Accounts")
           .addFilterNotEqual("objectType.name", "accounts")
-          .setMaxResults(10))
+          .setMaxResults(MaxResults))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
