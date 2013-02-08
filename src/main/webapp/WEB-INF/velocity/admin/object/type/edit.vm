@@ -68,8 +68,9 @@
             <td>$a.name</td>
             <td>$a.attributeType</td>
             <td>
-                <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-mini"> <i
-                        class="icon-pencil"></i></a></td>
+                <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+            </td>
         </tr>
     #end
 </table>
