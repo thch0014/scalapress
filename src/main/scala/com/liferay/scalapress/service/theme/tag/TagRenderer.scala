@@ -19,7 +19,6 @@ object TagRenderer extends Logging {
         "search_begin",
         "sitemap",
         "printer_friendly",
-        "attribute",
         "member",
         "ordering_qty",
         "ordering_buy",
@@ -50,26 +49,26 @@ object TagRenderer extends Logging {
                     val tagname = a._1
                     val tag = a._2
 
-                    try {
-                        regex(tagname).r.replaceAllIn(b, m => {
-                            require(b != null)
+                    logger.debug("Applying tag [{}={}]", tagname, tag)
 
-                            val params = m.groupCount match {
-                                case 1 if m.group(1) != null && m.group(1).length > 0 =>
-                                    parseQueryString(m.group(1).drop(1))
-                                case _ => Map.empty[String, String]
-                            }
+                    require(tagname != null)
 
-                            tag.render(request, context, params) match {
-                                case None => ""
-                                case Some(value) =>
-                                    if (value == null) ""
-                                    else value
-                            }
-                        })
-                    } catch {
-                        case e: Exception => ""
-                    }
+                    regex(tagname).r.replaceAllIn(b, m => {
+                        require(b != null)
+
+                        val params = m.groupCount match {
+                            case 1 if m.group(1) != null && m.group(1).length > 0 =>
+                                parseQueryString(m.group(1).drop(1))
+                            case _ => Map.empty[String, String]
+                        }
+
+                        tag.render(request, context, params) match {
+                            case None => ""
+                            case Some(value) =>
+                                if (value == null) ""
+                                else value.replace("$", "\\$")
+                        }
+                    })
                 })
             }
         }

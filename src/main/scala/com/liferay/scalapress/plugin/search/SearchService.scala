@@ -9,7 +9,7 @@ import com.liferay.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.{Value, Autowired}
 import com.googlecode.genericdao.search.Search
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
@@ -31,9 +31,9 @@ trait SearchService {
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
-    val MaxResults = 500
     val INDEX = "obj"
 
+    @Value("${search.index.preload.size}") var preloadSize: Int = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
 
@@ -64,7 +64,7 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "account")
           .addFilterNotEqual("objectType.name", "Accounts")
           .addFilterNotEqual("objectType.name", "accounts")
-          .setMaxResults(MaxResults))
+          .setMaxResults(preloadSize))
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))

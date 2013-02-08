@@ -1,12 +1,12 @@
 package com.liferay.scalapress.service.theme.tag.obj
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 
-object ImagesTag extends ScalapressTag with TagBuilder {
+object ImagesTag extends ScalapressTag with TagBuilder with Logging {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
@@ -51,7 +51,7 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
         request.obj.map(obj => {
 
             val images = obj.images.asScala.map(image => {
-                val link = "images/" + image.filename
+                val link = "/images/" + image.filename
                 <p>
                     <a class={cssClass} href={link} title={obj.name}>
                         {obj.name}
@@ -64,5 +64,6 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
                     $(".colorboxgroup").colorbox({ rel: '""" + cssClass + """'} );
                 </script>"""
         })
+
     }
 }

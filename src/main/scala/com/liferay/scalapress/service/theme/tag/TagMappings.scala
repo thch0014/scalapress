@@ -30,6 +30,7 @@ object TagMappings {
         "thumbnail" -> ImagesTag,
         "image_url" -> ImageUrlTag,
         "images_url" -> ImageUrlTag,
+        "attachments" -> AttachmentsTag,
         "ordering_buy" -> AddToBasketTag,
         "addtobasket" -> AddToBasketTag,
         "ordering_qty" -> AddToBasketTag,
