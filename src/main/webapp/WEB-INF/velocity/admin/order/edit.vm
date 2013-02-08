@@ -1,0 +1,155 @@
+#parse("/admin/header.vm")
+
+
+<h3>View Order $order.id</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <legend>Order Details</legend>
+    <div class="control-group">
+        <label class="control-label">Account</label>
+
+        <div class="controls">
+            <span class="input-xlarge uneditable-input">$order.account.name</span>
+            <span class="input-xlarge uneditable-input">$order.account.email</span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Status</label>
+
+        <div class="controls">
+            <input type="status" value="$order.account.status"/>
+        </div>
+    </div>
+
+    <legend>Delivery Address</legend>
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            <span class="input-xxlarge uneditable-input">$order.deliveryAddress.name</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Company</label>
+
+        <div class="controls">
+            <span class="input-xxlarge uneditable-input">$!order.deliveryAddress.company</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Address</label>
+
+        <div class="controls">
+            <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
+        </div>
+    </div>
+    <div class="control-group">
+
+        <div class="controls">
+            <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address2</span>
+        </div>
+    </div>
+    <div class="control-group">
+
+        <div class="controls">
+            <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address3</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">City</label>
+
+        <div class="controls">
+            <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Postcode</label>
+
+        <div class="controls">
+            <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Country</label>
+
+        <div class="controls">
+            <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Instructions</label>
+
+        <div class="controls">
+            <span class="input-xxlarge uneditable-input">$!order.deliveryAddress.instructions</span>
+        </div>
+    </div>
+</form>
+
+
+<legend>Lines</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th>Vat Rate</th>
+        <th>Total</th>
+    </tr>
+    #foreach ($l in $order.lines)
+        <tr>
+            <td>$l.description</td>
+            <td>$number.currency($l.priceExVat())</td>
+            <td>$l.qty</td>
+            <td>$number.currency($l.totalExVat())</td>
+            <td>$l.vatRate%</td>
+            <td>$number.currency($l.totalIncVat())</td>
+        </tr>
+    #end
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Subtotal</th>
+        <td>$number.currency($order.totalExVat())</td>
+    </tr>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Vat</th>
+        <td>$number.currency($order.totalVat())</td>
+    </tr>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>Total</th>
+        <td>$number.currency($order.totalIncVat())</td>
+    </tr>
+</table>
+
+
+<legend>Comments</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Comment</th>
+    </tr>
+    #foreach ($c in $order.comments)
+        <tr>
+            <td>$c.author</td>
+            <td>$datetool.format($c.date)</td>
+            <td>$c.body</td>
+        </tr>
+    #end
+</table>
+
+
+#parse("/admin/footer.vm")

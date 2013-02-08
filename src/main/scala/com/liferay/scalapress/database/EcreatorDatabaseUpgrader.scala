@@ -114,6 +114,11 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("ALTER TABLE attributes MODIFY itemtype bigint(10) null").execute()
         conn.prepareStatement("UPDATE attributes SET itemtype=null WHERE itemtype=0").execute()
 
+        conn.prepareStatement("ALTER TABLE orders MODIFY deliveryaddress bigint(10) null").execute()
+        conn.prepareStatement("UPDATE orders SET deliveryaddress=null WHERE deliveryaddress=0").execute()
+        conn.prepareStatement("ALTER TABLE orders MODIFY account bigint(10) null").execute()
+        conn.prepareStatement("UPDATE orders SET account=null WHERE account=0").execute()
+
         conn.close()
     }
 }

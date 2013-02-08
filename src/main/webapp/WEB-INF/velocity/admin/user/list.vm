@@ -24,5 +24,7 @@
     #end
 </table>
 
+<a href="$urlResolver.createUser()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create User</a>
+
 
 #parse("/admin/footer.vm")

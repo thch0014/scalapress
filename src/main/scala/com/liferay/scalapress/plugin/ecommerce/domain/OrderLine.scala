@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 
 /** @author Stephen Samuel */
@@ -11,29 +11,38 @@ class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty
-    var id: Long = _
+    @BeanProperty var id: Long = _
 
-    @Column(name = "ord")
-    var order: Long = _
-
-    var salePrice: Int = _
-
-    var date: Long = _
-
-    var description: String = _
-
-    var comment: String = _
-
-    var optionsDescription: String = _
+    @ManyToOne
+    @JoinColumn(name = "ord")
+    @BeanProperty var order: Order = _
 
     @Column(name = "item")
-    var obj: Long = _
+    @BeanProperty var obj: Long = _
 
-    var promotion: Boolean = _
+    @Column(name = "salePrice")
+    @BeanProperty var price: Int = _
 
-    var qty: Int = _
-    var allocated: Int = _
+    @BeanProperty var date: Long = _
 
-    var vatRate: Double = _
-    var position: Int = _
+    @Column(name = "description")
+    @BeanProperty var description: String = _
+
+    @BeanProperty var comment: String = _
+
+    @Column(name = "optionsDescription")
+    @BeanProperty var options: String = _
+
+    @BeanProperty var promotion: Boolean = _
+
+    @BeanProperty var qty: Int = _
+
+    @BeanProperty var vatRate: Double = _
+
+    def priceVat = price / 100.0 * vatRate / 100.0
+    def priceExVat = price / 100.0
+    def priceIncVat = priceExVat + priceVat
+    def totalVat = qty * price / 100.0 * vatRate / 100.0
+    def totalExVat = qty * price / 100.0
+    def totalIncVat = totalExVat + totalVat
 }

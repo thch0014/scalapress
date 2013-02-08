@@ -8,6 +8,7 @@
     <li><a href=/backoffice/submission><i class="icon-pencil"></i> Submissions</a></li>
     <li><a href=/backoffice/medialib><i class="icon-picture"></i> Media Library</a></li>
     <li><a href=/backoffice/gallery><i class="icon-picture"></i> Galleries</a></li>
+    <li><a href=/backoffice/order><i class="icon-shopping-cart"></i> Orders</a></li>
     <li><a href=/backoffice/plugin/search><i class="icon-search"></i> Search</a></li>
 </ul>
 

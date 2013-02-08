@@ -25,14 +25,14 @@ class Address {
     @BeanProperty var owner: Long = _
 
     @NotEmpty
-    @Column(name = "address1")
-    @BeanProperty var addressLine1: String = _
+    @Column(name = "addressLine1")
+    @BeanProperty var address1: String = _
 
-    @Column(name = "address2")
-    @BeanProperty var addressLine2: String = _
+    @Column(name = "addressLine2")
+    @BeanProperty var address2: String = _
 
-    @Column(name = "address3")
-    @BeanProperty var addressLine3: String = _
+    @Column(name = "addressLine3")
+    @BeanProperty var address3: String = _
 
     @NotEmpty
     @BeanProperty var town: String = _

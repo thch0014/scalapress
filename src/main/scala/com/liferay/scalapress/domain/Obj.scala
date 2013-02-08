@@ -129,6 +129,8 @@ class Obj {
 
 object Obj {
     def apply(t: ObjectType) = {
+        require(t != null)
+
         val obj = new Obj
         obj.objectType = t
         obj.name = "new object"

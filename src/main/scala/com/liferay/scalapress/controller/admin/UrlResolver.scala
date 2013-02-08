@@ -17,9 +17,13 @@ object UrlResolver {
     val basket = "/basket"
     def addToBasket(obj: Obj) = "basket/add/" + obj.id
 
+    val orders = "/backoffice/order"
+    def orderEdit(o: com.liferay.scalapress.plugin.ecommerce.domain.Order) = "/backoffice/order/" + o.id
+    val createOrder = "/backoffice/order/create"
+
     def userEdit(user: User) = "/backoffice/user/" + user.id
-    var users = "/backoffice/user"
-    def createUser = "/backoffice/user/create"
+    val users = "/backoffice/user"
+    val createUser = "/backoffice/user/create"
 
     def viewSubmission(s: Submission) = "/backoffice/submission/" + s.id
     def submissions = "/backoffice/submission"

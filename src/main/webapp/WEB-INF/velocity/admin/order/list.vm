@@ -1,0 +1,32 @@
+#parse("/admin/header.vm")
+
+
+<h3>Users</h3>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Date Placed</th>
+        <th>Status</th>
+        <th>Customer</th>
+        <th></th>
+    </tr>
+    #foreach ($o in $orders)
+        <tr>
+            <td>$o.id</td>
+            <td>$dateformat(o.datePlaced)</td>
+            <td>$o.status</td>
+            <td>$o.account.name</td>
+            <td>
+                <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i> </a>
+            </td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.createOrder()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create Order</a>
+
+
+#parse("/admin/footer.vm")

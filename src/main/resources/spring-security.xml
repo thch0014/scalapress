@@ -5,9 +5,10 @@
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <security:http pattern="/backoffice/**" auto-config='true'>
-        <security:intercept-url pattern="/backoffice" access="ROLE_ADMIN"/>
+    <security:http pattern="/backoffice/**" auto-config='true' access-denied-page="/error/noaccess">
+        <security:intercept-url pattern="/backoffice/**" access="ROLE_ADMIN"/>
         <security:intercept-url pattern="/backoffice/*" access="ROLE_ADMIN"/>
+        <security:intercept-url pattern="/" access="ROLE_ADMIN"/>
         <security:form-login login-page="/backlogin"/>
     </security:http>
 
