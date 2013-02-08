@@ -1,8 +1,8 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.enums.PaymentType
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Entity
@@ -11,85 +11,41 @@ class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty
-    var id: Long = _
+    @BeanProperty var id: Long = _
 
-    var card: Long = _
+    @BeanProperty var status: String = _
 
-    var saleVat: Int = _
-    var saleSubtotal: Int = _
-    var saleTotal: Int = _
+    @BeanProperty var saleVat: Int = _
+    @BeanProperty var saleSubtotal: Int = _
+    @BeanProperty var saleTotal: Int = _
 
-    var paymentCost: Int = _
-    var paymentCharge: Int = _
+    @BeanProperty var deliveryCharge: Int = _
+    @BeanProperty var deliveryChargeVat: Int = _
+    @BeanProperty var deliveryChargeInc: Int = _
+    @BeanProperty var deliveryVatRate: Double = _
 
-    var deliveryCharge: Int = _
-    var deliveryChargeVat: Int = _
-    var deliveryChargeInc: Int = _
+    @Column(name = "datePlaced")
+    @BeanProperty var datePlaced: Long = _
 
-    var itemDeliveryChargesEx: Int = _
-    var datePlaced: Long = _
+    @OneToMany(mappedBy = "order")
+    @BeanProperty var payments: java.util.List[Payment] = new java.util.ArrayList[Payment]()
 
-    var deliveryAddress: Long = _
-    var invoiceAddress: Long = _
+    @ManyToOne
+    @JoinColumn(name = "deliveryAddress")
+    @BeanProperty var deliveryAddress: Address = _
 
-    var deliveryCode: String = _
-    var ipAddress: String = _
+    @BeanProperty var ipAddress: String = _
 
-    var customerReference: String = _
+    @BeanProperty var customerReference: String = _
+    @BeanProperty var reference: String = _
 
-    var lastExportedOn: Long = _
+    @Column(name = "deliveryDetails")
+    @BeanProperty var deliveryDetails: String = _
 
-    var reference: String = _
-    var deliveryDetails: String = _
-    var ipCountry: String = _
-    var deliveryVatRate: Double = _
-
-    var cancelled: Boolean = _
-
-    var lineCount: Int = _
-
-    // customer / account id
-    var account: Long = _
-
-    var paymentType: PaymentType = _
+    @ManyToOne
+    @JoinColumn(name = "account")
+    var account: Obj = _
 
     @Column(name = "salesPerson")
     var createdBy: Long = _
-
-    var amountPaid: Int = _
-
-    var vatable: Boolean = _
-
-    var status: String = _
-
-    var authorised: Boolean = _
-
-    var voucherDiscountEx: Int = _
-    var voucherDiscountVat: Int = _
-    var voucherDiscountInc: Int = _
-
-    var linesInc: Int = _
-    var linesVat: Int = _
-    var linesEx: Int = _
-
-    var voucherDescription: String = _
-
-    var category: String = _
-    var deliveryOption: Long = _
-
-    var vatExemptText: String = _
-
-    var allocated: Boolean = _
-
-    var invoiced: Boolean = _
-    var declined: Boolean = _
-    var referrer: String = _
-
-    var googleOrderNumber: String = _
-    var reason: String = _
-    var comment: String = _
-    var finansialStatus: String = _
-    var payPalTransactionId: String = _
-    var cardsaveCrossReference: String = _
 }

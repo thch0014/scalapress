@@ -67,7 +67,8 @@ object SagepayFormService extends Logging {
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
         payment.authCode = authCode
-        payment.orderId = orderId
+        payment.order = orderId
+        payment.amount = amount
         payment
     }
 

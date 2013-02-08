@@ -25,13 +25,13 @@ class Payment {
     @JoinColumn(name = "account", nullable = true)
     @BeanProperty var account: Obj = _
 
+    @Column(name = "orderid", nullable = true)
+    @BeanProperty var order: Long = _
+
     @BeanProperty var paymentType: String = _
 
     @Column(name = "processorTransactionId")
     @BeanProperty var transactionId: String = _
-
-    @Column(name = "orderid")
-    @BeanProperty var orderId: Long = _
 
     @Column(name = "ipAddress")
     @BeanProperty var ipAddress: String = _
