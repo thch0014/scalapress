@@ -26,7 +26,7 @@ class AutoIPAuthenticationProvider extends AuthenticationProvider {
         val web = auth.getDetails.asInstanceOf[WebAuthenticationDetails]
         val ip = web.getRemoteAddress
 
-        if (ips.contains(ip) || ip == "127.0.0.1" || ip == "localhost")
+        if (ip == "127.0.0.1" || ip == "localhost")
             new UsernamePasswordAuthenticationToken("admin", "admin", List(AdminAuthority).asJava)
         else
             auth

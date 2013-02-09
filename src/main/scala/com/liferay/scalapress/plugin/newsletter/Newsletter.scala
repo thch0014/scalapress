@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.plugin.newsletter
 
 import scala.Predef.String
 import reflect.BeanProperty

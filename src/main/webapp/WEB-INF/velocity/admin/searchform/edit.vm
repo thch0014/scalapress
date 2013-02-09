@@ -1,0 +1,64 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Search Form</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("form.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Search Results Markup</label>
+
+        <div class="controls">
+            <select id="markup" name="markup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!form.markup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="/backoffice/searchform" class="btn">Return</a>
+    </div>
+
+</form>
+
+
+<legend>Fields</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th></th>
+    </tr>
+    #foreach ($f in $form.fields)
+        <tr>
+            <td>$f.id</td>
+            <td>$!f.name</td>
+            <td>$f.fieldType</td>
+            <td>
+                <a href="$urlResolver.editSearchFormField($f)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i> </a></td>
+        </tr>
+    #end
+</table>
+
+<a href="/backoffice/searchform/$form.id/field/create" class="btn btn-mini btn-info">
+    <i class="icon-plus"></i> Create Form Field</a>
+
+
+#parse("/admin/footer.vm")

@@ -1,0 +1,29 @@
+#parse("/admin/header.vm")
+
+
+<h3>Search Forms</h3>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Fields</th>
+        <th></th>
+    </tr>
+    #foreach ($f in $forms)
+        <tr>
+            <td>$f.id</td>
+            <td>$!f.name</td>
+            <td>$f.fields.size()</td>
+            <td>
+                <a href="$urlResolver.editSearchForm($f)" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i> </a></td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create Form</a>
+
+
+#parse("/admin/footer.vm")

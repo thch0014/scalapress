@@ -8,6 +8,7 @@ import com.liferay.scalapress.domain.attr.Attribute
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.plugin.form.{Submission, Form}
 import com.liferay.scalapress.plugin.ecommerce.domain.DeliveryOption
+import com.liferay.scalapress.plugin.search.form.{SearchFormField, SearchForm}
 
 /** @author Stephen Samuel */
 
@@ -29,6 +30,11 @@ object UrlResolver {
     def submissions = "/backoffice/submission"
     def forms = "/backoffice/form"
     def editForm(form: Form) = "/backoffice/form/" + form.id
+
+    def searchForms = "/backoffice/searchform"
+    def editSearchForm(f: SearchForm) = "/backoffice/searchform/" + f.id
+    def createSearchForm = "/backoffice/searchform/create"
+    def editSearchFormField(f: SearchFormField) = editSearchForm(f.searchForm) + "/field/" + f.id
 
     def deliveryOptions = "/backoffice/delivery"
     def editDeliveryOption(o: DeliveryOption) = "/backoffice/delivery/" + o.id

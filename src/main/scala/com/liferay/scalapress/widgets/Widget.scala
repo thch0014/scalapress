@@ -23,6 +23,7 @@ abstract class Widget {
 
     def render(req: ScalapressRequest, context: ScalapressContext): Option[String]
     def widgetType: String = getClass.getSimpleName
+    def backoffice = "/backoffice/widget/" + id
 
     @Column(name = "cssId")
     @BeanProperty var containerId: String = _

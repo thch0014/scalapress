@@ -1,9 +1,10 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.plugin.search
 
 import javax.persistence.{CollectionTable, Entity, Table, ElementCollection, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
 import reflect.BeanProperty
 import java.util
 import com.liferay.scalapress.enums.Sort
+import com.liferay.scalapress.domain.{ObjectType, Folder}
 
 /** @author Stephen Samuel */
 @Entity
@@ -13,6 +14,7 @@ class SavedSearch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: java.lang.Long = _
+
     @BeanProperty var status: String = _
 
     // search inside this folder

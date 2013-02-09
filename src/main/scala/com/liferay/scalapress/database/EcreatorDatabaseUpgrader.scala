@@ -18,13 +18,13 @@ class EcreatorDatabaseUpgrader extends Logging {
         val conn = dataSource.getConnection
 
         var k = 1
-        Array("boxes_custom", "categories_boxes").foreach(table => {
+        Array("boxes_custom", "categories_boxes", "boxes_search").foreach(table => {
 
             conn.prepareStatement("UPDATE " + table + " SET id=id+10000*" + k + " WHERE id<10000").execute()
             k = k + 1
         })
 
-        Array("boxes_custom", "categories_boxes", "boxes_images").foreach(table => {
+        Array("boxes_custom", "categories_boxes", "boxes_images", "boxes_search").foreach(table => {
             try {
                 conn
                   .prepareStatement("UPDATE " + table + " SET restricted=1, `where`=0 where `where`=1")
@@ -87,11 +87,19 @@ class EcreatorDatabaseUpgrader extends Logging {
             })
         })
 
-        conn.prepareStatement("alter table blocks_subcategories modify markup bigint(10) null").execute()
-        conn.prepareStatement("update blocks_subcategories set markup=null WHERE markup=0").execute()
+        conn.prepareStatement("ALTER TABLE blocks_subcategories MODIFY markup bigint(10) null").execute()
+        conn.prepareStatement("UPDATE blocks_subcategories set markup=null WHERE markup=0").execute()
 
-        conn.prepareStatement("alter table blocks_items modify listmarkup bigint(10) null").execute()
-        conn.prepareStatement("update blocks_items set listmarkup=null WHERE listmarkup=0").execute()
+        conn.prepareStatement("ALTER TABLE search_forms MODIFY markup bigint(10) null").execute()
+        conn.prepareStatement("UPDATE search_forms set markup=null WHERE markup=0").execute()
+
+        conn.prepareStatement("ALTER TABLE search_forms_fields MODIFY searchForm bigint(10) null").execute()
+        conn.prepareStatement("UPDATE search_forms_fields SET searchForm=null WHERE searchForm=0").execute()
+        conn.prepareStatement("ALTER TABLE search_forms_fields MODIFY attribute bigint(10) null").execute()
+        conn.prepareStatement("UPDATE search_forms_fields SET attribute=null WHERE attribute=0").execute()
+
+        conn.prepareStatement("ALTER TABLE blocks_items MODIFY listmarkup bigint(10) null").execute()
+        conn.prepareStatement("UPDATE blocks_items SET listmarkup=null WHERE listmarkup=0").execute()
 
         // update markup fields to text
         conn.prepareStatement("ALTER TABLE markup MODIFY `body` text null").execute()
@@ -117,6 +125,44 @@ class EcreatorDatabaseUpgrader extends Logging {
         conn.prepareStatement("ALTER TABLE orders MODIFY account bigint(10) null").execute()
         conn.prepareStatement("UPDATE orders SET account=null WHERE account=0").execute()
 
+
+        // copy the searchbox from forms to the box
+        try {
+            val rs = conn.prepareStatement("SELECT id, searchbox from search_forms WHERE searchbox>0").executeQuery()
+            while (rs.next) {
+                try {
+
+                    val id = rs.getLong(1)
+                    val searchbox = rs.getLong(2)
+                    val stmt = conn.prepareStatement("UPDATE boxes_search SET searchForm=? WHERE id=?")
+                    stmt.setLong(1, id)
+                    stmt.setLong(2, searchbox)
+                    stmt.execute()
+                    stmt.close()
+
+                    conn.prepareStatement("UPATE search_forms SET searchbox=0").execute()
+
+                } catch {
+                    case e: Exception => logger.warn(e.getMessage)
+                }
+            }
+        } catch {
+            case e: Exception => logger.warn(e.getMessage)
+        }
+
         conn.close()
+
+
+        for (column <- Array("disableemails",
+            "pendingimagecount",
+            "imagecount",
+            "imageupdatetimestamp",
+            "imageaddedtime", "administrator", "crm", "salesperson", "restrictions")) {
+            try {
+                conn.prepareStatement("ALTER TABLE users DROP " + column).execute()
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
     }
 }

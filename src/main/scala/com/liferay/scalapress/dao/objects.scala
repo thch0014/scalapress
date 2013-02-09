@@ -3,11 +3,12 @@ package com.liferay.scalapress.dao
 import org.springframework.stereotype.Component
 import org.hibernate.criterion.Restrictions
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.{SavedSearch, Obj}
+import com.liferay.scalapress.domain.{Obj}
 import org.hibernate.FetchMode
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.Logging
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.plugin.search.SavedSearch
 
 /** @author Stephen Samuel */
 

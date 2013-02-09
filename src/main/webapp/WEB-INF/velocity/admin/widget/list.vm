@@ -18,7 +18,7 @@
             <td>$w.widgetType()</td>
             <td>$w.name</td>
             <td>$w.location</td>
-            <td><a href="$urlResolver.widgetEdit($w)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            <td><a href="$w.backoffice()" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
     #end
