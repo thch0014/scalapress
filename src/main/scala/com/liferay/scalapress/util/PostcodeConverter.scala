@@ -14,10 +14,14 @@ object PostcodeConverter extends App {
     new File(dir).listFiles().foreach(arg => {
         IOUtils.readLines(new FileReader(arg)).asScala.foreach(line => {
             val fields = line.split(",")
-            val postcode = fields(0).replace("\"", "").replace(" ", "").dropRight(1)
+            val postcode = fields(0).replace("\"", "").replace(" ", "").dropRight(2)
+            map.put(postcode.dropRight(1), postcode.dropRight(1) + "," + fields(2) + "," + fields(3))
             map.put(postcode, postcode + "," + fields(2) + "," + fields(3))
         })
     })
 
-    IOUtils.write(map.values().asScala.mkString("\n"), new FileWriter(output))
+    val writer = new FileWriter(output)
+    IOUtils.write(map.values().asScala.mkString("\n"), writer)
+    writer.flush()
+    writer.close()
 }
