@@ -14,10 +14,10 @@ class Theme {
 
     @BeanProperty var name: String = _
 
-    @Column(name = "header", columnDefinition = "text")
+    @Column(name = "header", length = 100000, nullable = true)
     @BeanProperty var header: String = _
 
-    @Column(name = "footer", columnDefinition = "text")
+    @Column(name = "footer", length = 100000, nullable = true)
     @BeanProperty var footer: String = _
 
     @Column(name = "dfault")
