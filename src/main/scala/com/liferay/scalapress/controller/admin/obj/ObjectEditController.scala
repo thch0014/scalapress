@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
 import com.liferay.scalapress.plugin.search.SearchService
+import com.liferay.scalapress.domain.attr.Attribute
 
 /** @author Stephen Samuel */
 @Controller
@@ -73,13 +74,29 @@ class ObjectEditController {
         edit(form)
     }
 
-    @ModelAttribute("attributes") def attr(@PathVariable("id") id: Long) = {
+    //    @ModelAttribute("attributes") def attr(@PathVariable("id") id: Long) = {
+    //        val obj = objectDao.find(id)
+    //        obj.objectType
+    //          .attributes
+    //          .asScala
+    //          .sortBy(a => Option(a.section).getOrElse(""))
+    //          .asJava
+    //    }
+
+    @ModelAttribute("attributeValuesMap") def attributeValues(@PathVariable("id") id: Long): java.util.Map[Attribute, java.util.List[String]] = {
         val obj = objectDao.find(id)
-        obj.objectType
-          .attributes
-          .asScala
-          .sortBy(a => Option(a.section).getOrElse(""))
-          .asJava
+        val map = obj.attributeValues.asScala.groupBy(_.attribute).map(e => (e._1, e._2.asJava))
+        map.asJava
+        null
+    }
+
+    @ModelAttribute("attributesBySection") def attr(@PathVariable("id") id: Long): java.util.Map[String, java.util.List[Attribute]] = {
+        val obj = objectDao.find(id)
+        val attributes = obj.objectType.attributes.asScala
+        val map = attributes
+          .groupBy(a => Option(a.section).filter(_.length > 0).getOrElse("General Attributes"))
+          .map(e => (e._1, e._2.asJava))
+        map.asJava
     }
 
     @ModelAttribute("folders") def folder = {

@@ -29,7 +29,12 @@ class Attribute {
 
     import scala.collection.JavaConverters._
 
-    def optionsAsMap: java.util.Map[String, String] = options.asScala.map(opt => (opt.value, opt.value)).toMap.asJava
+    def optionsAsMap: java.util.Map[String, String] = options
+      .asScala
+      .sortBy(_.value)
+      .map(opt => (opt.value, opt.value))
+      .toMap
+      .asJava
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)

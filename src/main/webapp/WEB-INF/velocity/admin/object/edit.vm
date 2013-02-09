@@ -27,7 +27,7 @@
         <label class="control-label">Folder</label>
 
         <div class="controls">
-            <select id="folderIds" name="folderIds">
+            <select id="folderIds" name="folderIds" class="input-xxlarge">
                 #foreach($option in $folders.keySet())
                     <option value="${option}"
                         #if("$!folder.id" == "$option")
@@ -44,7 +44,7 @@
     <label class="control-label">Folder</label>
 
     <div class="controls">
-        #springFormSingleSelect("form.folderIds", $folders)
+        #springFormSingleSelect("form.folderIds", $folders, "class='input-xxlarge'")
     </div>
 </div>
 
@@ -97,10 +97,6 @@ form.add(FormControlGroup("Stock Level", TextInput("stock").value(o.stock).size(
         #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
     </div>
 </div>
-
-<legend>Content</legend>
-
-    #springFormTextarea("form.o.content", "rows='16' class='input-block-level tinymce'")
 
 
 <!--
@@ -163,32 +159,59 @@ form.add(attributesTable)
 
 -->
 
-<legend>Attributes</legend>
-    #foreach ($a in $form.o.objectType.attributes)
-    <div class="control-group">
-        <label class="control-label">$a.name</label>
 
-        <div class="controls">
-            #if ($a.attributeType == "Text")
-                #springFormInput("form.o.keywordsTag", "class='input-xarge'")
-                 #elseif ($a.attributeType == "Postcode")
-                #springFormInput("form.o.keywordsTag", "class='input-xarge'")
-            #elseif ($a.attributeType == "Link")
-                #springFormInput("form.o.keywordsTag", "class='input-xarge'")
-            #elseif ($a.attributeType == "Numerical")
-                #springFormInput("form.o.keywordsTag", "class='input-xarge'")
-            #elseif ($a.attributeType == "Selection")
-                #springFormSingleSelect("form.o.keywordsTag", $a.optionsAsMap())
-            #elseif ($a.attributeType == "Boolean")
-                #springFormSingleSelect("form.o.keywordsTag", $booleanMap)
-            #end
+    #foreach ($entry in $attributesBySection.entrySet())
+    <legend>$entry.key</legend>
+        #foreach ($a in $entry.value)
+
+        <div class="control-group">
+            <label class="control-label">$a.name</label>
+
+            <div class="controls">
+                #if ($a.attributeType == "Text")
+                    #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+                #elseif ($a.attributeType == "Postcode")
+                    #springFormInput("form.o.keywordsTag")
+                #elseif ($a.attributeType == "Link")
+                    #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+                #elseif ($a.attributeType == "Numerical")
+                    #springFormInput("form.o.keywordsTag", "class='input-small'")
+                #elseif ($a.attributeType == "Selection")
+                    <div class="control-group">
+                        <label class="control-label">Folder</label>
+
+                        <div class="controls">
+                            <select id="folderIds" name="folderIds" class="input-xxlarge">
+                                #foreach($option in $folders.keySet())
+                                    <option value="${option}"
+                                        #if("$!folder.id" == "$option")
+                                            selected="selected"
+                                        #end>
+                                        ${folders.get($option)}</option>
+                                #end
+                            </select>
+                        </div>
+                    </div>
+                    #springFormSingleSelect("form.o.keywordsTag", $a.optionsAsMap(), "class='input-xxlarge'")
+                #elseif ($a.attributeType == "Boolean")
+                    #springFormSingleSelect("form.o.keywordsTag", $booleanMap)
+                #end
+            </div>
         </div>
-    </div>
+        #end
     #end
 
 
+
+<legend>Content</legend>
+
+    #springFormTextarea("form.o.content", "rows='24' class='input-block-level tinymce'")
+
+
+
+<br/>
 <legend>Images</legend>
-<table class="table table-bordered table-condensed table-striped">
+<table class="table table-bordered table-condensed table-striped table-hover">
     <tr>
         <th>Image</th>
         <th>Filename</th>
