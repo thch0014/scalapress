@@ -28,6 +28,6 @@
     #end
 </table>
 
-<a href="$urlResolver.objectCreate($type)" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
 
 #parse("/admin/footer.vm")

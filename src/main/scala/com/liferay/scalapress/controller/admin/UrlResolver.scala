@@ -67,6 +67,7 @@ object UrlResolver {
     def generalSettings = "/backoffice/settings/site"
 
     def attributeEdit(a: Attribute) = "/backoffice/attribute/" + a.id
+    def createAttribute(t: ObjectType) = typeEdit(t) + "/attribute/create"
 
     def folderEdit(folder: Folder) = "/backoffice/folder/" + folder.id
     val folders = "/backoffice/folder"
@@ -86,8 +87,6 @@ object UrlResolver {
 
     val types = "/backoffice/type"
     def typeEdit(t: ObjectType) = "/backoffice/type/" + t.id
-
-    def addAttribute(t: ObjectType) = typeEdit(t) + "/attribute/create"
 
     def login = "/login"
     def logout = "/j_spring_security_logout"

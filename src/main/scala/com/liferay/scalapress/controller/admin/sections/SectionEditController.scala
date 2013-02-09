@@ -11,7 +11,7 @@ import com.liferay.scalapress.section.Section
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.section.objects.ObjectListSection
-import com.liferay.scalapress.plugin.folder.FolderContentSection
+import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 
 /** @author Stephen Samuel */
 @Controller

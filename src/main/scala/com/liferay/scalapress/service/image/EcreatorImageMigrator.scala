@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import com.liferay.scalapress.dao.{ImageDao, WidgetDao, FolderDao}
 import scala.collection.JavaConverters._
 import actors.Futures
-import com.liferay.scalapress.plugin.folder.FolderContentSection
+import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 
 /** @author Stephen Samuel */
 @Component

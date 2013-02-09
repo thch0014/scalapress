@@ -7,11 +7,13 @@ import com.liferay.scalapress.dao.AttributeDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.domain.attr.Attribute
+import com.liferay.scalapress.section.objects.EnumPopulator
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/attribute/{id}"))
-class AttributeEditController {
+class AttributeEditController extends EnumPopulator {
 
     @Autowired var attributeDao: AttributeDao = _
     @Autowired var context: ScalapressContext = _
@@ -33,4 +35,5 @@ class AttributeEditController {
     //
 
     @ModelAttribute def att(@PathVariable("id") id: Long) = attributeDao.find(id)
+    @ModelAttribute("attributeTypeMap") def types = populate(AttributeType.values)
 }

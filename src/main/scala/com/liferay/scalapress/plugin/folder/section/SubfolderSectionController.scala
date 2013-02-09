@@ -7,7 +7,6 @@ import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import com.liferay.scalapress.dao.{MarkupDao, PluginDao}
 import com.liferay.scalapress.section.objects.EnumPopulator
-import com.liferay.scalapress.plugin.folder.SubfolderSection
 
 /** @author Stephen Samuel */
 @Controller

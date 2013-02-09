@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Type</h3>
+<h3>Edit Type: $type.name</h3>
 
 <form class="form-horizontal" method="POST">
 
@@ -74,6 +74,8 @@
         </tr>
     #end
 </table>
+
+<a href="$urlResolver.createAttribute($type)" role="button" class="btn"> <i class="icon-plus"></i> Create Attribute</a>
 
 
 #parse("/admin/footer.vm")
