@@ -28,12 +28,12 @@ object SiteAddressLabelTag extends ScalapressTag with TagBuilder {
 
 object SiteNameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.name)
+        Option(context.siteDao.get.name)
 }
 
 object SiteCountryTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.country)
+        Option(context.siteDao.get.country)
 }
 
 object SiteEmailTag extends ScalapressTag with TagBuilder {
@@ -43,22 +43,22 @@ object SiteEmailTag extends ScalapressTag with TagBuilder {
 
 object SitePhoneTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.telephone)
+        Option(context.siteDao.get.telephone)
 }
 
 object SitePostcodeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.postcode)
+        Option(context.siteDao.get.postcode)
 }
 
 object SiteVatTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.vatNumber)
+        Option(context.siteDao.get.vatNumber)
 }
 
 object SiteCompanyNumberTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.companyNumber)
+        Option(context.siteDao.get.companyNumber)
 }
 
 object SiteGoogleMapTag extends ScalapressTag with TagBuilder {

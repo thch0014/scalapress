@@ -6,10 +6,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <security:http pattern="/backoffice/**" auto-config='true' access-denied-page="/error/noaccess">
-        <security:intercept-url pattern="/backoffice/**" access="ROLE_ADMIN"/>
-        <security:intercept-url pattern="/backoffice/*" access="ROLE_ADMIN"/>
-        <security:intercept-url pattern="/" access="ROLE_ADMIN"/>
-        <security:form-login login-page="/backlogin"/>
+        <security:intercept-url pattern="/backoffice*" access="ROLE_ADMIN"/>
+        <security:form-login login-page="/backlogin" />
     </security:http>
 
     <security:http auto-config="true" access-denied-page="/error/noaccess">
@@ -20,7 +18,7 @@
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
 
     <security:authentication-manager>
-        <security:authentication-provider ref="autoIPAuthenticationProvider"/>
+        <!--  <security:authentication-provider ref="autoIPAuthenticationProvider"/> -->
         <security:authentication-provider user-service-ref="databaseUserDetailsService">
             <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
