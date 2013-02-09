@@ -30,6 +30,7 @@ class ObjectUserDetails(obj: Obj) extends UserDetails {
     def getUsername: String = obj.email
     def getPassword: String = obj.passwordHash
     def userId: Long = obj.id
+    def user = obj
     def getAuthorities: util.Collection[_ <: GrantedAuthority] = List(UserAuthority).asJava
 }
 

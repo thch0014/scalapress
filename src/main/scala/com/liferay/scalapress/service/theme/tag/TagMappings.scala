@@ -7,7 +7,7 @@ import user.{LogoutTag, UserStatusTag}
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
 import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
 import com.liferay.scalapress.plugin.ecommerce.{BasketLinesTag, CheckoutTag, BasketTotalTag, BasketLinkTag, AddToBasketTag}
-import com.liferay.scalapress.plugin.account.tag.{LoginEmailTag, LoginPasswordTag, RegisterTag}
+import com.liferay.scalapress.plugin.account.tag.{UsernameTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 
 /** @author Stephen Samuel */
@@ -68,6 +68,8 @@ object TagMappings {
         "image_browser" -> ColorboxTag,
         "user_status" -> UserStatusTag,
         "account_status" -> UserStatusTag,
+        "account_name" -> UsernameTag,
+        "account_username" -> UsernameTag,
         "member_status" -> UserStatusTag,
         "boxes" -> WidgetsTag,
         "widgets" -> WidgetsTag,

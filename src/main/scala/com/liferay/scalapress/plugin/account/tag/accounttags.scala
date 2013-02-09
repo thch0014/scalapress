@@ -13,9 +13,7 @@ object UsernameTag extends ScalapressTag with TagBuilder {
           .map(_.asInstanceOf[UsernamePasswordAuthenticationToken])
           .map(_.getPrincipal)
           .map(_.asInstanceOf[ObjectUserDetails])
-          .map(_.userId)
-
-        None
+          .map(_.user.name)
     }
 }
 
