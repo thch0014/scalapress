@@ -3,7 +3,7 @@ package com.liferay.scalapress.service.theme.tag
 import folder.{FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
-import user.UserStatusTag
+import user.{LogoutTag, UserStatusTag}
 import com.liferay.scalapress.section.attachment.{AttachmentNameTag, AttachmentLinkTag}
 import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
 import com.liferay.scalapress.plugin.ecommerce.{BasketLinesTag, CheckoutTag, BasketTotalTag, BasketLinkTag, AddToBasketTag}
@@ -50,6 +50,7 @@ object TagMappings {
         "meta_description" -> DescriptionTagTag,
         "date" -> DateTag,
         "home" -> HomeTag,
+        "logout" -> LogoutTag,
         "attachment_link" -> AttachmentLinkTag,
         "attachment_name" -> AttachmentNameTag,
         "attribute_value" -> AttributeValueTag,

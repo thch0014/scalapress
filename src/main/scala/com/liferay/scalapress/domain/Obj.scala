@@ -14,10 +14,8 @@ class Obj {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var name: String = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var email: String = _
 
     @ElementCollection(fetch = FetchType.LAZY)
@@ -53,19 +51,18 @@ class Obj {
     @BeanProperty var dateCreated: java.lang.Long = _
     @BeanProperty var dateUpdated: java.lang.Long = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var confirmationCode: String = _
 
-    @Column(name = "feedSrc", columnDefinition = "TEXT")
+    @Column(name = "feedSrc", length = 5000)
     @BeanProperty var externalURI: String = _
 
-    @Column(name = "reference", columnDefinition = "TEXT")
+    @Column(name = "reference", length = 5000)
     @BeanProperty var exernalReference: String = _
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 5000)
     @BeanProperty var descriptionTag: String = _
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 5000)
     @BeanProperty var titleTag: String = _
 
     @Column(name = "keywords")
@@ -73,12 +70,12 @@ class Obj {
 
     @BeanProperty var featured: Boolean = false
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var summary: String = _
 
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
     @BeanProperty def sellPriceInc = sellPrice * vatRate
+
     @BeanProperty var costPrice: Int = _
     @BeanProperty var vatRate: Double = _
 
@@ -88,15 +85,13 @@ class Obj {
 
     @BeanProperty var x: Int = 0
     @BeanProperty var y: Int = 0
-    @Column(columnDefinition = "TEXT")
+
     @BeanProperty var location: String = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var status: String = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var inStockMsg: String = _
-    @Column(columnDefinition = "TEXT")
+
     @BeanProperty var outStockMsg: String = _
 
     @Column(name = "ourStock")
@@ -115,16 +110,10 @@ class Obj {
     @BeanProperty var passwordHash: String = _
     @BeanProperty var resetCode: String = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var ipAddress: String = _
 
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var referrer: String = _
 
-    @Column(columnDefinition = "TEXT")
-    @BeanProperty var mobilePhone: String = _
-
-    @Column(columnDefinition = "TEXT")
     @BeanProperty var permaLink: String = _
 
 }
