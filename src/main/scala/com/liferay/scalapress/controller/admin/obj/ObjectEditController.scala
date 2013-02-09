@@ -3,7 +3,7 @@ package com.liferay.scalapress.controller.admin.obj
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{FolderDao, ObjectDao}
+import com.liferay.scalapress.dao.{AttributeValueDao, FolderDao, ObjectDao}
 import scala.Array
 import com.liferay.scalapress.domain.{Image, Obj}
 import com.liferay.scalapress.ScalapressContext
@@ -16,7 +16,7 @@ import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
 import com.liferay.scalapress.plugin.search.SearchService
-import com.liferay.scalapress.domain.attr.Attribute
+import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 @Controller
@@ -24,6 +24,7 @@ import com.liferay.scalapress.domain.attr.Attribute
 class ObjectEditController {
 
     @Autowired var assetStore: AssetStore = _
+    @Autowired var attributeValueDao: AttributeValueDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var context: ScalapressContext = _
@@ -43,60 +44,50 @@ class ObjectEditController {
             }
         }
 
-        //        val attrValues = new ArrayBuffer[AttributeValue]
-        //        for (a <- form.o.objectType.attributes.asScala) {
-        //
-        //            val values = req.getParameterValues("attribute_value_" + a.id)
-        //            if (values != null) {
-        //                values.map(_.trim).filter(_.length > 0).foreach(value => {
-        //                    val av = new AttributeValue
-        //                    av.attribute = a
-        //                    av.value = value
-        //                    av.obj = form.o
-        //                    attrValues += av
-        //                })
-        //            }
-        //        }
-        //        form.o.attributeValues = attrValues.toList.asJava
+        form.o.attributeValues.clear()
+
+        for (a <- form.o.objectType.attributes.asScala) {
+
+            val values = req.getParameterValues("attributeValues" + a.id)
+            if (values != null) {
+                values.map(_.trim).filter(_.length > 0).foreach(value => {
+                    val av = new AttributeValue
+                    av.attribute = a
+                    av.value = value
+                    av.obj = form.o
+                    form.o.attributeValues.add(av)
+                })
+            }
+        }
 
         if (form.upload != null) {
-            val key = assetStore.add(form.upload.getOriginalFilename, form.upload.getInputStream)
+            if (!form.upload.isEmpty) {
+                val key = assetStore.add(form.upload.getOriginalFilename, form.upload.getInputStream)
 
-            val image = new Image
-            image.filename = key
-            image.date = System.currentTimeMillis()
-            image.obj = form.o
-            form.o.images.add(image)
+                val image = new Image
+                image.filename = key
+                image.date = System.currentTimeMillis()
+                image.obj = form.o
+                form.o.images.add(image)
+            }
         }
 
         objectDao.save(form.o)
         searchService.index(form.o)
-        edit(form)
+        "redirect:/backoffice/obj/" + form.o.id
     }
 
-    //    @ModelAttribute("attributes") def attr(@PathVariable("id") id: Long) = {
-    //        val obj = objectDao.find(id)
-    //        obj.objectType
-    //          .attributes
-    //          .asScala
-    //          .sortBy(a => Option(a.section).getOrElse(""))
-    //          .asJava
-    //    }
-
-    @ModelAttribute("attributeValuesMap") def attributeValues(@PathVariable("id") id: Long): java.util.Map[Attribute, java.util.List[String]] = {
+    @ModelAttribute("attributesWithValues")
+    def attributeEditMap(@PathVariable("id") id: Long): java.util.List[(Attribute, java.util.List[String])] = {
         val obj = objectDao.find(id)
-        val map = obj.attributeValues.asScala.groupBy(_.attribute).map(e => (e._1, e._2.asJava))
-        map.asJava
-        null
-    }
-
-    @ModelAttribute("attributesBySection") def attr(@PathVariable("id") id: Long): java.util.Map[String, java.util.List[Attribute]] = {
-        val obj = objectDao.find(id)
-        val attributes = obj.objectType.attributes.asScala
-        val map = attributes
-          .groupBy(a => Option(a.section).filter(_.length > 0).getOrElse("General Attributes"))
-          .map(e => (e._1, e._2.asJava))
-        map.asJava
+        val attributes = obj.objectType.attributes.asScala.sortBy(_.name)
+        val attributesWithValues = attributes.map(a => {
+            var values = obj.attributeValues.asScala.filter(_.attribute.id == a.id).map(_.value)
+            if (values.isEmpty || a.multipleValues)
+                values = values :+ ""
+            (a, values.asJava)
+        })
+        attributesWithValues.asJava
     }
 
     @ModelAttribute("folders") def folder = {
@@ -122,7 +113,7 @@ class ObjectEditController {
     @ModelAttribute("statuses") def statuses =
         Map("Live" -> "Live", "Disabled" -> "Disabled", "Deleted" -> "Deleted").asJava
 
-    @ModelAttribute def form(@PathVariable("id") id: Long, model: ModelMap) {
+    @ModelAttribute def f(@PathVariable("id") id: Long, model: ModelMap) {
         val obj = objectDao.find(id)
         val form = new EditForm
         form.o = obj
@@ -132,7 +123,6 @@ class ObjectEditController {
         model.put("form", form)
         model.put("eyeball", UrlResolver.objectSiteView(obj))
     }
-
 }
 
 class EditForm {
@@ -140,3 +130,4 @@ class EditForm {
     @BeanProperty var folderIds: Array[Long] = _
     @BeanProperty var upload: MultipartFile = _
 }
+

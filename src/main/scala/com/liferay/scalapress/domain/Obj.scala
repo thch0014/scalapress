@@ -1,9 +1,9 @@
 package com.liferay.scalapress.domain
 
 import attr.AttributeValue
-import javax.persistence._
 import reflect.BeanProperty
 import java.util
+import javax.persistence._
 
 /** @author Stephen Samuel */
 @Entity
@@ -30,7 +30,9 @@ class Obj {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+    @OneToMany(fetch = FetchType.LAZY,
+        mappedBy = "obj",
+        cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var attributeValues: java.util.List[AttributeValue] = new util.ArrayList[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))

@@ -5,237 +5,250 @@
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 
-<legend>Details</legend>
-<div class=" control-group">
-    <label class="control-label">Name</label>
-
-    <div class="controls">
-        #springFormInput("form.o.name", "class='input-xxlarge'")
+<div class="accordion" id="accordion2">
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+            Details
+        </a>
     </div>
-</div>
+    <div id="collapseOne" class="accordion-body collapse in">
+        <div class="accordion-inner">
 
-<div class="control-group">
-    <label class="control-label">Status</label>
+            <div class=" control-group">
+                <label class="control-label">Name</label>
 
-    <div class="controls">
-        #springFormSingleSelect("form.o.status", $statuses)
-    </div>
-</div>
+                <div class="controls">
+                    #springFormInput("form.o.name", "class='input-xxlarge'")
+                </div>
+            </div>
 
-    #foreach ($folder in $form.o.folders)
-    <div class="control-group">
-        <label class="control-label">Folder</label>
+            <div class="control-group">
+                <label class="control-label">Status</label>
 
-        <div class="controls">
-            <select id="folderIds" name="folderIds" class="input-xxlarge">
-                #foreach($option in $folders.keySet())
-                    <option value="${option}"
-                        #if("$!folder.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${folders.get($option)}</option>
-                #end
-            </select>
-        </div>
-    </div>
-    #end
+                <div class="controls">
+                    #springFormSingleSelect("form.o.status", $statuses)
+                </div>
+            </div>
 
-<div class="control-group">
-    <label class="control-label">Folder</label>
+            #foreach ($folder in $form.o.folders)
+                <div class="control-group">
+                    <label class="control-label">Folder</label>
 
-    <div class="controls">
-        #springFormSingleSelect("form.folderIds", $folders, "class='input-xxlarge'")
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label">Reference</label>
-
-    <div class="controls">
-        #springFormInput("form.o.exernalReference", "class='input-xlarge'")
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label">Labels</label>
-
-    <div class="controls">
-        #springFormInput("form.o.labels", "class='input-xxlarge'")
-    </div>
-</div>
-
-<!--
-if (o.objectType.name.toLowerCase.contains("product")) {
-form.add(FormControlGroup("Price", TextInput("sellPrice").value(o.sellPrice).size(XXLarge)))
-form.add(FormControlGroup("Cost Price", TextInput("costPrice").value(o.costPrice).size(XXLarge)))
-form.add(FormControlGroup("Vat Rate", TextInput("vatRate").value(o.vatRate).size(XXLarge)))
-form.add(FormControlGroup("RRP", TextInput("rrp").value(o.rrp).size(XXLarge)))
-form.add(FormControlGroup("Stock Level", TextInput("stock").value(o.stock).size(XXLarge)))
-} -->
-
-
-<div class="control-group">
-    <label class="control-label">Title Tag</label>
-
-    <div class="controls">
-        #springFormInput("form.o.titleTag", "class='input-xxlarge'")
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label">Description Tag</label>
-
-    <div class="controls">
-        #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label">Keywords Tag</label>
-
-    <div class="controls">
-        #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
-    </div>
-</div>
-
-
-<!--
-
-
-val attributesBySection = o.objectType.attributes.asScala.groupBy(arg => Option(arg.section).getOrElse("General"))
-for (a <- attributesBySection) {
-
-val attributesTable = BootTable[Attribute](a => {
-
-val inputId = "attribute_value_" + a.id
-val values = o.attributeValues.asScala.filter(a.id == _.attribute.id).map(_.value)
-val mvalues = if (a.multipleValues || values.size == 0) values :+ "" else values
-
-val attributeValueInput = a.attributeType match {
-
-case AttributeType.Email
-| AttributeType.Link
-| AttributeType.Numerical
-| AttributeType.Postcode
-| AttributeType.Text => {
-
-val inputs = mvalues.map(value => {
-TextInput(inputId).value(value).size(XLarge)
-})
-inputs.mkString("\n")
-}
-
-case AttributeType.Selection => {
-
-val selects = mvalues.map(value => {
-val select = BootSelect(inputId).value(value)
-for (option <- a.options.asScala.sortBy(_.position)) {
-select.options(BootOption(option.value, option.value))
-}
-select
-})
-selects.mkString("\n")
-}
-
-case AttributeType.Boolean => {
-
-val select = BootSelect(inputId).value(mvalues.head)
-select.options("Yes")
-select.options("No")
-select.toString
-}
-
-case _ => values.mkString(", ")
-}
-
-
-Array(a.name, attributeValueInput.toString)
-})
-attributesTable.headers(a._1 + " Attributes", "Value")
-attributesTable.addAll(a._2)
-form.add(attributesTable)
-
-}
-
--->
-
-
-    #foreach ($entry in $attributesBySection.entrySet())
-    <legend>$entry.key</legend>
-        #foreach ($a in $entry.value)
-
-        <div class="control-group">
-            <label class="control-label">$a.name</label>
-
-            <div class="controls">
-                #if ($a.attributeType == "Text")
-                    #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
-                #elseif ($a.attributeType == "Postcode")
-                    #springFormInput("form.o.keywordsTag")
-                #elseif ($a.attributeType == "Link")
-                    #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
-                #elseif ($a.attributeType == "Numerical")
-                    #springFormInput("form.o.keywordsTag", "class='input-small'")
-                #elseif ($a.attributeType == "Selection")
-                    <div class="control-group">
-                        <label class="control-label">Folder</label>
-
-                        <div class="controls">
-                            <select id="folderIds" name="folderIds" class="input-xxlarge">
-                                #foreach($option in $folders.keySet())
-                                    <option value="${option}"
-                                        #if("$!folder.id" == "$option")
-                                            selected="selected"
-                                        #end>
-                                        ${folders.get($option)}</option>
-                                #end
-                            </select>
-                        </div>
+                    <div class="controls">
+                        <select id="folderIds" name="folderIds" class="input-xxlarge">
+                            #foreach($option in $folders.keySet())
+                                <option value="${option}"
+                                    #if("$!folder.id" == "$option")
+                                        selected="selected"
+                                    #end>
+                                    ${folders.get($option)}</option>
+                            #end
+                        </select>
                     </div>
-                    #springFormSingleSelect("form.o.keywordsTag", $a.optionsAsMap(), "class='input-xxlarge'")
-                #elseif ($a.attributeType == "Boolean")
-                    #springFormSingleSelect("form.o.keywordsTag", $booleanMap)
-                #end
+                </div>
+            #end
+
+            <div class="control-group">
+                <label class="control-label">Folder</label>
+
+                <div class="controls">
+                    #springFormSingleSelect("form.folderIds", $folders, "class='input-xxlarge'")
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Reference</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.exernalReference", "class='input-xlarge'")
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Labels</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.labels", "class='input-xxlarge'")
+                </div>
+            </div>
+
+            <!--
+            if (o.objectType.name.toLowerCase.contains("product")) {
+            form.add(FormControlGroup("Price", TextInput("sellPrice").value(o.sellPrice).size(XXLarge)))
+            form.add(FormControlGroup("Cost Price", TextInput("costPrice").value(o.costPrice).size(XXLarge)))
+            form.add(FormControlGroup("Vat Rate", TextInput("vatRate").value(o.vatRate).size(XXLarge)))
+            form.add(FormControlGroup("RRP", TextInput("rrp").value(o.rrp).size(XXLarge)))
+            form.add(FormControlGroup("Stock Level", TextInput("stock").value(o.stock).size(XXLarge)))
+            } -->
+
+
+            <div class="control-group">
+                <label class="control-label">Title Tag</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.titleTag", "class='input-xxlarge'")
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Description Tag</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Keywords Tag</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+                </div>
             </div>
         </div>
-        #end
-    #end
+    </div>
+</div>
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+            Attributes
+        </a>
+    </div>
+    <div id="collapse2" class="accordion-body collapse">
+        <div class="accordion-inner">
+            #foreach ($attributeWithValues in $attributesWithValues)
+                #set($a = $attributeWithValues.productElement(0))
+                #set($values = $attributeWithValues.productElement(1))
+
+                <div class="control-group">
+                    <label class="control-label">$a.name</label>
+
+                    <div class="controls">
+
+                        #if ($a.attributeType == "Text" ||$a.attributeType == "Postcode" || $a.attributeType == "Link"
+                        || $a.attributeType == "Email" || $a.attributeType == "Numerical")
+
+                            #foreach ($value in $values)
+                                <input type="text" name="attributeValues$a.id" value="$value"
+                                       class="input-xxlarge"/><br/>
+                            #end
+
+                        #elseif ($a.attributeType == "Text" ||$a.attributeType == "Postcode" || $a.attributeType == "Link"
+                        || $a.attributeType == "Email" || $a.attributeType == "Numerical")
+                            #foreach ($value in $values)
+                                <input type="text" name="attributeValues$a.id" value="$value" class="input-small"/><br/>
+                            #end
+
+                        #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
+                            #foreach ($value in $values)
+                                <div class="input-append date datepicker" value="$value" data-date-format="dd-mm-yyyy">
+                                    <input size="16" type="text" name="attributeValues$a.id" value="$value">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </div>
+                            #end
+
+                        #elseif ($a.attributeType == "Selection")
+
+                            #if ($a.multipleValues)
+
+                                #foreach ($option in $a.options)
+                                    #if($values.contains($option.value))
+                                        #set ($checked = "checked='true'")
+                                    #else
+                                        #set ($checked="")
+                                    #end
+
+                                    <label class="checkbox inline">
+                                        <input type="checkbox" name="attributeValues$a.id"
+                                               value="$option.value" $!checked>
+                                        $option.value
+                                    </label>
+                                #end
+
+                            #else
+
+                                <select name="attributeValues$a.id" class="input-xlarge">
+                                    #foreach ($option in $a.options)
+                                        #if($values.contains($option.value))
+                                            #set ($selected = "selected='true'")
+                                        #else
+                                            #set ($selected="")
+                                        #end
+                                        <option $selected>$option.value</option>
+                                    #end
+                                </select>
+
+                            #end
+
+                        #elseif ($a.attributeType == "Boolean")
+                            <select name="attributeValues$a.id" class="input-small">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        #end
+                    </div>
+                </div>
+            #end
+        </div>
+    </div>
+</div>
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse4">
+            Content
+        </a>
+    </div>
+    <div id="collapse4" class="accordion-body collapse">
+        <div class="accordion-inner">
 
 
+            #springFormTextarea("form.o.content", "rows='24' class='input-block-level tinymce'")
+            <br/>
 
-<legend>Content</legend>
+        </div>
+    </div>
+</div>
 
-    #springFormTextarea("form.o.content", "rows='24' class='input-block-level tinymce'")
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
+            Images
+        </a>
+    </div>
+    <div id="collapse5" class="accordion-body collapse">
+        <div class="accordion-inner">
+
+            <legend>Images</legend>
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <tr>
+                    <th>Image</th>
+                    <th>Filename</th>
+                    <th>Content Type</th>
+                </tr>
+
+                #foreach ($a in $assets)
+                    <tr>
+                        <td>
+                            <ul class="thumbnails">
+                                <li class="span6">
+                                    <div class="thumbnail"><img
+                                            src="/images/$a.filename()?width=128&height=128"/></div>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>$a.filename()</td>
+                        <td>$a.contentType()</td>
+                    </tr>
+                #end
+            </table>
 
 
-
-<br/>
-<legend>Images</legend>
-<table class="table table-bordered table-condensed table-striped table-hover">
-    <tr>
-        <th>Image</th>
-        <th>Filename</th>
-        <th>Content Type</th>
-    </tr>
-
-    #foreach ($a in $assets)
-        <tr>
-            <td>
-                <ul class="thumbnails">
-                    <li class="span6">
-                        <div class="thumbnail"><img src="/images/$a.filename()?width=128&height=128"/></div>
-                    </li>
-                </ul>
-            </td>
-            <td>$a.filename()</td>
-            <td>$a.contentType()</td>
-        </tr>
-    #end
-</table>
-
-
-Image Upload: <input type="file" name="upload"/>
-
+            Image Upload: <input type="file" name="upload"/>
+        </div>
+    </div>
+</div>
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>

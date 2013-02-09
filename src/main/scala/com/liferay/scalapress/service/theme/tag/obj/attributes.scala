@@ -26,19 +26,15 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
         params.get("id") match {
             case None => None
             case Some(id) => {
-                try {
-                    request.obj.flatMap(obj => {
-                        obj.attributeValues
-                          .asScala
-                          .find(_.id == id.toLong)
-                          .map(_.attribute.name)
-                          .map(build(_, params))
-                    })
-                } catch {
-                    case e: Exception =>
-                        logger.warn("{}", e)
-                        None
-                }
+                request.obj.map(obj => {
+                    val values = obj.attributeValues
+                      .asScala
+                      .filter(_.id == id.toLong)
+                      .map(_.attribute.name)
+                      .map(build(_, params))
+                    val sep = params.get("sep").getOrElse(", ")
+                    values.mkString(sep)
+                })
             }
         }
     }
@@ -57,6 +53,7 @@ object AttributeTableTag extends ScalapressTag with TagBuilder {
             case None => None
             case Some(obj) => {
                 val objects = obj.attributeValues.asScala
+                  .filter(_.attribute.public)
                   .filterNot(av => excludes.contains(av.attribute.id.toString))
                   .filter(av => includes.isEmpty || includes.contains(av.attribute.id.toString))
                 objects.size match {
