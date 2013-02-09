@@ -11,11 +11,13 @@ import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.section.objects.EnumPopulator
+import com.liferay.scalapress.enums.FolderOrdering
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/{id}"))
-class FolderEditController {
+class FolderEditController extends EnumPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var folderDao: FolderDao = _
@@ -64,6 +66,8 @@ class FolderEditController {
         val java = options.toMap.asJava
         java
     }
+
+    @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)
 
     @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
         val folder = folderDao.find(id)

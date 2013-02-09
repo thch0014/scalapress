@@ -1,4 +1,4 @@
-package com.liferay.scalapress.section.folder
+package com.liferay.scalapress.plugin.folder
 
 import javax.persistence.{Table, Entity, JoinColumn, ManyToOne}
 import reflect.BeanProperty

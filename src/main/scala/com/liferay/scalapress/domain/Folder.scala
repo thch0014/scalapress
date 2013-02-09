@@ -5,9 +5,8 @@ import java.util
 import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.section.Section
-import com.liferay.scalapress.section.content.FolderContentSection
 import com.liferay.scalapress.enums.FolderOrdering
-import com.liferay.scalapress.section.folder.SubfolderSection
+import com.liferay.scalapress.plugin.folder.{FolderContentSection, SubfolderSection}
 
 /** @author Stephen Samuel */
 @Entity

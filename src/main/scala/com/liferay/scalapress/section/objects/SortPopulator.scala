@@ -20,3 +20,14 @@ trait SortPopulator {
         model.put("sortMap", map.asJava)
     }
 }
+
+trait EnumPopulator {
+
+    def populate(values: Seq[Enum[_]]): java.util.Map[String, String] = {
+        var map = TreeMap[String, String]()
+        values.map(s => {
+            map = map + (s.name -> s.name)
+        })
+        map.asJava
+    }
+}

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.section.folder
+package com.liferay.scalapress.plugin.folder
 
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
 import com.liferay.scalapress.domain.Markup

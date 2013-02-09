@@ -22,7 +22,11 @@ object TagRenderer extends Logging {
         "member",
         "ordering_qty",
         "ordering_buy",
-        "external_links")
+        "external_links",
+        "pricing_discount",
+        "pricing_original",
+        "accessories",
+        "options")
 
     def erase(text: String) = {
         require(text != null)

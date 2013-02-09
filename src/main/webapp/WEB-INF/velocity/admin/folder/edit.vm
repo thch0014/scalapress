@@ -14,7 +14,6 @@
         </div>
     </div>
 
-
     <div class="control-group">
         <label class="control-label">Parent</label>
 
@@ -36,6 +35,14 @@
 
         <div class="controls">
             #springFormCheckbox("folder.hidden")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Subfolder Ordering</label>
+
+        <div class="controls">
+            #springFormSingleSelect("folder.subfolderOrdering", $folderOrderingMap)
         </div>
     </div>
 

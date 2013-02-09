@@ -5,6 +5,7 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.FriendlyUrlGenerator
+import com.liferay.scalapress.enums.FolderOrdering
 
 /** @author Stephen Samuel */
 
@@ -79,9 +80,15 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val sep = params.get("sep").getOrElse("")
         val activeClass = params.get("activeclass").getOrElse("current active")
 
-        val folders = context.folderDao.findTopLevel.filterNot(_.hidden).filterNot(f => exclude.contains(f.id))
-        val names = folders
-          .map(f => {
+        val root = context.folderDao.root
+        val folders = root.subfolders.asScala
+        val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id))
+        val sorted = root.subfolderOrdering match {
+            case FolderOrdering.Manual => filtered.sortBy(_.position)
+            case _ => filtered.sortBy(_.name)
+        }
+
+        val links = sorted.map(f => {
 
             val startTag = if (request.folder.orNull == f)
                 "<" + tag + " class='" + cssClass + " " + activeClass + "'>"
@@ -92,8 +99,8 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
 
             val link = "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "'>" + f.name + "</a>"
             startTag + link + endTag
-        })
-          .mkString(sep)
-        Some(names)
+        }).mkString(sep)
+
+        Some(links)
     }
 }

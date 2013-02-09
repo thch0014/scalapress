@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.dao.{ImageDao, WidgetDao, FolderDao}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.section.content.FolderContentSection
 import actors.Futures
+import com.liferay.scalapress.plugin.folder.FolderContentSection
 
 /** @author Stephen Samuel */
 @Component
