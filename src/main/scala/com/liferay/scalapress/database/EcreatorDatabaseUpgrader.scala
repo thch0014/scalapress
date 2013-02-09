@@ -339,7 +339,25 @@ class EcreatorDatabaseUpgrader extends Logging {
             "newsfeeds",
             "items_views",
             "forms_submissions_ip_stats",
-            "currencies", "blocks_maps_clickable", "blocks_availabilitychart", "blocks_calculators")) {
+            "settings_stats",
+            "sessions",
+            "reviews_delegates",
+            "reviews_module",
+            "redirects",
+            "feeds_ecreator_import",
+            "newsletters_examples",
+            "feeds_category_mappings",
+            "feeds_custom",
+            "feeds_custom_export",
+            "feeds_custom_fields",
+            "feeds_ecreator_export",
+            "feeds_ecreator_import",
+            "feeds_generic_categories", "boxes_filters", "boxes_language", "boxes_upload", "blocks_ibex",
+            "blocks_jobsheets_submit", "blocks_maps_europe_countries", "blocks_maps_gb_regions", "blocks_newsfeeds",
+            "currencies",
+            "blocks_maps_clickable",
+            "blocks_availabilitychart",
+            "blocks_calculators")) {
             try {
                 execute("DROP TABLE " + table)
             } catch {
