@@ -2,7 +2,7 @@ package com.liferay.scalapress.controller.web.image
 
 import org.springframework.web.bind.annotation._
 import com.liferay.scalapress.service.image.ImageService
-import org.springframework.beans.factory.annotation.{Value, Autowired}
+import org.springframework.beans.factory.annotation.Autowired
 import javax.imageio.ImageIO
 import java.io.ByteArrayOutputStream
 import net.sf.ehcache.CacheManager
@@ -32,8 +32,6 @@ class ImageController extends Logging {
     val cacheManager = CacheManager.getInstance()
     cacheManager.addCache("images")
     val cache = cacheManager.getCache("images")
-
-    @Value("${ecreator.migration.domain}") var migrationDomain: String = _
 
     @ExceptionHandler(Array(classOf[RuntimeException]))
     def handleException1(e: RuntimeException, resp: HttpServletResponse) {
