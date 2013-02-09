@@ -299,7 +299,6 @@ class EcreatorDatabaseUpgrader extends Logging {
             "boxes_favourites",
             "forms_submissions_restriction_module",
             "forms_submissions_report_module",
-            "items_suppliers_sku",
             "items_stock_audit",
             "items_prices_watchers",
             "items_prices_requests",
@@ -312,10 +311,6 @@ class EcreatorDatabaseUpgrader extends Logging {
             "listings_hit_monthly",
             "listings_hits",
             "listings_hits_daily",
-            "permissions_module",
-            "permissions",
-            "permissions_accessgroups_items",
-            "permissions_accessgroups",
             "profiles_module",
             "settings_comments",
             "settings_facebook_login",
@@ -327,11 +322,28 @@ class EcreatorDatabaseUpgrader extends Logging {
             "templates_settings",
             "wizards",
             "templates_session",
-            "searcher_comments", "search_groups", "searches_alerts", "searches_labels", "prices_bands", "prices")) {
+            "boxes_newsfeeds",
+            "boxes_rss_export",
+            "boxes_wizards",
+            "payments_requests",
+            "payments_sessions",
+            "searcher_comments",
+            "search_groups",
+            "searches_alerts",
+            "searches_labels",
+            "prices_bands",
+            "prices",
+            "payments_adjustments",
+            "newsletter_optins",
+            "newsfeeds_items",
+            "newsfeeds",
+            "items_views",
+            "forms_submissions_ip_stats",
+            "currencies", "blocks_maps_clickable", "blocks_availabilitychart", "blocks_calculators")) {
             try {
                 execute("DROP TABLE " + table)
             } catch {
-                case e: Exception => logger.warn("{}", e)
+                case e: Exception => logger.warn("Unable to drop {}", e.getMessage)
             }
         }
 

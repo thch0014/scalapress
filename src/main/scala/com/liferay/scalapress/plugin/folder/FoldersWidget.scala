@@ -18,6 +18,8 @@ class FoldersWidget extends Widget with Logging {
     @BeanProperty var includeHome: Boolean = _
     @BeanProperty var excludeCurrent: Boolean = _
 
+    override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
+
     override def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
         val buffer = new ArrayBuffer[String]
         renderFolderLevel(context.folderDao.root, 1, buffer)
