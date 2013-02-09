@@ -29,7 +29,7 @@ class SearchFormEditController extends MarkupPopulator {
         edit(form)
     }
 
-    @RequestMapping(value = Array("field/create"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("field/create"), produces = Array("text/html"))
     def createField(@ModelAttribute("form") form: SearchForm) = {
 
         val field = new SearchFormField

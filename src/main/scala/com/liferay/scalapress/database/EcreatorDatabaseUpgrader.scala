@@ -12,6 +12,17 @@ class EcreatorDatabaseUpgrader extends Logging {
 
     @Autowired var dataSource: DataSource = _
 
+    def execute(sql: String) {
+        val conn = dataSource.getConnection
+        val stmt = conn.createStatement()
+        try {
+            stmt.executeUpdate(sql)
+        } finally {
+            stmt.close()
+            conn.close()
+        }
+    }
+
     @PostConstruct
     def update() {
 
@@ -20,15 +31,13 @@ class EcreatorDatabaseUpgrader extends Logging {
         var k = 1
         Array("boxes_custom", "categories_boxes", "boxes_search").foreach(table => {
 
-            conn.prepareStatement("UPDATE " + table + " SET id=id+10000*" + k + " WHERE id<10000").execute()
+            execute("UPDATE " + table + " SET id=id+10000*" + k + " WHERE id<10000")
             k = k + 1
         })
 
         Array("boxes_custom", "categories_boxes", "boxes_images", "boxes_search").foreach(table => {
             try {
-                conn
-                  .prepareStatement("UPDATE " + table + " SET restricted=1, `where`=0 where `where`=1")
-                  .execute()
+                execute("UPDATE " + table + " SET restricted=1, `where`=0 where `where`=1")
             } catch {
                 case e: Exception => logger.warn(e.getMessage)
             }
@@ -49,24 +58,24 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
         for (col <- Array("item", "category")) {
-            conn.prepareStatement("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null").execute()
-            conn.prepareStatement("UPDATE forms_submissions SET " + col + "=null where " + col + "=0").execute()
+            execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
+            execute("UPDATE forms_submissions SET " + col + "=null where " + col + "=0")
         }
 
-        conn.prepareStatement("ALTER TABLE categories_items modify item bigint(10) null").execute()
-        conn.prepareStatement("UPDATE categories set parent=null where parent=0").execute()
+        execute("ALTER TABLE categories_items modify item bigint(10) null")
+        execute("UPDATE categories set parent=null where parent=0")
 
 
-        conn.prepareStatement("ALTER TABLE blocks_galleries MODIFY gallery bigint(10) null").execute()
-        conn.prepareStatement("UPDATE blocks_galleries set gallery=null WHERE gallery=0").execute()
+        execute("ALTER TABLE blocks_galleries MODIFY gallery bigint(10) null")
+        execute("UPDATE blocks_galleries set gallery=null WHERE gallery=0")
 
-        conn.prepareStatement("ALTER TABLE categories modify parent bigint(10) null").execute()
-        conn.prepareStatement("UPDATE categories set parent=null WHERE parent=0").execute()
+        execute("ALTER TABLE categories modify parent bigint(10) null")
+        execute("UPDATE categories set parent=null WHERE parent=0")
 
         <!-- update image assocations -->
         for (col <- Array("imageBox", "item", "gallery", "category")) {
-            conn.prepareStatement("alter table images MODIFY " + col + " bigint(10) null").execute()
-            conn.prepareStatement("update images set " + col + "=null WHERE " + col + "=0").execute()
+            execute("alter table images MODIFY " + col + " bigint(10) null")
+            execute("update images set " + col + "=null WHERE " + col + "=0")
         }
 
         k = 1
@@ -78,52 +87,52 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_attachments")
           .foreach(block => {
 
-            conn.prepareStatement("UPDATE " + block + " SET id=id+10000*" + k + " WHERE id<10000").execute()
+            execute("UPDATE " + block + " SET id=id+10000*" + k + " WHERE id<10000")
             k = k + 1
 
             Array("ownerItemtype", "ownercategory", "ownerItem").foreach(col => {
-                conn.prepareStatement("alter table " + block + " modify " + col + " bigint(10) null").execute()
-                conn.prepareStatement("update " + block + " set " + col + "=null WHERE " + col + "=0").execute()
+                execute("alter table " + block + " modify " + col + " bigint(10) null")
+                execute("update " + block + " set " + col + "=null WHERE " + col + "=0")
             })
         })
 
-        conn.prepareStatement("ALTER TABLE blocks_subcategories MODIFY markup bigint(10) null").execute()
-        conn.prepareStatement("UPDATE blocks_subcategories set markup=null WHERE markup=0").execute()
+        execute("ALTER TABLE blocks_subcategories MODIFY markup bigint(10) null")
+        execute("UPDATE blocks_subcategories set markup=null WHERE markup=0")
 
-        conn.prepareStatement("ALTER TABLE search_forms MODIFY markup bigint(10) null").execute()
-        conn.prepareStatement("UPDATE search_forms set markup=null WHERE markup=0").execute()
+        execute("ALTER TABLE search_forms MODIFY markup bigint(10) null")
+        execute("UPDATE search_forms set markup=null WHERE markup=0")
 
-        conn.prepareStatement("ALTER TABLE search_forms_fields MODIFY searchForm bigint(10) null").execute()
-        conn.prepareStatement("UPDATE search_forms_fields SET searchForm=null WHERE searchForm=0").execute()
-        conn.prepareStatement("ALTER TABLE search_forms_fields MODIFY attribute bigint(10) null").execute()
-        conn.prepareStatement("UPDATE search_forms_fields SET attribute=null WHERE attribute=0").execute()
+        execute("ALTER TABLE search_forms_fields MODIFY searchForm bigint(10) null")
+        execute("UPDATE search_forms_fields SET searchForm=null WHERE searchForm=0")
+        execute("ALTER TABLE search_forms_fields MODIFY attribute bigint(10) null")
+        execute("UPDATE search_forms_fields SET attribute=null WHERE attribute=0")
 
-        conn.prepareStatement("ALTER TABLE blocks_items MODIFY listmarkup bigint(10) null").execute()
-        conn.prepareStatement("UPDATE blocks_items SET listmarkup=null WHERE listmarkup=0").execute()
+        execute("ALTER TABLE blocks_items MODIFY listmarkup bigint(10) null")
+        execute("UPDATE blocks_items SET listmarkup=null WHERE listmarkup=0")
 
         // update markup fields to text
-        conn.prepareStatement("ALTER TABLE markup MODIFY `body` text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY `start` text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY `end` text null").execute()
-        conn.prepareStatement("ALTER TABLE markup MODIFY `between` text null").execute()
+        execute("ALTER TABLE markup MODIFY `body` text null")
+        execute("ALTER TABLE markup MODIFY `start` text null")
+        execute("ALTER TABLE markup MODIFY `end` text null")
+        execute("ALTER TABLE markup MODIFY `between` text null")
 
-        conn.prepareStatement("ALTER TABLE templates MODIFY header text null").execute()
-        conn.prepareStatement("ALTER TABLE templates MODIFY footer text null").execute()
+        execute("ALTER TABLE templates MODIFY header text null")
+        execute("ALTER TABLE templates MODIFY footer text null")
 
-        conn.prepareStatement("UPDATE users SET passwordhash='09b792e75d96dbcb3d49f5af313e9fa1', active=1 " +
-          "WHERE passwordhash IS NULL AND active=1").execute()
+        execute("UPDATE users SET passwordhash='09b792e75d96dbcb3d49f5af313e9fa1', active=1 " +
+          "WHERE passwordhash IS NULL AND active=1")
 
         // attributes
-        conn.prepareStatement("ALTER TABLE attributes_values MODIFY item bigint(10) null").execute()
-        conn.prepareStatement("UPDATE attributes_values SET item=null WHERE item=0").execute()
+        execute("ALTER TABLE attributes_values MODIFY item bigint(10) null")
+        execute("UPDATE attributes_values SET item=null WHERE item=0")
 
-        conn.prepareStatement("ALTER TABLE attributes MODIFY itemtype bigint(10) null").execute()
-        conn.prepareStatement("UPDATE attributes SET itemtype=null WHERE itemtype=0").execute()
+        execute("ALTER TABLE attributes MODIFY itemtype bigint(10) null")
+        execute("UPDATE attributes SET itemtype=null WHERE itemtype=0")
 
-        conn.prepareStatement("ALTER TABLE orders MODIFY deliveryaddress bigint(10) null").execute()
-        conn.prepareStatement("UPDATE orders SET deliveryaddress=null WHERE deliveryaddress=0").execute()
-        conn.prepareStatement("ALTER TABLE orders MODIFY account bigint(10) null").execute()
-        conn.prepareStatement("UPDATE orders SET account=null WHERE account=0").execute()
+        execute("ALTER TABLE orders MODIFY deliveryaddress bigint(10) null")
+        execute("UPDATE orders SET deliveryaddress=null WHERE deliveryaddress=0")
+        execute("ALTER TABLE orders MODIFY account bigint(10) null")
+        execute("UPDATE orders SET account=null WHERE account=0")
 
 
         // copy the searchbox from forms to the box
@@ -140,7 +149,9 @@ class EcreatorDatabaseUpgrader extends Logging {
                     stmt.execute()
                     stmt.close()
 
-                    conn.prepareStatement("UPATE search_forms SET searchbox=0").execute()
+                    val stmt2 = conn.prepareStatement("UPDATE search_forms SET searchbox=0")
+                    stmt2.execute()
+                    stmt2.close()
 
                 } catch {
                     case e: Exception => logger.warn(e.getMessage)
@@ -150,7 +161,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
-        conn.close()
+
 
 
         for (column <- Array("disableemails",
@@ -159,10 +170,171 @@ class EcreatorDatabaseUpgrader extends Logging {
             "imageupdatetimestamp",
             "imageaddedtime", "administrator", "crm", "salesperson", "restrictions")) {
             try {
-                conn.prepareStatement("ALTER TABLE users DROP " + column).execute()
+                execute("ALTER TABLE users DROP " + column)
             } catch {
                 case e: Exception => logger.warn(e.getMessage)
             }
         }
+
+        for (table <- Array("videos",
+            "videos_block",
+            "visitors",
+            "visitors_sessions",
+            "visitors_views",
+            "system_messages",
+            "tickers_settings",
+            "tickers",
+            "sms_blocks",
+            "sms_bulletins",
+            "sms_registrations",
+            "stats_hits_items",
+            "stats_submissions_per_page",
+            "report_vouchers",
+            "reports_browsers_counter",
+            "reports_downloads_monthly",
+            "reports_downloads_weekly",
+            "reports_hits",
+            "reports_hits_copy",
+            "reports_hits_daily",
+            "reports_hits_monthly",
+            "reports_hits_pages_monthly",
+            "reports_ips",
+            "reports_ips_listing",
+            "reports_ips_page",
+            "reports_referrals",
+            "reports_referrals_counter",
+            "reports_search_phrases",
+            "reports_submissions",
+            "reports_submissions_members_monthly",
+            "reports_submissions_monthly",
+            "reports_submissions_pages_monthly",
+            "reports_terms",
+            "reports_terms_counter",
+            "reports_visitors_daily",
+            "reports_visitors_monthly",
+            "meetups_rsvp_blocks",
+            "members_buddies",
+            "members_debug_logins",
+            "members_messages",
+            "members_nudges",
+            "members_sessions",
+            "meetups",
+            "meetups_blocks_itemrsvps",
+            "meetups_blocks_myrsvps",
+            "mailboxes",
+            "logs_entries",
+            "licenses",
+            "jobsheets_jobs",
+            "languages_translations",
+            "items_bots_expiry",
+            "ipoints_settings",
+            "interaction_views_count",
+            "interaction_views",
+            "interactions",
+            "forums",
+            "forums_posts",
+            "forums_topics",
+            "geoip",
+            "gmap_sku",
+            "banners",
+            "banners_joins",
+            "auctions_bids",
+            "auctions",
+            "affiliates_settings",
+            "affiliates_conversions",
+            "affiliates_clicks",
+            "boxes_sms",
+            "boxes_tagcloud",
+            "boxes_members_views",
+            "boxes_member_messages",
+            "calculators",
+            "calculators_fields",
+            "calculators_fields_options",
+            "captchas",
+            "categories_referrers",
+            "dashboard_shortcuts",
+            "downloads",
+            "feeds_vue",
+            "feeds_vip",
+            "feeds_sykes",
+            "feeds_shopzilla",
+            "feeds_savemoneycars",
+            "feeds_rightmove_export",
+            "feeds_rightmove",
+            "feeds_propertyfeed",
+            "feeds_pricerunner",
+            "feeds_pricegrabber",
+            "feeds_pdo_news",
+            "feeds_open_range_images",
+            "feeds_open_range",
+            "feeds_midwich",
+            "feeds_micro_p",
+            "feeds_kyero",
+            "feeds_keloo",
+            "feeds_edirectory",
+            "feeds_c2000",
+            "feeds_artful",
+            "boxes_holiday_reminders",
+            "boxes_highlighted_comments",
+            "boxes_googlewebsearch",
+            "boxes_forums_search",
+            "boxes_forum_posts_latest",
+            "boxes_buddies",
+            "boxes_banners",
+            "adsense",
+            "attachments_groups",
+            "images_settings",
+            "images_types",
+            "feeds_kingfield",
+            "feeds_dealtime ",
+            "feeds_camdram",
+            "sitemap_categories",
+            "feeds_autopart",
+            "blocks_holiday_reminders",
+            "blocks_tagcloud",
+            "blocks_wizards",
+            "blocks_profile_sms",
+            "boxes_active_location",
+            "boxes_callback",
+            "boxes_favourites",
+            "forms_submissions_restriction_module",
+            "forms_submissions_report_module",
+            "items_suppliers_sku",
+            "items_stock_audit",
+            "items_prices_watchers",
+            "items_prices_requests",
+            "items_prices_overrides",
+            "items_prices_cost",
+            "items_favourites_settings",
+            "items_favourites_groups_attribute",
+            "items_favourites_groups",
+            "items_favourites",
+            "listings_hit_monthly",
+            "listings_hits",
+            "listings_hits_daily",
+            "permissions_module",
+            "permissions",
+            "permissions_accessgroups_items",
+            "permissions_accessgroups",
+            "profiles_module",
+            "settings_comments",
+            "settings_facebook_login",
+            "settings_forums",
+            "settings_sitemap",
+            "settings_sms",
+            "users_sessions",
+            "userplane_recorder_recordings",
+            "templates_settings",
+            "wizards",
+            "templates_session",
+            "searcher_comments", "search_groups", "searches_alerts", "searches_labels", "prices_bands", "prices")) {
+            try {
+                execute("DROP TABLE " + table)
+            } catch {
+                case e: Exception => logger.warn("{}", e)
+            }
+        }
+
+        conn.close()
     }
 }
