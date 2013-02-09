@@ -17,6 +17,8 @@ class EcreatorDatabaseUpgrader extends Logging {
         val stmt = conn.createStatement()
         try {
             stmt.executeUpdate(sql)
+        } catch {
+            case e: Exception => logger.warn(e.getMessage)
         } finally {
             stmt.close()
             conn.close()

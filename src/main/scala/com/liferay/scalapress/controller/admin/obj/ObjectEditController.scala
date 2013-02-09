@@ -100,6 +100,8 @@ class ObjectEditController {
         java
     }
 
+    @ModelAttribute("booleanMap") def booleanMap = Map("Yes" -> "Yes", "No" -> "No").asJava
+
     @ModelAttribute("statuses") def statuses =
         Map("Live" -> "Live", "Disabled" -> "Disabled", "Deleted" -> "Deleted").asJava
 

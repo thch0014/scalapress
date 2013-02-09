@@ -27,6 +27,10 @@ class Attribute {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL))
     @BeanProperty var options: java.util.List[AttributeOption] = new util.ArrayList[AttributeOption]()
 
+    import scala.collection.JavaConverters._
+
+    def optionsAsMap: java.util.Map[String, String] = options.asScala.map(opt => (opt.value, opt.value)).toMap.asJava
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     @javax.validation.constraints.NotNull
