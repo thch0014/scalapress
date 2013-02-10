@@ -16,6 +16,9 @@ import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.account.{RegistrationRenderer, AccountPluginDao}
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.WebAuthenticationDetails
+import org.springframework.security.authentication.{AuthenticationManager, UsernamePasswordAuthenticationToken}
 
 /** @author Stephen Samuel */
 @Controller
@@ -95,6 +98,8 @@ class RegistrationController {
                 user.passwordHash = passwordEncoder.encodePassword(form.password, null)
                 objectDao.save(user)
 
+                autologin(req, user)
+
                 val sreq = ScalapressRequest(req, context).withTitle("Registration")
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)
@@ -106,6 +111,16 @@ class RegistrationController {
     }
 
     @ModelAttribute("form") def form = new RegistrationForm
+
+    @Autowired var authenticationManager: AuthenticationManager = _
+
+    def autologin(req: HttpServletRequest, user: Obj) {
+        val token = new UsernamePasswordAuthenticationToken(user.email, user.passwordHash)
+        req.getSession(true)
+        token.setDetails(new WebAuthenticationDetails(req))
+        val authenticatedUser = authenticationManager.authenticate(token)
+        SecurityContextHolder.getContext.setAuthentication(authenticatedUser)
+    }
 }
 
 class RegistrationForm {
