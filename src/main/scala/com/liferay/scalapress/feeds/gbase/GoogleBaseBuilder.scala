@@ -40,6 +40,7 @@ object GoogleBaseBuilder extends Logging {
           .filter(AttributeFuncs.attributeValue(_, "brand").isDefined)
           .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
           .filter(_.images.size > 0)
+          .filter(_.folders.size > 0)
           .filter(_.sellPrice > 0)
           .filter(_.name != null)
           .filter(_.name.trim.length > 10)
@@ -73,7 +74,7 @@ object GoogleBaseBuilder extends Logging {
             name,
             content(obj.content),
             GoogleProductCategory,
-            "Electronics / GPS",
+            obj.folders.asScala.head.fullName,
             "http://www.satnaveasy.co.uk" + FriendlyUrlGenerator.friendlyUrl(obj),
             "http://www.satnaveasy.co.uk/images/" + obj.images.asScala.head.filename,
             "new",
