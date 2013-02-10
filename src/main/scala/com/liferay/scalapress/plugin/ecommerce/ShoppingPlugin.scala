@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce
 
-import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{Column, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -26,7 +26,8 @@ class ShoppingPlugin {
     @JoinColumn(name = "basketLineMarkup")
     @BeanProperty var basketLineMarkup: Markup = _
 
-    @BeanProperty var checkoutScripts: String = _
+    @Column(name = "checkoutScripts")
+    @BeanProperty var checkoutConfirmationScripts: String = _
     @BeanProperty var checkoutConfirmationText: String = _
 }
 

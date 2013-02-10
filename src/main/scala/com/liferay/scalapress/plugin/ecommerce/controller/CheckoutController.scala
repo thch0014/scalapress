@@ -24,7 +24,7 @@ import java.net.URL
 class CheckoutController {
 
     @Autowired var objectDao: ObjectDao = _
-    @Autowired var sagepayFormPlugin: SagepayFormPluginDao = _
+    @Autowired var sagepayFormPluginDao: SagepayFormPluginDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var addressDao: AddressDao = _
     @Autowired var basketDao: BasketDao = _
@@ -85,14 +85,14 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showPayment(req: HttpServletRequest): ScalaPressPage = {
 
-        val plugin = sagepayFormPlugin.get
+        val plugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
-        val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
         val account = SecurityFuncs.getAccount(req).get
 
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
         page.body(CheckoutRenderer.renderPaymentOptions(sreq.basket, plugin, account, host + ":" + port))
         page
     }
@@ -101,15 +101,15 @@ class CheckoutController {
     @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def paymentSuccess(req: HttpServletRequest): ScalaPressPage = {
 
-        val plugin = sagepayFormPlugin.get
+        val shoppingPlugin = shoppingPluginDao.get
+        val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
-        val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
-
+        val params = req.getParameterMap.asScala.asInstanceOf[Map[Any, Any]]
         val order = OrderService.createOrder(sreq.basket, req)
         orderDao.save(order)
 
-        SagepayFormService.processCallback(req.getParameterMap.asScala.asInstanceOf[Map[Any, Any]], plugin) match {
+        SagepayFormService.processCallback(params, sagepayFormPlugin) match {
+
             case Some(payment) =>
                 payment.order = order.id
                 paymentDao.save(payment)
@@ -120,7 +120,10 @@ class CheckoutController {
             case None =>
         }
 
-        page.body("Cheers bud")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+        page.body(shoppingPlugin.checkoutConfirmationScripts)
+        page.body(shoppingPlugin.checkoutConfirmationText)
         page
     }
 
@@ -128,7 +131,6 @@ class CheckoutController {
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def paymentFailure(req: HttpServletRequest): ScalaPressPage = {
 
-        val plugin = sagepayFormPlugin.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment Failure")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
