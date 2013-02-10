@@ -13,8 +13,9 @@ class SearchForm {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: java.lang.Long = _
 
-    @BeanProperty var itemtype: Long = _
     @BeanProperty var name: String = _
+
+    @BeanProperty var itemtype: Long = _
 
     @Column(name = "resultsperpage")
     @BeanProperty var pageSize: Int = _

@@ -15,7 +15,8 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
-import org.elasticsearch.index.query.{PrefixQueryBuilder, FieldQueryBuilder}
+import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder, FieldQueryBuilder}
+import collection.mutable.ArrayBuffer
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -25,6 +26,7 @@ trait SearchService {
     //  def index(folder: Folder)
     def prefix(q: String, limit: Int): SearchResponse
     def search(q: String, limit: Int): SearchResponse
+    def search(search: SavedSearch, limit: Int): SearchResponse
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }
 
@@ -121,6 +123,23 @@ class ElasticSearchService extends SearchService with Logging {
           .actionGet()
     }
 
+    override def search(search: SavedSearch, limit: Int): SearchResponse = {
+
+        val buffer = new ArrayBuffer[String]()
+        Option(search.labels).map(_.split(",")).foreach(label => buffer.append("labels:" + label))
+        Option(search.keywords).map(_.split(",")).foreach(keyword => buffer.append("content:" + keyword))
+        Option(search.searchFolder).map(_.id.toString).foreach(folderId => buffer.append("folders:" + folderId))
+
+        client.prepareSearch(INDEX)
+          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+          .addField("name")
+          .setQuery(new QueryStringQueryBuilder(buffer.mkString(" AND ")))
+          .setFrom(0)
+          .setSize(limit)
+          .execute()
+          .actionGet()
+    }
+
     // search by the given query string and then return the matching doc ids
     override def search(q: String, limit: Int): SearchResponse = {
 
@@ -149,11 +168,6 @@ class ElasticSearchService extends SearchService with Logging {
           .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
           .setFrom(0).setSize(limit)
 
-        //        t.attributes.asScala.foreach(a => {
-        //     val facet = FacetBuilders.termsFacet(a.id.toString).field(a.id.toString)
-        //       search.addFacet(facet)
-        //     })
-
         search.execute().actionGet()
     }
 
@@ -178,7 +192,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("labels", obj.labels)
 
         obj.folders.asScala.foreach(folder => {
-            json.field("folders", folder.id)
+            json.field("folders", folder.id.toString)
         })
 
         obj.attributeValues.asScala.foreach(av => {

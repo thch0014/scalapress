@@ -4,6 +4,7 @@ import dao.settings.SiteDao
 import dao.{AttributeDao, FormDao, SubmissionDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
+import plugin.search.SearchService
 import service.asset.AssetStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -17,6 +18,7 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
     @Autowired var siteDao: SiteDao = _
     @Autowired var basketDao: BasketDao = _
+    @Autowired var searchService: SearchService = _
     @Autowired var attributeDao: AttributeDao = _
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var folderDao: FolderDao = _

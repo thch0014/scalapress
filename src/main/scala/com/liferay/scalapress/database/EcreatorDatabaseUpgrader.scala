@@ -34,13 +34,13 @@ class EcreatorDatabaseUpgrader extends Logging {
         execute("UPDATE addresses SET owner=null WHERE owner=0")
 
         var k = 1
-        Array("boxes_custom", "categories_boxes", "boxes_search").foreach(table => {
-
+        Array("boxes_custom", "categories_boxes", "boxes_search", "boxes_highlighted_items").foreach(table => {
             execute("UPDATE " + table + " SET id=id+10000*" + k + " WHERE id<10000")
             k = k + 1
         })
 
-        Array("boxes_custom", "categories_boxes", "boxes_images", "boxes_search").foreach(table => {
+        Array("boxes_custom", "categories_boxes", "boxes_images", "boxes_search", "boxes_highlighted_items")
+          .foreach(table => {
             try {
                 execute("UPDATE " + table + " SET restricted=1, `where`=0 where `where`=1")
             } catch {
@@ -48,19 +48,19 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         })
 
-//        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
-//        while (rs.next) {
-//            try {
-//                val id = rs.getLong(1)
-//                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
-//                stmt.setLong(1, id)
-//                stmt.setString(2, "Featured")
-//                stmt.execute()
-//                stmt.close()
-//            } catch {
-//                case e: Exception => logger.warn(e.getMessage)
-//            }
-//        }
+        //        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
+        //        while (rs.next) {
+        //            try {
+        //                val id = rs.getLong(1)
+        //                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
+        //                stmt.setLong(1, id)
+        //                stmt.setString(2, "Featured")
+        //                stmt.execute()
+        //                stmt.close()
+        //            } catch {
+        //                case e: Exception => logger.warn(e.getMessage)
+        //            }
+        //        }
 
         for (col <- Array("item", "category")) {
             execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
@@ -89,7 +89,8 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_subcategories",
             "blocks_galleries",
             "blocks_forms",
-            "blocks_attachments")
+            "blocks_attachments",
+            "blocks_highlighted_items")
           .foreach(block => {
 
             execute("UPDATE " + block + " SET id=id+10000*" + k + " WHERE id<10000")
