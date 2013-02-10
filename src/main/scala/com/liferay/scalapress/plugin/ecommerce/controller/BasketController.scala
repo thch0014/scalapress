@@ -37,7 +37,6 @@ class BasketController {
         page
     }
 
-    @ResponseBody
     @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))
     def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long) = {
 
@@ -52,7 +51,6 @@ class BasketController {
         "redirect:/basket"
     }
 
-    @ResponseBody
     @RequestMapping(value = Array("remove/{id}"), produces = Array("text/html"))
     def remove(@ModelAttribute basket: Basket, @PathVariable("id") id: Long) = {
         basket.lines.asScala.find(_.id == id) match {
