@@ -13,7 +13,7 @@ class OrderComment {
     @BeanProperty var id: Long = _
 
     @ManyToOne
-    @JoinColumn(name = "order", nullable = true)
+    @JoinColumn(name = "`order`", nullable = true)
     @BeanProperty var order: Order = _
 
     @BeanProperty var date: Long = _

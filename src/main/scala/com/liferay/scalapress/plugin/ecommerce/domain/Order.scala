@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
 
@@ -27,13 +27,13 @@ class Order {
     @Column(name = "datePlaced")
     @BeanProperty var datePlaced: Long = _
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
     @BeanProperty var payments: java.util.List[Payment] = new java.util.ArrayList[Payment]()
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
     @BeanProperty var lines: java.util.List[OrderLine] = new java.util.ArrayList[OrderLine]()
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
     @BeanProperty var comments: java.util.List[OrderComment] = new java.util.ArrayList[OrderComment]()
 
     @ManyToOne

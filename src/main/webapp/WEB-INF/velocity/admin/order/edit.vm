@@ -168,6 +168,13 @@
             <td>$c.body</td>
         </tr>
     #end
+    <form method="POST" action="/backoffice/order/$order.id/comment/add">
+        <tr>
+            <td colspan="3"><textarea name="message"></textarea>
+                <button type="submit" class="btn">Add Comment</button>
+            </td>
+        </tr>
+    </form>
 </table>
 
 
