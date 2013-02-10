@@ -74,7 +74,7 @@ class ElasticSearchService extends SearchService with Logging {
         logger.info("Indexing finished")
     }
 
-//    private def index(folder: Folder) {
+    //    private def index(folder: Folder) {
     //        logger.debug("Indexing [{}]", folder)
     //        val src = source(folder)
     //
@@ -126,7 +126,7 @@ class ElasticSearchService extends SearchService with Logging {
         val buffer = new ArrayBuffer[String]()
         Option(search.labels).map(_.split(",")).foreach(label => buffer.append("labels:" + label))
         Option(search.keywords).map(_.split(",")).foreach(keyword => buffer.append("content:" + keyword))
-        Option(search.searchFolder).map(_.id.toString).foreach(folderId => buffer.append("folders:" + folderId))
+        Option(search.searchFolder).foreach(folderId => buffer.append("folders:" + folderId))
 
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)

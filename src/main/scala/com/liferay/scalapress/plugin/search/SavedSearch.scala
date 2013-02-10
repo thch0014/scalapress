@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.search
 import javax.persistence.{EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
-import com.liferay.scalapress.domain.{ObjectType, Folder}
+import com.liferay.scalapress.domain.ObjectType
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,9 +17,8 @@ class SavedSearch {
     @BeanProperty var status: String = _
 
     // search inside this folder
-    @ManyToOne
-    @JoinColumn(name = "searchCategory", nullable = true)
-    @BeanProperty var searchFolder: Folder = _
+    @Column(name = "searchCategory", nullable = true)
+    @BeanProperty var searchFolder: Long = _
 
     @BeanProperty var imageOnly: Boolean = _
 
@@ -47,8 +46,6 @@ class SavedSearch {
 
     //    @Column(name = "multipleItemTypes", nullable = false)
     //  @BeanProperty var multipleObjectTypes: Boolean = _
-
-    @BeanProperty var sortType: Sort = Sort.Name
 
     @Column(name = "limit")
     @BeanProperty var maxResults: Int = _

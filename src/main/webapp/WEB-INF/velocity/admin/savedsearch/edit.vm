@@ -38,6 +38,14 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Search in folder</label>
+
+        <div class="controls">
+            #springFormInput("search.searchFolder", "class='input-small'")
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Sort</label>
 
         <div class="controls">

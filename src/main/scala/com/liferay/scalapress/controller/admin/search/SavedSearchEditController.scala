@@ -5,14 +5,15 @@ import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.MarkupDao
+import com.liferay.scalapress.dao.{FolderDao, MarkupDao}
 import com.liferay.scalapress.plugin.search.{SavedSearchDao, SavedSearch}
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/savedsearch/{id}"))
-class SavedSearchEditController extends MarkupPopulator with SortPopulator {
+class SavedSearchEditController extends MarkupPopulator with SortPopulator with FolderPopulator {
 
+    @Autowired var folderDao: FolderDao = _
     @Autowired var markupDao: MarkupDao = _
     @Autowired var savedSearchDao: SavedSearchDao = _
     @Autowired var context: ScalapressContext = _
