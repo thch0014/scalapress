@@ -5,7 +5,7 @@ import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 
 /** @author Stephen Samuel */
-object PluginRenderer {
+object SectionRenderer {
 
     def render(folder: Folder, req: ScalapressRequest, context: ScalapressContext): String = {
 

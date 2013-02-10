@@ -94,7 +94,8 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(CheckoutRenderer.renderPaymentForm(sreq.basket, sagepayFormPlugin, account, host + ":" + port))
+        page.body(CheckoutConfirmationRenderer.
+          renderConfirmationPage(sreq.basket, sagepayFormPlugin, account, host + ":" + port))
         page
     }
 

@@ -1,0 +1,47 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Google Base Feed</h3>
+
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">FTP Hostname</label>
+
+        <div class="controls">
+            #springFormInput("feed.ftpHostname", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">FTP Username</label>
+
+        <div class="controls">
+            #springFormInput("feed.ftpUsername", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">FTP Password</label>
+
+        <div class="controls">
+            #springFormInput("feed.ftpPassword", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Google Product Category</label>
+
+        <div class="controls">
+            #springFormInput("feed.googleProductCategory", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

@@ -1,0 +1,28 @@
+#parse("/admin/header.vm")
+
+
+<h3>Feeds</h3>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Last Runtime</th>
+        <th></th>
+    </tr>
+
+    #foreach ($feed in $feeds)
+        <tr>
+            <td>$feed.id</td>
+            <td>$feed.feedType()</td>
+            <td>$datetool.format($feed.lastRuntime)</td>
+            <td>
+                <a href="$feed.backoffice()" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i> </a></td>
+        </tr>
+    #end
+</table>
+
+
+#parse("/admin/footer.vm")

@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(value = Array("backoffice/gbase"))
+@RequestMapping(value = Array("backoffice/feed/gbase"))
 class GBaseController {
 
     @Autowired var gbase: GoogleBaseTask = _
 
     @RequestMapping
-    def view = "admin/feeds/gbase/view.vm"
+    def view = "admin/feed/gbase/view.vm"
 
     @RequestMapping(value = Array("run"))
     def run = {

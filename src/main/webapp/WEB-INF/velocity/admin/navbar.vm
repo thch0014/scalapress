@@ -24,6 +24,7 @@
                         <li><a href="/backoffice/plugin/shopping"><i class="icon-shopping-cart"></i> Ecommerce</a></li>
                         <li><a href="/"><i class="icon-search"></i> Search</a></li>
                         <li><a href="/"><i class="icon-folder-open"></i> Folder</a></li>
+                        <li><a href="/backoffice/feed"><i class="icon-cloud-upload"></i> Feeds</a></li>
                         <li><a href="/backoffice/plugin/sagepayform"><i class="icon-credit-card"></i> SagepayForm</a>
                         </li>
 

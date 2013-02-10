@@ -1,25 +1,11 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket, DeliveryOption}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption}
 import org.springframework.validation.Errors
-import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
 import xml.Elem
-import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 object CheckoutRenderer {
-
-    def renderPaymentForm(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String) = {
-
-        val params = SagepayFormService.params(basket, plugin, account, domain)
-        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
-
-        <div class="checkout-payment-form">
-            <form method="POST" action={SagepayFormService.LiveUrl}>
-                {paramInputs}<button type="submit" class="btn btn-primary">Pay by sage pay</button>
-            </form>
-        </div>
-    }
 
     def renderDeliveryOptions(options: List[DeliveryOption]): Seq[Elem] =
         options.map(d => <label class="radio">

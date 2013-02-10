@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, ExceptionHandler, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
-import com.liferay.scalapress.{PluginRenderer, ScalapressRequest, ScalapressContext, Logging}
+import com.liferay.scalapress.{SectionRenderer, ScalapressRequest, ScalapressContext, Logging}
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import com.liferay.scalapress.controller.{RedirectException, NotFoundException}
 import javax.servlet.http.HttpServletRequest
@@ -59,7 +59,7 @@ class FolderController extends Logging {
             page.toolbar(Toolbar.render(context.siteDao.get, folder))
         }
 
-        val plugins = PluginRenderer.render(folder, sreq, context)
+        val plugins = SectionRenderer.render(folder, sreq, context)
 
         page.body(header)
         page.body(plugins)
