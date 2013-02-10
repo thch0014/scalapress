@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestMethod, ResponseBody, PathVariable, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
@@ -24,20 +24,30 @@ class BasketController {
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
-    @RequestMapping
-    def start = "redirect:/basket/delivery"
-
     @ResponseBody
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Your Shopping Bag")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         val markup = shoppingPluginDao.get.basketMarkup
+
+        page.body("<form method='POST'>")
         if (markup != null)
             page.body(MarkupRenderer.render(markup, sreq, context))
+        page.body("</form>")
         page
+    }
+
+    @RequestMapping(method = Array(RequestMethod.POST))
+    def update(@ModelAttribute basket: Basket, req: HttpServletRequest): String = {
+        basket.lines.asScala.foreach(line => {
+            val qty = req.getParameter("qty" + line.id).toInt
+            line.qty = qty
+        })
+        basketDao.save(basket)
+        "redirect:/basket"
     }
 
     @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))

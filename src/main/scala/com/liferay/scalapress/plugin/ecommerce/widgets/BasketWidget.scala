@@ -1,10 +1,10 @@
-package com.liferay.scalapress.plugin.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.widgets
 
-import domain.BasketLine
 import javax.persistence.{Table, Entity}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.widgets.Widget
+import com.liferay.scalapress.plugin.ecommerce.domain.BasketLine
 
 /** @author Stephen Samuel */
 @Table(name = "widgets_basket")

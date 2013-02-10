@@ -29,6 +29,9 @@ class CheckoutController {
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
+    @RequestMapping
+    def start = "redirect:/basket"
+
     @ResponseBody
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showAddress(req: HttpServletRequest, @ModelAttribute("address") address: Address,
