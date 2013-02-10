@@ -48,19 +48,19 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         })
 
-        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
-        while (rs.next) {
-            try {
-                val id = rs.getLong(1)
-                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
-                stmt.setLong(1, id)
-                stmt.setString(2, "Featured")
-                stmt.execute()
-                stmt.close()
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
+//        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
+//        while (rs.next) {
+//            try {
+//                val id = rs.getLong(1)
+//                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
+//                stmt.setLong(1, id)
+//                stmt.setString(2, "Featured")
+//                stmt.execute()
+//                stmt.close()
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
 
         for (col <- Array("item", "category")) {
             execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
