@@ -97,7 +97,7 @@ class RegistrationController {
                 user.passwordHash = passwordEncoder.encodePassword(form.password, null)
                 objectDao.save(user)
 
-                autologin(req, user)
+                autologin(req, form.email, form.password)
 
                 val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
                 val theme = themeService.default
@@ -113,8 +113,8 @@ class RegistrationController {
     @Qualifier("authman")
     @Autowired var authenticationManager: AuthenticationManager = _
 
-    def autologin(req: HttpServletRequest, user: Obj) {
-        val token = new UsernamePasswordAuthenticationToken(user.email, user.passwordHash)
+    def autologin(req: HttpServletRequest, email: String, password: String) {
+        val token = new UsernamePasswordAuthenticationToken(email, password)
         req.getSession(true)
         token.setDetails(new WebAuthenticationDetails(req))
         val authenticatedUser = authenticationManager.authenticate(token)

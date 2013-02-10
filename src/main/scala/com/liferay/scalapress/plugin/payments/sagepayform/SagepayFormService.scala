@@ -96,7 +96,7 @@ object SagepayFormService extends Logging {
         }
 
         sb.append(":")
-        sb.append(basket.deliveryOption.name.replaceAll("[&:=$*]", ""));
+        sb.append(basket.deliveryOption.name.replaceAll("[&:=$*]", ""))
         sb.append(":1:")
         sb.append(basket.deliveryOption.charge)
         sb.append(":")

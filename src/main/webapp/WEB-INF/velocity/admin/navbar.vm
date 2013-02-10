@@ -22,8 +22,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/backoffice/plugin/shopping"><i class="icon-font"></i> Ecommerce</a></li>
-                        <li><a href="//"><i class="icon-desktop"></i> Search</a></li>
+                        <li><a href="/"><i class="icon-desktop"></i> Search</a></li>
                         <li><a href="/"><i class="icon-user"></i> Folder</a></li>
+                        <li><a href="/backoffice/plugin/sagepayform"><i class="icon-user"></i> SagepayForm</a></li>
+
                     </ul>
                 </li>
                 <li class="dropdown">

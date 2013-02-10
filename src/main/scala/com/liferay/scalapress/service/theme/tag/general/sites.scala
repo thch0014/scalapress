@@ -38,7 +38,7 @@ object SiteCountryTag extends ScalapressTag with TagBuilder {
 
 object SiteEmailTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(site => "<a href='mailto:" + site.email + "'>" + site.email + "</a>")
+        Option(context.siteDao.get.email).map(email => "<a href='mailto:" + email + "'>" + email + "</a>")
 }
 
 object SitePhoneTag extends ScalapressTag with TagBuilder {

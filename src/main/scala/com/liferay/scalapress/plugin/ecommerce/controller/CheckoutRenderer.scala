@@ -3,6 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket, DeliveryOption}
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
+import xml.Elem
 
 /** @author Stephen Samuel */
 object CheckoutRenderer {
@@ -22,10 +23,10 @@ object CheckoutRenderer {
         {basket}
     </div>
 
-    def renderDeliveryOptions(options: List[DeliveryOption]) =
-        options.map(d => <option value={d.id.toString}>
-            {d.name + " GBP " + d.chargeIncVat}
-        </option>)
+    def renderDeliveryOptions(options: List[DeliveryOption]): Seq[Elem] =
+        options.map(d => <label class="radio">
+            <input type="radio" name="deliveryOptionId" id="deliveryOptionId" value={d.id.toString}/>{d.name}
+        </label>)
 
     def renderDeliveryAddress(address: Address, options: List[DeliveryOption], errors: Errors) =
         <div class="container">
@@ -318,14 +319,14 @@ object CheckoutRenderer {
                 </div>
 
                 <legend>Delivery Address</legend>
+
                 <div class="control-group">
-                    <label for="instructions">
+                    <label>
                         Delivery Option
-                    </label>
-                    <select name="country">
-                        {renderDeliveryOptions(options)}
-                    </select>
+                    </label>{renderDeliveryOptions(options)}
                 </div>
+
+
                 <button type="submit" class="btn btn-primary">Continue</button>
             </form>
         </div>

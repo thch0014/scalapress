@@ -53,12 +53,21 @@ class CheckoutController {
                       @Valid @ModelAttribute("address") address: Address,
                       errors: Errors): ScalaPressPage = {
 
+        val sreq = ScalapressRequest(req, context)
+
+        Option(req.getParameter("deliveryOptionId")).filter(_.trim.length > 0) match {
+            case None =>
+                errors.reject("deliveryOptionId", "Choose delivery option")
+            case Some(id) =>
+                val delivery = deliveryOptionDao.find(id.toLong)
+                sreq.basket.deliveryOption = delivery
+        }
+
         if (errors.hasErrors)
             showAddress(req, address, errors)
 
         else {
 
-            val sreq = ScalapressRequest(req, context)
             addressDao.save(address)
 
             sreq.basket.deliveryAddress = address
