@@ -47,7 +47,61 @@ object AddToBasketTag extends ScalapressTag with TagBuilder {
 object BasketLinesTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
-               params: Map[String, String]): Option[String] = None
+               params: Map[String, String]): Option[String] = {
+
+        // we need to be inside a basket context
+
+
+        Some("BASKET LINES !!!")
+    }
+
+    override def tags = Array("basket_lines")
+}
+
+object BasketLineQtyTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        // we need to be inside a basket line
+        Some("1")
+    }
+
+    override def tags = Array("basket_lines")
+}
+
+object BasketLineItemTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        // we need to be inside a basket line
+        Some("Some item")
+    }
+
+    override def tags = Array("basket_lines")
+}
+
+object BasketLinePriceTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        // we need to be inside a basket line
+        Some("Some price")
+    }
+
+    override def tags = Array("basket_lines")
+}
+
+object BasketLineTotalTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        // we need to be inside a basket line
+        Some("Some total")
+    }
 
     override def tags = Array("basket_lines")
 }

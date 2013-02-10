@@ -8,11 +8,12 @@ import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
+import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/shopping"))
-class ShoppingPluginController {
+class ShoppingPluginController extends MarkupPopulator {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _

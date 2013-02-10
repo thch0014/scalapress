@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, ModelAttribute, RequestMapping}
-import com.liferay.scalapress.controller.web.{ScalapressConstants, ScalaPressPage}
+import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,11 +40,13 @@ class BasketController {
     @ResponseBody
     @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))
     def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
+
         val obj = objectDao.find(id)
         val line = new BasketLine
         line.obj = obj
         line.qty = 1
         line.basket = basket
+
         basket.lines.add(line)
         basketDao.save(basket)
         view(basket, req)
@@ -59,6 +61,8 @@ class BasketController {
     }
 
     // populate methods
-    @ModelAttribute def basket(req: HttpServletRequest) =
-        basketDao.find(req.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String])
+    @ModelAttribute def basket(req: HttpServletRequest) = ScalapressRequest(req).basket match {
+        case None =>
+        case Some(basket) => basket
+    }
 }

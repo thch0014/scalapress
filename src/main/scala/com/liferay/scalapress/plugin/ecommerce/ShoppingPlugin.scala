@@ -22,6 +22,10 @@ class ShoppingPlugin {
     @JoinColumn(name = "markup")
     @BeanProperty var basketMarkup: Markup = _
 
+    @ManyToOne
+    @JoinColumn(name = "basketLineMarkup")
+    @BeanProperty var basketLineMarkup: Markup = _
+
     @BeanProperty var checkoutScripts: String = _
     @BeanProperty var checkoutConfirmationText: String = _
 }
