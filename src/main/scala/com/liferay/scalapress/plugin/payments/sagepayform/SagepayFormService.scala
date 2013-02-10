@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 object SagepayFormService extends Logging {
@@ -41,9 +42,9 @@ object SagepayFormService extends Logging {
     }
 
     // returns the four params needed by sagepay
-    def params(basket: Basket, plugin: SagepayFormPlugin): Map[String, String] = {
+    def params(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String): Map[String, String] = {
 
-        val crypt = encrypt(plugin, cryptParams(plugin, basket))
+        val crypt = encrypt(plugin, cryptParams(plugin, basket, account, domain))
 
         val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
@@ -131,23 +132,23 @@ object SagepayFormService extends Logging {
     def existingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    def cryptParams(plugin: SagepayFormPlugin, basket: Basket): Map[String, String] = {
+    def cryptParams(plugin: SagepayFormPlugin, basket: Basket, account: Obj, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", basket.sessionId) // store basket id as our tx id
         params.put("Currency", "GBP")
         params.put("Amount", basket.total.toString)
-        params.put("CustomerName", "sammy")
-        params.put("CustomerEmail", "sam@sam.com")
-        params.put("Description", "Payment for basket " + basket.sessionId)
+        params.put("CustomerName", account.name)
+        params.put("CustomerEmail", account.email)
+        params.put("Description", domain + " Order")
 
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
         params.put("Description", "Order")
-        params.put("SuccessURL", "http://www.satnaveasy.co.uk/checkout/payment/success")
-        params.put("FailureURL", "http://www.satnaveasy.co.uk/checkout/payment/failure")
+        params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
+        params.put("FailureURL", "http://" + domain + "/checkout/payment/failure")
 
         params.put("Basket", basketString(basket))
 
@@ -160,9 +161,6 @@ object SagepayFormService extends Logging {
         params.put("BillingCity", basket.deliveryAddress.town)
         params.put("BillingPostCode", basket.deliveryAddress.postcode)
         params.put("BillingCountry", "GB")
-        //                if (basket.deliveryAddress.getCountry().equals(Country.US)) {
-        //                    params.put("BillingState", basket.deliveryAddress.getState())
-        //                }
 
         params.put("DeliveryFirstnames", firstname)
         params.put("DeliverySurname", lastname)
@@ -170,9 +168,6 @@ object SagepayFormService extends Logging {
         params.put("DeliveryCity", basket.deliveryAddress.town)
         params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
         params.put("DeliveryCountry", "GB")
-        //        if (basket.deliveryAddress.getCountry().equals(Country.US)) {
-        //            params.put("DeliveryState", basket.deliveryAddress.getState())
-        //        }
 
         logger.debug("Params [{}]", params)
         params.toMap
