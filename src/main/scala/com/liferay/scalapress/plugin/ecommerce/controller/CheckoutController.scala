@@ -15,8 +15,8 @@ import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
 import scala.collection.JavaConverters._
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import com.liferay.scalapress.controller.web.folder.SecurityFuncs
+import java.net.URL
 
 /** @author Stephen Samuel */
 @Controller
@@ -89,10 +89,11 @@ class CheckoutController {
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        val domain = req.getLocalName
+        val host = new URL(req.getRequestURL.toString).getHost
+        val port = new URL(req.getRequestURL.toString).getPort
         val account = SecurityFuncs.getAccount(req).get
 
-        page.body(CheckoutRenderer.renderPaymentOptions(sreq.basket, plugin, account, domain))
+        page.body(CheckoutRenderer.renderPaymentOptions(sreq.basket, plugin, account, host + ":" + port))
         page
     }
 
