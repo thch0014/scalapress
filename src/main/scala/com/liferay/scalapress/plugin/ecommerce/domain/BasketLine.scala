@@ -6,7 +6,7 @@ import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "basketline")
+@Table(name = "plugin_shopping_baskets_lines")
 class BasketLine {
 
     @Id

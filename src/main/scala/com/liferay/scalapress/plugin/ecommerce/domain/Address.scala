@@ -21,8 +21,8 @@ class Address {
     @Column(name = "companyName")
     @BeanProperty var company: String = _
 
-    @Column(name = "account")
-    @BeanProperty var owner: Long = _
+    @Column(name = "owner", nullable = true)
+    @BeanProperty var account: Long = _
 
     @NotEmpty
     @Column(name = "addressLine1")

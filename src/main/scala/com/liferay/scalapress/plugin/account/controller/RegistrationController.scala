@@ -73,13 +73,23 @@ class RegistrationController {
             case true => showRegistrationPage(req, form)
             case false =>
 
-                ensureAccountType()
-
                 val plugin = accountPluginDao.get
                 val typeId = plugin.accounts.asScala.head
-                val t = typeDao.find(typeId)
+                val accountType = Option(typeDao.find(typeId)) match {
+                    case None =>
 
-                val user = Obj(t)
+                        val accountType = new ObjectType
+                        accountType.name = "Account"
+                        typeDao.save(accountType)
+
+                        plugin.accounts.add(accountType.id)
+                        accountPluginDao.save(plugin)
+                        accountType
+
+                    case Some(t) => t
+                }
+
+                val user = Obj(accountType)
                 user.name = form.name
                 user.email = form.email
                 user.passwordHash = passwordEncoder.encodePassword(form.password, null)
@@ -92,22 +102,6 @@ class RegistrationController {
                 page.body("<p>Thank you for signing up.</p>")
                 page.body("<p>Continue to <a href='/checkout'>checkout</a>.</p>")
                 page
-        }
-    }
-
-    def ensureAccountType() {
-        val plugin = accountPluginDao.get
-        plugin.accounts.asScala.size match {
-            case 0 =>
-
-                val accountType = new ObjectType
-                accountType.name = "Account"
-                typeDao.save(accountType)
-
-                plugin.accounts.add(accountType.id)
-                accountPluginDao.save(plugin)
-
-            case _ =>
         }
     }
 

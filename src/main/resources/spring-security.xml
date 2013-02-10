@@ -6,7 +6,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <security:http auto-config="true" access-denied-page="/error/noaccess">
-        <security:intercept-url pattern="/checkout/**" access="ROLE_USER"/>
+        <security:intercept-url pattern="/checkout/**" access="ROLE_USER,ROLE_ADMIN"/>
         <security:intercept-url pattern="/backoffice/**" access="ROLE_ADMIN"/>
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:form-login login-page="/login"/>

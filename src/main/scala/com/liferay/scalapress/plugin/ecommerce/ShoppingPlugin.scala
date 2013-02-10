@@ -19,7 +19,7 @@ class ShoppingPlugin {
     @BeanProperty var id: Long = _
 
     @ManyToOne
-    @JoinColumn(name = "markup")
+    @JoinColumn(name = "basketMarkup")
     @BeanProperty var basketMarkup: Markup = _
 
     @ManyToOne

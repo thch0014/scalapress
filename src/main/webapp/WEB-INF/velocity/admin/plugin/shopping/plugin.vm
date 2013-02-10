@@ -28,7 +28,7 @@
             <select id="basketLineMarkup" name="basketLineMarkup">
                 #foreach($option in $markupMap.keySet())
                     <option value="${option}"
-                        #if("$!plugin.basketMarkup.id" == "$option")
+                        #if("$!plugin.basketLineMarkup.id" == "$option")
                             selected="selected"
                         #end>
                         $!{markupMap.get($option)}</option>

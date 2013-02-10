@@ -55,15 +55,18 @@ class CheckoutController {
         if (errors.hasErrors)
             showAddress(req, address, errors)
 
-        val sreq = ScalapressRequest(req, context)
-        val principal = req.getUserPrincipal.asInstanceOf[UsernamePasswordAuthenticationToken]
-        val details = principal.getPrincipal.asInstanceOf[ObjectUserDetails]
-        address.owner = details.userId
-        addressDao.save(address)
+        else {
 
-        sreq.basket.deliveryAddress = address
-        basketDao.save(sreq.basket)
-        showPayment(req)
+            val sreq = ScalapressRequest(req, context)
+            val principal = req.getUserPrincipal.asInstanceOf[UsernamePasswordAuthenticationToken]
+            val details = principal.getPrincipal.asInstanceOf[ObjectUserDetails]
+            //            address.owner = details.userId
+            addressDao.save(address)
+
+            sreq.basket.deliveryAddress = address
+            basketDao.save(sreq.basket)
+            showPayment(req)
+        }
     }
 
     @ResponseBody

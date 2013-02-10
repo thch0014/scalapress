@@ -3,7 +3,7 @@ package com.liferay.scalapress
 import controller.web.ScalapressConstants
 import domain.{Attachment, Folder, Obj}
 import javax.servlet.http.HttpServletRequest
-import plugin.ecommerce.domain.Basket
+import plugin.ecommerce.domain.{BasketLine, Basket}
 
 /** @author Stephen Samuel */
 class ScalapressRequest(val request: HttpServletRequest, val context: ScalapressContext) {
@@ -35,6 +35,12 @@ class ScalapressRequest(val request: HttpServletRequest, val context: Scalapress
 
     def withTitle(title: String): ScalapressRequest = {
         this.title = Option(title)
+        this
+    }
+
+    var line: Option[BasketLine] = None
+    def withLine(line: BasketLine): ScalapressRequest = {
+        this.line = Option(line)
         this
     }
 

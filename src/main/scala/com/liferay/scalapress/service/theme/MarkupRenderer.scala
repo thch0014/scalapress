@@ -3,9 +3,21 @@ package com.liferay.scalapress.service.theme
 import tag.TagRenderer
 import com.liferay.scalapress.domain.{Obj, Folder, Markup}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.plugin.ecommerce.domain.BasketLine
 
 /** @author Stephen Samuel */
 object MarkupRenderer {
+
+    def render(lines: Seq[BasketLine], m: Markup, r: ScalapressRequest): String = {
+        require(m != null)
+        val start = TagRenderer.render(m.start, r, r.context)
+        val body =
+            lines
+              .map(l => TagRenderer.render(m.body, r.withLine(l), r.context))
+              .mkString(TagRenderer.render(m.between, r, r.context))
+        val end = TagRenderer.render(m.end, r, r.context)
+        start + body + end
+    }
 
     def render(m: Markup, request: ScalapressRequest, context: ScalapressContext): String = {
 

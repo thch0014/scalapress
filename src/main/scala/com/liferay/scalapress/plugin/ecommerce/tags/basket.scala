@@ -3,6 +3,8 @@ package com.liferay.scalapress.plugin.ecommerce.tags
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.admin.UrlResolver
+import com.liferay.scalapress.service.theme.MarkupRenderer
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object BasketLinkTag extends ScalapressTag with TagBuilder {
@@ -45,9 +47,13 @@ object BasketLinesTag extends ScalapressTag {
                params: Map[String, String]): Option[String] = {
 
         // we need to be inside a basket context
-
-
-        Some("BASKET LINES !!!")
+        val lines = request.basket.lines
+        Option(context.shoppingPluginDao.get.basketMarkup) match {
+            case None => None
+            case Some(m) =>
+                val render = MarkupRenderer.render(lines.asScala, m, request)
+                Some(render)
+        }
     }
 
     override def tags = Array("basket_lines")
@@ -57,9 +63,7 @@ object BasketLineQtyTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-
-        // we need to be inside a basket line
-        Some("1")
+        request.line.map(_.qty.toString)
     }
 
     override def tags = Array("basket_lines")
@@ -69,9 +73,10 @@ object BasketLineItemTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-
-        // we need to be inside a basket line
-        Some("Some item")
+        params.get("link") match {
+            case None => request.line.map(_.obj.name)
+            case _ => request.line.map(_.obj.name)
+        }
     }
 
     override def tags = Array("basket_lines")
@@ -81,9 +86,7 @@ object BasketLinePriceTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-
-        // we need to be inside a basket line
-        Some("Some price")
+        request.line.map(_.obj.sellPrice.toString)
     }
 
     override def tags = Array("basket_lines")

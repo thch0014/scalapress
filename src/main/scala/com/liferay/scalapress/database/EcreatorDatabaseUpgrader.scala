@@ -30,6 +30,9 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         val conn = dataSource.getConnection
 
+        execute("ALTER TABLE addresses MODIFY owner bigint(10) null")
+        execute("UPDATE addresses SET owner=null WHERE owner=0")
+
         var k = 1
         Array("boxes_custom", "categories_boxes", "boxes_search").foreach(table => {
 
@@ -135,6 +138,7 @@ class EcreatorDatabaseUpgrader extends Logging {
         execute("UPDATE orders SET deliveryaddress=null WHERE deliveryaddress=0")
         execute("ALTER TABLE orders MODIFY account bigint(10) null")
         execute("UPDATE orders SET account=null WHERE account=0")
+
 
 
         // copy the searchbox from forms to the box
