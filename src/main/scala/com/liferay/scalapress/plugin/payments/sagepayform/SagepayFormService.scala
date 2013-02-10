@@ -5,6 +5,7 @@ import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object SagepayFormService extends Logging {
@@ -42,9 +43,9 @@ object SagepayFormService extends Logging {
     }
 
     // returns the four params needed by sagepay
-    def params(plugin: SagepayFormPlugin): Map[String, String] = {
+    def params(basket: Basket, plugin: SagepayFormPlugin): Map[String, String] = {
 
-        val crypt = encrypt(plugin, cryptParams(plugin, null))
+        val crypt = encrypt(plugin, cryptParams(plugin, basket))
 
         val params = Map("VPSProtocol" -> "2.23",
             "TxType" -> PaymentTypePayment,
@@ -74,40 +75,37 @@ object SagepayFormService extends Logging {
 
     def basketString(basket: Basket) = {
 
+        val numOfLines = basket.lines.size + 1
+
         val sb = new StringBuilder
-        //        Integer numOfLines = lines.size();
-        //        if (order.hasDeliveryDetails()) {
-        //            numOfLines ++;
-        //        }
-        //        sb.append(numOfLines);
-        //
-        //        for (OrderLine line: lines)
-        //        {
-        //            sb.append(":");
-        //            sb.append(line.getDescription().replaceAll("[:=&]", ""));
-        //            sb.append(":");
-        //            sb.append(line.getQty());
-        //            sb.append(":");
-        //            sb.append(line.getUnitSellEx());
-        //            sb.append(":");
-        //            sb.append(line.getUnitSellVat());
-        //            sb.append(":");
-        //            sb.append(line.getUnitSellInc());
-        //            sb.append(":");
-        //            sb.append(line.getLineSellInc());
-        //        }
-        //        if (order.hasDeliveryDetails()) {
-        //            sb.append(":");
-        //            sb.append(order.getDeliveryDetails().replaceAll("[:=&]", ""));
-        //            sb.append(":1:");
-        //            sb.append(order.getDeliveryChargeEx());
-        //            sb.append(":");
-        //            sb.append(order.getDeliveryChargeVat());
-        //            sb.append(":");
-        //            sb.append(order.getDeliveryChargeInc());
-        //            sb.append(":");
-        //            sb.append(order.getDeliveryChargeInc());
-        //        }
+        sb.append(numOfLines)
+
+        for (line <- basket.lines.asScala) {
+            sb.append(":")
+            sb.append(line.obj.name.replaceAll("[=:&$*]", ""))
+            sb.append(":")
+            sb.append(line.qty)
+            sb.append(":")
+            sb.append(line.obj.sellPrice)
+            sb.append(":")
+            sb.append(line.obj.vat)
+            sb.append(":")
+            sb.append(line.obj.sellPriceInc)
+            sb.append(":")
+            sb.append(line.total)
+        }
+
+        sb.append(":")
+        sb.append(basket.deliveryOption.name.replaceAll("[&:=$*]", ""));
+        sb.append(":1:")
+        sb.append(basket.deliveryOption.charge)
+        sb.append(":")
+        sb.append(basket.deliveryOption.chargeVat)
+        sb.append(":")
+        sb.append(basket.deliveryOption.chargeIncVat)
+        sb.append(":")
+        sb.append(basket.deliveryOption.chargeIncVat)
+
 
         sb.toString()
     }
@@ -137,43 +135,44 @@ object SagepayFormService extends Logging {
     def cryptParams(plugin: SagepayFormPlugin, basket: Basket): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
-
-        // params +=("VendorTxCode", session.getTransactionId)
-
+        params.put("VendorTxCode", basket.sessionId) // store basket id as our tx id
         params.put("Currency", "GBP")
         params.put("Amount", basket.total.toString)
         params.put("CustomerName", "sammy")
         params.put("CustomerEmail", "sam@sam.com")
-        params.put("Description", "Customer Order")
+        params.put("Description", "Payment for basket " + basket.sessionId)
 
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
         params.put("Description", "Order")
-        params.put("SuccessURL", "/payment-callback-sagepayform/success")
-        params.put("FailureURL", "/payment-callback-sagepayform/failure")
+        params.put("SuccessURL", "/checkout/payment/success")
+        params.put("FailureURL", "/checkout/payment/failure")
 
         params.put("Basket", basketString(basket))
 
-        //        params.put("BillingSurname", order.getBillingAddress().getLastName())
-        //        params.put("BillingFirstnames", order.getBillingAddress().getFirstName())
-        //        params.put("BillingAddress1", order.getBillingAddress().getAddressLine1())
-        //        params.put("BillingCity", order.getBillingAddress().getTown())
-        //        params.put("BillingPostCode", order.getBillingAddress().getPostcode())
-        //        params.put("BillingCountry", order.getBillingAddress().getCountry().getIsoAlpha2())
-        //        if (order.getBillingAddress().getCountry().equals(Country.US)) {
-        //            params.put("BillingState", order.getBillingAddress().getState())
-        //        }
+        val firstname = basket.deliveryAddress.name.split(" ").last
+        val lastname = basket.deliveryAddress.name.split(" ").head
 
-        //        params.put("DeliveryFirstnames", order.getDeliveryAddress().getFirstName())
-        //        params.put("DeliverySurname", order.getDeliveryAddress().getLastName())
-        //        params.put("DeliveryAddress1", order.getDeliveryAddress().getAddressLine1())
-        //        params.put("DeliveryCity", order.getDeliveryAddress().getTown())
-        //        params.put("DeliveryPostCode", order.getDeliveryAddress().getPostcode())
-        //        params.put("DeliveryCountry", order.getDeliveryAddress().getCountry().getIsoAlpha2())
-        //        if (order.getDeliveryAddress().getCountry().equals(Country.US)) {
-        //            params.put("DeliveryState", order.getDeliveryAddress().getState())
+        params.put("BillingSurname", firstname)
+        params.put("BillingFirstnames", lastname)
+        params.put("BillingAddress1", basket.deliveryAddress.address1)
+        params.put("BillingCity", basket.deliveryAddress.town)
+        params.put("BillingPostCode", basket.deliveryAddress.postcode)
+        params.put("BillingCountry", "GB")
+        //                if (basket.deliveryAddress.getCountry().equals(Country.US)) {
+        //                    params.put("BillingState", basket.deliveryAddress.getState())
+        //                }
+
+        params.put("DeliveryFirstnames", firstname)
+        params.put("DeliverySurname", lastname)
+        params.put("DeliveryAddress1", basket.deliveryAddress.address1)
+        params.put("DeliveryCity", basket.deliveryAddress.town)
+        params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
+        params.put("DeliveryCountry", "GB")
+        //        if (basket.deliveryAddress.getCountry().equals(Country.US)) {
+        //            params.put("DeliveryState", basket.deliveryAddress.getState())
         //        }
 
         logger.debug("Params [{}]", params)

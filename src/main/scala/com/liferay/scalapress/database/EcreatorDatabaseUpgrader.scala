@@ -32,6 +32,7 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         execute("ALTER TABLE addresses MODIFY owner bigint(10) null")
         execute("UPDATE addresses SET owner=null WHERE owner=0")
+        execute("ALTER TABLE addresses MODIFY country varchar(100) null")
 
         var k = 1
         Array("boxes_custom", "categories_boxes", "boxes_search", "boxes_highlighted_items").foreach(table => {
