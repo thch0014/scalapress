@@ -2,6 +2,7 @@ package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Entity
@@ -45,12 +46,18 @@ class OrderLine {
 
 object OrderLine {
     def apply(line: BasketLine): OrderLine = {
+        val l = apply(line.obj)
+        l.qty = line.qty
+        l
+    }
+    def apply(obj: Obj): OrderLine = {
         val l = new OrderLine
-        l.price = line.obj.sellPrice
-        l.obj = line.obj.id
-        l.description = line.obj.name
+        l.price = obj.sellPrice
+        l.obj = obj.id
+        l.qty = 1
+        l.description = obj.name
         l.date = System.currentTimeMillis()
-        l.vatRate = line.obj.vatRate
+        l.vatRate = obj.vatRate
         l
     }
 }

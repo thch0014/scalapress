@@ -21,6 +21,9 @@ class Order {
 
     @BeanProperty var deliveryCharge: Int = _
     @BeanProperty var deliveryVatRate: Double = _
+    @BeanProperty def deliveryVat: Int = (deliveryCharge * deliveryVatRate / 100.0).toInt
+    @BeanProperty def deliveryChargeInc: Int = deliveryCharge + deliveryVat
+
     @Column(name = "deliveryDetails")
     @BeanProperty var deliveryDetails: String = _
 
@@ -30,10 +33,10 @@ class Order {
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
     @BeanProperty var payments: java.util.List[Payment] = new java.util.ArrayList[Payment]()
 
-    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
+    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var lines: java.util.List[OrderLine] = new java.util.ArrayList[OrderLine]()
 
-    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
+    @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var comments: java.util.List[OrderComment] = new java.util.ArrayList[OrderComment]()
 
     @ManyToOne

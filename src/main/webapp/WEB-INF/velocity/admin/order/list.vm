@@ -16,8 +16,8 @@
         <tr>
             <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
             <td>$datetool.format($o.datePlaced)</td>
-            <td>$o.status</td>
-            <td>$o.account.name</td>
+            <td>$!o.status</td>
+            <td>$!o.account.name</td>
             <td>
                 <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i> </a>
