@@ -13,8 +13,6 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import javax.validation.Valid
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, AddressDao, BasketDao}
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import com.liferay.scalapress.service.security.ObjectUserDetails
 import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
 
 /** @author Stephen Samuel */
@@ -32,7 +30,7 @@ class CheckoutController {
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showAddress(req: HttpServletRequest, @ModelAttribute("address") address: Address,
                     errors: Errors): ScalaPressPage = {
 
@@ -47,7 +45,7 @@ class CheckoutController {
     }
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def submitAddress(req: HttpServletRequest,
                       @Valid @ModelAttribute("address") address: Address,
                       errors: Errors): ScalaPressPage = {
@@ -58,9 +56,6 @@ class CheckoutController {
         else {
 
             val sreq = ScalapressRequest(req, context)
-            val principal = req.getUserPrincipal.asInstanceOf[UsernamePasswordAuthenticationToken]
-            val details = principal.getPrincipal.asInstanceOf[ObjectUserDetails]
-            //            address.owner = details.userId
             addressDao.save(address)
 
             sreq.basket.deliveryAddress = address
@@ -78,7 +73,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutRenderer.renderPaymentOptions(plugin))
+        page.body(CheckoutRenderer.renderPaymentOptions(sreq.basket, plugin))
         page
     }
 

@@ -24,6 +24,9 @@ class BasketController {
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
+    @RequestMapping
+    def start = "redirect:/basket/delivery"
+
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {

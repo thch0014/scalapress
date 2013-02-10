@@ -17,18 +17,27 @@ object RegistrationRenderer {
                         Your name
                     </label>
                     <input name="name" type="text" placeholder="Your real name"/>
+                    <span class="help-inline">
+                        {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
+                    </span>
                 </div>
                 <div class="control-group">
                     <label for="email">
                         Email
                     </label>
                     <input name="email" type="email" placeholder="Email Address"/>
+                    <span class="help-inline">
+                        {Option(errors.getFieldError("email")).map(_.getDefaultMessage).getOrElse("")}
+                    </span>
                 </div>
                 <div class="control-group">
                     <label for="password">
                         Password
                     </label>
                     <input name="password" type="password" placeholder="Password"/>
+                    <span class="help-inline">
+                        {Option(errors.getFieldError("password")).map(_.getDefaultMessage).getOrElse("")}
+                    </span>
                 </div>
                 <button type="submit" class="btn">Register</button>
             </form>

@@ -21,9 +21,8 @@ object TitleTag extends ScalapressTag with TagBuilder {
         if (excludeHome && home)
             None
         else {
-            val folderName = request.folder.map(_.name)
-            val objectName = request.obj.map(_.name)
-            folderName.orElse(objectName).orElse(Some("Welcome")).map(name => build(name, params))
+            val title = request.title.getOrElse("Welcome")
+            Some(build(title, params))
         }
     }
 }

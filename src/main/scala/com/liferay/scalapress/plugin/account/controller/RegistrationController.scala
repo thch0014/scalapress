@@ -51,14 +51,14 @@ class RegistrationController {
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showRegistrationPage(req: HttpServletRequest,
-                             @ModelAttribute("form") form: RegistrationForm): ScalaPressPage = {
+                             @ModelAttribute("form") form: RegistrationForm,
+                             errors: Errors): ScalaPressPage = {
 
         val plugin = accountPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Registration")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body("<h1>Registration</h1>")
-        page.body(RegistrationRenderer.renderRegistrationPage(plugin, null))
+        page.body(RegistrationRenderer.renderRegistrationPage(plugin, errors))
         page
     }
 
@@ -68,12 +68,11 @@ class RegistrationController {
                                @Valid @ModelAttribute("form") form: RegistrationForm,
                                errors: Errors): ScalaPressPage = {
 
-        if (objectDao.byEmail(form.email).isDefined) {
+        if (objectDao.byEmail(form.email).isDefined)
             errors.rejectValue("email", "email", "Email address already in use")
-        }
-        errors.hasErrors match {
 
-            case true => showRegistrationPage(req, form)
+        errors.hasErrors match {
+            case true => showRegistrationPage(req, form, errors)
             case false =>
 
                 val plugin = accountPluginDao.get
@@ -100,10 +99,9 @@ class RegistrationController {
 
                 autologin(req, user)
 
-                val sreq = ScalapressRequest(req, context).withTitle("Registration")
+                val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)
-                page.body("<h1>Registration Completed</h1>")
                 page.body("<p>Thank you for signing up.</p>")
                 page.body("<p>Continue to <a href='/checkout'>checkout</a>.</p>")
                 page
