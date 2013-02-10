@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce
+package com.liferay.scalapress.plugin.ecommerce.tags
 
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
