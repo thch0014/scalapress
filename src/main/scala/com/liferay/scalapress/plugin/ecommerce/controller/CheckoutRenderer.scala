@@ -9,21 +9,17 @@ import com.liferay.scalapress.domain.Obj
 /** @author Stephen Samuel */
 object CheckoutRenderer {
 
-    def renderPaymentOptions(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String) = {
+    def renderPaymentForm(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String) = {
 
         val params = SagepayFormService.params(basket, plugin, account, domain)
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
-        <div class="checkoutpayment">
-            {renderConfirmation(basket)}<form method="POST" action={SagepayFormService.LiveUrl}>
-            {paramInputs}<button type="submit" class="btn btn-primary">Pay by sage pay</button>
-        </form>
+        <div class="checkout-payment-form">
+            <form method="POST" action={SagepayFormService.LiveUrl}>
+                {paramInputs}<button type="submit" class="btn btn-primary">Pay by sage pay</button>
+            </form>
         </div>
     }
-
-    def renderConfirmation(basket: Basket) = <div class="checkoutconf">
-        {basket}
-    </div>
 
     def renderDeliveryOptions(options: List[DeliveryOption]): Seq[Elem] =
         options.map(d => <label class="radio">
@@ -31,7 +27,7 @@ object CheckoutRenderer {
         </label>)
 
     def renderDeliveryAddress(address: Address, options: List[DeliveryOption], errors: Errors) =
-        <div class="container">
+        <div class="checkout-delivery-input">
             <form method="POST">
                 <legend>Delivery Address</legend>
                 <div class="control-group">

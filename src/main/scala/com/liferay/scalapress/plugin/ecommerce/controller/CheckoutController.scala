@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, R
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{OrderDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
-import com.liferay.scalapress.service.theme.ThemeService
+import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.plugin.ecommerce.{OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
@@ -77,15 +77,16 @@ class CheckoutController {
 
             sreq.basket.deliveryAddress = address
             basketDao.save(sreq.basket)
-            showPayment(req)
+            showConfirmation(req)
         }
     }
 
     @ResponseBody
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showPayment(req: HttpServletRequest): ScalaPressPage = {
+    def showConfirmation(req: HttpServletRequest): ScalaPressPage = {
 
-        val plugin = sagepayFormPluginDao.get
+        val shoppingPlugin = shoppingPluginDao.get
+        val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
@@ -93,7 +94,9 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(CheckoutRenderer.renderPaymentOptions(sreq.basket, plugin, account, host + ":" + port))
+        if (shoppingPlugin.confirmationMarkup != null)
+            page.body(MarkupRenderer.render(shoppingPlugin.confirmationMarkup, sreq, context))
+        page.body(CheckoutRenderer.renderPaymentForm(sreq.basket, sagepayFormPlugin, account, host + ":" + port))
         page
     }
 

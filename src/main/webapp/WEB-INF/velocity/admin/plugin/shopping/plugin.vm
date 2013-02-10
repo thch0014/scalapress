@@ -37,6 +37,39 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Confirmation Markup</label>
+
+        <div class="controls">
+            <select id="confirmationMarkup" name="confirmationMarkup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!plugin.confirmationMarkup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        $!{markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <label class="control-label">Confirmation Line Markup</label>
+
+        <div class="controls">
+            <select id="confirmationLineMarkup" name="confirmationLineMarkup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!plugin.confirmationLineMarkup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        $!{markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn">Cancel</button>
