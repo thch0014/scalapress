@@ -6,7 +6,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.ThemeService
 import javax.servlet.http.HttpServletRequest
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.{ObjectType, Obj}
@@ -112,6 +112,7 @@ class RegistrationController {
 
     @ModelAttribute("form") def form = new RegistrationForm
 
+    @Qualifier("authman")
     @Autowired var authenticationManager: AuthenticationManager = _
 
     def autologin(req: HttpServletRequest, user: Obj) {

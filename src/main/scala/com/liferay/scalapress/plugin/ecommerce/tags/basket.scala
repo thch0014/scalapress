@@ -48,7 +48,7 @@ object BasketLinesTag extends ScalapressTag {
 
         // we need to be inside a basket context
         val lines = request.basket.lines
-        Option(context.shoppingPluginDao.get.basketMarkup) match {
+        Option(context.shoppingPluginDao.get.basketLineMarkup) match {
             case None => None
             case Some(m) =>
                 val render = MarkupRenderer.render(lines.asScala, m, request)

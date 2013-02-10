@@ -112,6 +112,27 @@ object SagepayFormService extends Logging {
         sb.toString()
     }
 
+    def processCallback(params: Map[String, String], plugin: SagepayFormPlugin) {
+        logger.debug("Callback params")
+
+        val crypt = params("crypt")
+        val p = decrypt(plugin, crypt)
+        logger.debug("Sagepay params {}", p)
+
+        val status = p.get("Status").getOrElse("NoStatus")
+
+        status.toLowerCase match {
+            case "ok" =>
+                val sageTxId = p.get("VPSTxId").getOrElse("NoId")
+                if (!existingTransaction(sageTxId)) {
+                    createPayment(p)
+                }
+            case _ =>
+        }
+    }
+
+    def existingTransaction(sageTxId: String) = false
+
     // returns the unencrpyted params used in the crypt field
     def cryptParams(plugin: SagepayFormPlugin, basket: Basket): Map[String, String] = {
 
