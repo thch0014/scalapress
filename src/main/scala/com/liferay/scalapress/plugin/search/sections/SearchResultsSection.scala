@@ -1,7 +1,6 @@
 package com.liferay.scalapress.plugin.search.sections
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import javax.persistence.{Column, JoinColumn, OneToOne, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.plugin.search.SavedSearch

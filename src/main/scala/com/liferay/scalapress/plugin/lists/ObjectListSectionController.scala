@@ -1,9 +1,9 @@
-package com.liferay.scalapress.section.objects
+package com.liferay.scalapress.plugin.lists
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import scala.Array
 import com.liferay.scalapress.dao.{MarkupDao, PluginDao}
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator

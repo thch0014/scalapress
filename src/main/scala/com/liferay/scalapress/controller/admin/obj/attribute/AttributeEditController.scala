@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.AttributeDao
 import scala.Array
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.domain.attr.Attribute
-import com.liferay.scalapress.section.objects.EnumPopulator
 import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */

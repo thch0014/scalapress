@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{MarkupDao, PluginDao, ObjectDao}
 import scala.Array
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{Section, ScalapressContext}
 import com.liferay.scalapress.service.asset.AssetStore
-import com.liferay.scalapress.section.Section
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.section.objects.ObjectListSection
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
+import com.liferay.scalapress.plugin.lists.ObjectListSection
 
 /** @author Stephen Samuel */
 @Controller

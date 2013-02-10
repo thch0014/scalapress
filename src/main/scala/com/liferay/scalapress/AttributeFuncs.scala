@@ -1,4 +1,4 @@
-package com.liferay.scalapress.section.gbase
+package com.liferay.scalapress
 
 import com.liferay.scalapress.domain.Obj
 import scala.collection.JavaConverters._

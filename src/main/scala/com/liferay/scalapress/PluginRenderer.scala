@@ -1,6 +1,5 @@
-package com.liferay.scalapress.section
+package com.liferay.scalapress
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer

@@ -3,9 +3,8 @@ package com.liferay.scalapress.plugin.folder.section
 import javax.persistence.{Table, Entity, JoinColumn, ManyToOne}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.section.Section
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */

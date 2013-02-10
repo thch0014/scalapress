@@ -1,8 +1,7 @@
-package com.liferay.scalapress.section.objects
+package com.liferay.scalapress.plugin.lists
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import javax.persistence.{Table, Entity}
-import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

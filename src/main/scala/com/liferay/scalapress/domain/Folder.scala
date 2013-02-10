@@ -4,9 +4,9 @@ import javax.persistence._
 import java.util
 import reflect.BeanProperty
 import scala.Array
-import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, SubfolderSection}
+import com.liferay.scalapress.Section
 
 /** @author Stephen Samuel */
 @Entity

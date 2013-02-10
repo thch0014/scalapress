@@ -5,9 +5,8 @@ import com.csvreader.CsvWriter
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.section.gbase.AttributeFuncs
 import org.apache.commons.lang.WordUtils
-import com.liferay.scalapress.Logging
+import com.liferay.scalapress.{AttributeFuncs, Logging}
 
 /** @author Stephen Samuel */
 object GoogleBaseBuilder extends Logging {

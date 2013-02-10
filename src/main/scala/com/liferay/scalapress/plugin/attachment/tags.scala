@@ -1,4 +1,4 @@
-package com.liferay.scalapress.section.attachment
+package com.liferay.scalapress.plugin.attachment
 
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}

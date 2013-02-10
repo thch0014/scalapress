@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.gallery
+package com.liferay.scalapress.plugin.gallery.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.GalleryDao
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.plugin.gallery.GalleryRenderer
 
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  * */
+  **/
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {

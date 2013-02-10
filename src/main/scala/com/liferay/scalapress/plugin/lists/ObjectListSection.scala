@@ -1,11 +1,10 @@
-package com.liferay.scalapress.section.objects
+package com.liferay.scalapress.plugin.lists
 
 import com.liferay.scalapress.domain.Markup
 import javax.persistence.{EnumType, Enumerated, ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.section.Section
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 
