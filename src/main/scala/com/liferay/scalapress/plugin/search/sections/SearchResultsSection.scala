@@ -1,9 +1,11 @@
 package com.liferay.scalapress.plugin.search.sections
 
 import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
-import javax.persistence.{Column, JoinColumn, OneToOne, Entity, Table}
+import javax.persistence.{ManyToOne, Column, JoinColumn, OneToOne, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.plugin.search.SavedSearch
+import com.liferay.scalapress.domain.Markup
+import com.liferay.scalapress.service.theme.MarkupRenderer
 
 /** @author Stephen Samuel
   *
@@ -18,6 +20,10 @@ class SearchResultsSection extends Section {
     @JoinColumn(name = "search")
     @BeanProperty var search: SavedSearch = _
 
+    @ManyToOne
+    @JoinColumn(name = "markup:")
+    @BeanProperty var markup: Markup = _
+
     @Column(name = "pageSize", nullable = false)
     @BeanProperty var pageSize: Int = 50
 
@@ -26,7 +32,9 @@ class SearchResultsSection extends Section {
             case None => None
             case Some(s) =>
                 val results = context.searchService.search(search, pageSize)
-                Some(results.toString)
+                val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
+                val rendered = MarkupRenderer.renderObjects(objs, markup, request, context)
+                Some(rendered)
         }
     }
 

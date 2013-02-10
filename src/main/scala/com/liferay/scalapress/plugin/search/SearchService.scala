@@ -71,28 +71,26 @@ class ElasticSearchService extends SearchService with Logging {
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
 
-
-
         logger.info("Indexing finished")
     }
 
-    private def index(folder: Folder) {
-        logger.debug("Indexing [{}]", folder)
-        val src = source(folder)
-
-        try {
-
-            client.prepareDelete(INDEX, "folder", folder.id.toString).execute().actionGet(2000)
-
-            client.prepareIndex(INDEX, "folder", folder.id.toString)
-              .setSource(src)
-              .execute()
-              .actionGet(2000)
-
-        } catch {
-            case e: Exception => logger.warn(e.getMessage)
-        }
-    }
+//    private def index(folder: Folder) {
+    //        logger.debug("Indexing [{}]", folder)
+    //        val src = source(folder)
+    //
+    //        try {
+    //
+    //            client.prepareDelete(INDEX, "folder", folder.id.toString).execute().actionGet(2000)
+    //
+    //            client.prepareIndex(INDEX, "folder", folder.id.toString)
+    //              .setSource(src)
+    //              .execute()
+    //              .actionGet(2000)
+    //
+    //        } catch {
+    //            case e: Exception => logger.warn(e.getMessage)
+    //        }
+    //    }
 
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)

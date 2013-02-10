@@ -170,7 +170,10 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
-
+        execute("ALTER TABLE searches MODIFY searchcategory bigint(10) null")
+        execute("UPDATE searches SET searchcategory=null WHERE searchcategory=0")
+        execute("ALTER TABLE searches MODIFY itemType bigint(10) null")
+        execute("UPDATE searches SET itemType=null WHERE itemType=0")
 
         for (column <- Array("disableemails",
             "pendingimagecount",
@@ -304,12 +307,14 @@ class EcreatorDatabaseUpgrader extends Logging {
             "feeds_edirectory",
             "feeds_c2000",
             "feeds_artful",
-            "settings_newsletter", "settings_delivery",
+            "settings_newsletter",
+            "settings_delivery",
             "boxes_holiday_reminders",
             "boxes_highlighted_comments",
             "boxes_googlewebsearch",
             "boxes_forums_search",
-            "prices_pricing", "prices_settings",
+            "prices_pricing",
+            "prices_settings",
             "media_modules",
             "boxes_login",
             "boxes_polls",
@@ -374,6 +379,16 @@ class EcreatorDatabaseUpgrader extends Logging {
             "newsfeeds_items",
             "newsfeeds",
             "items_views",
+            "settings_language",
+            "newsletters_autosignups",
+            "listings_session_payment",
+            "listings_session",
+            " newsletters_templates",
+            " newsletters_blocks",
+            "forms_fields_google",
+            "blocks_banners_rotation",
+            "blocks_banners",
+            "access_reminder_bots",
             "forms_submissions_ip_stats",
             "settings_stats",
             "sessions",

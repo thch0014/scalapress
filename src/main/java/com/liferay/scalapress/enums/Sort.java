@@ -1,6 +1,8 @@
 package com.liferay.scalapress.enums;
 
 public enum Sort {
+    // sort from the location set by the search
+    Distance,
     Name,
     Newest,
     Oldest,
@@ -8,8 +10,7 @@ public enum Sort {
     Price,
     // highest price first
     PriceHigh,
-    // sort from the location set by the search
-    Distance,
+
     // sort all objects randomly
     Random
 }

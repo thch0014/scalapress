@@ -3,7 +3,8 @@ package com.liferay.scalapress
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 import org.springframework.core.convert.converter.Converter
 import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
-import plugin.search.form.{SearchForm, SearchFormDao}
+import plugin.search.form.{SearchForm}
+import plugin.search.SearchFormDao
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {

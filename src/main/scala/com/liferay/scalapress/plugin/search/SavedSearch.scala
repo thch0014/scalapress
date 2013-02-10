@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.search
 
-import javax.persistence.{Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
+import javax.persistence.{EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.domain.{ObjectType, Folder}
@@ -23,7 +23,11 @@ class SavedSearch {
 
     @BeanProperty var imageOnly: Boolean = _
 
+    @Column(name = "method", nullable = true)
     @BeanProperty var labels: String = _
+
+    @Enumerated(EnumType.STRING)
+    @BeanProperty var sort: Sort = _
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
@@ -56,6 +60,5 @@ class SavedSearch {
     @BeanProperty var minPrice: Int = _
 
     // find objects newer than this date
-    @Column(name = "createdAfter")
     @BeanProperty var newerThanTimestamp: Long = _
 }

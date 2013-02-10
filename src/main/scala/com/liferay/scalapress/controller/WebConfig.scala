@@ -16,8 +16,8 @@ import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.{StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
-import com.liferay.scalapress.plugin.search.form.SearchFormDao
 import com.liferay.scalapress.dao.settings.SiteDao
+import com.liferay.scalapress.plugin.search.SearchFormDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

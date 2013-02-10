@@ -1,11 +1,12 @@
-package com.liferay.scalapress.plugin.search.controller
+package com.liferay.scalapress.controller.admin.search
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.plugin.search.form.{SearchForm, SearchFormDao}
+import com.liferay.scalapress.plugin.search.form.SearchForm
+import com.liferay.scalapress.plugin.search.SearchFormDao
 
 /** @author Stephen Samuel */
 @Controller
