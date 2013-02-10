@@ -72,12 +72,12 @@ object SagepayFormService extends Logging {
         payment
     }
 
-    def basketString(basket: Basket) = {
+    def sageBasketString(basket: Basket) = {
 
-        val numOfLines = basket.lines.size + 1
+        val count = basket.lines.size + 1
 
         val sb = new StringBuilder
-        sb.append(numOfLines)
+        sb.append(count)
 
         for (line <- basket.lines.asScala) {
             sb.append(":")
@@ -85,25 +85,25 @@ object SagepayFormService extends Logging {
             sb.append(":")
             sb.append(line.qty)
             sb.append(":")
-            sb.append(line.obj.sellPrice)
+            sb.append(line.obj.sellPrice / 100)
             sb.append(":")
-            sb.append(line.obj.vat)
+            sb.append(line.obj.vat / 100)
             sb.append(":")
-            sb.append(line.obj.sellPriceInc)
+            sb.append(line.obj.sellPriceInc / 100)
             sb.append(":")
-            sb.append(line.total)
+            sb.append(line.total / 100)
         }
 
         sb.append(":")
-        sb.append(basket.deliveryOption.name.replaceAll("[&:=$*]", ""))
+        sb.append(Option(basket.deliveryOption.name).getOrElse("Delivery option has no name").replaceAll("[&:=$*]", ""))
         sb.append(":1:")
-        sb.append(basket.deliveryOption.charge)
+        sb.append(basket.deliveryOption.charge / 100)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeVat)
+        sb.append(basket.deliveryOption.chargeVat / 100)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeIncVat)
+        sb.append(basket.deliveryOption.chargeIncVat / 100)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeIncVat)
+        sb.append(basket.deliveryOption.chargeIncVat / 100)
 
 
         sb.toString()
@@ -136,24 +136,28 @@ object SagepayFormService extends Logging {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", basket.sessionId) // store basket id as our tx id
-        params.put("Currency", "GBP")
-        params.put("Amount", basket.total.toString)
-        params.put("CustomerName", account.name)
-        params.put("CustomerEmail", account.email)
-        params.put("Description", domain + " Order")
-
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
-        params.put("Description", "Order")
+        params.put("Currency", "GBP")
+        params.put("Amount", "" + (basket.total / 100))
+        params.put("CustomerName", account.name)
+        params.put("CustomerEmail", account.email)
+        params.put("Description", "Basket " + basket.sessionId)
+
         params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
         params.put("FailureURL", "http://" + domain + "/checkout/payment/failure")
 
-        params.put("Basket", basketString(basket))
-
         val firstname = basket.deliveryAddress.name.split(" ").last
         val lastname = basket.deliveryAddress.name.split(" ").head
+
+        params.put("DeliveryFirstnames", firstname)
+        params.put("DeliverySurname", lastname)
+        params.put("DeliveryAddress1", basket.deliveryAddress.address1)
+        params.put("DeliveryCity", basket.deliveryAddress.town)
+        params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
+        params.put("DeliveryCountry", "GB")
 
         params.put("BillingSurname", firstname)
         params.put("BillingFirstnames", lastname)
@@ -162,12 +166,7 @@ object SagepayFormService extends Logging {
         params.put("BillingPostCode", basket.deliveryAddress.postcode)
         params.put("BillingCountry", "GB")
 
-        params.put("DeliveryFirstnames", firstname)
-        params.put("DeliverySurname", lastname)
-        params.put("DeliveryAddress1", basket.deliveryAddress.address1)
-        params.put("DeliveryCity", basket.deliveryAddress.town)
-        params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
-        params.put("DeliveryCountry", "GB")
+        params.put("Basket", sageBasketString(basket))
 
         logger.debug("Params [{}]", params)
         params.toMap

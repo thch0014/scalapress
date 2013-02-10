@@ -10,6 +10,11 @@ import scala.collection.JavaConverters._
 @Table(name = "plugin_shopping_baskets")
 class Basket {
 
+    def empty() {
+        lines.clear()
+        deliveryOption = null
+    }
+
     @Id
     @BeanProperty var sessionId: String = _
 

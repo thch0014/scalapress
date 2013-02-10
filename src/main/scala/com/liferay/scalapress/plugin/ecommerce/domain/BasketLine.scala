@@ -25,7 +25,7 @@ class BasketLine {
 
     // total value of the line excluding VAT
     def subtotal: Int = qty * obj.sellPrice
-    def vat: Int = qty * obj.vat.toInt
+    def vat: Int = qty * obj.vat
     // total value of the line including VAT
     def total: Int = subtotal + vat
 }

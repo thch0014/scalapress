@@ -60,24 +60,27 @@ class Obj {
     @Column(length = 5000)
     @BeanProperty var titleTag: String = _
 
-    @Column(name = "keywords")
+    @Column(name = "keywords", length = 5000)
     @BeanProperty var keywordsTag: String = _
 
     @BeanProperty var featured: Boolean = false
 
+    @Column(length = 5000)
     @BeanProperty var summary: String = _
 
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
-    def vat = sellPrice * vatRate
-    @BeanProperty def sellPriceInc = sellPrice + vat
+
+    @BeanProperty def vat: Int = (sellPrice * vatRate / 100.0).toInt
+    @BeanProperty def sellPriceInc: Int = sellPrice + vat
+    @BeanProperty def sellPriceDecimal = "%.2f" format sellPrice / 100.0
+
     @BeanProperty var vatRate: Double = _
 
     @BeanProperty var costPrice: Int = _
 
     @Column(name = "rrp")
     @BeanProperty var rrp: Int = _
-    def sellPriceDecimal = "%.2f" format sellPrice / 100.0
 
     @BeanProperty var x: Int = 0
     @BeanProperty var y: Int = 0

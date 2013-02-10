@@ -105,8 +105,12 @@ class CheckoutController {
         val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
         val params = req.getParameterMap.asScala.asInstanceOf[Map[Any, Any]]
+
         val order = OrderService.createOrder(sreq.basket, req)
         orderDao.save(order)
+
+        sreq.basket.empty()
+        basketDao.save(sreq.basket)
 
         SagepayFormService.processCallback(params, sagepayFormPlugin) match {
 

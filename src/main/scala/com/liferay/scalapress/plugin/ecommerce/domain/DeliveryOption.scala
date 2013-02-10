@@ -16,9 +16,9 @@ class DeliveryOption {
 
     @Column(name = "flatCharge")
     @BeanProperty var charge: Int = _
-
-    def chargeVat = charge * vatRate
-    def chargeIncVat = charge + charge * vatRate
+    @BeanProperty def chargeVat: Int = (charge * vatRate / 100.0).toInt
+    @BeanProperty def chargeIncVat: Int = charge + chargeVat
+    @BeanProperty var vatRate: Double = _
 
     // qualifying amount values
     @Column(name = "startPrice")
@@ -26,8 +26,6 @@ class DeliveryOption {
 
     @Column(name = "endPrice")
     @BeanProperty var maxPrice: Int = _
-
-    @BeanProperty var vatRate: Double = _
 
     // valid for these areas only
     @BeanProperty var postcodes: String = _
