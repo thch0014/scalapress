@@ -70,7 +70,7 @@ class FolderEditController extends EnumPopulator {
 
     @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
         val folder = folderDao.find(id)
-        val sections = folder.sections
+        val sections = folder.sections.asScala.sortBy(_.position).asJava
         map.put("eyeball", UrlResolver.folderSiteView(folder))
         map.put("folder", folder)
         map.put("sections", sections)

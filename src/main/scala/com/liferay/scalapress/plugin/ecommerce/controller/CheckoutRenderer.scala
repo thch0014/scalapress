@@ -20,7 +20,7 @@ object CheckoutRenderer {
                     <label for="name">
                         Name
                     </label>
-                    <input name="name" type="text" value={address.name}/>
+                    <input name="name" type="text" class="input-xlarge" value={address.name}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -29,7 +29,7 @@ object CheckoutRenderer {
                     <label for="company">
                         Company
                     </label>
-                    <input name="company" type="text" value={address.company}/>
+                    <input name="company" type="text" class="input-xlarge" value={address.company}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("company")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -38,7 +38,7 @@ object CheckoutRenderer {
                     <label for="address1">
                         Address 1
                     </label>
-                    <input name="address1" type="text" value={address.address1}/>
+                    <input name="address1" type="text" class="input-xlarge" value={address.address1}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("address1")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -47,7 +47,7 @@ object CheckoutRenderer {
                     <label for="address2">
                         Address 2
                     </label>
-                    <input name="address2" type="text" value={address.address2}/>
+                    <input name="address2" type="text" class="input-xlarge" value={address.address2}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("address2")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -56,7 +56,7 @@ object CheckoutRenderer {
                     <label for="city">
                         City
                     </label>
-                    <input name="town" type="text" value={address.town}/>
+                    <input name="town" type="text" class="input-xlarge" value={address.town}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("town")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -74,7 +74,7 @@ object CheckoutRenderer {
                     <label for="country">
                         Country
                     </label>
-                    <select name="country">
+                    <select name="country" class="input-large">
                         <option>United Kingdom</option>
                         <option>United States</option>
                         <option>Afghanistan</option>
@@ -297,7 +297,7 @@ object CheckoutRenderer {
                     <label for="instructions">
                         Delivery Instructions
                     </label>
-                    <textarea name="instructions">
+                    <textarea name="instructions" class="input-xxlarge">
                         {address.instructions}
                     </textarea>
                 </div>
