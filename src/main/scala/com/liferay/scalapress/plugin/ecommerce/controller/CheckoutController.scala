@@ -30,7 +30,7 @@ class CheckoutController {
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @RequestMapping
-    def start = "redirect:/basket"
+    def start = "redirect:/checkout/delivery"
 
     @ResponseBody
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.GET), produces = Array("text/html"))
@@ -43,7 +43,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutRenderer.renderDeliveryAddress(deliveryOptions, errors))
+        page.body(CheckoutRenderer.renderDeliveryAddress(address, deliveryOptions, errors))
         page
     }
 

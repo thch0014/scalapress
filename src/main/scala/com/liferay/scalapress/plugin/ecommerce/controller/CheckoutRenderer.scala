@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, DeliveryOption}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket, DeliveryOption}
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
 
@@ -27,7 +27,7 @@ object CheckoutRenderer {
             {d.name + " GBP " + d.chargeIncVat}
         </option>)
 
-    def renderDeliveryAddress(options: List[DeliveryOption], errors: Errors) =
+    def renderDeliveryAddress(address: Address, options: List[DeliveryOption], errors: Errors) =
         <div class="container">
             <form method="POST">
                 <legend>Delivery Address</legend>
@@ -35,7 +35,7 @@ object CheckoutRenderer {
                     <label for="name">
                         Name
                     </label>
-                    <input name="name" type=" "/>
+                    <input name="name" type="text" value={address.name}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -44,7 +44,7 @@ object CheckoutRenderer {
                     <label for="company">
                         Company
                     </label>
-                    <input name="company" type=" "/>
+                    <input name="company" type="text" value={address.company}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("company")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -53,7 +53,7 @@ object CheckoutRenderer {
                     <label for="address1">
                         Address 1
                     </label>
-                    <input name="address1" type=" "/>
+                    <input name="address1" type="text" value={address.address1}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("address1")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -62,7 +62,7 @@ object CheckoutRenderer {
                     <label for="address2">
                         Address 2
                     </label>
-                    <input name="address2" type=" "/>
+                    <input name="address2" type="text" value={address.address2}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("address2")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -71,16 +71,16 @@ object CheckoutRenderer {
                     <label for="city">
                         City
                     </label>
-                    <input name="city" type=" "/>
+                    <input name="town" type="text" value={address.town}/>
                     <span class="help-inline">
-                        {Option(errors.getFieldError("city")).map(_.getDefaultMessage).getOrElse("")}
+                        {Option(errors.getFieldError("town")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
                 </div>
                 <div class="control-group">
                     <label for="postcode">
                         Postcode
                     </label>
-                    <input name="postcode" type=" "/>
+                    <input name="postcode" type="text" value={address.postcode}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("postcode")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -297,22 +297,24 @@ object CheckoutRenderer {
                         <option>Zimbabwe</option>
                     </select>
                 </div>
-                <div class="control-group">
-                </div>
+
                 <div class="control-group">
                     <label for="telephone">
                         Telephone
                     </label>
-                    <input name="telephone" type=" "/>
+                    <input name="telephone" type="text" value={address.telephone}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("telephone")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
                 </div>
+
                 <div class="control-group">
                     <label for="instructions">
                         Delivery Instructions
                     </label>
-                    <textarea name="instructions"></textarea>
+                    <textarea name="instructions">
+                        {address.instructions}
+                    </textarea>
                 </div>
 
                 <legend>Delivery Address</legend>

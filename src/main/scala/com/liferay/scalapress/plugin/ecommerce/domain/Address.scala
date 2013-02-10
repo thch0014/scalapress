@@ -43,10 +43,12 @@ class Address {
     @NotEmpty
     @BeanProperty var telephone: String = _
 
+    @Column(length = 256)
     @BeanProperty var country: String = _
 
     @BeanProperty var date: Long = _
 
+    @Column(name = "addressLine3", length = 1000)
     @BeanProperty var instructions: String = null
 
     @BeanProperty var state: String = null

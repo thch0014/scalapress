@@ -46,7 +46,6 @@ class LoginController {
         val theme = themeService.default
 
         val page = ScalaPressPage(theme, sreq)
-        page.body("<h1>Login</h1>")
         page.body(LoginRenderer.renderLogin)
         page
     }

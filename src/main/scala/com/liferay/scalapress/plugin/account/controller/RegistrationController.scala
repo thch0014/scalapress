@@ -58,7 +58,7 @@ class RegistrationController {
         val sreq = ScalapressRequest(req, context).withTitle("Registration")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(RegistrationRenderer.renderRegistrationPage(plugin, errors))
+        page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
         page
     }
 

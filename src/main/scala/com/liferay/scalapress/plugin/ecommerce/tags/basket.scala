@@ -70,6 +70,24 @@ object BasketLineQtyTag extends ScalapressTag {
     override def tags = Array("basket_line_qty")
 }
 
+object BasketDeliveryChargeTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        Option(request.basket.deliveryOption).map(_.chargeIncVat.toString)
+    }
+    override def tags = Array("basket_delivery_charge")
+}
+
+object BasketDeliveryDescTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        Option(request.basket.deliveryOption).map(_.name)
+    }
+    override def tags = Array("basket_delivery_desc")
+}
+
 object BasketLineItemTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
@@ -140,7 +158,9 @@ object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
 
 object CheckoutTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
         val link = UrlResolver.checkout
         val text = params.get("text").getOrElse("Checkout")
         Some(buildLink(link, text, params))
