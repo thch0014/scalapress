@@ -1,6 +1,6 @@
 package com.liferay.scalapress.controller
 
-import admin.interceptor.{AdminUsernameInterceptor, TypesInterceptor, UrlResolverInterceptor}
+import admin.interceptor.{SiteInterceptor, AdminUsernameInterceptor, TypesInterceptor, UrlResolverInterceptor}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry
@@ -17,6 +17,7 @@ import com.liferay.scalapress.{StringSearchFormConverter, StringMarkupConverter,
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
 import com.liferay.scalapress.plugin.search.form.SearchFormDao
+import com.liferay.scalapress.dao.settings.SiteDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -30,6 +31,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var basketDao: BasketDao = _
     @Autowired var markupDao: MarkupDao = _
     @Autowired var searchFormDao: SearchFormDao = _
+    @Autowired var siteDao: SiteDao = _
 
     override def addFormatters(registry: FormatterRegistry) {
         registry.addConverter(new StringFolderConverter(folderDao))
@@ -54,6 +56,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao))
         registry.addInterceptor(AdminUsernameInterceptor)
+        registry.addInterceptor(new SiteInterceptor(siteDao))
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
