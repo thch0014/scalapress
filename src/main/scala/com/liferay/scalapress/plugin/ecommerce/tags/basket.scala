@@ -5,6 +5,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object BasketLinkTag extends ScalapressTag with TagBuilder {
@@ -66,40 +67,62 @@ object BasketLineQtyTag extends ScalapressTag {
         request.line.map(_.qty.toString)
     }
 
-    override def tags = Array("basket_lines")
+    override def tags = Array("basket_line_qty")
 }
 
 object BasketLineItemTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        params.get("link") match {
-            case None => request.line.map(_.obj.name)
-            case _ => request.line.map(_.obj.name)
-        }
+        request.line.map(line => {
+            params.contains("link") match {
+                case false => line.obj.name
+                case true => FriendlyUrlGenerator.friendlyUrl(line.obj)
+            }
+        })
     }
 
-    override def tags = Array("basket_lines")
+    override def tags = Array("basket_line_item")
 }
 
 object BasketLinePriceTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        request.line.map(_.obj.sellPrice.toString)
+        if (params.contains("ex"))
+            request.line.map(_.obj.sellPrice.toString)
+        else if (params.contains("vat"))
+            request.line.map(_.obj.vat.toString)
+        else
+            request.line.map(_.obj.sellPriceInc.toString)
     }
 
-    override def tags = Array("basket_lines")
+    override def tags = Array("basket_line_price")
 }
 
 object BasketLineTotalTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        request.line.map(_.total.toString)
+        if (params.contains("ex"))
+            request.line.map(_.subtotal.toString)
+        else if (params.contains("vat"))
+            request.line.map(_.vat.toString)
+        else
+            request.line.map(_.total.toString)
     }
 
-    override def tags = Array("basket_lines")
+    override def tags = Array("basket_line_total")
+}
+
+object BasketLineStockTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        request.line.map(_.obj.stock.toString)
+    }
+
+    override def tags = Array("basket_line_stock")
 }
 
 object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
@@ -112,7 +135,7 @@ object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
         Some(link)
     }
 
-    override def tags = Array("basket_lines")
+    override def tags = Array("basket_line_remove")
 }
 
 object CheckoutTag extends ScalapressTag with TagBuilder {

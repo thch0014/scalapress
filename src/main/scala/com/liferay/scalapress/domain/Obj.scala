@@ -71,9 +71,9 @@ class Obj {
     @BeanProperty var sellPrice: Int = _
     def vat = sellPrice * vatRate
     @BeanProperty def sellPriceInc = sellPrice + vat
+    @BeanProperty var vatRate: Double = _
 
     @BeanProperty var costPrice: Int = _
-    @BeanProperty var vatRate: Double = _
 
     @Column(name = "rrp")
     @BeanProperty var rrp: Int = _
@@ -92,6 +92,11 @@ class Obj {
 
     @Column(name = "ourStock")
     @BeanProperty var stock: Int = _
+
+    def availability = stock match {
+        case 0 => outStockMsg
+        case _ => inStockMsg
+    }
 
     @Column(name = "brochure")
     @BeanProperty var orderable: Boolean = false
