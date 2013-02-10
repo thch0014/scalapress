@@ -17,7 +17,8 @@ class DeliveryOption {
     @Column(name = "flatCharge")
     @BeanProperty var charge: Int = _
 
-    def chargeInc = charge + charge * vatRate
+    def chargeVat = charge * vatRate
+    def chargeIncVat = charge + charge * vatRate
 
     // qualifying amount values
     @Column(name = "startPrice")

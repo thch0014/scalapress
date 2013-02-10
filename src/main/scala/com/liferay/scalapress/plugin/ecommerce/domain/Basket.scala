@@ -7,7 +7,7 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugin_shopping_basket")
+@Table(name = "plugin_shopping_baskets")
 class Basket {
 
     @Id

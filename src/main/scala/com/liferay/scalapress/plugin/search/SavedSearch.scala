@@ -1,8 +1,7 @@
 package com.liferay.scalapress.plugin.search
 
-import javax.persistence.{CollectionTable, Entity, Table, ElementCollection, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
+import javax.persistence.{Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
 import reflect.BeanProperty
-import java.util
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.domain.{ObjectType, Folder}
 
@@ -24,12 +23,7 @@ class SavedSearch {
 
     @BeanProperty var imageOnly: Boolean = _
 
-    @ElementCollection
-    @CollectionTable(
-        name = "searches_labels",
-        joinColumns = Array(new JoinColumn(name = "search_id"))
-    )
-    @BeanProperty var labels: java.util.Set[String] = new util.HashSet[String]()
+    @BeanProperty var labels: String = _
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
@@ -38,16 +32,17 @@ class SavedSearch {
     @JoinColumn(name = "inStockOnly", nullable = false)
     @BeanProperty var inStockOnly: Boolean = _
 
-    // search object name and content
+    // search all content
     @BeanProperty var keywords: String = _
+    // search name only
     @BeanProperty var name: String = _
 
-    @Column(name = "itemTypes")
-    @ElementCollection
-    @BeanProperty var objectTypes: java.util.Set[Integer] = new java.util.HashSet[Integer]()
+    //  @Column(name = "itemTypes")
+    //   @ElementCollection
+    //   @BeanProperty var objectTypes: java.util.Set[Integer] = new java.util.HashSet[Integer]()
 
-    @Column(name = "multipleItemTypes", nullable = false)
-    @BeanProperty var multipleObjectTypes: Boolean = _
+    //    @Column(name = "multipleItemTypes", nullable = false)
+    //  @BeanProperty var multipleObjectTypes: Boolean = _
 
     @BeanProperty var sortType: Sort = Sort.Name
 

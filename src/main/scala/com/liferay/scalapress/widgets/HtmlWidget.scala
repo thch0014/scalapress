@@ -1,7 +1,7 @@
 package com.liferay.scalapress.widgets
 
 import javax.persistence.{Table, Entity}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 
 /** @author Stephen Samuel */
 
@@ -9,5 +9,5 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 @Table(name = "boxes_custom")
 class HtmlWidget extends Widget {
 
-    override def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = Option(content)
+    override def render(req: ScalapressRequest): Option[String] = Option(content)
 }

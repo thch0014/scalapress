@@ -19,7 +19,7 @@ class SearchFormWidget extends Widget {
     @JoinColumn(name = "searchForm")
     @BeanProperty var searchForm: SearchForm = _
 
-    def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(req: ScalapressRequest): Option[String] = {
         Option(searchForm) match {
             case None => None
             case Some(form) => Some(SearchFormRenderer.renderForm(form))

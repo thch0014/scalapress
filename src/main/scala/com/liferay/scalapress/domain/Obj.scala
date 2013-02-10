@@ -18,12 +18,7 @@ class Obj {
 
     @BeanProperty var email: String = _
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(
-        name = "object_labels",
-        joinColumns = Array(new JoinColumn(name = "object_id"))
-    )
-    @BeanProperty var labels: java.util.Set[String] = new util.HashSet[String]()
+    @BeanProperty var labels: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()

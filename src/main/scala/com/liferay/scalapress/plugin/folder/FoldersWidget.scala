@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.folder
 
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
-import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Logging, ScalapressRequest}
 import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
@@ -20,9 +20,9 @@ class FoldersWidget extends Widget with Logging {
 
     override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
-    override def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    override def render(req: ScalapressRequest): Option[String] = {
         val buffer = new ArrayBuffer[String]
-        renderFolderLevel(context.folderDao.root, 1, buffer)
+        renderFolderLevel(req.context.folderDao.root, 1, buffer)
         Some(buffer.mkString("\n"))
     }
 

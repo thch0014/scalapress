@@ -11,7 +11,7 @@ import com.liferay.scalapress.widgets.Widget
 @Entity
 class BasketWidget extends Widget {
 
-    def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(req: ScalapressRequest): Option[String] = {
 
         val basket = req.basket
 

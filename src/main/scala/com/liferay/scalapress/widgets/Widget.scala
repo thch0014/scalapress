@@ -21,7 +21,7 @@ abstract class Widget {
     @Column(name = "captionText")
     @BeanProperty var caption: String = _
 
-    def render(req: ScalapressRequest, context: ScalapressContext): Option[String]
+    def render(req: ScalapressRequest): Option[String]
     def widgetType: String = getClass.getSimpleName
     def backoffice = "/backoffice/widget/" + id
 

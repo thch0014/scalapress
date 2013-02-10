@@ -2,7 +2,7 @@ package com.liferay.scalapress.widgets
 
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity}
 import reflect.BeanProperty
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import scala.Array
 import java.util
 import com.liferay.scalapress.domain.Image
@@ -20,7 +20,7 @@ class MediaWidget extends Widget {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL))
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
-    override def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    override def render(req: ScalapressRequest): Option[String] = {
         images.asScala.headOption match {
             case None => None
             case Some(image) => {

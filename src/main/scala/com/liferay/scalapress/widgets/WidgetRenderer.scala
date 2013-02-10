@@ -17,7 +17,7 @@ object WidgetRenderer extends Logging {
         val allowed = widgets.filter(_.visible) filter (checkWhere(_, request))
         logger.debug("...and {} are visible on this page", allowed.size)
         val sorted = allowed.sortBy(_.position)
-        sorted.flatMap(render(_, request, context)).mkString(sep)
+        sorted.flatMap(render(_, request)).mkString(sep)
     }
 
     def checkWhere(widget: Widget, request: ScalapressRequest) = {
@@ -41,8 +41,8 @@ object WidgetRenderer extends Logging {
     def normalizedContainerId(widget: Widget) = Option(widget.containerId).getOrElse("widget" + widget.id)
     def widgetContainerClass(widget: Widget) = Option(widget.containerClass).getOrElse("") + " widgetcontainer"
 
-    def render(widget: Widget, req: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        widget.render(req, context) match {
+    def render(widget: Widget, req: ScalapressRequest): Option[String] = {
+        widget.render(req) match {
             case None => Some("\n<!-- widget " + widget.getClass + " - no content -->\n")
             case Some(body) => {
                 val rendered = widget.container match {
