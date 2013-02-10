@@ -27,13 +27,6 @@ class AttributeEditController extends EnumPopulator {
         edit(a)
     }
 
-    //    val typeSelect = BootSelect("attributeType")
-    //      .enums(AttributeType.values().filterNot(_ == AttributeType.Association))
-    //      .value(a.attributeType)
-    //    form.add(FormControlGroup("Type", typeSelect))
-    //
-    //
-
     @ModelAttribute def att(@PathVariable("id") id: Long) = attributeDao.find(id)
     @ModelAttribute("attributeTypeMap") def types = populate(AttributeType.values)
 }

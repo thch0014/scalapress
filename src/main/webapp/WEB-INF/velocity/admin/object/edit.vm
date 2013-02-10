@@ -73,14 +73,49 @@
                 </div>
             </div>
 
-            <!--
-            if (o.objectType.name.toLowerCase.contains("product")) {
-            form.add(FormControlGroup("Price", TextInput("sellPrice").value(o.sellPrice).size(XXLarge)))
-            form.add(FormControlGroup("Cost Price", TextInput("costPrice").value(o.costPrice).size(XXLarge)))
-            form.add(FormControlGroup("Vat Rate", TextInput("vatRate").value(o.vatRate).size(XXLarge)))
-            form.add(FormControlGroup("RRP", TextInput("rrp").value(o.rrp).size(XXLarge)))
-            form.add(FormControlGroup("Stock Level", TextInput("stock").value(o.stock).size(XXLarge)))
-            } -->
+
+            #if ($form.o.objectType.name.toLowerCase().contains("product"))
+
+                <div class="control-group">
+                    <label class="control-label">Price</label>
+
+                    <div class="controls">
+                        #springFormInput("form.o.sellPrice", "class='input-small'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Cost Price</label>
+
+                    <div class="controls">
+                        #springFormInput("form.o.costPrice", "class='input-small'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Vat Rate</label>
+
+                    <div class="controls">
+                        #springFormInput("form.o.vatRate", "class='input-small'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">RRP</label>
+
+                    <div class="controls">
+                        #springFormInput("form.o.rrp", "class-'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Stock Level</label>
+
+                    <div class="controls">
+                        #springFormInput("form.o.stock", "class='input-small'")
+                    </div>
+                </div>
+            #end
 
 
             <div class="control-group">
