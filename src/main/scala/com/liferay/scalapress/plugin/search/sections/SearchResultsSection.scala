@@ -28,14 +28,18 @@ class SearchResultsSection extends Section {
     @BeanProperty var pageSize: Int = 5
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        None
         Option(search) match {
             case None => None
             case Some(s) =>
                 val results = context.searchService.search(search, pageSize)
                 val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
-                val rendered = MarkupRenderer.renderObjects(objs, markup, request, context)
-                Some(rendered)
+                objs.size match {
+                    case 0 =>
+                        Some("<!-- no search results -->")
+                    case _ =>
+                        val rendered = MarkupRenderer.renderObjects(objs, markup, request, context)
+                        Some(rendered)
+                }
         }
     }
 

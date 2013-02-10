@@ -26,7 +26,7 @@ class SavedSearch {
     @BeanProperty var labels: String = _
 
     @Enumerated(EnumType.STRING)
-    @BeanProperty var sort: Sort = _
+    @BeanProperty var sortType: Sort = _
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
