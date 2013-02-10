@@ -33,7 +33,7 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
                       .map(_.attribute.name)
                       .map(build(_, params))
                     val sep = params.get("sep").getOrElse(", ")
-                    values.mkString(sep)
+                    build(values.mkString(sep), params)
                 })
             }
         }

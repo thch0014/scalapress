@@ -7,8 +7,8 @@ object AttributeTableRenderer {
 
     def render(attributeValues: Seq[AttributeValue]): String = {
         try {
-            "<table class=\"attributes attributes-table\" cellspacing=\"0\" cellpadding=\"0\">" +
-              rows(attributeValues) + "</table>"
+            val r = rows(attributeValues).mkString("\n")
+            "<table class=\"attributes attributes-table\" cellspacing=\"0\" cellpadding=\"0\">" + r + "</table>"
         } catch {
             case e: Exception =>
                 ""
