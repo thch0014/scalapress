@@ -74,7 +74,8 @@ class Obj {
 
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
-    @BeanProperty def sellPriceInc = sellPrice * vatRate
+    def vat = sellPrice * vatRate
+    @BeanProperty def sellPriceInc = sellPrice + vat
 
     @BeanProperty var costPrice: Int = _
     @BeanProperty var vatRate: Double = _

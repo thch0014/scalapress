@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.ThemeService
 import javax.servlet.http.HttpServletRequest
@@ -28,6 +28,7 @@ class RegistrationController {
     @Autowired var typeDao: TypeDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var passwordEncoder: PasswordEncoder = _
+    @Autowired var context: ScalapressContext = _
 
     //
     // @ResponseBody
@@ -50,7 +51,7 @@ class RegistrationController {
                              @ModelAttribute("form") form: RegistrationForm): ScalaPressPage = {
 
         val plugin = accountPluginDao.get
-        val sreq = ScalapressRequest(req).withTitle("Registration")
+        val sreq = ScalapressRequest(req, context).withTitle("Registration")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body("<h1>Registration</h1>")
@@ -84,7 +85,7 @@ class RegistrationController {
                 user.passwordHash = passwordEncoder.encodePassword(form.password, null)
                 objectDao.save(user)
 
-                val sreq = ScalapressRequest(req).withTitle("Registration")
+                val sreq = ScalapressRequest(req, context).withTitle("Registration")
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)
                 page.body("<h1>Registration Completed</h1>")

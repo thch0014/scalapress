@@ -38,7 +38,7 @@ class CheckoutController {
 
         val deliveryOptions = deliveryOptionDao.findAll()
 
-        val sreq = ScalapressRequest(req).withTitle("Checkout - Delivery")
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Delivery")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
@@ -55,15 +55,14 @@ class CheckoutController {
         if (errors.hasErrors)
             showAddress(req, address, errors)
 
-        val sreq = ScalapressRequest(req)
+        val sreq = ScalapressRequest(req, context)
         val principal = req.getUserPrincipal.asInstanceOf[UsernamePasswordAuthenticationToken]
         val details = principal.getPrincipal.asInstanceOf[ObjectUserDetails]
         address.owner = details.userId
         addressDao.save(address)
-        sreq.basket.foreach(basket => {
-            basket.deliveryAddress = address
-            basketDao.save(basket)
-        })
+
+        sreq.basket.deliveryAddress = address
+        basketDao.save(sreq.basket)
         showPayment(req)
     }
 
@@ -72,7 +71,7 @@ class CheckoutController {
     def showPayment(req: HttpServletRequest): ScalaPressPage = {
 
         val plugin = sagepayFormPlugin.get
-        val sreq = ScalapressRequest(req).withTitle("Checkout - Payment")
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 

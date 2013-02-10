@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.web
 
 import collection.mutable.ListBuffer
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.domain.setup.Theme
 
@@ -22,6 +22,7 @@ class ScalaPressPage(val theme: Theme, val req: ScalapressRequest) {
 }
 
 object ScalaPressPage {
-    def apply(theme: Theme, req: HttpServletRequest) = new ScalaPressPage(theme, ScalapressRequest(req))
+    def apply(theme: Theme, req: HttpServletRequest, context: ScalapressContext) =
+        new ScalaPressPage(theme, ScalapressRequest(req, context))
     def apply(theme: Theme, req: ScalapressRequest) = new ScalaPressPage(theme, req)
 }

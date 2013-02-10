@@ -23,6 +23,10 @@ class BasketLine {
     @JoinColumn(name = "obj", nullable = true)
     @BeanProperty var obj: Obj = _
 
-    def total: Int = qty * obj.sellPrice
+    // total value of the line excluding VAT
+    def subtotal: Int = qty * obj.sellPrice
+    def vat: Int = qty * obj.vat.toInt
+    // total value of the line including VAT
+    def total: Int = subtotal + vat
 }
 

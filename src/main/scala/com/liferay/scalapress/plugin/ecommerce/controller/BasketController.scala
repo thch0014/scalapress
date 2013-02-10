@@ -28,9 +28,9 @@ class BasketController {
     @RequestMapping(produces = Array("text/html"))
     def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req).withTitle("Your Shopping Bag")
+        val sreq = ScalapressRequest(req, context).withTitle("Your Shopping Bag")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, req)
+        val page = ScalaPressPage(theme, sreq)
         val markup = shoppingPluginDao.get.basketMarkup
         if (markup != null)
             page.body(MarkupRenderer.render(markup, sreq, context))
@@ -39,7 +39,7 @@ class BasketController {
 
     @ResponseBody
     @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))
-    def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
+    def add(@ModelAttribute basket: Basket, @PathVariable("id") id: Long) = {
 
         val obj = objectDao.find(id)
         val line = new BasketLine
@@ -49,20 +49,23 @@ class BasketController {
 
         basket.lines.add(line)
         basketDao.save(basket)
-        view(basket, req)
+        "redirect:/basket"
     }
 
     @ResponseBody
     @RequestMapping(value = Array("remove/{id}"), produces = Array("text/html"))
-    def remove(@ModelAttribute basket: Basket, @PathVariable("id") id: Long, req: HttpServletRequest) = {
-        basket.lines = basket.lines.asScala.filterNot(_.id == id).asJava
-        basketDao.save(basket)
-        view(basket, req)
+    def remove(@ModelAttribute basket: Basket, @PathVariable("id") id: Long) = {
+        basket.lines.asScala.find(_.id == id) match {
+            case None =>
+            case Some(line) =>
+                basket.lines.remove(line)
+                line.basket = null
+
+                basketDao.save(basket)
+        }
+        "redirect:/basket"
     }
 
     // populate methods
-    @ModelAttribute def basket(req: HttpServletRequest) = ScalapressRequest(req).basket match {
-        case None =>
-        case Some(basket) => basket
-    }
+    @ModelAttribute def basket(req: HttpServletRequest) = ScalapressRequest(req, context).basket
 }

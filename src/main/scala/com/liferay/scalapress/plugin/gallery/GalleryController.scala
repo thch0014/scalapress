@@ -7,18 +7,19 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.GalleryDao
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  **/
+  * */
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {
 
     @Autowired var galleryDao: GalleryDao = _
     @Autowired var themeService: ThemeService = _
+    @Autowired var context: ScalapressContext = _
 
     @ResponseBody
     @RequestMapping(value = Array("{id}"), produces = Array("text/html"))
@@ -26,7 +27,7 @@ class GalleryController {
 
         val gallery = galleryDao.find(id)
         val theme = themeService.default
-        val sreq = ScalapressRequest(req).withTitle(gallery.name)
+        val sreq = ScalapressRequest(req, context).withTitle(gallery.name)
 
         val page = ScalaPressPage(theme, sreq)
         page.body("<h1>" + gallery.name + "</h1>")
@@ -41,7 +42,7 @@ class GalleryController {
         val gallery = galleryDao.findAll()
         val theme = themeService.default
 
-        val page = ScalaPressPage(theme, req)
+        val page = ScalaPressPage(theme, req, context)
         page.body("<h1>Galleries</h1>")
         page.body(GalleryRenderer.renderCovers(gallery))
         page

@@ -7,7 +7,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 object DeliveryOptionsTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         val options = context.deliveryOptionDao.findAll()
-        val currentDeliveryId = request.basket.map(_.deliveryOption.id.toString).orNull
+        val currentDeliveryId = Option(request.basket.deliveryOption).map(_.id.toString).orNull
         val radios = options.map(opt => {
             val selected = if (opt.id.toString == currentDeliveryId) "checked='true'" else ""
             "<label class=\"radio\">" +

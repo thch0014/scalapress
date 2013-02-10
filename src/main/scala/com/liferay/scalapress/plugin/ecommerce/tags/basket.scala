@@ -19,13 +19,8 @@ object BasketLinkTag extends ScalapressTag with TagBuilder {
 object BasketTotalTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-
-        request.basket match {
-            case None => None
-            case Some(basket) =>
-                val text = basket.total
-                Some(build(text, params))
-        }
+        val text = request.basket.total
+        Some(build(text, params))
     }
 }
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.dao.{ThemeDao, FormDao, SubmissionDao}
-import com.liferay.scalapress.{Logging, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.controller.web.folder.FolderController
 import org.springframework.web.multipart.MultipartFile
@@ -18,6 +18,7 @@ import scala.collection.JavaConverters._
 class SubmissionController extends Logging {
 
     @Autowired var submissionDao: SubmissionDao = _
+    @Autowired var context: ScalapressContext = _
     @Autowired var formDao: FormDao = _
     @Autowired var formService: FormService = _
     @Autowired var themeDao: ThemeDao = _
@@ -44,7 +45,7 @@ class SubmissionController extends Logging {
              @RequestParam(value = "file") files: java.util.List[MultipartFile],
              @RequestParam(value = "folder", required = false) folderId: Long): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req)
+        val sreq = ScalapressRequest(req, context)
         val form = formDao.find(id)
 
         formService.checkErrors(form, sreq)
@@ -60,7 +61,7 @@ class SubmissionController extends Logging {
                 formService.email(form.recipients.asScala, sub)
 
                 val theme = themeService.default
-                val page = ScalaPressPage(theme, ScalapressRequest(req))
+                val page = ScalaPressPage(theme, sreq)
                 page.body(form.submissionMessage)
                 page
             }

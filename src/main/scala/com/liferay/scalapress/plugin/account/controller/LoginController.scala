@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.account.{LoginRenderer, AccountPluginDao}
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
@@ -21,13 +21,16 @@ class LoginController {
     @Autowired var themeService: ThemeService = _
     @Autowired var accountPluginDao: AccountPluginDao = _
     @Autowired var objectDao: ObjectDao = _
+    @Autowired var context: ScalapressContext = _
 
     @RequestMapping(value = Array("login"), produces = Array("text/html"))
     def loginredirect(req: HttpServletRequest, resp: HttpServletResponse): String = {
 
         val savedRequest = new HttpSessionRequestCache().getRequest(req, resp)
 
-        if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest.getRedirectUrl.contains("backoffice")) {
+        if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest
+          .getRedirectUrl
+          .contains("backoffice")) {
             "forward:/backlogin"
 
         } else {
@@ -39,7 +42,7 @@ class LoginController {
     @RequestMapping(value = Array("weblogin"), produces = Array("text/html"))
     def weblogin(req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req).withTitle("Login")
+        val sreq = ScalapressRequest(req, context).withTitle("Login")
         val theme = themeService.default
 
         val page = ScalaPressPage(theme, sreq)

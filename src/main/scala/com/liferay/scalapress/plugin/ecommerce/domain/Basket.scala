@@ -13,7 +13,7 @@ class Basket {
     @Id
     @BeanProperty var sessionId: String = _
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "basket", cascade = Array(CascadeType.ALL))
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "basket", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var lines: java.util.List[BasketLine] = new util.ArrayList[BasketLine]()
 
     @ManyToOne
