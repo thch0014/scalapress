@@ -96,9 +96,20 @@ object BasketLineTotalTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
+        request.line.map(_.total.toString)
+    }
 
-        // we need to be inside a basket line
-        Some("Some total")
+    override def tags = Array("basket_lines")
+}
+
+object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        val text = params.get("text").getOrElse("Remove")
+        val href = "/basket/remove/" + request.line.map(_.id.toString).getOrElse("")
+        val link = buildLink(href, text, params)
+        Some(link)
     }
 
     override def tags = Array("basket_lines")
