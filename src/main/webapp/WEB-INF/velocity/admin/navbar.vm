@@ -26,6 +26,7 @@
                         <li><a href=/backoffice/user><i class="icon-user"></i> Users</a></li>
                         <li><a href="/backoffice/searchform"><i class="icon-search"></i> Search Forms</a></li>
                         <li><a href=/backoffice/markup/><i class="icon-eye-close"></i> Markups</a></li>
+                        <li><a href=/backoffice/gbase><i class="icon-google-plus"></i> GBase</a></li>
                         <li><a href=/backoffice/settings/general><i class="icon-wrench"></i> General</a></li>
                         <li><a href=/backoffice/settings/installation><i class="icon-cog"></i> Installation</a></li>
                     </ul>

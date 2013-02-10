@@ -25,8 +25,10 @@ class GoogleBaseTask extends Logging {
 
     @Scheduled(cron = "0 0 8 * * *")
     def run() {
+        logger.debug("Running GBASE feed")
         val objs = objectDao.search(new Search(classOf[Obj]).addFilterLike("status", "Live"))
-        val file = GoogleBaseService.csv(objs)
+        val file = GoogleBaseBuilder.csv(objs)
+        logger.debug("Gbase file completed")
         upload(file)
         file.delete()
     }
@@ -37,8 +39,9 @@ class GoogleBaseTask extends Logging {
         ftp.setRemoteHost(Hostname)
         ftp.user(Username)
         ftp.password(Password)
+        logger.debug("Connecting to the FTP server...")
         ftp.connect()
-        logger.debug("Connected to the FTP server")
+        logger.debug("...connected")
 
         val in = FileUtils.openInputStream(file)
         ftp.put(in, OutputFileName)

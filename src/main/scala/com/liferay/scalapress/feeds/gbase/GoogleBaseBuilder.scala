@@ -10,7 +10,7 @@ import org.apache.commons.lang.WordUtils
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
-object GoogleBaseService extends Logging {
+object GoogleBaseBuilder extends Logging {
 
     def csv(obj: Seq[Obj]) = {
 

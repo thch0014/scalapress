@@ -1,0 +1,11 @@
+#parse("/admin/header.vm")
+
+
+<h3>Google Base</h3>
+
+<a href="/backoffice/gbase/run" class="btn btn-primary">Run Feed</a>
+
+
+
+
+#parse("/admin/footer.vm")
