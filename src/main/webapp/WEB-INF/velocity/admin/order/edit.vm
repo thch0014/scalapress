@@ -148,6 +148,11 @@
     </tr>
 </table>
 
+<form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
+    <input name="message" type="text" class="input-xlarge"/>
+    <button type="submit" class="btn btn-small">Add To Order</button>
+</form>
+
 
 <legend>Payments</legend>
 <table class="table table-condensed table-hover">
@@ -182,14 +187,12 @@
             <td>$c.body</td>
         </tr>
     #end
-    <form method="POST" action="/backoffice/order/$order.id/comment/add">
-        <tr>
-            <td colspan="3"><textarea name="message"></textarea>
-                <button type="submit" class="btn">Add Comment</button>
-            </td>
-        </tr>
-    </form>
 </table>
+
+<form method="POST" action="/backoffice/order/$order.id/comment/add" class="pull-right">
+    <textarea name="message"></textarea>
+    <button type="submit" class="btn btn-small">Add Comment</button>
+</form>
 
 
 #parse("/admin/footer.vm")
