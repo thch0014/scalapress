@@ -57,11 +57,11 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
                 val link = "/images/" + image.filename
                 val text = params.get("text").getOrElse(obj.name)
                 val display = if (count == 0) "" else "display: none"
+                count = count + 1
+
                 <a class={cssClass} href={link} title={obj.name} display={display}>
                     {text}
                 </a>
-
-                count = count + 1
 
             }).map(_.toString()).mkString("\n")
 

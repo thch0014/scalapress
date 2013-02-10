@@ -17,6 +17,7 @@ import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
 import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder, FieldQueryBuilder}
 import collection.mutable.ArrayBuffer
+import scala.Option
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -124,9 +125,21 @@ class ElasticSearchService extends SearchService with Logging {
     override def search(search: SavedSearch, limit: Int): SearchResponse = {
 
         val buffer = new ArrayBuffer[String]()
-        Option(search.labels).map(_.split(",")).foreach(label => buffer.append("labels:" + label))
-        Option(search.keywords).map(_.split(",")).foreach(keyword => buffer.append("content:" + keyword))
-        Option(search.searchFolder).foreach(folderId => buffer.append("folders:" + folderId))
+
+        Option(search.labels)
+          .filter(_.trim.length > 0)
+          .foreach(_.split(",").foreach(label => buffer.append("labels:" + label)))
+
+        Option(search.name)
+          .filter(_.trim.length > 0)
+          .foreach(_.split(",").foreach(n => buffer.append("name:" + n)))
+
+        Option(search.keywords)
+          .filter(_.trim.length > 0)
+          .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
+
+        //     Option(search.searchFolders).foreach(folderId => buffer.append("folders:" + folderId))
+        logger.debug("Performing search {}", buffer)
 
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)

@@ -18,6 +18,6 @@ object AttributeTableRenderer {
     def rows(attributeValues: Seq[AttributeValue]): Seq[String] =
         attributeValues
           .map(av =>
-            "<tr><td class=\"attribute -label\">" + av.attribute.name + "</td><td class=\"attribute-value\">" +
+            "<tr><td class=\"attribute-label\">" + av.attribute.name + "</td><td class=\"attribute-value\">" +
               av.value + "</td></tr>")
 }

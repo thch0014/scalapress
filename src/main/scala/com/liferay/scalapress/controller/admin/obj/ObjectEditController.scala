@@ -20,7 +20,7 @@ import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/obj/{id}"))
+@RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
 class ObjectEditController {
 
     @Autowired var assetStore: AssetStore = _

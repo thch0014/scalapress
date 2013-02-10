@@ -15,8 +15,10 @@
             <td>$s.id</td>
             <td>$!s.name</td>
             <td>
-                <a href="/backoffice/savedsearch/$s.id" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i> </a></td>
+                <a href="/backoffice/savedsearch/$s.id" class="btn btn-mini">
+                    <i class="icon-pencil"></i> </a>
+                <a href="/search/saved/$s.id" class="btn btn-mini">
+                    <i class="icon-eye-open"></i> </a></td>
         </tr>
     #end
 </table>

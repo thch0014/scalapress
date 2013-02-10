@@ -7,7 +7,7 @@ import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.{Page, ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
-import com.liferay.scalapress.plugin.search.{SearchPluginDao, SearchService}
+import com.liferay.scalapress.plugin.search.{SavedSearchDao, SearchPluginDao, SearchService}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
@@ -20,7 +20,8 @@ class SearchController extends Logging {
 
     val PageSize = 20
 
-    @Autowired var service: SearchService = _
+    @Autowired var savedSearchDao: SavedSearchDao = _
+    @Autowired var searchService: SearchService = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var typeDao: TypeDao = _
     @Autowired var themeService: ThemeService = _
@@ -34,7 +35,7 @@ class SearchController extends Logging {
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context)
-        val response = service.search(q, PageSize)
+        val response = searchService.search(q, PageSize)
         val objects = response.hits.hits().map(hit => {
             val id = hit.id().toLong
             objectDao.find(id)
@@ -57,14 +58,22 @@ class SearchController extends Logging {
     @RequestMapping(Array("{type}"))
     def test(@PathVariable("type") typeId: Long, @RequestParam("q") q: String) = {
         val t = typeDao.find(typeId)
-        val response = service.searchType(q, t, 50)
+        val response = searchService.searchType(q, t, 50)
+        response.toString
+    }
+
+    @ResponseBody
+    @RequestMapping(Array("saved/{id}"))
+    def savedSearch(@PathVariable("id") id: Long) = {
+        val savedSearch = savedSearchDao.find(id)
+        val response = searchService.search(savedSearch, 50)
         response.toString
     }
 
     @PostConstruct
     def index() {
         Futures.future {
-            service.index()
+            searchService.index()
         }
     }
 }

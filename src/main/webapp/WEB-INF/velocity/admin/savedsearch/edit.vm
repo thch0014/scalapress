@@ -41,7 +41,7 @@
         <label class="control-label">Search in folder</label>
 
         <div class="controls">
-            #springFormInput("search.searchFolder", "class='input-small'")
+            #springFormInput("search.searchFolders", "class='input-small'")
         </div>
     </div>
 

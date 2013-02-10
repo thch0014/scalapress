@@ -29,7 +29,7 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
                 request.obj.map(obj => {
                     val values = obj.attributeValues
                       .asScala
-                      .filter(_.id == id.toLong)
+                      .filter(_.id.toLong == id.toLong)
                       .map(_.attribute.name)
                       .map(build(_, params))
                     val sep = params.get("sep").getOrElse(", ")

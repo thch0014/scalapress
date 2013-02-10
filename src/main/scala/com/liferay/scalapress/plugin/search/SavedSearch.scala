@@ -18,7 +18,7 @@ class SavedSearch {
 
     // search inside this folder
     @Column(name = "searchCategory", nullable = true)
-    @BeanProperty var searchFolder: Long = _
+    @BeanProperty var searchFolders: String = _
 
     @BeanProperty var imageOnly: Boolean = _
 

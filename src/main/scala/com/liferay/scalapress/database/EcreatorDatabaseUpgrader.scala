@@ -49,19 +49,17 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         })
 
-        //        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
-        //        while (rs.next) {
-        //            try {
-        //                val id = rs.getLong(1)
-        //                val stmt = conn.prepareStatement("INSERT into object_labels (object_id, labels) values (?,?)")
-        //                stmt.setLong(1, id)
-        //                stmt.setString(2, "Featured")
-        //                stmt.execute()
-        //                stmt.close()
-        //            } catch {
-        //                case e: Exception => logger.warn(e.getMessage)
-        //            }
-        //        }
+        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
+        while (rs.next) {
+            try {
+                val id = rs.getLong(1)
+                val stmt = conn.prepareStatement("UPDATE items set labels='Featured' where id=" + id)
+                stmt.execute()
+                stmt.close()
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
 
         for (col <- Array("item", "category")) {
             execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
@@ -102,6 +100,10 @@ class EcreatorDatabaseUpgrader extends Logging {
                 execute("update " + block + " set " + col + "=null WHERE " + col + "=0")
             })
         })
+
+
+        execute("ALTER TABLE blocks_highlighted_items MODIFY markup bigint(10) null")
+        execute("UPDATE blocks_highlighted_items set markup=null WHERE markup=0")
 
         execute("ALTER TABLE blocks_subcategories MODIFY markup bigint(10) null")
         execute("UPDATE blocks_subcategories set markup=null WHERE markup=0")
@@ -170,7 +172,40 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
-        execute("ALTER TABLE searches MODIFY searchcategory bigint(10) null")
+
+
+        // copy the searchbox from forms to the box
+        try {
+            val rs = conn.prepareStatement("SELECT id, owner from searches").executeQuery()
+            while (rs.next) {
+                try {
+
+                    val id = rs.getLong(1)
+                    val owner = rs.getString(2)
+
+                    Option(owner).filter(_.trim.length > 0).foreach(owner => {
+                        if (owner.startsWith("blocks_highlighted_items@")) {
+                            val ownerId = owner.replace("blocks_highlighted_items@", "").toLong
+                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + ownerId + 70000)
+
+                        } else if (owner.startsWith("boxes_highlighted_items@")) {
+                            val ownerId = owner.replace("boxes_highlighted_items@", "").toLong
+                            execute("UPDATE boxes_highlighted_items SET search=" + id + " WHERE id=" + ownerId)
+                        }
+                    })
+
+                } catch {
+                    case e: Exception => logger.warn(e.getMessage)
+                }
+            }
+        }
+        catch {
+            case e: Exception => logger.warn(e.getMessage)
+        }
+
+
+
+        execute("ALTER TABLE searches MODIFY searchcategory varchar(255) null")
         execute("UPDATE searches SET searchcategory=null WHERE searchcategory=0")
         execute("ALTER TABLE searches MODIFY itemType bigint(10) null")
         execute("UPDATE searches SET itemType=null WHERE itemType=0")
@@ -179,7 +214,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             "pendingimagecount",
             "imagecount",
             "imageupdatetimestamp",
-            "imageaddedtime", "administrator", "crm", "salesperson", "restrictions")) {
+            "imageaddedtime", "administrator", "crm", "salesperson", "restrictions", "password")) {
             try {
                 execute("ALTER TABLE users DROP " + column)
             } catch {

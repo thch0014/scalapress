@@ -46,9 +46,6 @@
                         <li><a href="/backoffice/settings/installation"><i class="icon-cog"></i> Installation</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a>Your are logged in as $adminusername</a>
-                </li>
                 #if ($eyeball)
                     <li>
                         <a href="$eyeball">View on site</a>
