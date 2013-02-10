@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.search.widget
 
-import javax.persistence.{Table, Entity, JoinColumn, OneToOne}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import javax.persistence.{JoinColumn, OneToOne}
+import com.liferay.scalapress.ScalapressRequest
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.plugin.search.SavedSearch
@@ -10,9 +10,9 @@ import com.liferay.scalapress.plugin.search.SavedSearch
   *
   *         Shows the results of a saved search
   *
-  **/
-@Entity
-@Table(name = "boxes_highlighted_items")
+  * */
+//@Entity
+//@Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget {
 
     @OneToOne
