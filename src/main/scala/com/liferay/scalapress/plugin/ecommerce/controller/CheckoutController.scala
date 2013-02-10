@@ -130,13 +130,7 @@ class CheckoutController {
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def paymentFailure(req: HttpServletRequest): ScalaPressPage = {
-
-        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment Failure")
-        val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
-
-        page.body("no money eh")
-        page
+        showPayment(req)
     }
 
     @ModelAttribute("address") def address(req: HttpServletRequest) = {
