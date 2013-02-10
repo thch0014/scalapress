@@ -24,7 +24,7 @@ object Toolbar {
                         {site.name}
                     </a>
                     <ul class="nav">
-                        <li class="active">
+                        <li>
                             <a href="/backoffice/">Dashboard</a>
                         </li>
                         <li>

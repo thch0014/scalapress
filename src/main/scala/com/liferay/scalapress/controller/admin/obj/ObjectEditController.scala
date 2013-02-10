@@ -31,10 +31,19 @@ class ObjectEditController {
     @Autowired var searchService: SearchService = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("form") form: EditForm) = "admin/object/edit.vm"
+    def edit(@ModelAttribute("form") form: EditForm) = {
+        form.sellPrice = form.o.sellPrice / 100.0
+        form.costPrice = form.o.costPrice / 100.0
+        form.rrp = form.o.rrp / 100.0
+        "admin/object/edit.vm"
+    }
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest) = {
+
+        form.o.sellPrice = (form.sellPrice * 100).toInt
+        form.o.costPrice = (form.costPrice * 100).toInt
+        form.o.rrp = (form.rrp * 100).toInt
 
         form.o.folders.clear()
         for (id <- form.folderIds) {
@@ -127,6 +136,10 @@ class ObjectEditController {
 }
 
 class EditForm {
+
+    @BeanProperty var sellPrice: Double = _
+    @BeanProperty var costPrice: Double = _
+    @BeanProperty var rrp: Double = _
     @BeanProperty var o: Obj = _
     @BeanProperty var folderIds: Array[Long] = _
     @BeanProperty var upload: MultipartFile = _
