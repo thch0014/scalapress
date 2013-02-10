@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Exce
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import com.liferay.scalapress.controller.{RedirectException, NotFoundException}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.ThemeService
@@ -55,6 +55,10 @@ class FolderController extends Logging {
         val sreq = ScalapressRequest(folder, req).withTitle(folder.name)
         val theme = themeService.theme(folder)
         val page = ScalaPressPage(theme, sreq)
+
+        if (SecurityFuncs.hasAdminRole(page.req.request)) {
+            page.toolbar(Toolbar.render(context.siteDao.get, folder))
+        }
 
         val plugins = PluginRenderer.render(folder, ScalapressRequest(folder, req), context)
 

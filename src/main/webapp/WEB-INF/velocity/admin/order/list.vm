@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h3>Users</h3>
+<h3>Orders</h3>
 
 
 <table class="table table-condensed table-hover">
@@ -14,8 +14,8 @@
     </tr>
     #foreach ($o in $orders)
         <tr>
-            <td>$o.id</td>
-            <td>$dateformat(o.datePlaced)</td>
+            <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
+            <td>$datetool.format($o.datePlaced)</td>
             <td>$o.status</td>
             <td>$o.account.name</td>
             <td>

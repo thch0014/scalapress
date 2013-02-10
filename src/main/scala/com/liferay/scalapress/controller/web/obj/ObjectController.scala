@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, FolderDao}
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.controller.NotFoundException
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
+import com.liferay.scalapress.controller.web.folder.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -37,6 +38,10 @@ class ObjectController extends Logging {
         val sreq = ScalapressRequest(obj, req).withTitle(obj.name)
         val theme = themeService.theme(obj)
         val page = ScalaPressPage(theme, sreq)
+
+        if (SecurityFuncs.hasAdminRole(page.req.request)) {
+            page.toolbar(Toolbar.render(context.siteDao.get, obj))
+        }
 
         Option(obj.objectType.objectViewMarkup) match {
             case None =>

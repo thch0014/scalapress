@@ -16,9 +16,6 @@ class User extends java.io.Serializable {
     @Column(name = "active", nullable = false)
     @BeanProperty var active: Boolean = _
 
-    @Column(name = "administrator", nullable = false)
-    @BeanProperty var administrator: Boolean = _
-
     @Column(name = "name")
     @BeanProperty var name: String = _
 

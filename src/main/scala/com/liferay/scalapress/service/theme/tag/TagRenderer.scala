@@ -14,6 +14,7 @@ object TagRenderer extends Logging {
         "sms",
         "search_end",
         "submit",
+        "referafriend",
         "alternatives",
         "gallery_image",
         "search_begin",

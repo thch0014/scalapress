@@ -19,7 +19,7 @@
         <label class="control-label">Status</label>
 
         <div class="controls">
-            <input type="status" value="$order.account.status"/>
+            <input type="status" value="$order.status"/>
         </div>
     </div>
 

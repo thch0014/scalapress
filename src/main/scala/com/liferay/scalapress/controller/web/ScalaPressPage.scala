@@ -9,6 +9,11 @@ import com.liferay.scalapress.domain.setup.Theme
 class ScalaPressPage(val theme: Theme, val req: ScalapressRequest) {
 
     val _body = new ListBuffer[Any]()
+    var _toolbar: Option[String] = None
+
+    def toolbar(toolbar: String) {
+        _toolbar = Option(toolbar)
+    }
 
     def body(any: Any) = {
         _body += any
