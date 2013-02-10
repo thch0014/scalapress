@@ -185,8 +185,8 @@ class EcreatorDatabaseUpgrader extends Logging {
 
                     Option(owner).filter(_.trim.length > 0).foreach(owner => {
                         if (owner.startsWith("blocks_highlighted_items@")) {
-                            val ownerId = owner.replace("blocks_highlighted_items@", "").toLong
-                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + ownerId + 70000)
+                            val ownerId = owner.replace("blocks_highlighted_items@", "").toLong + 70000
+                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + ownerId)
 
                         } else if (owner.startsWith("boxes_highlighted_items@")) {
                             val ownerId = owner.replace("boxes_highlighted_items@", "").toLong
