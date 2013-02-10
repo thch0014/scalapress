@@ -25,6 +25,7 @@ object TagRenderer extends Logging {
         "ordering_buy",
         "external_links",
         "pricing_discount",
+        "newsletter",
         "pricing_original",
         "accessories",
         "options")

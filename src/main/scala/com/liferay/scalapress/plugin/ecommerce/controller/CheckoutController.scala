@@ -134,7 +134,14 @@ class CheckoutController {
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def paymentFailure(req: HttpServletRequest): ScalaPressPage = {
-        showPayment(req)
+
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment Error")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+        page.body("<p>There was a problem with payment for this order.</p>")
+        page.body("<p>Please <a href='/checkout/payment'>click here</a> to return to the payment selection page " +
+          "if you wish to try payment again.")
+        page
     }
 
     @ModelAttribute("address") def address(req: HttpServletRequest) = {
