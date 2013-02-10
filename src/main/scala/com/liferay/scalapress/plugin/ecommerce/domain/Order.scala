@@ -20,8 +20,6 @@ class Order {
     @BeanProperty var saleTotal: Int = _
 
     @BeanProperty var deliveryCharge: Int = _
-    @BeanProperty var deliveryChargeVat: Int = _
-    @BeanProperty var deliveryChargeInc: Int = _
     @BeanProperty var deliveryVatRate: Double = _
     @Column(name = "deliveryDetails")
     @BeanProperty var deliveryDetails: String = _

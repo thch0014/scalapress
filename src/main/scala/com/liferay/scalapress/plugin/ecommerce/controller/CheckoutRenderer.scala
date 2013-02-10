@@ -10,11 +10,12 @@ object CheckoutRenderer {
 
     def renderPaymentOptions(basket: Basket, plugin: SagepayFormPlugin) = {
 
-        val params = SagepayFormService.params(basket, plugin).map(e => <input type="text" name={e._1} value={e._2}/>)
+        val params = SagepayFormService.params(basket, plugin)
+        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
         <div class="checkoutpayment">
-            {renderConfirmation(basket)}<form method="POST" action={SagepayFormService.TestUrl}>
-            {params}<button type="submit" class="btn btn-primary">Pay by sage pay</button>
+            {renderConfirmation(basket)}<form method="POST" action={SagepayFormService.LiveUrl}>
+            {paramInputs}<button type="submit" class="btn btn-primary">Pay by sage pay</button>
         </form>
         </div>
     }

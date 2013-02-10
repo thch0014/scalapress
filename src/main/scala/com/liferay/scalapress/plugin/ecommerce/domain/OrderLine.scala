@@ -28,12 +28,8 @@ class OrderLine {
     @Column(name = "description")
     @BeanProperty var description: String = _
 
-    @BeanProperty var comment: String = _
-
     @Column(name = "optionsDescription")
     @BeanProperty var options: String = _
-
-    @BeanProperty var promotion: Boolean = _
 
     @BeanProperty var qty: Int = _
 
@@ -45,4 +41,16 @@ class OrderLine {
     def totalVat = qty * price / 100.0 * vatRate / 100.0
     def totalExVat = qty * price / 100.0
     def totalIncVat = totalExVat + totalVat
+}
+
+object OrderLine {
+    def apply(line: BasketLine): OrderLine = {
+        val l = new OrderLine
+        l.price = line.obj.sellPrice
+        l.obj = line.obj.id
+        l.description = line.obj.name
+        l.date = System.currentTimeMillis()
+        l.vatRate = line.obj.vatRate
+        l
+    }
 }

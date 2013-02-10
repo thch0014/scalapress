@@ -3,8 +3,6 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -12,33 +10,33 @@ object SagepayFormService extends Logging {
 
     val PaymentTypePayment = "PAYMENT"
     val PaymentTypeDeferred = "DEFERRED"
-    val VPSProtocol: String = "3.0"
+    val VPSProtocol: String = "2.23"
 
     val LiveUrl = "https://live.sagepay.com/gateway/service/vspform-register.vsp"
     val TestUrl = "https://test.sagepay.com/gateway/service/vspform-register.vsp"
 
+    def xor(in: Array[Byte], key: String) = {
+        val result = new Array[Byte](in.length)
+        for (k <- 0 until in.length) {
+            val b = in(k) ^ key.charAt(k % key.length)
+            result(k) = b.toByte
+        }
+        result
+    }
+
     def decrypt(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
 
         val encrypted = Base64.decodeBase64(base64.getBytes)
-        val keySpec = new SecretKeySpec(plugin.sagePayEncryptionPassword.getBytes, "AES")
-        val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
-        cipher.init(Cipher.DECRYPT_MODE, keySpec)
-
-        val decrypted = new String(cipher.doFinal(encrypted))
+        val x = xor(encrypted, plugin.sagePayEncryptionPassword)
+        val decrypted = new String(x)
         val params = decrypted.split("&").map(_.split("=")).filter(_.size == 2).map(a => (a(0), a(1))).toMap
         params
     }
 
     def encrypt(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
-
         val data = params.map(e => e._1 + "=" + e._2).mkString("&")
-
-        val keySpec = new SecretKeySpec(plugin.sagePayEncryptionPassword.getBytes, "AES")
-        val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
-        cipher.init(Cipher.DECRYPT_MODE, keySpec)
-
-        val encrypted = cipher.doFinal(data.getBytes)
-        val base64 = Base64.encodeBase64(encrypted)
+        val x = xor(data.getBytes, plugin.sagePayEncryptionPassword)
+        val base64 = Base64.encodeBase64(x)
         new String(base64)
     }
 
@@ -47,7 +45,7 @@ object SagepayFormService extends Logging {
 
         val crypt = encrypt(plugin, cryptParams(plugin, basket))
 
-        val params = Map("VPSProtocol" -> "2.23",
+        val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
             "Vendor" -> plugin.sagePayVendorName,
             "Crypt" -> crypt)
@@ -110,10 +108,10 @@ object SagepayFormService extends Logging {
         sb.toString()
     }
 
-    def processCallback(params: Map[String, String], plugin: SagepayFormPlugin) {
+    def processCallback(params: Map[Any, Any], plugin: SagepayFormPlugin): Option[Payment] = {
         logger.debug("Callback params")
 
-        val crypt = params("crypt")
+        val crypt = params.get("crypt").getOrElse("").toString
         val p = decrypt(plugin, crypt)
         logger.debug("Sagepay params {}", p)
 
@@ -122,10 +120,11 @@ object SagepayFormService extends Logging {
         status.toLowerCase match {
             case "ok" =>
                 val sageTxId = p.get("VPSTxId").getOrElse("NoId")
-                if (!existingTransaction(sageTxId)) {
-                    createPayment(p)
+                existingTransaction(sageTxId) match {
+                    case true => None
+                    case false => Some(createPayment(p))
                 }
-            case _ =>
+            case _ => None
         }
     }
 
@@ -147,8 +146,8 @@ object SagepayFormService extends Logging {
         })
 
         params.put("Description", "Order")
-        params.put("SuccessURL", "/checkout/payment/success")
-        params.put("FailureURL", "/checkout/payment/failure")
+        params.put("SuccessURL", "http://www.satnaveasy.co.uk/checkout/payment/success")
+        params.put("FailureURL", "http://www.satnaveasy.co.uk/checkout/payment/failure")
 
         params.put("Basket", basketString(basket))
 

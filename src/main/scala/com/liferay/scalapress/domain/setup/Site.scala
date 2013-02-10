@@ -23,6 +23,7 @@ class Site {
     @BeanProperty var name: String = null
 
     @BeanProperty var vatNumber: String = _
+
     @BeanProperty var companyNumber: String = _
 
     @BeanProperty var country: String = null

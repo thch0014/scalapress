@@ -3,17 +3,18 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.ObjectDao
+import com.liferay.scalapress.dao.{OrderDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.liferay.scalapress.plugin.ecommerce.{OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, AddressDao, BasketDao}
-import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
+import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
+import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,6 +26,8 @@ class CheckoutController {
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var addressDao: AddressDao = _
     @Autowired var basketDao: BasketDao = _
+    @Autowired var orderDao: OrderDao = _
+    @Autowired var paymentDao: PaymentDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
@@ -89,6 +92,51 @@ class CheckoutController {
         page
     }
 
-    @ModelAttribute("address") def address = new Address
+    @ResponseBody
+    @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def paymentSuccess(req: HttpServletRequest): ScalaPressPage = {
 
+        val plugin = sagepayFormPlugin.get
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        val order = OrderService.createOrder(sreq.basket, req)
+        orderDao.save(order)
+
+        SagepayFormService.processCallback(req.getParameterMap.asScala.asInstanceOf[Map[Any, Any]], plugin) match {
+            case Some(payment) =>
+                payment.order = order.id
+                paymentDao.save(payment)
+
+                order.payments.add(payment)
+                orderDao.save(order)
+
+            case None =>
+        }
+
+        page.body("Cheers bud")
+        page
+    }
+
+    @ResponseBody
+    @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def paymentFailure(req: HttpServletRequest): ScalaPressPage = {
+
+        val plugin = sagepayFormPlugin.get
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment Failure")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        page.body("no money eh")
+        page
+    }
+
+    @ModelAttribute("address") def address(req: HttpServletRequest) = {
+        val basket = ScalapressRequest(req, context).basket
+        Option(basket.deliveryAddress) match {
+            case None => new Address
+            case Some(address) => address
+        }
+    }
 }
