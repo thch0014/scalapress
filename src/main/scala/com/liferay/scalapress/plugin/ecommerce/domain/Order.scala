@@ -23,6 +23,8 @@ class Order {
     @BeanProperty var deliveryChargeVat: Int = _
     @BeanProperty var deliveryChargeInc: Int = _
     @BeanProperty var deliveryVatRate: Double = _
+    @Column(name = "deliveryDetails")
+    @BeanProperty var deliveryDetails: String = _
 
     @Column(name = "datePlaced")
     @BeanProperty var datePlaced: Long = _
@@ -45,9 +47,6 @@ class Order {
     @BeanProperty var customerReference: String = _
 
     @BeanProperty var reference: String = _
-
-    @Column(name = "deliveryDetails")
-    @BeanProperty var deliveryDetails: String = _
 
     @ManyToOne
     @JoinColumn(name = "account")
