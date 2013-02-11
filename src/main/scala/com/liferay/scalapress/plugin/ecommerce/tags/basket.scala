@@ -151,12 +151,20 @@ object BasketLineTotalTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        if (params.contains("ex"))
-            request.line.map(_.subtotal.toString)
+
+        val total = if (params.contains("ex"))
+            request.line.map(_.subtotal)
         else if (params.contains("vat"))
-            request.line.map(_.vat.toString)
+            request.line.map(_.vat)
         else
-            request.line.map(_.total.toString)
+            request.line.map(_.total)
+
+        total match {
+            case None => None
+            case Some(price) =>
+                val textFormatted = "£%1.2f".format(price / 100.0)
+                Some(textFormatted)
+        }
     }
 
     override def tags = Array("basket_line_total")
