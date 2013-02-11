@@ -43,6 +43,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     }
 
     override def addResourceHandlers(registry: ResourceHandlerRegistry) {
+
     }
 
     override def addInterceptors(registry: InterceptorRegistry) {

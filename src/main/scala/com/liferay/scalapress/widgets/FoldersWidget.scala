@@ -33,7 +33,15 @@ class FoldersWidget extends Widget with Logging {
         else
             buffer.append("<ul>")
 
-        for (folder <- parent.subfolders.asScala.filterNot(_.hidden)) {
+        val excluded = excludeCategories.split("\n").map(_.toLowerCase)
+        val children = parent
+          .subfolders
+          .asScala
+          .filterNot(_.hidden)
+          .filterNot(f => excluded.contains(f.id.toString))
+          .filterNot(f => exluded.contains(f.name.toLowerCase))
+
+        for (folder <- children) {
             buffer.append("<li id='w" + id + "_f" + folder.id + "' class='l" + level + "'>")
             buffer.append(FriendlyUrlGenerator.friendlyLink(folder))
             if (level < depth)
