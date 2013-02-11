@@ -24,7 +24,7 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
             val price = if (params.contains("inc")) obj.sellPriceInc else obj.getSellPrice
             price match {
                 case 0 => ""
-                case _ => build("%1.0f".format(price / 100.0), params + ("class" -> "price"))
+                case _ => build("£%1.2f".format(price / 100.0), params + ("class" -> "price"))
             }
         })
     }

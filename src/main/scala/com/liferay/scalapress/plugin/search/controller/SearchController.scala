@@ -45,7 +45,7 @@ class SearchController extends Logging {
 
         val markup = searchPluginDao.get.markup
         val theme = themeService.default
-        val page = ScalaPressPage(theme, req, context)
+        val page = ScalaPressPage(theme, sreq)
 
         page.body(PagingRenderer.render(paging))
         if (markup != null)

@@ -37,4 +37,19 @@ class Basket {
         total
     }
 
+    def subtotal: Int = {
+        var total = 0
+        for (line <- lines.asScala) {
+            total = total + line.total
+        }
+        total
+    }
+
+    def vat: Int = {
+        var total = 0
+        for (line <- lines.asScala) {
+            total = total + line.total
+        }
+        total
+    }
 }

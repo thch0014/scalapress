@@ -22,8 +22,14 @@ object BasketLinkTag extends ScalapressTag with TagBuilder {
 object BasketTotalTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        val text = request.basket.total
-        Some(build(text, params))
+        val text = if (params.contains("ex"))
+            request.basket.subtotal
+        else if (params.contains("vat"))
+            request.basket.vat
+        else
+            request.basket.total
+        val textFormatted = "£%1.2f".format(text / 100.0)
+        Some(build(textFormatted, params))
     }
 }
 
@@ -122,12 +128,20 @@ object BasketLinePriceTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        if (params.contains("ex"))
-            request.line.map(_.obj.sellPrice.toString)
+
+        val text = if (params.contains("ex"))
+            request.line.map(_.obj.sellPrice)
         else if (params.contains("vat"))
-            request.line.map(_.obj.vat.toString)
+            request.line.map(_.obj.vat)
         else
-            request.line.map(_.obj.sellPriceInc.toString)
+            request.line.map(_.obj.sellPriceInc)
+
+        text match {
+            case None => None
+            case Some(price) =>
+                val textFormatted = "£%1.2f".format(price / 100.0)
+                Some(textFormatted)
+        }
     }
 
     override def tags = Array("basket_line_price")
@@ -148,11 +162,11 @@ object BasketLineTotalTag extends ScalapressTag {
     override def tags = Array("basket_line_total")
 }
 
-object BasketLineStockTag extends ScalapressTag {
+object BasketLineStockTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        request.line.map(_.obj.stock.toString)
+        request.line.map(line => build(line.obj.stock.toString, params))
     }
 
     override def tags = Array("basket_line_stock")
