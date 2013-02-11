@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.folder
+package com.liferay.scalapress.widgets
 
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
@@ -7,7 +7,6 @@ import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
-import com.liferay.scalapress.widgets.Widget
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -17,6 +16,7 @@ class FoldersWidget extends Widget with Logging {
     @BeanProperty var depth: Int = _
     @BeanProperty var includeHome: Boolean = _
     @BeanProperty var excludeCurrent: Boolean = _
+    @BeanProperty var excludeCategories: String = _
 
     override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 

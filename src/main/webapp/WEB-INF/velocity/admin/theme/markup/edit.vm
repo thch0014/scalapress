@@ -21,10 +21,10 @@
             <li><a href="#tab4" data-toggle="tab">End</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="tab1">
+            <div class="tab-pane" id="tab1">
                 #springFormTextarea("markup.start", "rows='24' class='input-block-level '")
             </div>
-            <div class="tab-pane" id="tab2">
+            <div class="tab-pane active" id="tab2">
                 #springFormTextarea("markup.body", "rows='24' class='input-block-level '")
             </div>
             <div class="tab-pane" id="tab3">

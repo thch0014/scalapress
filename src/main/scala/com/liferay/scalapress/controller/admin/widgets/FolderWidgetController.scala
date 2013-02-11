@@ -1,10 +1,9 @@
-package com.liferay.scalapress.plugin.folder
+package com.liferay.scalapress.controller.admin.widgets
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
 import scala.Array
 import com.liferay.scalapress.widgets.Widget
-import com.liferay.scalapress.controller.admin.widgets.WidgetEditController
 
 /** @author Stephen Samuel */
 @Controller

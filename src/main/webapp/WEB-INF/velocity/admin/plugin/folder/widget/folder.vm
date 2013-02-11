@@ -55,6 +55,14 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Exclude categories</label>
+
+        <div class="controls">
+            #springFormInput("widget.excludeCategories", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Container</label>
 
         <div class="controls">
