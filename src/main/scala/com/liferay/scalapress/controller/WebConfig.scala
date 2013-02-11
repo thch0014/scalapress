@@ -46,7 +46,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     override def addInterceptors(registry: InterceptorRegistry) {
 
         val webContentInterceptor = new WebContentInterceptor
-        webContentInterceptor.setCacheSeconds(0)
+        webContentInterceptor.setCacheSeconds(60)
         webContentInterceptor.setUseExpiresHeader(true)
         webContentInterceptor.setUseCacheControlHeader(true)
         webContentInterceptor.setUseCacheControlNoStore(true)

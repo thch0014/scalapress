@@ -13,7 +13,7 @@ import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLi
 /** @author Stephen Samuel */
 object TagMappings {
 
-    val mappings: Map[String, ScalapressTag] = Map("item" -> ObjectTag,
+    val mappings: Map[String, ScalapressTag] = Map("item" -> ObjectTag, "object" -> ObjectTag,
         "categories_primary" -> PrimaryFoldersTag,
         "folders_primary" -> PrimaryFoldersTag,
         "summary" -> SummaryTag,

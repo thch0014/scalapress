@@ -8,18 +8,16 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 object ObjectTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         request.obj.map(obj => {
-
-            val text = params.get("label").getOrElse(obj.name)
-
+            val text = params.get("text").getOrElse(obj.name)
             params.contains("link") match {
                 case true => {
 
-                    val link = FriendlyUrlGenerator.friendlyUrl(obj)
-                    <a href={link}>
+                    val url = FriendlyUrlGenerator.friendlyUrl(obj)
+                    val link = <a href={url}>
                         {text}
                     </a>.toString()
+                    buildLink(url, text, params)
                 }
-
                 case false => build(obj.name, params)
             }
         })

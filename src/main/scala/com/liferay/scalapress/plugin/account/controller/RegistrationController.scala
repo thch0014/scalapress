@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.{ObjectType, Obj}
-import scala.collection.JavaConverters._
+import com.liferay.scalapress.domain.Obj
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.account.{RegistrationRenderer, AccountPluginDao}
-import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
-import org.springframework.security.authentication.{AuthenticationManager, UsernamePasswordAuthenticationToken}
+import org.springframework.security.core.context.SecurityContextHolder
 
 /** @author Stephen Samuel */
 @Controller
@@ -76,20 +75,9 @@ class RegistrationController {
             case false =>
 
                 val plugin = accountPluginDao.get
-                val typeId = plugin.accounts.asScala.head
-                val accountType = Option(typeDao.find(typeId)) match {
-                    case None =>
-
-                        val accountType = new ObjectType
-                        accountType.name = "Account"
-                        typeDao.save(accountType)
-
-                        plugin.accounts.add(accountType.id)
-                        accountPluginDao.save(plugin)
-                        accountType
-
-                    case Some(t) => t
-                }
+                val accountType = typeDao
+                  .findAll()
+                  .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
 
                 val user = Obj(accountType)
                 user.name = form.name
