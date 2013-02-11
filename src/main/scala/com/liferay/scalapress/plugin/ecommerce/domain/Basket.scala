@@ -26,7 +26,7 @@ class Basket {
     @BeanProperty var deliveryAddress: Address = _
 
     @ManyToOne
-    @JoinColumn(name = "delivery_option", nullable = true)
+    @JoinColumn(name = "delivery_option_id", nullable = true)
     @BeanProperty var deliveryOption: DeliveryOption = _
 
     def total: Int = {

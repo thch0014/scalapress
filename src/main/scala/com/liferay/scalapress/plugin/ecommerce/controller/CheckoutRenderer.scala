@@ -8,9 +8,12 @@ import xml.Elem
 object CheckoutRenderer {
 
     def renderDeliveryOptions(options: List[DeliveryOption]): Seq[Elem] =
-        options.map(d => <label class="radio">
-            <input type="radio" name="deliveryOptionId" id="deliveryOptionId" value={d.id.toString}/>{d.name}
-        </label>)
+        options.map(d => {
+            val price = " £%1.2f".format(d.chargeIncVat / 100.0)
+            <label class="radio">
+                <input type="radio" name="deliveryOptionId" id="deliveryOptionId" value={d.id.toString}/>{d.name}{price}
+            </label>
+        })
 
     def renderDeliveryAddress(address: Address, options: List[DeliveryOption], errors: Errors) =
         <div class="checkout-delivery-input">
@@ -302,7 +305,7 @@ object CheckoutRenderer {
                     </textarea>
                 </div>
 
-                <legend>Delivery Address</legend>
+                <legend>Delivery Option</legend>
 
                 <div class="control-group">
                     <label>
