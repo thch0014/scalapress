@@ -9,5 +9,13 @@ import com.liferay.scalapress.ScalapressRequest
 @Table(name = "boxes_custom")
 class HtmlWidget extends Widget {
 
-    override def render(req: ScalapressRequest): Option[String] = Option(content)
+    override def render(req: ScalapressRequest): Option[String] = {
+        Option(content) match {
+            case None => None
+            case Some(c) =>
+                Some(c
+                  .replace("src=\"/images/", "src=\"" + req.context.assetStore.cdn + "/")
+                  .replace("src=\"images/", "src=\"" + req.context.assetStore.cdn + "/"))
+        }
+    }
 }

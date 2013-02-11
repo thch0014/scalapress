@@ -152,7 +152,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
                     val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
                     copy.setNewObjectMetadata(md)
                     copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-                    copy.setStorageClass(StorageClass.ReducedRedundancy)
+                    copy.setStorageClass(StorageClass.Standard)
                     getAmazonS3Client.copyObject(copy)
 
                 } catch {

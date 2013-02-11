@@ -30,6 +30,10 @@ class Folder {
 
     @BeanProperty var name: String = _
 
+    @Column(name = "subcategoryordering")
+    @Enumerated(EnumType.STRING)
+    @BeanProperty var folderOrdering: FolderOrdering = FolderOrdering.Alphabetical
+
     def fullName(folder: Folder, count: Int): String = Option(folder.parent) match {
         case None => folder.name
         case Some(p) => count match {
@@ -52,10 +56,6 @@ class Folder {
 
     @Column(name = "forwardUrl")
     @BeanProperty var redirect: String = _
-
-    @Column(name = "subcategoryordering")
-    @Enumerated(EnumType.STRING)
-    @BeanProperty var subfolderOrdering: FolderOrdering = FolderOrdering.Alphabetical
 
     @BeanProperty var position: Int = _
 

@@ -39,10 +39,10 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Subfolder Ordering</label>
+        <label class="control-label">Folder Ordering</label>
 
         <div class="controls">
-            #springFormSingleSelect("folder.subfolderOrdering", $folderOrderingMap)
+            #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
         </div>
     </div>
 

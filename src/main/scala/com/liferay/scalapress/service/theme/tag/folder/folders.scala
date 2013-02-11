@@ -83,7 +83,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val root = context.folderDao.root
         val folders = root.subfolders.asScala
         val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
-        val sorted = root.subfolderOrdering match {
+        val sorted = root.folderOrdering match {
             case FolderOrdering.Manual => filtered.sortBy(_.position)
             case _ => filtered.sortBy(_.name)
         }

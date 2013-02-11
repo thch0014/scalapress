@@ -15,6 +15,10 @@ class FolderContentSection extends Section {
     def desc = "Edit and then display a section of content when viewing this object"
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        Option(content).map("src=\"images/".r.replaceAllIn(_, "src=\"/images/"))
+        Option(content)
+          .map(c => {
+            c.replace("src=\"/images/", "src=\"" + context.assetStore.cdn + "/")
+              .replace("src=\"images/", "src=\"" + context.assetStore.cdn + "/")
+        })
     }
 }
