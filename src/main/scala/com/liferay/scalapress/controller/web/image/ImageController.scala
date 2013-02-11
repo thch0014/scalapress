@@ -11,7 +11,7 @@ import java.net.{URL, URLConnection}
 import com.liferay.scalapress.service.asset.AssetStore
 import com.liferay.scalapress.service.asset.Asset
 import scala.Some
-import com.liferay.scalapress.service.image.ImageService
+import com.liferay.scalapress.service.image.ImageTools
 
 @Controller
 @RequestMapping(Array("images"))
@@ -33,10 +33,10 @@ class ImageController extends Logging {
         val url = new URL("http://childrenstorytales.com/wp-content/uploads/2011/08/large-siberian-tiger1-1024x768.jpg")
 
         val image = ImageIO.read(url.openStream())
-        val thumbnail = ImageService.fit(image, (width, height))
+        val thumbnail = ImageTools.fit(image, (width, height))
 
         ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
-        resp.setContentType(ImageService.contentType("image/png"))
+        resp.setContentType(ImageTools.contentType("image/png"))
     }
 
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
@@ -48,7 +48,7 @@ class ImageController extends Logging {
             case Some(in) =>
 
                 val image = ImageIO.read(in)
-                val thumbnail = ImageService.fit(image, (width, height))
+                val thumbnail = ImageTools.fit(image, (width, height))
                 ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
                 resp.setContentType("image/png")
         }

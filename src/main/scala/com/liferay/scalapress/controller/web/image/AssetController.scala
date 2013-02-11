@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.apache.commons.io.IOUtils
 import javax.servlet.http.HttpServletResponse
 import com.liferay.scalapress.service.asset.AssetStore
-import com.liferay.scalapress.service.image.ImageService
+import com.liferay.scalapress.service.image.ImageTools
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,7 +21,7 @@ class AssetController {
             case None => throw new RuntimeException(filename + " not found")
             case Some(in) => {
                 val bytes = IOUtils.toByteArray(in)
-                resp.setContentType(ImageService.contentType(filename))
+                resp.setContentType(ImageTools.contentType(filename))
                 IOUtils.write(bytes, resp.getOutputStream)
             }
         }

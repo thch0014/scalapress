@@ -24,9 +24,10 @@ class MediaWidget extends Widget {
         images.asScala.headOption match {
             case None => None
             case Some(image) => {
+                val src = req.context.assetStore.link(image.filename)
                 val html = Option(url) match {
-                    case None => ImageRenderer.link(image)
-                    case Some(u) => "<a href='" + u + "'>" + ImageRenderer.link(image) + "</a>"
+                    case None => ImageRenderer.link(src)
+                    case Some(u) => "<a href='" + u + "'>" + ImageRenderer.link(src) + "</a>"
                 }
                 Some(html)
             }

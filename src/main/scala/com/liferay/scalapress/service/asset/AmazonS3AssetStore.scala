@@ -5,16 +5,20 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.auth.BasicAWSCredentials
 import java.util.UUID
 import org.apache.commons.io.IOUtils
-import com.amazonaws.services.s3.model.{S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
+import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
 import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
+import javax.annotation.PostConstruct
+import com.liferay.scalapress.service.image.ImageTools
+import com.liferay.scalapress.Logging
+import actors.Futures
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
                          val secretKey: String,
                          val accessKey: String,
-                         val bucketName: String) extends AssetStore {
+                         val bucketName: String) extends AssetStore with Logging {
 
     def delete(key: String) {
         getAmazonS3Client.deleteObject(bucketName, key)
@@ -29,6 +33,15 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
 
     def cdn = cdnUrl
+
+    def exists(key: String) = {
+        try {
+            getAmazonS3Client.getObject(bucketName, key)
+            true
+        } catch {
+            case e: Exception => false
+        }
+    }
 
     def count: Int = {
         val req: ListObjectsRequest = new ListObjectsRequest
@@ -106,5 +119,25 @@ class AmazonS3AssetStore(val cdnUrl: String,
     def getAmazonS3Client: AmazonS3Client = {
         val cred: BasicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
         new AmazonS3Client(cred)
+    }
+
+    @PostConstruct
+    def run() {
+        Futures.future {
+            val list = listObjects(null, 0, 100000)
+            logger.debug("Updating content type on {} objects", list.size)
+            list.foreach(arg => {
+
+                val md = new ObjectMetadata
+                md.setContentType(ImageTools.contentType(arg.getKey))
+
+                val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
+                copy.setNewObjectMetadata(md)
+                copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
+                copy.setStorageClass(StorageClass.ReducedRedundancy)
+                getAmazonS3Client.copyObject(copy)
+            })
+            logger.debug("Upgrade completed", list.size)
+        }
     }
 }

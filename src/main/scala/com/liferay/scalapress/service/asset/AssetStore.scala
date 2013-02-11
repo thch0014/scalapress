@@ -5,6 +5,7 @@ import java.io.InputStream
 /** @author Stephen Samuel */
 trait AssetStore {
 
+    def exists(key: String): Boolean
     def add(input: InputStream): String
     def add(key: String, input: InputStream): String
     def put(key: String, input: InputStream): String
