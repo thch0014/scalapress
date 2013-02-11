@@ -35,3 +35,9 @@ object ObjectStockTag extends ScalapressTag with TagBuilder {
         request.obj.map(_.stock.toString)
     }
 }
+
+object ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.obj.map(_.availability)
+    }
+}

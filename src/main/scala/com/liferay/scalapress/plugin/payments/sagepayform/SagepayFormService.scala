@@ -109,10 +109,10 @@ object SagepayFormService extends Logging {
         sb.toString()
     }
 
-    def processCallback(params: Map[Any, Any], plugin: SagepayFormPlugin): Option[Payment] = {
+    def processCallback(params: java.util.Map[_, _], plugin: SagepayFormPlugin): Option[Payment] = {
         logger.debug("Callback params")
 
-        val crypt = params.get("crypt").getOrElse("").toString
+        val crypt = params.get("crypt").toString
         val p = decrypt(plugin, crypt)
         logger.debug("Sagepay params {}", p)
 
@@ -140,8 +140,7 @@ object SagepayFormService extends Logging {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
-
-        val amount = " £%1.2f".format(basket.total / 100.0)
+        val amount = "%1.2f".format(basket.total / 100.0)
 
         params.put("Currency", "GBP")
         params.put("Amount", amount)

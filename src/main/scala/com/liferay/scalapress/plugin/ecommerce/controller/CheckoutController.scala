@@ -48,7 +48,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutRenderer.renderDeliveryAddress(address, deliveryOptions, errors))
+        page.body(CheckoutAddressRenderer.renderDeliveryAddress(address, deliveryOptions, errors))
         page
     }
 
@@ -106,7 +106,7 @@ class CheckoutController {
         val shoppingPlugin = shoppingPluginDao.get
         val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
-        val params = req.getParameterMap.asScala.asInstanceOf[Map[Any, Any]]
+        val params = req.getParameterMap
 
         val order = OrderService.createOrder(sreq.basket, req)
         orderDao.save(order)

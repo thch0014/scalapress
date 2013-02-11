@@ -22,7 +22,7 @@ class OrderStatusController {
     @Autowired var context: ScalapressContext = _
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET))
+    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showAddress(req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status")
@@ -33,7 +33,7 @@ class OrderStatusController {
     }
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.POST))
+    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def showAddress(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
                     req: HttpServletRequest): ScalaPressPage = {
 
@@ -41,7 +41,7 @@ class OrderStatusController {
         if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
             throw new RuntimeException("Not valid")
 
-        val sreq = ScalapressRequest(req, context).withTitle("Order Status")
+        val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body("Order status: " + order.status)
