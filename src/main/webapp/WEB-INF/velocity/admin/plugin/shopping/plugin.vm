@@ -20,7 +20,6 @@
         </div>
     </div>
 
-
     <div class="control-group">
         <label class="control-label">Basket Line Markup</label>
 
@@ -34,6 +33,22 @@
                         $!{markupMap.get($option)}</option>
                 #end
             </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Require terms acceptance</label>
+
+        <div class="controls">
+            #springFormCheckbox("plugin.termsAcceptance")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Terms and Conditions</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.terms", "class='input-block' rows='12'")
         </div>
     </div>
 

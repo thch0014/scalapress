@@ -26,6 +26,8 @@ class ShoppingPlugin {
     @JoinColumn(name = "basketLineMarkup")
     @BeanProperty var basketLineMarkup: Markup = _
 
+    @Column(length = 100000)
+    @BeanProperty var terms: String = _
     @BeanProperty var termsAcceptance: Boolean = _
 
     @Column(name = "checkoutScripts")
