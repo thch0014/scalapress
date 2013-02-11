@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
 import com.liferay.scalapress.{SectionRenderer, ScalapressRequest, ScalapressContext, Logging}
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
-import com.liferay.scalapress.controller.{RedirectException, NotFoundException}
+import com.liferay.scalapress.controller.RedirectException
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.domain.Folder
@@ -41,7 +41,7 @@ class FolderController extends Logging {
 
     def view(folder: Folder, req: HttpServletRequest): ScalaPressPage = {
         if (folder == null)
-            throw new NotFoundException
+            throw new RedirectException("/")
 
         Option(folder.redirect).filter(_.trim.length > 0) match {
             case Some(redirect) => throw new RedirectException(folder.redirect)
