@@ -16,6 +16,10 @@ object CheckoutConfirmationRenderer {
 
     private def renderBasketLines(lines: Seq[BasketLine]) = {
         lines.map(line => {
+
+            val price = " £%1.2f".format(line.obj.sellPriceInc / 100.0)
+            val total = " £%1.2f".format(line.total / 100.0)
+
             <tr>
                 <td>
                     {line.obj.name}
@@ -24,13 +28,31 @@ object CheckoutConfirmationRenderer {
                     {line.qty}
                 </td>
                 <td>
-                    {line.total}
+                    {price}
                 </td>
                 <td>
-                    {line.total}
+                    {total}
                 </td>
             </tr>
         })
+    }
+
+    private def renderDeliveryLine(basket: Basket) = {
+
+        val price = " £%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0)
+
+        <tr>
+            <td>
+                {basket.deliveryOption.name}
+            </td>
+            <td></td>
+            <td>
+                {price}
+            </td>
+            <td>
+                {price}
+            </td>
+        </tr>
     }
 
     private def renderBasket(basket: Basket) = {
@@ -41,7 +63,7 @@ object CheckoutConfirmationRenderer {
                 <th>Qty</th>
                 <th>Price</th>
                 <th>Total</th>
-            </tr>{renderBasketLines(basket.lines.asScala)}
+            </tr>{renderBasketLines(basket.lines.asScala)}{renderDeliveryLine(basket)}
         </table>
     }
 

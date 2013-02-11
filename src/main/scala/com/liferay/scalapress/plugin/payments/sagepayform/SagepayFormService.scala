@@ -85,25 +85,25 @@ object SagepayFormService extends Logging {
             sb.append(":")
             sb.append(line.qty)
             sb.append(":")
-            sb.append(line.obj.sellPrice / 100)
+            sb.append(line.obj.sellPrice / 100.0)
             sb.append(":")
-            sb.append(line.obj.vat / 100)
+            sb.append(line.obj.vat / 100.0)
             sb.append(":")
-            sb.append(line.obj.sellPriceInc / 100)
+            sb.append(line.obj.sellPriceInc / 100.0)
             sb.append(":")
-            sb.append(line.total / 100)
+            sb.append(line.total / 100.0)
         }
 
         sb.append(":")
         sb.append(Option(basket.deliveryOption.name).getOrElse("Delivery option has no name").replaceAll("[&:=$*]", ""))
         sb.append(":1:")
-        sb.append(basket.deliveryOption.charge / 100)
+        sb.append(basket.deliveryOption.charge / 100.0)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeVat / 100)
+        sb.append(basket.deliveryOption.chargeVat / 100.0)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeIncVat / 100)
+        sb.append(basket.deliveryOption.chargeIncVat / 100.0)
         sb.append(":")
-        sb.append(basket.deliveryOption.chargeIncVat / 100)
+        sb.append(basket.deliveryOption.chargeIncVat / 100.0)
 
 
         sb.toString()
@@ -140,8 +140,11 @@ object SagepayFormService extends Logging {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
+
+        val amount = " £%1.2f".format(basket.total / 100.0)
+
         params.put("Currency", "GBP")
-        params.put("Amount", "" + (basket.total / 100))
+        params.put("Amount", amount)
         params.put("CustomerName", account.name)
         params.put("CustomerEmail", account.email)
         params.put("Description", "Basket " + basket.sessionId)
