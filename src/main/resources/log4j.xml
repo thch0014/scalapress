@@ -10,9 +10,6 @@
         </layout>
     </appender>
 
-    <logger name="com.liferay">
-        <level value="debug"/>
-    </logger>
     <root>
         <level value="info"/>
         <appender-ref ref="default"/>

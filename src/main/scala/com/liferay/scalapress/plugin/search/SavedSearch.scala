@@ -27,8 +27,7 @@ class SavedSearch {
     @Enumerated(EnumType.STRING)
     @BeanProperty var sortType: Sort = _
 
-    @Column(name = "itemType", nullable = true)
-    @BeanProperty var objectType: Long = _
+    @BeanProperty var objectTypes: String = _
 
     @JoinColumn(name = "inStockOnly", nullable = false)
     @BeanProperty var inStockOnly: Boolean = _

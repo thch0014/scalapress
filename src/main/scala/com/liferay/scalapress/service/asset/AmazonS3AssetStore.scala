@@ -128,14 +128,20 @@ class AmazonS3AssetStore(val cdnUrl: String,
             logger.debug("Updating content type on {} objects", list.size)
             list.foreach(arg => {
 
-                val md = new ObjectMetadata
-                md.setContentType(ImageTools.contentType(arg.getKey))
+                try {
 
-                val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
-                copy.setNewObjectMetadata(md)
-                copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-                copy.setStorageClass(StorageClass.ReducedRedundancy)
-                getAmazonS3Client.copyObject(copy)
+                    val md = new ObjectMetadata
+                    md.setContentType(ImageTools.contentType(arg.getKey))
+
+                    val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
+                    copy.setNewObjectMetadata(md)
+                    copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
+                    copy.setStorageClass(StorageClass.ReducedRedundancy)
+                    getAmazonS3Client.copyObject(copy)
+
+                } catch {
+                    case e: Exception => logger.warn("{}", e.getMessage)
+                }
             })
             logger.debug("Upgrade completed", list.size)
         }

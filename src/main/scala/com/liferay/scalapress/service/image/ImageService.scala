@@ -17,7 +17,7 @@ class ImageService {
 
     def imageLink(filename: String, w: Int, h: Int) = {
         _ensureThumbnailStored(filename, w, h)
-        _thumbailFilename(filename, w, h)
+        assetStore.link(_thumbailFilename(filename, w, h))
     }
 
     private def _thumbailFilename(filename: String, w: Int, h: Int) =
