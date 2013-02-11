@@ -74,7 +74,7 @@ object CheckoutConfirmationRenderer {
 
         <div class="checkout-payment-form">
             <form method="POST" action={SagepayFormService.LiveUrl}>
-                {paramInputs}<button type="submit" class="btn btn-primary">Pay by Sage Payments</button>
+                {paramInputs}<button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
         </div>
     }
