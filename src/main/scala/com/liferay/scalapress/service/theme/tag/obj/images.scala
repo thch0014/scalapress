@@ -48,20 +48,24 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
 object ColorboxTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
-        val cssClass = params.get("class").getOrElse("colorboxgroup")
-        val height = params.get("height").getOrElse("120")
-        val width = params.get("width").getOrElse("160")
+        val height = params.get("height").getOrElse("120").toInt
+        val width = params.get("width").getOrElse("160").toInt
+        val text = params.get("text").getOrElse("")
         request.obj.map(obj => {
 
             var count = 0
             val images = obj.images.asScala.map(image => {
 
-                val src = context.assetStore.link(image.filename)
+                val original = context.assetStore.link(image.filename)
+                val thumb = context.imageService.imageLink(image.filename, width, height)
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 
-                <a class="colorboxgroup" href={src} title={obj.name} display={display}>
-                    <img src={src} width={width} height={height}/>
+                <a class="colorboxgroup" href={original} title={obj.name} display={display}>
+                    <img src={thumb} width={width.toString} height={height.toString}/>
+                    <span>
+                        {text}
+                    </span>
                 </a>
 
             }).map(_.toString()).mkString("\n")
