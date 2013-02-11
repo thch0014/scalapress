@@ -57,7 +57,7 @@ object TagRenderer extends Logging {
                     val tagname = a._1
                     val tag = a._2
 
-                    logger.debug("Applying tag [{}={}]", tagname, tag)
+               //     logger.debug("Applying tag [{}={}]", tagname, tag)
 
                     require(tagname != null)
 

@@ -17,12 +17,12 @@ object ImageTools {
             case "jpg" => "image/jpg"
             case "jpeg" => "image/jpeg"
             case "png" => "image/png"
-            case _ => URLConnection.guessContentTypeFromName(filename)
+            case _ => Option(URLConnection.guessContentTypeFromName(filename)).getOrElse("application/octet-stream")
         }
     }
 
     val BG_COLOR = Color.WHITE
-    val SCALING_METHOD = java.awt.Image.SCALE_FAST
+    val SCALING_METHOD = java.awt.Image.SCALE_SMOOTH
 
     /**
      * Scales the given image to fit the target dimensions while keeping the current aspect ratio.

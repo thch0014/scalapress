@@ -3,14 +3,15 @@ package com.liferay.scalapress.service.image
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.AssetStore
-import org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.{IOUtils, FilenameUtils}
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
+import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
 @Component
-class ImageService {
+class ImageService extends Logging {
 
     val cache = scala.collection.mutable.HashSet[String]()
     @Autowired var assetStore: AssetStore = _
@@ -20,7 +21,7 @@ class ImageService {
         assetStore.link(_thumbailFilename(filename, w, h))
     }
 
-    private def _thumbailFilename(filename: String, w: Int, h: Int) =
+    private def _thumbailFilename(filename: String, w: Int, h: Int): String =
         FilenameUtils.getBaseName(filename) + "___" + w + "x" + h + ".png"
 
     private def _ensureThumbnailStored(filename: String, w: Int, h: Int) {
@@ -38,16 +39,18 @@ class ImageService {
 
     private def _storeImage(filename: String, image: BufferedImage) {
         val bout = new ByteArrayOutputStream()
-        ImageIO.write(image, "png", bout)
+        ImageIO.write(image, "PNG", bout)
         assetStore.put(filename, new ByteArrayInputStream(bout.toByteArray))
     }
 
-    private def _readAssetAndCreateThumbnail(filename: String, w: Int, h: Int): Option[BufferedImage] = {
-        assetStore.get(filename) match {
-            case None => None
+    private def _readAssetAndCreateThumbnail(key: String, w: Int, h: Int): Option[BufferedImage] = {
+        logger.debug("Creating thumbnail for {}", key)
+        assetStore.get(key) match {
             case Some(in) =>
-                val source = ImageIO.read(in)
+                val bytes = IOUtils.toByteArray(in)
+                val source = ImageIO.read(new ByteArrayInputStream(bytes))
                 Option(ImageTools.fit(source, (w, h)))
+            case None => None
         }
     }
 }

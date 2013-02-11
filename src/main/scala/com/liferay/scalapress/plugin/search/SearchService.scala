@@ -20,6 +20,7 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.SortOrder
+import actors.Futures
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -75,6 +76,7 @@ class ElasticSearchService extends SearchService with Logging {
         objs.foreach(index(_))
 
         logger.info("Indexing finished")
+
     }
 
     //    private def index(folder: Folder) {

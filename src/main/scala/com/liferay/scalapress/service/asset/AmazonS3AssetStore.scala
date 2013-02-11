@@ -36,8 +36,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     def exists(key: String) = {
         try {
-            getAmazonS3Client.getObject(bucketName, key)
-            true
+            getAmazonS3Client.getObject(bucketName, key) != null
         } catch {
             case e: Exception => false
         }
@@ -80,8 +79,25 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     override def list(limit: Int): Array[Asset] = search(null, limit)
 
-    def get(key: String): Option[InputStream] =
-        Option(getAmazonS3Client.getObject(bucketName, key)).map(_.getObjectContent)
+    def get(key: String): Option[InputStream] = {
+        try {
+            Option(getAmazonS3Client.getObject(bucketName, key)) match {
+                case None => None
+                case Some(obj) =>
+                    Option(obj.getObjectContent) match {
+                        case Some(in) =>
+                            val b = IOUtils.toByteArray(in)
+                            if (b.length == 0)
+                                None
+                            else
+                                Option(new ByteArrayInputStream(b))
+                        case None => None
+                    }
+            }
+        } catch {
+            case e: Exception => None
+        }
+    }
 
     def add(key: String, in: InputStream): String = {
         val normalizedKey = getNormalizedKey(key)
@@ -140,7 +156,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
                     getAmazonS3Client.copyObject(copy)
 
                 } catch {
-                    case e: Exception => logger.warn("{}", e.getMessage)
+                    case e: Exception => logger.warn("{}", e)
                 }
             })
             logger.debug("Upgrade completed", list.size)
