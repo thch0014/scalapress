@@ -171,7 +171,9 @@ class ElasticSearchService extends SearchService with Logging {
                   .setFrom(0)
                   .setSize(limit)
 
-                //                Option(search.objectTypes).foreach(objresp.setTypes(search.objectType.toString)
+                Option(search.objectTypes).map(_.split(",")).foreach(arg => {
+                    resp.setTypes(arg: _ *)
+                })
 
                 search.sortType match {
                     case Sort.Newest => resp.addSort("_id", SortOrder.DESC)

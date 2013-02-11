@@ -46,10 +46,10 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Search object type</label>
+        <label class="control-label">Search object types</label>
 
         <div class="controls">
-            #springFormInput("search.objectType", "class='input-small'")
+            #springFormInput("search.objectTypes", "class='input-small'")
         </div>
     </div>
 

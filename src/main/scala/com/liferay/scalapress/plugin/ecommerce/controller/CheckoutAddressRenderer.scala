@@ -312,7 +312,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="instructions">Delivery Instructions</label>
                     <div class="controls">
-                        <textarea name="instructions" class="input-xxlarge">
+                        <textarea name="instructions" class="input-large">
                             {address.instructions}
                         </textarea>
                     </div>

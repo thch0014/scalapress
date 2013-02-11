@@ -61,7 +61,7 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 
-                <a class="colorboxgroup" href={original} title={obj.name} display={display}>
+                <a class="colorboxgroup" href={original} title={obj.name} style={display}>
                     <img src={thumb} width={width.toString} height={height.toString}/>
                     <span>
                         {text}
