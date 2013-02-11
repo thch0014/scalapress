@@ -65,10 +65,10 @@
         <label class="control-label">Sort</label>
 
         <div class="controls">
-            <select id="sortBy" name="sortBy">
+            <select id="sortType" name="sortType">
                 #foreach($option in $sortMap.keySet())
                     <option value="${option}"
-                        #if("$!search.sortBy.id" == "$option")
+                        #if("$!search.sortType.id" == "$option")
                             selected="selected"
                         #end>
                         ${sortMap.get($option)}</option>
