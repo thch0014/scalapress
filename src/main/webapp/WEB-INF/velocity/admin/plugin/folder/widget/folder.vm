@@ -58,7 +58,7 @@
         <label class="control-label">Exclude categories</label>
 
         <div class="controls">
-            #springFormInput("widget.excludeCategories", "class='input-xlarge'")
+            #springFormTextarea("widget.excludeCategories", "class='input-xlarge' rows='12'")
         </div>
     </div>
 
