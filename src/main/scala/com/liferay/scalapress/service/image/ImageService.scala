@@ -1,85 +1,75 @@
 package com.liferay.scalapress.service.image
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
 import java.awt.image.BufferedImage
 import java.awt.Image
 import java.awt.Color
-import com.liferay.scalapress.service.asset.AssetStore
+import org.apache.commons.io.FilenameUtils
+import java.net.URLConnection
 
-@Service
-class ImageService {
+object ImageService {
 
-    @Autowired
-    var provider: AssetStore = _
+    def contentType(filename: String) = {
+        val ext = FilenameUtils.getExtension(filename)
+        ext match {
+            case "css" => "text/css"
+            case "js" => "text/javascript"
+            case "gif" => "image/gif"
+            case "jpg" => "image/jpg"
+            case "jpeg" => "image/jpeg"
+            case "png" => "image/png"
+            case _ => URLConnection.guessContentTypeFromName(filename)
+        }
+    }
 
-    //    def path(img: Img) = provider.link(img.getFilename)
+    val BG_COLOR = Color.WHITE
+    val SCALING_METHOD = java.awt.Image.SCALE_FAST
 
     /**
-     * resize the given image into the new size exactly.
+     * Scales the given image to fit the target dimensions while keeping the current aspect ratio.
      */
-    def resize(source: Image, w: Int, h: Int): BufferedImage = {
+    def fit(source: Image, size: (Int, Int)): BufferedImage = {
+        val fitted = dimensionsToFit(size, (source.getWidth(null), source.getHeight(null)))
+        val scaled = source.getScaledInstance(fitted._1, fitted._2, SCALING_METHOD)
+        val offset = ((size._1 - fitted._1) / 2, (size._2 - fitted._2) / 2)
+        _draw(size, offset, scaled)
+    }
 
-        // create new buffered image to hold the resized image
-        val target = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB)
-
-        // get graphics for target image
+    private def _draw(size: (Int, Int), offset: (Int, Int), image: Image) = {
+        val target = new BufferedImage(size._1, size._2, BufferedImage.TYPE_INT_RGB)
         val g = target.createGraphics
-
-        // fill background with bg colour (defaults to white)
-        g.setColor(Color.white)
-        g.fillRect(0, 0, w, h)
-
-        // resize the original
-        val scaled = source.getScaledInstance(w, h, java.awt.Image.SCALE_AREA_AVERAGING)
-
-        g.drawImage(scaled, 0, 0, null)
-
+        g.setColor(BG_COLOR)
+        g.fillRect(0, 0, size._1, size._2)
+        g.drawImage(image, offset._1, offset._2, null)
         target
     }
 
-    //    /**
-    //     * Returns an AWT image obj for the full size image represented by this.
-    //     */
-    //    def awt(img: Img) = ImageIO.read(provider.get(img.getFilename))
-    //
-    //    def getImageTag(img: Img): ImageTag = getImageTag(img.getWidth, img.getHeight, img)
-    //
-    //    def getImageTag(maxWidth: Int, maxHeight: Int, img: Img): ImageTag = {
-    //        val d = getDimensionsToFit(maxWidth, maxHeight, img.getWidth, img.getHeight)
-    //        new ImageTag(provider.getImageUrl(img.getFilename), 0, d(0), d(1))
-    //    }
-    //
-    //    def getThumbnailTag(maxWidth: Int, maxHeight: Int, img: Img) = {
-    //        val d = getDimensionsToFit(maxWidth, maxHeight, img.getWidth, img.getHeight)
-    //        new ImageTag(provider.getImageUrl(img.getFilename), 0, d(0), d(1))
-    //    }
-    //
-    //    def getDimensionsToFit(targetWidth: Int, targetHeight: Int, image: Img): Array[Int] = {
-    //        getDimensionsToFit(targetWidth, targetHeight, image.getWidth, image.getHeight)
-    //    }
+    /**
+     * Resizes the given image into the new target dimensions.
+     */
+    def resize(source: Image, target: (Int, Int)): BufferedImage = {
+        val scaled = source.getScaledInstance(target._1, target._2, SCALING_METHOD)
+        _draw(target, (0, 0), scaled)
+    }
 
     private[image] def ratio(width: Int, height: Int): Double = width / height.toDouble
 
     /**
-     * Returns the dimensions that will enable the source image to fit inside the target bounding box
+     * Returns width and height that allow the given source width, height to fit inside the target width, height
+     * without losing aspect ratio
      */
-    def getDimensionsToFit(targetWidth: Int, targetHeight: Int, sourceWidth: Int, sourceHeight: Int): Array[Int] = {
+    def dimensionsToFit(target: (Int, Int), source: (Int, Int)): (Int, Int) = {
 
-        // if target width is zero then we don't care how wide it is, so use
-        // the src width
-        val maxWidth = if (targetWidth == 0) sourceWidth else targetWidth
+        // if target width/height is zero then we have no preference for that, so set it to the original value,
+        // since it cannot be any larger
+        val maxWidth = if (target._1 == 0) source._1 else target._1
+        val maxHeight = if (target._2 == 0) source._2 else target._2
 
-        // if target height is zero then we don't care how high the image
-        // is, so use the src height
-        val maxHeight = if (targetHeight == 0) sourceHeight else targetHeight
-
-        val wscale = maxWidth / sourceWidth.toDouble
-        val hscale = maxHeight / sourceHeight.toDouble
+        val wscale = maxWidth / source._1.toDouble
+        val hscale = maxHeight / source._2.toDouble
 
         if (wscale < hscale)
-            Array((sourceWidth * wscale).toInt, (sourceHeight * wscale).toInt)
+            ((source._1 * wscale).toInt, (source._2 * wscale).toInt)
         else
-            Array((sourceWidth * hscale).toInt, (sourceHeight * hscale).toInt)
+            ((source._1 * hscale).toInt, (source._2 * hscale).toInt)
     }
 }
