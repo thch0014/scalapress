@@ -105,11 +105,15 @@ object BasketLineQtyTag extends ScalapressTag {
     override def tags = Array("basket_line_qty")
 }
 
-object BasketDeliveryChargeTag extends ScalapressTag {
+object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        Option(request.basket.deliveryOption).map(_.chargeIncVat.toString)
+
+        Option(request.basket.deliveryOption).map(d => {
+            val textFormatted = "£%1.2f".format(d.chargeIncVat / 100.0)
+            build(textFormatted, params)
+        }
     }
     override def tags = Array("basket_delivery_charge")
 }
