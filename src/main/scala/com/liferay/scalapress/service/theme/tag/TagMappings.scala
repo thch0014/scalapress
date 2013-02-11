@@ -23,6 +23,7 @@ object TagMappings {
         "price" -> ObjectSellPriceTag,
         "pricing" -> ObjectSellPriceTag,
         "pricing_rrp" -> RrpTag,
+        "price_rrp" -> RrpTag,
         "pricing_rrp_discount" -> RrpDiscountTag,
         "stock" -> ObjectStockTag,
         "availability" -> ObjectAvailabilityTag,

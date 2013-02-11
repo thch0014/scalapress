@@ -17,7 +17,9 @@ object AttributeTableRenderer {
 
     def rows(attributeValues: Seq[AttributeValue]): Seq[String] =
         attributeValues
-          .map(av =>
+          .map(av => {
+            val value = av.value.replace("true", "yes").replace("false", "no")
             "<tr><td class=\"attribute-label\">" + av.attribute.name + "</td><td class=\"attribute-value\">" +
-              av.value + "</td></tr>")
+              value + "</td></tr>"
+        })
 }

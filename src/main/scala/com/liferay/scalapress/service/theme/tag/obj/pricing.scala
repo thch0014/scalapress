@@ -7,7 +7,14 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 object RrpTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        None
+        request.obj.flatMap(obj => {
+            obj.rrp match {
+                case 0 => None
+                case _ =>
+                    val textFormatted = "£%1.2f".format(obj.rrp / 100.0)
+                    Some(build(textFormatted, params))
+            }
+        })
     }
 }
 
