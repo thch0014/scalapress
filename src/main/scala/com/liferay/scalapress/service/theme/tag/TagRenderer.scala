@@ -13,6 +13,7 @@ object TagRenderer extends Logging {
         "favourites",
         "sms",
         "search_end",
+        "pricing_able2buy",
         "submit",
         "referafriend",
         "alternatives",

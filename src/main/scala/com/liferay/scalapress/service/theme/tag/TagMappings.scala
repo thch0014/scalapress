@@ -33,7 +33,6 @@ object TagMappings {
         "attachments" -> AttachmentsTag,
         "ordering_buy" -> AddToBasketTag,
         "addtobasket" -> AddToBasketTag,
-        "ordering_qty" -> AddToBasketTag,
         "register" -> RegisterTag,
         "basketqty" -> AddToBasketTag,
         "checkout" -> CheckoutTag,

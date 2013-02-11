@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.search.sections
 
 import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
-import javax.persistence.{OneToOne, Column, ManyToOne, JoinColumn, Entity, Table}
+import javax.persistence.{OneToOne, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.plugin.search.SavedSearch
@@ -11,7 +11,7 @@ import com.liferay.scalapress.service.theme.MarkupRenderer
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {
@@ -24,14 +24,13 @@ class SearchResultsSection extends Section {
     @JoinColumn(name = "markup")
     @BeanProperty var markup: Markup = _
 
-    @Column(name = "pageSize", nullable = false)
-    @BeanProperty var pageSize: Int = 5
-
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val results = context.searchService.search(search, pageSize)
+                search.searchFolders = null
+                search.labels = null
+                val results = context.searchService.search(search)
                 val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
                 objs.size match {
                     case 0 =>

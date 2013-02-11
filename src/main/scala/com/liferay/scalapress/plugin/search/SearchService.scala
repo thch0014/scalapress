@@ -18,6 +18,8 @@ import org.elasticsearch.node.NodeBuilder
 import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder, FieldQueryBuilder}
 import collection.mutable.ArrayBuffer
 import scala.Option
+import com.liferay.scalapress.enums.Sort
+import org.elasticsearch.search.sort.SortOrder
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -27,7 +29,7 @@ trait SearchService {
     //  def index(folder: Folder)
     def prefix(q: String, limit: Int): SearchResponse
     def search(q: String, limit: Int): SearchResponse
-    def search(search: SavedSearch, limit: Int): SearchResponse
+    def search(search: SavedSearch): SearchResponse
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }
 
@@ -122,7 +124,7 @@ class ElasticSearchService extends SearchService with Logging {
           .actionGet()
     }
 
-    override def search(search: SavedSearch, limit: Int): SearchResponse = {
+    override def search(search: SavedSearch): SearchResponse = {
 
         val buffer = new ArrayBuffer[String]()
 
@@ -138,17 +140,46 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.trim.length > 0)
           .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
+        Option(search.searchFolders)
+          .filter(_.trim.length > 0)
+          .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
+
+
         //     Option(search.searchFolders).foreach(folderId => buffer.append("folders:" + folderId))
         logger.debug("Performing search {}", buffer)
 
-        client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-          .addField("name")
-          .setQuery(new QueryStringQueryBuilder(buffer.mkString(" AND ")))
-          .setFrom(0)
-          .setSize(limit)
-          .execute()
-          .actionGet()
+        buffer.size match {
+
+            case 0 => client.prepareSearch(INDEX)
+              .addField("name")
+              .setFrom(0)
+              .setSize(0)
+              .execute()
+              .actionGet()
+
+            case _ =>
+                val query = new QueryStringQueryBuilder(buffer.mkString(" AND "))
+                val limit = if (search.maxResults < 1) 20 else search.maxResults
+
+                val resp = client.prepareSearch(INDEX)
+                  .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                  .addField("name")
+                  .setQuery(query)
+                  .setFrom(0)
+                  .setSize(limit)
+
+                search.sortType match {
+                    case Sort.Newest => resp.addSort("_id", SortOrder.DESC)
+                    case Sort.Oldest => resp.addSort("_id", SortOrder.ASC)
+                    //   case Sort.Price => resp.addSort("name", SortOrder.ASC)
+                    //   case Sort.PriceHigh => resp.addSort("name", SortOrder.DESC)
+                    //   case _ => resp.addSort("name", SortOrder.ASC)
+                    case _ => resp.addSort("_id", SortOrder.ASC)
+                }
+
+                resp.execute()
+                  .actionGet()
+        }
     }
 
     // search by the given query string and then return the matching doc ids

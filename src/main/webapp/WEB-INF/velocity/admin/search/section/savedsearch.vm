@@ -38,23 +38,6 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Page Size</label>
-
-        <div class="controls">
-            #springFormInput("section.pageSize", "class='input-small'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Search</label>
-
-        <div class="controls">
-            #springFormInput("section.pageSize", "class='input-small'")
-        </div>
-    </div>
-
-
-    <div class="control-group">
         <label class="control-label">Search</label>
 
         <div class="controls">

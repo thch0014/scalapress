@@ -16,11 +16,10 @@ trait MarkupPopulator {
 
         var map = TreeMap(0l -> "-None-")
         markups.map(markup => {
-            map = map + (markup.id -> markup.name)
+            map = map + (markup.id -> ("#" + markup.id + " " + markup.name))
         })
 
         model.put("markups", markups.asJava)
         model.put("markupMap", map.asJava)
-
     }
 }

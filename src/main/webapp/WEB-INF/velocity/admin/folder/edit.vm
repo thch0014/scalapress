@@ -18,7 +18,7 @@
         <label class="control-label">Parent</label>
 
         <div class="controls">
-            <select id="parent" name="parent">
+            <select id="parent" name="parent" class="input-xxlarge">
                 #foreach($option in $parents.keySet())
                     <option value="${option}"
                         #if("$!folder.parent.id" == "$option")

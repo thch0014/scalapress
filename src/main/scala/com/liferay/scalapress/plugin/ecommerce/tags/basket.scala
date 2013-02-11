@@ -35,6 +35,7 @@ object AddToBasketTag extends ScalapressTag with TagBuilder {
             case None => None
             case Some(obj) =>
                 val label = params.get("label").getOrElse("Add to basket")
+
                 val href = UrlResolver.addToBasket(obj)
                 val link = buildLink(href, label, params)
                 Some(link)

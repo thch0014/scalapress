@@ -34,7 +34,7 @@ class SearchController extends Logging {
                @RequestParam("q") q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req, context)
+        val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val response = searchService.search(q, PageSize)
         val objects = response.hits.hits().map(hit => {
             val id = hit.id().toLong
@@ -47,7 +47,6 @@ class SearchController extends Logging {
         val theme = themeService.default
         val page = ScalaPressPage(theme, req, context)
 
-        page.body("<h1>Search Results</h1>")
         page.body(PagingRenderer.render(paging))
         if (markup != null)
             page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
@@ -66,7 +65,7 @@ class SearchController extends Logging {
     @RequestMapping(Array("saved/{id}"))
     def savedSearch(@PathVariable("id") id: Long) = {
         val savedSearch = savedSearchDao.find(id)
-        val response = searchService.search(savedSearch, 50)
+        val response = searchService.search(savedSearch)
         response.toString
     }
 
