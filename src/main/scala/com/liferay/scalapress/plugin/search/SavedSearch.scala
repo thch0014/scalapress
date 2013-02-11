@@ -1,9 +1,8 @@
 package com.liferay.scalapress.plugin.search
 
-import javax.persistence.{EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Column}
+import javax.persistence.{EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, Column}
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
-import com.liferay.scalapress.domain.ObjectType
 
 /** @author Stephen Samuel */
 @Entity
@@ -28,8 +27,7 @@ class SavedSearch {
     @Enumerated(EnumType.STRING)
     @BeanProperty var sortType: Sort = _
 
-    @ManyToOne
-    @JoinColumn(name = "itemType", nullable = true)
+    @Column(name = "itemType", nullable = true)
     @BeanProperty var objectType: Long = _
 
     @JoinColumn(name = "inStockOnly", nullable = false)
