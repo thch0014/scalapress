@@ -32,12 +32,12 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
 
 object ObjectStockTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.obj.map(_.stock.toString)
+        request.obj.map(obj => build(obj.stock.toString, params))
     }
 }
 
 object ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.obj.map(_.availability)
+        request.obj.map(obj => build(obj.availability, params))
     }
 }

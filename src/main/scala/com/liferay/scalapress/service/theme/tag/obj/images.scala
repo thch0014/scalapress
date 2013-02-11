@@ -50,18 +50,19 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
         val cssClass = params.get("class").getOrElse("colorboxgroup")
+        val height = params.get("height").getOrElse("120")
+        val width = params.get("width").getOrElse("160")
         request.obj.map(obj => {
 
             var count = 0
             val images = obj.images.asScala.map(image => {
 
-                val link = "/images/" + image.filename
-                val text = params.get("text").getOrElse(obj.name)
+                val src = "/images/" + image.filename
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 
-                <a class={cssClass} href={link} title={obj.name} display={display}>
-                    {text}
+                <a class={cssClass} href={src} title={obj.name} display={display}>
+                    <img src={src} width={width} height={height}/>
                 </a>
 
             }).map(_.toString()).mkString("\n")

@@ -80,7 +80,7 @@
                     <label class="control-label">Price</label>
 
                     <div class="controls">
-                        #springFormInput("form.o.sellPrice", "class='input-small'")
+                        #springFormInput("form.sellPrice", "class='input-small'")
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
                     <label class="control-label">Cost Price</label>
 
                     <div class="controls">
-                        #springFormInput("form.o.costPrice", "class='input-small'")
+                        #springFormInput("form.costPrice", "class='input-small'")
                     </div>
                 </div>
 
@@ -96,7 +96,7 @@
                     <label class="control-label">Vat Rate</label>
 
                     <div class="controls">
-                        #springFormInput("form.o.vatRate", "class='input-small'")
+                        #springFormInput("form.vatRate", "class='input-small'")
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@
                     <label class="control-label">RRP</label>
 
                     <div class="controls">
-                        #springFormInput("form.o.rrp", "class-'")
+                        #springFormInput("form.rrp", "class='input-small'")
                     </div>
                 </div>
 
@@ -112,7 +112,7 @@
                     <label class="control-label">Stock Level</label>
 
                     <div class="controls">
-                        #springFormInput("form.o.stock", "class='input-small'")
+                        #springFormInput("form.stock", "class='input-small'")
                     </div>
                 </div>
             #end

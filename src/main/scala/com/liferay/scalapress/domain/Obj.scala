@@ -98,7 +98,7 @@ class Obj {
 
     def availability = stock match {
         case 0 => outStockMsg
-        case _ => inStockMsg
+        case _ => stock + " in stock" //inStockMsg
     }
 
     @Column(name = "brochure")

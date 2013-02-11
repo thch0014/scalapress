@@ -39,12 +39,13 @@ class OrderStatusController {
 
         val order = orderDao.find(orderId)
         if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
-            throw new RuntimeException("Not valid")
+            showAddress(req)
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body("Order status: " + order.status)
+        page.body("The status of your order is " + order.status)
         page
     }
 }

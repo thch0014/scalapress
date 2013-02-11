@@ -35,6 +35,9 @@ class ObjectController extends Logging {
         if (obj.status.toLowerCase == "DELETED" || obj.status.toLowerCase == "DISABLED")
             throw new IllegalStateException()
 
+        if (obj.objectType.name.toLowerCase.startsWith("account"))
+            throw new IllegalStateException()
+
         val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
         val theme = themeService.theme(obj)
         val page = ScalaPressPage(theme, sreq)
