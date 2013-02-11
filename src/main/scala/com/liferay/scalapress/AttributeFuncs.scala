@@ -10,7 +10,7 @@ object AttributeFuncs {
         obj.attributeValues.asScala.find(_.attribute.name.toLowerCase == s).map(_.value)
     }
 
-    def attributeValues(obj: Obj, s: String): Array[String] = {
+    def attributeValues(obj: Obj, s: String): Seq[String] = {
         obj.attributeValues.asScala.filter(_.attribute.name.toLowerCase == s).map(_.value)
     }
 }

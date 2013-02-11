@@ -1,23 +1,21 @@
-package com.liferay.scalapress.service.render
+package com.liferay.scalapress.plugin.form
 
-import com.liferay.scalapress.domain.{Folder}
 import scala.collection.JavaConverters._
 import xml.Elem
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.enums.FormFieldType
-import com.liferay.scalapress.plugin.form.{FormField, Form}
 
 /** @author Stephen Samuel */
 object FormRenderer {
 
-    private def action(form: Form, folder: Option[Folder]) = "/form/" + form.id + "?folder=" +
-      folder.map(_.id).getOrElse("")
+    private def action(form: Form, folderId: Any) = "/form/" + form.id + "?folder=" + folderId
 
     def render(form: Form, req: ScalapressRequest): String = {
         val fields = form.fields.asScala.sortBy(_.position)
         val renderedFields = fields.map(renderField(_, req))
+        val folderId = req.folder.map(_.id.toString).getOrElse("0")
 
-        <form method="POST" enctype="multipart/form-data" action={action(form, req.folder)} class="form-horizontal">
+        <form method="POST" enctype="multipart/form-data" action={action(form, folderId)} class="form-horizontal">
             {renderedFields}{button(form)}
         </form>.toString()
     }
@@ -34,15 +32,16 @@ object FormRenderer {
 
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
 
-        val hasError = req.errors.contains(field.id.toString)
-        val errorMsg = req.errors.get(field.id.toString).getOrElse("")
-
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
             case FormFieldType.Text => renderText(field, req)
             case FormFieldType.TickBox => renderCheck(field)
             case FormFieldType.TickBoxes => renderChecks(field)
             case FormFieldType.Radio => renderRadio(field, req)
+            case FormFieldType.Description =>
+                <p>
+                    {field.name}
+                </p>
             case FormFieldType.Header =>
                 <legend>
                     {field.name}

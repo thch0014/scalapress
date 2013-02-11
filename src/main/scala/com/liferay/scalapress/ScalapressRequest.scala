@@ -1,20 +1,20 @@
 package com.liferay.scalapress
 
 import controller.web.ScalapressConstants
-import domain.{Attachment, Folder, Obj}
+import domain.{Folder, Obj}
 import javax.servlet.http.HttpServletRequest
 import plugin.ecommerce.domain.{BasketLine, Basket}
 
 /** @author Stephen Samuel */
-class ScalapressRequest(val request: HttpServletRequest, val context: ScalapressContext) {
+case class ScalapressRequest(request: HttpServletRequest,
+                             context: ScalapressContext,
+                             title: Option[String] = None,
+                             obj: Option[Obj] = None,
+                             folder: Option[Folder] = None,
+                             line: Option[BasketLine] = None) {
 
     if (request.getAttribute("errors") == null)
         request.setAttribute("errors", scala.collection.mutable.Map.empty)
-
-    var title: Option[String] = None
-    var obj: Option[Obj] = None
-    var attachment: Option[Attachment] = None
-    var folder: Option[Folder] = None
 
     def basket: Basket = {
         val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
@@ -31,43 +31,24 @@ class ScalapressRequest(val request: HttpServletRequest, val context: Scalapress
     }
 
     def errors = request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
-    def hasErrors = !errors.isEmpty
-
-    def withTitle(title: String): ScalapressRequest = {
-        this.title = Option(title)
-        this
-    }
-
-    var line: Option[BasketLine] = None
-    def withLine(line: BasketLine): ScalapressRequest = {
-        this.line = Option(line)
-        this
-    }
-
-    def withObject(o: Obj): ScalapressRequest = {
-        this.obj = Option(o)
-        this
-    }
-
-    def withFolder(f: Folder): ScalapressRequest = {
-        this.folder = Option(f)
-        this
-    }
-
     def error(key: String) = errors.get(key)
     def error(key: String, value: String) {
         errors.put(key, value)
     }
+    def hasErrors = !errors.isEmpty
 
+    def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
+    def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))
+    def withFolder(f: Folder): ScalapressRequest = copy(folder = Option(f))
+    def withObject(o: Obj): ScalapressRequest = copy(obj = Option(o))
 }
 
 object ScalapressRequest {
 
-    def apply(request: HttpServletRequest, context: ScalapressContext) = new ScalapressRequest(request, context)
-    def apply(obj: Obj, request: HttpServletRequest, context: ScalapressContext) =
-        new ScalapressRequest(request, context).withObject(obj)
-    def apply(folder: Folder, request: HttpServletRequest, context: ScalapressContext) =
-        new ScalapressRequest(request, context).withFolder(folder)
+    def apply(obj: Obj, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
+        ScalapressRequest(request, context).withObject(obj)
+    def apply(folder: Folder, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
+        ScalapressRequest(request, context).withFolder(folder)
 
 }
 

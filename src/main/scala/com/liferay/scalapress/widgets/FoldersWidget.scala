@@ -39,7 +39,7 @@ class FoldersWidget extends Widget with Logging {
           .asScala
           .filterNot(_.hidden)
           .filterNot(f => excluded.contains(f.id.toString))
-          .filterNot(f => exluded.contains(f.name.toLowerCase))
+          .filterNot(f => excluded.contains(f.name.toLowerCase))
 
         for (folder <- children) {
             buffer.append("<li id='w" + id + "_f" + folder.id + "' class='l" + level + "'>")
