@@ -66,7 +66,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="town">City</label>
                     <div class="controls">
-                        <input type="text" name="town" class="input-small" placeholder="City" value={address.town}/>
+                        <input type="text" name="town" class="input-large" placeholder="City" value={address.town}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("town")).map(_.getDefaultMessage).getOrElse("")}
                         </span>
@@ -76,7 +76,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="name">Postcode</label>
                     <div class="controls">
-                        <input type="text" name="postcode" class="input-xlarge" placeholder="Postcode" value={address
+                        <input type="text" name="postcode" class="input-small" placeholder="Postcode" value={address
                       .postcode}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("postcode")).map(_.getDefaultMessage).getOrElse("")}
@@ -301,7 +301,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="telephone">Telephone</label>
                     <div class="controls">
-                        <input type="text" name="telephone" class="input-small" placeholder="Telephone" value={address
+                        <input type="text" name="telephone" placeholder="Telephone" value={address
                       .telephone}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("telephone")).map(_.getDefaultMessage).getOrElse("")}

@@ -3,7 +3,9 @@ package com.liferay.scalapress
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
 import org.springframework.core.convert.converter.Converter
 import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
-import plugin.search.form.{SearchForm}
+import plugin.ecommerce.dao.DeliveryOptionDao
+import plugin.ecommerce.domain.DeliveryOption
+import plugin.search.form.SearchForm
 import plugin.search.SearchFormDao
 
 /** @author Stephen Samuel */
@@ -29,4 +31,10 @@ class StringSearchFormConverter(searchFormDao: SearchFormDao) extends Converter[
     def convert(source: String): SearchForm =
         if (source == null || source == "" || source == "0") null
         else searchFormDao.find(source.toInt)
+}
+
+class StringDeliveryOptionConverter(deliveryOptionDao: DeliveryOptionDao) extends Converter[String, DeliveryOption] {
+    def convert(source: String): DeliveryOption =
+        if (source == null || source == "" || source == "0") null
+        else deliveryOptionDao.find(source.toInt)
 }
