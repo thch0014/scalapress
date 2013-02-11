@@ -46,6 +46,8 @@ object TagMappings {
         "basket_line_stock" -> BasketLineStockTag,
         "basket_line_remove" -> BasketRemoveItemTag,
         "basket_lines_count" -> BasketLineCountTag,
+        "basket_lines_total" -> BasketLinesTotalTag,
+        "basket_items_total" -> BasketLinesTotalTag,
         "basket_delivery_charge" -> BasketDeliveryChargeTag,
         "basket_delivery_desc" -> BasketDeliveryDescTag,
         "checkout" -> CheckoutTag,

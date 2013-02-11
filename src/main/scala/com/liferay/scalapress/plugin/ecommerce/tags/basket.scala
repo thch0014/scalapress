@@ -33,6 +33,20 @@ object BasketTotalTag extends ScalapressTag with TagBuilder {
     }
 }
 
+object BasketLinesTotalTag extends ScalapressTag with TagBuilder {
+
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        val text = if (params.contains("ex"))
+            request.basket.linesSubtotal
+        else if (params.contains("vat"))
+            request.basket.linesVat
+        else
+            request.basket.linesTotal
+        val textFormatted = "£%1.2f".format(text / 100.0)
+        Some(build(textFormatted, params))
+    }
+}
+
 object AddToBasketTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {

@@ -23,7 +23,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input type="text" id="name" class="input-xlarge" placeholder="Name" value={address.name}/>
+                        <input type="text" name="name" class="input-xlarge" placeholder="Name" value={address.name}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                         </span>
@@ -33,7 +33,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="company">Company</label>
                     <div class="controls">
-                        <input type="text" id="company" class="input-xlarge" placeholder="Company" value={address
+                        <input type="text" name="company" class="input-xlarge" placeholder="Company" value={address
                       .company}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("company")).map(_.getDefaultMessage).getOrElse("")}
@@ -44,7 +44,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="address1">Address 1</label>
                     <div class="controls">
-                        <input type="text" id="address1" class="input-xlarge" placeholder="Name" value={address
+                        <input type="text" name="address1" class="input-xlarge" placeholder="Name" value={address
                       .address1}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("address1")).map(_.getDefaultMessage).getOrElse("")}
@@ -55,7 +55,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="address2">Address 2</label>
                     <div class="controls">
-                        <input type="text" id="address2" class="input-xlarge" placeholder="Name" value={address
+                        <input type="text" name="address2" class="input-xlarge" placeholder="Name" value={address
                       .address2}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("address2")).map(_.getDefaultMessage).getOrElse("")}
@@ -66,7 +66,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="town">City</label>
                     <div class="controls">
-                        <input type="text" id="town" class="input-small" placeholder="City" value={address.town}/>
+                        <input type="text" name="town" class="input-small" placeholder="City" value={address.town}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("town")).map(_.getDefaultMessage).getOrElse("")}
                         </span>
@@ -76,7 +76,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="name">Postcode</label>
                     <div class="controls">
-                        <input type="text" id="postcode" class="input-xlarge" placeholder="Postcode" value={address
+                        <input type="text" name="postcode" class="input-xlarge" placeholder="Postcode" value={address
                       .postcode}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("postcode")).map(_.getDefaultMessage).getOrElse("")}
@@ -301,7 +301,7 @@ object CheckoutAddressRenderer {
                 <div class="control-group">
                     <label class="control-label" for="telephone">Telephone</label>
                     <div class="controls">
-                        <input type="text" id="telephone" class="input-small" placeholder="Telephone" value={address
+                        <input type="text" name="telephone" class="input-small" placeholder="Telephone" value={address
                       .telephone}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("telephone")).map(_.getDefaultMessage).getOrElse("")}
