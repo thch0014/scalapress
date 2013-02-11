@@ -21,23 +21,31 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         request.obj.map(obj => {
-            val price = if (params.contains("inc")) obj.sellPriceInc else obj.getSellPrice
-            price match {
-                case 0 => ""
-                case _ => build("£%1.2f".format(price / 100.0), params + ("class" -> "price"))
-            }
+            val text = if (params.contains("ex"))
+                obj.getSellPrice
+            else if (params.contains("vat"))
+                obj.vat
+            else
+                obj.sellPriceInc else
+            val textFormatted = "£%1.2f".format(text / 100.0)
+
+            build(textFormatted, params + ("class" -> "price"))
         })
     }
 }
 
 object ObjectStockTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
         request.obj.map(obj => build(obj.stock.toString, params))
     }
 }
 
 object ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
         request.obj.map(obj => build(obj.availability, params))
     }
 }

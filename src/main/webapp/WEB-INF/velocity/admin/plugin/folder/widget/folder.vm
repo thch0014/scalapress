@@ -55,10 +55,10 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Exclude categories</label>
+        <label class="control-label">Exclusions</label>
 
         <div class="controls">
-            #springFormTextarea("widget.excludeCategories", "class='input-xlarge' rows='12'")
+            #springFormTextarea("widget.exclusions", "class='input-large' rows='12'")
         </div>
     </div>
 

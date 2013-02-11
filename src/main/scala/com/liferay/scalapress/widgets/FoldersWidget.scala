@@ -16,7 +16,8 @@ class FoldersWidget extends Widget with Logging {
     @BeanProperty var depth: Int = _
     @BeanProperty var includeHome: Boolean = _
     @BeanProperty var excludeCurrent: Boolean = _
-    @BeanProperty var excludeCategories: String = _
+
+    @BeanProperty var exclusions: String = _
 
     override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
@@ -33,7 +34,7 @@ class FoldersWidget extends Widget with Logging {
         else
             buffer.append("<ul>")
 
-        val excluded = excludeCategories.split("\n").flatMap(_.split(",")).map(_.toLowerCase)
+        val excluded = exclusions.split("\n").flatMap(_.split(",")).map(_.toLowerCase)
         val children = parent
           .subfolders
           .asScala
