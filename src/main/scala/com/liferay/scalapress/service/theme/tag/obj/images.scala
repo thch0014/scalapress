@@ -68,8 +68,10 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
             }).map(_.toString()).mkString("\n")
 
             images +
-              """<script> $(document).ready(function() {
-                    $(".colorboxgroup").colorbox({ rel: '""" + cssClass + """'} );
+              """<script>
+                 $(document).ready(function() {
+                    $(".colorboxgroup").colorbox({ rel: '""" + cssClass + """'});
+                 });
                 </script>"""
         })
 

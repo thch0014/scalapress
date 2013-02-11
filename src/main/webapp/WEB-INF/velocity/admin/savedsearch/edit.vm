@@ -46,6 +46,22 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Search object type</label>
+
+        <div class="controls">
+            #springFormInput("search.objectType", "class='input-small'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Images Only</label>
+
+        <div class="controls">
+            #springFormCheckbox("search.imageOnly")
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Sort</label>
 
         <div class="controls">

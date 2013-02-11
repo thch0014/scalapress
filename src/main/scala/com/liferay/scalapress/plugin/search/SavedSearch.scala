@@ -30,7 +30,7 @@ class SavedSearch {
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
-    @BeanProperty var objectType: ObjectType = _
+    @BeanProperty var objectType: Long = _
 
     @JoinColumn(name = "inStockOnly", nullable = false)
     @BeanProperty var inStockOnly: Boolean = _

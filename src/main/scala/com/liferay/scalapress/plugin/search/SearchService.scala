@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.search
 
-import com.liferay.scalapress.domain.{Folder, ObjectType, Obj}
+import com.liferay.scalapress.domain.{ObjectType, Obj}
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
 import javax.annotation.PreDestroy
@@ -144,6 +144,9 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.trim.length > 0)
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
+        if (search.imageOnly)
+            buffer.append("hasImage:true")
+
         val limit = if (search.maxResults < 1) 20 else search.maxResults
 
         buffer.size match {
@@ -162,10 +165,12 @@ class ElasticSearchService extends SearchService with Logging {
 
                 val resp = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                  .addField("name")
                   .setQuery(query)
                   .setFrom(0)
                   .setSize(limit)
+
+                if (search.objectType > 0)
+                    resp.setTypes(search.objectType.toString)
 
                 search.sortType match {
                     case Sort.Newest => resp.addSort("_id", SortOrder.DESC)
@@ -212,17 +217,19 @@ class ElasticSearchService extends SearchService with Logging {
         search.execute().actionGet()
     }
 
-    private def source(folder: Folder) = {
-
-        val json = XContentFactory
-          .jsonBuilder()
-          .startObject()
-          .field("name", folder.name)
-
-        json.endObject()
-    }
+    //    private def source(folder: Folder) = {
+    //
+    //        val json = XContentFactory
+    //          .jsonBuilder()
+    //          .startObject()
+    //          .field("name", folder.name)
+    //
+    //        json.endObject()
+    //    }
 
     private def source(obj: Obj) = {
+
+        val hasImage = obj.images.size > 0
 
         val json = XContentFactory
           .jsonBuilder()
@@ -231,6 +238,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("content", obj.content)
           .field("status", obj.status)
           .field("labels", obj.labels)
+          .field("hasImage", hasImage.toString)
 
         obj.folders.asScala.foreach(folder => {
             json.field("folders", folder.id.toString)
