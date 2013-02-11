@@ -144,22 +144,21 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.trim.length > 0)
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
-
-        //     Option(search.searchFolders).foreach(folderId => buffer.append("folders:" + folderId))
-        logger.debug("Performing search {}", buffer)
+        val limit = if (search.maxResults < 1) 20 else search.maxResults
 
         buffer.size match {
 
-            case 0 => client.prepareSearch(INDEX)
-              .addField("name")
-              .setFrom(0)
-              .setSize(0)
-              .execute()
-              .actionGet()
+            case 0 =>
+                client.prepareSearch(INDEX)
+                  .addField("name")
+                  .setFrom(0)
+                  .setSize(limit)
+                  .execute()
+                  .actionGet()
 
             case _ =>
                 val query = new QueryStringQueryBuilder(buffer.mkString(" AND "))
-                val limit = if (search.maxResults < 1) 20 else search.maxResults
+                logger.debug("Performing search {}", query)
 
                 val resp = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)

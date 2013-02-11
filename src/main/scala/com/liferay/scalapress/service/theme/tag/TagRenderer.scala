@@ -15,6 +15,7 @@ object TagRenderer extends Logging {
         "search_end",
         "pricing_able2buy",
         "submit",
+        "voucher",
         "referafriend",
         "alternatives",
         "gallery_image",

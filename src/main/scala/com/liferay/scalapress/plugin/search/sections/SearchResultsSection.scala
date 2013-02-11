@@ -28,8 +28,6 @@ class SearchResultsSection extends Section {
         Option(search) match {
             case None => None
             case Some(s) =>
-                search.searchFolders = null
-                search.labels = null
                 val results = context.searchService.search(search)
                 val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
                 objs.size match {

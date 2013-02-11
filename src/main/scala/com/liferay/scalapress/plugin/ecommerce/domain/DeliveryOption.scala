@@ -5,7 +5,7 @@ import javax.persistence.{ElementCollection, Table, Entity, GenerationType, Gene
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "delivery_options")
+@Table(name = "delivery")
 class DeliveryOption {
 
     @Id

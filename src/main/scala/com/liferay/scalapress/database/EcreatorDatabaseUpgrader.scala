@@ -453,7 +453,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_availabilitychart",
             "blocks_calculators")) {
             try {
-                execute("DROP TABLE " + table)
+        //        execute("DROP TABLE " + table)
             } catch {
                 case e: Exception => logger.warn("Unable to drop {}", e.getMessage)
             }

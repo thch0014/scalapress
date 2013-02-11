@@ -61,11 +61,25 @@ object BasketLinesTag extends ScalapressTag {
     override def tags = Array("basket_lines")
 }
 
+object BasketLineCountTag extends ScalapressTag with TagBuilder {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        val text = request.basket.lines.size().toString
+        Some(build(text, params))
+    }
+
+    override def tags = Array("basket_lines_count")
+}
+
 object BasketLineQtyTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
-        request.line.map(line => "<input type='text' size='4' name='qty" + line.id + " value='" + line.qty + "/>")
+        request
+          .line
+          .map(line => "<input type='text' class='input-mini' name='qty" +
+          line.id + "' value='" + line.qty + "'/>")
     }
 
     override def tags = Array("basket_line_qty")
