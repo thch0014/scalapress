@@ -26,7 +26,7 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
             else if (params.contains("vat"))
                 obj.vat
             else
-                obj.sellPriceInc else
+                obj.sellPriceInc
             val textFormatted = "£%1.2f".format(text / 100.0)
 
             build(textFormatted, params + ("class" -> "price"))
