@@ -57,11 +57,11 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
             var count = 0
             val images = obj.images.asScala.map(image => {
 
-                val src = "/images/" + image.filename
+                val src = context.assetStore.link(image.filename)
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 
-                <a class={cssClass} href={src} title={obj.name} display={display}>
+                <a class="colorboxgroup" href={src} title={obj.name} display={display}>
                     <img src={src} width={width} height={height}/>
                 </a>
 
@@ -70,7 +70,7 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
             images +
               """<script>
                  $(document).ready(function() {
-                    $(".colorboxgroup").colorbox({ rel: '""" + cssClass + """'});
+                    $(".colorboxgroup").colorbox({ rel: 'colorboxgroup' });
                  });
                 </script>"""
         })

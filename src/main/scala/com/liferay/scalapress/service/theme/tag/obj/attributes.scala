@@ -9,9 +9,8 @@ object AttributeValueTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         params.get("id") match {
-            case None => None
+            case None => Some("<!-- no id specified for attribute tag -->")
             case Some(id) => {
-                import scala.collection.JavaConverters._
                 request.obj.flatMap(obj => {
                     obj.attributeValues.asScala.find(_.id == id.toLong).map(_.value).map(build(_, params))
                 })

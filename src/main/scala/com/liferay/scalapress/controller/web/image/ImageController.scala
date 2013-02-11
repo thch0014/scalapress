@@ -20,10 +20,6 @@ class ImageController extends Logging {
     @Autowired
     var imageProvider: AssetStore = _
 
-    //    val cacheManager = CacheManager.getInstance()
-    //    cacheManager.addCache("images")
-    //    val cache = cacheManager.getCache("images")
-
     @ExceptionHandler(Array(classOf[RuntimeException]))
     def handleException1(e: RuntimeException, resp: HttpServletResponse) {
         resp.setStatus(404)
@@ -47,8 +43,6 @@ class ImageController extends Logging {
     def imageResized(@PathVariable("filename") filename: String, @RequestParam("width") width: Int,
                      @RequestParam("height") height: Int, resp: HttpServletResponse) {
 
-        //    val bytes = Option(cache.get(CacheElement(filename, width, height))) match {
-        //       case None => {
         imageProvider.get(filename) match {
             case None => throw new RuntimeException
             case Some(in) =>
@@ -57,13 +51,7 @@ class ImageController extends Logging {
                 val thumbnail = ImageService.fit(image, (width, height))
                 ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
                 resp.setContentType("image/png")
-
-            //          cache.put(new Element(CacheElement(filename, width, height), array))
-
         }
-        //       }
-        //       case Some(e) => e.getObjectValue.asInstanceOf[Array[Byte]]
-        //   }
     }
 
     @RequestMapping
