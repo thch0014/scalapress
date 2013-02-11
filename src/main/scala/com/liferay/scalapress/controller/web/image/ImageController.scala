@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream
 import net.sf.ehcache.CacheManager
 import net.sf.ehcache.Element
 import org.springframework.stereotype.Controller
-import org.apache.commons.io.IOUtils
+import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
@@ -38,12 +38,11 @@ class ImageController extends Logging {
         resp.setStatus(404)
     }
 
-    @ResponseBody
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
     def imageResized(@PathVariable("filename") filename: String, @RequestParam("width") width: Int,
-                     @RequestParam("height") height: Int): Array[Byte] = {
+                     @RequestParam("height") height: Int, resp: HttpServletResponse) {
 
-        Option(cache.get(CacheElement(filename, width, height))) match {
+        val bytes = Option(cache.get(CacheElement(filename, width, height))) match {
             case None => {
                 imageProvider.get(filename) match {
                     case None => throw new RuntimeException
@@ -59,6 +58,21 @@ class ImageController extends Logging {
                 }
             }
             case Some(e) => e.getValue.asInstanceOf[Array[Byte]]
+        }
+        resp.setContentType(contentType(filename))
+        IOUtils.write(bytes, resp.getOutputStream)
+    }
+
+    private def contentType(filename: String) = {
+        val ext = FilenameUtils.getExtension(filename)
+        ext match {
+            case "css" => "text/css"
+            case "js" => "text/javascript"
+            case "gif" => "image/gif"
+            case "jpg" => "image/jpg"
+            case "jpeg" => "image/jpeg"
+            case "png" => "image/png"
+            case _ => URLConnection.guessContentTypeFromName(filename)
         }
     }
 
