@@ -21,7 +21,8 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
             case Some(o) =>
 
                 val rendered = o.images.asScala.take(limit).map(i => {
-                    val tag = "<img src='/images/" + i.filename + "' height='" + h + "' width='" + w + "'/>"
+                    val tag = "<img src='/images/" +
+                      i.filename + "?width=" + w = "&height=" + h + "' height='" + h + "' width='" + w + "'/>"
                     tag
                 })
 
