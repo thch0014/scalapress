@@ -33,7 +33,7 @@ class FoldersWidget extends Widget with Logging {
         else
             buffer.append("<ul>")
 
-        val excluded = excludeCategories.split("\n").map(_.toLowerCase)
+        val excluded = excludeCategories.split("\n").flatMap(_.split(",")).map(_.toLowerCase)
         val children = parent
           .subfolders
           .asScala
