@@ -113,7 +113,7 @@ object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
         Option(request.basket.deliveryOption).map(d => {
             val textFormatted = "£%1.2f".format(d.chargeIncVat / 100.0)
             build(textFormatted, params)
-        }
+        })
     }
     override def tags = Array("basket_delivery_charge")
 }
