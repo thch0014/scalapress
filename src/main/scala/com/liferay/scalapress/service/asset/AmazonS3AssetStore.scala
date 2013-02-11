@@ -110,7 +110,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val md = new ObjectMetadata
         md.setContentLength(array.length)
-        md.setContentType(URLConnection.guessContentTypeFromStream(in))
+        md.setContentType(ImageTools.contentType(key))
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)

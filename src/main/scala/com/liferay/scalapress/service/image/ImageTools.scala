@@ -22,7 +22,7 @@ object ImageTools {
     }
 
     val BG_COLOR = Color.WHITE
-    val SCALING_METHOD = java.awt.Image.SCALE_SMOOTH
+    val SCALING_METHOD = java.awt.Image.SCALE_AREA_AVERAGING
 
     /**
      * Scales the given image to fit the target dimensions while keeping the current aspect ratio.

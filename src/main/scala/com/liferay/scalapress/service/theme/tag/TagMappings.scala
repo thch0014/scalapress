@@ -19,6 +19,7 @@ object TagMappings {
         "summary" -> SummaryTag,
         "content" -> ContentTag,
         "pricing_sell" -> ObjectSellPriceTag,
+        "asset" -> AssetTag,
         "price" -> ObjectSellPriceTag,
         "pricing" -> ObjectSellPriceTag,
         "pricing_rrp" -> RrpTag,
