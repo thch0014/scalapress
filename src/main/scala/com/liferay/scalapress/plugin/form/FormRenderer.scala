@@ -35,8 +35,8 @@ object FormRenderer {
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
             case FormFieldType.Text => renderText(field, req)
-            case FormFieldType.TickBox => renderCheck(field)
-            case FormFieldType.TickBoxes => renderChecks(field)
+            case FormFieldType.TickBox => renderCheck(field, req)
+            case FormFieldType.TickBoxes => renderChecks(field, req)
             case FormFieldType.Radio => renderRadio(field, req)
             case FormFieldType.Description =>
                 <p>
@@ -107,28 +107,33 @@ object FormRenderer {
         </div>
     }
 
-    private def renderCheck(field: FormField) = {
-        <div class="control-group">
+    private def renderCheck(field: FormField, req: ScalapressRequest) = {
+        val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
+        <div class={cssClass}>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name={field.id.toString}/>{field.name}
+                    <input type="checkbox" name={field.id.toString}/>{field.name}<span class="help-inline">
+                    {req.errors.getOrElse(field.id.toString, "")}
+                </span>
                 </label>
             </div>
         </div>
     }
 
-    private def renderChecks(field: FormField) = {
+    private def renderChecks(field: FormField, req: ScalapressRequest) = {
         val checks = field.optionsList.map(opt =>
             <label class="checkbox">
                 <input type="checkbox" name={field.id.toString}/>{opt}
             </label>)
 
-
-        <div class="control-group">
+        val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
+        <div class={cssClass}>
             <div class="controls">
                 <label class="checkbox">
                     {field.name}
-                </label>{checks}
+                </label>{checks}<span class="help-inline">
+                {req.errors.getOrElse(field.id.toString, "")}
+            </span>
             </div>
         </div>
     }

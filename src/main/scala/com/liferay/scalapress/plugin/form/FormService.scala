@@ -70,7 +70,12 @@ class FormService extends Logging {
     }
 
     def checkErrors(form: Form, sreq: ScalapressRequest) {
-        for (field <- form.fields.asScala) {
+        for (field <- form
+          .fields
+          .asScala
+          .filterNot(_.fieldType == FormFieldType.Attachment)
+          .filterNot(_.fieldType == FormFieldType.Header)
+          .filterNot(_.fieldType == FormFieldType.Description)) {
             if (field.required || field.regExp != null) {
 
                 val regExp =
