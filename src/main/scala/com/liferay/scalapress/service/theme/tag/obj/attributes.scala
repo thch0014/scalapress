@@ -12,7 +12,7 @@ object AttributeValueTag extends ScalapressTag with TagBuilder {
             case None => Some("<!-- no id specified for attribute tag -->")
             case Some(id) => {
                 request.obj.flatMap(obj => {
-                    obj.attributeValues.asScala.find(_.id == id.toLong).map(_.value).map(build(_, params))
+                    obj.attributeValues.asScala.find(_.id == id.trim.toLong).map(_.value).map(build(_, params))
                 })
             }
         }
@@ -28,7 +28,7 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
                 request.obj.map(obj => {
                     val values = obj.attributeValues
                       .asScala
-                      .filter(_.id.toLong == id.toLong)
+                      .filter(_.id == id.trim.toLong)
                       .map(_.attribute.name)
                       .map(build(_, params))
                     val sep = params.get("sep").getOrElse(", ")
@@ -43,8 +43,8 @@ object AttributeTableTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
-        val excludes = params.get("exclude").map(_.split(",")).getOrElse(Array[String]())
-        val includes = params.get("include").map(_.split(",")).getOrElse(Array[String]())
+        val excludes = params.get("exclude").map(_.trim.split(",")).getOrElse(Array[String]())
+        val includes = params.get("include").map(_.trim.split(",")).getOrElse(Array[String]())
 
         import scala.collection.JavaConverters._
 
