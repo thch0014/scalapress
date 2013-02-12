@@ -20,6 +20,8 @@ class MediaWidget extends Widget {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
+    override def backoffice = "/backoffice/widget/media/" + id
+
     override def render(req: ScalapressRequest): Option[String] = {
         images.asScala.headOption match {
             case None => None

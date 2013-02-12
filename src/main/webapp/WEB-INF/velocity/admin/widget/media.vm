@@ -4,7 +4,8 @@
 <h3>Edit Widget</h3>
 
 
-<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" enctype="multipart/form-data"
+      action="/backoffice/widget/media/$widget.id/saveAndUpload">
 
     <div class="control-group">
         <label class="control-label">Name</label>

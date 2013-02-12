@@ -16,6 +16,14 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Date</label>
+
+        <div class="controls">
+            <span class="uneditable-input">$datetool.format($order.datePlaced)</span>
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Status</label>
 
         <div class="controls">

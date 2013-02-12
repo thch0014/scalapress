@@ -31,7 +31,7 @@ class MediaWidgetController extends WidgetEditController {
         "admin/widget/media.vm"
     }
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("saveAndUpload"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def save(@ModelAttribute w: Widget, model: ModelMap,
              @RequestParam(value = "upload", required = false) upload: MultipartFile) = {
 
