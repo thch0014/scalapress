@@ -37,6 +37,23 @@
         </div>
     </div>
 
+    <legend>Stock</legend>
+    <div class="control-group">
+        <label class="control-label">Stock Method</label>
+
+        <div class="controls">
+            #springFormSingleSelect("plugin.stockMethod", $stockMethods)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Default out of stock message</label>
+
+        <div class="controls">
+            #springFormInput("plugin.outOfStockMessage")
+        </div>
+    </div>
+
     <legend>Checkout</legend>
     <div class="control-group">
         <label class="control-label">Checkout Confirmation Page Text</label>

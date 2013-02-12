@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
-import com.liferay.scalapress.enums.CheckoutMethod
+import com.liferay.scalapress.enums.{StockMethod, CheckoutMethod}
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,6 +22,10 @@ class ShoppingPlugin {
     @ManyToOne
     @JoinColumn(name = "basketMarkup")
     @BeanProperty var basketMarkup: Markup = _
+
+    @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
+
+    @BeanProperty var outOfStockMessage: String = _
 
     @Enumerated(EnumType.STRING)
     @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS

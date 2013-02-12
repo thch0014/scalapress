@@ -3,17 +3,18 @@ package com.liferay.scalapress.plugin.ecommerce.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
+import com.liferay.scalapress.enums.StockMethod
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/shopping"))
-class ShoppingPluginController extends MarkupPopulator {
+class ShoppingPluginController extends MarkupPopulator with EnumPopulator {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _
@@ -30,4 +31,5 @@ class ShoppingPluginController extends MarkupPopulator {
     }
 
     @ModelAttribute("plugin") def plugin = shoppingPluginDao.get
+    @ModelAttribute("stockMethods") def stockMethods = populate(StockMethod.values)
 }

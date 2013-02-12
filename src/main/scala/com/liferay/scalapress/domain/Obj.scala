@@ -96,11 +96,6 @@ class Obj {
     @Column(name = "ourStock")
     @BeanProperty var stock: Int = _
 
-    def availability = stock match {
-        case 0 => outStockMsg
-        case _ => stock + " in stock" //inStockMsg
-    }
-
     @Column(name = "brochure")
     @BeanProperty var orderable: Boolean = false
 
