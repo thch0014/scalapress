@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{OrderDao, ObjectDao}
+import com.liferay.scalapress.dao.{TypeDao, OrderDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.{OrderService, ShoppingPluginDao}
@@ -14,9 +14,8 @@ import javax.validation.Valid
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
-import scala.collection.JavaConverters._
-import com.liferay.scalapress.controller.web.folder.SecurityFuncs
 import java.net.URL
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -33,6 +32,7 @@ class CheckoutController {
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
+    @Autowired var typeDao: TypeDao = _
 
     @RequestMapping
     def start = "redirect:/checkout/delivery"
@@ -90,12 +90,12 @@ class CheckoutController {
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
-        val account = SecurityFuncs.getAccount(req).get
+        val domain = if (port == 80) host else host + ":" + port
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body(CheckoutConfirmationRenderer.
-          renderConfirmationPage(sreq.basket, sagepayFormPlugin, account, host + ":" + port))
+          renderConfirmationPage(sreq.basket, sagepayFormPlugin, domain))
         page
     }
 
@@ -108,7 +108,15 @@ class CheckoutController {
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
         val params = req.getParameterMap
 
-        val order = OrderService.createOrder(sreq.basket, req)
+        val accountType = typeDao
+          .findAll()
+          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
+        val account = Obj(accountType)
+        account.email = sreq.basket.deliveryAddress.accountEmail
+        account.name = sreq.basket.deliveryAddress.accountName
+        objectDao.save(account)
+
+        val order = OrderService.createOrder(account, sreq.basket, req)
         orderDao.save(order)
 
         sreq.basket.empty()
@@ -126,10 +134,19 @@ class CheckoutController {
             case None =>
         }
 
+        val confText = Option(shoppingPlugin.checkoutConfirmationText)
+          .map(text => text
+          .replace("[order_id]", order.id.toString)
+          .replace("[order_email]", order.account.email)
+          .replace("[order_name]", order.account.name)
+          .replace("[order_total]", order.totalIncVat.toString))
+          .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>)
+
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
-        page.body(shoppingPlugin.checkoutConfirmationText)
+        page.body(confText)
+        page.body()
         page
     }
 

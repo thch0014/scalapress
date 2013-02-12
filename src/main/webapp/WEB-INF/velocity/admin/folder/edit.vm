@@ -110,15 +110,16 @@
 </form>
 
 <legend>Sections</legend>
-<table class="table table-condensed table-hover">
+<table class="table table-condensed table-hover" id="sections-table">
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
         <th></th>
     </tr>
-    #foreach ($s in $sections)
-        <tr>
+    <tbody>
+        #foreach ($s in $sections)
+        <tr data-section-id="$s.id">
             <td>$s.id</td>
             <td>$!s.name()</td>
             <td>$s.desc()</td>
@@ -130,7 +131,19 @@
                     <i class="icon-trash icon-white"></i></a>
             </td>
         </tr>
-    #end
+        #end
+    </tbody>
 </table>
+
+<script>
+    $(function () {
+        $("#sections-table tbody").sortable({
+            update: function (event, ui) {
+
+            }
+        });
+        $("#sections-table tbody").disableSelection();
+    });
+</script>
 
 #parse("/admin/footer.vm")

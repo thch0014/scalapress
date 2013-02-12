@@ -14,7 +14,7 @@ object SectionRenderer {
         val sections = folder.sections.asScala.sortBy(_.position)
         val visible = sections.filter(_.visible)
         for (section <- visible) {
-            buffer += "<!-- section: " + section.getClass + " -->\n"
+            buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
             val rendered = section.render(req, context)
             if (rendered.isDefined) buffer += (rendered.get + "\n")
             buffer += "<!-- end section -->\n\n"

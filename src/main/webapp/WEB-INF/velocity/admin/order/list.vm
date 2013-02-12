@@ -3,6 +3,7 @@
 
 <h3>Orders</h3>
 
+<a href="$urlResolver.createOrder()" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New Order</a>
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -26,7 +27,7 @@
     #end
 </table>
 
-<a href="$urlResolver.createOrder()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create Order</a>
+
 
 
 #parse("/admin/footer.vm")

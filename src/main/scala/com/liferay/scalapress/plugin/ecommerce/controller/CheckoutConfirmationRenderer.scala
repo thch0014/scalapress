@@ -8,9 +8,9 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 object CheckoutConfirmationRenderer {
 
-    def renderConfirmationPage(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String) = {
+    def renderConfirmationPage(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
         val totals = renderBasket(basket).toString()
-        val payments = renderPaymentForm(basket, plugin, account, domain).toString()
+        val payments = renderPaymentForm(basket, plugin, domain).toString()
         totals + "\n\n" + payments
     }
 
@@ -67,14 +67,18 @@ object CheckoutConfirmationRenderer {
         </table>
     }
 
-    private def renderPaymentForm(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String) = {
+    private def renderPaymentForm(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
 
-        val params = SagepayFormService.params(basket, plugin, account, domain)
+        val params = SagepayFormService.params(basket, plugin, domain)
+        val termsError = ""
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
         <div class="checkout-payment-form">
             <form method="POST" action={SagepayFormService.LiveUrl}>
-                {paramInputs}<button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                <label class="control-label" for="name">Accept Terms and Conditions</label>
+                <div class="controls">
+                    <input type="checkbox" name="termsAccepted"/>{termsError}
+                </div>{paramInputs}<button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
         </div>
     }

@@ -3,12 +3,15 @@ package com.liferay.scalapress.plugin.ecommerce
 import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 object OrderService {
 
-    def createOrder(basket: Basket, req: HttpServletRequest): Order = {
+    def createOrder(account: Obj, basket: Basket, req: HttpServletRequest): Order = {
+
         val order = Order(req.getRemoteAddr)
+        order.account = account
         order.deliveryAddress = basket.deliveryAddress
         order.status = "NEW"
         order.deliveryCharge = basket.deliveryOption.charge

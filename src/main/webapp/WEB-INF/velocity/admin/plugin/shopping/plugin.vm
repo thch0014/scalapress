@@ -4,6 +4,7 @@
 
 <form class="form-horizontal" method="POST">
 
+    <legend>Basket</legend>
     <div class="control-group">
         <label class="control-label">Basket Markup</label>
 
@@ -33,6 +34,24 @@
                         $!{markupMap.get($option)}</option>
                 #end
             </select>
+        </div>
+    </div>
+
+    <legend>Checkout</legend>
+    <div class="control-group">
+        <label class="control-label">Checkout Confirmation Page Text</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block' rows='16'")
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <label class="control-label">Checkout Confirmation Scripts</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block' rows='8'")
         </div>
     </div>
 

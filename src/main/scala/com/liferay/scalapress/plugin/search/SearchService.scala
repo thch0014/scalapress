@@ -20,7 +20,6 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.SortOrder
-import actors.Futures
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -149,7 +148,7 @@ class ElasticSearchService extends SearchService with Logging {
         if (search.imageOnly)
             buffer.append("hasImage:true")
 
-        val limit = if (search.maxResults < 1) 20 else search.maxResults
+        val limit = if (search.maxResults < 1) 40 else search.maxResults
 
         buffer.size match {
 
@@ -168,10 +167,12 @@ class ElasticSearchService extends SearchService with Logging {
                 val resp = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                   .setQuery(query)
+                  .addField("name")
+                  .addField("hasImage")
                   .setFrom(0)
                   .setSize(limit)
 
-                Option(search.objectTypes).map(_.split(",")).foreach(arg => {
+                Option(search.objectTypes).filter(_.trim.length > 0).map(_.split(",")).foreach(arg => {
                     resp.setTypes(arg: _ *)
                 })
 
@@ -184,8 +185,7 @@ class ElasticSearchService extends SearchService with Logging {
                     case _ => resp.addSort("_id", SortOrder.ASC)
                 }
 
-                resp.execute()
-                  .actionGet()
+                resp.execute().actionGet()
         }
     }
 
@@ -234,6 +234,8 @@ class ElasticSearchService extends SearchService with Logging {
 
         val hasImage = obj.images.size > 0
 
+        val folderIds = obj.folders.asScala.map(_.id.toString)
+
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
@@ -242,10 +244,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("status", obj.status)
           .field("labels", obj.labels)
           .field("hasImage", hasImage.toString)
-
-        obj.folders.asScala.foreach(folder => {
-            json.field("folders", folder.id.toString)
-        })
+          .field("folders", folderIds: _ *)
 
         obj.attributeValues.asScala.foreach(av => {
             json.field(av.attribute.id.toString, av.value)

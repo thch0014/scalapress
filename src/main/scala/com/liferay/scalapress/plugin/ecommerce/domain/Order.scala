@@ -15,10 +15,6 @@ class Order {
 
     @BeanProperty var status: String = _
 
-    @BeanProperty var saleVat: Int = _
-    @BeanProperty var saleSubtotal: Int = _
-    @BeanProperty var saleTotal: Int = _
-
     @BeanProperty var deliveryCharge: Int = _
     @BeanProperty var deliveryVatRate: Double = _
     @BeanProperty def deliveryVat: Int = (deliveryCharge * deliveryVatRate / 100.0).toInt

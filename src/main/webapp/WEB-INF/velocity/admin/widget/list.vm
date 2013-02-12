@@ -4,7 +4,7 @@
 <h3>Widgets</h3>
 
 
-<table class="table table-condensed table-hover">
+<table class="table table-condensed table-hover" id="widgets-table">
     <tr>
         <th>Id</th>
         <th>Type</th>
@@ -12,7 +12,8 @@
         <th>Location</th>
         <th></th>
     </tr>
-    #foreach ($w in $widgets)
+    <tbody>
+        #foreach ($w in $widgets)
         <tr>
             <td>$w.id</td>
             <td>$w.widgetType()</td>
@@ -21,8 +22,21 @@
             <td><a href="$w.backoffice()" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
-    #end
+        #end
+    </tbody>
 </table>
+
+
+<script>
+    $(function () {
+        $("#widgets-table tbody").sortable({
+            update: function (event, ui) {
+
+            }
+        });
+        $("#widgets-table tbody").disableSelection();
+    });
+</script>
 
 
 #parse("/admin/footer.vm")

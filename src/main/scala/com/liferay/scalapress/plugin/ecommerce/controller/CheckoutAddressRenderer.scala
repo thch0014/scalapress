@@ -18,17 +18,43 @@ object CheckoutAddressRenderer {
     def renderDeliveryAddress(address: Address, options: List[DeliveryOption], errors: Errors) =
         <div class="checkout-delivery-input">
             <form method="POST" class="form-horizontal">
+                <legend>Your Details</legend>
+
+                <div class="control-group">
+                    <label class="control-label" for="accountName">Name</label>
+                    <div class="controls">
+                        <input type="text" name="accountName" class="input-xlarge" placeholder="Your Name" value={address
+                      .accountName}/>
+                        <span class="help-inline">
+                            {Option(errors.getFieldError("accountName")).map(_.getDefaultMessage).getOrElse("")}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="email">Email</label>
+                    <div class="controls">
+                        <input type="text" name="accountEmail" class="input-xlarge" placeholder="Your email" value={address
+                      .accountEmail}/>
+                        <span class="help-inline">
+                            {Option(errors.getFieldError("accountEmail")).map(_.getDefaultMessage).getOrElse("")}
+                        </span>
+                    </div>
+                </div>
+
                 <legend>Delivery Address</legend>
 
                 <div class="control-group">
-                    <label class="control-label" for="name">Name</label>
+                    <label class="control-label" for="name">Contact Name</label>
                     <div class="controls">
-                        <input type="text" name="name" class="input-xlarge" placeholder="Name" value={address.name}/>
+                        <input type="text" name="name" class="input-xlarge" placeholder="Contact Name" value={address
+                      .name}/>
                         <span class="help-inline">
                             {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                         </span>
                     </div>
                 </div>
+
 
                 <div class="control-group">
                     <label class="control-label" for="company">Company</label>

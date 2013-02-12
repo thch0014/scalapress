@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
 import scala.Predef.String
-import org.hibernate.validator.constraints.NotEmpty
+import org.hibernate.validator.constraints.{Email, NotEmpty}
 import reflect.BeanProperty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}
 
@@ -13,6 +13,13 @@ class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
+
+    @NotEmpty
+    @BeanProperty var accountName: String = _
+
+    @Email
+    @NotEmpty
+    @BeanProperty var accountEmail: String = _
 
     @NotEmpty
     @Column(name = "contactName")

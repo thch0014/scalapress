@@ -42,14 +42,15 @@ object SagepayFormService extends Logging {
     }
 
     // returns the four params needed by sagepay
-    def params(basket: Basket, plugin: SagepayFormPlugin, account: Obj, domain: String): Map[String, String] = {
+    def params(basket: Basket, plugin: SagepayFormPlugin, domain: String): Map[String, String] = {
 
-        val crypt = encrypt(plugin, cryptParams(plugin, basket, account, domain))
+        val crypt = encrypt(plugin, cryptParams(plugin, basket, domain))
 
         val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
             "Vendor" -> plugin.sagePayVendorName,
-            "Crypt" -> crypt)
+            "Crypt" -> crypt,
+            "_test" -> cryptParams(plugin, basket, domain).toString())
 
         params
     }
@@ -132,7 +133,7 @@ object SagepayFormService extends Logging {
     def existingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    def cryptParams(plugin: SagepayFormPlugin, basket: Basket, account: Obj, domain: String): Map[String, String] = {
+    def cryptParams(plugin: SagepayFormPlugin, basket: Basket, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", basket.sessionId) // store basket id as our tx id
@@ -144,8 +145,8 @@ object SagepayFormService extends Logging {
 
         params.put("Currency", "GBP")
         params.put("Amount", amount)
-        params.put("CustomerName", account.name)
-        params.put("CustomerEmail", account.email)
+        params.put("CustomerName", basket.deliveryAddress.accountName)
+        params.put("CustomerEmail", basket.deliveryAddress.accountEmail)
         params.put("Description", "Basket " + basket.sessionId)
 
         params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
