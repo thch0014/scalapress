@@ -14,7 +14,7 @@
     </tr>
     <tbody>
         #foreach ($w in $widgets)
-        <tr>
+        <tr class="widget-row" data-widget-id="$w.id">
             <td>$w.id</td>
             <td>$w.widgetType()</td>
             <td>$w.name</td>
@@ -30,8 +30,19 @@
 <script>
     $(function () {
         $("#widgets-table tbody").sortable({
-            update: function (event, ui) {
 
+            update: function (event, ui) {
+                var order = []
+                $("#widgets-table tr.widget-row").each(function (v) {
+                    var id = $(this).attr("data-widget-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/widget/order",
+                    data: order.join('-')
+                });
             }
         });
         $("#widgets-table tbody").disableSelection();
