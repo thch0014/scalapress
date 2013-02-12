@@ -43,12 +43,12 @@
 
         <div class="controls">
             <select id="theme" name="theme" class="input-xxlarge">
-                #foreach($option in $themes.keySet())
+                #foreach($option in $themesMap.keySet())
                     <option value="${option}"
                         #if("$!folder.theme.id" == "$option")
                             selected="selected"
                         #end>
-                        ${themes.get($option)}</option>
+                        ${themesMap.get($option)}</option>
                 #end
             </select>
         </div>
