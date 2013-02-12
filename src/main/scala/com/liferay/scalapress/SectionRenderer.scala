@@ -11,8 +11,8 @@ object SectionRenderer {
 
         val buffer = new ArrayBuffer[String]
 
-        val sections = folder.sections.asScala.sortBy(_.position)
-        val visible = sections.filter(_.visible)
+        val sorted = folder.sections.asScala.sortBy(_.position)
+        val visible = sorted.filter(_.visible)
         for (section <- visible) {
             buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
             val rendered = section.render(req, context)

@@ -119,7 +119,7 @@
     </tr>
     <tbody>
         #foreach ($s in $sections)
-        <tr data-section-id="$s.id">
+        <tr data-section-id="$s.id" class="section-row">
             <td>$s.id</td>
             <td>$!s.name()</td>
             <td>$s.desc()</td>
@@ -138,8 +138,19 @@
 <script>
     $(function () {
         $("#sections-table tbody").sortable({
-            update: function (event, ui) {
 
+            update: function (event, ui) {
+                var order = []
+                $("#sections-table tr.section-row").each(function (v) {
+                    var id = $(this).attr("data-section-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/folder/$folder.id/section/order",
+                    data: order.join('-')
+                });
             }
         });
         $("#sections-table tbody").disableSelection();

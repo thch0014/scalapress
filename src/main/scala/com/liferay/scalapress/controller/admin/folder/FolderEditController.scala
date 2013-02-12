@@ -1,10 +1,10 @@
 package com.liferay.scalapress.controller.admin.folder
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.domain.{Image, Folder}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.FolderDao
+import com.liferay.scalapress.dao.{PluginDao, FolderDao}
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
@@ -12,6 +12,7 @@ import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
+import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,6 +21,7 @@ class FolderEditController extends EnumPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var folderDao: FolderDao = _
+    @Autowired var sectionDao: PluginDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
@@ -44,6 +46,18 @@ class FolderEditController extends EnumPopulator {
 
         folderDao.save(folder)
         "redirect:" + UrlResolver.folderEdit(folder)
+    }
+
+    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
+    def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String = {
+
+        val ids = order.split("-")
+        folder.sections.asScala.foreach(section => {
+            val pos = ids.indexOf(section.id.toString)
+            section.position = pos
+            sectionDao.save(section)
+        })
+        "ok"
     }
 
     @RequestMapping(value = Array("section/{sectionId}/delete"))
