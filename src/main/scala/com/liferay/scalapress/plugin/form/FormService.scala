@@ -75,6 +75,7 @@ class FormService extends Logging {
           .asScala
           .filterNot(_.fieldType == FormFieldType.Attachment)
           .filterNot(_.fieldType == FormFieldType.Header)
+          .filterNot(_.fieldType == FormFieldType.TickBox)
           .filterNot(_.fieldType == FormFieldType.Description)) {
             if (field.required || field.regExp != null) {
 

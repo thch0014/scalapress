@@ -35,7 +35,7 @@ object FormRenderer {
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
             case FormFieldType.Text => renderText(field, req)
-            case FormFieldType.TickBox => renderCheck(field, req)
+            case FormFieldType.TickBox => renderCheck(field)
             case FormFieldType.TickBoxes => renderChecks(field, req)
             case FormFieldType.Radio => renderRadio(field, req)
             case FormFieldType.Description =>
@@ -107,14 +107,11 @@ object FormRenderer {
         </div>
     }
 
-    private def renderCheck(field: FormField, req: ScalapressRequest) = {
-        val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
-        <div class={cssClass}>
+    private def renderCheck(field: FormField) = {
+        <div class="control-group">
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name={field.id.toString}/>{field.name}<span class="help-inline">
-                    {req.errors.getOrElse(field.id.toString, "")}
-                </span>
+                    <input type="checkbox" name={field.id.toString}/>{field.name}
                 </label>
             </div>
         </div>

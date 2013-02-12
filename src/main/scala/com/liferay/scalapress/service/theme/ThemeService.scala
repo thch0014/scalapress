@@ -12,9 +12,6 @@ class ThemeService {
     @Autowired
     var servletContext: ServletContext = _
 
-    @Autowired
-    var storageProvider: ThemeStorageProvider = _
-
     @Autowired var themeDao: ThemeDao = _
 
     def theme(folder: Folder) = themeDao.findDefault
