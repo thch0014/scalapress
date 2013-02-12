@@ -140,7 +140,7 @@ class CheckoutController {
           .replace("[order_email]", order.account.email)
           .replace("[order_name]", order.account.name)
           .replace("[order_total]", order.totalIncVat.toString))
-          .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>)
+          .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>")
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
