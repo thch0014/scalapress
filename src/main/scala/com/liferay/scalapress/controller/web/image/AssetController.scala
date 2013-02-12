@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.web.image
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, RequestMapping}
+import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import org.apache.commons.io.IOUtils
 import javax.servlet.http.HttpServletResponse
@@ -14,6 +14,11 @@ import com.liferay.scalapress.service.image.ImageTools
 class AssetController {
 
     @Autowired var assetStore: AssetStore = _
+
+    @ExceptionHandler(Array(classOf[RuntimeException]))
+    def handleException1(e: RuntimeException, resp: HttpServletResponse) {
+        resp.setStatus(404)
+    }
 
     @RequestMapping(value = Array("{filename}"))
     def image(@PathVariable("filename") filename: String, resp: HttpServletResponse) {
