@@ -1,6 +1,7 @@
 package com.liferay.scalapress
 
 import java.net.URL
+import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 class UriBuilder(protocol: Option[String],
@@ -32,6 +33,11 @@ class UriBuilder(protocol: Option[String],
 
 object UriBuilder {
     def apply = new UriBuilder(None, None, None, None, Map.empty)
+    def apply(req: HttpServletRequest): UriBuilder = apply(req
+      .getRequestURL
+      .append("?")
+      .append(Option(req.getQueryString).getOrElse(""))
+      .toString)
     def apply(url: String) = {
         val u = new URL(url)
         new UriBuilder(Option(u.getProtocol), Option(u.getHost), Option(u.getPort), Option(u.getPath), Map.empty)

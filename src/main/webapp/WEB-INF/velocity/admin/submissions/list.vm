@@ -3,12 +3,14 @@
 
 <h3>Submissions</h3>
 
+#paging($paging)
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Date</th>
+        <th>Form Name</th>
+        <th>Date Submitted</th>
+        <th>Referer</th>
         <th></th>
     </tr>
     #foreach ($s in $submissions)
@@ -16,12 +18,17 @@
             <td>$s.id</td>
             <td>$s.formName</td>
             <td>$datetool.format($s.date)</td>
+            <td>#if ($s.folder)
+                <a href="/folder/$s.folder.id">$s.folder.name</a>
+            #end</td>
             <td>
                 <a href="$urlResolver.viewSubmission($s)" role="button" class="btn btn-mini"> <i
                         class="icon-eye-open"></i></a></td>
         </tr>
     #end
 </table>
+
+#paging($paging)
 
 
 

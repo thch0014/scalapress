@@ -1,0 +1,15 @@
+#macro( paging $paging )
+<div class="pagination">
+    <ul>
+
+        #foreach ($count in $paging.range(5))
+            #if ($count == $paging.pageNumber)
+                #set($active="active")
+            #else
+                #set($active="")
+            #end
+            <li class="$active"><a href="$paging.url($count)">$count</a></li>
+        #end
+    </ul>
+</div>
+#end

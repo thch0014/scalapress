@@ -12,6 +12,17 @@ class PagedQuery {
     def offset: Int = (pageNumber - 1) * pageSize
 }
 
+object PagedQuery {
+    def apply(page: Int, pageSize: Int) = {
+        require(page > 0)
+        require(pageSize > 0)
+        val q = new PagedQuery
+        q.pageNumber = page
+        q.pageSize = pageSize
+        q
+    }
+}
+
 import scala.collection.JavaConverters._
 
 class Page[T] {
@@ -78,6 +89,7 @@ object Page {
 class Paging(url: UriBuilder, @BeanProperty val pageNumber: Int, @BeanProperty val totalPages: Int) {
     def before(max: Int): Array[Int] = scala.math.max(1, pageNumber - max).to(pageNumber - 1).toArray
     def after(max: Int): Array[Int] = (pageNumber + 1).to(scala.math.min(pageNumber + max, totalPages)).toArray
+    def range(dist: Int): Array[Int] = (before(dist) :+ pageNumber) ++ after(dist)
     def previous: Int = pageNumber - 1
     def next: Int = pageNumber + 1
     def hasPreviousPage: Boolean = pageNumber > 1
@@ -89,8 +101,12 @@ class Paging(url: UriBuilder, @BeanProperty val pageNumber: Int, @BeanProperty v
 }
 
 object Paging {
-    def apply(req: HttpServletRequest, page: Page[_]): Paging =
-        apply(req.getRequestURL.append("?").append(Option(req.getQueryString).getOrElse("")).toString, page)
+
+    def apply(req: HttpServletRequest, page: Page[_]): Paging = {
+        val totalPages = if (page.pageSize == 0) 0 else scala.math.ceil(page.totalResults / page.pageSize).toInt
+        new Paging(UriBuilder(req), page.pageNumber, totalPages)
+    }
+
     def apply(url: String, page: Page[_]): Paging = {
         assert(page.pageNumber > 0)
         val totalPages = if (page.pageSize == 0) 0 else scala.math.ceil(page.totalResults / page.pageSize).toInt

@@ -1,7 +1,7 @@
 package com.liferay.scalapress.dao
 
 import com.googlecode.genericdao.dao.hibernate.HibernateBaseDAO
-import com.googlecode.genericdao.search.{ISearch, Search}
+import com.googlecode.genericdao.search.{SearchResult, ISearch, Search}
 import com.googlecode.genericdao.dao.DAOUtil
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
@@ -60,16 +60,16 @@ class GenericDaoImpl[T, ID <: java.io.Serializable] extends HibernateBaseDAO wit
     def search(search: ISearch): List[T] = {
         _search(persistentClass, search).asScala.toList.asInstanceOf[List[T]]
     }
-    //
-    //    def searchAndCount[T](search: ISearch): SearchResult[T] = {
-    //        if (search == null) {
-    //            val result: SearchResult[T] = new SearchResult[T]
-    //            result.setResult(findAll.asInstanceOf[java.util.List[T]])
-    //            result.setTotalCount(result.getResult.size)
-    //            return result
-    //        }
-    //        _searchAndCount(persistentClass, search)
-    //    }
+
+    def searchAndCount(search: ISearch): SearchResult[T] = {
+        if (search == null) {
+            val result: SearchResult[T] = new SearchResult[T]
+            result.setResult(findAll.asInstanceOf[java.util.List[T]])
+            result.setTotalCount(result.getResult.size)
+            return result
+        }
+        _searchAndCount(persistentClass, search).asInstanceOf[SearchResult[T]]
+    }
 
     def searchUnique(search: ISearch): T = {
         _searchUnique(persistentClass, search).asInstanceOf[T]

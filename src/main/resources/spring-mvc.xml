@@ -27,7 +27,7 @@
         <property name="resourceLoaderPath" value="/WEB-INF/velocity/"/>
         <property name="velocityProperties">
             <props>
-                <prop key="velocimacro.library"/>
+                <prop key="velocimacro.library">macro/paging.macro</prop>
                 <prop key="velocimacro.library.autoreload">true</prop>
                 <prop key="file.resource.loader.cache">false</prop>
                 <prop key="input.encoding">UTF-8</prop>
