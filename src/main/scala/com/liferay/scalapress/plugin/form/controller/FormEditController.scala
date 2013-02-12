@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.plugin.form.Form
-import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
+import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
@@ -26,19 +26,27 @@ class FormEditController {
         edit(form)
     }
 
-    @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
+    @RequestMapping(value = Array("field/{id}/delete"))
+    def deleteField(@ModelAttribute form: Form): String = {
+        "redirect:/backoffice/form/" + form.id
+    }
+
+    @RequestMapping(value = Array("field/order"), method = Array(RequestMethod.POST))
     def reorderSections(@ModelAttribute form: Form,
-                        @RequestBody order: String,
-                        @ModelAttribute folder: Folder): String = {
+                        @RequestBody order: String): String = {
 
         val ids = order.split("-")
         form.fields.asScala.foreach(field => {
             val pos = ids.indexOf(field.id.toString)
             field.position = pos
-            context.formDao.save(form)
+            context.formFieldDao.save(field)
         })
         "ok"
     }
 
-    @ModelAttribute def folder(@PathVariable("id") id: Long): Form = context.formDao.find(id)
+    @ModelAttribute def folder(@PathVariable("id") id: Long, model: ModelMap) {
+        val form = context.formDao.find(id)
+        model.put("form", form)
+        model.put("fields", form.fields.asScala.sortBy(_.position))
+    }
 }

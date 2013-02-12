@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.dao.SubmissionDao
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
 

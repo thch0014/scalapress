@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, PathVariable, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
-import com.liferay.scalapress.dao.{ThemeDao, FormDao, SubmissionDao}
+import com.liferay.scalapress.dao.{ThemeDao}
 import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.controller.web.folder.FolderController

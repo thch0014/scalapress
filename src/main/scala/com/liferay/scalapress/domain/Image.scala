@@ -41,3 +41,12 @@ class Image {
     @BeanProperty var mediaWidget: MediaWidget = _
 
 }
+
+object Image {
+    def apply(key: String) = {
+        val image = new Image
+        image.filename = key
+        image.date = System.currentTimeMillis()
+        image
+    }
+}

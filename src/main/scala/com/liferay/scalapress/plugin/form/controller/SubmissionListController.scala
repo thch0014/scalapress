@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.form.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
@@ -24,5 +24,11 @@ class SubmissionListController {
         val subs = context.submissionDao.search(PagedQuery(page, 50))
         model.put("submissions", subs.java)
         model.put("paging", Paging(req, subs))
+    }
+
+    @RequestMapping(Array("{id}/delete"))
+    def delete(@PathVariable("id") id: Long) = {
+        context.submissionDao.removeById(id)
+        "redirect:/backoffice/submission"
     }
 }

@@ -41,7 +41,8 @@
                 $.ajax({
                     type: "POST",
                     url: "/backoffice/widget/order",
-                    data: order.join('-')
+                    data: order.join('-'),
+                    contentType: "text/plain"
                 });
             }
         });

@@ -1,10 +1,10 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.plugin.form
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.plugin.form.{Submission, Form}
 import com.liferay.scalapress.{Page, PagedQuery}
 import com.googlecode.genericdao.search.Search
+import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 trait FormDao extends GenericDao[Form, java.lang.Long]
@@ -12,6 +12,12 @@ trait FormDao extends GenericDao[Form, java.lang.Long]
 @Component
 @Transactional
 class FormDaoImpl extends GenericDaoImpl[Form, java.lang.Long] with FormDao
+
+trait FormFieldDao extends GenericDao[FormField, java.lang.Long]
+
+@Component
+@Transactional
+class FormFieldDaoImpl extends GenericDaoImpl[FormField, java.lang.Long] with FormFieldDao
 
 trait SubmissionDao extends GenericDao[Submission, java.lang.Long] {
     def search(q: PagedQuery): Page[Submission]

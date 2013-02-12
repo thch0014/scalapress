@@ -81,10 +81,7 @@ class ObjectEditController extends FolderPopulator {
         if (form.upload != null) {
             if (!form.upload.isEmpty) {
                 val key = assetStore.add(form.upload.getOriginalFilename, form.upload.getInputStream)
-
-                val image = new Image
-                image.filename = key
-                image.date = System.currentTimeMillis()
+                val image = Image(key)
                 image.obj = form.o
                 form.o.images.add(image)
             }

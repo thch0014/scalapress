@@ -133,8 +133,7 @@
         <th>Description</th>
         <th></th>
     </tr>
-    <tbody>
-        #foreach ($s in $sections)
+    #foreach ($s in $sections)
         <tr data-section-id="$s.id" class="section-row">
             <td>$s.id</td>
             <td>$!s.name()</td>
@@ -147,8 +146,7 @@
                     <i class="icon-trash icon-white"></i></a>
             </td>
         </tr>
-        #end
-    </tbody>
+    #end
 </table>
 
 <script>
@@ -165,6 +163,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/backoffice/folder/$folder.id/section/order",
+                    contentType: "text/plain",
                     data: order.join('-')
                 });
             }

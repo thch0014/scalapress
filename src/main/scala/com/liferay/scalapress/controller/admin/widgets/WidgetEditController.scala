@@ -8,6 +8,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.enums.WidgetContainer
 import scala.collection.JavaConverters._
+import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,12 +19,12 @@ class WidgetEditController extends WidgetContainerMapPopulator {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute w: Widget) = "admin/widget/edit.vm"
+    def edit(@ModelAttribute w: Widget, model: ModelMap) = "admin/widget/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute w: Widget) = {
+    def save(@ModelAttribute w: Widget, model: ModelMap) = {
         widgetDao.save(w)
-        edit(w)
+        edit(w, model)
     }
 
     @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id)

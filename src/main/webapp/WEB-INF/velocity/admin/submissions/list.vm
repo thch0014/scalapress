@@ -22,8 +22,11 @@
                 <a href="/folder/$s.folder.id">$s.folder.name</a>
             #end</td>
             <td>
-                <a href="$urlResolver.viewSubmission($s)" role="button" class="btn btn-mini"> <i
-                        class="icon-eye-open"></i></a></td>
+                <a href="$urlResolver.viewSubmission($s)" role="button" class="btn btn-mini">
+                    <i class="icon-eye-open"></i></a>
+                <a href="/backoffice/submission/$s.id/delete" role="button" class="btn-danger btn btn-mini">
+                    <i class="icon-trash icon-white"></i></a>
+            </td>
         </tr>
     #end
 </table>

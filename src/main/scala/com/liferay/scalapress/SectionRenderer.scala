@@ -15,8 +15,7 @@ object SectionRenderer {
         val visible = sorted.filter(_.visible)
         for (section <- visible) {
             buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
-            val rendered = section.render(req, context)
-            if (rendered.isDefined) buffer += (rendered.get + "\n")
+            section.render(req, context).foreach(buffer += _)
             buffer += "<!-- end section -->\n\n"
         }
 

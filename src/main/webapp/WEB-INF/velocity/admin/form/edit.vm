@@ -21,7 +21,7 @@
 </form>
 
 
-<table class="table table-condensed table-hover">
+<table class="table table-condensed table-hover" id="fields-table">
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -29,8 +29,8 @@
         <th>Required</th>
         <th></th>
     </tr>
-    #foreach ($field in $form.fields)
-        <tr>
+    #foreach ($field in $fields)
+        <tr data-field-id="$field.id" class="field-row">
             <td>$field.id</td>
             <td>$field.name</td>
             <td>$field.fieldType</td>
@@ -42,5 +42,28 @@
     #end
 </table>
 
+
+<script>
+    $(function () {
+        $("#fields-table tbody").sortable({
+
+            update: function (event, ui) {
+                var order = []
+                $("#fields-table tr.field-row").each(function (v) {
+                    var id = $(this).attr("data-field-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/form/$folder.id/field/order",
+                    contentType: "text/plain",
+                    data: order.join('-')
+                });
+            }
+        });
+        $("#fields-table tbody").disableSelection();
+    });
+</script>
 
 #parse("/admin/footer.vm")

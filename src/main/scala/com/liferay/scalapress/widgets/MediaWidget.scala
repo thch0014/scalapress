@@ -17,7 +17,7 @@ class MediaWidget extends Widget {
 
     @BeanProperty var url: String = _
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL))
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
     override def render(req: ScalapressRequest): Option[String] = {
