@@ -4,6 +4,9 @@
 <h3>$type.name</h3>
 
 
+<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
+
+
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
@@ -27,7 +30,5 @@
         </tr>
     #end
 </table>
-
-<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
 
 #parse("/admin/footer.vm")

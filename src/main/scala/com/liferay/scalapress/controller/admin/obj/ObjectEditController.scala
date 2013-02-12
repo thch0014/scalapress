@@ -21,7 +21,7 @@ import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
-class ObjectEditController {
+class ObjectEditController extends FolderPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var attributeValueDao: AttributeValueDao = _
@@ -35,6 +35,7 @@ class ObjectEditController {
         form.sellPrice = form.o.sellPrice / 100.0
         form.costPrice = form.o.costPrice / 100.0
         form.rrp = form.o.rrp / 100.0
+        form.folderIds = form.o.folders.asScala.map(_.id).toArray :+ 0l
         "admin/object/edit.vm"
     }
 
@@ -45,11 +46,13 @@ class ObjectEditController {
         form.o.costPrice = (form.costPrice * 100).toInt
         form.o.rrp = (form.rrp * 100).toInt
 
+        form.o.folders.asScala.foreach(folder => folder.objects.remove(form.o))
         form.o.folders.clear()
         for (id <- form.folderIds) {
             val folder = folderDao.find(id)
             if (folder != null) {
                 form.o.folders.add(folder)
+                folder.objects.add(form.o)
             }
         }
 
@@ -98,13 +101,6 @@ class ObjectEditController {
             (a, values.asJava)
         })
         attributesWithValues.asJava
-    }
-
-    @ModelAttribute("folders") def folder = {
-        val folders = folderDao.findAll().map(f => (f.id, f.fullName))
-        val options = (0, "-None-") +: folders
-        val java = options.toMap.asJava
-        java
     }
 
     @ModelAttribute("assets") def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {

@@ -31,31 +31,23 @@
                 </div>
             </div>
 
-            #foreach ($folder in $form.o.folders)
+            #foreach ($folderId in $form.folderIds)
                 <div class="control-group">
                     <label class="control-label">Folder</label>
 
                     <div class="controls">
                         <select id="folderIds" name="folderIds" class="input-xxlarge">
-                            #foreach($option in $folders.keySet())
+                            #foreach($option in $foldersMap.keySet())
                                 <option value="${option}"
-                                    #if("$!folder.id" == "$option")
+                                    #if("$folderId" == "$option")
                                         selected="selected"
                                     #end>
-                                    ${folders.get($option)}</option>
+                                    ${foldersMap.get($option)}</option>
                             #end
                         </select>
                     </div>
                 </div>
             #end
-
-            <div class="control-group">
-                <label class="control-label">Folder</label>
-
-                <div class="controls">
-                    #springFormSingleSelect("form.folderIds", $folders, "class='input-xxlarge'")
-                </div>
-            </div>
 
             <div class="control-group">
                 <label class="control-label">Reference</label>

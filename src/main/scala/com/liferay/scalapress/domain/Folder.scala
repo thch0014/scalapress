@@ -7,6 +7,7 @@ import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.Section
+import setup.Theme
 
 /** @author Stephen Samuel */
 @Entity
@@ -27,6 +28,10 @@ class Folder {
     @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "parent")
     @BeanProperty var parent: Folder = _
+
+    @ManyToOne
+    @JoinColumn(name = "theme")
+    @BeanProperty var theme: Theme = _
 
     @BeanProperty var name: String = _
 

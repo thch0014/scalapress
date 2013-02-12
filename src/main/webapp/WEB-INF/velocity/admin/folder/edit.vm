@@ -39,6 +39,22 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Theme</label>
+
+        <div class="controls">
+            <select id="theme" name="theme" class="input-xxlarge">
+                #foreach($option in $themes.keySet())
+                    <option value="${option}"
+                        #if("$!folder.theme.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${themes.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Folder Ordering</label>
 
         <div class="controls">

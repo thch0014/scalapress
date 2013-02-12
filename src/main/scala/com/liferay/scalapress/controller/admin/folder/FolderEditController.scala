@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.domain.{Image, Folder}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{PluginDao, FolderDao}
+import com.liferay.scalapress.dao.{ThemeDao, PluginDao, FolderDao}
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
@@ -12,15 +12,16 @@ import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
-import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.controller.admin.obj.ThemePopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/{id}"))
-class FolderEditController extends EnumPopulator {
+class FolderEditController extends EnumPopulator with ThemePopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var folderDao: FolderDao = _
+    @Autowired var themeDao: ThemeDao = _
     @Autowired var sectionDao: PluginDao = _
     @Autowired var context: ScalapressContext = _
 
