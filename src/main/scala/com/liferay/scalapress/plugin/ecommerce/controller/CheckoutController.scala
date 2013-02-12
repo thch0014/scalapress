@@ -90,7 +90,7 @@ class CheckoutController {
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
-        val domain = if (port == 80) host else host + ":" + port
+        val domain = if (port == 8080) host + ":8080" else host
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
