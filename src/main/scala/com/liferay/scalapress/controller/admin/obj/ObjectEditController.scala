@@ -17,6 +17,7 @@ import reflect.BeanProperty
 import java.net.URLConnection
 import com.liferay.scalapress.plugin.search.SearchService
 import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
+import org.springframework.security.authentication.encoding.PasswordEncoder
 
 /** @author Stephen Samuel */
 @Controller
@@ -29,6 +30,7 @@ class ObjectEditController extends FolderPopulator {
     @Autowired var folderDao: FolderDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var searchService: SearchService = _
+    @Autowired var passwordEncoder: PasswordEncoder = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def edit(@ModelAttribute("form") form: EditForm) = {
@@ -41,6 +43,10 @@ class ObjectEditController extends FolderPopulator {
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest) = {
+
+        Option(form.changePassword).map(_.trim).filter(_.length > 0).foreach(pass => {
+            form.o.passwordHash = passwordEncoder.encodePassword(pass, null)
+        })
 
         form.o.sellPrice = (form.sellPrice * 100).toInt
         form.o.costPrice = (form.costPrice * 100).toInt
@@ -137,6 +143,7 @@ class EditForm {
     @BeanProperty var costPrice: Double = _
     @BeanProperty var rrp: Double = _
     @BeanProperty var o: Obj = _
+    @BeanProperty var changePassword: String = _
     @BeanProperty var folderIds: Array[Long] = _
     @BeanProperty var upload: MultipartFile = _
 }

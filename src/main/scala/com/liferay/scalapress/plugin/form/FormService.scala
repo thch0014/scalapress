@@ -1,6 +1,5 @@
 package com.liferay.scalapress.plugin.form
 
-import javax.servlet.http.HttpServletRequest
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.{Logging, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +20,7 @@ class FormService extends Logging {
     @Autowired
     var mailSender: MailSender = _
 
-    def doSubmission(form: Form, req: HttpServletRequest, files: Seq[MultipartFile]) = {
+    def doSubmission(form: Form, req: ScalapressRequest, files: Seq[MultipartFile]) = {
 
         // upload files first
         val keys = files.map(file => assetStore.add(file.getInputStream))
@@ -31,16 +30,18 @@ class FormService extends Logging {
         submission.attachments = keys.asJava
         submission.formName = form.name
         submission.date = System.currentTimeMillis()
-        submission.ipAddress = req.getRemoteAddr
+        submission.ipAddress = req.request.getRemoteAddr
+        submission.folder = req.folder.orNull
+        submission.obj = req.obj.orNull
         submission.data = form
           .fields
           .asScala
-          .filter(field => Option(req.getParameter(field.id.toString)).isDefined)
+          .filter(field => Option(req.request.getParameter(field.id.toString)).isDefined)
           .map(field => {
             val kv = new SubmissionKeyValue
             kv.submission = submission
             kv.key = field.name
-            kv.value = req.getParameterValues(field.id.toString).mkString(", ")
+            kv.value = req.request.getParameterValues(field.id.toString).mkString(", ")
             kv
         }).toList.asJava
 

@@ -26,18 +26,6 @@ class SubmissionController extends Logging {
     @Autowired var folderController: FolderController = _
 
     @ResponseBody
-    @RequestMapping(produces = Array("text/html"), value = Array("test"))
-    def view(@PathVariable("id") id: Long,
-             req: HttpServletRequest) = {
-
-        val form = formDao.find(id)
-        val sub = formService.doSubmission(form, req, Nil)
-        formService.email(List("sam@sksamuel.com", "info@clocked0ne.co.uk"), sub)
-
-        "email sent"
-    }
-
-    @ResponseBody
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
     def view(@PathVariable("id") id: Long,
              req: HttpServletRequest,
@@ -45,7 +33,7 @@ class SubmissionController extends Logging {
              @RequestParam(value = "file") files: java.util.List[MultipartFile],
              @RequestParam(value = "folder", required = false) folderId: Long): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req, context)
+        val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
         val form = formDao.find(id)
 
         formService.checkErrors(form, sreq)
@@ -57,7 +45,7 @@ class SubmissionController extends Logging {
             }
             case false => {
 
-                val sub = formService.doSubmission(form, req, files.asScala)
+                val sub = formService.doSubmission(form, sreq, files.asScala)
                 formService.email(form.recipients.asScala, sub)
 
                 val theme = themeService.default

@@ -48,7 +48,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutAddressRenderer.renderDeliveryAddress(address, deliveryOptions, errors))
+        page.body(CheckoutAddressRenderer.renderDeliveryAddress(sreq.basket, address, deliveryOptions, errors))
         page
     }
 

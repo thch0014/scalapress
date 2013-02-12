@@ -109,6 +109,13 @@
                 </div>
             #end
 
+            <div class="control-group">
+                <label class="control-label">Change Password</label>
+
+                <div class="controls">
+                    #springFormInput("form.changePassword")
+                </div>
+            </div>
 
             <div class="control-group">
                 <label class="control-label">Title Tag</label>
