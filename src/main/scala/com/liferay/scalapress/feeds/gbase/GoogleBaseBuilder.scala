@@ -40,7 +40,7 @@ object GoogleBaseBuilder extends Logging {
           .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
           .filter(_.images.size > 0)
           .filter(_.folders.size > 0)
-          .filter(_.sellPrice > 0)
+          .filter(_.sellPrice > 1)
           .filter(_.name != null)
           .filter(_.name.trim.length > 10)
     }

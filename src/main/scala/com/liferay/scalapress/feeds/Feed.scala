@@ -17,4 +17,5 @@ abstract class Feed {
     def feedType = getClass.getSimpleName
 
     def backoffice: String
+    def runUrl: String
 }

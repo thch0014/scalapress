@@ -10,7 +10,7 @@
         <label class="control-label">FTP Hostname</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpHostname", "class='input-xxlarge'")
+            #springFormInput("feed.ftpHostname", "class='input-xlarge'")
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <label class="control-label">FTP Username</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpUsername", "class='input-xxlarge'")
+            #springFormInput("feed.ftpUsername", "class='input-xlarge'")
         </div>
     </div>
 
@@ -26,7 +26,7 @@
         <label class="control-label">FTP Password</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpPassword", "class='input-xxlarge'")
+            #springFormInput("feed.ftpPassword", "class='input-xlarge'")
         </div>
     </div>
 
@@ -34,7 +34,15 @@
         <label class="control-label">Google Product Category</label>
 
         <div class="controls">
-            #springFormInput("feed.googleProductCategory", "class='input-xxlarge'")
+            #springFormInput("feed.productCategory", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Output Filename</label>
+
+        <div class="controls">
+            #springFormInput("feed.ftpFilename", "class='input-xlarge'")
         </div>
     </div>
 

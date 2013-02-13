@@ -22,6 +22,7 @@ class FeedListController {
     def create = {
         val gbase = new GBaseFeed
         feedDao.save(gbase)
+        "redirect:/backoffice/feed"
     }
 
     @ModelAttribute("feeds") def feeds = feedDao.findAll().asJava

@@ -16,13 +16,21 @@
         <tr>
             <td>$feed.id</td>
             <td>$feed.feedType()</td>
-            <td>$datetool.format($feed.lastRuntime)</td>
+            <td>
+                #if($feed.lastRuntime>0)
+                 $datetool.format($feed.lastRuntime)
+                #end
+            </td>
             <td>
                 <a href="$feed.backoffice()" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i> </a></td>
+                    <i class="icon-pencil"></i> </a>
+                <a href="$feed.runUrl()" role="button" class="btn btn-mini">
+                    <i class="icon-play"></i> </a></td>
         </tr>
     #end
 </table>
+
+<a href="/backoffice/feed/create" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New Feed</a>
 
 
 #parse("/admin/footer.vm")
