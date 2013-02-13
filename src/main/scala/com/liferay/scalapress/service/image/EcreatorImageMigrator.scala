@@ -8,7 +8,7 @@ import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.dao.{ImageDao, WidgetDao, FolderDao}
+import com.liferay.scalapress.dao.{ObjectDao, ImageDao, WidgetDao, FolderDao}
 import scala.collection.JavaConverters._
 import actors.Futures
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
@@ -21,6 +21,7 @@ class EcreatorImageMigrator extends Logging {
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var imageDao: ImageDao = _
     @Autowired var store: AssetStore = _
+    @Autowired var objectDao: ObjectDao = _
 
     private def migrateImage(domain: String, file: String, store: AssetStore) {
         try {
@@ -101,6 +102,18 @@ class EcreatorImageMigrator extends Logging {
         })
     }
 
+    def migrateItems(domain: String, executor: ExecutorService) {
+        val objects = objectDao.findAll()
+        logger.info("Migrating {} objects", objects.size)
+        objects.foreach(arg => {
+            executor.submit(new Runnable() {
+                def run() {
+                    Option(arg.content).foreach(content => migrateContent(domain, content, executor))
+                }
+            })
+        })
+    }
+
     def migrate(domain: String) {
         require(domain != null)
         logger.info("Starting migration on {}", domain)
@@ -111,6 +124,7 @@ class EcreatorImageMigrator extends Logging {
         migrateImages(domain, executor)
         migrateSideboxes(domain, executor)
         migrateCategories(domain, executor)
+        migrateItems(domain, executor)
 
         Futures.future {
             executor.shutdown()
