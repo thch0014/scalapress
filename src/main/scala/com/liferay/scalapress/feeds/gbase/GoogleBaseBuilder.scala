@@ -70,7 +70,7 @@ object GoogleBaseBuilder extends Logging {
         val brand = AttributeFuncs.attributeValue(obj, "brand").getOrElse("")
         val mpn = AttributeFuncs.attributeValue(obj, "mpn").getOrElse("")
         val name = WordUtils.capitalizeFully(obj.name)
-        val formattedPrice = "%1.2f".format(obj.sellPrice / 100.0)
+        val formattedPrice = "%1.2f".format(obj.sellPriceInc / 100.0)
 
         Array(obj.id.toString,
             name,

@@ -3,7 +3,6 @@ package com.liferay.scalapress.feeds
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.feeds.Feed
 
 /** @author Stephen Samuel */
 trait FeedDao extends GenericDao[Feed, java.lang.Long]
