@@ -63,7 +63,7 @@
         <th>Type</th>
         <th></th>
     </tr>
-    #foreach ($a in $type.attributes)
+    #foreach ($a in $attributes)
         <tr class="attribute-row" data-attribute-id="$a.id">
             <td>$a.id</td>
             <td>$!a.section</td>
