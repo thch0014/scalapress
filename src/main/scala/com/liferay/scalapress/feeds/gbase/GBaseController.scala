@@ -30,7 +30,7 @@ class GBaseController {
         GoogleBaseService.run(objectDao, feed.asInstanceOf[GBaseFeed])
         feed.lastRuntime = System.currentTimeMillis()
         feedDao.save(feed)
-        "redirect:/backoffice/feed/gbase/" + feed.id
+        "redirect:/backoffice/feed/"
     }
 
     @ModelAttribute def folder(@PathVariable("id") id: Long): Feed = feedDao.find(id)

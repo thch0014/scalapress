@@ -124,11 +124,11 @@
     #foreach ($l in $order.lines)
         <tr>
             <td>$l.description</td>
-            <td>$number.currency($l.priceExVat())</td>
+            <td>$number.number($l.priceExVat())</td>
             <td>$l.qty</td>
-            <td>$number.currency($l.totalExVat())</td>
-            <td>$number.currency($l.totalVat()) @ $l.vatRate%</td>
-            <td>$number.currency($l.totalIncVat())</td>
+            <td>$number.number($l.totalExVat())</td>
+            <td>$number.number($l.totalVat()) @ $l.vatRate%</td>
+            <td>$number.number($l.totalIncVat())</td>
             <td>
                 <a class="btn btn-small" href="/backoffice/order/$order.id/line/$l.id/remove">
                     <i class="icon-trash"></i></a>
@@ -137,20 +137,20 @@
     #end
     <tr>
         <td>$order.deliveryDetails</td>
-        <td>$number.currency($order.deliveryEx())</td>
+        <td>$number.number($order.deliveryEx())</td>
         <td>1</td>
-        <td>$number.currency($order.deliveryEx())</td>
-        <td>$number.currency($order.deliveryVat()) @ $order.deliveryVatRate()%</td>
-        <td>$number.currency($order.deliveryInc())</td>
+        <td>$number.number($order.deliveryEx())</td>
+        <td>$number.number($order.deliveryVat()) @ $order.deliveryVatRate()%</td>
+        <td>$number.number($order.deliveryInc())</td>
         <th></th>
     </tr>
     <tr>
         <th></th>
         <th></th>
         <th></th>
-        <th>$number.currency($order.subtotal())</th>
-        <th>$number.currency($order.vat())</th>
-        <th>$number.currency($order.total())</th>
+        <th>$number.number($order.subtotal())</th>
+        <th>$number.number($order.vat())</th>
+        <th>$number.number($order.total())</th>
         <th></th>
     </tr>
 </table>
@@ -174,7 +174,7 @@
             <td>$payment.paymentType</td>
             <td>$payment.transactionId</td>
             <td>$datetool.format($payment.date)</td>
-            <td>$number.currency($payment.amountDecimal())</td>
+            <td>$number.number($payment.amountDecimal())</td>
         </tr>
     #end
 </table>

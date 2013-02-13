@@ -73,6 +73,7 @@ object Order {
         order.datePlaced = System.currentTimeMillis()
         order.status = "New"
         order.ipAddress = ipAddress
+        order.vatable = true
         order
     }
 }
