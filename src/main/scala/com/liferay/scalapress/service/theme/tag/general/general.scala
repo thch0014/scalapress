@@ -44,7 +44,7 @@ object ScriptTag extends ScalapressTag with TagBuilder {
 
 object CssTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
-        val tag = """<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"/>
+        val tag = """<link href="/static/css/bootstrap-combined.min.css" rel="stylesheet"/>
                      <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
                     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
                     <link rel="stylesheet" href="/static/css/colorbox.css"/>

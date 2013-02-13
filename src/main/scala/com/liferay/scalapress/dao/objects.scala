@@ -6,14 +6,14 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.Obj
 import org.hibernate.FetchMode
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.Logging
+import com.liferay.scalapress.{Page, Logging}
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.plugin.search.SavedSearch
+import com.liferay.scalapress.controller.admin.obj.ObjectQuery
 
 /** @author Stephen Samuel */
 
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
-
+    def search(query: ObjectQuery): Page[Obj]
     def findByFolder(folderId: Long): Array[Obj]
     def search(query: String): Array[Obj]
     def typeAhead(query: String): Array[String]
@@ -24,6 +24,16 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
 @Component
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
+
+    def search(q: ObjectQuery): Page[Obj] = {
+        val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset).addSort("name", false)
+        q.objectType.foreach(t => {
+            s.addFetch("objectType")
+            s.addFilterEqual("objectType.id", t)
+        })
+        val result = searchAndCount(s)
+        Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
+    }
 
     override def byEmail(email: String): Option[Obj] = {
         val search = new Search(classOf[Obj])

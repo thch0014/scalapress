@@ -5,6 +5,7 @@
 
 <p>Submitted at $datetool.format($submission.date)</p>
 
+#paging($paging)
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
@@ -29,5 +30,7 @@
         </tr>
     #end
 </table>
+
+#paging($paging)
 
 #parse("/admin/footer.vm")

@@ -7,6 +7,9 @@
 <a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
 
 
+
+#paging($paging)
+
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
@@ -30,5 +33,9 @@
         </tr>
     #end
 </table>
+
+#paging($paging)
+
+
 
 #parse("/admin/footer.vm")

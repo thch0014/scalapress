@@ -48,8 +48,13 @@ class ImageService extends Logging {
         assetStore.get(key) match {
             case Some(in) =>
                 val bytes = IOUtils.toByteArray(in)
-                val source = ImageIO.read(new ByteArrayInputStream(bytes))
-                Option(ImageTools.fit(source, (w, h)))
+                try {
+                    val source = ImageIO.read(new ByteArrayInputStream(bytes))
+                    Option(ImageTools.fit(source, (w, h)))
+                } catch {
+                    case e: Exception => None
+                }
+
             case None => None
         }
     }

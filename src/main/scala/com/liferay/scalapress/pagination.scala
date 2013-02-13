@@ -6,21 +6,10 @@ import javax.servlet.http.HttpServletRequest
 import org.codehaus.jackson.annotate.JsonIgnore
 
 /** @author Stephen Samuel */
-class PagedQuery {
-    @BeanProperty var pageNumber: Int = Page.FirstPage
-    @BeanProperty var pageSize: Int = Page.DefaultPageSize
+case class PagedQuery(pageNumber: Int = Page.FirstPage, pageSize: Int = Page.DefaultPageSize) {
     def offset: Int = (pageNumber - 1) * pageSize
-}
-
-object PagedQuery {
-    def apply(page: Int, pageSize: Int) = {
-        require(page > 0)
-        require(pageSize > 0)
-        val q = new PagedQuery
-        q.pageNumber = page
-        q.pageSize = pageSize
-        q
-    }
+    def withPageNumber(pageNumber: Int) = copy(pageNumber = pageNumber)
+    def withPageSize(pageSize: Int) = copy(pageNumber = pageSize)
 }
 
 import scala.collection.JavaConverters._

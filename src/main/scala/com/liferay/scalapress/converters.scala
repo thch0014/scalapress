@@ -1,6 +1,7 @@
 package com.liferay.scalapress
 
-import com.liferay.scalapress.dao.{MarkupDao, TypeDao, FolderDao}
+import dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
+import domain.setup.Theme
 import org.springframework.core.convert.converter.Converter
 import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
 import plugin.ecommerce.dao.DeliveryOptionDao
@@ -37,4 +38,10 @@ class StringDeliveryOptionConverter(deliveryOptionDao: DeliveryOptionDao) extend
     def convert(source: String): DeliveryOption =
         if (source == null || source == "" || source == "0") null
         else deliveryOptionDao.find(source.toInt)
+}
+
+class StringToThemeConverter(themeDao: ThemeDao) extends Converter[String, Theme] {
+    def convert(source: String): Theme =
+        if (source == null || source == "" || source == "0") null
+        else themeDao.find(source.toInt)
 }
