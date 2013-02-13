@@ -156,7 +156,7 @@
 </table>
 
 <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
-<input type="hidden" id="add-line-id"/>
+<input type="hidden" id="add-line-id" name="objId"/>
 <input type="text" class="input-xlarge" id="add-line-typeahead" value=""/>
 <script>
     autosep = ":";
