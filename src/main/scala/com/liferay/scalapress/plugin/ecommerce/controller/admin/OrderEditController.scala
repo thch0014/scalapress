@@ -54,7 +54,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
 
         order.lines.asScala.foreach(line => {
             val qty = req.getParameter("lineQty" + line.id).toInt
-            line.qty = qty
+            line.qty = if (qty < 1) 1 else qty
         })
 
         order.lines.asScala.foreach(line => {
