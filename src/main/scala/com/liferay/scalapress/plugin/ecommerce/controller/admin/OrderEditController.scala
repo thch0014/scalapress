@@ -34,33 +34,36 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
              @ModelAttribute("form") form: OrderEditForm,
              req: HttpServletRequest) = {
 
-        if (form.changeDeliveryCharge > 0) {
-            order.deliveryCharge = (form.changeDeliveryCharge * 100.0).toInt
+        if (order.status.toLowerCase != "completed") {
+
+            if (form.changeDeliveryCharge > 0) {
+                order.deliveryCharge = (form.changeDeliveryCharge * 100.0).toInt
+            }
+
+            if (form.changeDeliveryOption != null) {
+                order.deliveryCharge = form.changeDeliveryOption.charge
+                order.deliveryVatRate = form.changeDeliveryOption.vatRate
+                order.deliveryDetails = form.changeDeliveryOption.name
+            }
+
+            if (form.changeBillingAddress != null) {
+                order.billingAddress = form.changeBillingAddress
+            }
+
+            if (form.changeDeliveryAddress != null) {
+                order.deliveryAddress = form.changeDeliveryAddress
+            }
+
+            order.lines.asScala.foreach(line => {
+                val qty = req.getParameter("lineQty" + line.id).toInt
+                line.qty = if (qty < 1) 1 else qty
+            })
+
+            order.lines.asScala.foreach(line => {
+                val p = (req.getParameter("linePrice" + line.id).toDouble * 100.0).toInt
+                line.price = p
+            })
         }
-
-        if (form.changeDeliveryOption != null) {
-            order.deliveryCharge = form.changeDeliveryOption.charge
-            order.deliveryVatRate = form.changeDeliveryOption.vatRate
-            order.deliveryDetails = form.changeDeliveryOption.name
-        }
-
-        if (form.changeBillingAddress != null) {
-            order.billingAddress = form.changeBillingAddress
-        }
-
-        if (form.changeDeliveryAddress != null) {
-            order.deliveryAddress = form.changeDeliveryAddress
-        }
-
-        order.lines.asScala.foreach(line => {
-            val qty = req.getParameter("lineQty" + line.id).toInt
-            line.qty = if (qty < 1) 1 else qty
-        })
-
-        order.lines.asScala.foreach(line => {
-            val p = (req.getParameter("linePrice" + line.id).toDouble * 100.0).toInt
-            line.price = p
-        })
 
         orderDao.save(order)
         "redirect:/backoffice/order/" + order.id
