@@ -11,7 +11,7 @@ import com.liferay.scalapress.dao.ObjectDao
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
 
-    def run(objectDao: ObjectDao, feed: GBaseFeed) {
+    def run(objectDao: ObjectDao, feed: GBaseFeed) = {
         logger.debug("Running GBASE feed")
 
         val objs = objectDao
@@ -24,7 +24,7 @@ object GoogleBaseService extends Logging {
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
-        file.delete()
+        file
     }
 
     def upload(file: File, feed: GBaseFeed) {
