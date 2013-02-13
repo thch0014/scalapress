@@ -14,8 +14,8 @@ class GBaseFeed extends Feed {
     @BeanProperty var ftpPassword: String = _
     @BeanProperty var ftpFilename: String = _
 
-    @BeanProperty var brandAttribute: String = _
-    @BeanProperty var partNumberAttribute: String = _
+    @BeanProperty var brandAttrName: String = _
+    @BeanProperty var partAttrName: String = _
 
     @Column(name = "producttype")
     @BeanProperty var productCategory: String = _

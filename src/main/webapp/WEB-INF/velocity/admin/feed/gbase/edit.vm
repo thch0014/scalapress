@@ -11,7 +11,7 @@
         <label class="control-label">brandAttribute</label>
 
         <div class="controls">
-            #springFormInput("feed.brandAttribute", "class='input-large'")
+            #springFormInput("feed.brandAttrName", "class='input-large'")
         </div>
     </div>
 
@@ -19,7 +19,7 @@
         <label class="control-label">partNumberAttribute</label>
 
         <div class="controls">
-            #springFormInput("feed.partNumberAttribute", "class='input-large'")
+            #springFormInput("feed.partAttrName", "class='input-large'")
         </div>
     </div>
 

@@ -40,8 +40,8 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
 
     def filter(feed: GBaseFeed, obj: Seq[Obj]) = {
         obj
-          .filter(AttributeFuncs.attributeValue(_, feed.brandAttribute).isDefined)
-          .filter(AttributeFuncs.attributeValue(_, feed.partNumberAttribute).isDefined)
+          .filter(AttributeFuncs.attributeValue(_, feed.brandAttrName).isDefined)
+          .filter(AttributeFuncs.attributeValue(_, feed.partAttrName).isDefined)
           .filter(_.images.size > 0)
           .filter(_.folders.size > 0)
           .filter(_.content != null)
@@ -66,8 +66,8 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
 
     def row(feed: GBaseFeed, obj: Obj): Array[String] = {
 
-        val brand = AttributeFuncs.attributeValue(obj, feed.brandAttribute).getOrElse("")
-        val mpn = AttributeFuncs.attributeValue(obj, feed.partNumberAttribute).getOrElse("")
+        val brand = AttributeFuncs.attributeValue(obj, feed.brandAttrName).getOrElse("")
+        val mpn = AttributeFuncs.attributeValue(obj, feed.partAttrName).getOrElse("")
         val name = WordUtils.capitalizeFully(obj.name)
         val formattedPrice = "%1.2f".format(obj.sellPriceInc / 100.0)
 
