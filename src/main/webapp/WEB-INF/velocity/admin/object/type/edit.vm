@@ -55,7 +55,7 @@
 <a href="$urlResolver.createAttribute($type)" role="button" class="btn"> <i class="icon-plus"></i> Create Attribute</a>
 
 
-<table class="table table-condensed table-striped table-hover">
+<table class="table table-condensed table-striped table-hover" id="attributes-table">
     <tr>
         <th>Id</th>
         <th>Section</th>
@@ -64,7 +64,7 @@
         <th></th>
     </tr>
     #foreach ($a in $type.attributes)
-        <tr>
+        <tr class="attribute-row" data-attribute-id="$a.id">
             <td>$a.id</td>
             <td>$!a.section</td>
             <td>$a.name</td>
@@ -76,6 +76,30 @@
         </tr>
     #end
 </table>
+
+
+<script>
+    $(function () {
+        $("#attributes-table tbody").sortable({
+
+            update: function (event, ui) {
+                var order = []
+                $("#attributes-table tr.attribute-row").each(function (v) {
+                    var id = $(this).attr("data-attribute-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/type/$type.id/attribute/order",
+                    contentType: "text/plain",
+                    data: order.join('-')
+                });
+            }
+        });
+        $("#attributes-table tbody").disableSelection();
+    });
+</script>
 
 
 #parse("/admin/footer.vm")

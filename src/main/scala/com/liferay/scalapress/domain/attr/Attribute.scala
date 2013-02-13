@@ -59,16 +59,9 @@ class Attribute {
     @Column(name = "multi")
     @BeanProperty var multipleValues: Boolean = _
 
-    //    @Column(name = "regexp", nullable = true)
-    //   @BeanProperty var regExp: String = _
-
     @BeanProperty var position: Int = _
-
-    //    @BeanProperty var location: Boolean = false
 
     @BeanProperty var prefix: String = _
     @BeanProperty var suffix: String = _
-
-    //      @BeanProperty var multiValueSeparator: String = _
 
 }

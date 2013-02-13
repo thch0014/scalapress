@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.admin.obj
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao}
 import scala.Array
@@ -11,6 +11,7 @@ import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.domain.attr.Attribute
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.enums.AttributeType
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -44,12 +45,24 @@ class TypeEditController extends MarkupPopulator {
         "redirect:" + UrlResolver.typeEdit(t)
     }
 
+    @RequestMapping(value = Array("/attribute/order"), method = Array(RequestMethod.POST))
+    def reorderAttributes(@RequestBody order: String, @ModelAttribute("type") t: ObjectType): String = {
+
+        val ids = order.split("-")
+        t.attributes.asScala.foreach(a => {
+            val pos = ids.indexOf(a.id.toString)
+            a.position = pos
+            context.attributeDao.save(a)
+        })
+        "ok"
+    }
+
     @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
         import scala.collection.JavaConverters._
 
         val t = typeDao.find(id)
-        val sortedAttributes = t.attributes.asScala.sortBy(arg => Option(arg.section).getOrElse("")).asJava
+        val sortedAttributes = t.attributes.asScala.sortBy(_.position).asJava
 
         model.put("type", t)
         model.put("attributes", sortedAttributes)
