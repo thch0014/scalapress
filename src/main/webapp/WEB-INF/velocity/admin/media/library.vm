@@ -52,6 +52,15 @@
             Select file to upload
         </p>
             <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
             <button class="btn btn-success" type="submit">
                 Upload File
             </button>

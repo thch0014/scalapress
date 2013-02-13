@@ -25,6 +25,8 @@ class ShoppingPlugin {
 
     @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
 
+    @BeanProperty var statuses: String = _
+
     @BeanProperty var outOfStockMessage: String = _
 
     @Enumerated(EnumType.STRING)

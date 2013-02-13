@@ -11,12 +11,12 @@
 
         <div class="controls">
             <span class="input-xlarge uneditable-input">$order.account.name</span>
-            <span class="input-xlarge uneditable-input">$order.account.email</span>
+            <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$order.account.email</a>
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">Date</label>
+        <label class="control-label">Date Placed</label>
 
         <div class="controls">
             <span class="uneditable-input">$datetool.format($order.datePlaced)</span>
@@ -27,7 +27,15 @@
         <label class="control-label">Status</label>
 
         <div class="controls">
-            <input type="status" value="$order.status"/>
+            <span class="uneditable-input">$order.status</span>
+            #springFormSingleSelect("order.status", $statusMap)
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Vatable</label>
+
+        <div class="controls">
+            #springFormCheckbox("order.vatable", $order.vatable)
         </div>
     </div>
 
@@ -93,6 +101,12 @@
             <span class="input-xxlarge uneditable-input">$!order.deliveryAddress.instructions</span>
         </div>
     </div>
+
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
 </form>
 
 
@@ -123,38 +137,20 @@
     #end
     <tr>
         <td>$order.deliveryDetails</td>
-        <td>$number.currency($order.deliveryCharge)</td>
+        <td>$number.currency($order.deliveryEx())</td>
         <td>1</td>
-        <td>$number.currency($order.deliveryCharge)</td>
-        <td>$number.currency($order.deliveryVat) @ $order.deliveryVatRate%</td>
-        <td>$number.currency($order.deliveryChargeInc)</td>
+        <td>$number.currency($order.deliveryEx())</td>
+        <td>$number.currency($order.deliveryVat()) @ $order.deliveryVatRate()%</td>
+        <td>$number.currency($order.deliveryInc())</td>
         <th></th>
     </tr>
     <tr>
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th>Subtotal</th>
-        <td>$number.currency($order.totalExVat())</td>
-        <th></th>
-    </tr>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>Vat</th>
-        <td>$number.currency($order.totalVat())</td>
-        <th></th>
-    </tr>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>Total</th>
-        <td>$number.currency($order.totalIncVat())</td>
+        <th>$number.currency($order.subtotal())</th>
+        <th>$number.currency($order.vat())</th>
+        <th>$number.currency($order.total())</th>
         <th></th>
     </tr>
 </table>

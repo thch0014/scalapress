@@ -9,7 +9,6 @@ import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, List
 import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
-import javax.annotation.PostConstruct
 import com.liferay.scalapress.service.image.ImageTools
 import com.liferay.scalapress.Logging
 import actors.Futures
@@ -114,7 +113,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)
-        request.setStorageClass(StorageClass.ReducedRedundancy)
+        request.setStorageClass(StorageClass.Standard)
 
         getAmazonS3Client.putObject(request)
         key

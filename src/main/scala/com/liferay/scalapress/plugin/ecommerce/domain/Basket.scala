@@ -29,30 +29,30 @@ class Basket {
     @JoinColumn(name = "delivery_option_id", nullable = true)
     @BeanProperty var deliveryOption: DeliveryOption = _
 
-    def linesTotal: Int = {
-        var total = 0
+    def linesTotal: Double = {
+        var total = 0.0
         for (line <- lines.asScala) {
             total = total + line.total
         }
         total
     }
-    def total: Int = linesTotal + Option(deliveryOption).map(_.chargeIncVat).getOrElse(0)
+    def total: Double = linesTotal + Option(deliveryOption).map(_.chargeIncVat).getOrElse(0)
 
-    def linesSubtotal: Int = {
-        var total = 0
+    def linesSubtotal: Double = {
+        var total = 0.0
         for (line <- lines.asScala) {
             total = total + line.total
         }
         total
     }
-    def subtotal: Int = linesSubtotal + Option(deliveryOption).map(_.charge).getOrElse(0)
+    def subtotal: Double = linesSubtotal + Option(deliveryOption).map(_.charge).getOrElse(0)
 
-    def linesVat: Int = {
-        var total = 0
+    def linesVat: Double = {
+        var total = 0.0
         for (line <- lines.asScala) {
             total = total + line.total
         }
         total
     }
-    def vat: Int = linesVat + Option(deliveryOption).map(_.chargeVat).getOrElse(0)
+    def vat: Double = linesVat + Option(deliveryOption).map(_.chargeVat).getOrElse(0)
 }

@@ -54,12 +54,22 @@
         </div>
     </div>
 
+    <legend>Orders</legend>
+    <div class="control-group">
+        <label class="control-label">Statuses</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.statuses", "rows='8'")
+        </div>
+    </div>
+
+
     <legend>Checkout</legend>
     <div class="control-group">
         <label class="control-label">Checkout Confirmation Page Text</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block' rows='16'")
+            #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block-level' rows='16'")
         </div>
     </div>
 
@@ -68,7 +78,7 @@
         <label class="control-label">Checkout Confirmation Scripts</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block' rows='8'")
+            #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block-level' rows='8'")
         </div>
     </div>
 
@@ -84,7 +94,7 @@
         <label class="control-label">Terms and Conditions</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.terms", "class='input-block' rows='12'")
+            #springFormTextarea("plugin.terms", "class='input-block-level' rows='12'")
         </div>
     </div>
 

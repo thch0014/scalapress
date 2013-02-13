@@ -7,15 +7,18 @@ import com.liferay.scalapress.dao.{ObjectDao, OrderDao}
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, OrderComment, Order}
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.liferay.scalapress.controller.admin.obj.OrderStatusPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/order/{id}"))
-class OrderEditController {
+class OrderEditController extends OrderStatusPopulator {
 
     @Autowired var orderDao: OrderDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var context: ScalapressContext = _
+    @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute order: Order) = "admin/order/edit.vm"
@@ -64,5 +67,9 @@ class OrderEditController {
         "redirect:/backoffice/order/" + order.id
     }
 
-    @ModelAttribute def order(@PathVariable("id") id: Long) = orderDao.find(id)
+    @ModelAttribute def order(@PathVariable("id") id: Long) = {
+        val order = orderDao.find(id)
+        order.status = Option(order.status).map(_.trim).getOrElse(null)
+        order
+    }
 }

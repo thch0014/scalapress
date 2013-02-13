@@ -14,9 +14,9 @@ object OrderService {
         order.account = account
         order.deliveryAddress = basket.deliveryAddress
         order.status = "NEW"
-        order.deliveryCharge = basket.deliveryOption.charge
-        order.deliveryVatRate = basket.deliveryOption.vatRate
-        order.deliveryDetails = basket.deliveryOption.name
+        order.deliveryCharge = Option(basket.deliveryOption).map(_.charge).getOrElse(0)
+        order.deliveryVatRate = Option(basket.deliveryOption).map(_.vatRate).getOrElse(0)
+        order.deliveryDetails = Option(basket.deliveryOption).map(_.name).orNull
 
         for (line <- basket.lines.asScala) {
             val orderLine = OrderLine(line)

@@ -17,8 +17,10 @@ class Order {
 
     @BeanProperty var deliveryCharge: Int = _
     @BeanProperty var deliveryVatRate: Double = _
-    @BeanProperty def deliveryVat: Int = (deliveryCharge * deliveryVatRate / 100.0).toInt
-    @BeanProperty def deliveryChargeInc: Int = deliveryCharge + deliveryVat
+
+    def deliveryEx: Double = deliveryCharge / 100.0
+    def deliveryVat: Double = if (vatable) deliveryEx * deliveryVatRate / 100.0 else 0
+    def deliveryInc: Double = deliveryEx + deliveryVat
 
     @Column(name = "deliveryDetails")
     @BeanProperty var deliveryDetails: String = _
@@ -41,6 +43,8 @@ class Order {
 
     @BeanProperty var ipAddress: String = _
 
+    @BeanProperty var vatable: Boolean = _
+
     @BeanProperty var customerReference: String = _
 
     @BeanProperty var reference: String = _
@@ -54,9 +58,13 @@ class Order {
 
     import scala.collection.JavaConverters._
 
-    def totalVat = lines.asScala.map(_.totalVat).foldLeft(0.0)((a, b) => a + b)
-    def totalExVat = lines.asScala.map(_.totalExVat).foldLeft(0.0)((a, b) => a + b)
-    def totalIncVat = lines.asScala.map(_.totalIncVat).foldLeft(0.0)((a, b) => a + b)
+    def linesSubtotal: Double = lines.asScala.map(_.totalExVat).foldLeft(0.0)((a, b) => a + b)
+    def linesVat: Double = if (vatable) lines.asScala.map(_.totalVat).foldLeft(0.0)((a, b) => a + b) else 0.0
+    def linesTotal: Double = lines.asScala.map(_.totalIncVat).foldLeft(0.0)((a, b) => a + b)
+
+    def vat: Double = if (vatable) linesVat + deliveryVat else 0.0
+    def subtotal: Double = linesSubtotal + deliveryEx
+    def total: Double = linesTotal + deliveryInc
 }
 
 object Order {

@@ -5,6 +5,7 @@ import org.springframework.ui.ModelMap
 import com.liferay.scalapress.dao.{FolderDao, ThemeDao, MarkupDao}
 import scala.collection.JavaConverters._
 import collection.immutable.TreeMap
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
@@ -21,6 +22,23 @@ trait MarkupPopulator {
 
         model.put("markups", markups.asJava)
         model.put("markupMap", map.asJava)
+    }
+}
+
+trait OrderStatusPopulator {
+
+    var shoppingPluginDao: ShoppingPluginDao
+
+    @ModelAttribute def markups(model: ModelMap) {
+
+        var map = TreeMap("" -> "-Change Status-")
+
+        val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("")
+        statuses.split("\n").filter(_.trim.length > 0).foreach(status => {
+            map = map + ((status -> status))
+        })
+
+        model.put("statusMap", map.asJava)
     }
 }
 
