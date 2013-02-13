@@ -6,6 +6,9 @@ import com.liferay.scalapress.dao.{FolderDao, ThemeDao, MarkupDao}
 import scala.collection.JavaConverters._
 import collection.immutable.TreeMap
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
+import com.liferay.scalapress.plugin.ecommerce.domain.Address
+import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
@@ -76,4 +79,39 @@ trait FolderPopulator {
     }
 }
 
+trait DeliveryOptionPopulator {
 
+    var deliveryOptionDao: DeliveryOptionDao
+
+    @ModelAttribute def deliveryOptions(model: ModelMap) {
+        val opts = deliveryOptionDao.findAll().sortBy(_.name)
+
+        var map = TreeMap(0l -> "-Select Delivery-")
+        opts.map(o => {
+            val price = "£%1.2f".format(o.charge / 100.0)
+            map = map + (o.id -> (o.name + " " + price))
+        })
+
+        model.put("deliveryOptions", opts.asJava)
+        model.put("deliveryOptionsMap", map.asJava)
+    }
+}
+
+trait AddressPopulator {
+
+    var addressDao: AddressDao
+
+    def addressOptions(accountId: Long, model: ModelMap) {
+        val opts = addressDao.search(new Search(classOf[Address])
+          .addFilterEqual("account", accountId)
+          .addFilterEqual("active", true))
+
+        var map = TreeMap(0l -> "-Select Address-")
+        opts.map(o => {
+            map = map + (o.id -> (o.name + " " + o.address1 + " " + o.town + " " + o.postcode))
+        })
+
+        model.put("addresses", opts.asJava)
+        model.put("addressesMap", map.asJava)
+    }
+}

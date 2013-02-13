@@ -25,7 +25,7 @@ class ShoppingPlugin {
 
     @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
 
-    @BeanProperty var statuses: String = _
+    @BeanProperty var statuses: String = "New\nCompleted\nCancelled"
 
     @BeanProperty var outOfStockMessage: String = _
 

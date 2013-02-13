@@ -5,109 +5,178 @@
 
 <form class="form-horizontal" method="POST">
 
-    <legend>Order Details</legend>
-    <div class="control-group">
-        <label class="control-label">Account</label>
+<legend>Order Details</legend>
+<div class="control-group">
+    <label class="control-label">Account</label>
 
-        <div class="controls">
-            <span class="input-xlarge uneditable-input">$order.account.name</span>
-            <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$order.account.email</a>
+    <div class="controls">
+        <span class="input-xlarge uneditable-input">$order.account.name</span>
+        <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$order.account.email</a>
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Date Placed</label>
+
+    <div class="controls">
+        <span class="uneditable-input">$datetool.format($order.datePlaced)</span>
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Status</label>
+
+    <div class="controls">
+        <span class="uneditable-input">$order.status</span>
+        #springFormSingleSelect("order.status", $statusMap)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">Vatable</label>
+
+    <div class="controls">
+        #springFormCheckbox("order.vatable", $order.vatable)
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span6">
+        <legend>Delivery Address</legend>
+        <div class="control-group">
+            <label class="control-label">Name</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$order.deliveryAddress.name</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Company</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.company</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Address</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address2</span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address3</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">City</label>
+
+            <div class="controls">
+                <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Postcode</label>
+
+            <div class="controls">
+                <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Country</label>
+
+            <div class="controls">
+                <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Instructions</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.instructions</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Change Delivery Address</label>
+
+            <div class="controls">
+                #springFormSingleSelect("form.changeDeliveryAddress", "")
+            </div>
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Date Placed</label>
+    <div class="span6">
+        <legend>Billing Address</legend>
+        <div class="control-group">
+            <label class="control-label">Name</label>
 
-        <div class="controls">
-            <span class="uneditable-input">$datetool.format($order.datePlaced)</span>
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$order.deliveryAddress.name</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Company</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.company</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Address</label>
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address2</span>
+            </div>
+        </div>
+        <div class="control-group">
+
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address3</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">City</label>
+
+            <div class="controls">
+                <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Postcode</label>
+
+            <div class="controls">
+                <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Country</label>
+
+            <div class="controls">
+                <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Change Billing Address</label>
+
+            <div class="controls">
+                #springFormSingleSelect("form.changeBillingAddress", $addressesMap,"class='input-xlarge'")
+            </div>
         </div>
     </div>
-
-    <div class="control-group">
-        <label class="control-label">Status</label>
-
-        <div class="controls">
-            <span class="uneditable-input">$order.status</span>
-            #springFormSingleSelect("order.status", $statusMap)
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Vatable</label>
-
-        <div class="controls">
-            #springFormCheckbox("order.vatable", $order.vatable)
-        </div>
-    </div>
-
-    <legend>Delivery Address</legend>
-    <div class="control-group">
-        <label class="control-label">Name</label>
-
-        <div class="controls">
-            <span class="input-xxlarge uneditable-input">$order.deliveryAddress.name</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Company</label>
-
-        <div class="controls">
-            <span class="input-xxlarge uneditable-input">$!order.deliveryAddress.company</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Address</label>
-
-        <div class="controls">
-            <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
-        </div>
-    </div>
-    <div class="control-group">
-
-        <div class="controls">
-            <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address2</span>
-        </div>
-    </div>
-    <div class="control-group">
-
-        <div class="controls">
-            <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address3</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">City</label>
-
-        <div class="controls">
-            <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Postcode</label>
-
-        <div class="controls">
-            <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Country</label>
-
-        <div class="controls">
-            <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label">Instructions</label>
-
-        <div class="controls">
-            <span class="input-xxlarge uneditable-input">$!order.deliveryAddress.instructions</span>
-        </div>
-    </div>
-
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
-    </div>
-</form>
+</div>
 
 
 <legend>Lines</legend>
@@ -124,8 +193,12 @@
     #foreach ($l in $order.lines)
         <tr>
             <td>$l.description</td>
-            <td>$number.number($l.priceExVat())</td>
-            <td>$l.qty</td>
+            <td>
+                <input type="text" name="linePrice$l.id" class='input-mini' value="$number.number($l.priceExVat())"/>
+            </td>
+            <td>
+                <input type="text" name="lineQty$l.id" class='input-mini' value="$l.qty()"/>
+            </td>
             <td>$number.number($l.totalExVat())</td>
             <td>$number.number($l.totalVat()) @ $l.vatRate%</td>
             <td>$number.number($l.totalIncVat())</td>
@@ -137,15 +210,16 @@
     #end
     <tr>
         <td>$order.deliveryDetails</td>
-        <td>$number.number($order.deliveryEx())</td>
-        <td>1</td>
+        <td><input type="text" name="changeDeliveryCharge" class='input-mini' value="$number.number($order.deliveryEx())"/>
+        </td>
+        <td></td>
         <td>$number.number($order.deliveryEx())</td>
         <td>$number.number($order.deliveryVat()) @ $order.deliveryVatRate()%</td>
         <td>$number.number($order.deliveryInc())</td>
         <th></th>
     </tr>
     <tr>
-        <th></th>
+        <th>#springFormSingleSelect("form.changeDeliveryOption", $deliveryOptionsMap, "class='input-xxlarge'")</th>
         <th></th>
         <th></th>
         <th>$number.number($order.subtotal())</th>
@@ -155,39 +229,45 @@
     </tr>
 </table>
 
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn">Cancel</button>
+</div>
+</form>
+
 <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
-<input type="hidden" id="add-line-id" name="objId"/>
-<input type="text" class="input-xlarge" id="add-line-typeahead" value=""/>
-<script>
-    autosep = ":";
-    $('#add-line-typeahead').typeahead({
-        source: function (query, process) {
-            return $.ajax({
-                url: "/rest/obj",
-                type: 'GET',
-                data: {q: query},
-                dataType: 'json',
-                success: function (json) {
-                    var arr = [];
-                    for (var i in json) {
-                        arr.push(json[i][0] + autosep + json[i][1]);
+    <input type="hidden" id="add-line-id" name="objId"/>
+    <input type="text" class="input-xlarge" id="add-line-typeahead" value=""/>
+    <script>
+        autosep = ":";
+        $('#add-line-typeahead').typeahead({
+            source: function (query, process) {
+                return $.ajax({
+                    url: "/rest/obj",
+                    type: 'GET',
+                    data: {q: query},
+                    dataType: 'json',
+                    success: function (json) {
+                        var arr = [];
+                        for (var i in json) {
+                            arr.push(json[i][0] + autosep + json[i][1]);
+                        }
+                        process(arr);
                     }
-                    process(arr);
-                }
-            });
-        }, highlighter: function (item) {
-            var parts = item.split(autosep);
-            parts.shift();
-            return parts.join(autosep);
-        }, updater: function (item) {
-            var parts = item.split(autosep);
-            var id = parts.shift();
-            $('#add-line-id').val(id);
-            return parts.join(autosep);
-        }
-    })
-</script>
-<button type="submit" class="btn btn-small">Add To Order</button>
+                });
+            }, highlighter: function (item) {
+                var parts = item.split(autosep);
+                parts.shift();
+                return parts.join(autosep);
+            }, updater: function (item) {
+                var parts = item.split(autosep);
+                var id = parts.shift();
+                $('#add-line-id').val(id);
+                return parts.join(autosep);
+            }
+        })
+    </script>
+    <button type="submit" class="btn btn-small">Add To Order</button>
 </form>
 
 

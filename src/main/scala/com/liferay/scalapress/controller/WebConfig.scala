@@ -13,9 +13,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
-import com.liferay.scalapress.{StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
+import com.liferay.scalapress.{StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
-import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
+import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.dao.settings.InstallationDao
 import com.liferay.scalapress.plugin.search.SearchFormDao
 
@@ -31,6 +31,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var basketDao: BasketDao = _
     @Autowired var markupDao: MarkupDao = _
     @Autowired var themeDao: ThemeDao = _
+    @Autowired var addressDao: AddressDao = _
     @Autowired var searchFormDao: SearchFormDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var siteDao: InstallationDao = _
@@ -42,6 +43,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addConverter(new StringSearchFormConverter(searchFormDao))
         registry.addConverter(new StringDeliveryOptionConverter(deliveryOptionDao))
         registry.addConverter(new StringToThemeConverter(themeDao))
+        registry.addConverter(new StringToAddressConverter(addressDao))
     }
 
     override def addResourceHandlers(registry: ResourceHandlerRegistry) {

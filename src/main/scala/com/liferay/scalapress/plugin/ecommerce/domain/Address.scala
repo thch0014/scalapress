@@ -4,6 +4,7 @@ import scala.Predef.String
 import org.hibernate.validator.constraints.{Email, NotEmpty}
 import reflect.BeanProperty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Entity
@@ -28,8 +29,8 @@ class Address {
     @Column(name = "companyName")
     @BeanProperty var company: String = _
 
-    //   @Column(name = "owner", nullable = true)
-    //   @BeanProperty var account: Long = _
+    @Column(name = "account", nullable = true)
+    @BeanProperty var account: Long = _
 
     @NotEmpty
     @Column(name = "addressLine1")

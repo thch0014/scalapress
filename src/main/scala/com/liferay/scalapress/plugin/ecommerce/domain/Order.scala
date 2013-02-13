@@ -41,6 +41,10 @@ class Order {
     @JoinColumn(name = "deliveryAddress")
     @BeanProperty var deliveryAddress: Address = _
 
+    @ManyToOne
+    @JoinColumn(name = "billingAddress")
+    @BeanProperty var billingAddress: Address = _
+
     @BeanProperty var ipAddress: String = _
 
     @BeanProperty var vatable: Boolean = _

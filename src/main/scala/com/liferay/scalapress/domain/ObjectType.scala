@@ -1,7 +1,7 @@
 package com.liferay.scalapress.domain
 
 import attr.Attribute
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{ElementCollection, JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import java.util
 import reflect.BeanProperty
 import com.liferay.scalapress.Section
@@ -17,6 +17,8 @@ class ObjectType {
 
     @Column
     @BeanProperty var name: String = _
+
+    @BeanProperty var linkGroups: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @BeanProperty var attributes: java.util.List[Attribute] = new util.ArrayList[Attribute]()
