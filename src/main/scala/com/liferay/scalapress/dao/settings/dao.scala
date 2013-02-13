@@ -46,8 +46,8 @@ class InstallationDaoImplValidator {
     @Autowired var dao: InstallationDao = _
     @PostConstruct def ensureOne() {
         if (dao.findAll().size == 0) {
-            val plugin = new Installation
-            dao.save(plugin)
+            val i = new Installation
+            dao.save(i)
         }
     }
 }

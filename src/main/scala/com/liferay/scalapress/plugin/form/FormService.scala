@@ -49,7 +49,7 @@ class FormService extends Logging {
         submission
     }
 
-    def email(form: Form, submission: Submission, installation: Installation) {
+    def email(recipients: Seq[String], submission: Submission, installation: Installation) {
 
         val body = new StringBuilder
         for (kv <- submission.data.asScala) {
@@ -61,7 +61,7 @@ class FormService extends Logging {
         val nowww = if (installation.domain.startsWith("www.")) installation.domain.drop(4) else installation.domain
 
         message.setFrom("nodotreply@" + nowww)
-        message.setTo(form.recipients.asScala.toArray)
+        message.setTo(recipients.toArray)
         message.setSubject("Submission: " + submission.formName)
         message.setText(body.toString())
 

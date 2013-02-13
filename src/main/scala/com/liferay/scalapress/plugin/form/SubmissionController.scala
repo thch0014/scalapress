@@ -28,14 +28,6 @@ class SubmissionController extends Logging {
     @ModelAttribute("form") def form(@PathVariable("id") id: Long) = formDao.find(id)
 
     @ResponseBody
-    @RequestMapping(value = Array("test"))
-    def test(@ModelAttribute("form") form: Form,
-             req: HttpServletRequest,
-             resp: HttpServletResponse): String = {
-        "test email sent to sam@sksamuel.com"
-    }
-
-    @ResponseBody
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
     def view(@ModelAttribute("form") form: Form,
              req: HttpServletRequest,
@@ -54,7 +46,7 @@ class SubmissionController extends Logging {
             case false => {
 
                 val sub = formService.doSubmission(form, sreq, files.asScala)
-                formService.email(form, sub, context.installationDao.get)
+                formService.email(form.recipients.asScala, sub, context.installationDao.get)
 
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)

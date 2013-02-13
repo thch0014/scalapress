@@ -30,7 +30,7 @@ class Address {
     @BeanProperty var company: String = _
 
     @Column(name = "account", nullable = true)
-    @BeanProperty var account: Long = _
+    @BeanProperty var account: String = _
 
     @NotEmpty
     @Column(name = "addressLine1")

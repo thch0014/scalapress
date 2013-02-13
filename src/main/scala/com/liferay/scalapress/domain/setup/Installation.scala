@@ -28,5 +28,5 @@ class Installation {
 
     @BeanProperty var country: String = null
 
-    @BeanProperty var domain: String = null
+    @BeanProperty var domain: String = "localhost"
 }
