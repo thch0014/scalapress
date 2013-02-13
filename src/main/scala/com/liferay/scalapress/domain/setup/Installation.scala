@@ -6,7 +6,7 @@ import reflect.BeanProperty
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "settings_site")
-class Site {
+class Installation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,4 +27,6 @@ class Site {
     @BeanProperty var companyNumber: String = _
 
     @BeanProperty var country: String = null
+
+    @BeanProperty var domain: String = null
 }

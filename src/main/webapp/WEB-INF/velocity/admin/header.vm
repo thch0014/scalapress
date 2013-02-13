@@ -71,7 +71,6 @@
             <br/>
             #parse("/admin/navlist.vm")
 
-
         </div>
         <div class="span10">
 

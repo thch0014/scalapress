@@ -3,10 +3,10 @@ package com.liferay.scalapress.controller.admin.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.servlet.ModelAndView
-import com.liferay.scalapress.dao.settings.SiteDao
+import com.liferay.scalapress.dao.settings.InstallationDao
 
 /** @author Stephen Samuel */
-class SiteInterceptor(siteDao: SiteDao) extends HandlerInterceptorAdapter {
+class SiteInterceptor(siteDao: InstallationDao) extends HandlerInterceptorAdapter {
     override def postHandle(request: HttpServletRequest,
                             response: HttpServletResponse,
                             handler: Any,

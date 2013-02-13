@@ -16,7 +16,7 @@ import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.{StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
-import com.liferay.scalapress.dao.settings.SiteDao
+import com.liferay.scalapress.dao.settings.InstallationDao
 import com.liferay.scalapress.plugin.search.SearchFormDao
 
 /**
@@ -33,7 +33,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var themeDao: ThemeDao = _
     @Autowired var searchFormDao: SearchFormDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-    @Autowired var siteDao: SiteDao = _
+    @Autowired var siteDao: InstallationDao = _
 
     override def addFormatters(registry: FormatterRegistry) {
         registry.addConverter(new StringFolderConverter(folderDao))

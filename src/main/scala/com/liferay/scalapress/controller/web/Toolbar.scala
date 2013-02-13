@@ -1,22 +1,22 @@
 package com.liferay.scalapress.controller.web
 
 import com.liferay.scalapress.domain.{Folder, Obj}
-import com.liferay.scalapress.domain.setup.Site
+import com.liferay.scalapress.domain.setup.Installation
 
 /** @author Stephen Samuel */
 object Toolbar {
 
-    def render(site: Site, folder: Folder): String = {
+    def render(site: Installation, folder: Folder): String = {
         val url = "/backoffice/folder/" + folder.id
         render(site, url)
     }
 
-    def render(site: Site, obj: Obj): String = {
+    def render(site: Installation, obj: Obj): String = {
         val url = "/backoffice/object/" + obj.id
         render(site, url)
     }
 
-    def render(site: Site, url: String): String =
+    def render(site: Installation, url: String): String =
         <div class="navbar navbar-static-top navbar-inverse">
             <div class="navbar-inner">
                 <div class="container" style="width: auto; padding: 0 20px;">

@@ -1,7 +1,6 @@
 #parse("/admin/header.vm")
 
-
-<h3>Installation Details</h3>
+<h3>Installation</h3>
 
 <form class="form-horizontal" method="POST">
 
@@ -30,11 +29,81 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">CDN Object Count</label>
+        <label class="control-label">Domain</label>
 
         <div class="controls">
-            $assetStore.count()
+            #springFormInput("installation.domain")
         </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("installation.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Address</label>
+
+        <div class="controls">
+            #springFormInput("installation.address")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Postcode</label>
+
+        <div class="controls">
+            #springFormInput("installation.postcode")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Country</label>
+
+        <div class="controls">
+            #springFormInput("installation.country")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">email</label>
+
+        <div class="controls">
+            #springFormInput("installation.email")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">telephone</label>
+
+        <div class="controls">
+            #springFormInput("installation.telephone")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">vatNumber</label>
+
+        <div class="controls">
+            #springFormInput("installation.vatNumber")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">companyNumber</label>
+
+        <div class="controls">
+            #springFormInput("installation.companyNumber")
+        </div>
+    </div>
+
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
     </div>
 
 </form>

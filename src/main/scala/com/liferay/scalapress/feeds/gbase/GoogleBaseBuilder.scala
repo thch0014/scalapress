@@ -9,7 +9,10 @@ import org.apache.commons.lang.WordUtils
 import com.liferay.scalapress.{AttributeFuncs, Logging}
 
 /** @author Stephen Samuel */
-object GoogleBaseBuilder extends Logging {
+class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging {
+
+    val ShippingCost = "4.95"
+    val ShippingDesc = "Courier"
 
     def csv(obj: Seq[Obj]) = {
 
@@ -36,20 +39,15 @@ object GoogleBaseBuilder extends Logging {
 
     def filter(obj: Seq[Obj]) = {
         obj
-          //  .filter(AttributeFuncs.attributeValue(_, "brand").isDefined)
-          //   .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
+          .filter(AttributeFuncs.attributeValue(_, "brand").isDefined)
+          .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
           .filter(_.images.size > 0)
           .filter(_.folders.size > 0)
           .filter(_.content != null)
           .filter(_.content.trim.length > 0)
-          //      .filter(_.sellPrice > 1)
           .filter(_.name != null)
           .filter(_.name.trim.length > 10)
     }
-
-    val GoogleProductCategory = "Electronics > GPS"
-    val ShippingCost = "4.95"
-    val ShippingDesc = "Courier"
 
     def headers = Array("id",
         "title",
@@ -75,10 +73,10 @@ object GoogleBaseBuilder extends Logging {
         Array(obj.id.toString,
             name,
             content(obj.content),
-            GoogleProductCategory,
+            googleCategory,
             obj.folders.asScala.head.fullName,
-            "http://www.satnaveasy.co.uk" + FriendlyUrlGenerator.friendlyUrl(obj),
-            "http://www.satnaveasy.co.uk/images/" + obj.images.asScala.head.filename,
+            "http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj),
+            "http://" + domain + "/" + obj.images.asScala.head.filename,
             "new",
             formattedPrice + " GBP",
             "in stock",

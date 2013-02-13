@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.feeds.{Feed, FeedDao}
 import com.liferay.scalapress.dao.ObjectDao
+import com.liferay.scalapress.dao.settings.InstallationDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -15,6 +16,7 @@ class GBaseController {
     @Autowired var context: ScalapressContext = _
     @Autowired var feedDao: FeedDao = _
     @Autowired var objectDao: ObjectDao = _
+    @Autowired var installationDao: InstallationDao = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def edit(@ModelAttribute feed: Feed) = "admin/feed/gbase/edit.vm"
@@ -27,9 +29,7 @@ class GBaseController {
 
     @RequestMapping(value = Array("run"))
     def run(@ModelAttribute feed: Feed) = {
-        GoogleBaseService.run(objectDao, feed.asInstanceOf[GBaseFeed])
-        feed.lastRuntime = System.currentTimeMillis()
-        feedDao.save(feed)
+        GoogleBaseService.run(objectDao, feedDao, installationDao.get, feed.asInstanceOf[GBaseFeed])
         "redirect:/backoffice/feed/"
     }
 

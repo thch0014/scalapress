@@ -7,11 +7,13 @@ import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.dao.ObjectDao
+import com.liferay.scalapress.feeds.FeedDao
+import com.liferay.scalapress.domain.setup.Installation
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
 
-    def run(objectDao: ObjectDao, feed: GBaseFeed) = {
+    def run(objectDao: ObjectDao, feedDao: FeedDao, installation: Installation, feed: GBaseFeed) = {
         logger.debug("Running GBASE feed")
 
         val objs = objectDao
@@ -20,11 +22,14 @@ object GoogleBaseService extends Logging {
           .addFilterGreaterThan("sellPrice", 0))
         logger.debug("Retrieved {} objects", objs.size)
 
-        val file = GoogleBaseBuilder.csv(objs)
+        val file = new GoogleBaseBuilder(installation.domain, feed.productCategory).csv(objs)
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
-        file
+        file.delete
+
+        feed.lastRuntime = System.currentTimeMillis()
+        feedDao.save(feed)
     }
 
     def upload(file: File, feed: GBaseFeed) {

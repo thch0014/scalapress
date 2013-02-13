@@ -1,6 +1,6 @@
 package com.liferay.scalapress
 
-import dao.settings.SiteDao
+import dao.settings.InstallationDao
 import dao.{AttributeDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
@@ -18,10 +18,11 @@ import service.image.ImageService
 @Component
 class ScalapressContext extends ServletContextAware {
 
+    @Autowired var installationDao: InstallationDao = _
     @Autowired var formFieldDao: FormFieldDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
-    @Autowired var siteDao: SiteDao = _
+    @Autowired var siteDao: InstallationDao = _
     @Autowired var imageService: ImageService = _
     @Autowired var basketDao: BasketDao = _
     @Autowired var searchService: SearchService = _
