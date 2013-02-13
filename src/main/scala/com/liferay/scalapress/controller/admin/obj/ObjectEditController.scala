@@ -136,6 +136,7 @@ class ObjectEditController extends FolderPopulator {
 
 class EditForm {
 
+
     @BeanProperty var sellPrice: Double = _
     @BeanProperty var costPrice: Double = _
     @BeanProperty var rrp: Double = _

@@ -88,7 +88,7 @@
                     <label class="control-label">Vat Rate</label>
 
                     <div class="controls">
-                        #springFormInput("form.vatRate", "class='input-small'")
+                        #springFormInput("form.o.vatRate", "class='input-small'")
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@
                     <label class="control-label">Stock Level</label>
 
                     <div class="controls">
-                        #springFormInput("form.stock", "class='input-small'")
+                        #springFormInput("form.o.stock", "class='input-small'")
                     </div>
                 </div>
             #end
