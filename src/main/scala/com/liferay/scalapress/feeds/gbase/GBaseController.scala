@@ -28,6 +28,8 @@ class GBaseController {
     @RequestMapping(value = Array("run"))
     def run(@ModelAttribute feed: Feed) = {
         GoogleBaseService.run(objectDao, feed.asInstanceOf[GBaseFeed])
+        feed.lastRuntime = System.currentTimeMillis()
+        feedDao.save(feed)
         "redirect:/backoffice/feed/gbase/" + feed.id
     }
 

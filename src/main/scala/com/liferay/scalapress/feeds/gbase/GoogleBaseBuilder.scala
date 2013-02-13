@@ -38,8 +38,10 @@ object GoogleBaseBuilder extends Logging {
         obj
           //  .filter(AttributeFuncs.attributeValue(_, "brand").isDefined)
           //   .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
-            .filter(_.images.size > 0)
+          .filter(_.images.size > 0)
           .filter(_.folders.size > 0)
+          .filter(_.content != null)
+          .filter(_.content.trim.length > 0)
           //      .filter(_.sellPrice > 1)
           .filter(_.name != null)
           .filter(_.name.trim.length > 10)
@@ -68,6 +70,7 @@ object GoogleBaseBuilder extends Logging {
         val brand = AttributeFuncs.attributeValue(obj, "brand").getOrElse("")
         val mpn = AttributeFuncs.attributeValue(obj, "mpn").getOrElse("")
         val name = WordUtils.capitalizeFully(obj.name)
+        val formattedPrice = "%1.2f".format(obj.sellPrice / 100.0)
 
         Array(obj.id.toString,
             name,
@@ -77,7 +80,7 @@ object GoogleBaseBuilder extends Logging {
             "http://www.satnaveasy.co.uk" + FriendlyUrlGenerator.friendlyUrl(obj),
             "http://www.satnaveasy.co.uk/images/" + obj.images.asScala.head.filename,
             "new",
-            obj.sellPrice + " GBP",
+            formattedPrice + " GBP",
             "in stock",
             brand,
             mpn,
