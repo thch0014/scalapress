@@ -15,13 +15,14 @@ trait TagBuilder {
         val id = params.get("id").getOrElse("")
         val prefix = params.get("prefix").getOrElse("")
         val suffix = params.get("suffix").getOrElse("")
+        val rel = params.get("rel").getOrElse("")
 
         val sb = new StringBuilder()
         sb.append(prefix)
         sb.append(label)
         sb.append(suffix)
 
-        <a href={href} class={cssClass} id={id}>
+        <a href={href} class={cssClass} id={id} rel={rel}>
             {sb.toString()}
         </a>.toString()
     }

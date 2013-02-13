@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.form
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMethod, ResponseBody, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
@@ -25,17 +25,25 @@ class SubmissionController extends Logging {
     @Autowired var themeService: ThemeService = _
     @Autowired var folderController: FolderController = _
 
+    @ModelAttribute("form") def form(@PathVariable("id") id: Long) = formDao.find(id)
+
+    @ResponseBody
+    @RequestMapping(method = Array(RequestMethod.POST), value = Array("test"))
+    def view(@ModelAttribute("form") form: Form,
+             req: HttpServletRequest,
+             resp: HttpServletResponse): String = {
+        "test email sent to sam@sksamuel.com"
+    }
+
     @ResponseBody
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def view(@PathVariable("id") id: Long,
+    def view(@ModelAttribute("form") form: Form,
              req: HttpServletRequest,
              resp: HttpServletResponse,
              @RequestParam(value = "file") files: java.util.List[MultipartFile],
              @RequestParam(value = "folder", required = false) folderId: Long): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
-        val form = formDao.find(id)
-
         formService.checkErrors(form, sreq)
 
         sreq.hasErrors match {
@@ -46,7 +54,7 @@ class SubmissionController extends Logging {
             case false => {
 
                 val sub = formService.doSubmission(form, sreq, files.asScala)
-                formService.email(form.recipients.asScala, sub)
+                formService.email(form, sub, context.installationDao.get)
 
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)

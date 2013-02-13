@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
+import com.liferay.scalapress.domain.setup.Installation
 
 /** @author Stephen Samuel */
 @Component
@@ -48,7 +49,7 @@ class FormService extends Logging {
         submission
     }
 
-    def email(recipients: Seq[String], submission: Submission) {
+    def email(form: Form, submission: Submission, installation: Installation) {
 
         val body = new StringBuilder
         for (kv <- submission.data.asScala) {
@@ -57,8 +58,10 @@ class FormService extends Logging {
 
         val message = new SimpleMailMessage()
 
-        message.setFrom("sam@sksamuel.com")
-        message.setTo(recipients.toArray)
+        val nowww = if (installation.domain.startsWith("www.")) installation.domain.drop(4) else installation.domain
+
+        message.setFrom("nodotreply@" + nowww)
+        message.setTo(form.recipients.asScala.toArray)
         message.setSubject("Submission: " + submission.formName)
         message.setText(body.toString())
 

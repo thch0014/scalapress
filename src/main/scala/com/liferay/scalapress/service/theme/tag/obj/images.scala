@@ -3,6 +3,7 @@ package com.liferay.scalapress.service.theme.tag.obj
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
+import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 
@@ -21,8 +22,20 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
             case Some(o) =>
 
                 val rendered = o.images.asScala.take(limit).map(i => {
+
                     val src = context.imageService.imageLink(i.filename, w, h)
-                        <img src={src} height={h.toString} width={w.toString}/>.toString()
+                    val html = <img src={src} height={h.toString} width={w.toString}/>.toString()
+
+                    params.get("link") match {
+
+                        case None => build(html, params)
+
+                        case Some(link) if link == "image" =>
+                            buildLink(html, context.assetStore.link(i.filename), params)
+
+                        case Some(link) if link == "object" =>
+                            buildLink(html, FriendlyUrlGenerator.friendlyUrl(o), params)
+                    }
                 })
 
                 Option(rendered.mkString("\n"))
@@ -32,7 +45,9 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
 
 object ImageUrlTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
 
         request.obj match {
 
@@ -46,7 +61,9 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
 }
 
 object ColorboxTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
 
         val height = params.get("height").getOrElse("120").toInt
         val width = params.get("width").getOrElse("160").toInt
