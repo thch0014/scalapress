@@ -6,11 +6,29 @@
 
 <form class="form-horizontal" method="POST">
 
+    <legend>Attributes</legend>
+    <div class="control-group">
+        <label class="control-label">brandAttribute</label>
+
+        <div class="controls">
+            #springFormInput("feed.brandAttribute", "class='input-large'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">partNumberAttribute</label>
+
+        <div class="controls">
+            #springFormInput("feed.partNumberAttribute", "class='input-large'")
+        </div>
+    </div>
+
+    <legend>Ftp Details</legend>
     <div class="control-group">
         <label class="control-label">FTP Hostname</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpHostname", "class='input-xlarge'")
+            #springFormInput("feed.ftpHostname", "class='input-large'")
         </div>
     </div>
 
@@ -18,7 +36,7 @@
         <label class="control-label">FTP Username</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpUsername", "class='input-xlarge'")
+            #springFormInput("feed.ftpUsername", "class='input-large'")
         </div>
     </div>
 
@@ -26,7 +44,7 @@
         <label class="control-label">FTP Password</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpPassword", "class='input-xlarge'")
+            #springFormInput("feed.ftpPassword", "class='input-large'")
         </div>
     </div>
 
@@ -42,7 +60,7 @@
         <label class="control-label">Output Filename</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpFilename", "class='input-xlarge'")
+            #springFormInput("feed.ftpFilename", "class='input-large'")
         </div>
     </div>
 

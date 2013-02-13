@@ -7,16 +7,17 @@ import com.liferay.scalapress.service.FriendlyUrlGenerator
 import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
 import com.liferay.scalapress.{AttributeFuncs, Logging}
+import com.liferay.scalapress.service.asset.AssetStore
 
 /** @author Stephen Samuel */
-class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging {
+class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {
 
     val ShippingCost = "4.95"
     val ShippingDesc = "Courier"
 
-    def csv(obj: Seq[Obj]) = {
+    def csv(objs: Seq[Obj], feed: GBaseFeed) = {
 
-        val filtered = filter(obj)
+        val filtered = filter(feed, objs)
         logger.debug("Generating GBASE file for {} objects", filtered.size)
 
         val file = File.createTempFile("gbase", "csv")
@@ -28,7 +29,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging 
         csv.writeRecord(headers)
 
         filtered.foreach(obj => {
-            csv.writeRecord(row(obj))
+            csv.writeRecord(row(feed, obj))
         })
 
         csv.flush()
@@ -37,10 +38,10 @@ class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging 
         file
     }
 
-    def filter(obj: Seq[Obj]) = {
+    def filter(feed: GBaseFeed, obj: Seq[Obj]) = {
         obj
-          .filter(AttributeFuncs.attributeValue(_, "brand").isDefined)
-          .filter(AttributeFuncs.attributeValue(_, "mpn").isDefined)
+          .filter(AttributeFuncs.attributeValue(_, feed.brandAttribute).isDefined)
+          .filter(AttributeFuncs.attributeValue(_, feed.partNumberAttribute).isDefined)
           .filter(_.images.size > 0)
           .filter(_.folders.size > 0)
           .filter(_.content != null)
@@ -63,10 +64,10 @@ class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging 
         "mpn",
         "shipping")
 
-    def row(obj: Obj): Array[String] = {
+    def row(feed: GBaseFeed, obj: Obj): Array[String] = {
 
-        val brand = AttributeFuncs.attributeValue(obj, "brand").getOrElse("")
-        val mpn = AttributeFuncs.attributeValue(obj, "mpn").getOrElse("")
+        val brand = AttributeFuncs.attributeValue(obj, feed.brandAttribute).getOrElse("")
+        val mpn = AttributeFuncs.attributeValue(obj, feed.partNumberAttribute).getOrElse("")
         val name = WordUtils.capitalizeFully(obj.name)
         val formattedPrice = "%1.2f".format(obj.sellPriceInc / 100.0)
 
@@ -76,7 +77,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String) extends Logging 
             googleCategory,
             obj.folders.asScala.head.fullName,
             "http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj),
-            "http://" + domain + "/" + obj.images.asScala.head.filename,
+            assetStore.link(obj.images.asScala.head.filename),
             "new",
             formattedPrice + " GBP",
             "in stock",

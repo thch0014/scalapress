@@ -29,7 +29,7 @@ class GBaseController {
 
     @RequestMapping(value = Array("run"))
     def run(@ModelAttribute feed: Feed) = {
-        GoogleBaseService.run(objectDao, feedDao, installationDao.get, feed.asInstanceOf[GBaseFeed])
+        GoogleBaseService.run(objectDao, feedDao, installationDao.get, feed.asInstanceOf[GBaseFeed], context.assetStore)
         "redirect:/backoffice/feed/"
     }
 

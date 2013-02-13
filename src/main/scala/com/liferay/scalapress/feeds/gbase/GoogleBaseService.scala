@@ -9,11 +9,16 @@ import com.liferay.scalapress.Logging
 import com.liferay.scalapress.dao.ObjectDao
 import com.liferay.scalapress.feeds.FeedDao
 import com.liferay.scalapress.domain.setup.Installation
+import com.liferay.scalapress.service.asset.AssetStore
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
 
-    def run(objectDao: ObjectDao, feedDao: FeedDao, installation: Installation, feed: GBaseFeed) = {
+    def run(objectDao: ObjectDao,
+            feedDao: FeedDao,
+            installation: Installation,
+            feed: GBaseFeed,
+            assetStore: AssetStore) = {
         logger.debug("Running GBASE feed")
 
         val objs = objectDao
@@ -22,7 +27,7 @@ object GoogleBaseService extends Logging {
           .addFilterGreaterThan("sellPrice", 0))
         logger.debug("Retrieved {} objects", objs.size)
 
-        val file = new GoogleBaseBuilder(installation.domain, feed.productCategory).csv(objs)
+        val file = new GoogleBaseBuilder(installation.domain, feed.productCategory, assetStore).csv(objs, feed)
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
