@@ -14,7 +14,7 @@ class BackgroundController {
     @ResponseBody
     @RequestMapping(produces = Array("image/jpeg"))
     def background(resp: HttpServletResponse) {
-        val random = Random.nextInt(16) + 1
+        val random = Random.nextInt(14) + 1
         val input = getClass.getResourceAsStream("/background/loginbg" + random + ".jpg")
         IOUtils.copy(input, resp.getOutputStream)
     }

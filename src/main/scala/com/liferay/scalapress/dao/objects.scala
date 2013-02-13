@@ -16,7 +16,7 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
     def search(query: ObjectQuery): Page[Obj]
     def findByFolder(folderId: Long): Array[Obj]
     def search(query: String): Array[Obj]
-    def typeAhead(query: String): Array[String]
+    def typeAhead(query: String): Array[Array[String]]
     def findByType(id: Long): List[Obj]
     def byEmail(email: String): Option[Obj]
 }
@@ -53,15 +53,17 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
           .toList
     }
 
-    override def typeAhead(query: String): Array[String] = {
+    override def typeAhead(query: String): Array[Array[String]] = {
         getSession
-          .createSQLQuery("select name from items where name like ?")
+          .createSQLQuery("select id, name from items where name like ?")
           .setString(0, query + "%")
           .setMaxResults(20)
           .list()
           .asScala
-          .map(_.asInstanceOf[String])
-          .toArray
+          .map(arg => {
+            val values = arg.asInstanceOf[Array[_]]
+            Array(values(0).toString, values(1).toString)
+        }).toArray
     }
 
     override def search(query: String): Array[Obj] = {

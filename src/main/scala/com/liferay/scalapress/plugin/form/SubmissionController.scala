@@ -28,8 +28,8 @@ class SubmissionController extends Logging {
     @ModelAttribute("form") def form(@PathVariable("id") id: Long) = formDao.find(id)
 
     @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.POST), value = Array("test"))
-    def view(@ModelAttribute("form") form: Form,
+    @RequestMapping(value = Array("test"))
+    def test(@ModelAttribute("form") form: Form,
              req: HttpServletRequest,
              resp: HttpServletResponse): String = {
         "test email sent to sam@sksamuel.com"
