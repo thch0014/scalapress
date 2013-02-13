@@ -18,7 +18,7 @@ object GoogleBaseService extends Logging {
           .search(new Search(classOf[Obj])
           .addFilterLike("status", "Live")
           .addFilterGreaterThan("sellPrice", 0))
-        logger.debug("Retrieved {} objects", objs)
+        logger.debug("Retrieved {} objects", objs.size)
 
         val file = GoogleBaseBuilder.csv(objs)
         logger.debug("Gbase file generated [{}]", file)
@@ -31,12 +31,13 @@ object GoogleBaseService extends Logging {
 
         val ftp = new FTPClient()
         ftp.setRemoteHost(feed.ftpHostname)
-        ftp.user(feed.ftpUsername)
-        ftp.password(feed.ftpPassword)
 
         logger.debug("Connecting to the FTP server...")
         ftp.connect()
         logger.debug("...connected")
+
+        ftp.user(feed.ftpUsername)
+        ftp.password(feed.ftpPassword)
 
         logger.debug("Uploading file to {}...", feed.ftpFilename)
         val in = FileUtils.openInputStream(file)
