@@ -1,5 +1,6 @@
 package com.liferay.scalapress.feeds
 
+import gbase.GBaseFeed
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +17,12 @@ class FeedListController {
 
     @RequestMapping
     def list = "admin/feed/list.vm"
+
+    @RequestMapping(Array("create"))
+    def create = {
+        val gbase = new GBaseFeed
+        feedDao.save(gbase)
+    }
 
     @ModelAttribute("feeds") def feeds = feedDao.findAll().asJava
 }

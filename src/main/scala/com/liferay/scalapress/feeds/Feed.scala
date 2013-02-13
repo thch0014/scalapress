@@ -1,4 +1,4 @@
-package com.liferay.scalapress.feeds.gbase
+package com.liferay.scalapress.feeds
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
 import reflect.BeanProperty

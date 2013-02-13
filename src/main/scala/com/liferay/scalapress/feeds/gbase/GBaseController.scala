@@ -12,7 +12,7 @@ class GBaseController {
     @Autowired var gbase: GoogleBaseTask = _
 
     @RequestMapping
-    def view = "admin/feed/gbase/view.vm"
+    def view = "admin/feed/gbase/edit.vm"
 
     @RequestMapping(value = Array("run"))
     def run = {

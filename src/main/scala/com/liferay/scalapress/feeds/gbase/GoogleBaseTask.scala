@@ -23,7 +23,7 @@ class GoogleBaseTask extends Logging {
     val Password = ""
     val OutputFileName = ""
 
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = "0 0 0/4 * * *")
     def run() {
         logger.debug("Running GBASE feed")
         val objs = objectDao.search(new Search(classOf[Obj]).addFilterLike("status", "Live"))

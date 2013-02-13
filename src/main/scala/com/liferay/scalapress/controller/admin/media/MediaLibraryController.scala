@@ -22,12 +22,10 @@ class MediaLibraryController {
 
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
     def upload(@RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
-        for (upload <- uploads.asScala)
+        for (upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty))
             assetStore.put(upload.getOriginalFilename, upload.getInputStream)
         "redirect:" + UrlResolver.medialib
     }
-
-    import scala.collection.JavaConverters._
 
     @ModelAttribute("assets") def assets(@RequestParam(value = "q", required = false) q: String) =
         assetStore.search(q, 50).toList.asJava

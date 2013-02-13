@@ -2,6 +2,7 @@ package com.liferay.scalapress.feeds.gbase
 
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
+import com.liferay.scalapress.feeds.Feed
 
 /** @author Stephen Samuel */
 @Entity
