@@ -44,7 +44,7 @@ object FormRenderer {
                 </p>
             case FormFieldType.Header =>
                 <legend>
-                    {field.name}
+                    {scala.xml.Unparsed(field.name)}
                 </legend>
             case FormFieldType.Attachment => renderUpload(field)
             case FormFieldType.Email => renderText(field, req)

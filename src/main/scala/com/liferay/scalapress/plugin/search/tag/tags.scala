@@ -13,15 +13,18 @@ object SearchFormTag extends ScalapressTag {
 }
 
 object QuickSearchTag extends ScalapressTag {
+
     def render(request: ScalapressRequest,
                context: ScalapressContext,
-               params: Map[String, String]): Option[String] = Some(xml.toString())
+               params: Map[String, String]): Option[String] = {
 
-    def xml =
-        <form method="GET" action="/search">
-            <input type="text" name="q" class="search-query" placeholder="Search"/>
+        val placeholder = params.get("placeholder").orElse(params.get("initial")).getOrElse("")
+
+        Some(<form method="GET" action="/search">
+            <input type="text" name="q" class="search-query" placeholder={placeholder}/>
             <button>Go</button>
-        </form>
+        </form>.toString())
+    }
 }
 
 object AttributeSearchTag extends ScalapressTag {
