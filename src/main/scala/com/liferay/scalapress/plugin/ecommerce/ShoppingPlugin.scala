@@ -38,10 +38,14 @@ class ShoppingPlugin {
 
     @Column(length = 100000)
     @BeanProperty var terms: String = _
+
+    @Column(length = 100000)
     @BeanProperty var termsAcceptance: Boolean = _
 
-    @Column(name = "checkoutScripts")
+    @Column(name = "checkoutScripts", length = 100000)
     @BeanProperty var checkoutConfirmationScripts: String = _
+
+    @Column(length = 100000)
     @BeanProperty var checkoutConfirmationText: String = _
 }
 

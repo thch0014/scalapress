@@ -147,7 +147,7 @@ object SagepayFormService extends Logging {
         params.put("Amount", amount)
         params.put("CustomerName", basket.deliveryAddress.accountName)
         params.put("CustomerEmail", basket.deliveryAddress.accountEmail)
-        params.put("Description", "Basket " + basket.sessionId)
+        params.put("Description", "Order at " + domain)
 
         params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
         params.put("FailureURL", "http://" + domain + "/checkout/payment/failure")
