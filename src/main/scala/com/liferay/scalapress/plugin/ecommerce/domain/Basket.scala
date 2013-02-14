@@ -41,7 +41,7 @@ class Basket {
     def linesSubtotal: Double = {
         var total = 0.0
         for (line <- lines.asScala) {
-            total = total + line.total
+            total = total + line.subtotal
         }
         total
     }
@@ -50,7 +50,7 @@ class Basket {
     def linesVat: Double = {
         var total = 0.0
         for (line <- lines.asScala) {
-            total = total + line.total
+            total = total + line.vat
         }
         total
     }
