@@ -19,9 +19,9 @@ class SubmissionListController {
     def list = "admin/submissions/list.vm"
 
     @ModelAttribute def submissions(req: HttpServletRequest,
-                                    @RequestParam(value = "pageNumber", defaultValue = "1") page: Int,
+                                    @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
                                     model: ModelMap) {
-        val subs = context.submissionDao.search(PagedQuery(page, 50))
+        val subs = context.submissionDao.search(PagedQuery(pageNumber, 50))
         model.put("submissions", subs.java)
         model.put("paging", Paging(req, subs))
     }

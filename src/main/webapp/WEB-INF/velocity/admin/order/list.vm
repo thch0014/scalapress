@@ -5,6 +5,8 @@
 
 <a href="$urlResolver.createOrder()" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New Order</a>
 
+#paging($paging)
+
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
@@ -18,7 +20,7 @@
             <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
             <td>$datetool.format($o.datePlaced)</td>
             <td>$!o.status</td>
-            <td>$!o.account.name</td>
+            <td>$!o.account.name $!o.account.email</td>
             <td>
                 <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i> </a>
@@ -27,7 +29,7 @@
     #end
 </table>
 
-
+#paging($paging)
 
 
 #parse("/admin/footer.vm")

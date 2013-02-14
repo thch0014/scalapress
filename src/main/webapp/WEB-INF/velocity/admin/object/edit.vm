@@ -156,7 +156,7 @@
                 #set($values = $attributeWithValues.productElement(1))
 
                 <div class="control-group">
-                    <label class="control-label">$a.name</label>
+                    <label class="control-label">$a.name ($a.id)</label>
 
                     <div class="controls">
 

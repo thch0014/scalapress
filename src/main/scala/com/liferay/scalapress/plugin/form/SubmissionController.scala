@@ -46,7 +46,10 @@ class SubmissionController extends Logging {
             case false => {
 
                 val sub = formService.doSubmission(form, sreq, files.asScala)
-                formService.email(form.recipients.asScala, sub, context.installationDao.get)
+                val recipients = Option(form.recipients)
+                  .map(_.split("\n").map(_.trim).filter(_.length > 0))
+                  .getOrElse(Array[String]())
+                formService.email(recipients, sub, context.installationDao.get)
 
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)

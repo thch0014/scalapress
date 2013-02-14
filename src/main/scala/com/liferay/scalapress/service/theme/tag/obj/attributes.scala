@@ -3,8 +3,6 @@ package com.liferay.scalapress.service.theme.tag.obj
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.enums.AttributeType
-import org.joda.time.DateTime
 
 /** @author Stephen Samuel */
 object AttributeValueTag extends ScalapressTag with TagBuilder {
@@ -14,23 +12,10 @@ object AttributeValueTag extends ScalapressTag with TagBuilder {
             case None => Some("<!-- no id specified for attribute tag -->")
             case Some(id) => {
                 request.obj.flatMap(obj => {
-                    obj.attributeValues.asScala.find(_.id == id.trim.toLong).map(av => {
-                        av.attribute.attributeType match {
-                            case AttributeType.Link => "<a href='" + av.value + "'>" + av.value + "</a>"
-                            case AttributeType.Email => "<a href='mailto:" + av.value + "'>" + av.value + "</a>"
-                            case AttributeType.Date => try {
-                                new DateTime(av.value.toLong).toString("dd/MM/yyyy")
-                            } catch {
-                                case e: Exception => av.value
-                            }
-                            case AttributeType.DateTime => try {
-                                new DateTime(av.value.toLong).toString("dd/MM/yyyy HH:mm")
-                            } catch {
-                                case e: Exception => av.value
-                            }
-                            case _ => av.value.replace("true", "yes").replace("false", "no")
-                        }
-                    }).map(build(_, params))
+                    obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
+                        case None => None
+                        case Some(av) => Some(build(AttributeRenderer.renderValue(av), params))
+                    }
                 })
             }
         }
@@ -45,14 +30,28 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
         params.get("id") match {
             case None => None
             case Some(id) => {
-                request.obj.map(obj => {
-                    val values = obj.attributeValues
-                      .asScala
-                      .filter(_.id == id.trim.toLong)
-                      .map(_.attribute.name)
-                      .map(build(_, params))
-                    val sep = params.get("sep").getOrElse(", ")
-                    build(values.mkString(sep), params)
+                request.obj.flatMap(obj => {
+                    obj.attributeValues.asScala
+                      .find(_.attribute.id == id.trim.toLong)
+                      .map(av => build(av.attribute.name, params))
+                })
+            }
+        }
+    }
+}
+
+object AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
+
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        params.get("id") match {
+            case None => None
+            case Some(id) => {
+                request.obj.flatMap(obj => {
+                    obj.attributeValues.asScala
+                      .find(_.attribute.id == id.trim.toLong)
+                      .map(av => build(av.attribute.section, params))
                 })
             }
         }

@@ -71,6 +71,7 @@ object TagMappings {
         "attribute_table" -> AttributeTableTag,
         "attributes_table" -> AttributeTableTag,
         "attribute_name" -> AttributeNameTag,
+        "attribute_section" -> AttributeSectionTag,
         "attribute" -> AttributeValueTag,
         "search_attribute" -> AttributeSearchTag,
         "site_name" -> SiteNameTag,

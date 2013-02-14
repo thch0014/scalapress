@@ -96,7 +96,13 @@ class ObjectEditController extends FolderPopulator {
     @ModelAttribute("attributesWithValues")
     def attributeEditMap(@PathVariable("id") id: Long): java.util.List[(Attribute, java.util.List[String])] = {
         val obj = objectDao.find(id)
-        val attributes = obj.objectType.attributes.asScala.sortBy(_.name)
+        val attributes = obj.objectType.attributes.asScala.sortWith((a, b) => {
+            val comp = Option(a.section).getOrElse("").compareTo(Option(b.section).getOrElse(""))
+            if (comp == 0)
+                a.position.compareTo(b.position) < 0
+            else
+                comp < 0
+        })
         val attributesWithValues = attributes.map(a => {
             var values = obj.attributeValues.asScala.filter(_.attribute.id == a.id).map(_.value)
             if (values.isEmpty || a.multipleValues)
@@ -135,7 +141,6 @@ class ObjectEditController extends FolderPopulator {
 }
 
 class EditForm {
-
 
     @BeanProperty var sellPrice: Double = _
     @BeanProperty var costPrice: Double = _

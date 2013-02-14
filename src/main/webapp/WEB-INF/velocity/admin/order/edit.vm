@@ -307,7 +307,7 @@
 </table>
 
 <form method="POST" action="/backoffice/order/$order.id/comment/add" class="pull-right">
-    <textarea name="message"></textarea>
+    <textarea name="message" class="input-xxlarge"></textarea>
     <button type="submit" class="btn btn-small">Add Comment</button>
 </form>
 

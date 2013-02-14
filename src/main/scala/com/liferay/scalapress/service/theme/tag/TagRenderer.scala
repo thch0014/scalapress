@@ -40,8 +40,7 @@ object TagRenderer extends Logging {
     def parseQueryString(string: String) =
         string.split("&")
           .map(arg => arg.split("="))
-          .filter(_.size == 2)
-          .map(arg => (arg(0), arg(1)))
+          .map(arg => (arg.head, arg.tail.mkString))
           .toMap
 
     def regex(tag: String) = "\\[" + tag + "(\\?.*?)?\\]"
@@ -56,8 +55,6 @@ object TagRenderer extends Logging {
 
                     val tagname = a._1
                     val tag = a._2
-
-               //     logger.debug("Applying tag [{}={}]", tagname, tag)
 
                     require(tagname != null)
 

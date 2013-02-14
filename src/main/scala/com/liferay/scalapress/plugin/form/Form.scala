@@ -32,8 +32,7 @@ class Form {
     @BeanProperty var submissionScript: String = _
 
     @Column(name = "emails")
-    @ElementCollection
-    @BeanProperty var recipients: java.util.List[String] = new java.util.ArrayList[String]
+    @BeanProperty var recipients: String = _
 
     @BeanProperty var cssId: String = _
     @BeanProperty var cssClass: String = _
