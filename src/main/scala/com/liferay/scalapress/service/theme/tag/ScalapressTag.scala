@@ -22,7 +22,7 @@ trait TagBuilder {
         sb.append(label)
         sb.append(suffix)
 
-        """<a href={href} class={cssClass} id={id} rel={rel}>""" + sb.toString() + "</a>"
+        "<a href='" + href + "' class='" + cssClass + "' id='" + id + "' rel='" + rel + "}'>" + sb + "</a>"
     }
 
     def build(body: Any, params: Map[String, String]): String = {
