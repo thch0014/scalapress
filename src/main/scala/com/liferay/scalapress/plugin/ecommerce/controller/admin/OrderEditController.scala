@@ -13,6 +13,7 @@ import reflect.BeanProperty
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.controller.web.folder.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -96,10 +97,10 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
     }
 
     @RequestMapping(value = Array("comment/add"), method = Array(RequestMethod.POST))
-    def addComment(@RequestParam("message") message: String, @ModelAttribute order: Order) = {
+    def addComment(req: HttpServletRequest, @RequestParam("message") message: String, @ModelAttribute order: Order) = {
         val comment = new OrderComment
         comment.date = System.currentTimeMillis()
-        comment.author = "tbc"
+        comment.author = SecurityFuncs.getUser(req).name
         comment.body = message
         comment.order = order
         order.comments.add(comment)

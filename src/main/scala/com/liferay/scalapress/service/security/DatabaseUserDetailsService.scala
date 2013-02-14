@@ -20,7 +20,7 @@ class DatabaseUserDetailsService extends UserDetailsService {
     }
 }
 
-class BasicUserDetails(user: User) extends UserDetails {
+class BasicUserDetails(val user: User) extends UserDetails {
 
     def isEnabled: Boolean = user.active
     def isCredentialsNonExpired: Boolean = user.active
