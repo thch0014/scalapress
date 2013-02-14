@@ -24,7 +24,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                 val rendered = o.images.asScala.take(limit).map(i => {
 
                     val src = context.imageService.imageLink(i.filename, w, h)
-                    val html = <img src={src} height={h.toString} width={w.toString}/>.toString()
+                    val html = "<img src='" + src + "' height='" + h + "' width='" + w + "'/>"
 
                     params.get("link") match {
 
@@ -78,14 +78,11 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 
-                <a class="colorboxgroup" href={original} title={obj.name} style={display}>
-                    <img src={thumb} width={width.toString} height={height.toString}/>
-                    <span>
-                        {text}
-                    </span>
-                </a>
+                "<a class='colorboxgroup' href='" + original + "' title='" + obj
+                  .name + "' style='" + display + "'><img src='" + thumb + "' width='" + width
+                  .toString + "' height='" + height + "'/><span>" + text + "</span></a> "
 
-            }).map(_.toString()).mkString("\n")
+            }).mkString("\n")
 
             images +
               """<script>

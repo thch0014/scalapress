@@ -40,7 +40,7 @@ object TagRenderer extends Logging {
     def parseQueryString(string: String) =
         string.split("&")
           .map(arg => arg.split("="))
-          .map(arg => (arg.head, arg.tail.mkString))
+          .map(arg => (arg.head, arg.tail.mkString("=")))
           .toMap
 
     def regex(tag: String) = "\\[" + tag + "(\\?.*?)?\\]"
