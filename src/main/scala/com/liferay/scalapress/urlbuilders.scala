@@ -40,7 +40,13 @@ object UriBuilder {
       .toString)
     def apply(url: String) = {
         val u = new URL(url)
-        val params: Map[String, String] = u.getQuery.split("&").map(_.split("=")).map(a => (a(0), a(1))).toMap
+        val params: Map[String, String] = Option(u.getQuery)
+          .getOrElse("")
+          .split("&")
+          .map(_.split("="))
+          .filter(_.length == 2)
+          .map(a => (a(0), a(1)))
+          .toMap
         new UriBuilder(Option(u.getProtocol), Option(u.getHost), Option(u.getPort), Option(u.getPath), params)
     }
 }

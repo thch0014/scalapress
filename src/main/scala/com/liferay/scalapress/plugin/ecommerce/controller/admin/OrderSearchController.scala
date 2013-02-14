@@ -1,13 +1,12 @@
 package com.liferay.scalapress.plugin.ecommerce.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.OrderDao
 import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
-import com.googlecode.genericdao.search.Search
 import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
@@ -23,9 +22,9 @@ class OrderSearchController {
              req: HttpServletRequest,
              @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int) = {
 
-        val subs = context.submissionDao.search(PagedQuery(pageNumber, 50))
-        model.put("orders", subs.java)
-        model.put("paging", Paging(req, subs))
+        val orders = orderDao.search(PagedQuery(pageNumber, 50))
+        model.put("orders", orders.java)
+        model.put("paging", Paging(req, orders))
         "admin/order/list.vm"
     }
 
@@ -35,11 +34,4 @@ class OrderSearchController {
         orderDao.save(u)
         "redirect:/backoffice/order"
     }
-
-    import scala.collection.JavaConverters._
-
-    @ModelAttribute("orders") def orders = {
-        orderDao.search(new Search(classOf[Order]).addSort("id", true).setMaxResults(200)).asJava
-    }
-
 }
