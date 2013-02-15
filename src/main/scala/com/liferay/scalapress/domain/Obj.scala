@@ -10,6 +10,8 @@ import javax.persistence._
 @Table(name = "items")
 class Obj {
 
+    def available = stock > 0
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _

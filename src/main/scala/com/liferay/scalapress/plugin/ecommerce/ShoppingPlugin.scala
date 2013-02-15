@@ -39,6 +39,8 @@ class ShoppingPlugin {
     @Column(length = 100000)
     @BeanProperty var terms: String = _
 
+    @BeanProperty var backorders: Boolean = _
+
     @Column(length = 100000)
     @BeanProperty var termsAcceptance: Boolean = _
 

@@ -32,7 +32,7 @@ class ObjectEditController extends FolderPopulator {
     @Autowired var searchService: SearchService = _
     @Autowired var passwordEncoder: PasswordEncoder = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute("form") form: EditForm) = {
         form.sellPrice = form.o.sellPrice / 100.0
         form.costPrice = form.o.costPrice / 100.0
@@ -41,7 +41,7 @@ class ObjectEditController extends FolderPopulator {
         "admin/object/edit.vm"
     }
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest) = {
 
         Option(form.changePassword).map(_.trim).filter(_.length > 0).foreach(pass => {
@@ -91,6 +91,19 @@ class ObjectEditController extends FolderPopulator {
         searchService.index(form.o)
         searchService.index(form.o)
         "redirect:/backoffice/obj/" + form.o.id
+    }
+
+    @RequestMapping("image/{imageId}/remove")
+    def removeImage(@PathVariable("imageId") imageId: String,
+                    @ModelAttribute("form") form: EditForm) = {
+        form.o.images.asScala.find(_.id == imageId) match {
+            case None =>
+            case Some(img) =>
+                form.o.images.remove(img)
+                img.obj = null
+                objectDao.save(form.o)
+        }
+        "redirect:/backoffice/obj" + form.o.id
     }
 
     @ModelAttribute("attributesWithValues")
