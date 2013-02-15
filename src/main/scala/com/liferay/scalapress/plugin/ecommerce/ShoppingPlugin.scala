@@ -29,6 +29,8 @@ class ShoppingPlugin {
 
     @BeanProperty var outOfStockMessage: String = _
 
+    @BeanProperty var orderConfirmationRecipients: String = _
+
     @Enumerated(EnumType.STRING)
     @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
 

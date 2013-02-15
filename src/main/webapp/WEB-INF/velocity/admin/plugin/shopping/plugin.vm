@@ -63,8 +63,15 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Order Confirmation Recipients</label>
 
+        <div class="controls">
+            #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
+        </div>
+    </div>
     <legend>Checkout</legend>
+
     <div class="control-group">
         <label class="control-label">Checkout Confirmation Page Text</label>
 

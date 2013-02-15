@@ -38,3 +38,14 @@ class Payment {
     @BeanProperty var ipAddress: String = _
 }
 
+object Payment {
+    def apply(transactionId: String, orderId: Long, amount: Int) = {
+        val payment = new Payment
+        payment.paymentType = "SagePayForm"
+        payment.date = System.currentTimeMillis()
+        payment.transactionId = transactionId
+        payment.order = orderId
+        payment.amount = amount
+        payment
+    }
+}

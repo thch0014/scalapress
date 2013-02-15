@@ -45,6 +45,8 @@ case class ScalapressRequest(request: HttpServletRequest,
 
 object ScalapressRequest {
 
+    def apply(request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
+        new ScalapressRequest(request, context)
     def apply(obj: Obj, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
         ScalapressRequest(request, context).withObject(obj)
     def apply(folder: Folder, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =

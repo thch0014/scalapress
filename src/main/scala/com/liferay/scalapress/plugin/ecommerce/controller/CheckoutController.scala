@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, OrderDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.ecommerce.{OrderService, ShoppingPluginDao}
+import com.liferay.scalapress.plugin.ecommerce.{OrderEmailService, OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
-import com.liferay.scalapress.plugin.ecommerce.domain.Address
-import javax.validation.Valid
+import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Address}
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
 import java.net.URL
 import com.liferay.scalapress.domain.Obj
+import javax.validation.Valid
 
 /** @author Stephen Samuel */
 @Controller
@@ -33,50 +33,74 @@ class CheckoutController {
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
     @Autowired var typeDao: TypeDao = _
+    @Autowired var orderEmailService: OrderEmailService = _
 
     @RequestMapping
-    def start = "redirect:/checkout/delivery"
+    def start = "redirect:/checkout/address"
+
+    @ResponseBody
+    @RequestMapping(value = Array("address"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showAddress(req: HttpServletRequest,
+                    @ModelAttribute("basket") basket: Basket,
+                    errors: Errors): ScalaPressPage = {
+
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Address")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        page.body(CheckoutAddressRenderer.renderDeliveryAddress(sreq.basket, errors))
+        page
+    }
+
+    @ResponseBody
+    @RequestMapping(value = Array("address"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    def submitAddress(@Valid @ModelAttribute("basket") basket: Basket,
+                      errors: Errors,
+                      req: HttpServletRequest): ScalaPressPage = {
+
+        val sreq = ScalapressRequest(req, context)
+
+        if (errors.hasErrors)
+            showAddress(req, basket, errors)
+        else {
+            basketDao.save(sreq.basket)
+            showDelivery(req, basket, errors)
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showAddress(req: HttpServletRequest, @ModelAttribute("address") address: Address,
-                    errors: Errors): ScalaPressPage = {
-
-        val deliveryOptions = deliveryOptionDao.findAll()
+    def showDelivery(req: HttpServletRequest,
+                     @ModelAttribute("basket") basket: Basket,
+                     errors: Errors): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Delivery")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutAddressRenderer.renderDeliveryAddress(sreq.basket, address, deliveryOptions, errors))
+        val deliveryOptions = deliveryOptionDao.findAll()
+        page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(sreq.basket, deliveryOptions, errors))
         page
     }
 
     @ResponseBody
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def submitAddress(req: HttpServletRequest,
-                      @Valid @ModelAttribute("address") address: Address,
-                      errors: Errors): ScalaPressPage = {
-
-        val sreq = ScalapressRequest(req, context)
+    def submitDelivery(@ModelAttribute("basket") basket: Basket,
+                       errors: Errors,
+                       req: HttpServletRequest): ScalaPressPage = {
 
         Option(req.getParameter("deliveryOptionId")).filter(_.trim.length > 0) match {
             case None =>
                 errors.reject("deliveryOptionId", "Choose delivery option")
             case Some(id) =>
                 val delivery = deliveryOptionDao.find(id.toLong)
-                sreq.basket.deliveryOption = delivery
+                basket.deliveryOption = delivery
         }
 
         if (errors.hasErrors)
-            showAddress(req, address, errors)
-
+            showDelivery(req, basket, errors)
         else {
-
-            addressDao.save(address)
-
-            sreq.basket.deliveryAddress = address
-            basketDao.save(sreq.basket)
+            basketDao.save(basket)
             showConfirmation(req)
         }
     }
@@ -85,7 +109,6 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showConfirmation(req: HttpServletRequest): ScalaPressPage = {
 
-        val shoppingPlugin = shoppingPluginDao.get
         val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
@@ -94,8 +117,7 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(CheckoutConfirmationRenderer.
-          renderConfirmationPage(sreq.basket, sagepayFormPlugin, domain))
+        page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, sagepayFormPlugin, domain))
         page
     }
 
@@ -112,8 +134,8 @@ class CheckoutController {
           .findAll()
           .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
         val account = Obj(accountType)
-        account.email = sreq.basket.deliveryAddress.accountEmail
-        account.name = sreq.basket.deliveryAddress.accountName
+        account.email = sreq.basket.accountEmail
+        account.name = sreq.basket.accountName
         objectDao.save(account)
 
         val order = OrderService.createOrder(account, sreq.basket, req)
@@ -134,6 +156,9 @@ class CheckoutController {
             case None =>
         }
 
+        val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
+        orderEmailService.email(recipients, order, context.installationDao.get)
+
         val confText = Option(shoppingPlugin.checkoutConfirmationText)
           .map(text => text
           .replace("[order_id]", order.id.toString)
@@ -145,6 +170,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletedStage))
         page.body(confText)
         page.body()
         page
@@ -163,11 +189,21 @@ class CheckoutController {
         page
     }
 
-    @ModelAttribute("address") def address(req: HttpServletRequest) = {
+    @ModelAttribute("basket") def basket(req: HttpServletRequest) = ScalapressRequest(req, context).basket
+
+    @ModelAttribute def ensureBasketFields(req: HttpServletRequest) {
         val basket = ScalapressRequest(req, context).basket
         Option(basket.deliveryAddress) match {
-            case None => new Address
-            case Some(address) => address
+            case None =>
+                basket.deliveryAddress = new Address
+                basketDao.save(basket)
+            case _ =>
+        }
+        Option(basket.billingAddress) match {
+            case None =>
+                basket.billingAddress = new Address
+                basketDao.save(basket)
+            case _ =>
         }
     }
 }

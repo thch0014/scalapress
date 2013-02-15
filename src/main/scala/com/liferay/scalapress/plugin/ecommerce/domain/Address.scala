@@ -16,13 +16,6 @@ class Address {
     @BeanProperty var id: Long = _
 
     @NotEmpty
-    @BeanProperty var accountName: String = _
-
-    @Email
-    @NotEmpty
-    @BeanProperty var accountEmail: String = _
-
-    @NotEmpty
     @Column(name = "contactName")
     @BeanProperty var name: String = _
 

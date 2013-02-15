@@ -2,7 +2,6 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 
 import com.liferay.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
-import com.liferay.scalapress.domain.Obj
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -11,7 +10,10 @@ object CheckoutConfirmationRenderer {
     def renderConfirmationPage(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
         val totals = renderBasket(basket).toString()
         val payments = renderPaymentForm(basket, plugin, domain).toString()
-        totals + "\n\n" + payments
+
+        "<div id='checkout-confirmation'>" +
+          CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage) +
+          totals + "\n\n" + payments + "</div>"
     }
 
     private def renderBasketLines(lines: Seq[BasketLine]) = {
@@ -73,18 +75,18 @@ object CheckoutConfirmationRenderer {
         val termsError = ""
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
-        <div class="checkout-payment-form">
+        <div id="sagepay-form">
             <form method="POST" action={SagepayFormService.LiveUrl}>
-                {paramInputs}<label class="control-label" for="name">Accept
+                {paramInputs}<label class="checkbox">
+                <input type="checkbox" name="termsAccepted"/>
+                Accept
                 <a href="/checkout/terms">Terms and Conditions</a>
+            </label>{termsError}<label class="checkbox">
+                <input type="checkbox" name="newsletterOptin"/>
+                Please send me details of your special offers. You can opt out at any time.
             </label>
-                <div class="controls">
-                    <input type="checkbox" name="termsAccepted"/>{termsError}
-                </div>
-                <label class="control-label" for="name">Newsletter Optin</label>
-                <div class="controls">
-                    <input type="checkbox" name="newsletterOptin"/>
-                </div> <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+
+                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
         </div>
     }

@@ -4,7 +4,7 @@ import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.Obj
+import java.util.UUID
 
 /** @author Stephen Samuel */
 object SagepayFormService extends Logging {
@@ -25,7 +25,7 @@ object SagepayFormService extends Logging {
         result
     }
 
-    def decrypt(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
+    def decryptParams(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
 
         val encrypted = Base64.decodeBase64(base64.getBytes)
         val x = xor(encrypted, plugin.sagePayEncryptionPassword)
@@ -34,7 +34,7 @@ object SagepayFormService extends Logging {
         params
     }
 
-    def encrypt(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
+    def encryptParams(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
         val data = params.map(e => e._1 + "=" + e._2).mkString("&")
         val x = xor(data.getBytes, plugin.sagePayEncryptionPassword)
         val base64 = Base64.encodeBase64(x)
@@ -44,7 +44,7 @@ object SagepayFormService extends Logging {
     // returns the four params needed by sagepay
     def params(basket: Basket, plugin: SagepayFormPlugin, domain: String): Map[String, String] = {
 
-        val crypt = encrypt(plugin, cryptParams(plugin, basket, domain))
+        val crypt = encryptParams(plugin, cryptParams(plugin, basket, domain))
 
         val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
@@ -114,7 +114,7 @@ object SagepayFormService extends Logging {
         logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
-        val p = decrypt(plugin, crypt)
+        val p = decryptParams(plugin, crypt)
         logger.debug("Sagepay params {}", p)
 
         val status = p.get("Status").getOrElse("NoStatus")
@@ -136,7 +136,7 @@ object SagepayFormService extends Logging {
     def cryptParams(plugin: SagepayFormPlugin, basket: Basket, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
-        params.put("VendorTxCode", basket.sessionId) // store basket id as our tx id
+        params.put("VendorTxCode", UUID.randomUUID.toString)
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
@@ -145,8 +145,8 @@ object SagepayFormService extends Logging {
 
         params.put("Currency", "GBP")
         params.put("Amount", amount)
-        params.put("CustomerName", basket.deliveryAddress.accountName)
-        params.put("CustomerEmail", basket.deliveryAddress.accountEmail)
+        params.put("CustomerName", basket.accountName)
+        params.put("CustomerEmail", basket.accountEmail)
         params.put("Description", "Order at " + domain)
 
         params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
@@ -162,11 +162,14 @@ object SagepayFormService extends Logging {
         params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
         params.put("DeliveryCountry", "GB")
 
-        params.put("BillingSurname", firstname)
-        params.put("BillingFirstnames", lastname)
-        params.put("BillingAddress1", basket.deliveryAddress.address1)
-        params.put("BillingCity", basket.deliveryAddress.town)
-        params.put("BillingPostCode", basket.deliveryAddress.postcode)
+        val fn = basket.billingAddress.name.split(" ").last
+        val ln = basket.billingAddress.name.split(" ").head
+
+        params.put("BillingSurname", fn)
+        params.put("BillingFirstnames", ln)
+        params.put("BillingAddress1", basket.billingAddress.address1)
+        params.put("BillingCity", basket.billingAddress.town)
+        params.put("BillingPostCode", basket.billingAddress.postcode)
         params.put("BillingCountry", "GB")
 
         params.put("Basket", sageBasketString(basket))

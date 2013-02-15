@@ -44,11 +44,12 @@ object ScriptTag extends ScalapressTag with TagBuilder {
 
 object CssTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
-        val tag = """<link href="/static/css/bootstrap-combined.min.css" rel="stylesheet"/>
-                     <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
-                    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
-                    <link rel="stylesheet" href="/static/css/colorbox.css"/>
-                    	<link rel="stylesheet" href="/static/css/eventCalendar.css">
+        val tag = """   <link href="/static/css/bootstrap-combined.min.css" rel="stylesheet"/>
+                        <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
+                        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
+                        <link rel="stylesheet" href="/static/css/colorbox.css"/>
+                        <link rel="stylesheet" href="/static/css/wizard.css"/>
+                        <link rel="stylesheet" href="/static/css/eventCalendar.css">
                     	<link rel="stylesheet" href="/static/css/eventCalendar_theme_responsive.css">"""
         Some(tag)
     }

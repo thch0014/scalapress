@@ -4,6 +4,8 @@ import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.domain.setup.Installation
+import org.springframework.mail.SimpleMailMessage
 
 /** @author Stephen Samuel */
 object OrderService {
@@ -26,4 +28,5 @@ object OrderService {
 
         order
     }
+
 }

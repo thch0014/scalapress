@@ -4,6 +4,8 @@ import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMa
 import reflect.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
+import javax.validation.Valid
+import org.hibernate.validator.constraints.{Email, NotEmpty}
 
 /** @author Stephen Samuel */
 @Entity
@@ -18,12 +20,25 @@ class Basket {
     @Id
     @BeanProperty var sessionId: String = _
 
+    @NotEmpty
+    @BeanProperty var accountName: String = _
+
+    @Email
+    @NotEmpty
+    @BeanProperty var accountEmail: String = _
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "basket", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var lines: java.util.List[BasketLine] = new util.ArrayList[BasketLine]()
 
-    @ManyToOne
+    @Valid
+    @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "delivery_address", nullable = true)
     @BeanProperty var deliveryAddress: Address = _
+
+    @Valid
+    @ManyToOne(cascade = Array(CascadeType.ALL))
+    @JoinColumn(name = "billing_address", nullable = true)
+    @BeanProperty var billingAddress: Address = _
 
     @ManyToOne
     @JoinColumn(name = "delivery_option_id", nullable = true)
