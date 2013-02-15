@@ -260,6 +260,7 @@
                     <th>Image</th>
                     <th>Filename</th>
                     <th>Content Type</th>
+                    <th></th>
                 </tr>
 
                 #foreach ($a in $assets)
@@ -274,6 +275,9 @@
                         </td>
                         <td>$a.filename()</td>
                         <td>$a.contentType()</td>
+                        <td>
+                            <a href="/backoffice/object/$form.o.id/image/$a.filename()/remove" class="btn btn-danger">
+                                <i class="icon-trash icon-white"></i></a></td>
                     </tr>
                 #end
             </table>

@@ -93,17 +93,17 @@ class ObjectEditController extends FolderPopulator {
         "redirect:/backoffice/obj/" + form.o.id
     }
 
-    @RequestMapping("image/{imageId}/remove")
-    def removeImage(@PathVariable("imageId") imageId: String,
+    @RequestMapping(Array("image/{filename}/remove"))
+    def removeImage(@PathVariable("filename") filename: String,
                     @ModelAttribute("form") form: EditForm) = {
-        form.o.images.asScala.find(_.id == imageId) match {
+        form.o.images.asScala.find(_.filename == filename) match {
             case None =>
             case Some(img) =>
                 form.o.images.remove(img)
                 img.obj = null
                 objectDao.save(form.o)
         }
-        "redirect:/backoffice/obj" + form.o.id
+        "redirect:/backoffice/obj/" + form.o.id
     }
 
     @ModelAttribute("attributesWithValues")

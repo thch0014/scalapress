@@ -75,12 +75,16 @@ object CheckoutConfirmationRenderer {
 
         <div class="checkout-payment-form">
             <form method="POST" action={SagepayFormService.LiveUrl}>
-                <label class="control-label" for="name">Accept
-                    <a href="/checkout/terms">Terms and Conditions</a>
-                </label>
+                {paramInputs}<label class="control-label" for="name">Accept
+                <a href="/checkout/terms">Terms and Conditions</a>
+            </label>
                 <div class="controls">
                     <input type="checkbox" name="termsAccepted"/>{termsError}
-                </div>{paramInputs}<button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </div>
+                <label class="control-label" for="name">Newsletter Optin</label>
+                <div class="controls">
+                    <input type="checkbox" name="newsletterOptin"/>
+                </div> <button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
         </div>
     }
