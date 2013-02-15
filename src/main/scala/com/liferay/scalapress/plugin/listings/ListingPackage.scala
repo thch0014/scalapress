@@ -16,6 +16,9 @@ class ListingPackage {
     @Column(name = "maxcategories")
     @BeanProperty var maxFolders: Int = _
 
+    @ManyToOne
+    @BeanProperty var objectType: ObjectType = _
+
     @BeanProperty var maxImages: Int = _
 
     @BeanProperty var maxCharacters: Int = _
@@ -23,7 +26,4 @@ class ListingPackage {
     @BeanProperty var labels: String = _
 
     @BeanProperty var fee: Int = _
-
-    @ManyToOne
-    @BeanProperty var objectType: ObjectType = _
 }
