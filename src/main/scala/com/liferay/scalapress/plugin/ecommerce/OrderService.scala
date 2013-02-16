@@ -4,11 +4,24 @@ import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.dao.{OrderDao, ObjectDao, TypeDao}
 
 /** @author Stephen Samuel */
 object OrderService {
 
-    def createOrder(account: Obj, basket: Basket, req: HttpServletRequest): Order = {
+    def createAccount(typeDao: TypeDao, objectDao: ObjectDao, basket: Basket) = {
+
+        val accountType = typeDao.findAll()
+          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
+        val account = Obj(accountType)
+        account.email = basket.accountEmail
+        account.name = basket.accountName
+        objectDao.save(account)
+
+        account
+    }
+
+    def createOrder(account: Obj, orderDao: OrderDao, basket: Basket, req: HttpServletRequest): Order = {
 
         val order = Order(req.getRemoteAddr)
         order.account = account
@@ -34,7 +47,8 @@ object OrderService {
             order.lines.add(orderLine)
         }
 
+        orderDao.save(order)
+
         order
     }
-
 }

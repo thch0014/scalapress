@@ -139,19 +139,11 @@ class CheckoutController {
 
         val shoppingPlugin = shoppingPluginDao.get
         val sagepayFormPlugin = sagepayFormPluginDao.get
-        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Confirmed")
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Completed")
         val params = req.getParameterMap
 
-        val accountType = typeDao
-          .findAll()
-          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
-        val account = Obj(accountType)
-        account.email = sreq.basket.accountEmail
-        account.name = sreq.basket.accountName
-        objectDao.save(account)
-
-        val order = OrderService.createOrder(account, sreq.basket, req)
-        orderDao.save(order)
+        val account = OrderService.createAccount(typeDao, objectDao, sreq.basket)
+        val order = OrderService.createOrder(account, orderDao, sreq.basket, req)
 
         sreq.basket.empty()
         basketDao.save(sreq.basket)

@@ -20,7 +20,7 @@
     </tr>
     #foreach ($o in $objects)
         <tr>
-            <td>$o.id</td>
+            <td><a href="$urlResolver.objectEdit($o)">$o.id</a></td>
             <td>$o.name</td>
             <td>$!o.status</td>
             <td>$datetool.format($o.dateCreated)</td>
