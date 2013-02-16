@@ -24,6 +24,7 @@ object RecaptchaClient {
 
         val client = new DefaultHttpClient
         val resp = client.execute(post)
-        EntityUtils.toString(resp.getEntity) == "true"
+        val outcome = EntityUtils.toString(resp.getEntity)
+        outcome.toLowerCase.startsWith("true")
     }
 }

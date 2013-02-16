@@ -39,11 +39,10 @@ class SubmissionController extends Logging {
         formService.checkErrors(form, sreq)
 
         if (form.captcha) {
-            if (!RecaptchaClient
-              .post(req.getParameter("recaptcha_challenge_field"),
+            if (!RecaptchaClient.post(req.getParameter("recaptcha_challenge_field"),
                 req.getParameter("recaptcha_response_field"),
                 req.getRemoteAddr))
-                sreq.error("general", "Please complete captcha")
+                sreq.error("captcha.error", "Please complete captcha")
         }
 
         sreq.hasErrors match {

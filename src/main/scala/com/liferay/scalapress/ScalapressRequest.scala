@@ -40,6 +40,7 @@ case class ScalapressRequest(request: HttpServletRequest,
         errors.put(key, value)
     }
     def hasErrors = !errors.isEmpty
+    def hasError(key: String) = errors.contains(key)
 
     def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
     def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))

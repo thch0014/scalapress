@@ -14,9 +14,12 @@ object FormRenderer {
         val fields = form.fields.asScala.sortBy(_.position)
         val renderedFields = fields.map(renderField(_, req))
         val folderId = req.folder.map(_.id.toString).getOrElse("0")
+        val captchaError = req.hasError("captcha.error")
 
         <form method="POST" enctype="multipart/form-data" action={action(form, folderId)} class="form-horizontal">
-            {renderedFields}{if (form.captcha) _captcha() else ""}{button(form)}
+            {if (captchaError) <div class='alert alert-error'>Please try the captcha again</div> else null}{renderedFields}{if (form
+          .captcha) _captcha()
+        else ""}{button(form)}
         </form>.toString()
     }
 
@@ -31,15 +34,20 @@ object FormRenderer {
     }
 
     private def _captcha() = {
-        <script type="text/javascript"
-                src="http://www.google.com/recaptcha/api/challenge?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq">
-        </script>
-          <noscript>
-              <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq"
-                      height="300" width="500" frameborder="0"></iframe> <br/>
-              <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-              <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
-          </noscript>
+        <div class="control-group">
+            <div class="controls">
+
+                <script type="text/javascript"
+                        src="http://www.google.com/recaptcha/api/challenge?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq">
+                </script>
+                <noscript>
+                    <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq"
+                            height="300" width="500" frameborder="0"></iframe> <br/>
+                    <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                    <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+                </noscript>
+            </div>
+        </div>
     }
 
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
