@@ -23,7 +23,7 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(obj => {
-            val saving = obj.rrp = obj.sellPrice
+            val saving = obj.rrp - obj.sellPrice
             saving match {
                 case 0 => None
                 case _ =>
