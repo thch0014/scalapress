@@ -4,8 +4,6 @@ import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.Obj
-import com.liferay.scalapress.domain.setup.Installation
-import org.springframework.mail.SimpleMailMessage
 
 /** @author Stephen Samuel */
 object OrderService {
@@ -14,10 +12,17 @@ object OrderService {
 
         val order = Order(req.getRemoteAddr)
         order.account = account
-        order.deliveryAddress = basket.deliveryAddress
-        order.deliveryAddress.active = true
+
         order.billingAddress = basket.billingAddress
         order.billingAddress.active = true
+
+        if (basket.useBillingAddress) {
+            order.deliveryAddress = basket.billingAddress
+        } else {
+            order.deliveryAddress = basket.deliveryAddress
+            order.deliveryAddress.active = true
+        }
+
         order.status = "New"
         order.deliveryCharge = Option(basket.deliveryOption).map(_.charge).getOrElse(0)
         order.deliveryVatRate = Option(basket.deliveryOption).map(_.vatRate).getOrElse(0)
