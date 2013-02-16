@@ -8,10 +8,12 @@ import scala.collection.JavaConverters._
 object CheckoutConfirmationRenderer {
 
     def renderConfirmationPage(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
-        val totals = renderBasket(basket).toString()
-        val payments = renderPaymentForm(basket, plugin, domain).toString()
-        val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket.deliveryAddress) + "</div>"
-        val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket.deliveryAddress) + "</div>"
+        val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
+        val payments = renderPaymentForm(basket, plugin, domain)
+        val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket
+          .deliveryAddress) + "<br/><br/></div>"
+        val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
+          .billingAddress) + "<br/><br/></div>"
 
         "<div id='checkout-confirmation'>" +
           CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage) +
@@ -86,12 +88,17 @@ object CheckoutConfirmationRenderer {
     }
 
     private def _renderTotals(basket: Basket) = {
+
+        val subtotal = " £%1.2f".format(basket.subtotal / 100.0)
+        val vat = " £%1.2f".format(basket.vat / 100.0)
+        val total = " £%1.2f".format(basket.total / 100.0)
+
         <tr>
             <td></td>
             <td></td>
             <th>Subtotal</th>
             <th>
-                {basket.subtotal}
+                {subtotal}
             </th>
         </tr>
           <tr>
@@ -99,7 +106,7 @@ object CheckoutConfirmationRenderer {
               <td></td>
               <th>Vat</th>
               <th>
-                  {basket.vat}
+                  {vat}
               </th>
           </tr>
           <tr>
@@ -107,7 +114,7 @@ object CheckoutConfirmationRenderer {
               <td></td>
               <th>Total</th>
               <th>
-                  {basket.total}
+                  {total}
               </th>
           </tr>
     }
@@ -131,6 +138,7 @@ object CheckoutConfirmationRenderer {
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
         <div id="sagepay-form">
+            <legend>Confirm and Pay</legend>
             <form method="POST" action={SagepayFormService.LiveUrl}>
                 {paramInputs}<label class="checkbox">
                 <input type="checkbox" name="termsAccepted"/>
@@ -140,8 +148,7 @@ object CheckoutConfirmationRenderer {
                 <input type="checkbox" name="newsletterOptin"/>
                 Please send me details of your special offers. You can opt out at any time.
             </label>
-
-                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                <br/> <button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
         </div>
     }

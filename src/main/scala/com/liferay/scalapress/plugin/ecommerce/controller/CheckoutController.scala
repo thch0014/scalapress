@@ -15,7 +15,6 @@ import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDa
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
 import java.net.URL
 import com.liferay.scalapress.domain.Obj
-import javax.validation.Valid
 
 /** @author Stephen Samuel */
 @Controller
@@ -91,6 +90,11 @@ class CheckoutController {
         val page = ScalaPressPage(theme, sreq)
 
         val deliveryOptions = deliveryOptionDao.findAll()
+
+        if (errors.hasErrors) {
+            page.body(<div class="alert alert-error">Please choose delivery method</div>)
+        }
+
         page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(basket, deliveryOptions, errors))
         page
     }
@@ -104,16 +108,12 @@ class CheckoutController {
         Option(req.getParameter("deliveryOptionId")).filter(_.trim.length > 0) match {
             case None =>
                 errors.reject("deliveryOptionId", "Choose delivery option")
+                showDelivery(req, basket, errors)
             case Some(id) =>
                 val delivery = deliveryOptionDao.find(id.toLong)
                 basket.deliveryOption = delivery
-        }
-
-        if (errors.hasErrors)
-            showDelivery(req, basket, errors)
-        else {
-            basketDao.save(basket)
-            showConfirmation(req)
+                basketDao.save(basket)
+                showConfirmation(req)
         }
     }
 
