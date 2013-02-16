@@ -77,7 +77,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
             googleCategory,
             obj.folders.asScala.head.fullName,
             "http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj),
-            assetStore.link(obj.images.asScala.head.filename),
+            "http://" + domain + "/images/" + obj.images.asScala.head.filename,
             "new",
             formattedPrice + " GBP",
             "in stock",

@@ -10,7 +10,7 @@ import com.liferay.scalapress.plugin.ecommerce.{OrderEmailService, OrderService,
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Address}
-import org.springframework.validation.Errors
+import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
 import java.net.URL
@@ -35,6 +35,8 @@ class CheckoutController {
     @Autowired var typeDao: TypeDao = _
     @Autowired var orderEmailService: OrderEmailService = _
 
+    @Autowired var validator: Validator = _
+
     @RequestMapping
     def start = "redirect:/checkout/address"
 
@@ -48,26 +50,32 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(CheckoutAddressRenderer.renderDeliveryAddress(sreq.basket, errors))
+        page.body(CheckoutAddressRenderer.renderDeliveryAddress(basket, errors))
         page
     }
 
     @ResponseBody
     @RequestMapping(value = Array("address"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def submitAddress(@Valid @ModelAttribute("basket") basket: Basket,
+    def submitAddress(@ModelAttribute("basket") basket: Basket,
                       errors: Errors,
                       req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req, context)
-
-        if (req.getParameter("useBillingAddress") == "true") {
-
+        basket.useBillingAddress = req.getParameterMap.containsKey("useBillingAddress")
+        if (basket.useBillingAddress) {
+            basket.deliveryAddress.name = basket.billingAddress.name
+            basket.deliveryAddress.postcode = basket.billingAddress.postcode
+            basket.deliveryAddress.address1 = basket.billingAddress.address1
+            basket.deliveryAddress.address2 = basket.billingAddress.address2
+            basket.deliveryAddress.town = basket.billingAddress.town
+            basket.deliveryAddress.country = basket.billingAddress.country
+            basket.deliveryAddress.telephone = basket.billingAddress.telephone
         }
+        validator.validate(basket, errors)
 
         if (errors.hasErrors)
             showAddress(req, basket, errors)
         else {
-            basketDao.save(sreq.basket)
+            basketDao.save(basket)
             showDelivery(req, basket, errors)
         }
     }
@@ -83,7 +91,7 @@ class CheckoutController {
         val page = ScalaPressPage(theme, sreq)
 
         val deliveryOptions = deliveryOptionDao.findAll()
-        page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(sreq.basket, deliveryOptions, errors))
+        page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(basket, deliveryOptions, errors))
         page
     }
 

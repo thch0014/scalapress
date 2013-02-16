@@ -15,6 +15,9 @@ object OrderService {
         val order = Order(req.getRemoteAddr)
         order.account = account
         order.deliveryAddress = basket.deliveryAddress
+        order.deliveryAddress.active = true
+        order.billingAddress = basket.billingAddress
+        order.billingAddress.active = true
         order.status = "New"
         order.deliveryCharge = Option(basket.deliveryOption).map(_.charge).getOrElse(0)
         order.deliveryVatRate = Option(basket.deliveryOption).map(_.vatRate).getOrElse(0)

@@ -17,17 +17,21 @@ case class ScalapressRequest(request: HttpServletRequest,
         request.setAttribute("errors", scala.collection.mutable.Map.empty)
 
     def basket: Basket = {
-        val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
-        val basket = Option(context.basketDao.find(sessionId)) match {
+        Option(request.getAttribute(ScalapressConstants.BasketKey)) match {
+            case Some(basket) => basket.asInstanceOf[Basket]
             case None =>
-                val b = new Basket
-                b.sessionId = sessionId
-                context.basketDao.save(b)
-                b
-            case Some(b) => b
+                val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
+                val basket = Option(context.basketDao.find(sessionId)) match {
+                    case None =>
+                        val b = new Basket
+                        b.sessionId = sessionId
+                        context.basketDao.save(b)
+                        b
+                    case Some(b) => b
+                }
+                request.setAttribute(ScalapressConstants.BasketKey, basket)
+                basket
         }
-        request.setAttribute(ScalapressConstants.BasketKey, basket)
-        basket
     }
 
     def errors = request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]

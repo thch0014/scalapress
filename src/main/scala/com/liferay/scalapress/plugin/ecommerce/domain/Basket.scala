@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
+import javax.persistence.{Transient, JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
 import reflect.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
@@ -22,6 +22,8 @@ class Basket {
 
     @NotEmpty
     @BeanProperty var accountName: String = _
+
+    @BeanProperty var useBillingAddress = false
 
     @Email
     @NotEmpty
