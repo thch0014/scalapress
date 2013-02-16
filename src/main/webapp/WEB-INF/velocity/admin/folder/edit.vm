@@ -6,117 +6,174 @@
 <legend>Folder Details</legend>
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Folder Details</a></li>
+            <li><a href="#tab2" data-toggle="tab">Metadata</a></li>
+            <li><a href="#tab3" data-toggle="tab">Sections</a></li>
+            <li><a href="#tab4" data-toggle="tab">Header & Footer</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
 
-        <div class="controls">
-            #springFormInput("folder.name", "class='input-xxlarge'")
+                <div class="control-group">
+                    <label class="control-label">Name</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.name", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Parent</label>
+
+                    <div class="controls">
+                        <select id="parent" name="parent" class="input-xxlarge">
+                            #foreach($option in $parents.keySet())
+                                <option value="${option}"
+                                    #if("$!folder.parent.id" == "$option")
+                                        selected="selected"
+                                    #end>
+                                    ${parents.get($option)}</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Hidden</label>
+
+                    <div class="controls">
+                        #springFormCheckbox("folder.hidden")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Theme</label>
+
+                    <div class="controls">
+                        <select id="theme" name="theme" class="input-xxlarge">
+                            #foreach($option in $themesMap.keySet())
+                                <option value="${option}"
+                                    #if("$!folder.theme.id" == "$option")
+                                        selected="selected"
+                                    #end>
+                                    ${themesMap.get($option)}</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Folder Ordering</label>
+
+                    <div class="controls">
+                        #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Permalink</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.permaLink", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Redirect</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.redirect", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tab-pane" id="tab2">
+
+                <div class="control-group">
+                    <label class="control-label">Title Tag</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.titleTag", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Description Tag</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.descriptionTag", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Keywords Tag</label>
+
+                    <div class="controls">
+                        #springFormInput("folder.keywordsTag", "class='input-xxlarge'")
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane" id="tab3">
+
+
+                <legend>Sections</legend>
+                <table class="table table-condensed table-hover" id="sections-table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                    #foreach ($s in $sections)
+                        <tr data-section-id="$s.id" class="section-row">
+                            <td>$s.id</td>
+                            <td>$!s.name()</td>
+                            <td>$s.desc()</td>
+                            <td>
+                                <a href="$s.backoffice()" role="button" class="btn btn-mini">
+                                    <i class="icon-pencil"></i></a>
+
+                                <a href="$urlResolver.deleteSection($folder, $s)" role="button"
+                                   class="btn btn-mini btn-danger">
+                                    <i class="icon-trash icon-white"></i></a>
+                            </td>
+                        </tr>
+                    #end
+                </table>
+
+
+            </div>
+
+
+            <div class="tab-pane" id="tab4">
+
+
+                <div class="control-group">
+                    <label class="control-label">Header</label>
+
+                    <div class="controls">
+                        #springFormTextarea("folder.header", "rows='8' class='input-block-level htmleditor'")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Footer</label>
+
+                    <div class="controls">
+                        #springFormTextarea("folder.footer", "rows='8' class='input-block-level htmleditor'")
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Parent</label>
-
-        <div class="controls">
-            <select id="parent" name="parent" class="input-xxlarge">
-                #foreach($option in $parents.keySet())
-                    <option value="${option}"
-                        #if("$!folder.parent.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${parents.get($option)}</option>
-                #end
-            </select>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Hidden</label>
-
-        <div class="controls">
-            #springFormCheckbox("folder.hidden")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Theme</label>
-
-        <div class="controls">
-            <select id="theme" name="theme" class="input-xxlarge">
-                #foreach($option in $themesMap.keySet())
-                    <option value="${option}"
-                        #if("$!folder.theme.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${themesMap.get($option)}</option>
-                #end
-            </select>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Folder Ordering</label>
-
-        <div class="controls">
-            #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Permalink</label>
-
-        <div class="controls">
-            #springFormInput("folder.permaLink", "class='input-xxlarge'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Redirect</label>
-
-        <div class="controls">
-            #springFormInput("folder.redirect", "class='input-xxlarge'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Title Tag</label>
-
-        <div class="controls">
-            #springFormInput("folder.titleTag", "class='input-xxlarge'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Description Tag</label>
-
-        <div class="controls">
-            #springFormInput("folder.descriptionTag", "class='input-xxlarge'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Keywords Tag</label>
-
-        <div class="controls">
-            #springFormInput("folder.keywordsTag", "class='input-xxlarge'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Header</label>
-
-        <div class="controls">
-            #springFormTextarea("folder.header", "rows='8' class='input-block-level htmleditor'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Footer</label>
-
-        <div class="controls">
-            #springFormTextarea("folder.footer", "rows='8' class='input-block-level htmleditor'")
-        </div>
-    </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -125,29 +182,6 @@
 
 </form>
 
-<legend>Sections</legend>
-<table class="table table-condensed table-hover" id="sections-table">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th></th>
-    </tr>
-    #foreach ($s in $sections)
-        <tr data-section-id="$s.id" class="section-row">
-            <td>$s.id</td>
-            <td>$!s.name()</td>
-            <td>$s.desc()</td>
-            <td>
-                <a href="$s.backoffice()" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i></a>
-
-                <a href="$urlResolver.deleteSection($folder, $s)" role="button" class="btn btn-mini btn-danger">
-                    <i class="icon-trash icon-white"></i></a>
-            </td>
-        </tr>
-    #end
-</table>
 
 <script>
     $(function () {
