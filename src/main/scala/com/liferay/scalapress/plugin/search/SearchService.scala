@@ -143,6 +143,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
+          .map(_.replaceAll("\\D", ""))
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
         if (search.imageOnly)

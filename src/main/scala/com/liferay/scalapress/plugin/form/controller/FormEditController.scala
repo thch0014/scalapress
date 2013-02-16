@@ -32,8 +32,7 @@ class FormEditController {
     }
 
     @RequestMapping(value = Array("field/order"), method = Array(RequestMethod.POST))
-    def reorderSections(@ModelAttribute form: Form,
-                        @RequestBody order: String): String = {
+    def reorderFields(@ModelAttribute form: Form, @RequestBody order: String): String = {
 
         val ids = order.split("-")
         form.fields.asScala.foreach(field => {
@@ -47,6 +46,6 @@ class FormEditController {
     @ModelAttribute def folder(@PathVariable("id") id: Long, model: ModelMap) {
         val form = context.formDao.find(id)
         model.put("form", form)
-        model.put("fields", form.fields.asScala.sortBy(_.position))
+        model.put("fields", form.fields.asScala.sortBy(_.position).asJava)
     }
 }

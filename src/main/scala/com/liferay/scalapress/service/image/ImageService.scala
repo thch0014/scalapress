@@ -17,6 +17,8 @@ class ImageService extends Logging {
     @Autowired var assetStore: AssetStore = _
 
     def imageLink(filename: String, w: Int, h: Int) = {
+        require(w < 2000)
+        require(h < 2000)
         _ensureThumbnailStored(filename, w, h)
         assetStore.link(_thumbailFilename(filename, w, h))
     }

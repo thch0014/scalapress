@@ -29,14 +29,22 @@ class SubmissionController extends Logging {
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def view(@ModelAttribute("form") form: Form,
-             req: HttpServletRequest,
-             resp: HttpServletResponse,
-             @RequestParam(value = "file") files: java.util.List[MultipartFile],
-             @RequestParam(value = "folder", required = false) folderId: Long): ScalaPressPage = {
+    def submit(@ModelAttribute("form") form: Form,
+               req: HttpServletRequest,
+               resp: HttpServletResponse,
+               @RequestParam(value = "file") files: java.util.List[MultipartFile],
+               @RequestParam(value = "folder", required = false) folderId: Long): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
         formService.checkErrors(form, sreq)
+
+        if (form.captcha) {
+            if (!RecaptchaClient
+              .post(req.getParameter("recaptcha_challenge_field"),
+                req.getParameter("recaptcha_response_field"),
+                req.getRemoteAddr))
+                sreq.error("general", "Please complete captcha")
+        }
 
         sreq.hasErrors match {
             case true => {

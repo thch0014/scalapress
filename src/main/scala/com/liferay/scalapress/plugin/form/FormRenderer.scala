@@ -16,7 +16,7 @@ object FormRenderer {
         val folderId = req.folder.map(_.id.toString).getOrElse("0")
 
         <form method="POST" enctype="multipart/form-data" action={action(form, folderId)} class="form-horizontal">
-            {renderedFields}{button(form)}
+            {renderedFields}{if (form.captcha) _captcha() else ""}{button(form)}
         </form>.toString()
     }
 
@@ -30,8 +30,19 @@ object FormRenderer {
         </div>
     }
 
-    private def renderField(field: FormField, req: ScalapressRequest): Elem = {
+    private def _captcha() = {
+        <script type="text/javascript"
+                src="http://www.google.com/recaptcha/api/challenge?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq">
+        </script>
+          <noscript>
+              <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq"
+                      height="300" width="500" frameborder="0"></iframe> <br/>
+              <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+              <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+          </noscript>
+    }
 
+    private def renderField(field: FormField, req: ScalapressRequest): Elem = {
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
             case FormFieldType.Text => renderText(field, req)
@@ -64,7 +75,6 @@ object FormRenderer {
     }
 
     private def renderText(field: FormField, req: ScalapressRequest) = {
-
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
         val star = if (field.required) "*" else ""
         val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
@@ -83,7 +93,6 @@ object FormRenderer {
     }
 
     private def renderSelect(field: FormField, req: ScalapressRequest) = {
-
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
         val star = if (field.required) "*" else ""
 
@@ -136,7 +145,6 @@ object FormRenderer {
     }
 
     private def renderRadio(field: FormField, req: ScalapressRequest) = {
-
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
         val star = if (field.required) "*" else ""
 

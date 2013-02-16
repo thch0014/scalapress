@@ -39,5 +39,4 @@ class Form {
 
     @Column(name = "ccItemListers")
     @BeanProperty var emailObjectOwner: Boolean = _
-
 }
