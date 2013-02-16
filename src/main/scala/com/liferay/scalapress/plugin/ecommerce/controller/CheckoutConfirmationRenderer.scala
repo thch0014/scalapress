@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Address, BasketLine, Basket}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
 import scala.collection.JavaConverters._
 
@@ -10,10 +10,12 @@ object CheckoutConfirmationRenderer {
     def renderConfirmationPage(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
         val totals = renderBasket(basket).toString()
         val payments = renderPaymentForm(basket, plugin, domain).toString()
+        val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket.deliveryAddress) + "</div>"
+        val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket.deliveryAddress) + "</div>"
 
         "<div id='checkout-confirmation'>" +
           CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage) +
-          totals + "\n\n" + payments + "</div>"
+          totals + billing + delivery + payments + "</div>"
     }
 
     private def renderBasketLines(lines: Seq[BasketLine]) = {
@@ -39,6 +41,32 @@ object CheckoutConfirmationRenderer {
         })
     }
 
+    private def _renderAddress(address: Address) = {
+        <div class="address">
+            <div>
+                {address.name}
+            </div>
+            <div>
+                {address.company}
+            </div>
+            <div>
+                {address.address1}
+            </div>
+            <div>
+                {address.address2}
+            </div>
+            <div>
+                {address.town}
+            </div>
+            <div>
+                {address.postcode}
+            </div>
+            <div>
+                {address.country}
+            </div>
+        </div>
+    }
+
     private def renderDeliveryLine(basket: Basket) = {
 
         val price = " £%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0)
@@ -57,6 +85,33 @@ object CheckoutConfirmationRenderer {
         </tr>
     }
 
+    private def _renderTotals(basket: Basket) = {
+        <tr>
+            <td></td>
+            <td></td>
+            <th>Subtotal</th>
+            <th>
+                {basket.subtotal}
+            </th>
+        </tr>
+          <tr>
+              <td></td>
+              <td></td>
+              <th>Vat</th>
+              <th>
+                  {basket.vat}
+              </th>
+          </tr>
+          <tr>
+              <td></td>
+              <td></td>
+              <th>Total</th>
+              <th>
+                  {basket.total}
+              </th>
+          </tr>
+    }
+
     private def renderBasket(basket: Basket) = {
 
         <table id="checkout-confirmation-basket" class="table table-striped table-condensed">
@@ -65,7 +120,7 @@ object CheckoutConfirmationRenderer {
                 <th>Qty</th>
                 <th>Price</th>
                 <th>Total</th>
-            </tr>{renderBasketLines(basket.lines.asScala)}{renderDeliveryLine(basket)}
+            </tr>{renderBasketLines(basket.lines.asScala)}{renderDeliveryLine(basket)}{_renderTotals(basket)}
         </table>
     }
 

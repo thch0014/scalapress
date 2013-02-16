@@ -46,7 +46,12 @@ object CheckoutAddressRenderer {
               .controlGroup("billingAddress.telephone",
                 "Telephone",
                 basket.billingAddress.telephone,
-                errors)}<legend>Delivery Address</legend>{BootstrapHelpers
+                errors)}<legend>Delivery Address</legend>
+                <label class="checkbox">
+                    <input type="checkbox" name="useBillingAddress"/>
+                    Use billing address for delivery.
+                </label>
+                {BootstrapHelpers
               .controlGroup("deliveryAddress.name", "Contact Name",
                 basket.deliveryAddress.name, errors)}{BootstrapHelpers
               .controlGroup("deliveryAddress.company", "Company",

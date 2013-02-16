@@ -60,6 +60,10 @@ class CheckoutController {
 
         val sreq = ScalapressRequest(req, context)
 
+        if (req.getParameter("useBillingAddress") == "true") {
+
+        }
+
         if (errors.hasErrors)
             showAddress(req, basket, errors)
         else {
