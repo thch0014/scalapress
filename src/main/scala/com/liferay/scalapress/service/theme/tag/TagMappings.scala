@@ -25,6 +25,7 @@ object TagMappings {
         "pricing_rrp" -> RrpTag,
         "price_rrp" -> RrpTag,
         "pricing_rrp_discount" -> RrpDiscountTag,
+        "price_rrp_discount" -> RrpDiscountTag,
         "stock" -> ObjectStockTag,
         "availability" -> ObjectAvailabilityTag,
         "folder" -> FolderTag, "category" -> FolderTag,
