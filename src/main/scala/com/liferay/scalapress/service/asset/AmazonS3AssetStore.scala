@@ -113,7 +113,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)
-        request.setStorageClass(StorageClass.Standard)
+        request.setStorageClass(StorageClass.ReducedRedundancy)
 
         getAmazonS3Client.putObject(request)
         key
