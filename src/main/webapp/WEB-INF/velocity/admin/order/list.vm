@@ -13,6 +13,7 @@
         <th>Date Placed</th>
         <th>Status</th>
         <th>Customer</th>
+        <th>Total</th>
         <th></th>
     </tr>
     #foreach ($o in $orders)
@@ -21,6 +22,7 @@
             <td>$datetool.format($o.datePlaced)</td>
             <td>$!o.status</td>
             <td>$!o.account.name $!o.account.email</td>
+            <td>$o.total()</td>
             <td>
                 <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i> </a>
