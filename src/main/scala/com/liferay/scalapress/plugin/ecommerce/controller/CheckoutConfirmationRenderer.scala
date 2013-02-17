@@ -93,6 +93,7 @@ object CheckoutConfirmationRenderer {
     }
 
     private def _terms(text: String) = {
+        val content = scala.xml.Unparsed(text)
         <div id="termsModal" class="modal fade hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -100,7 +101,7 @@ object CheckoutConfirmationRenderer {
             </div>
             <div class="modal-body">
                 <p>
-                    {text}
+                    {content}
                 </p>
             </div>
             <div class="modal-footer">
