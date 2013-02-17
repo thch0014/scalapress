@@ -119,54 +119,54 @@
             <label class="control-label">Name</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.deliveryAddress.name</span>
+                <span class="input-xlarge uneditable-input">$order.billingAddress.name</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Company</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.company</span>
+                <span class="input-xlarge uneditable-input">$!order.billingAddress.company</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Address</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
+                <span class="input-xlarge uneditable-input">$order.billingAddress.address1</span>
             </div>
         </div>
         <div class="control-group">
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address2</span>
+                <span class="input-xlarge uneditable-input">$!order.billingAddress.address2</span>
             </div>
         </div>
         <div class="control-group">
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address3</span>
+                <span class="input-xlarge uneditable-input">$!order.billingAddress.address3</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">City</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
+                <span class="input-large uneditable-input">$order.billingAddress.town</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Postcode</label>
 
             <div class="controls">
-                <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
+                <span class="input-medium uneditable-input">$order.billingAddress.postcode</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Country</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
+                <span class="input-large uneditable-input">$order.billingAddress.country</span>
             </div>
         </div>
         <div class="control-group">
