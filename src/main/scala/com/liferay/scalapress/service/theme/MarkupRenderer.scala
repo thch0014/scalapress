@@ -3,7 +3,7 @@ package com.liferay.scalapress.service.theme
 import tag.TagRenderer
 import com.liferay.scalapress.domain.{Obj, Folder, Markup}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.plugin.ecommerce.domain.BasketLine
+import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
 
 /** @author Stephen Samuel */
 object MarkupRenderer {
@@ -33,6 +33,16 @@ object MarkupRenderer {
 
     def render(o: Obj, m: Markup, request: ScalapressRequest, context: ScalapressContext): String =
         render(m, request.withObject(o), context)
+
+    def renderOrderLines(objects: Seq[OrderLine], m: Markup, request: ScalapressRequest) = {
+        val start = TagRenderer.render(m.start, request, request.context)
+        val body = objects
+          .map(o =>
+            TagRenderer.render(m.body, request.withOrderLine(o), request.context))
+          .mkString(TagRenderer.render(m.between, request, request.context))
+        val end = TagRenderer.render(m.end, request, request.context)
+        start + body + end
+    }
 
     def renderObjects(objects: Seq[Obj], m: Markup, request: ScalapressRequest, context: ScalapressContext) = {
         val start = TagRenderer.render(m.start, request, context)

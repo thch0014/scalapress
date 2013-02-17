@@ -38,6 +38,14 @@ class ShoppingPlugin {
     @JoinColumn(name = "basketLineMarkup")
     @BeanProperty var basketLineMarkup: Markup = _
 
+    @ManyToOne
+    @JoinColumn(name = "invoiceLineMarkup")
+    @BeanProperty var invoiceLineMarkup: Markup = _
+
+    @ManyToOne
+    @JoinColumn(name = "invoiceMarkup")
+    @BeanProperty var invoiceMarkup: Markup = _
+
     @Column(length = 100000)
     @BeanProperty var terms: String = _
 

@@ -3,13 +3,15 @@ package com.liferay.scalapress
 import controller.web.ScalapressConstants
 import domain.{Folder, Obj}
 import javax.servlet.http.HttpServletRequest
-import plugin.ecommerce.domain.{BasketLine, Basket}
+import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
                              context: ScalapressContext,
                              title: Option[String] = None,
                              obj: Option[Obj] = None,
+                             order: Option[Order] = None,
+                             orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
                              line: Option[BasketLine] = None) {
 
@@ -46,6 +48,8 @@ case class ScalapressRequest(request: HttpServletRequest,
     def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))
     def withFolder(f: Folder): ScalapressRequest = copy(folder = Option(f))
     def withObject(o: Obj): ScalapressRequest = copy(obj = Option(o))
+    def withOrder(o: Order): ScalapressRequest = copy(order = Option(o))
+    def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
 }
 
 object ScalapressRequest {
