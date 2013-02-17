@@ -58,7 +58,11 @@ class FormService extends Logging {
 
         val message = new SimpleMailMessage()
 
-        val nowww = if (installation.domain.startsWith("www.")) installation.domain.drop(4) else installation.domain
+        val nowww = Option(installation.domain) match {
+            case Some(domain) if domain.startsWith("www") => domain.drop(4)
+            case Some(domain) => domain
+            case _ => "nodomain.com"
+        }
 
         message.setFrom("nodotreply@" + nowww)
         message.setTo(recipients.toArray)
