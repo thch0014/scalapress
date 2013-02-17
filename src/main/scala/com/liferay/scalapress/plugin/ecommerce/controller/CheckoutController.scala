@@ -165,7 +165,7 @@ class CheckoutController {
         val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
         orderEmailService.email(recipients, order, context.installationDao.get)
 
-        val confText = Option(shoppingPlugin.checkoutConfirmationText)
+        val confText = Option(shoppingPlugin.checkoutConfirmationText).filter(_.trim.length > 0)
           .map(text => text
           .replace("[order_id]", order.id.toString)
           .replace("[order_email]", order.account.email)
@@ -178,7 +178,6 @@ class CheckoutController {
         page.body(shoppingPlugin.checkoutConfirmationScripts)
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletedStage))
         page.body(confText)
-        page.body()
         page
     }
 

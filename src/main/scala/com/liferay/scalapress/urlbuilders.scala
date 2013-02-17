@@ -47,6 +47,10 @@ object UriBuilder {
           .filter(_.length == 2)
           .map(a => (a(0), a(1)))
           .toMap
-        new UriBuilder(Option(u.getProtocol), Option(u.getHost), Option(u.getPort), Option(u.getPath), params)
+        new UriBuilder(Option(u.getProtocol),
+            Option(u.getHost),
+            Option(u.getPort).filter(_ < 0),
+            Option(u.getPath),
+            params)
     }
 }
