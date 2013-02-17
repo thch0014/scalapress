@@ -63,6 +63,6 @@ class Address {
         Option(postcode).foreach(sb append _)
         Option(country).foreach(sb append _)
         Option(telephone).foreach(sb append _)
-        sb.mkString("\n")
+        sb.mkString("<br/>")
     }
 }

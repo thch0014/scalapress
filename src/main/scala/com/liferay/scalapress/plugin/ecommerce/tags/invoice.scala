@@ -39,7 +39,7 @@ object InvoiceBillingAddressTag extends ScalapressTag {
 
 object InvoiceDateTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(arg => new DateTime(arg.datePlaced).toString)
+        request.order.map(arg => new DateTime(arg.datePlaced).toString("dd/MM/yyyy"))
     }
 }
 
