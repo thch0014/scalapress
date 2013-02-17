@@ -168,6 +168,7 @@ class ElasticSearchService extends SearchService with Logging {
                 val resp = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                   .setQuery(query)
+                  .addField("id")
                   .addField("name")
                   .addField("hasImage")
                   .setFrom(0)
@@ -178,12 +179,12 @@ class ElasticSearchService extends SearchService with Logging {
                 })
 
                 search.sortType match {
-                    case Sort.Newest => resp.addSort("_id", SortOrder.DESC)
-                    case Sort.Oldest => resp.addSort("_id", SortOrder.ASC)
+                    case Sort.Newest => resp.addSort("name", SortOrder.DESC)
+                    case Sort.Oldest => resp.addSort("name", SortOrder.ASC)
                     //   case Sort.Price => resp.addSort("name", SortOrder.ASC)
                     //   case Sort.PriceHigh => resp.addSort("name", SortOrder.DESC)
                     //   case _ => resp.addSort("name", SortOrder.ASC)
-                    case _ => resp.addSort("_id", SortOrder.ASC)
+                    case _ => resp.addSort("name", SortOrder.ASC)
                 }
 
                 resp.execute().actionGet()
@@ -196,6 +197,7 @@ class ElasticSearchService extends SearchService with Logging {
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
+          .addField("id")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -212,6 +214,7 @@ class ElasticSearchService extends SearchService with Logging {
         val search = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
+          .addField("id")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -240,6 +243,7 @@ class ElasticSearchService extends SearchService with Logging {
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
+          .field("id", obj.id)
           .field("name", obj.name)
           .field("content", obj.content)
           .field("status", obj.status)

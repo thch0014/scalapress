@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
+import com.liferay.scalapress.domain.Markup
 
 /** @author Stephen Samuel */
 @Controller
@@ -15,6 +16,14 @@ class MarkupListController {
 
     @RequestMapping(produces = Array("text/html"))
     def list = "admin/theme/markup/list.vm"
+
+    @RequestMapping(value = Array("create"), produces = Array("text/html"))
+    def create = {
+        val markup = new Markup
+        markup.name = "new markup"
+        markupDao.save(markup)
+        "redirect:/backoffice/markup/" + markup.id
+    }
 
     import scala.collection.JavaConverters._
 

@@ -4,7 +4,6 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {
@@ -27,13 +26,13 @@ object InvoiceAccountEmailTag extends ScalapressTag {
 
 object InvoiceDeliveryAddressTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(_.deliveryAddress.label)
+        request.order.flatMap(order => Option(order.deliveryAddress)).map(_.label)
     }
 }
 
 object InvoiceBillingAddressTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(_.billingAddress.label)
+        request.order.flatMap(order => Option(order.billingAddress)).map(_.label)
     }
 }
 
@@ -67,7 +66,32 @@ object InvoiceLinesTag extends ScalapressTag {
             }
         })
     }
+}
 
+object InvoiceDeliveryDetailsTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        request.order.flatMap(order => Option(order.deliveryDetails))
+    }
+}
+
+object InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+
+        request.order.map(order => {
+            val text = if (params.contains("ex"))
+                order.deliveryEx
+            else if (params.contains("vat"))
+                order.deliveryVat
+            else
+                order.deliveryInc
+            val textFormatted = "£%1.2f".format(text / 100.0)
+            build(textFormatted, params)
+        })
+    }
 }
 
 object InvoiceLineDescTag extends ScalapressTag {

@@ -17,9 +17,13 @@ class InvoiceController {
     @Autowired var context: ScalapressContext = _
 
     @ResponseBody
+    @RequestMapping
     def invoice(@PathVariable("id") id: Long, req: HttpServletRequest): String = {
         val order = orderDao.find(id)
-        val invoiceMarkup = context.shoppingPluginDao.get.invoiceMarkup
-        MarkupRenderer.render(invoiceMarkup, ScalapressRequest(req, context).withOrder(order))
+        Option(context.shoppingPluginDao.get.invoiceMarkup) match {
+            case None => "No invoice markup set"
+            case Some(m) => MarkupRenderer.render(m, ScalapressRequest(req, context).withOrder(order))
+        }
+
     }
 }
