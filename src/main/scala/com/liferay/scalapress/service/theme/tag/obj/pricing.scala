@@ -25,9 +25,9 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
         request.obj.flatMap(obj => {
             val saving = obj.rrp - obj.sellPrice
             saving match {
-                case 0 => None
+                case i if i <= 0 => None
                 case _ =>
-                    val textFormatted = "£%1.2f".format(obj.rrp / 100.0)
+                    val textFormatted = "£%1.2f".format(saving / 100.0)
                     Some(build(textFormatted, params))
             }
         })

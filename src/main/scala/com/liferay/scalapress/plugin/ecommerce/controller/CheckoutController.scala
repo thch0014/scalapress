@@ -14,7 +14,6 @@ import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
 import java.net.URL
-import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -121,6 +120,7 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showConfirmation(req: HttpServletRequest): ScalaPressPage = {
 
+        val shoppingPlugin = shoppingPluginDao.get
         val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
@@ -129,7 +129,9 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, sagepayFormPlugin, domain))
+        page
+          .body(CheckoutConfirmationRenderer
+          .renderConfirmationPage(sreq.basket, sagepayFormPlugin, shoppingPlugin, domain))
         page
     }
 

@@ -12,7 +12,7 @@ import com.liferay.scalapress.enums.{StockMethod, CheckoutMethod}
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugins_shopping")
+@Table(name = "t")
 class ShoppingPlugin {
 
     @Id
