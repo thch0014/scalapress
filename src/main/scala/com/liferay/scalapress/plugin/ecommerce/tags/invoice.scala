@@ -116,7 +116,7 @@ object InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
                 order.deliveryVat
             else
                 order.deliveryInc
-            val textFormatted = "&pound;%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text)
             build(textFormatted, params)
         })
     }
@@ -142,7 +142,7 @@ object InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
                 line.priceVat
             else
                 line.priceIncVat
-            val textFormatted = "&pound;%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text)
             build(textFormatted, params)
         })
     }
@@ -160,7 +160,7 @@ object InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
                 line.totalVat
             else
                 line.totalIncVat
-            val textFormatted = "&pound;%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text)
             build(textFormatted, params)
         })
     }
@@ -178,7 +178,7 @@ object InvoiceTotalTag extends ScalapressTag with TagBuilder {
                 order.vat
             else
                 order.total
-            val textFormatted = "&pound;%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text)
             build(textFormatted, params)
         })
     }
@@ -194,7 +194,7 @@ object InvoiceLinesTotalTag extends ScalapressTag with TagBuilder {
                 order.linesVat
             else
                 order.linesTotal
-            val textFormatted = "&pound;%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text)
             build(textFormatted, params)
         })
     }
