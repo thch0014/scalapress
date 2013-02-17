@@ -34,7 +34,9 @@ class BasketController {
         val markup = shoppingPluginDao.get.basketMarkup
 
         page.body("<form method='POST'>")
-        if (markup != null)
+        if (markup == null)
+            page.body("<!-- no basket markup set -->")
+        else
             page.body(MarkupRenderer.render(markup, sreq, context))
         page.body("</form>")
         page
