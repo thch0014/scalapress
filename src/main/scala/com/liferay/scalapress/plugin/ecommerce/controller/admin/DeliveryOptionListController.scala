@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
@@ -27,5 +27,17 @@ class DeliveryOptionListController {
         "redirect:/backoffice/delivery"
     }
 
-    @ModelAttribute("options") def options = deliveryOptionDao.findAll().asJava
+    @RequestMapping(value = Array("/order"), method = Array(RequestMethod.POST))
+    def reorder(@RequestBody order: String): String = {
+
+        val ids = order.split("-")
+        deliveryOptionDao.findAll().foreach(d => {
+            val pos = ids.indexOf(d.id.toString)
+            d.position = pos
+            deliveryOptionDao.save(d)
+        })
+        "ok"
+    }
+
+    @ModelAttribute("options") def options = deliveryOptionDao.findAll().sortBy(_.position).asJava
 }

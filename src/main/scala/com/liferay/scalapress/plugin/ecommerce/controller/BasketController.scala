@@ -79,6 +79,5 @@ class BasketController {
         "redirect:/basket"
     }
 
-    // populate methods
     @ModelAttribute def basket(req: HttpServletRequest) = ScalapressRequest(req, context).basket
 }

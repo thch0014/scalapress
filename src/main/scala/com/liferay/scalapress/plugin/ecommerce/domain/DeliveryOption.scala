@@ -30,6 +30,8 @@ class DeliveryOption {
     // valid for these areas only
     @BeanProperty var postcodes: String = _
 
+    @BeanProperty var position: Int = _
+
     @ElementCollection
     @BeanProperty var countries: java.util.Set[String] = _
 

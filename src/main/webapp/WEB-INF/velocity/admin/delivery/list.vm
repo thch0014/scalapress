@@ -3,15 +3,17 @@
 
 <h3>Delivery Options</h3>
 
+<a href="/backoffice/delivery/create" role="button" class="btn btn-small">
+    <i class="icon-plus"></i> Create Delivery Option</a>
 
-<table class="table table-condensed table-hover">
+<table class="table table-condensed table-hover" id="deliveryoptions-table">
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th></th>
     </tr>
     #foreach ($o in $options)
-        <tr>
+        <tr class="option-row" data-delivery-id="$o.id">
             <td>$o.id</td>
             <td>$!o.name</td>
             <td>
@@ -22,8 +24,30 @@
     #end
 </table>
 
+<script>
+    $(function () {
+        $("#deliveryoptions-table tbody").sortable({
 
-<a href="/backoffice/delivery/create" role="button" class="btn btn-small">
-    <i class="icon-plus"></i> Create Delivery Option</a>
+            update: function (event, ui) {
+                var order = []
+                $("#deliveryoptions-table tr.option-row").each(function (v) {
+                    var id = $(this).attr("data-delivery-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/delivery/$o.id/order",
+                    contentType: "text/plain",
+                    data: order.join('-')
+                });
+            }
+        });
+        $("#deliveryoptions-table tbody").disableSelection();
+    });
+</script>
+
+
+
 
 #parse("/admin/footer.vm")

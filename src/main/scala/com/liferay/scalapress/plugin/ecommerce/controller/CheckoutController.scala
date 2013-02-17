@@ -88,7 +88,7 @@ class CheckoutController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        val deliveryOptions = deliveryOptionDao.findAll()
+        val deliveryOptions = deliveryOptionDao.findAll().sortBy(_.position)
 
         if (errors.hasErrors) {
             page.body(<div class="alert alert-error">Please choose delivery method</div>)

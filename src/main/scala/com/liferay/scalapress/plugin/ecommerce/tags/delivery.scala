@@ -7,7 +7,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 object DeliveryOptionsTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
-        val options = context.deliveryOptionDao.findAll()
+        val options = context.deliveryOptionDao.findAll().sortBy(_.position)
         val currentDeliveryId = Option(request.basket.deliveryOption).map(_.id.toString).orNull
 
         val radios = options.map(opt => {
