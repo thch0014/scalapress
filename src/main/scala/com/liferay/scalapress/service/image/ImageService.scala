@@ -8,6 +8,7 @@ import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import com.liferay.scalapress.Logging
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 @Component
@@ -15,6 +16,11 @@ class ImageService extends Logging {
 
     val cache = scala.collection.mutable.HashSet[String]()
     @Autowired var assetStore: AssetStore = _
+
+    @PostConstruct
+    def populateCache() {
+        assetStore.list(50000).foreach(asset => cache.add(asset.filename))
+    }
 
     def imageLink(filename: String, w: Int, h: Int) = {
         require(w < 2000)
