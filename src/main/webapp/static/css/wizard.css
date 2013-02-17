@@ -3,6 +3,7 @@
 }
 
 .wizard a {
+    height: 20px;
     padding: 10px 12px 10px;
     margin-right: 5px;
     background: #efefef;

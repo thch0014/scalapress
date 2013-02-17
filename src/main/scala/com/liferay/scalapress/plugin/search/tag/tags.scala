@@ -19,9 +19,12 @@ object QuickSearchTag extends ScalapressTag {
                params: Map[String, String]): Option[String] = {
 
         val placeholder = params.get("placeholder").orElse(params.get("initial")).getOrElse("")
+        val objectType = params
+          .get("objectType")
+          .map(arg => <input type="hidden" value={arg.toString} name="objectType"/>).orNull
 
         Some(<form method="GET" action="/search">
-            <input type="text" name="q" class="search-query" placeholder={placeholder}/>
+            {objectType}<input type="text" name="q" class="search-query" placeholder={placeholder}/>
             <button>Go</button>
         </form>.toString())
     }
@@ -33,12 +36,13 @@ object AttributeSearchTag extends ScalapressTag {
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
 
-        params.get("id") match {
+        params.get(" id ") match {
             case None => None
             case Some(id) =>
                 val attribute = context.attributeDao.find(id.toLong)
                 val xml =
-                    <form method="GET" action="/search">
+                    <form method=" GET " action="
+        /search">
                         <select name="q" action="/search">
                             {options(attribute.options.asScala)}
                         </select>

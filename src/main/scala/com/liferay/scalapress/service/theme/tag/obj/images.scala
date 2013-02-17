@@ -29,10 +29,10 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                     params.get("link") match {
 
                         case Some(link) if link == "image" =>
-                            buildLink(html, context.assetStore.link(i.filename), params)
+                            buildLink(context.assetStore.link(i.filename), html, params)
 
                         case Some(link) if link == "object" =>
-                            buildLink(html, FriendlyUrlGenerator.friendlyUrl(o), params)
+                            buildLink(FriendlyUrlGenerator.friendlyUrl(o), html, params)
 
                         case _ => build(html, params)
                     }
