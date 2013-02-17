@@ -61,6 +61,7 @@ object TagMappings {
         "invoice_delivery_address" -> InvoiceDeliveryAddressTag,
         "invoice_line_desc" -> InvoiceLineDescTag,
         "invoice_total" -> InvoiceTotalTag,
+        "invoice_number" -> InvoiceNumberTag,
         "invoice_lines" -> InvoiceLinesTag,
         "invoice_line_qty" -> InvoiceLineQtyTag,
         "invoice_line_price" -> InvoiceLinePriceTag,

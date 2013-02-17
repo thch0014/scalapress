@@ -32,7 +32,7 @@ object ScriptTag extends ScalapressTag with TagBuilder {
         val tag = """
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
           <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
-          <script src="//cdn.jsdelivr.net/colorbox/1.3.21/jquery.colorbox-min.js"></script>
+          <script src="/static/js/jquery.colorbox-min.js"></script>
           <script src="/static/js/jquery.easing.1.3.js"></script>
           <script src="/static/js/jquery.galleryview-3.0-dev.js"></script>
           <script src="/static/js/jquery.timers-1.2.js"></script>

@@ -68,6 +68,14 @@ object InvoiceLinesTag extends ScalapressTag {
     }
 }
 
+object InvoiceNumberTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        request.order.map(order => order.id.toString)
+    }
+}
+
 object InvoiceDeliveryDetailsTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,

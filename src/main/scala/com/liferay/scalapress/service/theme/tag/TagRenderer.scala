@@ -30,7 +30,9 @@ object TagRenderer extends Logging {
         "newsletter",
         "pricing_original",
         "accessories",
-        "options")
+        "options",
+        "invoice_line_options",
+        "invoice_voucher_discount")
 
     def erase(text: String) = {
         require(text != null)

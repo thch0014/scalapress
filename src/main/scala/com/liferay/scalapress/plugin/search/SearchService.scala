@@ -19,7 +19,7 @@ import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilde
 import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
-import org.elasticsearch.search.sort.SortOrder
+import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -75,26 +75,7 @@ class ElasticSearchService extends SearchService with Logging {
         objs.foreach(index(_))
 
         logger.info("Indexing finished")
-
     }
-
-    //    private def index(folder: Folder) {
-    //        logger.debug("Indexing [{}]", folder)
-    //        val src = source(folder)
-    //
-    //        try {
-    //
-    //            client.prepareDelete(INDEX, "folder", folder.id.toString).execute().actionGet(2000)
-    //
-    //            client.prepareIndex(INDEX, "folder", folder.id.toString)
-    //              .setSource(src)
-    //              .execute()
-    //              .actionGet(2000)
-    //
-    //        } catch {
-    //            case e: Exception => logger.warn(e.getMessage)
-    //        }
-    //    }
 
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
@@ -117,6 +98,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+          .addField("objid")
           .addField("name")
           .setQuery(new PrefixQueryBuilder("name", q))
           .setFrom(0)
@@ -155,6 +137,7 @@ class ElasticSearchService extends SearchService with Logging {
 
             case 0 =>
                 client.prepareSearch(INDEX)
+                  .addField("objid")
                   .addField("name")
                   .setFrom(0)
                   .setSize(limit)
@@ -168,7 +151,7 @@ class ElasticSearchService extends SearchService with Logging {
                 val resp = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                   .setQuery(query)
-                  .addField("id")
+                  .addField("objid")
                   .addField("name")
                   .addField("hasImage")
                   .setFrom(0)
@@ -178,14 +161,12 @@ class ElasticSearchService extends SearchService with Logging {
                     resp.setTypes(arg: _ *)
                 })
 
-                search.sortType match {
-                    case Sort.Newest => resp.addSort("name", SortOrder.DESC)
-                    case Sort.Oldest => resp.addSort("name", SortOrder.ASC)
-                    //   case Sort.Price => resp.addSort("name", SortOrder.ASC)
-                    //   case Sort.PriceHigh => resp.addSort("name", SortOrder.DESC)
-                    //   case _ => resp.addSort("name", SortOrder.ASC)
-                    case _ => resp.addSort("name", SortOrder.ASC)
+                val sort = search.sortType match {
+                    case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
+                    case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
+
                 }
+                resp.addSort(sort.ignoreUnmapped(true))
 
                 resp.execute().actionGet()
         }
@@ -197,7 +178,7 @@ class ElasticSearchService extends SearchService with Logging {
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
-          .addField("id")
+          .addField("objid")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -214,7 +195,7 @@ class ElasticSearchService extends SearchService with Logging {
         val search = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
-          .addField("id")
+          .addField("objid")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -223,16 +204,6 @@ class ElasticSearchService extends SearchService with Logging {
 
         search.execute().actionGet()
     }
-
-    //    private def source(folder: Folder) = {
-    //
-    //        val json = XContentFactory
-    //          .jsonBuilder()
-    //          .startObject()
-    //          .field("name", folder.name)
-    //
-    //        json.endObject()
-    //    }
 
     private def source(obj: Obj) = {
 
@@ -243,7 +214,7 @@ class ElasticSearchService extends SearchService with Logging {
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
-          .field("id", obj.id)
+          .field("objid", obj.id)
           .field("name", obj.name)
           .field("content", obj.content)
           .field("status", obj.status)
