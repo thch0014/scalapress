@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-    #set($springHtmlEscape = true)
 <html lang="en">
 <head>
 
