@@ -20,6 +20,7 @@
 
     <div class="controls">
         <span class="uneditable-input">$datetool.format($order.datePlaced)</span>
+        <a href="/backoffice/invoice/$order.id" class="btn btn-small" role="button">Print Invoice</a>
     </div>
 </div>
 
@@ -210,7 +211,8 @@
     #end
     <tr>
         <td>$order.deliveryDetails</td>
-        <td><input type="text" name="changeDeliveryCharge" class='input-mini' value="$number.number($order.deliveryEx())"/>
+        <td><input type="text" name="changeDeliveryCharge" class='input-mini'
+                   value="$number.number($order.deliveryEx())"/>
         </td>
         <td></td>
         <td>$number.number($order.deliveryEx())</td>

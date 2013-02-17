@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.{Email, NotEmpty}
 import reflect.BeanProperty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}
 import com.liferay.scalapress.domain.Obj
+import collection.mutable.ArrayBuffer
 
 /** @author Stephen Samuel */
 @Entity
@@ -32,9 +33,6 @@ class Address {
     @Column(name = "addressLine2")
     @BeanProperty var address2: String = _
 
-    @Column(name = "addressLine3")
-    @BeanProperty var address3: String = _
-
     @NotEmpty
     @BeanProperty var town: String = _
 
@@ -54,4 +52,17 @@ class Address {
 
     @BeanProperty var state: String = null
     @BeanProperty var active: Boolean = _
+
+    def label = {
+        val sb = new ArrayBuffer[String]()
+        Option(name).foreach(sb append _)
+        Option(company).foreach(sb append _)
+        Option(address1).foreach(sb append _)
+        Option(address2).foreach(sb append _)
+        Option(town).foreach(sb append _)
+        Option(postcode).foreach(sb append _)
+        Option(country).foreach(sb append _)
+        Option(telephone).foreach(sb append _)
+        sb.mkString("\n")
+    }
 }

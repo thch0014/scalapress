@@ -4,11 +4,36 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
+import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         request.order.map(_.account.id.toString)
+    }
+}
+
+object InvoiceAccountNameTag extends ScalapressTag {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.order.map(_.account.name.toString)
+    }
+}
+
+object InvoiceAccountEmailTag extends ScalapressTag {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.order.map(_.account.email.toString)
+    }
+}
+
+object InvoiceDeliveryAddressTag extends ScalapressTag {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.order.map(_.deliveryAddress.label)
+    }
+}
+
+object InvoiceBillingAddressTag extends ScalapressTag {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.order.map(_.billingAddress.label)
     }
 }
 
@@ -43,7 +68,14 @@ object InvoiceLinesTag extends ScalapressTag {
         })
     }
 
-    override def tags = Array("basket_lines")
+}
+
+object InvoiceLineDescTag extends ScalapressTag {
+    def render(request: ScalapressRequest,
+               context: ScalapressContext,
+               params: Map[String, String]): Option[String] = {
+        request.orderLine.map(line => line.description)
+    }
 }
 
 object InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
