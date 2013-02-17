@@ -11,20 +11,25 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
-        val h = params.get("h").orElse(params.get("height")).getOrElse("120").toInt
-        val w = params.get("w").orElse(params.get("width")).getOrElse("120").toInt
+        val h = params.get("h").orElse(params.get("height")).getOrElse("0").toInt
+        val w = params.get("w").orElse(params.get("width")).getOrElse("0").toInt
         val limit = params.get("limit").getOrElse("1").toInt
 
         val obj = request.obj.orElse(request.line.map(_.obj))
         obj match {
-
             case None => None
             case Some(o) =>
-
                 val rendered = o.images.asScala.take(limit).map(i => {
 
-                    val src = context.imageService.imageLink(i.filename, w, h)
-                    val html = "<img src='" + src + "' height='" + h + "' width='" + w + "'/>"
+                    val src = if (w == 0 || h == 0)
+                        context.assetStore.link(i.filename)
+                    else
+                        context.imageService.imageLink(i.filename, w, h)
+
+                    val html = if (w == 0 || h == 0)
+                        <img src={src}/>.toString()
+                    else
+                        <img src={src} height={h.toString} width={w.toString}/>.toString()
 
                     params.get("link") match {
 

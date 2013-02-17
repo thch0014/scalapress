@@ -37,7 +37,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/backoffice/delivery/$o.id/order",
+                    url: "/backoffice/delivery/order",
                     contentType: "text/plain",
                     data: order.join('-')
                 });

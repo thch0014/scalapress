@@ -5,6 +5,7 @@ import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.controller.admin.UrlResolver
+import com.liferay.scalapress.service.asset.AssetStore
 
 /** @author Stephen Samuel */
 object GalleryRenderer {
@@ -37,19 +38,19 @@ object GalleryRenderer {
         }
     }
 
-    def renderGallery(gallery: Gallery): String = {
+    def renderGallery(gallery: Gallery, assetStore: AssetStore): String = {
         val sb = new ArrayBuffer[String]
         sb.append("<!--gallery " + gallery.id + " " + gallery.images.size() + " images -->")
-        sb.append("<ul id='gallery" + gallery.id + "'>" + renderImages(gallery.images.asScala) + "</ul>")
+        sb.append("<ul id='gallery" + gallery.id + "'>" + renderImages(gallery.images.asScala, assetStore) + "</ul>")
         sb.append(generateScript(gallery))
         sb.append("<!--end gallery-->")
         sb.mkString("\n")
     }
 
-    private def renderImages(images: Seq[Image]): String = {
+    private def renderImages(images: Seq[Image], assetStore: AssetStore): String = {
         val sb = new ArrayBuffer[String]
         for (image <- images) {
-            val src = "/images/" + image.filename
+            val src = assetStore.link(image.filename)
             sb.append("<li><img data-frame='" + src + "' src='" + src + "' title='" + image.filename + "'/></li>")
         }
         sb.mkString("\n")

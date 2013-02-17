@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
@@ -27,6 +27,7 @@ class DeliveryOptionListController {
         "redirect:/backoffice/delivery"
     }
 
+    @ResponseBody
     @RequestMapping(value = Array("/order"), method = Array(RequestMethod.POST))
     def reorder(@RequestBody order: String): String = {
 

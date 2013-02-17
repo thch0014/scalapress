@@ -54,7 +54,9 @@ class ImageService extends Logging {
                     val source = ImageIO.read(new ByteArrayInputStream(bytes))
                     Option(ImageTools.fit(source, (w, h)))
                 } catch {
-                    case e: Exception => None
+                    case e: Exception =>
+                        logger.warn("{}", e)
+                        None
                 }
 
             case None => None
