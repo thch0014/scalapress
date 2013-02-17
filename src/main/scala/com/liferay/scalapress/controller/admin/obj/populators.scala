@@ -88,7 +88,7 @@ trait DeliveryOptionPopulator {
 
         var map = TreeMap(0l -> "-Select Delivery-")
         opts.map(o => {
-            val price = "£%1.2f".format(o.charge / 100.0)
+            val price = "&pound;%1.2f".format(o.charge / 100.0)
             map = map + (o.id -> (o.name + " " + price))
         })
 

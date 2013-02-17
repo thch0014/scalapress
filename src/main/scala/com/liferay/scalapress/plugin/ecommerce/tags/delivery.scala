@@ -12,7 +12,7 @@ object DeliveryOptionsTag extends ScalapressTag {
 
         val radios = options.map(opt => {
             val selected = if (opt.id.toString == currentDeliveryId) "checked='true'" else ""
-            val price = "£%1.2f".format(opt.chargeIncVat / 100.0)
+            val price = "&pound;%1.2f".format(opt.chargeIncVat / 100.0)
             "<label class=\"radio\">" +
               "<input onclick='this.form.submit()' type=\"radio\" name=\"deliveryOption\" value=\"" + opt
               .id + "\" " + selected + ">" +

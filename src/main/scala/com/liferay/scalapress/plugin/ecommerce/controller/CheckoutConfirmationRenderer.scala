@@ -28,8 +28,8 @@ object CheckoutConfirmationRenderer {
     private def renderBasketLines(lines: Seq[BasketLine]) = {
         lines.map(line => {
 
-            val price = " £%1.2f".format(line.obj.sellPriceInc / 100.0)
-            val total = " £%1.2f".format(line.total / 100.0)
+            val price = " &pound;%1.2f".format(line.obj.sellPriceInc / 100.0)
+            val total = " &pound;%1.2f".format(line.total / 100.0)
 
             <tr>
                 <td>
@@ -76,7 +76,7 @@ object CheckoutConfirmationRenderer {
 
     private def renderDeliveryLine(basket: Basket) = {
 
-        val price = " £%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0)
+        val price = " &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0)
 
         <tr>
             <td>
@@ -111,9 +111,9 @@ object CheckoutConfirmationRenderer {
 
     private def _renderTotals(basket: Basket) = {
 
-        val subtotal = " £%1.2f".format(basket.subtotal / 100.0)
-        val vat = " £%1.2f".format(basket.vat / 100.0)
-        val total = " £%1.2f".format(basket.total / 100.0)
+        val subtotal = " &pound;%1.2f".format(basket.subtotal / 100.0)
+        val vat = " &pound;%1.2f".format(basket.vat / 100.0)
+        val total = " &pound;%1.2f".format(basket.total / 100.0)
 
         <tr>
             <td></td>

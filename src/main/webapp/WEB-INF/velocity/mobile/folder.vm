@@ -31,7 +31,7 @@
                     #end
                     <h3>$obj.name</h3>
 
-                    <p>£$obj.sellPriceDecimal()</p>
+                    <p>&pound;$obj.sellPriceDecimal()</p>
                 </a></li>
             #end
         </ul>

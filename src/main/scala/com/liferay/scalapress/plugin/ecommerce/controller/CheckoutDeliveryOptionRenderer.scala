@@ -13,7 +13,7 @@ object CheckoutDeliveryOptionRenderer {
           .filter(d => d.maxPrice == 0 || d.maxPrice >= basket.linesSubtotal)
           .map(d => {
 
-            val price = " £%1.2f".format(d.chargeIncVat / 100.0)
+            val price = " &pound;%1.2f".format(d.chargeIncVat / 100.0)
             val checked = Option(basket.deliveryOption).exists(_.id == d.id)
 
             <label class="radio">

@@ -28,7 +28,7 @@ object BasketTotalTag extends ScalapressTag with TagBuilder {
             request.basket.vat
         else
             request.basket.total
-        val textFormatted = "£%1.2f".format(text / 100.0)
+        val textFormatted = "&pound;%1.2f".format(text / 100.0)
         Some(build(textFormatted, params))
     }
 }
@@ -42,7 +42,7 @@ object BasketLinesTotalTag extends ScalapressTag with TagBuilder {
             request.basket.linesVat
         else
             request.basket.linesTotal
-        val textFormatted = "£%1.2f".format(text / 100.0)
+        val textFormatted = "&pound;%1.2f".format(text / 100.0)
         Some(build(textFormatted, params))
     }
 }
@@ -114,7 +114,7 @@ object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
                params: Map[String, String]): Option[String] = {
 
         Option(request.basket.deliveryOption).map(d => {
-            val textFormatted = "£%1.2f".format(d.chargeIncVat / 100.0)
+            val textFormatted = "&pound;%1.2f".format(d.chargeIncVat / 100.0)
             build(textFormatted, params)
         })
     }
@@ -160,7 +160,7 @@ object BasketLinePriceTag extends ScalapressTag {
         text match {
             case None => None
             case Some(price) =>
-                val textFormatted = "£%1.2f".format(price / 100.0)
+                val textFormatted = "&pound;%1.2f".format(price / 100.0)
                 Some(textFormatted)
         }
     }
@@ -183,7 +183,7 @@ object BasketLineTotalTag extends ScalapressTag {
         total match {
             case None => None
             case Some(price) =>
-                val textFormatted = "£%1.2f".format(price / 100.0)
+                val textFormatted = "&pound;%1.2f".format(price / 100.0)
                 Some(textFormatted)
         }
     }

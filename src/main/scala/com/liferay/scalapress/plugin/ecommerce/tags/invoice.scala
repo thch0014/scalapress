@@ -4,6 +4,7 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
+import com.liferay.scalapress.service.theme.tag.obj.AttributeRenderer
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {
@@ -39,6 +40,25 @@ object InvoiceBillingAddressTag extends ScalapressTag {
 object InvoiceDateTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         request.order.map(arg => new DateTime(arg.datePlaced).toString)
+    }
+}
+
+import scala.collection.JavaConverters._
+
+object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
+
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        params.get("id") match {
+            case None => Some("<!-- no id specified for attribute tag -->")
+            case Some(id) => {
+                request.orderLine.flatMap(line => Option(context.objectDao.find(line.obj))).flatMap(obj => {
+                    obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
+                        case None => None
+                        case Some(av) => Some(build(AttributeRenderer.renderValue(av), params))
+                    }
+                })
+            }
+        }
     }
 }
 
@@ -96,7 +116,7 @@ object InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
                 order.deliveryVat
             else
                 order.deliveryInc
-            val textFormatted = "£%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text / 100.0)
             build(textFormatted, params)
         })
     }
@@ -122,7 +142,7 @@ object InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
                 line.priceVat
             else
                 line.priceIncVat
-            val textFormatted = "£%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text / 100.0)
             build(textFormatted, params)
         })
     }
@@ -140,7 +160,7 @@ object InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
                 line.totalVat
             else
                 line.totalIncVat
-            val textFormatted = "£%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text / 100.0)
             build(textFormatted, params)
         })
     }
@@ -158,7 +178,7 @@ object InvoiceTotalTag extends ScalapressTag with TagBuilder {
                 order.vat
             else
                 order.total
-            val textFormatted = "£%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text / 100.0)
             build(textFormatted, params)
         })
     }
@@ -174,7 +194,7 @@ object InvoiceLinesTotalTag extends ScalapressTag with TagBuilder {
                 order.linesVat
             else
                 order.linesTotal
-            val textFormatted = "£%1.2f".format(text / 100.0)
+            val textFormatted = "&pound;%1.2f".format(text / 100.0)
             build(textFormatted, params)
         })
     }
