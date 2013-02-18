@@ -175,17 +175,21 @@ class ElasticSearchService extends SearchService with Logging {
     // search by the given query string and then return the matching doc ids
     override def search(q: String, limit: Int): SearchResponse = {
 
-        client.prepareSearch(INDEX)
+        val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
           .addField("objid")
           .addField("folders")
           .addField("status")
           .addField("labels")
-          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
           .setFrom(0)
           .setSize(limit)
-          .execute()
+
+        Option(q)
+          .filter(_.trim.length > 0)
+          .foreach(q => req.setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND)))
+
+        req.execute()
           .actionGet()
     }
 
