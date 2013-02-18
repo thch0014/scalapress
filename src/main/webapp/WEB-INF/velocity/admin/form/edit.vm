@@ -51,6 +51,9 @@
 </table>
 
 
+<a href="/backoffice/form/$field.id/field/create" role="button" class="btn"> <i class="icon-plus"></i> Create Form Field</a>
+
+
 <script>
     $(function () {
         $("#fields-table tbody").sortable({

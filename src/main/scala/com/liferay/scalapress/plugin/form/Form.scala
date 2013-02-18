@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.form
 
-import javax.persistence.{ElementCollection, Column, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{CascadeType, Column, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 
 /** @author Stephen Samuel */
@@ -18,7 +18,7 @@ class Form {
 
     @BeanProperty var submitButtonText: String = _
 
-    @OneToMany(mappedBy = "form")
+    @OneToMany(mappedBy = "form", cascade = Array(CascadeType.ALL))
     @BeanProperty var fields: java.util.List[FormField] = new java.util.ArrayList[FormField]
 
     // shows on final page

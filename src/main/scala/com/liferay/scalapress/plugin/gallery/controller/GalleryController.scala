@@ -37,7 +37,7 @@ class GalleryController {
     }
 
     @ResponseBody
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping
     def view(req: HttpServletRequest): ScalaPressPage = {
 
         val gallery = galleryDao.findAll()

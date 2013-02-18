@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.liferay.scalapress.plugin.form.Form
+import com.liferay.scalapress.plugin.form.{FormField, Form}
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
+import com.liferay.scalapress.enums.FormFieldType
 
 /** @author Stephen Samuel */
 @Controller
@@ -24,6 +25,17 @@ class FormEditController {
     def save(@ModelAttribute form: Form) = {
         context.formDao.save(form)
         edit(form)
+    }
+
+    @RequestMapping(value = Array("field/create"))
+    def createField(@ModelAttribute form: Form): String = {
+        val field = new FormField
+        field.fieldType = FormFieldType.Text
+        field.name = "new field"
+        field.form = form
+        field.required = false
+        form.fields.add(field)
+        "redirect:/backoffice/form/" + form.id
     }
 
     @RequestMapping(value = Array("field/{id}/delete"))
