@@ -84,7 +84,7 @@ trait DeliveryOptionPopulator {
     var deliveryOptionDao: DeliveryOptionDao
 
     @ModelAttribute def deliveryOptions(model: ModelMap) {
-        val opts = deliveryOptionDao.findAll().sortBy(_.name)
+        val opts = deliveryOptionDao.findAll().sortBy(d => Option(d.name).getOrElse(""))
 
         var map = TreeMap(0l -> "-Select Delivery-")
         opts.map(o => {
