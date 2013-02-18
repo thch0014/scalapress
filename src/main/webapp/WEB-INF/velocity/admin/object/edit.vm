@@ -174,9 +174,9 @@
 
                 #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
                     #foreach ($value in $values)
-                        <div class="input-append date datepicker" value="$value"
+                        <div class="input-append date datepicker" value="$esc.html($value)"
                              data-date-format="dd-mm-yyyy">
-                            <input size="16" type="text" name="attributeValues$a.id" value="$value"/>
+                            <input size="16" type="text" name="attributeValues$a.id" value="$esc.html($value)"/>
                             <span class="add-on"><i class="icon-th"></i></span>
                         </div>
                     #end
@@ -193,7 +193,7 @@
                             #end
 
                             <label class="checkbox inline">
-                                <input type="checkbox" name="attributeValues$a.id" value="$option.value" $!checked/>
+                                <input type="checkbox" name="attributeValues$a.id" value="$esc.html($option.value)" $!checked/>
                                 $option.value
                             </label>
                         #end
@@ -207,7 +207,7 @@
                                 #else
                                     #set ($selected="")
                                 #end
-                                <option $selected>$option.value</option>
+                                <option $selected>$esc.html($option.value)</option>
                             #end
                         </select>
 
