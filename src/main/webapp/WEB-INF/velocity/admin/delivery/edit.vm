@@ -10,7 +10,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("option.name", "class='input-xxlarge'")
+            #springFormInput("form.option.name", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <label class="control-label">Vat Rate</label>
 
         <div class="controls">
-            #springFormInput("option.vatRate")
+            #springFormInput("form.option.vatRate")
         </div>
     </div>
 
@@ -26,7 +26,7 @@
         <label class="control-label">Charge</label>
 
         <div class="controls">
-            #springFormInput("option.charge")
+            #springFormInput("form.charge")
         </div>
     </div>
 
@@ -34,7 +34,7 @@
         <label class="control-label">Min Price</label>
 
         <div class="controls">
-            #springFormInput("option.minPrice")
+            #springFormInput("form.minPrice")
         </div>
     </div>
 
@@ -42,13 +42,13 @@
         <label class="control-label">Max Price</label>
 
         <div class="controls">
-            #springFormInput("option.maxPrice")
+            #springFormInput("form.maxPrice")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/delivery" type="button" class="btn">Cancel</a>
+        <a href="/backoffice/delivery" type="button" class="btn">Return</a>
     </div>
 
 </form>

@@ -27,6 +27,9 @@ class MediaLibraryController {
         "redirect:" + UrlResolver.medialib
     }
 
-    @ModelAttribute("assets") def assets(@RequestParam(value = "q", required = false) q: String) =
+    @ModelAttribute("assets") def assets(@RequestParam(value = "pageNumber",
+        required = false,
+        defaultValue = "1") pageNumber: Int,
+                                         @RequestParam(value = "q", required = false) q: String) =
         assetStore.search(q, 50).toList.asJava
 }

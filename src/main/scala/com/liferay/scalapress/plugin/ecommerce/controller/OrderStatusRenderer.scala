@@ -6,7 +6,7 @@ object OrderStatusRenderer {
     def form =
         <form class="form-horizontal" method="POST">
             <div class="control-group">
-                <label class="control-label" for="orderId">Email</label>
+                <label class="control-label" for="orderId">Order Id</label>
                 <div class="controls">
                     <input type="text" name="orderId" placeholder="Enter order id"/>
                 </div>
@@ -14,7 +14,7 @@ object OrderStatusRenderer {
             <div class="control-group">
                 <label class="control-label" for="email">Email</label>
                 <div class="controls">
-                    <input type="password" name="email" placeholder="Enter the order email"/>
+                    <input type="text" name="email" placeholder="Enter the order email"/>
                 </div>
             </div>
             <div class="control-group">
