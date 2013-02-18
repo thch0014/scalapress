@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.plugin.form.Form
 
 /** @author Stephen Samuel */
 @Controller
@@ -13,8 +14,18 @@ class FormListController {
 
     @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping
     def list = "admin/form/list.vm"
+
+    @RequestMapping(value = Array("create"))
+    def create: String = {
+
+        val form = new Form
+        form.name = "new form"
+        context.formDao.save(form)
+
+        "redirect:/backoffice/form/" + form.id
+    }
 
     import scala.collection.JavaConverters._
 

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.{Paging, ScalapressContext}
-import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.domain.Obj
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
@@ -29,7 +28,7 @@ class ObjectSearchController {
         val obj = Obj(t)
         objectDao.save(obj)
 
-        "redirect:" + UrlResolver.objects(typeId)
+        "redirect:/obj/" + obj.id
     }
 
     @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
