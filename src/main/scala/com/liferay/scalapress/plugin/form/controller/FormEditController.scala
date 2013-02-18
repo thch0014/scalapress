@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.plugin.form.{FormField, Form}
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
@@ -16,7 +15,6 @@ import com.liferay.scalapress.enums.FormFieldType
 class FormEditController {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var passwordEncoder: PasswordEncoder = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute form: Form) = "admin/form/edit.vm"

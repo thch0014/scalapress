@@ -44,8 +44,11 @@
             <td>$field.fieldType</td>
             <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
             <td>
-                <a href="" role="button" class="btn btn-mini"> <i class="icon-pencil"></i></a>
-                <a href="" role="button" class="btn btn-danger btn-mini"> <i class="icon-trash icon-white"></i></a></td>
+                <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+                <a href="/backoffice/form/$form.id/field/$field.id/delete" role="button"
+                   class="btn btn-danger btn-mini">
+                    <i class="icon-trash icon-white"></i></a></td>
         </tr>
     #end
 </table>
