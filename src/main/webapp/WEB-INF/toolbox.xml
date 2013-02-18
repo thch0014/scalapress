@@ -16,6 +16,11 @@
         <class>org.apache.velocity.tools.generic.SortTool</class>
     </tool>
     <tool>
+        <key>esc</key>
+        <scope>application</scope>
+        <class>org.apache.velocity.tools.generic.EscapeTool</class>
+    </tool>
+    <tool>
         <key>math</key>
         <scope>request</scope>
         <class>org.apache.velocity.tools.generic.MathTool</class>

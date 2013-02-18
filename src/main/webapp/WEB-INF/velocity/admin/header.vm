@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    #set($springHtmlEscape = true)
     <title>
         Backoffice
     </title>

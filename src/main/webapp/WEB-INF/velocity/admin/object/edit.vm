@@ -160,17 +160,16 @@
 
             <div class="controls">
 
-                #if ($a.attributeType == "Text" ||$a.attributeType == "Postcode" || $a.attributeType == "Link"
-                || $a.attributeType == "Email" || $a.attributeType == "Numerical")
+                #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
 
                     #foreach ($value in $values)
-                        <input type="text" name="attributeValues$a.id" value="$value" class="input-xxlarge"/><br/>
+                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="input-xxlarge"/><br/>
                     #end
 
-                #elseif ($a.attributeType == "Text" ||$a.attributeType == "Postcode" || $a.attributeType == "Link"
-                || $a.attributeType == "Email" || $a.attributeType == "Numerical")
+                #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
                     #foreach ($value in $values)
-                        <input type="text" name="attributeValues$a.id" value="$value" class="input-small"/><br/>
+                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
+                               class="input-small"/><br/>
                     #end
 
                 #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
