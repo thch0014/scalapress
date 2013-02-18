@@ -26,6 +26,9 @@
             <td>
                 <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i> </a>
+
+                <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-mini">
+                    <i class="icon-print"></i> </a>
             </td>
         </tr>
     #end
