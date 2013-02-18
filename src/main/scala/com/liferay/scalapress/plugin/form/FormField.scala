@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.form
 
-import javax.persistence.{JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import scala.Predef.String
 import com.liferay.scalapress.enums.FormFieldType
@@ -34,6 +34,7 @@ class FormField {
 
     @BeanProperty var position: Int = _
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     @BeanProperty var fieldType: FormFieldType = FormFieldType.Text
 }

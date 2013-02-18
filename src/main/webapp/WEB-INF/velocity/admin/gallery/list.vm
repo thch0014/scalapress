@@ -17,7 +17,12 @@
             <td>$g.images.size()</td>
             <td>
                 <a href="$urlResolver.galleryEdit($g)" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i></a></td>
+                    <i class="icon-pencil"></i></a>
+
+                <a href="/backoffice/gallery/$g.id/delete" role="button" class="btn btn-mini btn-danger">
+                    <i class="icon-trash icon-white"></i></a>
+
+            </td>
         </tr>
     #end
 </table>

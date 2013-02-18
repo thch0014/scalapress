@@ -13,7 +13,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
 
         val h = params.get("h").orElse(params.get("height")).getOrElse("0").toInt
         val w = params.get("w").orElse(params.get("width")).getOrElse("0").toInt
-        val limit = params.get("limit").getOrElse("1").toInt
+        val limit = params.get("limit").getOrElse("100").toInt
 
         val obj = request.obj.orElse(request.line.map(_.obj))
         obj match {

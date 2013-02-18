@@ -51,7 +51,7 @@
 </table>
 
 
-<a href="/backoffice/form/$field.id/field/create" role="button" class="btn"> <i class="icon-plus"></i> Create Form Field</a>
+<a href="/backoffice/form/$form.id/field/create" role="button" class="btn"> <i class="icon-plus"></i> Create Form Field</a>
 
 
 <script>
