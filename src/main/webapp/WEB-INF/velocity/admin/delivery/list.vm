@@ -17,8 +17,11 @@
             <td>$o.id</td>
             <td>$!o.name</td>
             <td>
-                <a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-small">
+                <a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-mini">
                     <i class="icon-pencil"></i></a>
+
+                <a href="/backoffice/delivery/$o.id/delete" role="button" class="btn btn-mini btn-danger">
+                    <i class="icon-trash icon-white"></i></a>
             </td>
         </tr>
     #end

@@ -17,10 +17,10 @@ class DeliveryOptionListController {
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping
     def list = "admin/delivery/list.vm"
 
-    @RequestMapping(value = Array("create"), produces = Array("text/html"))
+    @RequestMapping(value = Array("create"))
     def create = {
         val d = new DeliveryOption
         deliveryOptionDao.save(d)

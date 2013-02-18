@@ -28,6 +28,12 @@ class DeliveryOptionEditController {
         "redirect:/backoffice/delivery/" + form.option.id
     }
 
+    @RequestMapping(Array("/delete"))
+    def delete(@ModelAttribute("form") form: Form) = {
+        deliveryOptionDao.remove(form.option)
+        "redirect:/backoffice/delivery"
+    }
+
     @ModelAttribute("form") def del(@PathVariable("id") id: Long) = {
         val form = new Form
         form.option = deliveryOptionDao.find(id)
