@@ -39,10 +39,10 @@ object CheckoutConfirmationRenderer {
                     {line.qty}
                 </td>
                 <td>
-                    {price}
+                    {xml.Unparsed(price)}
                 </td>
                 <td>
-                    {total}
+                    {xml.Unparsed(total)}
                 </td>
             </tr>
         })
@@ -76,7 +76,7 @@ object CheckoutConfirmationRenderer {
 
     private def renderDeliveryLine(basket: Basket) = {
 
-        val price = " &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0)
+        val price = xml.Unparsed(" &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0))
 
         <tr>
             <td>
@@ -112,9 +112,9 @@ object CheckoutConfirmationRenderer {
 
     private def _renderTotals(basket: Basket) = {
 
-        val subtotal = " &pound;%1.2f".format(basket.subtotal / 100.0)
-        val vat = " &pound;%1.2f".format(basket.vat / 100.0)
-        val total = " &pound;%1.2f".format(basket.total / 100.0)
+        val subtotal = xml.Unparsed(" &pound;%1.2f".format(basket.subtotal / 100.0))
+        val vat = xml.Unparsed(" &pound;%1.2f".format(basket.vat / 100.0))
+        val total = xml.Unparsed(" &pound;%1.2f".format(basket.total / 100.0))
 
         <tr>
             <td></td>
