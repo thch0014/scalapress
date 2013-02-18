@@ -39,6 +39,7 @@ object UriBuilder {
       .append(Option(req.getQueryString).getOrElse(""))
       .toString)
     def apply(url: String) = {
+
         val u = new URL(url)
         val params: Map[String, String] = Option(u.getQuery)
           .getOrElse("")
@@ -47,9 +48,10 @@ object UriBuilder {
           .filter(_.length == 2)
           .map(a => (a(0), a(1)))
           .toMap
+
         new UriBuilder(Option(u.getProtocol),
             Option(u.getHost),
-            Option(u.getPort).filter(_ < 0),
+            Option(u.getPort).filter(_ > 0),
             Option(u.getPath),
             params)
     }
