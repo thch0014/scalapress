@@ -11,9 +11,9 @@ object ListingWizardRenderer {
     val Payment = 4
     val Completed = 5
 
-    def steps = List(WizardStep("/listing/package", "Choose Package"),
-        WizardStep("/listing/category", "Select Category"),
-        WizardStep("/listing/detail", "Listing Detail"),
+    def steps = List(WizardStep("/listing/package", "Package"),
+        WizardStep("/listing/category", "Categories"),
+        WizardStep("/listing/detail", "Details"),
         WizardStep("/listing/payment", "Payment"),
         WizardStep("#", "Completed"))
 

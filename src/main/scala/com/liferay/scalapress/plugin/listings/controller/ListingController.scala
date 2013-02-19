@@ -27,7 +27,7 @@ class ListingController {
     @ResponseBody
     @RequestMapping(value = Array("package"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showPackages(req: HttpServletRequest,
-                     @ModelAttribute("process") process: Process,
+                     @ModelAttribute("process") process: ListingProcess,
                      errors: Errors): ScalaPressPage = {
 
         val packages = listingPackageDao.findAll()
@@ -43,7 +43,7 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("package"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def submitPackage(@ModelAttribute("process") process: Process,
+    def submitPackage(@ModelAttribute("process") process: ListingProcess,
                       errors: Errors,
                       req: HttpServletRequest): ScalaPressPage = {
         showCategories(process, errors, req)
@@ -51,7 +51,7 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("category"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def showCategories(@ModelAttribute("process") process: Process,
+    def showCategories(@ModelAttribute("process") process: ListingProcess,
                        errors: Errors,
                        req: HttpServletRequest): ScalaPressPage = {
 

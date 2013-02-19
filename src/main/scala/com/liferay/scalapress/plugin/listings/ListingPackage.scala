@@ -1,8 +1,9 @@
 package com.liferay.scalapress.plugin.listings
 
-import javax.persistence.{Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
+import javax.persistence.{ManyToMany, JoinColumn, CollectionTable, Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.ObjectType
+import com.liferay.scalapress.domain.{Folder, ObjectType}
+import java.util
 
 /** @author Stephen Samuel */
 @Entity
@@ -31,4 +32,12 @@ class ListingPackage {
     @BeanProperty var fee: Int = _
 
     @BeanProperty var duration: Int = _
+
+    @ManyToMany
+    @CollectionTable(
+        name = "listings_packages_categories",
+        joinColumns = Array(new JoinColumn(name = "listingpackage"))
+    )
+    @Column(name = "category")
+    @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
 }

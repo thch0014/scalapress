@@ -35,7 +35,7 @@ object FormRenderer {
 
     private def _captcha() = {
         <div class="control-group">
-            <div class="controls">
+            <div class="controls" style="height: 120px">
 
                 <script type="text/javascript"
                         src="http://www.google.com/recaptcha/api/challenge?k=6LeFAt0SAAAAAE5ErgvudIK-jdUZGXbVOe7WP0Oq">
