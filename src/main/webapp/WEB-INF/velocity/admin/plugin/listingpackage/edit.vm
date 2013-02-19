@@ -1,0 +1,55 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Listing Package</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("package.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Fee</label>
+
+        <div class="controls">
+            #springFormInput("package.fee")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Max images</label>
+
+        <div class="controls">
+            #springFormInput("package.maxImages")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Max folders</label>
+
+        <div class="controls">
+            #springFormInput("package.maxFolders")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Labels</label>
+
+        <div class="controls">
+            #springFormInput("package.labels")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a role="button" class="btn" href="/backoffice/plugin/listingpackage">Return</a>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

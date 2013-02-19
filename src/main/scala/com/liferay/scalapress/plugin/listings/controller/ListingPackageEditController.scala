@@ -10,7 +10,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/lp/{id}"))
+@RequestMapping(Array("backoffice/plugin/listingpackage/{id}"))
 class ListingPackageEditController {
 
     @Autowired var userDao: UserDao = _

@@ -25,5 +25,7 @@ class ListingPackage {
 
     @BeanProperty var labels: String = _
 
+    @BeanProperty var name: String = _
+
     @BeanProperty var fee: Int = _
 }
