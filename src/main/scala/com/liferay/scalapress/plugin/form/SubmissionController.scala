@@ -60,7 +60,7 @@ class SubmissionController extends Logging {
 
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)
-                page.body(form.submissionMessage)
+                page.body(form.submissionText)
                 page
             }
         }

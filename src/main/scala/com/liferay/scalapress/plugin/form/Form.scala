@@ -18,11 +18,12 @@ class Form {
 
     @BeanProperty var submitButtonText: String = _
 
+    @Column(name = "submissionmessage")
+    @BeanProperty var submissionText: String = _
+
     @OneToMany(mappedBy = "form", cascade = Array(CascadeType.ALL))
     @BeanProperty var fields: java.util.List[FormField] = new java.util.ArrayList[FormField]
 
-    // shows on final page
-    @BeanProperty var submissionMessage: String = _
     // redirect on completion
     @Column(name = "submissionforward")
     @BeanProperty var submissionRedirect: String = _

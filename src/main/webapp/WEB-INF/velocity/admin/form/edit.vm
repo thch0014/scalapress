@@ -14,6 +14,14 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Submission Page Text</label>
+
+        <div class="controls">
+            #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Use Captcha</label>
 
         <div class="controls">

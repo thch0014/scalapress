@@ -211,6 +211,8 @@ class EcreatorDatabaseUpgrader extends Logging {
         execute("ALTER TABLE categories_boxes MODIFY root bigint(10) null")
         execute("UPDATE categories_boxes SET root=null WHERE root=0")
 
+        execute("DELETE FROM forms_fields WHERE type='Separator'")
+
         execute("ALTER TABLE searches MODIFY searchcategory varchar(255) null")
         execute("UPDATE searches SET searchcategory=null WHERE searchcategory=0")
         execute("ALTER TABLE searches MODIFY itemType bigint(10) null")
