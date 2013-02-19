@@ -12,6 +12,9 @@
     <li><a href="#tab3" data-toggle="tab">Attributes</a></li>
     <li><a href="#tab4" data-toggle="tab">Content</a></li>
     <li><a href="#tab5" data-toggle="tab">Images</a></li>
+    #foreach ($g in $form.o.objectType.linkGroupsArray())
+        <li><a href="#tablinkgroup$g" data-toggle="tab">$g</a></li>
+    #end
 </ul>
 <div class="tab-content">
 <div class="tab-pane active" id="tab1">
@@ -193,7 +196,8 @@
                             #end
 
                             <label class="checkbox inline">
-                                <input type="checkbox" name="attributeValues$a.id" value="$esc.html($option.value)" $!checked/>
+                                <input type="checkbox" name="attributeValues$a.id"
+                                       value="$esc.html($option.value)" $!checked/>
                                 $option.value
                             </label>
                         #end
@@ -226,9 +230,7 @@
 
 </div>
 <div class="tab-pane" id="tab4">
-
     #springFormTextarea("form.o.content", "rows='48' class='input-block-level tinymce'")
-
 </div>
 <div class="tab-pane" id="tab5">
 
@@ -265,6 +267,19 @@
     Image Upload: <input type="file" name="upload"/>
 
 </div>
+
+    #foreach ($g in $form.o.objectType.linkGroupsArray())
+    <div class="tab-pane active" id="tablinkgroup$g">
+
+        <div class=" control-group">
+            <label class="control-label">Name</label>
+
+
+        </div>
+
+    </div>
+    #end
+
 </div>
 </div>
 

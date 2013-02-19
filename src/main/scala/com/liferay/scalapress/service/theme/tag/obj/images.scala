@@ -92,7 +92,7 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
             images +
               """<script>
                  $(document).ready(function() {
-                    $(".colorboxgroup").colorbox({ rel: 'colorboxgroup', fixed: true });
+                    $(".colorboxgroup").colorbox({ rel: 'colorboxgroup', fixed: '150px' });
                  });
                 </script>"""
         })

@@ -28,7 +28,7 @@ class ObjectSearchController {
         val obj = Obj(t)
         objectDao.save(obj)
 
-        "redirect:/obj/" + obj.id
+        "redirect:/backoffice/obj/" + obj.id
     }
 
     @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
