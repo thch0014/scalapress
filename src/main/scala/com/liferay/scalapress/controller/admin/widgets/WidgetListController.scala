@@ -1,13 +1,14 @@
 package com.liferay.scalapress.controller.admin.widgets
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.widgets.HtmlWidget
+import com.liferay.scalapress.widgets.{Widget, HtmlWidget}
 import scala.Array
 import com.liferay.scalapress.domain.Folder
+import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,10 +21,9 @@ class WidgetListController {
     @RequestMapping
     def list = "admin/widget/list.vm"
 
-    @RequestMapping(Array("create"))
-    def create = {
-        val widget = new HtmlWidget
-        widget.name = "new html widget"
+    @RequestMapping(value = Array("create"), method = Array(RequestMethod.POST))
+    def create(@RequestParam("class") klass: String) = {
+        val widget = Class.forName(klass).newInstance().asInstanceOf[Widget]
         widgetDao.save(widget)
         "redirect:/backoffice/widget"
     }
@@ -43,4 +43,9 @@ class WidgetListController {
     import scala.collection.JavaConverters._
 
     @ModelAttribute("widgets") def widgets = widgetDao.findAll().asJava
+    @ModelAttribute("classes") def classes = ComponentClassScanner
+      .widgets
+      .map(c => (c.getName, c.getSimpleName))
+      .toMap
+      .asJava
 }

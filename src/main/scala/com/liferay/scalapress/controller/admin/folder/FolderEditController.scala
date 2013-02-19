@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestBody, RequestParam, Reque
 import com.liferay.scalapress.domain.{Image, Folder}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ThemeDao, PluginDao, FolderDao}
-import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
+import com.liferay.scalapress.{Section, EnumPopulator, ScalapressContext}
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
@@ -13,6 +13,8 @@ import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.controller.admin.obj.ThemePopulator
+import com.liferay.scalapress.util.ComponentClassScanner
+import com.liferay.scalapress.plugin.form.section.FormSection
 
 /** @author Stephen Samuel */
 @Controller
@@ -34,6 +36,17 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
             folder.parent = null
         folderDao.save(folder)
         edit(folder)
+    }
+
+    @RequestMapping(Array("section/create"))
+    def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String) = {
+        val section = Class.forName(cls).newInstance.asInstanceOf[Section]
+        if (section.isInstanceOf[FormSection])
+            section.asInstanceOf[FormSection].form = context.formDao.findAll().head
+        section.folder = folder
+        folder.sections.add(section)
+        folderDao.save(folder)
+        "redirect:/backoffice/folder/" + folder.id
     }
 
     @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
@@ -92,4 +105,10 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         map.put("folder", folder)
         map.put("sections", sections)
     }
+
+    @ModelAttribute("classes") def classes = ComponentClassScanner
+      .sections
+      .map(c => (c.getName, c.getSimpleName))
+      .toMap
+      .asJava
 }
