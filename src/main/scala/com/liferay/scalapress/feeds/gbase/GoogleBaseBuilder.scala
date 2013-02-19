@@ -70,12 +70,13 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
         val mpn = AttributeFuncs.attributeValue(obj, feed.partAttrName).getOrElse("")
         val name = WordUtils.capitalizeFully(obj.name)
         val formattedPrice = "%1.2f".format(obj.sellPriceInc / 100.0)
+        val folder = obj.folders.asScala.head.fullName.dropWhile(_ != '>').drop(1).trim
 
         Array(obj.id.toString,
             name,
             content(obj.content),
             googleCategory,
-            obj.folders.asScala.head.fullName,
+            folder,
             "http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj),
             "http://" + domain + "/images/" + obj.images.asScala.head.filename,
             "new",
