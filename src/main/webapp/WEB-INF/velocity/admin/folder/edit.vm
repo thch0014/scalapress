@@ -124,14 +124,12 @@
                 <legend>Sections</legend>
                 <table class="table table-condensed table-hover" id="sections-table">
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th></th>
                     </tr>
                     #foreach ($s in $sections)
                         <tr data-section-id="$s.id" class="section-row">
-                            <td>$s.id</td>
                             <td>$!s.name()</td>
                             <td>$s.desc()</td>
                             <td>

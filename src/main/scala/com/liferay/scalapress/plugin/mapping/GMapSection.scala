@@ -17,9 +17,10 @@ class GMapSection extends Section {
         Option(postcode).map(_.replace(" ", "")).map(arg => {
             val iframeSrc = "https://maps.google.co.uk/maps?q=" + postcode + "&z=14&output=embed"
             val hrefSrc = "https://maps.google.co.uk/maps?q=" + postcode + "&z=14"
+            val sectionId = "section-" + id
             val html =
-                <div class="gmap-section">
-                    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src={iframeSrc}></iframe>
+                <div class="gmap-section" id={sectionId}>
+                    <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src={iframeSrc}></iframe>
                     <br/>
                     <small>
                         <a href={hrefSrc} style="color:#0000FF;text-align:left">View Larger Map</a>
