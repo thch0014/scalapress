@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -7,13 +7,14 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.plugin.listings.ListingsPlugin
+import com.liferay.scalapress.plugin.listings.{ListingPackageDao, ListingsPlugin}
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/listings"))
 class ListingsPluginController {
 
+    @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _
 

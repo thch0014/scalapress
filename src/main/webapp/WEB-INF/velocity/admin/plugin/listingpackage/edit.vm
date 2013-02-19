@@ -9,7 +9,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("package.name")
+            #springFormInput("package.name", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -17,7 +17,15 @@
         <label class="control-label">Fee</label>
 
         <div class="controls">
-            #springFormInput("package.fee")
+            #springFormInput("package.fee", "class='input-small'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Duration in days</label>
+
+        <div class="controls">
+            #springFormInput("package.duration", "class='input-small'")
         </div>
     </div>
 
@@ -25,7 +33,7 @@
         <label class="control-label">Max images</label>
 
         <div class="controls">
-            #springFormInput("package.maxImages")
+            #springFormInput("package.maxImages", "class='input-small'")
         </div>
     </div>
 
@@ -33,7 +41,7 @@
         <label class="control-label">Max folders</label>
 
         <div class="controls">
-            #springFormInput("package.maxFolders")
+            #springFormInput("package.maxFolders", "class='input-small'")
         </div>
     </div>
 
@@ -41,7 +49,7 @@
         <label class="control-label">Labels</label>
 
         <div class="controls">
-            #springFormInput("package.labels")
+            #springFormInput("package.labels", "class='input-xlarge'")
         </div>
     </div>
 
