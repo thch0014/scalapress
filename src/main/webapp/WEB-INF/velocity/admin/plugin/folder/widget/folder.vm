@@ -39,6 +39,22 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Start folder</label>
+
+        <div class="controls">
+            <select id="start" name="start" class="input-xxlarge">
+                #foreach($option in $foldersMap.keySet())
+                    <option value="${option}"
+                        #if("$widget.start" == "$option")
+                            selected="selected"
+                        #end>
+                        ${foldersMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Include Home Page</label>
 
         <div class="controls">
