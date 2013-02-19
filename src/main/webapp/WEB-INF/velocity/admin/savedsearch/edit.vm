@@ -14,6 +14,21 @@
     </div>
 
     <div class="control-group">
+        <label class="control-label">Object Type</label>
+
+        <div class="controls">
+            <select id="objectType" name="objectType">
+                #foreach($option in $objectTypesMap.keySet())
+                    <option value="${option}"
+                        #if("$!search.objectType.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${objectTypesMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label">Keywords search</label>
 
         <div class="controls">
@@ -45,13 +60,6 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Search object types</label>
-
-        <div class="controls">
-            #springFormInput("search.objectTypes", "class='input-small'")
-        </div>
-    </div>
 
     <div class="control-group">
         <label class="control-label">Images Only</label>
@@ -76,6 +84,89 @@
             </select>
         </div>
     </div>
+
+
+
+
+
+
+
+    #foreach ($attributeWithValues in $attributesWithValues)
+
+        #set($a = $attributeWithValues.productElement(0))
+        #set($values = $attributeWithValues.productElement(1))
+
+        <div class="control-group">
+            <label class="control-label">$a.name ($a.id)</label>
+
+            <div class="controls">
+
+                #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
+
+                    #foreach ($value in $values)
+                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="input-xxlarge"/><br/>
+                    #end
+
+                #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
+                    #foreach ($value in $values)
+                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
+                               class="input-small"/><br/>
+                    #end
+
+                #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
+                    #foreach ($value in $values)
+                        <div class="input-append date datepicker" value="$esc.html($value)"
+                             data-date-format="dd-mm-yyyy">
+                            <input size="16" type="text" name="attributeValues$a.id" value="$esc.html($value)"/>
+                            <span class="add-on"><i class="icon-th"></i></span>
+                        </div>
+                    #end
+
+                #elseif ($a.attributeType == "Selection")
+
+                    #if ($a.multipleValues)
+
+                        #foreach ($option in $a.options)
+                            #if($values.contains($option.value))
+                                #set ($checked = "checked='true'")
+                            #else
+                                #set ($checked="")
+                            #end
+
+                            <label class="checkbox inline">
+                                <input type="checkbox" name="attributeValues$a.id"
+                                       value="$esc.html($option.value)" $!checked/>
+                                $option.value
+                            </label>
+                        #end
+
+                    #else
+
+                        <select name="attributeValues$a.id" class="input-xlarge">
+                            #foreach ($option in $a.options)
+                                #if($values.contains($option.value))
+                                    #set ($selected = "selected='true'")
+                                #else
+                                    #set ($selected="")
+                                #end
+                                <option $selected>$esc.html($option.value)</option>
+                            #end
+                        </select>
+
+                    #end
+
+                #elseif ($a.attributeType == "Boolean")
+                    <select name="attributeValues$a.id" class="input-small">
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                #end
+
+            </div>
+        </div>
+    #end
+
+
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>

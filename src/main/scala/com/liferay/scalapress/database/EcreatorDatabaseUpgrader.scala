@@ -172,8 +172,6 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
-
-
         // copy the searchbox from forms to the box
         try {
             val rs = conn.prepareStatement("SELECT id, owner from searches").executeQuery()
@@ -184,13 +182,20 @@ class EcreatorDatabaseUpgrader extends Logging {
                     val owner = rs.getString(2)
 
                     Option(owner).filter(_.trim.length > 0).foreach(owner => {
+
                         if (owner.startsWith("blocks_highlighted_items@")) {
-                            val ownerId = owner.replace("blocks_highlighted_items@", "").toLong + 70000
-                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + ownerId)
+                            val blockId = owner.replace("blocks_highlighted_items@", "").toLong + 70000
+                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + blockId)
 
                         } else if (owner.startsWith("boxes_highlighted_items@")) {
-                            val ownerId = owner.replace("boxes_highlighted_items@", "").toLong
-                            execute("UPDATE boxes_highlighted_items SET search=" + id + " WHERE id=" + ownerId)
+                            val boxId = owner.replace("boxes_highlighted_items@", "").toLong
+                            execute("UPDATE boxes_highlighted_items SET search=" + id + " WHERE id=" + boxId)
+
+                        } else if (owner.startsWith("categories@")) {
+                            val categoryId = owner.replace("categories@", "").toLong
+                            execute(
+                                "INSERT INTO blocks_highlighted_items (position, visible, ownerCategory, search, name) values (4545, 1, " + categoryId + "," + id + ", 'Saved search results')")
+                            execute("UPDATE searches set owner='__categories@" + categoryId + "' WHERE id=" + id)
                         }
                     })
 
@@ -203,7 +208,8 @@ class EcreatorDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
-
+        execute("ALTER TABLE categories_boxes MODIFY root bigint(10) null")
+        execute("UPDATE categories_boxes SET root=null WHERE root=0")
 
         execute("ALTER TABLE searches MODIFY searchcategory varchar(255) null")
         execute("UPDATE searches SET searchcategory=null WHERE searchcategory=0")
@@ -453,7 +459,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_availabilitychart",
             "blocks_calculators")) {
             try {
-        //        execute("DROP TABLE " + table)
+                //        execute("DROP TABLE " + table)
             } catch {
                 case e: Exception => logger.warn("Unable to drop {}", e.getMessage)
             }

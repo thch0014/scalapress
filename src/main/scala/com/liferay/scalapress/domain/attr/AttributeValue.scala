@@ -4,6 +4,7 @@ import java.lang.String
 import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.plugin.search.SavedSearch
 
 /** @author Stephen Samuel */
 @Entity
@@ -21,6 +22,10 @@ class AttributeValue {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item", nullable = true)
     @BeanProperty var obj: Obj = _
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "search", nullable = true)
+    @BeanProperty var savedSearch: SavedSearch = _
 
     @BeanProperty var value: String = _
 }

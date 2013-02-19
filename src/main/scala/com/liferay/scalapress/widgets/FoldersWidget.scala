@@ -1,6 +1,6 @@
 package com.liferay.scalapress.widgets
 
-import javax.persistence.{Entity, Table}
+import javax.persistence.{ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
 import com.liferay.scalapress.domain.Folder
@@ -17,13 +17,18 @@ class FoldersWidget extends Widget with Logging {
     @BeanProperty var includeHome: Boolean = _
     @BeanProperty var excludeCurrent: Boolean = _
 
+    @ManyToOne
+    @JoinColumn(name = "root")
+    @BeanProperty var start: Folder = _
+
     @BeanProperty var exclusions: String = _
 
     override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
     override def render(req: ScalapressRequest): Option[String] = {
         val buffer = new ArrayBuffer[String]
-        renderFolderLevel(req.context.folderDao.root, 1, buffer)
+        val root = Option(start).getOrElse(req.context.folderDao.root)
+        renderFolderLevel(root, 1, buffer)
         Some(buffer.mkString("\n"))
     }
 

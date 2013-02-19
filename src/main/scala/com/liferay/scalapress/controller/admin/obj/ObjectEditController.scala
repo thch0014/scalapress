@@ -16,13 +16,13 @@ import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
 import com.liferay.scalapress.plugin.search.SearchService
-import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
+import com.liferay.scalapress.domain.attr.AttributeValue
 import org.springframework.security.authentication.encoding.PasswordEncoder
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
-class ObjectEditController extends FolderPopulator {
+class ObjectEditController extends FolderPopulator with AttributeValuesPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var attributeValueDao: AttributeValueDao = _
@@ -106,25 +106,6 @@ class ObjectEditController extends FolderPopulator {
         "redirect:/backoffice/obj/" + form.o.id
     }
 
-    @ModelAttribute("attributesWithValues")
-    def attributeEditMap(@PathVariable("id") id: Long): java.util.List[(Attribute, java.util.List[String])] = {
-        val obj = objectDao.find(id)
-        val attributes = obj.objectType.attributes.asScala.sortWith((a, b) => {
-            val comp = Option(a.section).getOrElse("").compareTo(Option(b.section).getOrElse(""))
-            if (comp == 0)
-                a.position.compareTo(b.position) < 0
-            else
-                comp < 0
-        })
-        val attributesWithValues = attributes.map(a => {
-            var values = obj.attributeValues.asScala.filter(_.attribute.id == a.id).map(_.value)
-            if (values.isEmpty || a.multipleValues)
-                values = values :+ ""
-            (a, values.asJava)
-        })
-        attributesWithValues.asJava
-    }
-
     @ModelAttribute("assets") def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
         val obj = objectDao.find(id)
         val java = obj.images.asScala.map(img => {
@@ -148,6 +129,9 @@ class ObjectEditController extends FolderPopulator {
         form.folderIds = Array()
         form
 
+        import scala.collection.JavaConverters._
+        model.put("attributesWithValues",
+            attributeEditMap(obj.objectType.attributes.asScala, obj.attributeValues.asScala))
         model.put("form", form)
         model.put("eyeball", UrlResolver.objectSiteView(obj))
     }

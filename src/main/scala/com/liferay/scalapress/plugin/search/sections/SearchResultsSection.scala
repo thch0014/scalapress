@@ -31,11 +31,14 @@ class SearchResultsSection extends Section {
                 val results = context.searchService.search(search)
                 val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
                 objs.size match {
-                    case 0 =>
-                        Some("<!-- no search results -->")
+                    case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
                     case _ =>
-                        val rendered = MarkupRenderer.renderObjects(objs, markup, request, context)
-                        Some(rendered)
+                        Option(markup).orElse(Option(objs.head.objectType.objectListMarkup)) match {
+                            case None => Some("<!-- no search results markup -->")
+                            case Some(m) =>
+                                val rendered = MarkupRenderer.renderObjects(objs, m, request, context)
+                                Some(rendered)
+                        }
                 }
         }
     }

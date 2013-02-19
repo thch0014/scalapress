@@ -66,7 +66,7 @@ trait FolderPopulator {
 
     var folderDao: FolderDao
 
-    @ModelAttribute def themes(model: ModelMap) {
+    @ModelAttribute def folders(model: ModelMap) {
         val folders = folderDao.findAll()
 
         var map = TreeMap(0l -> "-Default-")

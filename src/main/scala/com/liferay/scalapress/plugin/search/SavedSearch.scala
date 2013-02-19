@@ -1,8 +1,12 @@
 package com.liferay.scalapress.plugin.search
 
-import javax.persistence.{EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, Column}
+import javax.persistence.{ManyToOne, CascadeType, FetchType, OneToMany, EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, Column}
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
+import scala.Array
+import com.liferay.scalapress.domain.attr.AttributeValue
+import java.util
+import com.liferay.scalapress.domain.ObjectType
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,6 +23,11 @@ class SavedSearch {
     @Column(name = "searchCategory", nullable = true)
     @BeanProperty var searchFolders: String = _
 
+    @OneToMany(fetch = FetchType.LAZY,
+        mappedBy = "savedSearch",
+        cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @BeanProperty var attributeValues: java.util.List[AttributeValue] = new util.ArrayList[AttributeValue]()
+
     @BeanProperty var imageOnly: Boolean = _
 
     @Column(name = "method", nullable = true)
@@ -27,9 +36,11 @@ class SavedSearch {
     @Enumerated(EnumType.STRING)
     @BeanProperty var sortType: Sort = _
 
-    @BeanProperty var objectTypes: String = _
+    @ManyToOne
+    @JoinColumn(name = "itemType")
+    @BeanProperty var objectType: ObjectType = _
 
-    @JoinColumn(name = "inStockOnly", nullable = false)
+    @Column(name = "inStockOnly", nullable = false)
     @BeanProperty var inStockOnly: Boolean = _
 
     // search all content

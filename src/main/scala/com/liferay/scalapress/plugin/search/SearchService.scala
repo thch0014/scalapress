@@ -26,7 +26,6 @@ trait SearchService {
 
     def index()
     def index(obj: Obj)
-    //  def index(folder: Folder)
     def prefix(q: String, limit: Int): SearchResponse
     def search(q: String, limit: Int): SearchResponse
     def search(search: SavedSearch): SearchResponse
@@ -128,6 +127,10 @@ class ElasticSearchService extends SearchService with Logging {
           .map(_.replaceAll("\\D", ""))
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
+        search.attributeValues.asScala.foreach(av => {
+            buffer.append("attribute_" + av.attribute.id + ":" + av.value)
+        })
+
         if (search.imageOnly)
             buffer.append("hasImage:true")
 
@@ -148,17 +151,16 @@ class ElasticSearchService extends SearchService with Logging {
                 val query = new QueryStringQueryBuilder(buffer.mkString(" AND "))
                 logger.debug("Performing search {}", query)
 
-                val resp = client.prepareSearch(INDEX)
+                val req = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                   .setQuery(query)
                   .addField("objid")
                   .addField("name")
-                  .addField("hasImage")
                   .setFrom(0)
                   .setSize(limit)
 
-                Option(search.objectTypes).filter(_.trim.length > 0).map(_.split(",")).foreach(arg => {
-                    resp.setTypes(arg: _ *)
+                Option(search.objectType).foreach(arg => {
+                    req.setTypes(arg.id.toString)
                 })
 
                 val sort = search.sortType match {
@@ -166,9 +168,9 @@ class ElasticSearchService extends SearchService with Logging {
                     case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
 
                 }
-                resp.addSort(sort.ignoreUnmapped(true))
+                req.addSort(sort.ignoreUnmapped(true))
 
-                resp.execute().actionGet()
+                req.execute().actionGet()
         }
     }
 
@@ -227,7 +229,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("folders", folderIds: _ *)
 
         obj.attributeValues.asScala.foreach(av => {
-            json.field(av.attribute.id.toString, av.value)
+            json.field("attribute_" + av.attribute.id.toString, av.value)
         })
 
         json.endObject()
