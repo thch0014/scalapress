@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.form
 
 import scala.collection.JavaConverters._
-import xml.Elem
+import xml.{Unparsed, Elem}
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.enums.FormFieldType
 
@@ -59,7 +59,7 @@ object FormRenderer {
             case FormFieldType.Radio => renderRadio(field, req)
             case FormFieldType.Description =>
                 <p>
-                    {field.name}
+                    {Unparsed(field.name)}
                 </p>
             case FormFieldType.Header =>
                 <legend>
@@ -74,7 +74,7 @@ object FormRenderer {
         val star = if (field.required) "*" else ""
         <div class="control-group">
             <label class="control-label">
-                {field.name}{star}
+                {Unparsed(field.name)}{star}
             </label>
             <div class="controls">
                 <input type="file" name="file"/>
@@ -89,7 +89,7 @@ object FormRenderer {
 
         <div class={cssClass}>
             <label class="control-label">
-                {field.name}{star}
+                {Unparsed(field.name)}{star}
             </label>
             <div class="controls">
                 <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value}/>
@@ -111,7 +111,7 @@ object FormRenderer {
 
         <div class={cssClass}>
             <label class="control-label">
-                {field.name}{star}
+                {Unparsed(field.name)}{star}
             </label>
             <div class="controls">
                 <select name={field.id.toString}>
@@ -128,7 +128,7 @@ object FormRenderer {
         <div class="control-group">
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name={field.id.toString}/>{field.name}
+                    <input type="checkbox" name={field.id.toString}/>{Unparsed(field.name)}
                 </label>
             </div>
         </div>
@@ -144,7 +144,7 @@ object FormRenderer {
         <div class={cssClass}>
             <div class="controls">
                 <label class="checkbox">
-                    {field.name}
+                    {Unparsed(field.name)}
                 </label>{checks}<span class="help-inline">
                 {req.errors.getOrElse(field.id.toString, "")}
             </span>
@@ -164,7 +164,7 @@ object FormRenderer {
         <div class={cssClass}>
             <div class="controls">
                 <label class="radio">
-                    {field.name}{star}
+                    {Unparsed(field.name)}{star}
                 </label>{radios}<span class="help-inline">
                 {req.errors.getOrElse(field.id.toString, "")}
             </span>

@@ -37,6 +37,13 @@ class Obj {
     )
     @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
+    @JoinTable(name = "objects_links",
+        joinColumns = Array(new JoinColumn(name = "parent", unique = true)),
+        inverseJoinColumns = Array(new JoinColumn(name = "child"))
+    )
+    @BeanProperty var links: java.util.List[Obj] = new util.ArrayList[Obj]()
+
     @ManyToOne
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
