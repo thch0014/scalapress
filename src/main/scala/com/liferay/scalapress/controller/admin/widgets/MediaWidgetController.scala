@@ -35,7 +35,7 @@ class MediaWidgetController extends WidgetEditController {
     def save(@ModelAttribute w: Widget, model: ModelMap,
              @RequestParam(value = "upload", required = false) upload: MultipartFile) = {
 
-        if (upload != null) {
+        if (upload != null && !upload.isEmpty) {
             val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
             val image = Image(key)
             image.mediaWidget = w.asInstanceOf[MediaWidget]
