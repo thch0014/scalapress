@@ -57,12 +57,23 @@ class FolderPluginDaoImpl extends GenericDaoImpl[FolderPlugin, java.lang.Long] w
 }
 
 @Component
-class FolderPluginDaoValidator {
+class FoldersValidator {
+
     @Autowired var folderPluginDao: FolderPluginDao = _
-    @PostConstruct def ensureOne() {
+    @Autowired var folderDao: FolderDao = _
+
+    @PostConstruct def ensureOnePlugin() {
         if (folderPluginDao.findAll().size == 0) {
             val plugin = new FolderPlugin
             folderPluginDao.save(plugin)
+        }
+    }
+
+    @PostConstruct def ensureRoot() {
+        if (folderDao.findAll().size == 0) {
+            val root = Folder(null)
+            root.name = "Home Page"
+            folderDao.save(root)
         }
     }
 }
