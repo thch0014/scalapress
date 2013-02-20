@@ -6,6 +6,7 @@ import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.FriendlyUrlGenerator
+import com.liferay.scalapress.enums.StockMethod
 
 /** @author Stephen Samuel */
 object BasketLinkTag extends ScalapressTag with TagBuilder {
@@ -54,7 +55,7 @@ object AddToBasketTag extends ScalapressTag with TagBuilder {
         request.obj match {
             case None => None
             case Some(obj) =>
-                obj.available || obj.backorders match {
+                obj.available || obj.backorders || context.shoppingPluginDao.get.stockMethod == StockMethod.Off match {
                     case true =>
                         val text = params.get("text").getOrElse("Add to basket")
                         val href = UrlResolver.addToBasket(obj)
