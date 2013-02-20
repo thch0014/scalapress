@@ -1,0 +1,74 @@
+#parse("/admin/header.vm")
+
+<h3>Address Entry</h3>
+
+<form class="form-horizontal" method="POST">
+
+
+    <legend>Billing Address</legend>
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("address.name") #springShowErrors(",")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Company</label>
+
+        <div class="controls">
+            #springFormInput("address.company") #springShowErrors(",")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Address</label>
+
+        <div class="controls">
+            #springFormInput("address.address1") #springShowErrors(" ")
+        </div>
+    </div>
+    <div class="control-group">
+
+        <div class="controls">
+            #springFormInput("address.address2") #springShowErrors(" ")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">City</label>
+
+        <div class="controls">
+            #springFormInput("address.town") #springShowErrors(" ")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Postcode</label>
+
+        <div class="controls">
+            #springFormInput("address.postcode") #springShowErrors(" ")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Country</label>
+
+        <div class="controls">
+            #springFormInput("address.country") #springShowErrors(" ")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Telephone</label>
+
+        <div class="controls">
+            #springFormInput("address.telephone") #springShowErrors(",")
+        </div>
+    </div>
+
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+
+</form>
+
+#parse("/admin/footer.vm")

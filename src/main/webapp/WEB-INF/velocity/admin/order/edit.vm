@@ -115,7 +115,7 @@
             <label class="control-label">Change Delivery Address</label>
 
             <div class="controls">
-                #springFormSingleSelect("form.changeDeliveryAddress", "")
+                #springFormSingleSelect("form.changeDeliveryAddress", $addressesMap, "class='input-xlarge'")
             </div>
         </div>
     </div>
@@ -190,6 +190,13 @@
                 #springFormSingleSelect("form.changeBillingAddress", $addressesMap,"class='input-xlarge'")
             </div>
         </div>
+        <div class="control-group">
+            <div class="controls">
+                <a href="/backoffice/plugin/shopping/address/$order.account.id" role="button" class="btn btn-small">Create
+                    Address</a>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -224,7 +231,7 @@
         </tr>
     #end
     <tr>
-        <td>$order.deliveryDetails</td>
+        <td>$!order.deliveryDetails</td>
         <td><input type="text" name="changeDeliveryCharge" class='input-mini'
                    value="$number.number($order.deliveryEx())"/>
         </td>

@@ -153,9 +153,8 @@ class CheckoutController {
         SagepayFormService.processCallback(params, sagepayFormPlugin) match {
 
             case Some(payment) =>
-                payment.order = order.id
-                paymentDao.save(payment)
 
+                payment.order = order.id
                 order.payments.add(payment)
                 orderDao.save(order)
 

@@ -14,6 +14,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.folder.SecurityFuncs
+import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
@@ -110,9 +111,12 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
 
     @ModelAttribute("form") def form = new OrderEditForm
 
-    @ModelAttribute def order(@PathVariable("id") id: Long) = {
+    @ModelAttribute def order(@PathVariable("id") id: Long, model: ModelMap) = {
+
         val order = orderDao.find(id)
         order.status = Option(order.status).map(_.trim).getOrElse(null)
+
+        addressOptions(order.account.id, model)
         order
     }
 }
