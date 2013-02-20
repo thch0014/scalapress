@@ -9,6 +9,7 @@ import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
+import com.liferay.scalapress.plugin.form.FormDao
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
@@ -25,6 +26,23 @@ trait MarkupPopulator {
 
         model.put("markups", markups.asJava)
         model.put("markupMap", map.asJava)
+    }
+}
+
+trait FormPopulator {
+
+    var formDao: FormDao
+
+    @ModelAttribute def forms(model: ModelMap) {
+        val forms = formDao.findAll()
+
+        var map = TreeMap(0l -> "-None-")
+        forms.map(f => {
+            map = map + (f.id -> ("#" + f.id + " " + f.name))
+        })
+
+        model.put("forms", forms.asJava)
+        model.put("formsMap", map.asJava)
     }
 }
 
