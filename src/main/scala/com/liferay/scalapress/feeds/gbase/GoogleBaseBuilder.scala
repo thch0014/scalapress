@@ -71,6 +71,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
         val name = WordUtils.capitalizeFully(obj.name)
         val formattedPrice = "%1.2f".format(obj.sellPriceInc / 100.0)
         val folder = obj.folders.asScala.head.fullName.dropWhile(_ != '>').drop(1).trim
+        val availability = obj.available "in stock" else "available for order"
 
         Array(obj.id.toString,
             name,
@@ -81,7 +82,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
             "http://" + domain + "/images/" + obj.images.asScala.head.filename,
             "new",
             formattedPrice + " GBP",
-            "in stock",
+            availability,
             brand,
             mpn,
             shipping)
