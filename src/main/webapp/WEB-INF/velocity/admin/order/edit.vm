@@ -94,7 +94,7 @@
             <label class="control-label">Country</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.deliveryAddress.country</span>
+                <span class="input-large uneditable-input">$!order.deliveryAddress.country</span>
             </div>
         </div>
         <div class="control-group">
@@ -166,7 +166,7 @@
             <label class="control-label">Country</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.billingAddress.country</span>
+                <span class="input-large uneditable-input">$!order.billingAddress.country</span>
             </div>
         </div>
         <div class="control-group">
