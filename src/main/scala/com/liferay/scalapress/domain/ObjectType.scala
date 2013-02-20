@@ -15,8 +15,9 @@ class ObjectType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: java.lang.Long = _
 
-    @Column
     @BeanProperty var name: String = _
+
+    @BeanProperty var deleted: Boolean = false
 
     @BeanProperty var linkGroups: String = _
     def linkGroupsArray = Option(linkGroups)

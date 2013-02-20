@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.TypeDao
 import com.liferay.scalapress.domain.ObjectType
+import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,5 +19,6 @@ class TypeListController {
 
     import scala.collection.JavaConverters._
 
-    @ModelAttribute("types") def types = typeDao.findAll().asJava
+    @ModelAttribute("types") def types = typeDao
+      .search(new Search(classOf[ObjectType]).addFilterEqual("deleted", false)).asJava
 }
