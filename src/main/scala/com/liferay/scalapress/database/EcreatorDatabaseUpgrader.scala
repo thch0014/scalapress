@@ -137,6 +137,8 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         execute("ALTER TABLE attributes MODIFY itemtype bigint(10) null")
         execute("UPDATE attributes SET itemtype=null WHERE itemtype=0")
+        execute("ALTER TABLE attributes MODIFY search bigint(10) null")
+        execute("UPDATE attributes SET search=null WHERE search=0")
 
         execute("ALTER TABLE orders MODIFY deliveryaddress bigint(10) null")
         execute("UPDATE orders SET deliveryaddress=null WHERE deliveryaddress=0")
