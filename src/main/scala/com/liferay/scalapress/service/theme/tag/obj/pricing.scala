@@ -12,8 +12,8 @@ object RrpTag extends ScalapressTag with TagBuilder {
             obj.rrp match {
                 case 0 => None
                 case _ =>
-                    val textFormatted = "&pound;%1.2f".format(obj.rrp / 100.0)
-                    Some(build(textFormatted, params))
+                    val formatted = "&pound;%1.2f".format(obj.rrp / 100.0)
+                    Some(build(formatted, params))
             }
         })
     }
@@ -23,7 +23,8 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(obj => {
-            val saving = obj.rrp - obj.sellPrice
+
+            val saving = obj.rrp - obj.sellPriceInc
             saving match {
                 case i if i <= 0 => None
                 case _ =>
