@@ -137,7 +137,7 @@ object FormRenderer {
     private def renderChecks(field: FormField, req: ScalapressRequest) = {
         val checks = field.optionsList.map(opt =>
             <label class="checkbox">
-                <input type="checkbox" name={field.id.toString}/>{opt}
+                <input type="checkbox" name={field.id.toString}/>{Unparsed(opt)}
             </label>)
 
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
@@ -158,7 +158,7 @@ object FormRenderer {
 
         val radios = field.optionsList.map(opt =>
             <label class="radio">
-                <input type="radio" name={field.id.toString} value={opt}/>{opt}
+                <input type="radio" name={field.id.toString} value={opt}/>{Unparsed(opt)}
             </label>)
 
         <div class={cssClass}>
