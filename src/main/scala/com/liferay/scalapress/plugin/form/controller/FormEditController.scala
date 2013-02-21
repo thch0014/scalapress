@@ -36,8 +36,15 @@ class FormEditController {
         "redirect:/backoffice/form/" + form.id
     }
 
-    @RequestMapping(value = Array("field/{id}/delete"))
-    def deleteField(@ModelAttribute form: Form): String = {
+    @RequestMapping(value = Array("field/{fieldId}/delete"))
+    def deleteField(@ModelAttribute form: Form, @PathVariable("fieldId") fieldId: Long): String = {
+        form.fields.asScala.find(_.id == fieldId) match {
+            case None =>
+            case Some(field) =>
+                form.fields.remove(field)
+                field.form = null
+                context.formDao.save(form)
+        }
         "redirect:/backoffice/form/" + form.id
     }
 

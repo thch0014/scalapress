@@ -21,7 +21,7 @@ class Form {
     @Column(name = "submissionmessage")
     @BeanProperty var submissionText: String = _
 
-    @OneToMany(mappedBy = "form", cascade = Array(CascadeType.ALL))
+    @OneToMany(mappedBy = "form", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var fields: java.util.List[FormField] = new java.util.ArrayList[FormField]
 
     // redirect on completion

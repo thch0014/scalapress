@@ -15,7 +15,7 @@ class FormSection extends Section {
     @BeanProperty var form: Form = _
 
     def desc: String = "For showing a form on a folder or object page"
-    def backoffice: String = "/backoffice/plugin/form/section/" + id
+    override def backoffice: String = "/backoffice/plugin/form/section/" + id
     def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
         val rendered = FormRenderer.render(form, req)
         Option(rendered)
