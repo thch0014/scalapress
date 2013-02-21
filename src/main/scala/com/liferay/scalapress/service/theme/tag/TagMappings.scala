@@ -1,6 +1,6 @@
 package com.liferay.scalapress.service.theme.tag
 
-import folder.{FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
+import folder.{NestedFoldersTag, FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
 import user.{LogoutTag, UserStatusTag}
@@ -16,6 +16,7 @@ object TagMappings {
     val mappings: Map[String, ScalapressTag] = Map("item" -> ObjectTag, "object" -> ObjectTag,
         "categories_primary" -> PrimaryFoldersTag,
         "folders_primary" -> PrimaryFoldersTag,
+        "folders_nested" -> NestedFoldersTag,
         "summary" -> SummaryTag,
         "content" -> ContentTag,
         "pricing_sell" -> ObjectSellPriceTag,
