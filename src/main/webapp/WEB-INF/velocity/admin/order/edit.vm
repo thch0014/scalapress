@@ -47,7 +47,7 @@
             <label class="control-label">Name</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.deliveryAddress.name</span>
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.name</span>
             </div>
         </div>
         <div class="control-group">
@@ -61,7 +61,7 @@
             <label class="control-label">Address</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.deliveryAddress.address1</span>
+                <span class="input-xlarge uneditable-input">$!order.deliveryAddress.address1</span>
             </div>
         </div>
         <div class="control-group">
@@ -80,14 +80,14 @@
             <label class="control-label">City</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.deliveryAddress.town</span>
+                <span class="input-large uneditable-input">$!order.deliveryAddress.town</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Postcode</label>
 
             <div class="controls">
-                <span class="input-medium uneditable-input">$order.deliveryAddress.postcode</span>
+                <span class="input-medium uneditable-input">$!order.deliveryAddress.postcode</span>
             </div>
         </div>
         <div class="control-group">
@@ -126,7 +126,7 @@
             <label class="control-label">Name</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.billingAddress.name</span>
+                <span class="input-xlarge uneditable-input">$!order.billingAddress.name</span>
             </div>
         </div>
         <div class="control-group">
@@ -140,7 +140,7 @@
             <label class="control-label">Address</label>
 
             <div class="controls">
-                <span class="input-xlarge uneditable-input">$order.billingAddress.address1</span>
+                <span class="input-xlarge uneditable-input">$!order.billingAddress.address1</span>
             </div>
         </div>
         <div class="control-group">
@@ -159,14 +159,14 @@
             <label class="control-label">City</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$order.billingAddress.town</span>
+                <span class="input-large uneditable-input">$!order.billingAddress.town</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Postcode</label>
 
             <div class="controls">
-                <span class="input-medium uneditable-input">$order.billingAddress.postcode</span>
+                <span class="input-medium uneditable-input">$!order.billingAddress.postcode</span>
             </div>
         </div>
         <div class="control-group">

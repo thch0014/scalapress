@@ -42,14 +42,14 @@ class FoldersWidget extends Widget with Logging {
         val excluded = Option(exclusions)
           .map(_.toLowerCase)
           .map(_.split("\n").flatMap(_.split(",")))
-          .getOrElse(Array[String]())
+          .getOrElse(Array[String]()).map(_.trim)
 
         val children = parent
           .subfolders
           .asScala
           .filterNot(_.hidden)
           .filterNot(f => excluded.contains(f.id.toString))
-          .filterNot(f => excluded.contains(f.name.toLowerCase))
+          .filterNot(f => excluded.contains(f.name.toLowerCase.trim))
 
         for (folder <- children) {
             buffer.append("<li id='w" + id + "_f" + folder.id + "' class='l" + level + "'>")
