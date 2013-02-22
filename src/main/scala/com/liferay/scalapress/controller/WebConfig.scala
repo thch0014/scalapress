@@ -13,11 +13,12 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
-import com.liferay.scalapress.{StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
+import com.liferay.scalapress.{StringFormConverter, StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.dao.settings.InstallationDao
 import com.liferay.scalapress.plugin.search.SearchFormDao
+import com.liferay.scalapress.plugin.form.FormDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -35,6 +36,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     @Autowired var searchFormDao: SearchFormDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var siteDao: InstallationDao = _
+    @Autowired var formDao: FormDao = _
 
     override def addFormatters(registry: FormatterRegistry) {
         registry.addConverter(new StringFolderConverter(folderDao))
@@ -44,6 +46,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addConverter(new StringDeliveryOptionConverter(deliveryOptionDao))
         registry.addConverter(new StringToThemeConverter(themeDao))
         registry.addConverter(new StringToAddressConverter(addressDao))
+        registry.addConverter(new StringFormConverter(formDao))
     }
 
     override def addResourceHandlers(registry: ResourceHandlerRegistry) {

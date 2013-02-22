@@ -2,6 +2,10 @@
 
 <h3>Folders</h3>
 
+<p>
+    <a href="/backoffice/folder/create" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create Folder</a>
+</p>
+
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
@@ -22,6 +26,5 @@
     #end
 </table>
 
-<a href="$urlResolver.createFolder()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
 
 #parse("/admin/footer.vm")

@@ -6,6 +6,7 @@ import org.springframework.core.convert.converter.Converter
 import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}
+import plugin.form.{Form, FormDao}
 import plugin.search.form.SearchForm
 import plugin.search.SearchFormDao
 
@@ -20,6 +21,12 @@ class StringObjectTypeConverter(objectTypeDao: TypeDao) extends Converter[String
     def convert(source: String): ObjectType =
         if (source == null || source == "" || source == "0") null
         else objectTypeDao.find(source.toLong)
+}
+
+class StringFormConverter(formDao: FormDao) extends Converter[String, Form] {
+    def convert(source: String): Form =
+        if (source == null || source == "" || source == "0") null
+        else formDao.find(source.toLong)
 }
 
 class StringMarkupConverter(markupDao: MarkupDao) extends Converter[String, Markup] {
