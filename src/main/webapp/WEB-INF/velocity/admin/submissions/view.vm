@@ -4,8 +4,7 @@
 <h3>Submission: #$submission.id</h3>
 
 <p>Submitted at $datetool.format($submission.date)</p>
-
-#paging($paging)
+<p>From form $submission.formName $!submission.folder.name</p>
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
@@ -26,11 +25,10 @@
     #foreach ($a in $submission.attachments)
         <tr>
             <th>Attachment</th>
-            <td><a href="$assetStore.link($a.filename)">$a.filename</a></td>
+            <td><a href="$assetStore.link($a)">$a</a></td>
         </tr>
     #end
 </table>
 
-#paging($paging)
 
 #parse("/admin/footer.vm")
