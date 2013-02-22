@@ -73,12 +73,13 @@ class Order {
 }
 
 object Order {
-    def apply(ipAddress: String) = {
+    def apply(ipAddress: String, account: Obj) = {
         val order = new Order
         order.datePlaced = System.currentTimeMillis()
         order.status = "New"
         order.ipAddress = ipAddress
         order.vatable = true
+        order.account = account
         order
     }
 }

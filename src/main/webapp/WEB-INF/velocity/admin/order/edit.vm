@@ -266,7 +266,7 @@
         $('#add-line-typeahead').typeahead({
             source: function (query, process) {
                 return $.ajax({
-                    url: "/rest/obj",
+                    url: "/rest/obj?objectTypeName=Product",
                     type: 'GET',
                     data: {q: query},
                     dataType: 'json',

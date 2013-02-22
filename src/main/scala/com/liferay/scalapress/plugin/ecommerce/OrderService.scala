@@ -23,8 +23,8 @@ object OrderService {
 
     def createOrder(account: Obj, orderDao: OrderDao, basket: Basket, req: HttpServletRequest): Order = {
 
-        val order = Order(req.getRemoteAddr)
-        order.account = account
+        val order = Order(req.getRemoteAddr, account)
+
 
         order.billingAddress = basket.billingAddress
         order.billingAddress.active = true

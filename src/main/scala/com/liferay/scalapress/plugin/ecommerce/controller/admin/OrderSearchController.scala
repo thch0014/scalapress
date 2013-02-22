@@ -8,6 +8,7 @@ import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
+import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -29,8 +30,9 @@ class OrderSearchController {
     }
 
     @RequestMapping(value = Array("create"), produces = Array("text/html"))
-    def create(req: HttpServletRequest) = {
-        val u = Order(req.getRemoteAddr)
+    def create(req: HttpServletRequest, @RequestParam("accountId") accountId: Long) = {
+        val account = context.objectDao.find(accountId)
+        val u = Order(req.getRemoteAddr, account)
         orderDao.save(u)
         "redirect:/backoffice/order"
     }

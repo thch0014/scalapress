@@ -17,7 +17,10 @@ class ObjectRestController {
 
     @ResponseBody
     @RequestMapping
-    def typeAhead(@RequestParam("q") q: String): Array[Array[String]] = objectDao.typeAhead(q)
+    def typeAhead(@RequestParam("q") q: String,
+                  @RequestParam(value = "objectTypeName",
+                      required = false) objectTypeName: String): Array[Array[String]] = objectDao
+      .typeAhead(q, Option(objectTypeName))
 
     @ResponseBody
     @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))

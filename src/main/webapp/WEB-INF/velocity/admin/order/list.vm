@@ -3,7 +3,40 @@
 
 <h3>Orders</h3>
 
-<a href="$urlResolver.createOrder()" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New Order</a>
+<form method="POST" action="/backoffice/order/create">
+    <input type="hidden" id="add-account-id" name="accountId"/>
+    <input type="text" class="input-xlarge" id="add-account-typeahead" value=""/>
+    <script>
+        autosep = ":";
+        $('#add-account-typeahead').typeahead({
+            source: function (query, process) {
+                return $.ajax({
+                    url: "/rest/obj?objectTypeName=Account",
+                    type: 'GET',
+                    data: {q: query},
+                    dataType: 'json',
+                    success: function (json) {
+                        var arr = [];
+                        for (var i in json) {
+                            arr.push(json[i][0] + autosep + json[i][1]);
+                        }
+                        process(arr);
+                    }
+                });
+            }, highlighter: function (item) {
+                var parts = item.split(autosep);
+                parts.shift();
+                return parts.join(autosep);
+            }, updater: function (item) {
+                var parts = item.split(autosep);
+                var id = parts.shift();
+                $('#add-account-id').val(id);
+                return parts.join(autosep);
+            }
+        })
+    </script>
+    <button type="submit" class="btn btn-small"><i class="icon-plus"></i> Create New Order</button>
+</form>
 
 #paging($paging)
 
