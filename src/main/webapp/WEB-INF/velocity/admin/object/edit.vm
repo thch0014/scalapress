@@ -219,8 +219,8 @@
 
                 #elseif ($a.attributeType == "Boolean")
                     <select name="attributeValues$a.id" class="input-small">
-                        <option>Yes</option>
-                        <option>No</option>
+                        <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
+                        <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
                     </select>
                 #end
 
