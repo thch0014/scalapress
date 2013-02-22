@@ -36,7 +36,6 @@ class ObjectListSection extends Section {
         val objects = folder.objects.asScala
         val live = objects.filter(_.status.toLowerCase == "live")
 
-        val sort =
         val sorted = sort match {
             case Sort.Name => live.sortBy(_.name)
             case Sort.Price => live.sortBy(_.sellPrice)
