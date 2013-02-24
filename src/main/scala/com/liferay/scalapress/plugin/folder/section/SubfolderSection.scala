@@ -26,7 +26,7 @@ class SubfolderSection extends Section {
 
         val subfolders = folder.subfolders.asScala.filterNot(_.hidden)
         val sorted = folder.folderOrdering match {
-            case FolderOrdering.Alphabetical => subfolders.sortBy(_.position)
+            case FolderOrdering.Alphabetical => subfolders.sortBy(f => Option(f.name).getOrElse(""))
             case _ => subfolders.sortBy(_.position)
         }
 
