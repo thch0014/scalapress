@@ -24,21 +24,23 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Parent</label>
+                #if ($folder.id > 1)
+                    <div class="control-group">
+                        <label class="control-label">Parent</label>
 
-                    <div class="controls">
-                        <select id="parent" name="parent" class="input-xxlarge">
-                            #foreach($option in $parents.keySet())
-                                <option value="${option}"
-                                    #if("$!folder.parent.id" == "$option")
-                                        selected="selected"
-                                    #end>
-                                    ${parents.get($option)}</option>
-                            #end
-                        </select>
+                        <div class="controls">
+                            <select id="parent" name="parent" class="input-xxlarge">
+                                #foreach($option in $parents.keySet())
+                                    <option value="${option}"
+                                        #if("$!folder.parent.id" == "$option")
+                                            selected="selected"
+                                        #end>
+                                        ${parents.get($option)}</option>
+                                #end
+                            </select>
+                        </div>
                     </div>
-                </div>
+                #end
 
                 <div class="control-group">
                     <label class="control-label">Hidden</label>

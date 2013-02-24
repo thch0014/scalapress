@@ -32,7 +32,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute folder: Folder) = {
-        if (folder.id == 1)
+        if (folder.id == 1l)
             folder.parent = null
         folderDao.save(folder)
         edit(folder)
