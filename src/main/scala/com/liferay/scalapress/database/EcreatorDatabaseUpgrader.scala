@@ -232,6 +232,53 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         }
 
+
+        for (column <- Array("hidediscountinfo",
+            "contentlinkingkeywords",
+            "discount",
+            "amazonbtg",
+            "shopzillacategory",
+            "membergrouppricing",
+            "pricebreakvalues",
+            "itemsperpage",
+            "liveitemscount",
+            "kelkoocategory",
+            "attributecount",
+            "searchengineurllocked",
+            "supermanlock",
+            "friendlyurllocked",
+            "permissions",
+            "primaryparent",
+            "messages",
+            "currency",
+            "filecount",
+            "contentlinkingkeyword",
+            "basketforwardcategory",
+            "childcount",
+            "background",
+            "autocontentlinking",
+            "forwardwho",
+            "simpleeditor",
+            "forum",
+            "hash",
+            "rendertags",
+            "suggestions",
+            "includesubcategoryitems",
+            "usemanualsort",
+            "imageupdatetimestamp",
+            "imagecount",
+            "imageaddedtime",
+            "pendingimagecount",
+            "videocount",
+            "restrictionforwardurl",
+            "wikiaccess")) {
+            try {
+                execute("ALTER TABLE categories DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
         for (table <- Array("videos",
             "videos_block",
             "visitors",
