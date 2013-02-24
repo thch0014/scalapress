@@ -57,21 +57,13 @@ class Folder {
     @BeanProperty var footer: String = _
     @BeanProperty var header: String = _
 
-    @BeanProperty var css: String = _
-
     @Column(name = "forwardUrl")
     @BeanProperty var redirect: String = _
 
     @BeanProperty var position: Int = _
 
-    @BeanProperty var primaryParent: Long = _
-
     // hidden when browsing but visible in search
     @BeanProperty var hidden: Boolean = false
-
-    @BeanProperty var content: String = _
-
-    @BeanProperty var includeSubcategoryItems: Boolean = false
 
     // meta data
     @BeanProperty var titleTag: String = _
