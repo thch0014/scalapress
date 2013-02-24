@@ -258,6 +258,8 @@ class EcreatorDatabaseUpgrader extends Logging {
             "background",
             "autocontentlinking",
             "forwardwho",
+            "advanced", "parentcount", "resultstop", "resultsbottom",
+            "manualitemsorder", "itemsort", "content", "comments", "template",
             "simpleeditor",
             "forum",
             "hash",
