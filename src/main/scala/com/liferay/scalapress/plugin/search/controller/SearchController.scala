@@ -34,6 +34,7 @@ class SearchController extends Logging {
                @RequestParam("q") q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
+        val plugin = searchPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val response = searchService.search(q, PageSize)
         val objects = response.hits.hits().map(hit => {
@@ -41,15 +42,20 @@ class SearchController extends Logging {
             objectDao.find(id)
         }).toList
 
-        val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
-
-        val markup = searchPluginDao.get.markup
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(PagingRenderer.render(paging))
-        if (markup != null)
-            page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
+        if (objects.size == 0) {
+            page.body(plugin.noResultsText)
+        } else {
+
+            val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
+            page.body(PagingRenderer.render(paging))
+
+            val markup = objects.head.objectType.objectListMarkup
+            if (markup != null)
+                page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
+        }
         page
     }
 

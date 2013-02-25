@@ -21,6 +21,8 @@ class SearchPlugin {
     @ManyToOne
     @JoinColumn(name = "markup")
     @BeanProperty var markup: Markup = _
+
+    @BeanProperty var noResultsText: String = _
 }
 
 trait SearchPluginDao extends GenericDao[SearchPlugin, java.lang.Long] {
