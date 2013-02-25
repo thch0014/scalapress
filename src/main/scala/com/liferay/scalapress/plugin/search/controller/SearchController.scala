@@ -46,15 +46,21 @@ class SearchController extends Logging {
         val page = ScalaPressPage(theme, sreq)
 
         if (objects.size == 0) {
+            page.body("<!-- search results: no objects found -->")
             page.body(plugin.noResultsText)
+
         } else {
+            page.body("<!-- search results: " + objects.size + " objects found -->")
 
             val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
             page.body(PagingRenderer.render(paging))
 
+
             val markup = objects.head.objectType.objectListMarkup
-            if (markup != null)
+            if (markup != null) {
+                page.body("<!-- search results: no object list markup found -->")
                 page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
+            }
         }
         page
     }
