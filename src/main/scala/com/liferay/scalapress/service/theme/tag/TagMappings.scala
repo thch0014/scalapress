@@ -39,6 +39,7 @@ object TagMappings {
         "ordering_buy" -> AddToBasketTag,
         "addtobasket" -> AddToBasketTag,
         "register" -> RegisterTag,
+        "id" -> IdTag,
         "basket" -> BasketLinkTag,
         "basket_total" -> BasketTotalTag,
         "basket_lines" -> BasketLinesTag,
