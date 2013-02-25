@@ -1,9 +1,10 @@
 package com.liferay.scalapress.plugin.search
 
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
-import form.{SearchFormField, SearchForm}
+import form.{SearchFormField}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.search.SearchForm
 
 /** @author Stephen Samuel */
 trait SearchFormDao extends GenericDao[SearchForm, java.lang.Long]

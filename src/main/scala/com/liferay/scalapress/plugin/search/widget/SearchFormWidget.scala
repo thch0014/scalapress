@@ -4,7 +4,7 @@ import javax.persistence.{OneToOne, JoinColumn, Entity, Table}
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
-import com.liferay.scalapress.plugin.search.form.SearchForm
+import com.liferay.scalapress.search.{SearchFormRenderer, SearchForm}
 
 /** @author Stephen Samuel
   *

@@ -7,8 +7,9 @@ import com.liferay.scalapress.domain.attr.Attribute
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.plugin.form.{Submission, Form}
 import com.liferay.scalapress.plugin.ecommerce.domain.DeliveryOption
-import com.liferay.scalapress.plugin.search.form.{SearchFormField, SearchForm}
+import com.liferay.scalapress.plugin.search.form.{SearchFormField}
 import com.liferay.scalapress.Section
+import com.liferay.scalapress.search.SearchForm
 
 /** @author Stephen Samuel */
 

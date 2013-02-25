@@ -1,8 +1,7 @@
-package com.liferay.scalapress.plugin.search.form
+package com.liferay.scalapress.search
 
-import javax.persistence.{Column, OneToMany, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.Markup
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,14 +14,13 @@ class SearchForm {
 
     @BeanProperty var name: String = _
 
-    @BeanProperty var itemtype: Long = _
+    @Column(name = "itemtype")
+    @BeanProperty var objectType: Long = _
 
     @Column(name = "resultsperpage")
     @BeanProperty var pageSize: Int = _
 
-    @ManyToOne
-    @JoinColumn(name = "markup", nullable = true)
-    @BeanProperty var markup: Markup = _
+    @BeanProperty var submitLabel: String = _
 
     @OneToMany(mappedBy = "searchForm")
     @BeanProperty var fields: java.util.List[SearchFormField] = new java.util.ArrayList[SearchFormField]()

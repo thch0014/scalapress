@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.form
+package com.liferay.scalapress.search
 
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty

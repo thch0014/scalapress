@@ -5,7 +5,6 @@ package com.liferay.scalapress.enums;
  */
 public enum SearchFieldType {
     Keywords,
-    Folders,
     Attribute,
     Categories,
     Location,
