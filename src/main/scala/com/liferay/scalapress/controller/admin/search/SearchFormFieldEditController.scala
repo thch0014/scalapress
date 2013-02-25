@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.liferay.scalapress.plugin.search.form.SearchFormField
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.plugin.search.SearchFormFieldDao
+import com.liferay.scalapress.search.SearchFormField
 
 /** @author Stephen Samuel */
 @Controller

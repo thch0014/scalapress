@@ -173,8 +173,6 @@ class EcreatorDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
-
-        // copy the searchbox from forms to the box
         try {
             val rs = conn.prepareStatement("SELECT id, owner from searches").executeQuery()
             while (rs.next) {
@@ -210,6 +208,22 @@ class EcreatorDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
+        // make search blocks from the search_forms
+        try {
+            val rs = conn.prepareStatement("SELECT id, searchblock from search_forms").executeQuery()
+            while (rs.next) {
+
+                val id = rs.getLong(1)
+                val searchblock = rs.getLong(2)
+
+                execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + searchblock)
+
+            }
+        }
+        catch {
+            case e: Exception => logger.warn(e.getMessage)
+        }
+
         execute("ALTER TABLE categories_boxes MODIFY root bigint(10) null")
         execute("UPDATE categories_boxes SET root=null WHERE root=0")
 
@@ -227,6 +241,26 @@ class EcreatorDatabaseUpgrader extends Logging {
             "imageaddedtime", "administrator", "crm", "salesperson", "restrictions", "password")) {
             try {
                 execute("ALTER TABLE users DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
+
+        for (column <- Array("noresultsforwardurl",
+            "autoforward",
+            "activelocation",
+            "noresultstext",
+            "googlemap",
+            "sortattribute",
+            "submitsrc",
+            "resultspagetitle",
+            "savable",
+            "excludeaccountitemtype",
+            "excludeaccount",
+            "filter", "alerts", "numberofhighlightedresults", "parenttemplate", "titletag", "descriptiontag")) {
+            try {
+                execute("ALTER TABLE search_forms DROP " + column)
             } catch {
                 case e: Exception => logger.warn(e.getMessage)
             }
