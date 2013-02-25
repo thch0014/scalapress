@@ -15,6 +15,7 @@ import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.controller.admin.obj.ThemePopulator
 import com.liferay.scalapress.util.ComponentClassScanner
 import com.liferay.scalapress.plugin.form.section.FormSection
+import collection.mutable
 
 /** @author Stephen Samuel */
 @Controller
@@ -91,10 +92,13 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
 
     @ModelAttribute("parents") def folder = {
 
-        val folders = folderDao.findAll().map(f => (f.id, f.fullName))
-        val options = (0, "-None-") +: folders
-        val java = options.toMap.asJava
-        java
+        val folders = folderDao.tree
+
+        val map = new mutable.LinkedHashMap[Long, String]
+        map.put(0, "-None-")
+        for (folder <- folders)
+            map.put(folder.id, folder.fullName)
+        map.asJava
     }
 
     @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)

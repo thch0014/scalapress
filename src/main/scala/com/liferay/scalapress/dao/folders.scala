@@ -8,17 +8,31 @@ import com.liferay.scalapress.domain.Folder
 import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.plugin.folder.FolderPlugin
+import collection.mutable.ArrayBuffer
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
     def findTopLevel: Array[Folder]
     def root: Folder
     def search(query: String): Array[Folder]
+    def tree: Array[Folder]
 }
 
 @Component
 @Transactional
 class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDao {
+
+    override def tree: Array[Folder] = {
+        tree(root).toArray
+    }
+
+    private def tree(parent: Folder): ArrayBuffer[Folder] = {
+        val buffer = new ArrayBuffer[Folder]
+        buffer.append(parent)
+        for (child <- parent.subfolders.asScala)
+            buffer.appendAll(tree(child))
+        buffer
+    }
 
     override def findTopLevel: Array[Folder] = root
       .subfolders
