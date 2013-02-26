@@ -221,7 +221,7 @@ class EcreatorDatabaseUpgrader extends Logging {
                 val searchblock = rs.getLong(2)
 
                 execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + searchblock)
-                execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + searchblock + 80000)
+                execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + (searchblock + 80000))
 
             }
         }
