@@ -43,20 +43,20 @@ object SearchFormRenderer {
                 {opt.value}
             </option>)
 
-        val name = "attr_" + field.id
+        val name = "attr_" + field.attribute.id
 
         <div>
             <label>
                 {field.name}
             </label>
             <select type="text" name={name}>
-                <option value="">Any</option>{options}
+                <option value=" ">Any</option>{options}
             </select>
         </div>
     }
 
     private def renderTextAttribute(field: SearchFormField): Elem = {
-        val name = "attr_" + field.id
+        val name = "attr_" + field.attribute.id
         <div>
             <label>
                 {field.name}

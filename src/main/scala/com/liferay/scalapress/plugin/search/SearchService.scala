@@ -70,6 +70,7 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "accounts")
           .setMaxResults(preloadSize))
 
+
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))
 
