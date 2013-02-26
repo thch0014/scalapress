@@ -16,9 +16,9 @@ object AttributeFuncs {
     }
 
     def attributeValues(obj: Obj, s: String): Seq[String] = {
-        obj.attributeValues.asScala
-          .filter(_.attribute.name != null).
-          filter(_.attribute.name.toLowerCase.trim == s
+        obj.attributeValues.asScala.toSeq
+          .filter(_.attribute.name != null)
+          .filter(_.attribute.name.toLowerCase.trim == s
           .toLowerCase
           .trim).map(_.value)
     }

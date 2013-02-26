@@ -227,11 +227,10 @@ class ElasticSearchService extends SearchService with Logging {
           .field("status", obj.status)
           .field("labels", obj.labels)
           .field("hasImage", hasImage.toString)
-          .field("folders", folderIds: _ *)
+          .field("folders", folderIds.toSeq: _ *)
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)
-            logger.debug("ATTRIBUTE ID " + av.attribute.id.toString)
         })
 
         json.endObject()

@@ -23,10 +23,10 @@ class SavedSearch {
     @Column(name = "searchCategory", nullable = true)
     @BeanProperty var searchFolders: String = _
 
-    @OneToMany(fetch = FetchType.LAZY,
+    @OneToMany(fetch = FetchType.EAGER,
         mappedBy = "savedSearch",
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @BeanProperty var attributeValues: java.util.List[AttributeValue] = new util.ArrayList[AttributeValue]()
+    @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @BeanProperty var imageOnly: Boolean = _
 

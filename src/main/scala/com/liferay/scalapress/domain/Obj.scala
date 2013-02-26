@@ -4,6 +4,7 @@ import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
+import org.hibernate.annotations.{FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,27 +23,28 @@ class Obj {
 
     @BeanProperty var labels: String = _
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
-    @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @OneToMany(fetch = FetchType.LAZY,
+    @OneToMany(fetch = FetchType.EAGER,
         mappedBy = "obj",
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @BeanProperty var attributeValues: java.util.List[AttributeValue] = new util.ArrayList[AttributeValue]()
+    @Fetch(value = FetchMode.SUBSELECT)
+    @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "categories_items",
         joinColumns = Array(new JoinColumn(name = "item", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
-    @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
+    @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "objects_links",
         joinColumns = Array(new JoinColumn(name = "parent", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "child"))
     )
-    @BeanProperty var links: java.util.List[Obj] = new util.ArrayList[Obj]()
+    @BeanProperty var links: java.util.Set[Obj] = new util.HashSet[Obj]()
 
     @ManyToOne
     @JoinColumn(name = "itemType")

@@ -12,7 +12,6 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.search.controller.PagingRenderer
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.domain.attr.Attribute
 import com.liferay.scalapress.plugin.search.SavedSearch
@@ -53,7 +52,7 @@ class SearchController extends Logging {
         })
 
         val search = new SavedSearch
-        search.attributeValues = attributeValues.toList.asJava
+        search.attributeValues = attributeValues.toSet.asJava
         search.keywords = q
         search.maxResults = PageSize
 

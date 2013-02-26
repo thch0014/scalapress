@@ -24,7 +24,7 @@ class SubfolderSection extends Section {
         default.body = "<li>[category?link=1]</li>"
         default.end = "</ul>"
 
-        val subfolders = folder.subfolders.asScala.filterNot(_.hidden)
+        val subfolders = folder.subfolders.asScala.toSeq.filterNot(_.hidden)
         val sorted = folder.folderOrdering match {
             case FolderOrdering.Alphabetical => subfolders.sortBy(f => Option(f.name).getOrElse(""))
             case _ => subfolders.sortBy(_.position)

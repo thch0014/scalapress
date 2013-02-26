@@ -33,7 +33,7 @@ class ObjectListSection extends Section {
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-        val objects = folder.objects.asScala
+        val objects = folder.objects.asScala.toSeq
         val live = objects.filter(_.status.toLowerCase == "live")
 
         val sorted = sort match {

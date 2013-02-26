@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import com.liferay.scalapress.Logging
 import javax.annotation.PostConstruct
+import actors.Futures
 
 /** @author Stephen Samuel */
 @Component
@@ -25,7 +26,9 @@ class ImageService extends Logging {
     def imageLink(filename: String, w: Int, h: Int) = {
         require(w < 2000)
         require(h < 2000)
-        _ensureThumbnailStored(filename, w, h)
+        Futures.future {
+            _ensureThumbnailStored(filename, w, h)
+        }
         assetStore.link(_thumbailFilename(filename, w, h))
     }
 

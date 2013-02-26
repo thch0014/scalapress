@@ -19,11 +19,11 @@ class Folder {
     @BeanProperty var id: Long = _
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
-    @BeanProperty var objects: java.util.List[Obj] = new java.util.ArrayList[Obj]()
+    @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     @OrderBy("name")
-    @BeanProperty var subfolders: java.util.List[Folder] = new java.util.ArrayList[Folder]()
+    @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
     @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "parent")
@@ -47,9 +47,6 @@ class Folder {
         }
     }
     def fullName: String = fullName(this, 10)
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
-    @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
     @BeanProperty var dateCreated: java.lang.Long = _
     @BeanProperty var dateUpdated: java.lang.Long = _

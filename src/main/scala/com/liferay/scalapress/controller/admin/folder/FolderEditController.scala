@@ -2,11 +2,10 @@ package com.liferay.scalapress.controller.admin.folder
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
-import com.liferay.scalapress.domain.{Image, Folder}
+import com.liferay.scalapress.domain.Folder
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ThemeDao, PluginDao, FolderDao}
 import com.liferay.scalapress.{Section, EnumPopulator, ScalapressContext}
-import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
@@ -51,20 +50,20 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         "redirect:/backoffice/folder/" + folder.id
     }
 
-    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
-    def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
-
-        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
-
-        val image = new Image
-        image.filename = key
-        image.date = System.currentTimeMillis()
-        image.folder = folder
-        folder.images.add(image)
-
-        folderDao.save(folder)
-        "redirect:" + UrlResolver.folderEdit(folder)
-    }
+    //    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
+    //    def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
+    //
+    //        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
+    //
+    //        val image = new Image
+    //        image.filename = key
+    //        image.date = System.currentTimeMillis()
+    //        image.folder = folder
+    //        folder.images.add(image)
+    //
+    //        folderDao.save(folder)
+    //        "redirect:" + UrlResolver.folderEdit(folder)
+    //    }
 
     @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
     def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String = {
