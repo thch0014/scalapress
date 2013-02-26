@@ -4,10 +4,12 @@ import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue,
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.MediaWidget
 import com.liferay.scalapress.plugin.gallery.Gallery
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "images")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class Image {
 
     @Id

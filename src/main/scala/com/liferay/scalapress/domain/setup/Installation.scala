@@ -2,10 +2,12 @@ package com.liferay.scalapress.domain.setup
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "settings_site")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class Installation {
 
     @Id

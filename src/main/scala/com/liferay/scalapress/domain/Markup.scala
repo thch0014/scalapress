@@ -3,10 +3,12 @@ package com.liferay.scalapress.domain
 import scala.Predef.String
 import javax.persistence.{Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "markup")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class Markup {
 
     @Id

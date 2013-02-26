@@ -2,7 +2,7 @@ package com.liferay.scalapress.widgets
 
 import javax.persistence.{JoinColumn, JoinTable, CascadeType, FetchType, ManyToMany, Column, GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
 import reflect.BeanProperty
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.domain.Folder
 import scala.Array
 import com.liferay.scalapress.enums.WidgetContainer
@@ -72,5 +72,5 @@ abstract class Widget {
         joinColumns = Array(new JoinColumn(name = "box", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
-    @BeanProperty var whichFolders: java.util.List[Folder] = new java.util.ArrayList[Folder]
+    @BeanProperty var whichFolders: java.util.Set[Folder] = new java.util.HashSet[Folder]
 }

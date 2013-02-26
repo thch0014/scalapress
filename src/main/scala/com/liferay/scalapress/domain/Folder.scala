@@ -8,6 +8,7 @@ import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.Section
 import setup.Theme
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,8 +23,10 @@ class Folder {
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    @OrderBy("name")
     @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
+    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
     @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "parent")

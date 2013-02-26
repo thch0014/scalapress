@@ -4,7 +4,7 @@ import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,7 +29,6 @@ class Obj {
     @OneToMany(fetch = FetchType.EAGER,
         mappedBy = "obj",
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @Fetch(value = FetchMode.SUBSELECT)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))

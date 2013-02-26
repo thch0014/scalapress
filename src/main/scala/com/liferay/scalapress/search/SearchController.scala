@@ -55,6 +55,7 @@ class SearchController extends Logging {
         search.attributeValues = attributeValues.toSet.asJava
         search.keywords = q
         search.maxResults = PageSize
+        search.objectType = Option(t).map(t => typeDao.find(t.toLong)).orNull
 
         val response = searchService.search(search)
         val objects = response.hits.hits().map(hit => {

@@ -4,10 +4,12 @@ import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import javax.persistence.{ManyToOne, Entity, Table, JoinColumn}
 import com.liferay.scalapress.plugin.form.{FormRenderer, Form}
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "blocks_forms")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class FormSection extends Section {
 
     @ManyToOne
