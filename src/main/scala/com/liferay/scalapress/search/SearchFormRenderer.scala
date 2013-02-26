@@ -26,7 +26,7 @@ object SearchFormRenderer {
         fields.map(field => {
             field.fieldType match {
                 case SearchFieldType.Attribute => renderAttributeField(field)
-                case _ => renderTextAttribute(field)
+                case _ => renderTextField(field)
             }
         })
     }

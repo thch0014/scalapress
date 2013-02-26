@@ -59,10 +59,10 @@ class FolderController extends Logging {
             page.toolbar(Toolbar.render(context.siteDao.get, folder))
         }
 
-      //  val plugins = SectionRenderer.render(folder, sreq, context)
+        val plugins = SectionRenderer.render(folder, sreq, context)
 
         page.body(header)
-  //      page.body(plugins)
+        page.body(plugins)
         page.body(footer)
         page
     }

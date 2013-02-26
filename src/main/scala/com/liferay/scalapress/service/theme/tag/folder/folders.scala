@@ -75,35 +75,33 @@ object BreadcrumbsTag extends ScalapressTag with TagBuilder {
 object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
 
-        None
+        val tag = params.get("tag").getOrElse("span")
+        val cssClass = params.get("class").getOrElse("cat_link")
+        val exclude = params.get("exclude").getOrElse("").split(",")
+        val sep = params.get("sep").getOrElse("")
+        val activeClass = params.get("activeclass").getOrElse("current active")
 
-//        val tag = params.get("tag").getOrElse("span")
-//        val cssClass = params.get("class").getOrElse("cat_link")
-//        val exclude = params.get("exclude").getOrElse("").split(",")
-//        val sep = params.get("sep").getOrElse("")
-//        val activeClass = params.get("activeclass").getOrElse("current active")
-//
-//        val root = context.folderDao.root
-//        val folders = root.subfolders.asScala
-//        val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
-//        val sorted = root.folderOrdering match {
-//            case FolderOrdering.Manual => filtered.toSeq.sortBy(_.position)
-//            case _ => filtered.toSeq.sortBy(_.name)
-//        }
-//
-//        val links = sorted.map(f => {
-//
-//            val startTag = if (request.folder.orNull == f)
-//                "<" + tag + " class='" + cssClass + " " + activeClass + "'>"
-//            else
-//                "<" + tag + " class='" + cssClass + "'>"
-//
-//            val endTag = "</" + tag + ">"
-//
-//            val link = "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "'>" + f.name + "</a>"
-//            startTag + link + endTag
-//        }).mkString(sep)
-//
-//        Some(links)
+        val root = context.folderDao.root
+        val folders = root.subfolders.asScala
+        val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
+        val sorted = root.folderOrdering match {
+            case FolderOrdering.Manual => filtered.toSeq.sortBy(_.position)
+            case _ => filtered.toSeq.sortBy(_.name)
+        }
+
+        val links = sorted.map(f => {
+
+            val startTag = if (request.folder.orNull == f)
+                "<" + tag + " class='" + cssClass + " " + activeClass + "'>"
+            else
+                "<" + tag + " class='" + cssClass + "'>"
+
+            val endTag = "</" + tag + ">"
+
+            val link = "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "'>" + f.name + "</a>"
+            startTag + link + endTag
+        }).mkString(sep)
+
+        Some(links)
     }
 }
