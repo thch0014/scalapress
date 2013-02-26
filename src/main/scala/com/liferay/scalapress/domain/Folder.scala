@@ -20,14 +20,15 @@ class Folder {
     @BeanProperty var id: Long = _
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
+    @BatchSize(size = 20)
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 40)
+    @BatchSize(size = 20)
     @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
     //    @Fetch(FetchMode.SELECT)
     //    @BatchSize(size = 20)
     //    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
