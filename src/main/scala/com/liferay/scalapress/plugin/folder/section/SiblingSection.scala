@@ -8,8 +8,8 @@ import com.liferay.scalapress.service.theme.MarkupRenderer
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-@Entity
-@Table(name = "blocks_siblings")
+//@Entity
+//@Table(name = "blocks_siblings")
 class SiblingSection extends Section {
 
     @ManyToOne

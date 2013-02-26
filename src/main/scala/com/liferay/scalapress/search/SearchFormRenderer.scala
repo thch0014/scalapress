@@ -11,8 +11,12 @@ object SearchFormRenderer {
     def render(form: SearchForm): String = {
         val fields = renderFields(form.fields.asScala)
         val submit = Option(form.submitLabel).getOrElse("Submit")
+        val objectType = Option(form.objectType)
+          .filter(_ > 0)
+          .map(id => <input type="hidden" value={id.toString} name="type"/>).orNull
+
         <form method="GET" action="/search">
-            {fields}<button type="submit">
+            {objectType}{fields}<button type="submit">
             {submit}
         </button>
         </form>.toString()
@@ -22,7 +26,7 @@ object SearchFormRenderer {
         fields.map(field => {
             field.fieldType match {
                 case SearchFieldType.Attribute => renderAttributeField(field)
-                case _ => renderTextField(field)
+                case _ => renderTextAttribute(field)
             }
         })
     }
@@ -33,15 +37,33 @@ object SearchFormRenderer {
             case _ => renderTextField(field)
         }
 
-    private def renderSelectionAttribute(field: SearchFormField): Elem =
+    private def renderSelectionAttribute(field: SearchFormField): Elem = {
+        val options = field.attribute.options.asScala.map(opt =>
+            <option value={opt.value}>
+                {opt.value}
+            </option>)
+
+        val name = "attr_" + field.id
+
         <div>
             <label>
                 {field.name}
             </label>
-            <select type="text" name={field.id.toString}>
-                <option>Any</option>
+            <select type="text" name={name}>
+                <option value="">Any</option>{options}
             </select>
         </div>
+    }
+
+    private def renderTextAttribute(field: SearchFormField): Elem = {
+        val name = "attr_" + field.id
+        <div>
+            <label>
+                {field.name}
+            </label>
+            <input type="text" name={name}/>
+        </div>
+    }
 
     private def renderTextField(field: SearchFormField): Elem =
         <div>

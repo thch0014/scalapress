@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.controller
+package com.liferay.scalapress.search
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
@@ -11,6 +11,7 @@ import com.liferay.scalapress.plugin.search.{SavedSearchDao, SearchPluginDao, Se
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.plugin.search.controller.PagingRenderer
 
 /** @author Stephen Samuel */
 
@@ -31,7 +32,7 @@ class SearchController extends Logging {
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
-               @RequestParam("q") q: String,
+               @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
         val plugin = searchPluginDao.get

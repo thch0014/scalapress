@@ -89,7 +89,8 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_galleries",
             "blocks_forms",
             "blocks_attachments",
-            "blocks_highlighted_items")
+            "blocks_highlighted_items",
+            "blocks_search")
           .foreach(block => {
 
             execute("UPDATE " + block + " SET id=id+10000*" + k + " WHERE id<10000")
