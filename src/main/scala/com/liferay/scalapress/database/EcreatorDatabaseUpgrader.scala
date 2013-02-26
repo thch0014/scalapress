@@ -100,6 +100,10 @@ class EcreatorDatabaseUpgrader extends Logging {
                 execute("alter table " + block + " modify " + col + " bigint(10) null")
                 execute("update " + block + " set " + col + "=null WHERE " + col + "=0")
             })
+
+            execute("ALTER TABLE " + block + " drop cssid")
+            execute("ALTER TABLE " + block + " drop cssclass")
+            execute("ALTER TABLE " + block + " drop displaytomembers")
         })
 
 
@@ -204,8 +208,7 @@ class EcreatorDatabaseUpgrader extends Logging {
                     case e: Exception => logger.warn(e.getMessage)
                 }
             }
-        }
-        catch {
+        } catch {
             case e: Exception => logger.warn(e.getMessage)
         }
 
@@ -218,6 +221,7 @@ class EcreatorDatabaseUpgrader extends Logging {
                 val searchblock = rs.getLong(2)
 
                 execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + searchblock)
+                execute("UPDATE blocks_search SET search_form=" + id + " WHERE id=" + searchblock + 80000)
 
             }
         }
