@@ -12,6 +12,7 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.search.controller.PagingRenderer
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 
@@ -35,9 +36,12 @@ class SearchController extends Logging {
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
+        val attributeParams = req.getParameterMap.asScala.filter(arg => arg._1.toString.startsWith("attr_"))
+          .map(arg => (arg._1.toString.drop(5), arg._2.toString)).toMap
+
         val plugin = searchPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Search Results")
-        val response = searchService.search(q, PageSize)
+        val response = searchService.search(q, attributeParams, PageSize)
         val objects = response.hits.hits().map(hit => {
             val id = hit.id().toLong
             objectDao.find(id)

@@ -27,7 +27,7 @@ trait SearchService {
     def index()
     def index(obj: Obj)
     def prefix(q: String, limit: Int): SearchResponse
-    def search(q: String, limit: Int): SearchResponse
+    def search(q: String, attributeParams: Map[String, String], limit: Int): SearchResponse
     def search(search: SavedSearch): SearchResponse
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }
@@ -175,15 +175,12 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     // search by the given query string and then return the matching doc ids
-    override def search(q: String, limit: Int): SearchResponse = {
+    override def search(q: String, attributeParams: Map[String, String], limit: Int): SearchResponse = {
 
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
           .addField("objid")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
           .setFrom(0)
           .setSize(limit)
 
@@ -202,9 +199,6 @@ class ElasticSearchService extends SearchService with Logging {
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
           .addField("objid")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
           .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
           .setFrom(0).setSize(limit)
 

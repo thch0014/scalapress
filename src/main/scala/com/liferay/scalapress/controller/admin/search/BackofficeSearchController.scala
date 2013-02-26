@@ -21,7 +21,7 @@ class BackofficeSearchController {
     @RequestMapping
     def test(@RequestParam("q") q: String, model: ModelMap) = {
 
-        val response = service.search(q, 50)
+        val response = service.search(q, Map.empty, 50)
         val results = response.hits().hits().map(hit => {
 
             val `type` = hit.getType.toLowerCase match {
