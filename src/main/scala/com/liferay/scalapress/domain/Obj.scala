@@ -24,11 +24,13 @@ class Obj {
     @BeanProperty var labels: String = _
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+    @Fetch(FetchMode.SUBSELECT)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
     @OneToMany(fetch = FetchType.EAGER,
         mappedBy = "obj",
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))

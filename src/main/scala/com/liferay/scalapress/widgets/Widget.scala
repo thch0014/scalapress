@@ -6,10 +6,12 @@ import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.domain.Folder
 import scala.Array
 import com.liferay.scalapress.enums.WidgetContainer
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 abstract class Widget {
 
     @Id
@@ -67,7 +69,7 @@ abstract class Widget {
     @Column(name = "restricted", nullable = false)
     @BeanProperty var restricted: Boolean = _
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "boxes_where",
         joinColumns = Array(new JoinColumn(name = "box", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
