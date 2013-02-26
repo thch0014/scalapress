@@ -13,6 +13,10 @@ import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.search.controller.PagingRenderer
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.domain.attr.AttributeValue
+import com.liferay.scalapress.domain.attr.Attribute
+import com.liferay.scalapress.plugin.search.SavedSearch
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 
@@ -36,17 +40,31 @@ class SearchController extends Logging {
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
 
-        val attributeParams = req.getParameterMap.asScala.filter(arg => arg._1.toString.startsWith("attr_"))
-          .map(arg => (arg._1.toString.drop(5), arg._2.toString)).toMap
+        val attributeValues = req.getParameterMap.asScala
+          .filter(arg => arg._1.toString.startsWith("attr_"))
+          .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
+          .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
+          .map(arg => {
+            val av = new AttributeValue
+            av.attribute = new Attribute
+            av.attribute.id = arg._1.toString.drop(5).toLong
+            av.value = arg._2.asInstanceOf[Array[String]].head
+            av
+        })
 
-        val plugin = searchPluginDao.get
-        val sreq = ScalapressRequest(req, context).withTitle("Search Results")
-        val response = searchService.search(q, attributeParams, PageSize)
+        val search = new SavedSearch
+        search.attributeValues = attributeValues.toList.asJava
+        search.keywords = q
+        search.maxResults = PageSize
+
+        val response = searchService.search(search)
         val objects = response.hits.hits().map(hit => {
             val id = hit.id().toLong
             objectDao.find(id)
         }).toList
 
+        val plugin = searchPluginDao.get
+        val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
@@ -59,7 +77,6 @@ class SearchController extends Logging {
 
             val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
             page.body(PagingRenderer.render(paging))
-
 
             val markup = objects.head.objectType.objectListMarkup
             if (markup != null) {

@@ -27,7 +27,7 @@ trait SearchService {
     def index()
     def index(obj: Obj)
     def prefix(q: String, limit: Int): SearchResponse
-    def search(q: String, attributeParams: Map[String, String], limit: Int): SearchResponse
+    def search(q: String, limit: Int): SearchResponse
     def search(search: SavedSearch): SearchResponse
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }
@@ -168,19 +168,22 @@ class ElasticSearchService extends SearchService with Logging {
                     case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
 
                 }
-                req.addSort(sort.ignoreUnmapped(true))
 
+                req.addSort(sort.ignoreUnmapped(true))
                 req.execute().actionGet()
         }
     }
 
     // search by the given query string and then return the matching doc ids
-    override def search(q: String, attributeParams: Map[String, String], limit: Int): SearchResponse = {
+    override def search(q: String, limit: Int): SearchResponse = {
 
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
           .addField("objid")
+          .addField("folders")
+          .addField("status")
+          .addField("labels")
           .setFrom(0)
           .setSize(limit)
 
@@ -199,6 +202,9 @@ class ElasticSearchService extends SearchService with Logging {
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
           .addField("objid")
+          .addField("folders")
+          .addField("status")
+          .addField("labels")
           .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
           .setFrom(0).setSize(limit)
 
@@ -224,6 +230,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)
+            logger.debug("ATTRIBUTE ID " + av.attribute.id.toString)
         })
 
         json.endObject()
