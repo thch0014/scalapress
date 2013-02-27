@@ -15,9 +15,9 @@ import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
-import com.liferay.scalapress.plugin.search.SearchService
 import com.liferay.scalapress.domain.attr.AttributeValue
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import com.liferay.scalapress.search.SearchService
 
 /** @author Stephen Samuel */
 @Controller

@@ -24,7 +24,7 @@ class Folder {
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SUBSELECT)
     @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
     //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
@@ -32,7 +32,7 @@ class Folder {
     //    @BatchSize(size = 20)
     //    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @ManyToOne(cascade = Array(CascadeType.ALL), fetch = FetchType.EAGER)
+    @ManyToOne(cascade = Array(CascadeType.ALL), fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     @BeanProperty var parent: Folder = _
 

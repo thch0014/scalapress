@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search
+package com.liferay.scalapress.search
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Entity, Table}
 import reflect.BeanProperty

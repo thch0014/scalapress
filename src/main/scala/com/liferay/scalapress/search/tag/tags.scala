@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.tag
+package com.liferay.scalapress.search.tag
 
 import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}

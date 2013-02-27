@@ -6,7 +6,7 @@ import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
 import plugin.listings.{ListingPackageDao, ListingsPluginDao}
-import plugin.search.SearchService
+import search.SearchService
 import service.asset.AssetStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

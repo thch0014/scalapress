@@ -4,11 +4,11 @@ import folder.{NestedFoldersTag, FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
 import user.{LogoutTag, UserStatusTag}
-import com.liferay.scalapress.plugin.search.tag.{AttributeSearchTag, QuickSearchTag}
 import com.liferay.scalapress.plugin.account.tag.{UsernameTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
 import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLinkTag}
+import com.liferay.scalapress.search.tag.{AttributeSearchTag, QuickSearchTag}
 
 /** @author Stephen Samuel */
 object TagMappings {

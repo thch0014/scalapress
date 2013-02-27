@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search
+package com.liferay.scalapress.search
 
 import com.liferay.scalapress.domain.{ObjectType, Obj}
 import org.elasticsearch.common.xcontent.XContentFactory
@@ -60,6 +60,16 @@ class ElasticSearchService extends SearchService with Logging {
     val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
     val client = node.client()
 
+    // create dummy entry so the index is created
+    val json = XContentFactory
+      .jsonBuilder()
+      .startObject()
+      .field("name", "dummy")
+      .field("status", "dummy")
+      .endObject()
+
+    client.prepareIndex(INDEX, "dummy", "dummy").setSource(json).execute().actionGet(2000)
+
     @Transactional
     def index() {
 
@@ -70,7 +80,6 @@ class ElasticSearchService extends SearchService with Logging {
           .addFilterNotEqual("objectType.name", "Accounts")
           .addFilterNotEqual("objectType.name", "accounts")
           .setMaxResults(preloadSize))
-
 
         logger.info("Indexing {} objects", objs.size)
         objs.foreach(index(_))

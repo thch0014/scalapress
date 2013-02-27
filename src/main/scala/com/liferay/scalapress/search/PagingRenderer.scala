@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.controller
+package com.liferay.scalapress.search
 
 import com.liferay.scalapress.Page
 import com.liferay.scalapress.domain.Obj

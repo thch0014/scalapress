@@ -7,7 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.dao.MarkupDao
-import com.liferay.scalapress.plugin.search.{SearchPlugin, SearchPluginDao}
+import com.liferay.scalapress.search.{SearchPluginDao, SearchPlugin}
 
 /** @author Stephen Samuel */
 @Controller
