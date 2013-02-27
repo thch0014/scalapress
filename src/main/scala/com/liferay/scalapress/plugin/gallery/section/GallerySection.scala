@@ -1,9 +1,10 @@
 package com.liferay.scalapress.plugin.gallery.section
 
-import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import javax.persistence.{JoinColumn, Entity, Table, ManyToOne}
 import com.liferay.scalapress.plugin.gallery.{Gallery, GalleryRenderer}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

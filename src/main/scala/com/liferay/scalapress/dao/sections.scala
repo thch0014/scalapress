@@ -2,7 +2,7 @@ package com.liferay.scalapress.dao
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.Section
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 

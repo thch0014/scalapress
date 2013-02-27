@@ -1,9 +1,10 @@
 package com.liferay.scalapress.plugin.form.section
 
-import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import javax.persistence.{ManyToOne, Entity, Table, JoinColumn}
 import com.liferay.scalapress.plugin.form.{FormRenderer, Form}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

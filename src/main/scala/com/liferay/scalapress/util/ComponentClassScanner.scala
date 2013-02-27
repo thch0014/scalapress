@@ -5,9 +5,9 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
 import org.springframework.core.`type`.filter.AssignableTypeFilter
-import com.liferay.scalapress.Section
 import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {

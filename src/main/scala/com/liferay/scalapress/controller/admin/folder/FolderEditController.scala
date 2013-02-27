@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestBody, RequestParam, Reque
 import com.liferay.scalapress.domain.Folder
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ThemeDao, PluginDao, FolderDao}
-import com.liferay.scalapress.{Section, EnumPopulator, ScalapressContext}
+import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
@@ -15,6 +15,7 @@ import com.liferay.scalapress.controller.admin.obj.ThemePopulator
 import com.liferay.scalapress.util.ComponentClassScanner
 import com.liferay.scalapress.plugin.form.section.FormSection
 import collection.mutable
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Controller

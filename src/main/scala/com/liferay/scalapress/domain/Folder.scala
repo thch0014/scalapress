@@ -6,9 +6,9 @@ import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, SubfolderSection}
-import com.liferay.scalapress.Section
 import setup.Theme
-import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity
@@ -24,6 +24,7 @@ class Folder {
     @BatchSize(size = 20)
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
+    @Index(name="parent_index")
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 40)
@@ -43,6 +44,7 @@ class Folder {
     @JoinColumn(name = "theme")
     @BeanProperty var theme: Theme = _
 
+    @Index(name="name_index")
     @BeanProperty var name: String = _
 
     @Column(name = "subcategoryordering")

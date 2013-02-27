@@ -7,6 +7,7 @@ import java.util
 import com.liferay.scalapress.domain.ObjectType
 import scala.Array
 import com.liferay.scalapress.enums.AttributeType
+import org.hibernate.annotations.Index
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,6 +23,7 @@ class Attribute {
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
+    @Index(name="objecttype_index")
     @BeanProperty var objectType: ObjectType = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL))

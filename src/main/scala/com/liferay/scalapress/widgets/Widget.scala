@@ -6,7 +6,7 @@ import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.domain.Folder
 import scala.Array
 import com.liferay.scalapress.enums.WidgetContainer
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -68,11 +68,12 @@ abstract class Widget {
     @Column(name = "restricted", nullable = false)
     @BeanProperty var restricted: Boolean = _
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "boxes_where",
         joinColumns = Array(new JoinColumn(name = "box", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     @BeanProperty var whichFolders: java.util.Set[Folder] = new java.util.HashSet[Folder]
 }

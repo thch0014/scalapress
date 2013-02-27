@@ -1,8 +1,10 @@
-package com.liferay.scalapress
+package com.liferay.scalapress.section
 
 import javax.persistence.{JoinColumn, ManyToOne, Entity, Inheritance, InheritanceType, Column, GenerationType, GeneratedValue, Id}
 import com.liferay.scalapress.domain.{ObjectType, Obj, Folder}
 import reflect.BeanProperty
+import org.hibernate.annotations.Index
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
 @Entity
@@ -24,14 +26,17 @@ abstract class Section {
 
     @ManyToOne
     @JoinColumn(name = "ownerCategory", nullable = true)
+    @Index(name = "folder_index")
     @BeanProperty var folder: Folder = _
 
     @ManyToOne
     @JoinColumn(name = "ownerItem", nullable = true)
+    @Index(name = "object_index")
     var obj: Obj = _
 
     @ManyToOne
     @JoinColumn(name = "ownerItemType", nullable = true)
+    @Index(name="objecttype_index")
     var objectType: ObjectType = _
 
     def desc: String

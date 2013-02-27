@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, ExceptionHandler, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
-import com.liferay.scalapress.{SectionRenderer, ScalapressRequest, ScalapressContext, Logging}
+import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import com.liferay.scalapress.controller.RedirectException
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.domain.Folder
+import com.liferay.scalapress.section.SectionRenderer
 
 /**
  * @author sks 09-Feb-2006 13:48:13

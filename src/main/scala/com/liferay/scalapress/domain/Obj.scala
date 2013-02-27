@@ -4,7 +4,7 @@ import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
-import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,6 +17,7 @@ class Obj {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
+    @Index(name="name_index")
     @BeanProperty var name: String = _
 
     @BeanProperty var email: String = _
@@ -48,6 +49,7 @@ class Obj {
     )
     @BeanProperty var links: java.util.Set[Obj] = new util.HashSet[Obj]()
 
+    @Index(name="objecttype_index")
     @ManyToOne
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
@@ -81,6 +83,7 @@ class Obj {
     @Column(length = 5000)
     @BeanProperty var summary: String = _
 
+    @Index(name="sellPrice_index")
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
 
@@ -100,6 +103,7 @@ class Obj {
 
     @BeanProperty var location: String = _
 
+    @Index(name="status_index")
     @BeanProperty var status: String = _
 
     @BeanProperty var inStockMsg: String = _

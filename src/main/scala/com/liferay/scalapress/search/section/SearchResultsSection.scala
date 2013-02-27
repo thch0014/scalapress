@@ -1,11 +1,12 @@
 package com.liferay.scalapress.search.section
 
-import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{OneToOne, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import com.liferay.scalapress.search.SavedSearch
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel
   *

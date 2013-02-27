@@ -1,9 +1,10 @@
 package com.liferay.scalapress.search.section
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest, Section}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{JoinColumn, ManyToOne, Table, Entity}
 import reflect.BeanProperty
 import com.liferay.scalapress.search.{SearchFormRenderer, SearchForm}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

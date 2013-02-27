@@ -1,8 +1,9 @@
 package com.liferay.scalapress.plugin.mapping
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest, Section}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

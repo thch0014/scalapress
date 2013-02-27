@@ -4,8 +4,8 @@ import attr.Attribute
 import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import java.util
 import reflect.BeanProperty
-import com.liferay.scalapress.Section
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,8 +1,9 @@
-package com.liferay.scalapress
+package com.liferay.scalapress.section
 
 import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
 object SectionRenderer {
