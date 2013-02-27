@@ -9,7 +9,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "images")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class Image {
 
     @Id

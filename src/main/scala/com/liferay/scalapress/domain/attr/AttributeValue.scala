@@ -5,12 +5,10 @@ import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, Gener
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.plugin.search.SavedSearch
-import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "attributes_values")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class AttributeValue {
 
     @Id

@@ -7,12 +7,10 @@ import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
-import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
 @Entity
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class FoldersWidget extends Widget with Logging {
 
     @BeanProperty var depth: Int = _

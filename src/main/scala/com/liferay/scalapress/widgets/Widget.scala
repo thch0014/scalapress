@@ -6,12 +6,10 @@ import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.domain.Folder
 import scala.Array
 import com.liferay.scalapress.enums.WidgetContainer
-import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
-@Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Widget {
 
     @Id

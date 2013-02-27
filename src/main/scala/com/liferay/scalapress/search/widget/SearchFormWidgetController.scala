@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.widget
+package com.liferay.scalapress.search.widget
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}

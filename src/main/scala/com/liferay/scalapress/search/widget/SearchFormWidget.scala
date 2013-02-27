@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.search.widget
+package com.liferay.scalapress.search.widget
 
 import javax.persistence.{OneToOne, JoinColumn, Entity, Table}
 import com.liferay.scalapress.widgets.Widget

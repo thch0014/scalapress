@@ -8,13 +8,11 @@ import java.util
 import com.liferay.scalapress.domain.Image
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.ImageRenderer
-import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 
 @Entity
 @Table(name = "boxes_images")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 class MediaWidget extends Widget {
 
     @BeanProperty var url: String = _
