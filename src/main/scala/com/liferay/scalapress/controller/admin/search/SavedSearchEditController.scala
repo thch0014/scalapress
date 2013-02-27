@@ -62,6 +62,6 @@ class SavedSearchEditController
         if (ss.objectType == null)
             null
         else
-            attributeEditMap(ss.objectType.attributes.asScala, ss.attributeValues.asScala.toSeq)
+            attributeEditMap(ss.objectType.attributes.asScala.toSeq, ss.attributeValues.asScala.toSeq)
     }
 }

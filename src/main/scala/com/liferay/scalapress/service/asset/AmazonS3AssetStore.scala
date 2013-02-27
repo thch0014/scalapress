@@ -74,7 +74,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         all.asScala.toArray.drop(start).take(limit)
     }
 
-    override def link(key: String) = cdnUrl + "/" + key
+    override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
     override def list(limit: Int): Array[Asset] = search(null, limit)
 

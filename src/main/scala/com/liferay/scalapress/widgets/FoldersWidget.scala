@@ -1,6 +1,6 @@
 package com.liferay.scalapress.widgets
 
-import javax.persistence.{ManyToOne, JoinColumn, Entity, Table}
+import javax.persistence.{FetchType, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
 import com.liferay.scalapress.domain.Folder
@@ -17,7 +17,7 @@ class FoldersWidget extends Widget with Logging {
     @BeanProperty var includeHome: Boolean = _
     @BeanProperty var excludeCurrent: Boolean = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "root")
     @BeanProperty var start: Folder = _
 

@@ -62,7 +62,7 @@ class TypeEditController extends MarkupPopulator {
         import scala.collection.JavaConverters._
 
         val t = typeDao.find(id)
-        val sortedAttributes = t.attributes.asScala.sortBy(_.position).asJava
+        val sortedAttributes = t.attributes.asScala.toSeq.sortBy(_.position).asJava
 
         model.put("type", t)
         model.put("attributes", sortedAttributes)

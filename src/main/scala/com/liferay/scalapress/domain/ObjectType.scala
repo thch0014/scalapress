@@ -5,6 +5,7 @@ import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchTy
 import java.util
 import reflect.BeanProperty
 import com.liferay.scalapress.Section
+import org.hibernate.annotations.{FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -24,17 +25,18 @@ class ObjectType {
       .map(_.split("\n").map(_.trim).filter(_.length > 0))
       .getOrElse(Array[String]())
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
-    @BeanProperty var attributes: java.util.List[Attribute] = new util.ArrayList[Attribute]()
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
+    @Fetch(FetchMode.JOIN)
+    @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType")
-    @BeanProperty var sections: java.util.List[Section] = new util.ArrayList[Section]()
+    @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "listitemmarkup", nullable = true)
     @BeanProperty var objectListMarkup: Markup = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "objectViewMarkup", nullable = true)
     @BeanProperty var objectViewMarkup: Markup = _
 

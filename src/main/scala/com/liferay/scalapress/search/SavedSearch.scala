@@ -7,6 +7,7 @@ import scala.Array
 import com.liferay.scalapress.domain.attr.AttributeValue
 import java.util
 import com.liferay.scalapress.domain.ObjectType
+import org.hibernate.annotations.{FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -26,6 +27,7 @@ class SavedSearch {
     @OneToMany(fetch = FetchType.EAGER,
         mappedBy = "savedSearch",
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @BeanProperty var imageOnly: Boolean = _

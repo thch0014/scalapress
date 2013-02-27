@@ -20,12 +20,11 @@ class Folder {
     @BeanProperty var id: Long = _
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
-    @BatchSize(size = 20)
+    @BatchSize(size = 40)
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
     //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
@@ -33,7 +32,7 @@ class Folder {
     //    @BatchSize(size = 20)
     //    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @ManyToOne(cascade = Array(CascadeType.ALL))
+    @ManyToOne(cascade = Array(CascadeType.ALL), fetch = FetchType.EAGER)
     @JoinColumn(name = "parent")
     @BeanProperty var parent: Folder = _
 
@@ -81,7 +80,7 @@ class Folder {
     @BeanProperty var permaLink: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
-    @BeanProperty var sections: java.util.List[Section] = new util.ArrayList[Section]()
+    @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
 }
 
