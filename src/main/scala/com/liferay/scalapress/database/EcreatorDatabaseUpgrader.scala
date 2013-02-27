@@ -272,6 +272,17 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
+        for (column <- Array("padding",
+            "labelprefix",
+            "searchcontrol", "width", "height", "autosubmit")) {
+            try {
+                execute("ALTER TABLE search_forms_fields DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
+
         for (column <- Array("hidediscountinfo",
             "contentlinkingkeywords",
             "discount",
