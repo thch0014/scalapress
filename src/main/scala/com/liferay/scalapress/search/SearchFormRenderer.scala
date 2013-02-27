@@ -25,10 +25,18 @@ object SearchFormRenderer {
     private def renderFields(fields: Seq[SearchFormField]): Seq[Elem] = {
         fields.map(field => {
             field.fieldType match {
+                case SearchFieldType.Attribute if field.preset => renderPresetAttributeField(field)
                 case SearchFieldType.Attribute => renderAttributeField(field)
                 case _ => renderTextField(field)
             }
-        })
+        }
+        )
+    }
+
+    private def renderPresetAttributeField(field: SearchFormField) = {
+        val name = "attr_" + field.attribute.id
+        val value = field.value
+            <input type="hidden" name={name} value={value}/>
     }
 
     private def renderAttributeField(field: SearchFormField): Elem =
@@ -50,7 +58,9 @@ object SearchFormRenderer {
                 {field.name}
             </label>
             <select type="text" name={name}>
-                <option value=" ">Any</option>{options}
+                <option value=" ">
+                    Any
+                </option>{options}
             </select>
         </div>
     }

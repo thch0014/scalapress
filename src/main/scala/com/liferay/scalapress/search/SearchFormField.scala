@@ -21,6 +21,12 @@ class SearchFormField {
     @Column(name = "name")
     @BeanProperty var name: String = _
 
+    @Column(name = "hidden")
+    @BeanProperty var preset: Boolean = _
+
+    @Column(name = "value")
+    @BeanProperty var value: String = _
+
     @ManyToOne
     @JoinColumn(name = "searchForm")
     @BeanProperty var searchForm: SearchForm = _
