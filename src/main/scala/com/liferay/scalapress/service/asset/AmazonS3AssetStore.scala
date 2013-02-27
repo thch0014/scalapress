@@ -35,7 +35,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     def exists(key: String) = {
         try {
-            getAmazonS3Client.getObject(bucketName, key) != null
+            getAmazonS3Client.getObjectMetadata(bucketName, key) != null
         } catch {
             case e: Exception => false
         }

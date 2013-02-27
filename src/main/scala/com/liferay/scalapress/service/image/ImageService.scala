@@ -26,9 +26,7 @@ class ImageService extends Logging {
     def imageLink(filename: String, w: Int, h: Int) = {
         require(w < 2000)
         require(h < 2000)
-        Futures.future {
-            _ensureThumbnailStored(filename, w, h)
-        }
+        _ensureThumbnailStored(filename, w, h)
         assetStore.link(_thumbailFilename(filename, w, h))
     }
 
