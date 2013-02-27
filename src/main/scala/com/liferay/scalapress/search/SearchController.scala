@@ -7,14 +7,13 @@ import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.{Page, ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
-import com.liferay.scalapress.plugin.search.{SavedSearchDao, SearchPluginDao, SearchService}
+import com.liferay.scalapress.plugin.search.{SearchPluginDao, SearchService}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.search.controller.PagingRenderer
 import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.domain.attr.Attribute
-import com.liferay.scalapress.plugin.search.SavedSearch
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */

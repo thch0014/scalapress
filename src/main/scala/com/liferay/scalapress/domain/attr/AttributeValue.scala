@@ -4,7 +4,7 @@ import java.lang.String
 import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
-import com.liferay.scalapress.plugin.search.SavedSearch
+import com.liferay.scalapress.search.SavedSearch
 
 /** @author Stephen Samuel */
 @Entity

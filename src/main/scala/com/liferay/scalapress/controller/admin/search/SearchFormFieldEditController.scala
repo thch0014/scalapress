@@ -7,8 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.dao.MarkupDao
-import com.liferay.scalapress.plugin.search.SearchFormFieldDao
-import com.liferay.scalapress.search.SearchFormField
+import com.liferay.scalapress.search.{SearchFormFieldDao, SearchFormField}
 
 /** @author Stephen Samuel */
 @Controller

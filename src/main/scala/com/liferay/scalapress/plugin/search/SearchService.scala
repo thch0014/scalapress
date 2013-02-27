@@ -20,6 +20,7 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
+import com.liferay.scalapress.search.SavedSearch
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -113,6 +114,8 @@ class ElasticSearchService extends SearchService with Logging {
 
         Option(search.labels)
           .filter(_.trim.length > 0)
+          .filterNot(_.toLowerCase == "random")
+          .filterNot(_.toLowerCase == "latest")
           .foreach(_.split(",").foreach(label => buffer.append("labels:" + label)))
 
         Option(search.name)

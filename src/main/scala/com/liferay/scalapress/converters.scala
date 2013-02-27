@@ -7,8 +7,7 @@ import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
-import plugin.search.SearchFormDao
-import search.SearchForm
+import search.{SearchFormDao, SearchForm}
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {

@@ -17,8 +17,8 @@ import com.liferay.scalapress.{StringFormConverter, StringToAddressConverter, St
 import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.dao.settings.InstallationDao
-import com.liferay.scalapress.plugin.search.SearchFormDao
 import com.liferay.scalapress.plugin.form.FormDao
+import com.liferay.scalapress.search.SearchFormDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

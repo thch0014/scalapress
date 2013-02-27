@@ -7,8 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.enums.SearchFieldType
-import com.liferay.scalapress.plugin.search.SearchFormDao
-import com.liferay.scalapress.search.{SearchFormField, SearchForm}
+import com.liferay.scalapress.search.{SearchFormDao, SearchFormField, SearchForm}
 
 /** @author Stephen Samuel */
 @Controller

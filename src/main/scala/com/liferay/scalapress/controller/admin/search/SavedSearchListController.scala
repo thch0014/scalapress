@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.plugin.search.SavedSearchDao
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.search.SavedSearchDao
 
 /** @author Stephen Samuel */
 @Controller

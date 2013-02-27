@@ -1,17 +1,17 @@
-package com.liferay.scalapress.plugin.search.sections
+package com.liferay.scalapress.search.section
 
 import com.liferay.scalapress.{Section, ScalapressContext, ScalapressRequest}
 import javax.persistence.{OneToOne, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
-import com.liferay.scalapress.plugin.search.SavedSearch
 import com.liferay.scalapress.service.theme.MarkupRenderer
+import com.liferay.scalapress.search.SavedSearch
 
 /** @author Stephen Samuel
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {

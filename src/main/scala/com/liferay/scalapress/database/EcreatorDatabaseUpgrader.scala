@@ -183,24 +183,24 @@ class EcreatorDatabaseUpgrader extends Logging {
             while (rs.next) {
                 try {
 
-                    val id = rs.getLong(1)
+                    val searchId = rs.getLong(1)
                     val owner = rs.getString(2)
 
                     Option(owner).filter(_.trim.length > 0).foreach(owner => {
 
                         if (owner.startsWith("blocks_highlighted_items@")) {
                             val blockId = owner.replace("blocks_highlighted_items@", "").toLong + 70000
-                            execute("UPDATE blocks_highlighted_items SET search=" + id + " WHERE id=" + blockId)
+                            execute("UPDATE blocks_highlighted_items SET search=" + searchId + " WHERE id=" + blockId)
 
                         } else if (owner.startsWith("boxes_highlighted_items@")) {
-                            val boxId = owner.replace("boxes_highlighted_items@", "").toLong
-                            execute("UPDATE boxes_highlighted_items SET search=" + id + " WHERE id=" + boxId)
+                            val boxId = owner.replace("boxes_highlighted_items@", "").toLong + 40000
+                            execute("UPDATE boxes_highlighted_items SET search=" + searchId + " WHERE id=" + boxId)
 
                         } else if (owner.startsWith("categories@")) {
                             val categoryId = owner.replace("categories@", "").toLong
                             execute(
-                                "INSERT INTO blocks_highlighted_items (position, visible, ownerCategory, search, name) values (4545, 1, " + categoryId + "," + id + ", 'Saved search results')")
-                            execute("UPDATE searches set owner='__categories@" + categoryId + "' WHERE id=" + id)
+                                "INSERT INTO blocks_highlighted_items (position, visible, ownerCategory, search, name) values (4545, 1, " + categoryId + "," + searchId + ", 'Saved search results')")
+                            execute("UPDATE searches set owner='__categories@" + categoryId + "' WHERE id=" + searchId)
                         }
                     })
 
@@ -282,6 +282,27 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         }
 
+
+
+        for (column <- Array("style",
+            "appletbackgroundcolor",
+            "appletheadlinecolor",
+            "appletsummarycolor",
+            "appletsummaryfamily",
+            "appletsummarysize",
+            "appletheadlinefamily",
+            "appletheadlinesize",
+            "appletheadlinehighlightcolor",
+            "appletsummaryhighlightcolor",
+            "appletlinktocategory",
+            "simpleeditor",
+            "scrollerspeed", "scrollerheight")) {
+            try {
+                execute("ALTER TABLE boxes_highlighted_items DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
 
         for (column <- Array("hidediscountinfo",
             "contentlinkingkeywords",
