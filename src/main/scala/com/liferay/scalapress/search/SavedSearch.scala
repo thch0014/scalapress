@@ -38,7 +38,7 @@ class SavedSearch {
     @Enumerated(EnumType.STRING)
     @BeanProperty var sortType: Sort = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
 

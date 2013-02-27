@@ -8,6 +8,7 @@ import java.util
 import com.liferay.scalapress.domain.Image
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.ImageRenderer
+import org.hibernate.annotations.{FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 
@@ -21,6 +22,7 @@ class MediaWidget extends Widget {
         mappedBy = "mediaWidget",
         cascade = Array(CascadeType.ALL),
         orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
     override def backoffice = "/backoffice/widget/media/" + id

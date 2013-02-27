@@ -9,7 +9,7 @@ import com.liferay.scalapress.enums.AttributeType
 object SearchFormRenderer {
 
     def render(form: SearchForm): String = {
-        val fields = renderFields(form.fields.asScala)
+        val fields = renderFields(form.fields.asScala.toSeq)
         val submit = Option(form.submitLabel).getOrElse("Submit")
         val objectType = Option(form.objectType)
           .filter(_ > 0)

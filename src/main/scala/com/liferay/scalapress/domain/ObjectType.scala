@@ -5,7 +5,7 @@ import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchTy
 import java.util
 import reflect.BeanProperty
 import com.liferay.scalapress.Section
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -30,14 +30,18 @@ class ObjectType {
     @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType")
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 10)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "listitemmarkup", nullable = true)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var objectListMarkup: Markup = _
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "objectViewMarkup", nullable = true)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var objectViewMarkup: Markup = _
 
     def bootIcon = name.toLowerCase match {

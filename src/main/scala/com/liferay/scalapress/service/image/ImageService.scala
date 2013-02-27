@@ -8,15 +8,21 @@ import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import com.liferay.scalapress.Logging
-import javax.annotation.PostConstruct
-import actors.Futures
+import javax.annotation.{PreDestroy, PostConstruct}
+import java.util.concurrent.Executors
 
 /** @author Stephen Samuel */
 @Component
 class ImageService extends Logging {
 
+    val executor = Executors.newFixedThreadPool(4)
     val cache = scala.collection.mutable.HashSet[String]()
     @Autowired var assetStore: AssetStore = _
+
+    @PreDestroy
+    def destroy() {
+        executor.shutdownNow()
+    }
 
     @PostConstruct
     def populateCache() {
@@ -26,7 +32,11 @@ class ImageService extends Logging {
     def imageLink(filename: String, w: Int, h: Int) = {
         require(w < 2000)
         require(h < 2000)
-        _ensureThumbnailStored(filename, w, h)
+        executor.submit(new Runnable() {
+            def run() {
+                _ensureThumbnailStored(filename, w, h)
+            }
+        })
         assetStore.link(_thumbailFilename(filename, w, h))
     }
 

@@ -4,7 +4,7 @@ import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
-import org.hibernate.annotations.{BatchSize, CacheConcurrencyStrategy, FetchMode, Fetch}
+import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -23,14 +23,15 @@ class Obj {
 
     @BeanProperty var labels: String = _
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "obj", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @OneToMany(fetch = FetchType.EAGER,
-        mappedBy = "obj",
+    @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY,
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
@@ -38,7 +39,6 @@ class Obj {
         joinColumns = Array(new JoinColumn(name = "item", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
-    @BatchSize(size = 10)
     @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
@@ -46,10 +46,9 @@ class Obj {
         joinColumns = Array(new JoinColumn(name = "parent", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "child"))
     )
-    @BatchSize(size = 10)
     @BeanProperty var links: java.util.Set[Obj] = new util.HashSet[Obj]()
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
 

@@ -5,6 +5,7 @@ import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, Gener
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.search.SavedSearch
+import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,14 +18,20 @@ class AttributeValue {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attribute", nullable = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 50)
     @BeanProperty var attribute: Attribute = _
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item", nullable = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     @BeanProperty var obj: Obj = _
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "search", nullable = true)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
     @BeanProperty var savedSearch: SavedSearch = _
 
     @BeanProperty var value: String = _

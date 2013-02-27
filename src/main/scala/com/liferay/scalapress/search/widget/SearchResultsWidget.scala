@@ -1,28 +1,31 @@
 package com.liferay.scalapress.search.widget
 
-import javax.persistence.{ManyToOne, Table, Entity, JoinColumn, OneToOne}
+import javax.persistence.{FetchType, ManyToOne, Table, Entity, JoinColumn, OneToOne}
 import com.liferay.scalapress.ScalapressRequest
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.search.SavedSearch
+import org.hibernate.annotations.{Fetch, FetchMode}
 
 /** @author Stephen Samuel
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "search", nullable = true)
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var search: SavedSearch = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "markup")
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var markup: Markup = _
 
     def render(req: ScalapressRequest): Option[String] = {

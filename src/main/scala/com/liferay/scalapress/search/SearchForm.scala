@@ -1,7 +1,8 @@
 package com.liferay.scalapress.search
 
-import javax.persistence.{Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{FetchType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
+import org.hibernate.annotations.{Fetch, FetchMode}
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,7 +23,8 @@ class SearchForm {
 
     @BeanProperty var submitLabel: String = _
 
-    @OneToMany(mappedBy = "searchForm")
-    @BeanProperty var fields: java.util.List[SearchFormField] = new java.util.ArrayList[SearchFormField]()
+    @OneToMany(mappedBy = "searchForm", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
 
 }

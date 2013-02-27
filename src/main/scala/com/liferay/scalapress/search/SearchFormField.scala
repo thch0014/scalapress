@@ -4,6 +4,7 @@ import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, T
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.domain.attr.Attribute
+import org.hibernate.annotations.{FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,10 +30,12 @@ class SearchFormField {
 
     @ManyToOne
     @JoinColumn(name = "searchForm")
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var searchForm: SearchForm = _
 
     @ManyToOne
     @JoinColumn(name = "attribute")
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var attribute: Attribute = _
 
 }

@@ -7,6 +7,7 @@ import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
+import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -19,6 +20,7 @@ class FoldersWidget extends Widget with Logging {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "root")
+    @Fetch(FetchMode.JOIN)
     @BeanProperty var start: Folder = _
 
     @BeanProperty var exclusions: String = _

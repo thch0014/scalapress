@@ -20,7 +20,6 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
-import com.liferay.scalapress.search.SavedSearch
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -69,6 +68,7 @@ class ElasticSearchService extends SearchService with Logging {
       .endObject()
 
     client.prepareIndex(INDEX, "dummy", "dummy").setSource(json).execute().actionGet(2000)
+    client.prepareDelete(INDEX, "dummy", "dummy").execute().actionGet(2000)
 
     @Transactional
     def index() {
@@ -250,6 +250,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     @PreDestroy
     def shutdown() {
+        client.close()
         node.close()
         dataDir.delete()
     }
