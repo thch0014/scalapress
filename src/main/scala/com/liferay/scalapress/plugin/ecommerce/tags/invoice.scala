@@ -15,13 +15,13 @@ object InvoiceAccountNumberTag extends ScalapressTag {
 
 object InvoiceAccountNameTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(_.account.name.toString)
+        request.order.map(_.account.name)
     }
 }
 
 object InvoiceAccountEmailTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(_.account.email.toString)
+        request.order.map(_.account.email)
     }
 }
 
