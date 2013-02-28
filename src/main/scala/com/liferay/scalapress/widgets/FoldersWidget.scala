@@ -49,9 +49,12 @@ class FoldersWidget extends Widget with Logging {
         val children = parent
           .subfolders
           .asScala
+          .toSeq
           .filterNot(_.hidden)
           .filterNot(f => excluded.contains(f.id.toString))
           .filterNot(f => excluded.contains(f.name.toLowerCase.trim))
+          .filterNot(_.name == null)
+          .sortBy(_.name)
 
         for (folder <- children) {
             buffer.append("<li id='w" + id + "_f" + folder.id + "' class='l" + level + "'>")
