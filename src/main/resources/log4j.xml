@@ -9,9 +9,6 @@
                    value="[%d{dd-MMM HH:mm:ss:SSS}] %-5p [%-40.40t] %c{1}.%M - %m%n"/>
         </layout>
     </appender>
-    <logger name="com.liferay">
-        <level value="debug"/>
-    </logger>
     <root>
         <level value="info"/>
         <appender-ref ref="default"/>

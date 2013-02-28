@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.web.obj
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, ResponseBody, RequestMapping}
+import org.springframework.web.bind.annotation.{ExceptionHandler, ModelAttribute, PathVariable, ResponseBody, RequestMapping}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, FolderDao}
@@ -9,7 +9,7 @@ import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.controller.NotFoundException
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import scala.collection.JavaConverters._
-import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.controller.web.folder.SecurityFuncs
 
@@ -22,6 +22,12 @@ class ObjectController extends Logging {
     @Autowired var objectDao: ObjectDao = _
     @Autowired var themeService: ThemeService = _
     @Autowired var context: ScalapressContext = _
+
+    @ResponseBody
+    @ExceptionHandler(Array(classOf[NotFoundException]))
+    def notfound(resp: HttpServletResponse) {
+        resp.setStatus(404)
+    }
 
     @ModelAttribute def obj(@PathVariable("id") id: Long) = Option(objectDao.find(id)) match {
         case None => throw new NotFoundException
