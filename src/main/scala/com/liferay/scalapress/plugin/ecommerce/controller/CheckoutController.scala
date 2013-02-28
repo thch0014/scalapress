@@ -67,6 +67,7 @@ class CheckoutController {
             basket.deliveryAddress.town = basket.billingAddress.town
             basket.deliveryAddress.country = basket.billingAddress.country
             basket.deliveryAddress.telephone = basket.billingAddress.telephone
+            basket.deliveryAddress.instructions = basket.billingAddress.instructions
         }
         validator.validate(basket, errors)
 

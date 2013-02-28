@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.gallery.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
-import javax.persistence.{JoinColumn, Entity, Table, ManyToOne}
+import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.liferay.scalapress.plugin.gallery.{Gallery, GalleryRenderer}
 import com.liferay.scalapress.section.Section
 
@@ -11,7 +11,7 @@ import com.liferay.scalapress.section.Section
 @Table(name = "blocks_galleries")
 class GallerySection extends Section {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gallery")
     @BeanProperty var gallery: Gallery = _
 
