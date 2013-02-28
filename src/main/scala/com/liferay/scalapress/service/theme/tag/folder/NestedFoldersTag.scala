@@ -23,12 +23,15 @@ object NestedFoldersTag extends ScalapressTag with TagBuilder {
         Some(string)
     }
 
-    private def _renderLevel(root: Folder, depth: Int, buffer: ArrayBuffer[String], excluded: Array[String]) {
+    private def _renderLevel(parent: Folder, depth: Int, buffer: ArrayBuffer[String], excluded: Array[String]) {
+
+        val folders = parent.subfolders.asScala.toSeq
+        val filtered = folders.filterNot(f => excluded.contains(f.id.toString)).filterNot(_.hidden)
+        val sorted = filtered.sortBy(_.name)
         buffer.append("<ul class=\"nested-folder-level" + depth + "\">")
-        root.subfolders.asScala.filterNot(f => excluded.contains(f.id.toString)).foreach(child => {
-            buffer
-              .append("<li id=\"nested-folder-" + child.id + "\"><a href=\"" + FriendlyUrlGenerator
-              .friendlyLink(child) + "\">" + child.name + "</a>")
+        sorted.foreach(child => {
+            buffer.append("<li id=\"nested-folder-" + child.id + "\">")
+            buffer.append(FriendlyUrlGenerator.friendlyLink(child))
             if (depth > 0)
                 _renderLevel(child, depth - 1, buffer, excluded)
             buffer.append("</li>")
