@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMethod, ModelAttribute, RequestMapping}
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import scala.Array
 import javax.validation.Valid
@@ -25,6 +25,7 @@ class AddressEntryController {
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def submit(@PathVariable("id") accountId: Long,
+               @RequestParam("orderId") orderId: Long,
                @Valid @ModelAttribute("address") address: Address,
                errors: Errors) = {
 
@@ -34,9 +35,10 @@ class AddressEntryController {
             address.active = true
             address.account = accountId.toString
             addressDao.save(address)
-            "redirect:/backoffice/order"
+            "redirect:/backoffice/order/" + orderId
         }
     }
 
+    @ModelAttribute("orderId") def orderId(@RequestParam("orderId") orderId: Long) = orderId
     @ModelAttribute("address") def address = new Address()
 }

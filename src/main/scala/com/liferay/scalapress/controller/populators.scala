@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.admin.search
+package com.liferay.scalapress.controller
 
 import org.springframework.web.bind.annotation.ModelAttribute
 import com.liferay.scalapress.dao.{TypeDao, FolderDao}

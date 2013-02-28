@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.admin.search
+package com.liferay.scalapress.search.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, RequestMapping}
@@ -9,6 +9,7 @@ import com.liferay.scalapress.dao.{TypeDao, FolderDao, MarkupDao}
 import com.liferay.scalapress.domain.attr.AttributeValue
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.search.{SavedSearch, SavedSearchDao}
+import com.liferay.scalapress.controller.ObjectTypePopulator
 
 /** @author Stephen Samuel */
 @Controller

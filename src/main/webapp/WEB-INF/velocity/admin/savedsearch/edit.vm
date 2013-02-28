@@ -143,6 +143,7 @@
                     #else
 
                         <select name="attributeValues$a.id" class="input-xlarge">
+                            <option value="">Any</option>
                             #foreach ($option in $a.options)
                                 #if($values.contains($option.value))
                                     #set ($selected = "selected='true'")
@@ -157,6 +158,7 @@
 
                 #elseif ($a.attributeType == "Boolean")
                     <select name="attributeValues$a.id" class="input-small">
+                        <option value="">Any</option>
                         <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
                         <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
                     </select>

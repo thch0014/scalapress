@@ -192,11 +192,11 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <a href="/backoffice/plugin/shopping/address/$order.account.id" role="button" class="btn btn-small">Create
+                <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=billing"
+                   role="button" class="btn btn-small">Create
                     Address</a>
             </div>
         </div>
-
     </div>
 </div>
 
