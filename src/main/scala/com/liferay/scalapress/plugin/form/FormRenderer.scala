@@ -27,7 +27,7 @@ object FormRenderer {
         <div class="control-group">
             <div class="controls">
                 <button type="submit" class="btn">
-                    {form.submitButtonText}
+                    {Option(form.submitButtonText).filter(_.trim.length > 0).getOrElse("Submit")}
                 </button>
             </div>
         </div>
