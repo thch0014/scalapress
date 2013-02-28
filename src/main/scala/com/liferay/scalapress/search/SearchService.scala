@@ -140,8 +140,8 @@ class ElasticSearchService extends SearchService with Logging {
           .map(_.replaceAll("\\D", ""))
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
-        search.attributeValues.asScala.foreach(av => {
-            buffer.append("attribute_" + av.attribute.id + ":" + av.value)
+        search.attributeValues.asScala.filter(_.value.trim.length > 0).foreach(av => {
+            av.value.split(" ").foreach(value => buffer.append("attribute_" + av.attribute.id + ":" + value))
         })
 
         if (search.imageOnly)

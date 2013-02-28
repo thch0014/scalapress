@@ -61,6 +61,8 @@ class SearchController extends Logging {
             objectDao.find(id)
         }).toList
 
+        // val objects = objectDao.search(new Search(classOf[Obj]).addFilterIn("id", ids.toSeq.asJava))
+
         val plugin = searchPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val theme = themeService.default

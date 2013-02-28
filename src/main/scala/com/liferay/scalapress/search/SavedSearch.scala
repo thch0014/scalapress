@@ -24,9 +24,7 @@ class SavedSearch {
     @Column(name = "searchCategory", nullable = true)
     @BeanProperty var searchFolders: String = _
 
-    @OneToMany(fetch = FetchType.EAGER,
-        mappedBy = "savedSearch",
-        cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @OneToMany(mappedBy = "savedSearch", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 

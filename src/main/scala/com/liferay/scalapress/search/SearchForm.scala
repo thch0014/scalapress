@@ -23,7 +23,7 @@ class SearchForm {
 
     @BeanProperty var submitLabel: String = _
 
-    @OneToMany(mappedBy = "searchForm", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "searchForm")
     @Fetch(FetchMode.JOIN)
     @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
 
