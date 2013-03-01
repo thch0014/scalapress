@@ -5,6 +5,7 @@ import reflect.BeanProperty
 import java.util
 import javax.persistence._
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
+import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,7 +18,7 @@ class Obj {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
-    @Index(name="name_index")
+    @Index(name = "name_index")
     @BeanProperty var name: String = _
 
     @BeanProperty var email: String = _
@@ -49,7 +50,12 @@ class Obj {
     )
     @BeanProperty var links: java.util.Set[Obj] = new util.HashSet[Obj]()
 
-    @Index(name="objecttype_index")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 20)
+    @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
+
+    @Index(name = "objecttype_index")
     @ManyToOne
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
@@ -83,7 +89,7 @@ class Obj {
     @Column(length = 5000)
     @BeanProperty var summary: String = _
 
-    @Index(name="sellPrice_index")
+    @Index(name = "sellPrice_index")
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _
 
@@ -103,7 +109,7 @@ class Obj {
 
     @BeanProperty var location: String = _
 
-    @Index(name="status_index")
+    @Index(name = "status_index")
     @BeanProperty var status: String = _
 
     @BeanProperty var inStockMsg: String = _

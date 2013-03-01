@@ -12,6 +12,7 @@ import scala.collection.JavaConverters._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.controller.web.folder.SecurityFuncs
+import com.liferay.scalapress.section.SectionRenderer
 
 /** @author Stephen Samuel */
 @Controller
@@ -61,19 +62,7 @@ class ObjectController extends Logging {
                 page.body("<!-- end object markup -->")
         }
 
-        for (section <- obj.objectType.sections.asScala) {
-            if (section.visible) {
-                section.render(sreq, context) match {
-                    case None =>
-                    case Some(output) =>
-                        page.body("\n\n<!-- plugin: " + section.getClass + " -->\n\n")
-                        page.body(output + "\n\n")
-                }
-            }
-        }
-
-
-
+        page.body(SectionRenderer.render(obj, sreq, context))
         page
     }
 }

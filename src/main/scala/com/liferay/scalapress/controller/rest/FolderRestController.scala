@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.rest
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMapping, ResponseBody}
+import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.FolderDao
 import org.springframework.http.MediaType
@@ -13,10 +13,6 @@ import com.liferay.scalapress.domain.Obj
 class FolderRestController {
 
     @Autowired var folderDao: FolderDao = _
-
-    @ResponseBody
-    @RequestMapping(params = Array("q"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-    def search(@RequestParam("q") q: String) = folderDao.search(q)
 
     @ResponseBody
     @RequestMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))

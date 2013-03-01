@@ -34,7 +34,11 @@ class ImageService extends Logging {
         require(h < 2000)
         executor.submit(new Runnable() {
             def run() {
-                _ensureThumbnailStored(filename, w, h)
+                try {
+                    _ensureThumbnailStored(filename, w, h)
+                } catch {
+                    case e: Exception => logger.warn(e.toString)
+                }
             }
         })
         assetStore.link(_thumbailFilename(filename, w, h))

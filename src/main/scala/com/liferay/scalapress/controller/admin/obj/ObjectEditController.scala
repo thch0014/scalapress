@@ -1,12 +1,12 @@
 package com.liferay.scalapress.controller.admin.obj
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{AttributeValueDao, FolderDao, ObjectDao}
 import scala.Array
 import com.liferay.scalapress.domain.{Image, Obj}
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.{Asset, AssetStore}
@@ -18,16 +18,19 @@ import java.net.URLConnection
 import com.liferay.scalapress.domain.attr.AttributeValue
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.search.SearchService
+import com.liferay.scalapress.section.{PluginDao, Section}
+import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
-class ObjectEditController extends FolderPopulator with AttributeValuesPopulator {
+class ObjectEditController extends FolderPopulator with AttributeValuesPopulator with EnumPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var attributeValueDao: AttributeValueDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
+    @Autowired var sectionDao: PluginDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var searchService: SearchService = _
     @Autowired var passwordEncoder: PasswordEncoder = _
@@ -93,6 +96,40 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         "redirect:/backoffice/obj/" + form.o.id
     }
 
+    @RequestMapping(Array("section/create"))
+    def createSection(@ModelAttribute("form") form: EditForm, @RequestParam("class") cls: String) = {
+        val section = Class.forName(cls).newInstance.asInstanceOf[Section]
+        section.obj = form.o
+        section.visible = true
+        form.o.sections.add(section)
+        objectDao.save(form.o)
+        "redirect:/backoffice/obj/" + form.o.id
+    }
+
+    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
+    def reorderSections(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String = {
+
+        val ids = order.split("-")
+        form.o.sections.asScala.foreach(section => {
+            val pos = ids.indexOf(section.id.toString)
+            section.position = pos
+            sectionDao.save(section)
+        })
+        "ok"
+    }
+
+    @RequestMapping(value = Array("section/{sectionId}/delete"))
+    def deleteSection(@ModelAttribute("form") form: EditForm, @PathVariable("sectionId") sectionId: Long): String = {
+        form.o.sections.asScala.find(_.id == sectionId) match {
+            case None =>
+            case Some(section) =>
+                form.o.sections.remove(section)
+                section.obj = null
+                objectDao.save(form.o)
+        }
+        "redirect:/backoffice/obj/"
+    }
+
     @RequestMapping(Array("image/{filename}/remove"))
     def removeImage(@PathVariable("filename") filename: String,
                     @ModelAttribute("form") form: EditForm) = {
@@ -134,7 +171,15 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
         model.put("form", form)
         model.put("eyeball", UrlResolver.objectSiteView(obj))
+        val sections = obj.sections.asScala.toSeq.sortBy(_.position).asJava
+        model.put("sections", sections)
     }
+
+    @ModelAttribute("classes") def classes = ComponentClassScanner
+      .sections
+      .map(c => (c.getName, c.getSimpleName))
+      .toMap
+      .asJava
 }
 
 class EditForm {

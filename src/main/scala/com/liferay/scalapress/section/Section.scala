@@ -32,12 +32,12 @@ abstract class Section {
     @ManyToOne
     @JoinColumn(name = "ownerItem", nullable = true)
     @Index(name = "object_index")
-    var obj: Obj = _
+    @BeanProperty var obj: Obj = _
 
     @ManyToOne
     @JoinColumn(name = "ownerItemType", nullable = true)
-    @Index(name="objecttype_index")
-    var objectType: ObjectType = _
+    @Index(name = "objecttype_index")
+    @BeanProperty var objectType: ObjectType = _
 
     def desc: String
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String]
