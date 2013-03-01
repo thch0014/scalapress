@@ -82,11 +82,11 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val activeClass = params.get("activeclass").getOrElse("current active")
 
         val root = context.folderDao.root
-        val folders = root.subfolders.asScala
+        val folders = root.subfolders.asScala.toSeq.sortBy(_.name)
         val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
         val sorted = root.folderOrdering match {
-            case FolderOrdering.Manual => filtered.toSeq.sortBy(_.position)
-            case _ => filtered.toSeq.sortBy(_.name)
+            case FolderOrdering.Manual => filtered.sortBy(_.position)
+            case _ => filtered
         }
 
         val links = sorted.map(f => {
@@ -100,6 +100,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
 
             val link = "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "'>" + f.name + "</a>"
             startTag + link + endTag
+
         }).mkString(sep)
 
         Some(links)
