@@ -11,6 +11,7 @@ import com.liferay.scalapress.domain.{Obj, ObjectType}
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.domain.attr.Attribute
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,7 +23,9 @@ class ObjectExportController {
 
     @RequestMapping(produces = Array("text/csv"), value = Array("csv"))
     @ResponseBody
-    def export(@PathVariable("id") id: Long) = {
+    def export(@PathVariable("id") id: Long, resp: HttpServletResponse) = {
+
+        resp.setHeader("Content-Disposition", "attachment; filename=export_objects_" + id + ".csv")
 
         val objectType = objectTypeDao.find(id)
         val attributes = objectType.attributes.asScala.toSeq.sortBy(_.name)
