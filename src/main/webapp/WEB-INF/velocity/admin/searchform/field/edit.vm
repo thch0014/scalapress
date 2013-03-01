@@ -13,9 +13,54 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Type</label>
+
+        <div class="controls">
+            #springFormSingleSelect("field.fieldType", $attributeTypes)
+        </div>
+    </div>
+
+
+    #if ($field.fieldType == "Attribute")
+        <div class="control-group">
+            <label class="control-label">Attribute</label>
+
+            <div class="controls">
+                <select id="attribute" name="attribute">
+                    #foreach($option in $attributesMap.keySet())
+                        <option value="${option}"
+                            #if("$!field.attribute.id" == "$option")
+                                selected="selected"
+                            #end>
+                            ${attributesMap.get($option)}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+    #end
+
+    <div class="control-group">
+        <label class="control-label">Preset</label>
+
+        <div class="controls">
+            #springFormCheckbox("field.preset")
+        </div>
+    </div>
+
+    #if ($field.preset)
+        <div class="control-group">
+            <label class="control-label">Preset Value</label>
+
+            <div class="controls">
+                #springFormInput("field.value")
+            </div>
+        </div>
+    #end
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Return</button>
+        <a role="button" class="btn" href="/backoffice/searchform/$field.searchForm.id">Return</a>
     </div>
 
 </form>

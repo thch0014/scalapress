@@ -24,10 +24,11 @@ trait SortPopulator {
 trait EnumPopulator {
 
     def populate(values: Seq[Enum[_]]): java.util.Map[String, String] = {
-        var map = TreeMap[String, String]()
+        val map = new java.util.LinkedHashMap[String, String]
+        map.put("", "-None-")
         values.map(s => {
-            map = map + (s.name -> s.name)
+            map.put(s.name, s.name)
         })
-        map.asJava
+        map
     }
 }

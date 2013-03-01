@@ -1,6 +1,7 @@
 package com.liferay.scalapress
 
-import dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
+import dao.{AttributeDao, ThemeDao, MarkupDao, TypeDao, FolderDao}
+import domain.attr.Attribute
 import domain.setup.Theme
 import org.springframework.core.convert.converter.Converter
 import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
@@ -20,6 +21,12 @@ class StringObjectTypeConverter(objectTypeDao: TypeDao) extends Converter[String
     def convert(source: String): ObjectType =
         if (source == null || source == "" || source == "0") null
         else objectTypeDao.find(source.toLong)
+}
+
+class StringToAttributeConvertor(attributeDao: AttributeDao) extends Converter[String, Attribute] {
+    def convert(source: String): Attribute =
+        if (source == null || source == "" || source == "0") null
+        else attributeDao.find(source.toLong)
 }
 
 class StringFormConverter(formDao: FormDao) extends Converter[String, Form] {

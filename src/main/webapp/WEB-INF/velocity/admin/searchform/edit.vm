@@ -45,7 +45,7 @@
         <th>Type</th>
         <th></th>
     </tr>
-    #foreach ($f in $form.fields)
+    #foreach ($f in $fields)
         <tr>
             <td>$f.id</td>
             <td>$!f.name</td>

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
-import com.liferay.scalapress.{StringFormConverter, StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
+import com.liferay.scalapress.{StringToAttributeConvertor, StringFormConverter, StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.dao.settings.InstallationDao
@@ -26,7 +26,7 @@ import com.liferay.scalapress.search.SearchFormDao
 @Configuration
 class WebConfig extends WebMvcConfigurationSupport {
 
-    @Autowired var scalapressContext: ScalapressContext = _
+    @Autowired var context: ScalapressContext = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var typeDao: TypeDao = _
     @Autowired var basketDao: BasketDao = _
@@ -47,6 +47,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addConverter(new StringToThemeConverter(themeDao))
         registry.addConverter(new StringToAddressConverter(addressDao))
         registry.addConverter(new StringFormConverter(formDao))
+        registry.addConverter(new StringToAttributeConvertor(context.attributeDao))
     }
 
     override def addResourceHandlers(registry: ResourceHandlerRegistry) {
@@ -70,7 +71,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
         super.addDefaultHttpMessageConverters(converters)
-        converters.add(0, new ScalaPressPageMessageConverter(new ScalapressPageRenderer(scalapressContext)))
+        converters.add(0, new ScalaPressPageMessageConverter(new ScalapressPageRenderer(context)))
     }
 
     override def requestMappingHandlerAdapter: RequestMappingHandlerAdapter = {

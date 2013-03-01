@@ -28,6 +28,9 @@ class SearchFormField {
     @Column(name = "value")
     @BeanProperty var value: String = _
 
+    @Column(name = "position")
+    @BeanProperty var position: Int = _
+
     @ManyToOne
     @JoinColumn(name = "searchForm")
     @Fetch(FetchMode.JOIN)

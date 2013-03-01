@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.search.{SearchFormDao, SearchForm}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -26,8 +27,6 @@ class SearchFormListController {
         searchFormDao.save(form)
         "redirect:/backoffice/searchform"
     }
-
-    import scala.collection.JavaConverters._
 
     @ModelAttribute("forms") def users = searchFormDao.findAll().asJava
 }
