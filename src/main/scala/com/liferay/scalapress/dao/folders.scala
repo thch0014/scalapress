@@ -35,7 +35,7 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
 
     override def findTopLevel: Array[Folder] = root.subfolders.asScala.toArray
 
-    override def root: Folder = searchUnique(new Search(classOf[Folder]).addFilterNull("parent"))
+    override def root: Folder = search(new Search(classOf[Folder]).addFilterNull("parent")).head
 
     override def findAll: List[Folder] = super.findAll.sortWith((a, b) => a.name < b.name)
 }
