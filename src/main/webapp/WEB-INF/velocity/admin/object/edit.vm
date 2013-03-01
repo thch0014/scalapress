@@ -160,7 +160,10 @@
         #set($values = $attributeWithValues.productElement(1))
 
         <div class="control-group">
-            <label class="control-label">$a.name ($a.id)</label>
+            <label class="control-label">$a.name ($a.id)
+                <a href="/backoffice/attribute/$a.id" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+            </label>
 
             <div class="controls">
 

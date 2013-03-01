@@ -29,7 +29,7 @@ class ObjectType {
     @Fetch(FetchMode.JOIN)
     @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()

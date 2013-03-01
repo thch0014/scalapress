@@ -109,5 +109,37 @@
     });
 </script>
 
+<legend>Sections</legend>
+<table class="table table-condensed table-hover" id="sections-table">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    #foreach ($s in $sections)
+        <tr data-section-id="$s.id" class="section-row">
+            <td>$!s.name()</td>
+            <td>$s.desc()</td>
+            <td>
+                <a href="$s.backoffice()" role="button" class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+
+                <a href="/backoffice/type/$type.id/section/$s.id/delete" role="button"
+                   class="btn btn-mini btn-danger">
+                    <i class="icon-trash icon-white"></i></a>
+            </td>
+        </tr>
+    #end
+</table>
+
+<form method="POST" action="/backoffice/type/$type.id/section/create">
+    Add Section:
+    <select name="class">
+        #foreach($class in $classes.keySet())
+            <option value="${class}">${classes.get($class)}</option>
+        #end
+    </select>
+    <button type="submit">Submit</button>
+</form>
 
 #parse("/admin/footer.vm")

@@ -171,6 +171,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
         model.put("form", form)
         model.put("eyeball", UrlResolver.objectSiteView(obj))
+
         val sections = obj.sections.asScala.toSeq.sortBy(_.position).asJava
         model.put("sections", sections)
     }

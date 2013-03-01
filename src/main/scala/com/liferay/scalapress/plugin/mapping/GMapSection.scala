@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.mapping
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{AttributeFuncs, ScalapressContext, ScalapressRequest}
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.section.Section
@@ -15,9 +15,15 @@ class GMapSection extends Section {
     override def backoffice: String = "/backoffice/plugin/mapping/section/" + id
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        Option(postcode).map(_.replace(" ", "")).map(arg => {
-            val iframeSrc = "https://maps.google.co.uk/maps?q=" + postcode + "&z=14&output=embed"
-            val hrefSrc = "https://maps.google.co.uk/maps?q=" + postcode + "&z=14"
+
+        Option(postcode).filter(_.trim.length > 0)
+          .orElse(request.obj.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))
+          .map(arg => {
+
+            val pc = arg.replace(" ", "")
+
+            val iframeSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=14&output=embed"
+            val hrefSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=14"
             val sectionId = "section-" + id
             val html =
                 <div class="gmap-section" id={sectionId}>

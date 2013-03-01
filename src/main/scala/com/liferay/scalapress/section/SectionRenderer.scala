@@ -23,7 +23,7 @@ object SectionRenderer {
     }
 
     def render(obj: Obj, req: ScalapressRequest, context: ScalapressContext): String =
-        _render(obj.sections.asScala.toSeq, req)
+        _render(obj.sections.asScala.toSeq ++ obj.objectType.sections.asScala.toSeq, req)
 
     def render(folder: Folder, req: ScalapressRequest, context: ScalapressContext): String =
         _render(folder.sections.asScala.toSeq, req)
