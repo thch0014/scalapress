@@ -45,7 +45,7 @@
             <select id="start" name="start" class="input-xxlarge">
                 #foreach($option in $foldersMap.keySet())
                     <option value="${option}"
-                        #if("$widget.start" == "$option")
+                        #if("$widget.start.id" == "$option")
                             selected="selected"
                         #end>
                         ${foldersMap.get($option)}</option>
