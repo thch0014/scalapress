@@ -1,7 +1,6 @@
 package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import java.util.UUID
-import com.liferay.scalapress.domain.setup.Installation
 import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
 import com.liferay.scalapress.Logging
 import org.apache.http.impl.client.DefaultHttpClient
@@ -32,7 +31,7 @@ object PaypalStandardService extends Logging {
         params += ("return" -> "/checkout/payment/success")
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
-        params += ("notify_url" -> "qweee")
+        params += ("notify_url" -> "/plugin/payment/paypal/standard/callback")
 
         params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")
@@ -44,7 +43,7 @@ object PaypalStandardService extends Logging {
 
         // The price or amount of the product, service, or contribution, not including shipping, handling, or tax.
         // If this variable is omitted from Buy Now or Donate buttons, buyers enter their own amount at the time of payment.
-        params += ("amount" -> basket.total.toString)
+        params += ("amount" -> (basket.total / 100.0).toString)
 
         if (basket.accountEmail != null)
             params += ("email" -> basket.accountEmail)

@@ -130,8 +130,6 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showConfirmation(req: HttpServletRequest): ScalaPressPage = {
 
-        val shoppingPlugin = shoppingPluginDao.get
-        val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
@@ -139,8 +137,7 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(
-            CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, sagepayFormPlugin, shoppingPlugin, domain))
+        page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, sreq.context))
         page
     }
 

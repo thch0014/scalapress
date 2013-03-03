@@ -11,7 +11,6 @@ import com.liferay.scalapress.ScalapressContext
 object CheckoutConfirmationRenderer {
 
     def renderConfirmationPage(basket: Basket,
-                               shoppingPlugin: ShoppingPlugin,
                                domain: String,
                                context: ScalapressContext): String = {
 
@@ -26,7 +25,7 @@ object CheckoutConfirmationRenderer {
         val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
           .billingAddress) + "<br/><br/></div>"
 
-        val terms = _terms(shoppingPlugin.terms)
+        val terms = _terms(context.shoppingPluginDao.get.terms)
 
         "<div id='checkout-confirmation'>" + wizard + totals + billing + delivery + payments + "</div>" + terms
     }
