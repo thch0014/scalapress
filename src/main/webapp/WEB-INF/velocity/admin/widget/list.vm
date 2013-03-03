@@ -17,8 +17,8 @@
         <tr class="widget-row" data-widget-id="$w.id">
             <td>$w.id</td>
             <td>$w.widgetType()</td>
-            <td>$w.name</td>
-            <td>$w.location</td>
+            <td>$!w.name</td>
+            <td>$!w.location</td>
             <td><a href="$w.backoffice()" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
             </a></td>
         </tr>

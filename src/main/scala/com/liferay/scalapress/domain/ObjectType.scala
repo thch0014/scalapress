@@ -47,8 +47,10 @@ class ObjectType {
     @BeanProperty var objectViewMarkup: Markup = _
 
     def bootIcon = name.toLowerCase match {
+        case "listing" | "listings" => "icon-list-alt"
         case "event" | "events" | "show" | "shows" => "icon-calendar"
         case "job" | "jobs" => "icon-truck"
+        case "image" | "images" => "icon-picture"
         case "product" | "products" => "icon-th-large"
         case "membership" | "account" | "accounts" => "icon-user"
         case _ => "icon-circle-blank"

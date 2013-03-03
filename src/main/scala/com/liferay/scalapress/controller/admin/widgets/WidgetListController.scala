@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestBody, Reque
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.widgets.{Widget, HtmlWidget}
+import com.liferay.scalapress.widgets.Widget
 import scala.Array
 import com.liferay.scalapress.domain.Folder
 import com.liferay.scalapress.util.ComponentClassScanner
@@ -42,7 +42,12 @@ class WidgetListController {
 
     import scala.collection.JavaConverters._
 
-    @ModelAttribute("widgets") def widgets = widgetDao.findAll().asJava
+    @ModelAttribute("widgets") def widgets = {
+        val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
+          .position))
+        widgetDao.findAll().sorted(ordering).toArray
+    }
+
     @ModelAttribute("classes") def classes = ComponentClassScanner
       .widgets
       .map(c => (c.getName, c.getSimpleName))
