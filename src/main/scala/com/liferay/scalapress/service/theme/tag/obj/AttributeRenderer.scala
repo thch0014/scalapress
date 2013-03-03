@@ -9,7 +9,7 @@ object AttributeRenderer {
 
     def renderValue(av: AttributeValue) = {
         av.attribute.attributeType match {
-            case AttributeType.Link => "<a href='" + av.value + "'>Please click here</a>"
+            case AttributeType.Link => <a href={av.value} target="_blank">Please click here</a>.toString()
             case AttributeType.Email => "<a href='mailto:" + av.value + "'>Please click here</a>"
             case AttributeType.Date => try {
                 new DateTime(av.value.toLong).toString("dd/MM/yyyy")
