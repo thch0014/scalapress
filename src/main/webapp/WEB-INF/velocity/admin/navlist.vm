@@ -9,9 +9,7 @@
     <li><a href=/backoffice/medialib><i class="icon-camera"></i> Media Library</a></li>
     <li><a href="/backoffice/gallery"><i class="icon-picture"></i> Galleries</a></li>
     <li><a href=/backoffice/order><i class="icon-shopping-cart"></i> Orders</a></li>
-    <li><a href=/backoffice/plugin/search><i class="icon-search"></i> Search</a></li>
     <li><a href=/backoffice/widget/><i class="icon-asterisk"></i> Widgets</a></li>
-    <li><a href=/backoffice/delivery/><i class="icon-desktop"></i> Delivery Options</a></li>
     <li><a href=/j_spring_security_logout><i class="icon-lock"></i> Logout</a></li>
 </ul>
 

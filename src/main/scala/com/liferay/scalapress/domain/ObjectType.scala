@@ -1,7 +1,7 @@
 package com.liferay.scalapress.domain
 
 import attr.Attribute
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Table, Entity, GenerationType, GeneratedValue, Id}
 import java.util
 import reflect.BeanProperty
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
@@ -19,6 +19,8 @@ class ObjectType {
     @BeanProperty var name: String = _
 
     @BeanProperty var deleted: Boolean = false
+
+    @BeanProperty var prices: Boolean = false
 
     @BeanProperty var linkGroups: String = _
     def linkGroupsArray = Option(linkGroups)
@@ -45,9 +47,10 @@ class ObjectType {
     @BeanProperty var objectViewMarkup: Markup = _
 
     def bootIcon = name.toLowerCase match {
-        case "event" | "events" => "icon-calendar"
+        case "event" | "events" | "show" | "shows" => "icon-calendar"
         case "job" | "jobs" => "icon-truck"
         case "product" | "products" => "icon-th-large"
+        case "membership" | "account" | "accounts" => "icon-user"
         case _ => "icon-circle-blank"
     }
 }

@@ -71,7 +71,7 @@
     </div>
 
 
-    #if ($form.o.objectType.name.toLowerCase().contains("product"))
+    #if ($form.o.objectType.prices)
 
         <div class="control-group">
             <label class="control-label">Price</label>
