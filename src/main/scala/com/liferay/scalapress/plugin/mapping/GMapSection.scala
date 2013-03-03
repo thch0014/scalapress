@@ -22,8 +22,8 @@ class GMapSection extends Section {
 
             val pc = arg.replace(" ", "")
 
-            val iframeSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=14&output=embed"
-            val hrefSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=14"
+            val iframeSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=10&output=embed"
+            val hrefSrc = "https://maps.google.co.uk/maps?q=" + pc + "&z=10"
             val sectionId = "section-" + id
             val html =
                 <div class="gmap-section" id={sectionId}>
