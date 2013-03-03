@@ -27,5 +27,5 @@ class MobileObjectController {
         "mobile/obj.vm"
     }
 
-    @ModelAttribute("folders") def folders = folderDao.findAll
+    @ModelAttribute("folders") def folders = folderDao.findAll().toArray
 }

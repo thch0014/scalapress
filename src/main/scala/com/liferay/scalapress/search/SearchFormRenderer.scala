@@ -29,8 +29,7 @@ object SearchFormRenderer {
                 case SearchFieldType.Attribute => renderAttributeField(field)
                 case _ => renderTextField(field)
             }
-        }
-        )
+        })
     }
 
     private def renderPresetAttributeField(field: SearchFormField) = {
@@ -40,8 +39,8 @@ object SearchFormRenderer {
     }
 
     private def renderAttributeField(field: SearchFormField): Elem =
-        field.attribute.attributeType match {
-            case AttributeType.Selection => renderSelectionAttribute(field)
+        Option(field.attribute).flatMap(attr => Option(attr.attributeType)) match {
+            case Some(AttributeType.Selection) => renderSelectionAttribute(field)
             case _ => renderTextField(field)
         }
 

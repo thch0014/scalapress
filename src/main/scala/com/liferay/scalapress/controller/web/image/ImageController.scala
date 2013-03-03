@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller
 import org.apache.commons.io.IOUtils
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
-import java.net.{URL, URLConnection}
+import java.net.URLConnection
 import com.liferay.scalapress.service.asset.AssetStore
 import com.liferay.scalapress.service.asset.Asset
 import scala.Some
@@ -23,20 +23,6 @@ class ImageController extends Logging {
     @ExceptionHandler(Array(classOf[RuntimeException]))
     def handleException1(e: RuntimeException, resp: HttpServletResponse) {
         resp.setStatus(404)
-    }
-
-    @RequestMapping(value = Array("test"), produces = Array("image/png"), params = Array("width", "height"))
-    def test(@RequestParam("width") width: Int,
-             @RequestParam("height") height: Int,
-             resp: HttpServletResponse) {
-
-        val url = new URL("http://childrenstorytales.com/wp-content/uploads/2011/08/large-siberian-tiger1-1024x768.jpg")
-
-        val image = ImageIO.read(url.openStream())
-        val thumbnail = ImageTools.fit(image, (width, height))
-
-        ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
-        resp.setContentType(ImageTools.contentType("image/png"))
     }
 
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
