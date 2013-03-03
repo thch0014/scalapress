@@ -31,7 +31,8 @@ object PaypalStandardService extends Logging {
         params += ("return" -> "/checkout/payment/success")
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
-        params += ("notify_url" -> "/plugin/payment/paypal/standard/callback")
+        params += ("notify_url" ->
+          ("http://" + domain.toLowerCase.replace("http://", "") + "/plugin/payment/paypal/standard/callback"))
 
         params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")

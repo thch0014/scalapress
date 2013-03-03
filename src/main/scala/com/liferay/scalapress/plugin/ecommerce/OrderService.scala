@@ -25,7 +25,6 @@ object OrderService {
 
         val order = Order(req.getRemoteAddr, account)
 
-
         order.billingAddress = basket.billingAddress
         order.billingAddress.active = true
 
