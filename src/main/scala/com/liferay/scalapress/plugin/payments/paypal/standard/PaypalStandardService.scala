@@ -44,7 +44,8 @@ object PaypalStandardService extends Logging {
 
         // The price or amount of the product, service, or contribution, not including shipping, handling, or tax.
         // If this variable is omitted from Buy Now or Donate buttons, buyers enter their own amount at the time of payment.
-        params += ("amount" -> (basket.total / 100.0).toString)
+        val amount = "%.2f".format(basket.total / 100.0)
+        params += ("amount" -> amount)
 
         if (basket.accountEmail != null)
             params += ("email" -> basket.accountEmail)
