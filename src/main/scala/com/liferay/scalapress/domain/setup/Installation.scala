@@ -23,6 +23,7 @@ class Installation {
     @BeanProperty var name: String = null
 
     @BeanProperty var vatNumber: String = _
+    @BeanProperty var vatEnabled: Boolean = Option(vatNumber).filter(_.trim.length > 0).isDefined
 
     @BeanProperty var companyNumber: String = _
 

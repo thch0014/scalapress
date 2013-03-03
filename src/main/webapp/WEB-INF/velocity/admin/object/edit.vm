@@ -70,7 +70,6 @@
         </div>
     </div>
 
-
     #if ($form.o.objectType.prices)
 
         <div class="control-group">
@@ -89,13 +88,17 @@
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="control-label">Vat Rate</label>
+        #if ($installation.vatEnabled)
 
-            <div class="controls">
-                #springFormInput("form.o.vatRate", "class='input-small'")
+            <div class="control-group">
+                <label class="control-label">Vat Rate</label>
+
+                <div class="controls">
+                    #springFormInput("form.o.vatRate", "class='input-small'")
+                </div>
             </div>
-        </div>
+
+        #end
 
         <div class="control-group">
             <label class="control-label">RRP</label>

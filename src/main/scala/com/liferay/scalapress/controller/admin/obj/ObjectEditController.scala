@@ -176,6 +176,8 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         model.put("sections", sections)
     }
 
+    @ModelAttribute("installation") def installation = context.installationDao.get
+
     @ModelAttribute("classes") def classes = ComponentClassScanner
       .sections
       .map(c => (c.getName, c.getSimpleName))
