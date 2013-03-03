@@ -19,6 +19,7 @@ object PaypalStandardService extends Logging {
 
     def params(plugin: PaypalStandardPlugin, domain: String, basket: Basket): Map[String, String] = {
 
+        val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
 
         params += ("cmd" -> "_xclick")
@@ -27,12 +28,11 @@ object PaypalStandardService extends Logging {
         // Your PayPal ID or an email address associated with your PayPal account. Email addresses must be confirmed.
         params += ("business" -> plugin.accountEmail)
 
-        params += ("cancel_return" -> "/checkout/payment/failure")
-        params += ("return" -> "/checkout/payment/success")
+        params += ("cancel_return" -> (url + "/checkout/payment/failure"))
+        params += ("return" -> (url + "/checkout/payment/success"))
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
-        params += ("notify_url" ->
-          ("http://" + domain.toLowerCase.replace("http://", "") + "/plugin/payment/paypal/standard/callback"))
+        params += ("notify_url" -> (url + "/plugin/payment/paypal/standard/callback"))
 
         params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")
