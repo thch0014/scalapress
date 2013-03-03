@@ -10,7 +10,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("payment/sagepayform"))
-class PaymentController {
+class SagepayCallbackController {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var dao: SagepayFormPluginDao = _

@@ -9,6 +9,7 @@ import java.util.UUID
 /** @author Stephen Samuel */
 object SagepayFormService extends Logging {
 
+    val PaymentTypeId = "SagePayForm"
     val PaymentTypePayment = "PAYMENT"
     val PaymentTypeDeferred = "DEFERRED"
     val VPSProtocol: String = "2.23"
@@ -16,7 +17,7 @@ object SagepayFormService extends Logging {
     val LiveUrl = "https://live.sagepay.com/gateway/service/vspform-register.vsp"
     val TestUrl = "https://test.sagepay.com/gateway/service/vspform-register.vsp"
 
-    def xor(in: Array[Byte], key: String) = {
+    private def xor(in: Array[Byte], key: String) = {
         val result = new Array[Byte](in.length)
         for (k <- 0 until in.length) {
             val b = in(k) ^ key.charAt(k % key.length)
@@ -25,7 +26,7 @@ object SagepayFormService extends Logging {
         result
     }
 
-    def decryptParams(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
+    private def decryptParams(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
 
         val encrypted = Base64.decodeBase64(base64.getBytes)
         val x = xor(encrypted, plugin.sagePayEncryptionPassword)
@@ -34,7 +35,7 @@ object SagepayFormService extends Logging {
         params
     }
 
-    def encryptParams(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
+    private def encryptParams(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
         val data = params.map(e => e._1 + "=" + e._2).mkString("&")
         val x = xor(data.getBytes, plugin.sagePayEncryptionPassword)
         val base64 = Base64.encodeBase64(x)
@@ -64,7 +65,7 @@ object SagepayFormService extends Logging {
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
         val payment = new Payment
-        payment.paymentType = "SagePayForm"
+        payment.paymentType = PaymentTypeId
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
         payment.authCode = authCode
@@ -73,7 +74,7 @@ object SagepayFormService extends Logging {
         payment
     }
 
-    def sageBasketString(basket: Basket) = {
+    private def sageBasketString(basket: Basket) = {
 
         val count = basket.lines.size + 1
 
