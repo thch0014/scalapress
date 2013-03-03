@@ -4,22 +4,28 @@ import com.liferay.scalapress.plugin.ecommerce.domain.{Address, BasketLine, Bask
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPlugin
+import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardService, PaypalStandardPlugin}
+import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 object CheckoutConfirmationRenderer {
 
     def renderConfirmationPage(basket: Basket,
-                               sagepayFormPlugin: SagepayFormPlugin,
                                shoppingPlugin: ShoppingPlugin,
-                               domain: String): String = {
+                               domain: String,
+                               context: ScalapressContext): String = {
 
         val wizard = CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage)
         val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
-        val payments = renderPaymentForm(basket, sagepayFormPlugin, domain)
+
+        val payments = renderPaymentForm(basket, context, domain)
+
         val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket
           .deliveryAddress) + "<br/><br/></div>"
+
         val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
           .billingAddress) + "<br/><br/></div>"
+
         val terms = _terms(shoppingPlugin.terms)
 
         "<div id='checkout-confirmation'>" + wizard + totals + billing + delivery + payments + "</div>" + terms
@@ -168,7 +174,31 @@ object CheckoutConfirmationRenderer {
         </table>
     }
 
-    private def renderPaymentForm(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
+    private def renderPaymentForm(basket: Basket, context: ScalapressContext, domain: String) = {
+        if (domain.contains("satnav"))
+            _renderSagepayForm(basket, context.sagepayFormPluginDao.get, domain)
+        else
+            _renderPaypalForm(basket, context.paypalStandardPluginDao.get, domain)
+    }
+
+    private def _renderPaypalForm(basket: Basket, plugin: PaypalStandardPlugin, domain: String) = {
+
+        val params = PaypalStandardService.params(plugin, domain, basket)
+        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
+
+        <div id="paypal-standard-form">
+            <legend>
+                Confirm and Pay
+            </legend>
+            <form method="POST" action={PaypalStandardService.Production}>
+                {paramInputs}<br/> <button type="submit" class="btn btn-primary">
+                Proceed to Payment
+            </button>
+            </form>
+        </div>
+    }
+
+    private def _renderSagepayForm(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
 
         val params = SagepayFormService.params(basket, plugin, domain)
         val termsError = ""

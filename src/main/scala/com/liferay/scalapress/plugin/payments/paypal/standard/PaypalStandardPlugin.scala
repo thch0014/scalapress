@@ -18,6 +18,8 @@ class PaypalStandardPlugin {
     @BeanProperty var id: Long = _
 
     @BeanProperty var accountEmail: String = _
+
+    def backofffice = "backoffice/plugin/payment/paypal/standard"
 }
 
 trait PaypalStandardPluginDao extends GenericDao[PaypalStandardPlugin, java.lang.Long] {
@@ -26,7 +28,7 @@ trait PaypalStandardPluginDao extends GenericDao[PaypalStandardPlugin, java.lang
 
 @Component
 @Transactional
-class SagepayFormPluginDaoImpl
+class PaypalStandardPluginDaoImpl
   extends GenericDaoImpl[PaypalStandardPlugin, java.lang.Long] with PaypalStandardPluginDao {
     def get = findAll.head
 }

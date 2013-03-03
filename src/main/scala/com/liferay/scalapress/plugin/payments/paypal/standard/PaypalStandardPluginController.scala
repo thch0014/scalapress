@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments.sagepayform
+package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/sagepayform"))
-class SagepayFormPluginController {
+@RequestMapping(Array("backoffice/plugin/payment/paypal/standard"))
+class PaypalStandardPluginController {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var dao: SagepayFormPluginDao = _
+    @Autowired var dao: PaypalStandardPluginDao = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(req: HttpServletRequest,
-             @ModelAttribute("plugin") plugin: SagepayFormPlugin) = "admin/plugin/payment/sagepayform/plugin.vm"
+             @ModelAttribute("plugin") plugin: PaypalStandardPlugin) = "admin/plugin/payment/paypal/standard/plugin.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
-    def save(req: HttpServletRequest, @ModelAttribute("plugin") plugin: SagepayFormPlugin) = {
+    def save(req: HttpServletRequest, @ModelAttribute("plugin") plugin: PaypalStandardPlugin) = {
         dao.save(plugin)
         edit(req, plugin)
     }

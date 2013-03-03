@@ -90,13 +90,22 @@ class CheckoutController {
         val page = ScalaPressPage(theme, sreq)
 
         val deliveryOptions = deliveryOptionDao.findAll().sortBy(_.position)
+        if (deliveryOptions.size == 1) {
 
-        if (errors.hasErrors) {
-            page.body(<div class="alert alert-error">Please choose delivery method</div>)
+            val delivery = deliveryOptions.head
+            basket.deliveryOption = delivery
+            basketDao.save(basket)
+            showConfirmation(req)
+
+        } else {
+
+            if (errors.hasErrors) {
+                page.body(<div class="alert alert-error">Please choose delivery method</div>)
+            }
+
+            page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(basket, deliveryOptions, errors))
+            page
         }
-
-        page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(basket, deliveryOptions, errors))
-        page
     }
 
     @ResponseBody
@@ -130,9 +139,8 @@ class CheckoutController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page
-          .body(CheckoutConfirmationRenderer
-          .renderConfirmationPage(sreq.basket, sagepayFormPlugin, shoppingPlugin, domain))
+        page.body(
+            CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, sagepayFormPlugin, shoppingPlugin, domain))
         page
     }
 

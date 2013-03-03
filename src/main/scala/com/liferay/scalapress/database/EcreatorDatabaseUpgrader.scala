@@ -30,6 +30,9 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         val conn = dataSource.getConnection
 
+        execute("ALTER TABLE addresses MODIFY account bigint(10) null")
+        execute("UPDATE addresses SET addresses=null WHERE addresses=0")
+
         execute("ALTER TABLE addresses MODIFY owner bigint(10) null")
         execute("UPDATE addresses SET owner=null WHERE owner=0")
         execute("ALTER TABLE addresses MODIFY country varchar(100) null")
@@ -347,11 +350,9 @@ class EcreatorDatabaseUpgrader extends Logging {
             "videocount",
             "restrictionforwardurl",
             "wikiaccess")) {
-            try {
-                execute("ALTER TABLE categories DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
+
+            execute("ALTER TABLE categories DROP " + column)
+
         }
 
         for (table <- Array("videos",
@@ -525,6 +526,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             "settings_forums",
             "settings_sitemap",
             "settings_sms",
+            "wizards_steps", "wizards",
             "users_sessions",
             "userplane_recorder_recordings",
             "templates_settings",
@@ -584,11 +586,8 @@ class EcreatorDatabaseUpgrader extends Logging {
             "blocks_maps_clickable",
             "blocks_availabilitychart",
             "blocks_calculators")) {
-            try {
-                //        execute("DROP TABLE " + table)
-            } catch {
-                case e: Exception => logger.warn("Unable to drop {}", e.getMessage)
-            }
+            execute("DROP TABLE " + table)
+
         }
 
         conn.close()

@@ -6,6 +6,8 @@ import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
 import plugin.listings.{ListingPackageDao, ListingsPluginDao}
+import plugin.payments.paypal.standard.PaypalStandardPluginDao
+import plugin.payments.sagepayform.SagepayFormPluginDao
 import search.SearchService
 import service.asset.AssetStore
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,6 +19,9 @@ import service.image.ImageService
 /** @author Stephen Samuel */
 @Component
 class ScalapressContext extends ServletContextAware {
+
+    @Autowired var paypalStandardPluginDao: PaypalStandardPluginDao = _
+    @Autowired var sagepayFormPluginDao: SagepayFormPluginDao = _
 
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var installationDao: InstallationDao = _

@@ -10,7 +10,7 @@ import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
 
 /** @author Stephen Samuel */
-class PaypalStandardService extends Logging {
+object PaypalStandardService extends Logging {
 
     val PaymentTypeId = "PaypalStandard"
     val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
@@ -18,7 +18,7 @@ class PaypalStandardService extends Logging {
 
     def paymentUrl: String = Production
 
-    def params(plugin: PaypalStandardPlugin, installation: Installation, basket: Basket): Map[String, String] = {
+    def params(plugin: PaypalStandardPlugin, domain: String, basket: Basket): Map[String, String] = {
 
         val params = scala.collection.mutable.Map[String, String]()
 
@@ -34,7 +34,7 @@ class PaypalStandardService extends Logging {
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
         params += ("notify_url" -> "qweee")
 
-        params += ("item_name" -> ("Order at " + installation.domain))
+        params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")
 
         params += ("invoice" -> UUID.randomUUID().toString)

@@ -25,7 +25,8 @@
                         <li><a href="/backoffice/plugin/search"><i class="icon-search"></i> Search</a></li>
                         <li><a href="/"><i class="icon-folder-open"></i> Folder</a></li>
                         <li><a href="/backoffice/feed"><i class="icon-cloud-upload"></i> Feeds</a></li>
-                        <li><a href="/backoffice/plugin/sagepayform"><i class="icon-credit-card"></i> SagepayForm</a>
+                        <li><a href="/backoffice/plugin/sagepayform"><i class="icon-credit-card"></i> Sagepay Form</a>
+                        <li><a href="/backoffice/plugin/payment/paypal/standard"><i class="icon-credit-card"></i> Paypal Standard</a>
                         <li><a href="/backoffice/plugin/listingpackage"><i class=" icon-th-large"></i> Listing Packages</a>
                         </li>
 
