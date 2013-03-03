@@ -43,7 +43,7 @@
     </div>
 
     <div data-role="footer">
-        <h4>Sat Nav Easy</h4>
+        <h4>$installation.domain</h4>
     </div>
 
     #parse("/mobile/catpanel.vm")
