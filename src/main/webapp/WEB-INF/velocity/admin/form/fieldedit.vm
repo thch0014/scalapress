@@ -39,7 +39,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn" href="/backoffice/form/$form.id">Return</a>
+        <a role="button" class="btn" href="/backoffice/form/$field.form.id">Return</a>
     </div>
 
 </form>
