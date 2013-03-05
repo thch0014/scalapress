@@ -110,7 +110,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/backoffice/form/$folder.id/field/order",
+                    url: "/backoffice/form/$form.id/field/order",
                     contentType: "text/plain",
                     data: order.join('-')
                 });
