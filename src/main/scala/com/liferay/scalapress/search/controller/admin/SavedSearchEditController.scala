@@ -51,7 +51,7 @@ class SavedSearchEditController
         }
 
         savedSearchDao.save(search)
-        edit(search)
+        "redirect:/backoffice/savedsearch/" + search.id
     }
 
     @ModelAttribute("search") def search(@PathVariable("id") id: Long) = savedSearchDao.find(id)

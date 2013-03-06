@@ -92,7 +92,6 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 
         objectDao.save(form.o)
         searchService.index(form.o)
-        searchService.index(form.o)
         "redirect:/backoffice/obj/" + form.o.id
     }
 

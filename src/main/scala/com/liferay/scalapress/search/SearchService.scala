@@ -49,6 +49,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     val settings = ImmutableSettings.settingsBuilder()
       .put("node.http.enabled", false)
+      .put("http.enabled", false)
       //  .put("index.gateway.type", "none")
       //    .put("gateway.type", "none")
       //   .put("index.store.type", "memory")
@@ -108,7 +109,6 @@ class ElasticSearchService extends SearchService with Logging {
 
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-          .addField("objid")
           .addField("name")
           .setQuery(new PrefixQueryBuilder("name", q))
           .setFrom(0)
@@ -131,9 +131,9 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.trim.length > 0)
           .foreach(_.split(",").foreach(n => buffer.append("name:" + n)))
 
-        Option(search.keywords)
-          .filter(_.trim.length > 0)
-          .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
+        //      Option(search.keywords)
+        //      .filter(_.trim.length > 0)
+        //    .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
@@ -153,7 +153,6 @@ class ElasticSearchService extends SearchService with Logging {
 
             case 0 =>
                 client.prepareSearch(INDEX)
-                  .addField("objid")
                   .addField("name")
                   .setFrom(0)
                   .setSize(limit)
@@ -167,7 +166,6 @@ class ElasticSearchService extends SearchService with Logging {
                 val req = client.prepareSearch(INDEX)
                   .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                   .setQuery(query)
-                  .addField("objid")
                   .addField("name")
                   .setFrom(0)
                   .setSize(limit)
@@ -193,7 +191,6 @@ class ElasticSearchService extends SearchService with Logging {
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
-          .addField("objid")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -214,7 +211,6 @@ class ElasticSearchService extends SearchService with Logging {
         val search = client.prepareSearch(INDEX)
           .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
           .addField("name")
-          .addField("objid")
           .addField("folders")
           .addField("status")
           .addField("labels")
@@ -233,9 +229,7 @@ class ElasticSearchService extends SearchService with Logging {
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
-          .field("objid", obj.id)
           .field("name", obj.name)
-          .field("content", obj.content)
           .field("status", obj.status)
           .field("labels", obj.labels)
           .field("hasImage", hasImage.toString)

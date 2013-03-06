@@ -4,7 +4,7 @@ import folder.{NestedFoldersTag, FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
 import user.{LogoutTag, UserStatusTag}
-import com.liferay.scalapress.plugin.account.tag.{UsernameTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
+import com.liferay.scalapress.plugin.account.tag.{AccountLinkTag, UsernameTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
 import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLinkTag}
@@ -105,6 +105,7 @@ object TagMappings {
         "account_status" -> UserStatusTag,
         "account_name" -> UsernameTag,
         "account_username" -> UsernameTag,
+        "account" -> AccountLinkTag,
         "member_status" -> UserStatusTag,
         "boxes" -> WidgetsTag,
         "widgets" -> WidgetsTag,

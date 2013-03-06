@@ -17,8 +17,7 @@ object UsernameTag extends ScalapressTag with TagBuilder {
     }
 }
 
-// shows the account name or a login/register tag depending on status
-object AccountTag extends ScalapressTag with TagBuilder {
+object AccountLinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         None
     }
