@@ -24,7 +24,7 @@ class SearchFormSection extends Section {
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = Option(searchForm) match {
         case None => Some("<!--no search form set-->")
         case Some(form) =>
-            val rendered = SearchFormRenderer.render(form)
+            val rendered = SearchFormRenderer.render(form, this)
             Some(rendered)
     }
 

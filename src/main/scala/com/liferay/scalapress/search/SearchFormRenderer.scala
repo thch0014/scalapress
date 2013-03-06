@@ -1,5 +1,6 @@
 package com.liferay.scalapress.search
 
+import section.SearchFormSection
 import xml.Elem
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.SearchFieldType
@@ -8,7 +9,7 @@ import com.liferay.scalapress.enums.AttributeType
 /** @author Stephen Samuel */
 object SearchFormRenderer {
 
-    def render(form: SearchForm): String = {
+    def render(form: SearchForm, section: SearchFormSection): String = {
         val fields = renderFields(form.fields.asScala.toSeq)
         val submit = Option(form.submitLabel).getOrElse("Submit")
         val objectType = Option(form.objectType)
@@ -16,7 +17,9 @@ object SearchFormRenderer {
           .map(id => <input type="hidden" value={id.toString} name="type"/>).orNull
 
         <form method="GET" action="/search">
-            <input type="hidden" name="searchForm" value={form.id.toString}/>{objectType}{fields}<button type="submit">
+            <input type="hidden" name="sectionId" value={section
+          .id
+          .toString}/>{objectType}{fields}<button type="submit">
             {submit}
         </button>
         </form>.toString()
