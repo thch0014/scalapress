@@ -25,7 +25,7 @@ class ListingController {
     def start = "redirect:/listing/package"
 
     @ResponseBody
-    @RequestMapping(value = Array("package"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(value = Array("package"), produces = Array("text/html"))
     def showPackages(@ModelAttribute("process") process: ListingProcess,
                      errors: Errors,
                      req: HttpServletRequest): ScalaPressPage = {
@@ -41,29 +41,79 @@ class ListingController {
         page
     }
 
-    @ResponseBody
-    @RequestMapping(value = Array("package/{id}"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("package/{id}"))
     def selectPackage(@ModelAttribute("process") process: ListingProcess,
                       errors: Errors,
                       @PathVariable("id") id: Long,
                       req: HttpServletRequest): String = {
+
         process.listingPackage = listingPackageDao.find(id)
         listingProcessDao.save(process)
-        "redirect:/listing/category"
+        "redirect:/listing/folder"
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("category"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def showCategories(@ModelAttribute("process") process: ListingProcess,
-                       errors: Errors,
-                       req: HttpServletRequest): ScalaPressPage = {
+    @RequestMapping(value = Array("folder"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showFolders(@ModelAttribute("process") process: ListingProcess,
+                    errors: Errors,
+                    req: HttpServletRequest) = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Category")
+        val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectCategory))
+        val folders = context.folderDao.tree
+
+        page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
+        page.body(ListingFoldersRenderer.render(process, folders))
         page
+    }
+
+    @RequestMapping(value = Array("folder"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    def selectFolders(@ModelAttribute("process") process: ListingProcess,
+                      errors: Errors,
+                      req: HttpServletRequest): String = {
+
+        process.folders = req.getParameterValues("folderId").map(_.toLong)
+        listingProcessDao.save(process)
+        "redirect:/listing/detail"
+    }
+
+    @ResponseBody
+    @RequestMapping(value = Array("detail"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showDetail(@ModelAttribute("process") process: ListingProcess,
+                   errors: Errors,
+                   req: HttpServletRequest) = {
+
+        val sreq = ScalapressRequest(req, context).withTitle("Listing - Details")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        page.body(ListingWizardRenderer.render(ListingWizardRenderer.ListingDetails))
+        page.body(ListingDetailsRenderer.render(process))
+        page
+    }
+
+    @ResponseBody
+    @RequestMapping(value = Array("image"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showImageForm(@ModelAttribute("process") process: ListingProcess,
+                      errors: Errors,
+                      req: HttpServletRequest): ScalaPressPage = {
+
+        val sreq = ScalapressRequest(req, context).withTitle("Listing - Upload Images")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        page.body(ListingWizardRenderer.render(ListingWizardRenderer.UploadImages))
+        page.body(ListingImagesRenderer.render(process))
+        page
+    }
+
+    @RequestMapping(value = Array("image"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    def uploadImages(@ModelAttribute("process") process: ListingProcess,
+                     errors: Errors,
+                     req: HttpServletRequest): String = {
+        "redirect:/listing/detail"
     }
 
     // -- population methods --

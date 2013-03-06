@@ -6,14 +6,16 @@ import com.liferay.scalapress.service.{WizardRenderer, WizardStep}
 object ListingWizardRenderer {
 
     val ChoosePackage = 1
-    val SelectCategory = 2
+    val SelectFolder = 2
     val ListingDetails = 3
-    val Payment = 4
-    val Completed = 5
+    val UploadImages = 4
+    val Payment = 5
+    val Completed = 6
 
     def steps = List(WizardStep("/listing/package", "Package"),
-        WizardStep("/listing/category", "Categories"),
+        WizardStep("/listing/folder", "Folders"),
         WizardStep("/listing/detail", "Details"),
+        WizardStep("/listing/image", "Images"),
         WizardStep("/listing/payment", "Payment"),
         WizardStep("#", "Completed"))
 

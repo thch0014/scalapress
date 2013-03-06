@@ -23,7 +23,7 @@ class Attribute {
 
     @ManyToOne
     @JoinColumn(name = "itemType", nullable = true)
-    @Index(name="objecttype_index")
+    @Index(name = "objecttype_index")
     @BeanProperty var objectType: ObjectType = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL))
@@ -53,6 +53,8 @@ class Attribute {
     @Column(name = "displayable", nullable = false)
     @BeanProperty var public: Boolean = _
 
+    @BeanProperty var placeholder: String = _
+
     @Column(name = "editable")
     @BeanProperty var userEditable: Boolean = _
 
@@ -64,6 +66,7 @@ class Attribute {
     @BeanProperty var position: Int = _
 
     @BeanProperty var prefix: String = _
+
     @BeanProperty var suffix: String = _
 
 }

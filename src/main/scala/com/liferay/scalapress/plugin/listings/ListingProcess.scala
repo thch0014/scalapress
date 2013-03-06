@@ -13,4 +13,8 @@ class ListingProcess {
 
     @ManyToOne
     @BeanProperty var listingPackage: ListingPackage = _
+
+    @BeanProperty var folders: Array[Long] = Array()
+
+    @BeanProperty var title: String = _
 }

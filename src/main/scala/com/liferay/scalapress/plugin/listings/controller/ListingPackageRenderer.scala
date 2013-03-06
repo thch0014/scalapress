@@ -6,7 +6,7 @@ import com.liferay.scalapress.plugin.listings.ListingPackage
 object ListingPackageRenderer {
 
     def render(packages: Seq[ListingPackage]) = {
-        <div id="listing-packages">
+        <div id="listing-process-packages">
             {_renderPackages(packages)}
         </div>
     }

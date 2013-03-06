@@ -5,12 +5,15 @@ import org.springframework.web.bind.annotation.{PathVariable, RequestMethod, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao}
+import com.liferay.scalapress.controller.ObjectTypePopulator
+import com.liferay.scalapress.dao.TypeDao
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/listingpackage/{id}"))
-class ListingPackageEditController {
+class ListingPackageEditController extends ObjectTypePopulator {
 
+    @Autowired var objectTypeDao: TypeDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var context: ScalapressContext = _
 
