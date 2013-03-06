@@ -275,6 +275,37 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
+
+        for (column <- Array("categorynames",
+            "pendingimagecount",
+            "inactivemessage",
+            "branch",
+            "buyerfor",
+            "pricebreaks",
+            "awaitingmoderation",
+            "suggestions",
+            "shortname",
+            "ourcostprice",
+            "lastmessageauthor",
+            "lastmessagedate",
+            "balance",
+            "awaitingvalidation",
+            "smscredits",
+            "videocount",
+            "approvedreviewscount",
+            "imageaddedtime",
+            "imageupdatetimestamp",
+            "imagecount",
+            "openrangeproductid",
+            "discountapplied")) {
+            try {
+                execute("ALTER TABLE items DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
+
         for (column <- Array("padding",
             "labelprefix",
             "searchcontrol", "width", "height", "autosubmit")) {

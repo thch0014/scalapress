@@ -3,8 +3,6 @@ package com.liferay.scalapress.plugin.listings
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
-import com.liferay.scalapress.plugin.ecommerce.domain.Basket
-import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
 
 /** @author Stephen Samuel */
 trait ListingPackageDao extends GenericDao[ListingPackage, java.lang.Long]

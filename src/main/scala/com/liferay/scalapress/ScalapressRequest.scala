@@ -44,6 +44,8 @@ case class ScalapressRequest(request: HttpServletRequest,
     def hasErrors = !errors.isEmpty
     def hasError(key: String) = errors.contains(key)
 
+    def sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).toString
+
     def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
     def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))
     def withFolder(f: Folder): ScalapressRequest = copy(folder = Option(f))

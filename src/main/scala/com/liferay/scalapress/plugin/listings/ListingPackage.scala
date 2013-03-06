@@ -1,9 +1,9 @@
 package com.liferay.scalapress.plugin.listings
 
-import javax.persistence.{ManyToMany, JoinColumn, CollectionTable, Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
+import javax.persistence.{Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.{Folder, ObjectType}
-import java.util
+import com.liferay.scalapress.domain.ObjectType
+import collection.mutable.ArrayBuffer
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,6 +22,8 @@ class ListingPackage {
 
     @BeanProperty var maxImages: Int = _
 
+    @BeanProperty var description: String = _
+
     @BeanProperty var maxCharacters: Int = _
 
     @BeanProperty var labels: String = _
@@ -33,11 +35,30 @@ class ListingPackage {
 
     @BeanProperty var duration: Int = _
 
-    @ManyToMany
-    @CollectionTable(
-        name = "listings_packages_categories",
-        joinColumns = Array(new JoinColumn(name = "listingpackage"))
-    )
-    @Column(name = "category")
-    @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
+    @BeanProperty var folders: String = _
+
+    def priceText = {
+        val buffer = new ArrayBuffer[String]
+        buffer.append(fee match {
+            case 0 => "Free"
+            case _ => "£" + fee
+        })
+        if (duration > 0)
+            buffer.append(duration match {
+                case x if x == 365 => "for 1 year"
+                case x if x == 30 => "for 1 month"
+                case x if (x % 30 == 0) => "for " + duration / 30 + " months"
+                case x => "for " + x + " days"
+            })
+        buffer.mkString(" ")
+    }
+
+    //
+    //    @ManyToMany
+    //    @CollectionTable(
+    //        name = "listings_packages_categories",
+    //        joinColumns = Array(new JoinColumn(name = "listingpackage"))
+    //    )
+    //    @Column(name = "category")
+    //    @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
 }

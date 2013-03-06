@@ -13,9 +13,17 @@ object ListingPackageRenderer {
 
     private def _renderPackages(packages: Seq[ListingPackage]) = {
         packages.map(pck => {
-            <div class="package">
+            <div class="listing-package">
                 <div class="name">
-                    {pck.name} {pck.fee}
+                    <a href={"/listing/package/" + pck.id.toString}>
+                        {pck.name}
+                    </a>
+                </div>
+                <div class="desc">
+                    {pck.description}
+                </div>
+                <div class="cost">
+                    {pck.priceText}
                 </div>
             </div>
         })

@@ -1,15 +1,15 @@
 package com.liferay.scalapress.plugin.listings.controller
 
-import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.stereotype.Controller
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import org.springframework.validation.Errors
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.{ListingProcess, ListingProcessDao, ListingPackageDao}
+import org.springframework.validation.Errors
 
 /** @author Stephen Samuel */
 @Controller
@@ -26,9 +26,9 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("package"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showPackages(req: HttpServletRequest,
-                     @ModelAttribute("process") process: ListingProcess,
-                     errors: Errors): ScalaPressPage = {
+    def showPackages(@ModelAttribute("process") process: ListingProcess,
+                     errors: Errors,
+                     req: HttpServletRequest): ScalaPressPage = {
 
         val packages = listingPackageDao.findAll()
 
@@ -42,11 +42,14 @@ class ListingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("package"), method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def submitPackage(@ModelAttribute("process") process: ListingProcess,
+    @RequestMapping(value = Array("package/{id}"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    def selectPackage(@ModelAttribute("process") process: ListingProcess,
                       errors: Errors,
-                      req: HttpServletRequest): ScalaPressPage = {
-        showCategories(process, errors, req)
+                      @PathVariable("id") id: Long,
+                      req: HttpServletRequest): String = {
+        process.listingPackage = listingPackageDao.find(id)
+        listingProcessDao.save(process)
+        "redirect:/listing/category"
     }
 
     @ResponseBody
@@ -63,7 +66,16 @@ class ListingController {
         page
     }
 
+    // -- population methods --
     @ModelAttribute("process") def process(req: HttpServletRequest) = {
-        new ListingProcess
+        val sessionId = ScalapressRequest(req, context).sessionId
+        Option(listingProcessDao.find(sessionId)) match {
+            case None =>
+                val process = new ListingProcess()
+                process.sessionId = sessionId
+                listingProcessDao.save(process)
+                process
+            case Some(process) => process
+        }
     }
 }

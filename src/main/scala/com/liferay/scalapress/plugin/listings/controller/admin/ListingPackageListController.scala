@@ -23,7 +23,8 @@ class ListingPackageListController {
     def create = {
         val p = new ListingPackage
         p.name = "new listing package"
-        "redirect:/backoffice/plugin/listing"
+        listingPackageDao.save(p)
+        "redirect:/backoffice/plugin/listingpackage"
     }
 
     @ModelAttribute("packages") def users = listingPackageDao.findAll().asJava
