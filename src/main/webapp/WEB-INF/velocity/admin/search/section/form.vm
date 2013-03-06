@@ -30,6 +30,14 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">No results text</label>
+
+        <div class="controls">
+            #springFormTextarea("section.noResultsText", "class='input-xlarge'")
+        </div>
+    </div>
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
         <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>

@@ -15,12 +15,14 @@ class SearchFormSection extends Section {
     @JoinColumn(name = "search_form")
     @BeanProperty var searchForm: SearchForm = _
 
+    @BeanProperty var noResultsText: String = _
+
     def desc: String = "Search form"
 
     override def backoffice: String = "/backoffice/search/section/form/" + id
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = Option(searchForm) match {
-        case None => None
+        case None => Some("<!--no search form set-->")
         case Some(form) =>
             val rendered = SearchFormRenderer.render(form)
             Some(rendered)

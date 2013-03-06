@@ -14,6 +14,8 @@ import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.domain.attr.Attribute
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{PagingRenderer, SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
+import com.liferay.scalapress.section.PluginDao
+import com.liferay.scalapress.search.section.SearchFormSection
 
 /** @author Stephen Samuel */
 
@@ -30,12 +32,16 @@ class SearchController extends Logging {
     @Autowired var themeService: ThemeService = _
     @Autowired var context: ScalapressContext = _
     @Autowired var searchPluginDao: SearchPluginDao = _
+    @Autowired var pluginDao: PluginDao = _
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
+               @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
+
+        val plugin = searchPluginDao.get
 
         val attributeValues = req.getParameterMap.asScala
           .filter(arg => arg._1.toString.startsWith("attr_"))
@@ -63,14 +69,20 @@ class SearchController extends Logging {
 
         // val objects = objectDao.search(new Search(classOf[Obj]).addFilterIn("id", ids.toSeq.asJava))
 
-        val plugin = searchPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
         if (objects.size == 0) {
+
+            val noResults = Option(sectionId).map(_.toLong)
+              .flatMap(id => Option(pluginDao.find(id)))
+              .flatMap(section => Option(section.asInstanceOf[SearchFormSection].noResultsText))
+              .getOrElse(plugin.noResultsText)
+
+
             page.body("<!-- search results: no objects found -->")
-            page.body(plugin.noResultsText)
+            page.body(noResults)
 
         } else {
             page.body("<!-- search results: " + objects.size + " objects found -->")

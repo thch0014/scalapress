@@ -16,7 +16,7 @@ object SearchFormRenderer {
           .map(id => <input type="hidden" value={id.toString} name="type"/>).orNull
 
         <form method="GET" action="/search">
-            {objectType}{fields}<button type="submit">
+            <input type="hidden" name="searchForm" value={form.id.toString}/>{objectType}{fields}<button type="submit">
             {submit}
         </button>
         </form>.toString()
