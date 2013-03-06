@@ -174,7 +174,7 @@ object CheckoutConfirmationRenderer {
     }
 
     private def renderPaymentForm(basket: Basket, context: ScalapressContext, domain: String) = {
-        if (domain.contains("satnav"))
+        if (domain.contains("satnav") || domain.contains("globalgps"))
             _renderSagepayForm(basket, context.sagepayFormPluginDao.get, domain)
         else
             _renderPaypalForm(basket, context.paypalStandardPluginDao.get, domain)
