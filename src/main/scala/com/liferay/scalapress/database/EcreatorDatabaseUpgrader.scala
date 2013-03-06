@@ -317,6 +317,22 @@ class EcreatorDatabaseUpgrader extends Logging {
         }
 
 
+        for (column <- Array("subscriber",
+            "smsregistration",
+            "booking",
+            "bookingsession",
+            "review",
+            "registrationsession",
+            "order",
+            "basket")) {
+            try {
+                execute("ALTER TABLE attributes_values DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
+
 
         for (column <- Array("style",
             "appletbackgroundcolor",

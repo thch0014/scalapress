@@ -12,6 +12,7 @@ import com.liferay.scalapress.plugin.listings.{ListingProcess, ListingProcessDao
 import org.springframework.validation.Errors
 import com.liferay.scalapress.domain.attr.AttributeValue
 import scala.collection.JavaConverters._
+import java.net.URL
 
 /** @author Stephen Samuel */
 @Controller
@@ -145,7 +146,7 @@ class ListingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("image"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showPayment(@ModelAttribute("process") process: ListingProcess,
                     errors: Errors,
                     req: HttpServletRequest): ScalaPressPage = {
@@ -154,7 +155,12 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
+        val host = new URL(req.getRequestURL.toString).getHost
+        val port = new URL(req.getRequestURL.toString).getPort
+        val domain = if (port == 8080) host + ":8080" else host
+
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.Payment))
+        page.body(ListingPaymentRenderer.renderPaypalForm(process, context.paypalStandardPluginDao.get, domain))
         page
     }
 
