@@ -11,7 +11,9 @@ object ListingDetailsRenderer {
 
     def render(process: ListingProcess) =
         <div id="listing-process-details">
-            {_title(process)}{_attributes(process)}
+            <form method="POST">
+                {_title(process)}{_attributes(process)}<button type="submit">Continue</button>
+            </form>
         </div>
 
     def _title(process: ListingProcess) =
@@ -34,7 +36,7 @@ object ListingDetailsRenderer {
                 {Unparsed(attr.name)}
             </label>
             <div class="controls">
-                <select name={"attr_" + attr.id} placeholder="Title">
+                <select name={"attributeValue_" + attr.id} placeholder="Title">
                     {_options(attr)}
                 </select>
             </div>
@@ -46,7 +48,7 @@ object ListingDetailsRenderer {
                 {Unparsed(attr.name)}
             </label>
             <div class="controls">
-                <input type="text" name={"attr_" + attr.id} placeholder={attr.placeholder} class={size}/>
+                <input type="text" name={"attributeValue_" + attr.id} placeholder={attr.placeholder} class={size}/>
             </div>
         </div>
 
@@ -57,7 +59,7 @@ object ListingDetailsRenderer {
             </label>
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name={"attr_" + attr.id}/>
+                    <input type="checkbox" name={"attributeValue_" + attr.id}/>
                 </label>
             </div>
         </div>

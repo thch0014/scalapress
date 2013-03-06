@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.{ListingProcess, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
+import com.liferay.scalapress.domain.attr.AttributeValue
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -69,19 +71,19 @@ class ListingController {
         page
     }
 
-    @RequestMapping(value = Array("folder"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("folder"), method = Array(RequestMethod.POST))
     def selectFolders(@ModelAttribute("process") process: ListingProcess,
                       errors: Errors,
                       req: HttpServletRequest): String = {
 
         process.folders = req.getParameterValues("folderId").map(_.toLong)
         listingProcessDao.save(process)
-        "redirect:/listing/detail"
+        "redirect:/listing/field"
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("detail"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showDetail(@ModelAttribute("process") process: ListingProcess,
+    @RequestMapping(value = Array("field"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showFields(@ModelAttribute("process") process: ListingProcess,
                    errors: Errors,
                    req: HttpServletRequest) = {
 
@@ -89,9 +91,35 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.ListingDetails))
+        page.body(ListingWizardRenderer.render(ListingWizardRenderer.ListingFields))
         page.body(ListingDetailsRenderer.render(process))
         page
+    }
+
+    @RequestMapping(value = Array("field"), method = Array(RequestMethod.POST))
+    def submitFields(@ModelAttribute("process") process: ListingProcess,
+                     errors: Errors,
+                     req: HttpServletRequest): String = {
+
+        process.title = req.getParameter("title")
+
+        process.attributeValues.clear()
+        for (a <- process.listingPackage.objectType.attributes.asScala) {
+
+            val values = req.getParameterValues("attributeValue_" + a.id)
+            if (values != null) {
+                values.map(_.trim).filter(_.length > 0).foreach(value => {
+                    val av = new AttributeValue
+                    av.attribute = a
+                    av.value = value
+                    av.listingProcess = process
+                    process.attributeValues.add(av)
+                })
+            }
+        }
+
+        listingProcessDao.save(process)
+        "redirect:/listing/image"
     }
 
     @ResponseBody
@@ -109,11 +137,25 @@ class ListingController {
         page
     }
 
-    @RequestMapping(value = Array("image"), method = Array(RequestMethod.POST), produces = Array("text/html"))
+    @RequestMapping(value = Array("image"), method = Array(RequestMethod.POST))
     def uploadImages(@ModelAttribute("process") process: ListingProcess,
                      errors: Errors,
                      req: HttpServletRequest): String = {
-        "redirect:/listing/detail"
+        "redirect:/listing/payment"
+    }
+
+    @ResponseBody
+    @RequestMapping(value = Array("image"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    def showPayment(@ModelAttribute("process") process: ListingProcess,
+                    errors: Errors,
+                    req: HttpServletRequest): ScalaPressPage = {
+
+        val sreq = ScalapressRequest(req, context).withTitle("Listing - Payment")
+        val theme = themeService.default
+        val page = ScalaPressPage(theme, sreq)
+
+        page.body(ListingWizardRenderer.render(ListingWizardRenderer.Payment))
+        page
     }
 
     // -- population methods --

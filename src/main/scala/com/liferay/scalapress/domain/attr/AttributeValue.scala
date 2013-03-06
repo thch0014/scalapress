@@ -6,6 +6,7 @@ import reflect.BeanProperty
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations.{Index, BatchSize}
+import com.liferay.scalapress.plugin.listings.ListingProcess
 
 /** @author Stephen Samuel */
 @Entity
@@ -16,23 +17,29 @@ class AttributeValue {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
-    @Index(name="attribute_index")
+    @Index(name = "attribute_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attribute", nullable = true)
     @BatchSize(size = 50)
     @BeanProperty var attribute: Attribute = _
 
-    @Index(name="object_index")
+    @Index(name = "object_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item", nullable = true)
     @BatchSize(size = 20)
     @BeanProperty var obj: Obj = _
 
-    @Index(name="search_index")
+    @Index(name = "search_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "search", nullable = true)
     @BatchSize(size = 20)
     @BeanProperty var savedSearch: SavedSearch = _
+
+    @Index(name = "lp_index")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "listing_process", nullable = true)
+    @BatchSize(size = 20)
+    @BeanProperty var listingProcess: ListingProcess = _
 
     @BeanProperty var value: String = _
 }

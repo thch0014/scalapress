@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
 import dao.settings.InstallationDao
-import dao.{AttributeDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
+import dao.{AttributeValueDao, AttributeDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{PaymentDao, BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
@@ -45,6 +45,7 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var markupDao: MarkupDao = _
     @Autowired var submissionDao: SubmissionDao = _
     @Autowired var formDao: FormDao = _
+    @Autowired var attributeValueDao: AttributeValueDao = _
 
     var servletContext: ServletContext = _
     def setServletContext(servletContext: ServletContext) {
