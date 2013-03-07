@@ -12,5 +12,7 @@ public enum Sort {
     PriceHigh,
 
     // sort all objects randomly
-    Random
+    Random,
+
+    Attribute
 }

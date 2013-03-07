@@ -39,7 +39,7 @@ object SearchFormRenderer {
     }
 
     private def renderPresetAttributeField(field: SearchFormField) = {
-        val name = "attr_" + Option(field.attribute).map(_.id).getOrElse("")
+        val name = "attr_" + Option(field.attribute).map(_.id).getOrElse("~")
             <input type="hidden" name={name} value={field.value}/>
     }
 

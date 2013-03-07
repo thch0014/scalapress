@@ -64,20 +64,24 @@ class ListingController {
                     errors: Errors,
                     req: HttpServletRequest) = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
-        val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        Option(process.listingPackage) match {
+            case None =>
+                val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
+                val theme = themeService.default
+                val page = ScalaPressPage(theme, sreq)
 
-        val folders = Option(process.listingPackage.folders)
-          .filter(_.trim.length > 0)
-          .map(_.split(","))
-          .getOrElse(Array[String]())
-        val tree = context.folderDao.tree
-        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
+                val folders = Option(process.listingPackage.folders)
+                  .filter(_.trim.length > 0)
+                  .map(_.split(","))
+                  .getOrElse(Array[String]())
+                val tree = context.folderDao.tree
+                val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
-        page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
-        page
+                page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
+                page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
+                page
+            case Some(lp) => showPackages(process, errors, req)
+        }
     }
 
     @RequestMapping(value = Array("folder"), method = Array(RequestMethod.POST))

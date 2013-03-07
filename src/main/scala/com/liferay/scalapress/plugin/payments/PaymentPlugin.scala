@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 abstract class PaymentPlugin {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @BeanProperty var id: Long = _
 
     @BeanProperty var enabled: Boolean = _
