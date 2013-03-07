@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings
 
-import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.domain.{Image, Obj}
 import com.liferay.scalapress.domain.attr.AttributeValue
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
@@ -45,6 +45,13 @@ class ListingProcess2ObjectBuilder(context: ScalapressContext) {
             val folder = context.folderDao.find(folderId)
             folder.objects.add(obj)
             obj.folders.add(folder)
+        })
+
+        process.imageKeys.foreach(key => {
+            val img = new Image
+            img.filename = key
+            img.obj = obj
+            obj.images.add(img)
         })
 
         context.objectDao.save(obj)
