@@ -12,7 +12,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
         <div id="listing-process-nopaymentrequired">
             <form method="POST" action="/listing/payment/success">
                 <button type="submit" class="btn btn-primary">
-                    Complete Listing
+                    Complete
                 </button>
             </form>
         </div>
@@ -65,8 +65,10 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
         links.map(link => <img src={link}/>)
     }
 
-    private def _attributes(process: ListingProcess) =
-        process.attributeValues.asScala.map(av =>
+    private def _attributes(process: ListingProcess) = {
+        val values = process.attributeValues.asScala.toSeq
+        val sorted = values.sortBy(_.attribute.position)
+        sorted.map(av =>
             <tr>
                 <td>
                     {Unparsed(av.attribute.name)}
@@ -75,4 +77,6 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
                     {Unparsed(av.value)}
                 </td>
             </tr>)
+
+    }
 }
