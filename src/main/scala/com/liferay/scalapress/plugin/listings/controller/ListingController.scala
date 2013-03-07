@@ -41,7 +41,7 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-       // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
+        // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
         page.body(ListingPackageRenderer.render(packages))
         page
     }
@@ -67,8 +67,12 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        val folders = context.folderDao.tree
-        val filtered = folders.filter(f => process.listingPackage.folders.split(",").contains(f.id.toString))
+        val folders = Option(process.listingPackage.folders)
+          .filter(_.trim.length > 0)
+          .map(_.split(","))
+          .getOrElse(Array[String]())
+        val tree = context.folderDao.tree
+        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.toString))
 
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
         page.body(ListingFoldersRenderer.render(process, filtered))
