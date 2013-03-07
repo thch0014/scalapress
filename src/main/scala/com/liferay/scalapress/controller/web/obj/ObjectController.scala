@@ -8,7 +8,6 @@ import com.liferay.scalapress.dao.{ObjectDao, FolderDao}
 import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.controller.NotFoundException
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
-import scala.collection.JavaConverters._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.controller.web.folder.SecurityFuncs
@@ -39,7 +38,7 @@ class ObjectController extends Logging {
     @RequestMapping(produces = Array("text/html"))
     def view(@ModelAttribute obj: Obj, req: HttpServletRequest) = {
 
-        if (obj.status.toLowerCase == "DELETED" || obj.status.toLowerCase == "DISABLED")
+        if (obj.status.toLowerCase == "deleted" || obj.status.toLowerCase == "disabled")
             throw new IllegalStateException()
 
         if (obj.objectType.name.toLowerCase.startsWith("account"))
