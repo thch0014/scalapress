@@ -72,7 +72,7 @@ class ListingController {
           .map(_.split(","))
           .getOrElse(Array[String]())
         val tree = context.folderDao.tree
-        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.toString))
+        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
 
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
         page.body(ListingFoldersRenderer.render(process, filtered))
@@ -189,7 +189,7 @@ class ListingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
     def paymentSuccess(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
@@ -209,7 +209,7 @@ class ListingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+    @RequestMapping(value = Array("payment/failure"), produces = Array("text/html"))
     def paymentFailure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Payment Not Completed")

@@ -7,7 +7,11 @@ import com.liferay.scalapress.domain.Folder
 object ListingFoldersRenderer {
 
     def render(process: ListingProcess, folders: Array[Folder]) = {
-        val selects = (1 to process.listingPackage.maxFolders).map(arg => _select(folders))
+        val max = process.listingPackage.maxFolders match {
+            case 0 => 1
+            case x: Int => x
+        }
+        val selects = (1 to max).map(arg => _select(folders))
         <div id="listing-process-folders">
             <form method="POST">
                 {selects}<button type="submit">Continue</button>
