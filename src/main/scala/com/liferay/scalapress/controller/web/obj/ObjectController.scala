@@ -39,10 +39,10 @@ class ObjectController extends Logging {
     def view(@ModelAttribute obj: Obj, req: HttpServletRequest) = {
 
         if (obj.status.toLowerCase == "deleted" || obj.status.toLowerCase == "disabled")
-            throw new IllegalStateException()
+            throw new NotFoundException()
 
         if (obj.objectType.name.toLowerCase.startsWith("account"))
-            throw new IllegalStateException()
+            throw new NotFoundException()
 
         val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
         val theme = themeService.theme(obj)
