@@ -26,6 +26,8 @@ class ListingPackage {
 
     @BeanProperty var maxCharacters: Int = _
 
+    @BeanProperty var deleted: Boolean = _
+
     @BeanProperty var labels: String = _
 
     @Column(length = 10000)

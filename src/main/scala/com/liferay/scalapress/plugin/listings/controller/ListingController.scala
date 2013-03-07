@@ -36,7 +36,7 @@ class ListingController {
                      errors: Errors,
                      req: HttpServletRequest): ScalaPressPage = {
 
-        val packages = listingPackageDao.findAll()
+        val packages = listingPackageDao.findAll().filterNot(_.deleted)
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Choose Package")
         val theme = themeService.default
