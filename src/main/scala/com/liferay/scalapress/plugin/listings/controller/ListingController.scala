@@ -198,8 +198,8 @@ class ListingController {
         val builder = new ListingProcess2ObjectBuilder(context)
         val obj = builder.build(process)
 
-        val message = "<p>Your listing is now completed. It will show on the site shortly. " +
-          "Once the listing is live then you will be able to view it on the following url:\n" +
+        val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>" +
+          "<p>Once the listing is visble then you will be able to view it on the following url:<br/>" +
           FriendlyUrlGenerator.friendlyLink(obj) + "</p>"
 
         val theme = themeService.default
