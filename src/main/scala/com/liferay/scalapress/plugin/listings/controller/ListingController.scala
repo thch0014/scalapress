@@ -8,7 +8,7 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.listings.{ListingProcess2ObjectBuilder, ListingProcess, ListingProcessDao, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess2ObjectBuilder, ListingProcess, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
 import com.liferay.scalapress.domain.attr.AttributeValue
 import java.net.URL
@@ -23,6 +23,7 @@ class ListingController {
 
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
+    @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
 
@@ -42,7 +43,7 @@ class ListingController {
         val page = ScalaPressPage(theme, sreq)
 
         // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
-        page.body(ListingPackageRenderer.render(packages))
+        page.body(ListingPackageRenderer.render(packages, listingsPluginDao.get))
         page
     }
 
@@ -75,7 +76,7 @@ class ListingController {
         val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
 
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
-        page.body(ListingFoldersRenderer.render(process, filtered))
+        page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
         page
     }
 
@@ -84,7 +85,7 @@ class ListingController {
                       errors: Errors,
                       req: HttpServletRequest): String = {
 
-        process.folders = req.getParameterValues("folderId").map(_.toLong)
+        process.folders = req.getParameterValues("folderId").filter(arg => arg.trim.length > 0).map(_.toLong)
         listingProcessDao.save(process)
         "redirect:/listing/field"
     }
@@ -142,7 +143,7 @@ class ListingController {
         val page = ScalaPressPage(theme, sreq)
 
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.UploadImages))
-        page.body(ListingImagesRenderer.render(process))
+        page.body(ListingImagesRenderer.render(process, listingsPluginDao.get))
         page
     }
 

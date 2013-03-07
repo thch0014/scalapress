@@ -10,7 +10,7 @@ import com.liferay.scalapress.dao.TypeDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/listingpackage/{id}"))
+@RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
 class ListingPackageEditController extends ObjectTypePopulator {
 
     @Autowired var objectTypeDao: TypeDao = _
@@ -18,12 +18,12 @@ class ListingPackageEditController extends ObjectTypePopulator {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("package") p: ListingPackage) = "admin/plugin/listingpackage/edit.vm"
+    def edit(@ModelAttribute("package") p: ListingPackage) = "admin/plugin/listings/package/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("package") p: ListingPackage) = {
         listingPackageDao.save(p)
-        "redirect:/backoffice/plugin/listingpackage/" + p.id
+        "redirect:/backoffice/plugin/listings/package/" + p.id
     }
 
     @ModelAttribute("package") def pck(@PathVariable("id") id: Long) = listingPackageDao.find(id)

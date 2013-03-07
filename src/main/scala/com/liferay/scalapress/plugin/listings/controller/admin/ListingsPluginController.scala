@@ -7,7 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.plugin.listings.{ListingPackageDao, ListingsPlugin}
+import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao, ListingsPlugin}
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,6 +18,8 @@ class ListingsPluginController {
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _
 
+    import scala.collection.JavaConverters._
+
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
     def edit(req: HttpServletRequest) = "admin/plugin/listings/plugin.vm"
 
@@ -27,5 +29,14 @@ class ListingsPluginController {
         edit(req)
     }
 
+    @RequestMapping(value = Array("package/create"))
+    def create = {
+        val p = new ListingPackage
+        p.name = "new listing package"
+        listingPackageDao.save(p)
+        "redirect:/backoffice/plugin/listings"
+    }
+
     @ModelAttribute("plugin") def plugin = context.listingsPluginDao.get
+    @ModelAttribute("packages") def users = listingPackageDao.findAll().asJava
 }

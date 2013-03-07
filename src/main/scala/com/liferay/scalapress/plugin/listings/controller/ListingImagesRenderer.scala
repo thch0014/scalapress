@@ -1,14 +1,14 @@
 package com.liferay.scalapress.plugin.listings.controller
 
-import com.liferay.scalapress.plugin.listings.ListingProcess
+import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingProcess}
 
 /** @author Stephen Samuel */
 object ListingImagesRenderer {
-    def render(process: ListingProcess) =
+    def render(process: ListingProcess, plugin: ListingsPlugin) =
         <div id="listing-process-images">
-            <form method="POST" enctype="multipart/form-data">
-                {_upload}<button type="submit">Continue</button>
-            </form>
+            {plugin.imagesPageText}<form method="POST" enctype="multipart/form-data">
+            {_upload}<button type="submit" class="btn btn-primary">Continue</button>
+        </form>
         </div>
 
     private def _upload =

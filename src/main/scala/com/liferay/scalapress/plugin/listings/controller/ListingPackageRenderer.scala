@@ -1,13 +1,13 @@
 package com.liferay.scalapress.plugin.listings.controller
 
-import com.liferay.scalapress.plugin.listings.ListingPackage
+import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingPackage}
 
 /** @author Stephen Samuel */
 object ListingPackageRenderer {
 
-    def render(packages: Seq[ListingPackage]) = {
+    def render(packages: Seq[ListingPackage], plugin: ListingsPlugin) = {
         <div id="listing-process-packages">
-            {_renderPackages(packages)}
+            {plugin.packagesPageText}{_renderPackages(packages)}
         </div>
     }
 

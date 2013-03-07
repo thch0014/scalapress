@@ -12,7 +12,8 @@ object ListingFieldsRenderer {
     def render(process: ListingProcess) =
         <div id="listing-process-details">
             <form method="POST">
-                {_title(process)}{_email(process)}{_content(process)}{_attributes(process)}<button type="submit">Continue</button>
+                <legend>Details</legend>{_title(process)}{_email(process)}<legend>Main Content</legend>{_content(process)}<legend>Specific Details</legend>{_attributes(
+                process)}<button type="submit" class="btn btn-primary">Continue</button>
             </form>
         </div>
 
