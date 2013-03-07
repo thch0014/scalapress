@@ -66,6 +66,8 @@ class ListingController {
 
         Option(process.listingPackage) match {
             case None =>
+                showPackages(process, errors, req)
+            case Some(lp) =>
                 val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
                 val theme = themeService.default
                 val page = ScalaPressPage(theme, sreq)
@@ -80,7 +82,7 @@ class ListingController {
                 page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
                 page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
                 page
-            case Some(lp) => showPackages(process, errors, req)
+
         }
     }
 

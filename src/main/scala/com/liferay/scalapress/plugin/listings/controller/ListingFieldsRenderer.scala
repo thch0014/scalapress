@@ -84,6 +84,9 @@ object ListingFieldsRenderer {
 
     def _attributes(process: ListingProcess) = {
 
+        if (process.listingPackage.objectType == null)
+            throw new RuntimeException("Object Type is not set on the listing package")
+
         val attributes = process.listingPackage.objectType.attributes.asScala.toSeq
         val sorted = attributes.sortBy(_.position)
         sorted.map(attr => {

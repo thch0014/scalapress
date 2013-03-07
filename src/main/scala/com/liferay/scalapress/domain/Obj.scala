@@ -21,8 +21,7 @@ class Obj {
     @Index(name = "name_index")
     @BeanProperty var name: String = _
 
-    @Column(nullable = true, columnDefinition = "expiry bigint(20) null")
-    @BeanProperty var expiry: Long = _
+    @BeanProperty var expiry: Long = 0
 
     @BeanProperty var email: String = _
 
