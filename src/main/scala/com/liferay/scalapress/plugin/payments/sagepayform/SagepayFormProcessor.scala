@@ -8,7 +8,7 @@ import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProce
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with Logging {
+class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcessor with Logging {
 
     val PaymentTypeId = "SagePayForm"
     val PaymentTypePayment = "PAYMENT"
@@ -27,7 +27,7 @@ object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with
         result
     }
 
-    private def decryptParams(plugin: SagepayFormPlugin, base64: String): Map[String, String] = {
+    private def decryptParams(base64: String): Map[String, String] = {
 
         val encrypted = Base64.decodeBase64(base64.getBytes)
         val x = xor(encrypted, plugin.sagePayEncryptionPassword)
@@ -36,7 +36,7 @@ object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with
         params
     }
 
-    private def encryptParams(plugin: SagepayFormPlugin, params: Map[String, String]): String = {
+    private def encryptParams(params: Map[String, String]): String = {
         val data = params.map(e => e._1 + "=" + e._2).mkString("&")
         val x = xor(data.getBytes, plugin.sagePayEncryptionPassword)
         val base64 = Base64.encodeBase64(x)
@@ -44,9 +44,9 @@ object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with
     }
 
     // returns the four params needed by sagepay
-    def params(plugin: SagepayFormPlugin, domain: String, requiresPayment: RequiresPayment): Map[String, String] = {
+    def params(domain: String, requiresPayment: RequiresPayment): Map[String, String] = {
 
-        val crypt = encryptParams(plugin, _cryptParams(plugin, requiresPayment, domain))
+        val crypt = encryptParams(_cryptParams(requiresPayment, domain))
 
         val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
@@ -111,11 +111,11 @@ object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with
         sb.toString()
     }
 
-    def callback(params: Map[String, String], plugin: SagepayFormPlugin): Option[Payment] = {
+    def callback(params: Map[String, String]): Option[Payment] = {
         logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
-        val p = decryptParams(plugin, crypt)
+        val p = decryptParams(crypt)
         logger.debug("Sagepay params {}", p)
 
         val status = p.get("Status").getOrElse("NoStatus")
@@ -134,8 +134,7 @@ object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with
     private def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    private def _cryptParams(plugin: SagepayFormPlugin,
-                             requiresPayment: RequiresPayment,
+    private def _cryptParams(requiresPayment: RequiresPayment,
                              domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]

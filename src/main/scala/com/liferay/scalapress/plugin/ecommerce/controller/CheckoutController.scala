@@ -9,10 +9,10 @@ import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.{OrderEmailService, OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
-import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Address}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
-import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPluginDao}
+import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
 import java.net.URL
 import scala.collection.JavaConverters._
 
@@ -157,17 +157,15 @@ class CheckoutController {
         sreq.basket.empty()
         basketDao.save(sreq.basket)
 
-        SagepayFormProcessor
-          .callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap, sagepayFormPlugin) match {
-
-            case Some(payment) =>
-
-                payment.order = order.id
-                order.payments.add(payment)
-                orderDao.save(order)
-
-            case None =>
-        }
+        context.paymentPluginDao.enabled.foreach(plugin => {
+            plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
+                case Some(payment) =>
+                    payment.order = order.id
+                    order.payments.add(payment)
+                    orderDao.save(order)
+                case None =>
+            }
+        })
 
         val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
         orderEmailService.email(recipients, order, context.installationDao.get)

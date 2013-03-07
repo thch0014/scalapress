@@ -9,5 +9,6 @@ public enum SearchFieldType {
     Attribute,
     Categories,
     Location,
-    Distance
+    Distance,
+    Towns
 }

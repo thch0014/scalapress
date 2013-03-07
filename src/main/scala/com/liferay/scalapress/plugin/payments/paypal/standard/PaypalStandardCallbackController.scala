@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,12 +17,12 @@ class PaypalStandardCallbackController {
     @ResponseBody
     @RequestMapping
     def calback(req: HttpServletRequest, resp: HttpServletResponse) {
-        val params = req.getParameterMap.asScala.asInstanceOf[Map[String, String]]
-        PaypalStandardProcessor.callback(params, dao.get) match {
-            case None =>
-            case Some(payment) =>
-                context.paymentDao.save(payment)
-        }
-        resp.setStatus(204)
+        //        val params = req.getParameterMap.asScala.asInstanceOf[Map[String, String]]
+        //        PaypalStandardProcessor.callback(params, dao.get) match {
+        //            case None =>
+        //            case Some(payment) =>
+        //                context.paymentDao.save(payment)
+        //        }
+        //        resp.setStatus(204)
     }
 }

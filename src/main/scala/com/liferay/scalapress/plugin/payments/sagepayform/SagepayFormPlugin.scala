@@ -1,25 +1,25 @@
 package com.liferay.scalapress.plugin.payments.sagepayform
 
-import javax.persistence.{Entity, Table, GenerationType, GeneratedValue, Id}
+import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
+import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, PaymentPlugin}
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "plugins_sagepay")
-class SagepayFormPlugin {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+class SagepayFormPlugin extends PaymentPlugin {
 
     @BeanProperty var sagePayVendorName: String = _
     @BeanProperty var sagePayEncryptionPassword: String = _
     @BeanProperty var sagePayVendorEmail: String = _
+
+    def name: String = "Sagepay Form"
+    def processor: FormPaymentProcessor = new SagepayFormProcessor(this)
 }
 
 trait SagepayFormPluginDao extends GenericDao[SagepayFormPlugin, java.lang.Long] {

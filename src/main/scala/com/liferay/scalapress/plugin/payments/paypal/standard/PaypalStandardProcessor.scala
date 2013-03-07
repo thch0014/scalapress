@@ -10,7 +10,8 @@ import org.apache.http.util.EntityUtils
 import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProcessor}
 
 /** @author Stephen Samuel */
-object PaypalStandardProcessor extends FormPaymentProcessor[PaypalStandardPlugin] with Logging {
+class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
+  extends FormPaymentProcessor with Logging {
 
     val PaymentTypeId = "PaypalStandard"
     val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
@@ -18,7 +19,7 @@ object PaypalStandardProcessor extends FormPaymentProcessor[PaypalStandardPlugin
 
     def paymentUrl: String = Production
 
-    def params(plugin: PaypalStandardPlugin, domain: String, basket: RequiresPayment): Map[String, String] = {
+    def params(domain: String, basket: RequiresPayment): Map[String, String] = {
 
         val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
@@ -65,10 +66,10 @@ object PaypalStandardProcessor extends FormPaymentProcessor[PaypalStandardPlugin
         payment
     }
 
-    def callback(params: Map[String, String], plugin: PaypalStandardPlugin): Option[Payment] = {
+    def callback(params: Map[String, String]): Option[Payment] = {
         logger.debug("**Paypal Callback** {}", params)
 
-        _isPaymentCompleted(params, plugin) match {
+        _isPaymentCompleted(params) match {
             case false =>
                 logger.debug("IPN callback not valid")
                 None
@@ -97,7 +98,7 @@ object PaypalStandardProcessor extends FormPaymentProcessor[PaypalStandardPlugin
         "VERIFIED".equalsIgnoreCase(string)
     }
 
-    private def _isPaymentCompleted(params: Map[String, String], plugin: PaypalStandardPlugin): Boolean = {
+    private def _isPaymentCompleted(params: Map[String, String]): Boolean = {
         // check the callback was genuine from paypal
         _isGenuineCallback(params) &&
           // determines whether the transaction is complete

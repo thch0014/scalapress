@@ -1,9 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
 import com.liferay.scalapress.plugin.ecommerce.domain.{BasketRequiresPaymentWrapper, Address, BasketLine, Basket}
-import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardProcessor, PaypalStandardPlugin}
 import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
@@ -16,7 +14,7 @@ object CheckoutConfirmationRenderer {
         val wizard = CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage)
         val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
 
-        val payments = renderPaymentForm(basket, context, domain)
+        val payments = renderPaymentForms(basket, context, domain)
 
         val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket
           .deliveryAddress) + "<br/><br/></div>"
@@ -172,53 +170,37 @@ object CheckoutConfirmationRenderer {
         </table>
     }
 
-    private def renderPaymentForm(basket: Basket, context: ScalapressContext, domain: String) = {
-        if (domain.contains("satnav") || domain.contains("globalgps"))
-            _renderSagepayForm(basket, context.sagepayFormPluginDao.get, domain)
-        else
-            _renderPaypalForm(basket, context.paypalStandardPluginDao.get, domain)
-    }
+    def renderPaymentForms(basket: Basket, context: ScalapressContext, domain: String) = {
 
-    private def _renderPaypalForm(basket: Basket, plugin: PaypalStandardPlugin, domain: String) = {
+        val forms = context.paymentPluginDao.enabled.map(plugin => {
 
-        val params = PaypalStandardProcessor.params(plugin, domain, new BasketRequiresPaymentWrapper(basket))
-        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
+            val buttonText = "Pay with " + plugin.name
+            val params = plugin.processor.params(domain, new BasketRequiresPaymentWrapper(basket))
 
-        <div id="paypal-standard-form">
-            <legend>
-                Confirm and Pay
-            </legend>
-            <form method="POST" action={PaypalStandardProcessor.Production}>
-                {paramInputs}<br/> <button type="submit" class="btn btn-primary">
-                Proceed to Payment
+            <form method="POST" action={plugin.processor.paymentUrl}>
+                {params}<button type="submit" class="btn btn-primary">
+                {buttonText}
             </button>
             </form>
-        </div>
-    }
 
-    private def _renderSagepayForm(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
+        })
 
-        val params = SagepayFormProcessor.params(plugin, domain, new BasketRequiresPaymentWrapper(basket))
         val termsError = ""
-        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
-        <div id="sagepay-form">
+        <div id="payment-forms">
             <legend>
                 Confirm and Pay
             </legend>
-            <form method="POST" action={SagepayFormProcessor.LiveUrl}>
-                {paramInputs}<label class="checkbox">
+            <label class="checkbox">
                 <input type="checkbox" name="termsAccepted"/>
                 Accept
-                <a href="#termsModal" data-toggle="modal">Terms and Conditions</a>
+                <a href="#termsModal" data-toggle="modal">
+                    Terms and Conditions
+                </a>
             </label>{termsError}<label class="checkbox">
-                <input type="checkbox" name="newsletterOptin"/>
-                Please send me details of your special offers. You can opt out at any time.
-            </label>
-                <br/> <button type="submit" class="btn btn-primary">
-                Proceed to Payment
-            </button>
-            </form>
+            <input type="checkbox" name="newsletterOptin"/>
+            Please send me details of your special offers. You can opt out at any time.
+        </label>{forms}
         </div>
     }
 }

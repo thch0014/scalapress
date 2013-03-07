@@ -1,7 +1,7 @@
 package com.liferay.scalapress.search.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import javax.persistence.{JoinColumn, ManyToOne, Table, Entity}
+import javax.persistence.{Column, JoinColumn, ManyToOne, Table, Entity}
 import reflect.BeanProperty
 import com.liferay.scalapress.search.{SearchFormRenderer, SearchForm}
 import com.liferay.scalapress.section.Section
@@ -15,6 +15,7 @@ class SearchFormSection extends Section {
     @JoinColumn(name = "search_form")
     @BeanProperty var searchForm: SearchForm = _
 
+    @Column(name = "no_results_text", length = 10000)
     @BeanProperty var noResultsText: String = _
 
     def desc: String = "Search form"

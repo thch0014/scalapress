@@ -1,25 +1,30 @@
 package com.liferay.scalapress.plugin.listings.controller
 
-import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardProcessor, PaypalStandardPlugin}
-import com.liferay.scalapress.plugin.listings.{ListingProcess}
+import com.liferay.scalapress.plugin.listings.ListingProcess
+import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 object ListingPaymentRenderer {
 
-    def renderPaypalForm(process: ListingProcess, plugin: PaypalStandardPlugin, domain: String) = {
+    def renderPaypalForm(process: ListingProcess, context: ScalapressContext, domain: String) = {
 
-        val params = PaypalStandardProcessor.params(plugin, domain, new ListingProcessPaymentWrapper(process))
-        val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
+        val forms = context.paymentPluginDao.enabled.map(plugin => {
+
+            val buttonText = "Pay with " + plugin.name
+            val params = plugin.processor.params(domain, new ListingProcessPaymentWrapper(process))
+
+            <form method="POST" action={plugin.processor.paymentUrl}>
+                {params}<button type="submit" class="btn btn-primary">
+                {buttonText}
+            </button>
+            </form>
+
+        })
 
         <div id="listing-process-payment">
             <legend>
-                Payment
-            </legend>
-            <form method="POST" action={PaypalStandardProcessor.Production}>
-                {paramInputs}<br/> <button type="submit" class="btn btn-primary">
-                Proceed to Payment
-            </button>
-            </form>
+                Listing Payment
+            </legend>{forms}
         </div>
     }
 }

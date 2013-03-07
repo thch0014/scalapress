@@ -5,12 +5,21 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
+        <label class="control-label">Enabled</label>
+
+        <div class="controls">
+            #springFormInput("plugin.enabled")
+        </div>
+    </div>
+
+    <div class="control-group">
         <label class="control-label">Account Email</label>
 
         <div class="controls">
             #springFormInput("plugin.accountEmail")
         </div>
     </div>
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn">Cancel</button>

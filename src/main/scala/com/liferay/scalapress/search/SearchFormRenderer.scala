@@ -1,7 +1,7 @@
 package com.liferay.scalapress.search
 
 import section.SearchFormSection
-import xml.Elem
+import xml.{Unparsed, Elem}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.enums.AttributeType
@@ -39,15 +39,14 @@ object SearchFormRenderer {
     }
 
     private def renderPresetAttributeField(field: SearchFormField) = {
-        val name = "attr_" + field.attribute.id
-        val value = field.value
-            <input type="hidden" name={name} value={value}/>
+        val name = "attr_" + Option(field.attribute).map(_.id).getOrElse("")
+            <input type="hidden" name={name} value={field.value}/>
     }
 
     private def renderAttributeField(field: SearchFormField): Elem =
         Option(field.attribute).flatMap(attr => Option(attr.attributeType)) match {
             case Some(AttributeType.Selection) => renderSelectionAttribute(field)
-            case _ => renderTextField(field)
+            case _ => renderTextAttribute(field)
         }
 
     private def renderSelectionAttribute(field: SearchFormField): Elem = {
@@ -60,7 +59,7 @@ object SearchFormRenderer {
 
         <div>
             <label>
-                {field.name}
+                {Unparsed(field.name)}
             </label>
             <select type="text" name={name}>
                 <option value=" ">
@@ -74,7 +73,7 @@ object SearchFormRenderer {
         val name = "attr_" + field.attribute.id
         <div>
             <label>
-                {field.name}
+                {Unparsed(field.name)}
             </label>
             <input type="text" name={name}/>
         </div>
@@ -83,7 +82,7 @@ object SearchFormRenderer {
     private def renderTextField(field: SearchFormField): Elem =
         <div>
             <label>
-                {field.name}
+                {Unparsed(field.name)}
             </label>
             <input type="text" name={field.id.toString}/>
         </div>
