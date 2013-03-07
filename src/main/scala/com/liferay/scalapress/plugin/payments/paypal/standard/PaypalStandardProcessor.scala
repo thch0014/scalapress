@@ -1,15 +1,16 @@
 package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import java.util.UUID
-import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
+import com.liferay.scalapress.plugin.ecommerce.domain.Payment
 import com.liferay.scalapress.Logging
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
+import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProcessor}
 
 /** @author Stephen Samuel */
-object PaypalStandardService extends Logging {
+object PaypalStandardProcessor extends FormPaymentProcessor[PaypalStandardPlugin] with Logging {
 
     val PaymentTypeId = "PaypalStandard"
     val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
@@ -17,7 +18,7 @@ object PaypalStandardService extends Logging {
 
     def paymentUrl: String = Production
 
-    def params(plugin: PaypalStandardPlugin, domain: String, basket: Basket): Map[String, String] = {
+    def params(plugin: PaypalStandardPlugin, domain: String, basket: RequiresPayment): Map[String, String] = {
 
         val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
@@ -28,8 +29,8 @@ object PaypalStandardService extends Logging {
         // Your PayPal ID or an email address associated with your PayPal account. Email addresses must be confirmed.
         params += ("business" -> plugin.accountEmail)
 
-        params += ("cancel_return" -> (url + "/checkout/payment/failure"))
-        params += ("return" -> (url + "/checkout/payment/success"))
+        params += ("cancel_return" -> (url + basket.failureUrl))
+        params += ("return" -> (url + basket.successUrl))
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
         params += ("notify_url" -> (url + "/plugin/payment/paypal/standard/callback"))
@@ -38,7 +39,7 @@ object PaypalStandardService extends Logging {
         params += ("quantity" -> "1")
 
         params += ("invoice" -> UUID.randomUUID().toString)
-        params += ("custom" -> basket.sessionId)
+        params += ("custom" -> basket.uniqueIdent)
 
         params += ("no_note" -> "1")
 
@@ -53,7 +54,7 @@ object PaypalStandardService extends Logging {
         params.toMap
     }
 
-    def createPayment(params: Map[String, String]): Payment = {
+    private def _createPayment(params: Map[String, String]): Payment = {
         logger.debug("Creating payment [{}]", params)
 
         val payment = new Payment
@@ -67,18 +68,18 @@ object PaypalStandardService extends Logging {
     def callback(params: Map[String, String], plugin: PaypalStandardPlugin): Option[Payment] = {
         logger.debug("**Paypal Callback** {}", params)
 
-        paymentCompleted(params, plugin) match {
+        _isPaymentCompleted(params, plugin) match {
             case false =>
                 logger.debug("IPN callback not valid")
                 None
             case true =>
                 logger.debug("IPN callback is valid")
-                val payment = createPayment(params)
+                val payment = _createPayment(params)
                 Option(payment)
         }
     }
 
-    def genuineCallback(params: Map[String, String]): Boolean = {
+    private def _isGenuineCallback(params: Map[String, String]): Boolean = {
 
         val queryParams = new BasicHttpParams()
         queryParams.setParameter("cmd", "_notify-validate")
@@ -96,9 +97,9 @@ object PaypalStandardService extends Logging {
         "VERIFIED".equalsIgnoreCase(string)
     }
 
-    def paymentCompleted(params: Map[String, String], plugin: PaypalStandardPlugin): Boolean = {
+    private def _isPaymentCompleted(params: Map[String, String], plugin: PaypalStandardPlugin): Boolean = {
         // check the callback was genuine from paypal
-        genuineCallback(params) &&
+        _isGenuineCallback(params) &&
           // determines whether the transaction is complete
           "COMPLETED".equalsIgnoreCase(params("payment_status")) &&
           // Check email address to make sure that this is not a spoof

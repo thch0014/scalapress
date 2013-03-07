@@ -1,10 +1,9 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{Address, BasketLine, Basket}
-import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPlugin}
+import com.liferay.scalapress.plugin.ecommerce.domain.{BasketRequiresPaymentWrapper, Address, BasketLine, Basket}
+import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.plugin.ecommerce.ShoppingPlugin
-import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardService, PaypalStandardPlugin}
+import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardProcessor, PaypalStandardPlugin}
 import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
@@ -182,14 +181,14 @@ object CheckoutConfirmationRenderer {
 
     private def _renderPaypalForm(basket: Basket, plugin: PaypalStandardPlugin, domain: String) = {
 
-        val params = PaypalStandardService.params(plugin, domain, basket)
+        val params = PaypalStandardProcessor.params(plugin, domain, new BasketRequiresPaymentWrapper(basket))
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
         <div id="paypal-standard-form">
             <legend>
                 Confirm and Pay
             </legend>
-            <form method="POST" action={PaypalStandardService.Production}>
+            <form method="POST" action={PaypalStandardProcessor.Production}>
                 {paramInputs}<br/> <button type="submit" class="btn btn-primary">
                 Proceed to Payment
             </button>
@@ -199,7 +198,7 @@ object CheckoutConfirmationRenderer {
 
     private def _renderSagepayForm(basket: Basket, plugin: SagepayFormPlugin, domain: String) = {
 
-        val params = SagepayFormService.params(basket, plugin, domain)
+        val params = SagepayFormProcessor.params(plugin, domain, new BasketRequiresPaymentWrapper(basket))
         val termsError = ""
         val paramInputs = params.map(e => <input type="hidden" name={e._1} value={e._2}/>)
 
@@ -207,7 +206,7 @@ object CheckoutConfirmationRenderer {
             <legend>
                 Confirm and Pay
             </legend>
-            <form method="POST" action={SagepayFormService.LiveUrl}>
+            <form method="POST" action={SagepayFormProcessor.LiveUrl}>
                 {paramInputs}<label class="checkbox">
                 <input type="checkbox" name="termsAccepted"/>
                 Accept

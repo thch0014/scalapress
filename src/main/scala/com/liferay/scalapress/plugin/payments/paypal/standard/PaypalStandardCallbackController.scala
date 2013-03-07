@@ -19,7 +19,7 @@ class PaypalStandardCallbackController {
     @RequestMapping
     def calback(req: HttpServletRequest, resp: HttpServletResponse) {
         val params = req.getParameterMap.asScala.asInstanceOf[Map[String, String]]
-        PaypalStandardService.callback(params, dao.get) match {
+        PaypalStandardProcessor.callback(params, dao.get) match {
             case None =>
             case Some(payment) =>
                 context.paymentDao.save(payment)

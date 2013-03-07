@@ -232,6 +232,9 @@ class EcreatorDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
+        execute("ALTER TABLE items MODIFY account bigint(10) null")
+        execute("UPDATE items SET account=null WHERE account=0")
+
         execute("ALTER TABLE categories_boxes MODIFY root bigint(10) null")
         execute("UPDATE categories_boxes SET root=null WHERE root=0")
 
@@ -285,15 +288,46 @@ class EcreatorDatabaseUpgrader extends Logging {
             "awaitingmoderation",
             "suggestions",
             "shortname",
+            "feedsrc",
+            "agreement",
             "ourcostprice",
+            "postcount",
+            "searchcount",
             "lastmessageauthor",
+            "endofline",
+            "priceband",
+            "resetcode",
+            "displayname",
+            "mobilephone",
+            "listingpaymentdone",
+            "showoptionslist",
+            "bogof",
+            "referrer",
+            "feedcount",
             "lastmessagedate",
+            "bogofitem",
+            "bogofitem",
+            "zebraean",
+            "attachmentcount",
+            "messagecount",
+            "lastactive",
+            "categorycached",
+            "categoryname",
+            "categoryids",
+            "categoryfullname",
+            "categorycount",
+            "confirmationcode",
+            "costprice",
+            "optioncount",
+            "accessorycount",
+            "contentstripped",
             "balance",
             "awaitingvalidation",
             "smscredits",
             "videocount",
             "approvedreviewscount",
             "imageaddedtime",
+            "owner",
             "imageupdatetimestamp",
             "imagecount",
             "openrangeproductid",
@@ -322,8 +356,11 @@ class EcreatorDatabaseUpgrader extends Logging {
             "booking",
             "bookingsession",
             "review",
+            "promotion",
             "registrationsession",
             "order",
+            "listingsession",
+            "category",
             "basket")) {
             try {
                 execute("ALTER TABLE attributes_values DROP " + column)

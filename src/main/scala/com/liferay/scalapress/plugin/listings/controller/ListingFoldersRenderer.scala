@@ -9,7 +9,7 @@ object ListingFoldersRenderer {
     def render(process: ListingProcess, folders: Array[Folder]) = {
         val selects = (1 to process.listingPackage.maxFolders).map(arg => _select(folders))
         <div id="listing-process-folders">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST">
                 {selects}<button type="submit">Continue</button>
             </form>
         </div>
@@ -18,7 +18,7 @@ object ListingFoldersRenderer {
     private def _select(folders: Array[Folder]) =
         <div class="listing-folder-selection">
             <select name="folderId">
-                {_options(folders)}
+                <option>None</option>{_options(folders)}
             </select>
         </div>
 

@@ -2,12 +2,13 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.plugin.ecommerce.domain.{Payment, Basket}
-import scala.collection.JavaConverters._
+import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Payment}
 import java.util.UUID
+import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProcessor}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-object SagepayFormService extends Logging {
+object SagepayFormProcessor extends FormPaymentProcessor[SagepayFormPlugin] with Logging {
 
     val PaymentTypeId = "SagePayForm"
     val PaymentTypePayment = "PAYMENT"
@@ -43,21 +44,20 @@ object SagepayFormService extends Logging {
     }
 
     // returns the four params needed by sagepay
-    def params(basket: Basket, plugin: SagepayFormPlugin, domain: String): Map[String, String] = {
+    def params(plugin: SagepayFormPlugin, domain: String, requiresPayment: RequiresPayment): Map[String, String] = {
 
-        val crypt = encryptParams(plugin, cryptParams(plugin, basket, domain))
+        val crypt = encryptParams(plugin, _cryptParams(plugin, requiresPayment, domain))
 
         val params = Map("VPSProtocol" -> VPSProtocol,
             "TxType" -> PaymentTypePayment,
             "Vendor" -> plugin.sagePayVendorName,
-            "Crypt" -> crypt,
-            "_test" -> cryptParams(plugin, basket, domain).toString())
+            "Crypt" -> crypt)
 
         params
     }
 
     // creates a payment object for the given set of response params
-    def createPayment(params: Map[String, String]) = {
+    private def createPayment(params: Map[String, String]) = {
 
         val orderId = params.get("VendorTxCode").getOrElse("0").toLong
         val transactionId = params.get("VPSTxId").orNull
@@ -111,7 +111,7 @@ object SagepayFormService extends Logging {
         sb.toString()
     }
 
-    def processCallback(params: java.util.Map[_, _], plugin: SagepayFormPlugin): Option[Payment] = {
+    def callback(params: Map[String, String], plugin: SagepayFormPlugin): Option[Payment] = {
         logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
@@ -123,7 +123,7 @@ object SagepayFormService extends Logging {
         status.toLowerCase match {
             case "ok" =>
                 val sageTxId = p.get("VPSTxId").getOrElse("NoId")
-                existingTransaction(sageTxId) match {
+                _isExistingTransaction(sageTxId) match {
                     case true => None
                     case false => Some(createPayment(p))
                 }
@@ -131,10 +131,12 @@ object SagepayFormService extends Logging {
         }
     }
 
-    def existingTransaction(sageTxId: String) = false
+    private def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    def cryptParams(plugin: SagepayFormPlugin, basket: Basket, domain: String): Map[String, String] = {
+    private def _cryptParams(plugin: SagepayFormPlugin,
+                             requiresPayment: RequiresPayment,
+                             domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", UUID.randomUUID.toString)
@@ -142,40 +144,44 @@ object SagepayFormService extends Logging {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
-        val amount = "%1.2f".format(basket.total / 100.0)
+        val amount = "%1.2f".format(requiresPayment.total / 100.0)
 
         params.put("Currency", "GBP")
         params.put("Amount", amount)
-        params.put("CustomerName", basket.accountName)
-        params.put("CustomerEmail", basket.accountEmail)
+        params.put("CustomerName", requiresPayment.accountName)
+        params.put("CustomerEmail", requiresPayment.accountEmail)
         params.put("Description", "Order at " + domain)
 
-        params.put("SuccessURL", "http://" + domain + "/checkout/payment/success")
-        params.put("FailureURL", "http://" + domain + "/checkout/payment/failure")
+        params.put("SuccessURL", "http://" + domain + requiresPayment.successUrl)
+        params.put("FailureURL", "http://" + domain + requiresPayment.failureUrl)
 
-        val firstname = basket.deliveryAddress.name.split(" ").last
-        val lastname = basket.deliveryAddress.name.split(" ").head
+        val firstname = requiresPayment.deliveryAddress.name.split(" ").last
+        val lastname = requiresPayment.deliveryAddress.name.split(" ").head
 
         params.put("DeliveryFirstnames", firstname)
         params.put("DeliverySurname", lastname)
-        params.put("DeliveryAddress1", basket.deliveryAddress.address1)
-        params.put("DeliveryCity", basket.deliveryAddress.town)
-        params.put("DeliveryPostCode", basket.deliveryAddress.postcode)
+        params.put("DeliveryAddress1", requiresPayment.deliveryAddress.address1)
+        params.put("DeliveryCity", requiresPayment.deliveryAddress.town)
+        params.put("DeliveryPostCode", requiresPayment.deliveryAddress.postcode)
         params.put("DeliveryCountry", "GB")
 
-        val fn = basket.billingAddress.name.split(" ").last
-        val ln = basket.billingAddress.name.split(" ").head
+        val fn = requiresPayment.billingAddress.name.split(" ").last
+        val ln = requiresPayment.billingAddress.name.split(" ").head
 
         params.put("BillingSurname", fn)
         params.put("BillingFirstnames", ln)
-        params.put("BillingAddress1", basket.billingAddress.address1)
-        params.put("BillingCity", basket.billingAddress.town)
-        params.put("BillingPostCode", basket.billingAddress.postcode)
+        params.put("BillingAddress1", requiresPayment.billingAddress.address1)
+        params.put("BillingCity", requiresPayment.billingAddress.town)
+        params.put("BillingPostCode", requiresPayment.billingAddress.postcode)
         params.put("BillingCountry", "GB")
 
-        params.put("Basket", sageBasketString(basket))
+        if (requiresPayment.isInstanceOf[Basket])
+            params.put("Basket", sageBasketString(requiresPayment.asInstanceOf[Basket]))
 
         logger.debug("Params [{}]", params)
         params.toMap
     }
+
+    def paymentUrl: String = LiveUrl
+
 }

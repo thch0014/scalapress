@@ -7,16 +7,16 @@ import com.liferay.scalapress.domain.attr.Attribute
 import xml.Unparsed
 
 /** @author Stephen Samuel */
-object ListingDetailsRenderer {
+object ListingFieldsRenderer {
 
     def render(process: ListingProcess) =
         <div id="listing-process-details">
             <form method="POST">
-                {_title(process)}{_attributes(process)}<button type="submit">Continue</button>
+                {_title(process)}{_email(process)}{_content(process)}{_attributes(process)}<button type="submit">Continue</button>
             </form>
         </div>
 
-    def _title(process: ListingProcess) =
+    private def _title(process: ListingProcess) =
         <div>
             <label class="control-label">Title</label>
             <div class="controls">
@@ -24,13 +24,29 @@ object ListingDetailsRenderer {
             </div>
         </div>
 
-    def _options(attr: Attribute) =
+    private def _email(process: ListingProcess) =
+        <div>
+            <label class="control-label">Email</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" name="email" placeholder="Your email" value={process.email}/>
+            </div>
+        </div>
+
+    private def _content(process: ListingProcess) =
+        <div>
+            <label class="control-label">Content</label>
+            <div class="controls">
+                <textarea class="input-block-xlarge" name="content" value={process.content}/>
+            </div>
+        </div>
+
+    private def _options(attr: Attribute) =
         attr.options.asScala.map(opt =>
             <option>
                 {opt.value}
             </option>)
 
-    def _renderSelection(attr: Attribute) =
+    private def _renderSelection(attr: Attribute) =
         <div>
             <label class="control-label">
                 {Unparsed(attr.name)}
@@ -42,13 +58,14 @@ object ListingDetailsRenderer {
             </div>
         </div>
 
-    def _renderText(attr: Attribute, size: String) =
+    def _renderText(attr: Attribute, size: String, value: Option[String]) =
         <div>
             <label class="control-label">
                 {Unparsed(attr.name)}
             </label>
             <div class="controls">
-                <input type="text" name={"attributeValue_" + attr.id} placeholder={attr.placeholder} class={size}/>
+                <input type="text" name={"attributeValue_" + attr.id}
+                       placeholder={attr.placeholder} class={size} value={value.orNull}/>
             </div>
         </div>
 
@@ -65,12 +82,17 @@ object ListingDetailsRenderer {
         </div>
 
     def _attributes(process: ListingProcess) = {
-        process.listingPackage.objectType.attributes.asScala.map(attr => {
+
+        val attributes = process.listingPackage.objectType.attributes.asScala.toSeq
+        val sorted = attributes.sortBy(_.position)
+        sorted.map(attr => {
+
+            val value = process.attributeValues.asScala.find(av => av.attribute.id == attr.id).map(_.value)
             attr.attributeType match {
-                case AttributeType.Postcode | AttributeType.Numerical => _renderText(attr, "input-small")
+                case AttributeType.Postcode | AttributeType.Numerical => _renderText(attr, "input-small", value)
                 case AttributeType.Boolean => _renderYesNo(attr)
                 case AttributeType.Selection => _renderSelection(attr)
-                case _ => _renderText(attr, "input-xlarge")
+                case _ => _renderText(attr, "input-xlarge", value)
             }
         })
     }

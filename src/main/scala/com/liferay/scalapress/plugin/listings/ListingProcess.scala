@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings
 
-import javax.persistence.{OneToMany, CascadeType, FetchType, ManyToOne, Table, Entity, Id}
+import javax.persistence.{Column, OneToMany, CascadeType, FetchType, ManyToOne, Table, Entity, Id}
 import reflect.BeanProperty
 import scala.Array
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
@@ -15,6 +15,11 @@ class ListingProcess {
     @Id
     @BeanProperty var sessionId: String = _
 
+    @Column(length = 10000)
+    @BeanProperty var content: String = _
+
+    @BeanProperty var email: String = _
+
     @ManyToOne
     @BeanProperty var listingPackage: ListingPackage = _
 
@@ -22,7 +27,7 @@ class ListingProcess {
 
     @BeanProperty var title: String = _
 
-    @BeanProperty var imageFilenames: Array[String] = Array()
+    @BeanProperty var imageKeys: Array[String] = Array()
 
     @OneToMany(mappedBy = "listingProcess", fetch = FetchType.LAZY,
         cascade = Array(CascadeType.ALL), orphanRemoval = true)

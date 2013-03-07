@@ -12,8 +12,9 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Address}
 import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
-import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormService, SagepayFormPluginDao}
+import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPluginDao}
 import java.net.URL
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -156,7 +157,8 @@ class CheckoutController {
         sreq.basket.empty()
         basketDao.save(sreq.basket)
 
-        SagepayFormService.processCallback(params, sagepayFormPlugin) match {
+        SagepayFormProcessor
+          .callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap, sagepayFormPlugin) match {
 
             case Some(payment) =>
 

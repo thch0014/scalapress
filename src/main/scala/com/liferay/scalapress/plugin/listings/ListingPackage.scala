@@ -41,7 +41,7 @@ class ListingPackage {
         val buffer = new ArrayBuffer[String]
         buffer.append(fee match {
             case 0 => "Free"
-            case _ => "£" + fee
+            case _ => "£" + "%.2f".format(fee / 100.0)
         })
         if (duration > 0)
             buffer.append(duration match {

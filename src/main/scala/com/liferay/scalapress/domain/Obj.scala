@@ -21,9 +21,16 @@ class Obj {
     @Index(name = "name_index")
     @BeanProperty var name: String = _
 
+    @BeanProperty var expiryDate: Long = _
+
     @BeanProperty var email: String = _
 
     @BeanProperty var labels: String = _
+
+    @Index(name = "owner_index")
+    @ManyToOne
+    @JoinColumn(name = "account")
+    @BeanProperty var account: Obj = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
@@ -68,9 +75,6 @@ class Obj {
     @BeanProperty var dateUpdated: java.lang.Long = _
 
     @BeanProperty var confirmationCode: String = _
-
-    @Column(name = "feedSrc", length = 5000)
-    @BeanProperty var externalURI: String = _
 
     @Column(name = "reference", length = 5000)
     @BeanProperty var exernalReference: String = _
