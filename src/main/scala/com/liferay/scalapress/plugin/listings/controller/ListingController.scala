@@ -41,7 +41,7 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
+       // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
         page.body(ListingPackageRenderer.render(packages))
         page
     }

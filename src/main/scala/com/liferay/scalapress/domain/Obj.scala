@@ -74,8 +74,6 @@ class Obj {
     @BeanProperty var dateCreated: java.lang.Long = _
     @BeanProperty var dateUpdated: java.lang.Long = _
 
-    @BeanProperty var confirmationCode: String = _
-
     @Column(name = "reference", length = 5000)
     @BeanProperty var exernalReference: String = _
 
@@ -87,8 +85,6 @@ class Obj {
 
     @Column(name = "keywords", length = 5000)
     @BeanProperty var keywordsTag: String = _
-
-    @BeanProperty var featured: Boolean = false
 
     @Column(length = 5000)
     @BeanProperty var summary: String = _
@@ -128,17 +124,12 @@ class Obj {
 
     @BeanProperty var orderQtyMin: Int = _
     @BeanProperty var orderQtyMax: Int = _
-    @BeanProperty var orderQtyMultiple: Int = _
     @BeanProperty var backorders: Boolean = _
-    @BeanProperty var stockNotifyLevel: Int = _
 
     // used by account types
     @BeanProperty var passwordHash: String = _
-    @BeanProperty var resetCode: String = _
 
     @BeanProperty var ipAddress: String = _
-
-    @BeanProperty var referrer: String = _
 
     @BeanProperty var permaLink: String = _
 

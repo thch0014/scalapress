@@ -52,16 +52,20 @@ class EcreatorDatabaseUpgrader extends Logging {
             }
         })
 
-        val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
-        while (rs.next) {
-            try {
-                val id = rs.getLong(1)
-                val stmt = conn.prepareStatement("UPDATE items set labels='Featured' where id=" + id)
-                stmt.execute()
-                stmt.close()
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
+        try {
+            val rs = conn.prepareStatement("SELECT id FROM items WHERE featured=1").executeQuery
+            while (rs.next) {
+                try {
+                    val id = rs.getLong(1)
+                    val stmt = conn.prepareStatement("UPDATE items set labels='Featured' where id=" + id)
+                    stmt.execute()
+                    stmt.close()
+                } catch {
+                    case e: Exception => logger.warn(e.getMessage)
+                }
             }
+        } catch {
+            case e: Exception => logger.warn(e.getMessage)
         }
 
         for (col <- Array("item", "category")) {
@@ -306,7 +310,14 @@ class EcreatorDatabaseUpgrader extends Logging {
             "feedcount",
             "lastmessagedate",
             "bogofitem",
-            "bogofitem",
+            "pendingreviewscount",
+            "prioritised",
+            "optiongroup",
+            "orderqtymultiple",
+            "featured",
+            "stocknotifylevel",
+            "friendlyurllocked",
+            "unit",
             "zebraean",
             "attachmentcount",
             "messagecount",
@@ -316,8 +327,6 @@ class EcreatorDatabaseUpgrader extends Logging {
             "categoryids",
             "categoryfullname",
             "categorycount",
-            "confirmationcode",
-            "costprice",
             "optioncount",
             "accessorycount",
             "contentstripped",
@@ -328,6 +337,9 @@ class EcreatorDatabaseUpgrader extends Logging {
             "approvedreviewscount",
             "imageaddedtime",
             "owner",
+            "comments",
+            "ratingaverages", "ratingaverage",
+            "friendlyurl",
             "imageupdatetimestamp",
             "imagecount",
             "openrangeproductid",
