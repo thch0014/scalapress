@@ -333,6 +333,7 @@ class EcreatorDatabaseUpgrader extends Logging {
             "balance",
             "awaitingvalidation",
             "smscredits",
+            "expirydate",
             "videocount",
             "approvedreviewscount",
             "imageaddedtime",
