@@ -10,7 +10,10 @@ import com.liferay.scalapress.enums.AttributeType
 object SearchFormRenderer {
 
     def render(form: SearchForm, section: SearchFormSection): String = {
-        val fields = renderFields(form.fields.asScala.toSeq)
+
+        val fields = form.fields.asScala.toSeq.sortBy(_.position)
+        val renderedFields = renderFields(fields)
+
         val submit = Option(form.submitLabel).getOrElse("Submit")
         val objectType = Option(form.objectType)
           .filter(_ > 0)
@@ -19,7 +22,7 @@ object SearchFormRenderer {
         <form method="GET" action="/search">
             <input type="hidden" name="sectionId" value={section
           .id
-          .toString}/>{objectType}{fields}<button type="submit">
+          .toString}/>{objectType}{renderedFields}<button type="submit">
             {submit}
         </button>
         </form>.toString()

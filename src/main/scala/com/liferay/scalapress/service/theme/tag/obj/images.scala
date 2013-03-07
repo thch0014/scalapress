@@ -19,17 +19,18 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
         obj match {
             case None => None
             case Some(o) =>
-                val rendered = o.images.asScala.take(limit).map(i => {
-
+                val images = o.images.asScala.toSeq
+                val sorted = images.sortBy(_.position)
+                val rendered = sorted.take(limit).map(i => {
                     val src = if (w == 0 || h == 0)
                         context.assetStore.link(i.filename)
                     else
                         context.imageService.imageLink(i.filename, w, h)
 
                     val html = if (w == 0 || h == 0)
-                        <img src={src}/>.toString()
+                            <img src={src}/>.toString()
                     else
-                        <img src={src} height={h.toString} width={w.toString}/>.toString()
+                            <img src={src} height={h.toString} width={w.toString}/>.toString()
 
                     params.get("link") match {
 
@@ -76,7 +77,9 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
         request.obj.map(obj => {
 
             var count = 0
-            val images = obj.images.asScala.map(image => {
+            val images = obj.images.asScala.toSeq
+            val sorted = images.sortBy(_.position)
+            val rendered = obj.images.asScala.map(image => {
 
                 val original = context.assetStore.link(image.filename)
                 val thumb = context.imageService.imageLink(image.filename, width, height)
@@ -89,7 +92,7 @@ object ColorboxTag extends ScalapressTag with TagBuilder {
 
             }).mkString("\n")
 
-            images +
+            rendered +
               """<script>
                  $(document).ready(function() {
                     $(".colorboxgroup").colorbox({ rel: 'colorboxgroup', top: '150px' });
