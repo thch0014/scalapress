@@ -687,6 +687,16 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         }
 
+
+        for (table <- Array("plugins_sagepay", "plugins_paypalstandard")) {
+            try {
+                execute("ALTER TABLE " + table + " modify enabled tinyint(1) not null default 0")
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
+
         conn.close()
     }
 }

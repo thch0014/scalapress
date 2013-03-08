@@ -176,9 +176,10 @@ object CheckoutConfirmationRenderer {
 
             val buttonText = "Pay with " + plugin.name
             val params = plugin.processor.params(domain, new BasketRequiresPaymentWrapper(basket))
+            val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>
-                {params}<button type="submit" class="btn btn-primary">
+                {paramInputs}<button type="submit" class="btn btn-primary">
                 {buttonText}
             </button>
             </form>

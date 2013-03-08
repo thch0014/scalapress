@@ -15,7 +15,6 @@ abstract class PaymentPlugin {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @BeanProperty var id: Long = _
 
-    @Column(name = "enabled")
     @BeanProperty var enabled: Boolean = _
 
     def name: String
