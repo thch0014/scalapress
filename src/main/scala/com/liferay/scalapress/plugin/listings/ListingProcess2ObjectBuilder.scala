@@ -30,7 +30,7 @@ class ListingProcess2ObjectBuilder(context: ScalapressContext) {
         obj.content = process.content
         obj.status = "Disabled"
         obj.account = account
-        obj.expiryDate = new DateMidnight().plusDays(process.listingPackage.duration).getMillis
+        obj.expiry = new DateMidnight().plusDays(process.listingPackage.duration).getMillis
         context.objectDao.save(obj)
 
         process.attributeValues.asScala.foreach(av => {

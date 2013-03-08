@@ -40,13 +40,13 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
                     <td>
                         {_folders(process)}
                     </td>
-                </tr>
+                </tr>{_attributes(process)}<tr>
                 <tr>
                     <td>Content</td>
                     <td>
                         {process.content}
                     </td>
-                </tr>{_attributes(process)}<tr>
+                </tr>
                 <td>Images</td>
                 <td>
                     {_images(process)}
