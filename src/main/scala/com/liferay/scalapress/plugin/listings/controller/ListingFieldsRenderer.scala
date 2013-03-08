@@ -38,7 +38,7 @@ object ListingFieldsRenderer {
 
     private def _title(process: ListingProcess) =
         <div>
-            <label class="control-label">Title</label>
+            <label class="control-label">Title *</label>
             <div class="controls">
                 <input type="text" class="input-xlarge" name="title" placeholder="Title" value={process.title}/>
             </div>
@@ -46,7 +46,7 @@ object ListingFieldsRenderer {
 
     private def _email(process: ListingProcess) =
         <div>
-            <label class="control-label">Email</label>
+            <label class="control-label">Email *</label>
             <div class="controls">
                 <input type="text" class="input-xlarge" name="email" placeholder="Your email" value={process.email}/>
             </div>
@@ -54,7 +54,7 @@ object ListingFieldsRenderer {
 
     private def _content(process: ListingProcess) =
         <div>
-            <label class="control-label">Content</label>
+            <label class="control-label">Content *</label>
             <div class="controls">
                 <textarea class="input-block-level" rows="12" name="content" value={process.content}/>
             </div>

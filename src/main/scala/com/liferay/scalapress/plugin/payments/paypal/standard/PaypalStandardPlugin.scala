@@ -17,7 +17,6 @@ class PaypalStandardPlugin extends PaymentPlugin {
     @BeanProperty var accountEmail: String = _
 
     def backofffice = "backoffice/plugin/payment/paypal/standard"
-
     def name: String = "Paypal Standard"
     def processor: FormPaymentProcessor = new PaypalStandardProcessor(this)
 }

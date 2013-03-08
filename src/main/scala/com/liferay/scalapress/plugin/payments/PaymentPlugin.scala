@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.payments
 
 import reflect.BeanProperty
-import javax.persistence.{InheritanceType, Inheritance, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence.{Column, InheritanceType, Inheritance, Entity, GenerationType, GeneratedValue, Id}
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -15,10 +15,10 @@ abstract class PaymentPlugin {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @BeanProperty var id: Long = _
 
+    @Column(name = "enabled")
     @BeanProperty var enabled: Boolean = _
 
     def name: String
-
     def processor: FormPaymentProcessor
 }
 

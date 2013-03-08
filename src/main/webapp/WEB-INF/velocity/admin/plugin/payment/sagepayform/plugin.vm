@@ -8,7 +8,7 @@
         <label class="control-label">Enabled</label>
 
         <div class="controls">
-            #springFormInput("plugin.enabled")
+            #springFormCheckbox("plugin.enabled")
         </div>
     </div>
 

@@ -2,13 +2,15 @@ package com.liferay.scalapress.plugin.listings.controller
 
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import com.liferay.scalapress.ScalapressContext
+import xml.Elem
 
 /** @author Stephen Samuel */
 object ListingPaymentRenderer {
 
-    def renderPaypalForm(process: ListingProcess, context: ScalapressContext, domain: String) = {
+    def renderPaymentForms(process: ListingProcess, context: ScalapressContext, domain: String): Elem = {
 
-        val forms = context.paymentPluginDao.enabled.map(plugin => {
+        val payments = context.paymentPluginDao.enabled
+        val forms = payments.map(plugin => {
 
             val buttonText = "Pay with " + plugin.name
             val params = plugin.processor.params(domain, new ListingProcessPaymentWrapper(process))

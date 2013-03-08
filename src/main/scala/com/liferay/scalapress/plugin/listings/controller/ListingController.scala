@@ -191,7 +191,7 @@ class ListingController {
         if (process.listingPackage.fee == 0)
             page.body(confRenderer.completeForm(process))
         else
-            page.body(ListingPaymentRenderer.renderPaypalForm(process, context, domain))
+            page.body(ListingPaymentRenderer.renderPaymentForms(process, context, domain))
         page
     }
 
