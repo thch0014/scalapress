@@ -9,6 +9,7 @@ import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.Tag
+import com.liferay.scalapress.plugin.payments.PaymentPlugin
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -34,10 +35,17 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 }
 
 object ComponentClassScanner {
+
+    def paymentPlugins = {
+        val scanner = new ComponentClassScanner
+        scanner.addIncludeFilter(new AssignableTypeFilter(classOf[PaymentPlugin]))
+        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[PaymentPlugin]])
+    }
+
     def sections = {
         val scanner = new ComponentClassScanner
         scanner.addIncludeFilter(new AssignableTypeFilter(classOf[Section]))
-        scanner.getComponentClasses("com.liferay.scalapress")
+        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[Section]])
     }
     def plugins = {
         val scanner = new ComponentClassScanner

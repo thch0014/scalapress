@@ -5,6 +5,9 @@ import javax.persistence.{InheritanceType, Inheritance, Entity, GenerationType, 
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import javax.annotation.PostConstruct
+import com.liferay.scalapress.util.ComponentClassScanner
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,3 +32,22 @@ trait PaymentPluginDao extends GenericDao[PaymentPlugin, java.lang.Long] {
 class PaymentPluginDaoImpl extends GenericDaoImpl[PaymentPlugin, java.lang.Long] with PaymentPluginDao {
     def enabled: Seq[PaymentPlugin] = findAll.filter(p => p.enabled)
 }
+
+@Component
+class PaymentPluginValidator {
+
+    @Autowired var paymentPluginDao: PaymentPluginDao = _
+
+    @PostConstruct
+    def ensurePluginsCreated() {
+        val plugins = paymentPluginDao.findAll()
+        ComponentClassScanner.paymentPlugins.foreach(plugin => {
+            if (plugins.find(
+                arg => arg.getClass.isAssignableFrom(plugin.getClass) ||
+                  plugin.getClass.isAssignableFrom(arg.getClass))
+              .isEmpty)
+                paymentPluginDao.save(plugin.newInstance)
+        })
+    }
+}
+
