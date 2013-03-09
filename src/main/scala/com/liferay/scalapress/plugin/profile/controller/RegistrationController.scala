@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.profile.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.service.theme.ThemeService
-import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import reflect.BeanProperty
@@ -18,6 +18,8 @@ import com.liferay.scalapress.plugin.profile.{RegistrationRenderer, AccountPlugi
 import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder
+import com.liferay.scalapress.controller.RedirectException
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 
 /** @author Stephen Samuel */
 @Controller
@@ -31,6 +33,12 @@ class RegistrationController {
     @Autowired var objectDao: ObjectDao = _
     @Autowired var passwordEncoder: PasswordEncoder = _
     @Autowired var context: ScalapressContext = _
+
+    @ExceptionHandler
+    @ResponseBody
+    def redirect(e: RedirectException, resp: HttpServletResponse) {
+        resp.sendRedirect(e.url)
+    }
 
     //
     // @ResponseBody
@@ -64,6 +72,7 @@ class RegistrationController {
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def submitRegistrationPage(req: HttpServletRequest,
+                               resp: HttpServletResponse,
                                @Valid @ModelAttribute("form") form: RegistrationForm,
                                errors: Errors): ScalaPressPage = {
 
@@ -71,10 +80,10 @@ class RegistrationController {
             errors.rejectValue("email", "email", "Email address already in use")
 
         errors.hasErrors match {
-            case true => showRegistrationPage(req, form, errors)
+            case true =>
+                showRegistrationPage(req, form, errors)
             case false =>
 
-                val plugin = accountPluginDao.get
                 val accountType = typeDao
                   .findAll()
                   .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
@@ -87,12 +96,17 @@ class RegistrationController {
 
                 autologin(req, form.email, form.password)
 
-                val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
-                val theme = themeService.default
-                val page = ScalaPressPage(theme, sreq)
-                page.body("<p>Thank you for signing up.</p>")
-                page.body("<p>Continue to <a href='/checkout'>checkout</a>.</p>")
-                page
+                Option(new HttpSessionRequestCache().getRequest(req, resp))
+                  .flatMap(arg => Option(arg.getRedirectUrl)) match {
+                    case None =>
+                        val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
+                        val theme = themeService.default
+                        val page = ScalaPressPage(theme, sreq)
+                        page.body("<p>Thank you for registering.</p>")
+                        page
+                    case Some(redirect) =>
+                        throw new RedirectException(redirect)
+                }
         }
     }
 

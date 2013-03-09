@@ -21,6 +21,9 @@
 </table>
 
 
+#springShowErrors()
+
+
 <table class="table table-condensed table-striped table-hover">
     #foreach ($a in $submission.attachments)
         <tr>

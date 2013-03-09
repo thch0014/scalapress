@@ -12,6 +12,7 @@
         <security:intercept-url pattern="/listing/package" access="ROLE_ANONYMOUS"/>
         <security:intercept-url pattern="/listing" access="ROLE_ANONYMOUS"/>
         <security:intercept-url pattern="/listing/**" access="ROLE_USER"/>
+        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" />
         <security:form-login login-page="/login"/>
     </security:http>
 

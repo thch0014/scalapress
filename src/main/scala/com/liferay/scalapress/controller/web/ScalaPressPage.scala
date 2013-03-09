@@ -22,7 +22,10 @@ class ScalaPressPage(val theme: Theme, val req: ScalapressRequest) {
 }
 
 object ScalaPressPage {
+
+    @deprecated
     def apply(theme: Theme, req: HttpServletRequest, context: ScalapressContext) =
         new ScalaPressPage(theme, ScalapressRequest(req, context))
+
     def apply(theme: Theme, req: ScalapressRequest) = new ScalaPressPage(theme, req)
 }
