@@ -5,3 +5,4 @@ target
 .classpath
 out
 *.iml
+scalapress-*.properties
