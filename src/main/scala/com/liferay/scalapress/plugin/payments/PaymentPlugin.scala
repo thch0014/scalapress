@@ -40,13 +40,11 @@ class PaymentPluginValidator {
 
     @PostConstruct
     def ensurePluginsCreated() {
-        val plugins = paymentPluginDao.findAll()
         ComponentClassScanner.paymentPlugins.foreach(plugin => {
-            if (plugins.find(
-                arg => arg.getClass.isAssignableFrom(plugin.getClass) ||
-                  plugin.getClass.isAssignableFrom(arg.getClass))
-              .isEmpty)
+            val plugins = paymentPluginDao.findAll()
+            if (!plugins.exists(arg => arg.getClass.isAssignableFrom(plugin) || plugin.isAssignableFrom(arg.getClass)))
                 paymentPluginDao.save(plugin.newInstance)
+
         })
     }
 }
