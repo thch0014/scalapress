@@ -10,8 +10,8 @@ import com.liferay.scalapress.controller.NotFoundException
 import com.liferay.scalapress.controller.web.{Toolbar, ScalaPressPage}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
-import com.liferay.scalapress.controller.web.folder.SecurityFuncs
 import com.liferay.scalapress.section.SectionRenderer
+import com.liferay.scalapress.security.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller

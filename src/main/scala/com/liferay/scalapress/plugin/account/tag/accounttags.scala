@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.account.tag
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import com.liferay.scalapress.service.security.ObjectUserDetails
+import com.liferay.scalapress.security.ObjectUserDetails
 
 /** @author Stephen Samuel */
 object UsernameTag extends ScalapressTag with TagBuilder {

@@ -1,10 +1,10 @@
-package com.liferay.scalapress.service.security
+package com.liferay.scalapress.security
 
 import org.springframework.security.core.userdetails.{UsernameNotFoundException, UserDetails, UserDetailsService}
 import com.liferay.scalapress.dao.UserDao
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.User
+import com.liferay.scalapress.domain.{Obj, User}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -15,11 +15,11 @@ class AdminUserDetailsService extends UserDetailsService {
 
     def loadUserByUsername(username: String): UserDetails = Option(userDao.byUsername(username)) match {
         case None => throw new UsernameNotFoundException(username)
-        case Some(user) => new BasicUserDetails(user)
+        case Some(user) => new AdminUserDetails(user)
     }
 }
 
-class BasicUserDetails(val user: User) extends UserDetails {
+class AdminUserDetails(val user: User) extends ScalaPressUserDetails {
 
     def isEnabled: Boolean = user.active
     def isCredentialsNonExpired: Boolean = true
@@ -28,4 +28,13 @@ class BasicUserDetails(val user: User) extends UserDetails {
     def getUsername: String = user.username
     def getPassword: String = user.passwordHash
     def getAuthorities = List(AdminAuthority, UserAuthority).asJava
+}
+
+abstract class ScalaPressUserDetails extends UserDetails {
+    // returns the user object for the current security context
+    def userObject: Obj = null
+    def username = getUsername
+    def password = getPassword
+    def authorities = getAuthorities
+    def enabled = isEnabled
 }

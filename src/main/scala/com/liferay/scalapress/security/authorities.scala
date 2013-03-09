@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.security
+package com.liferay.scalapress.security
 
 import org.springframework.security.core.GrantedAuthority
 

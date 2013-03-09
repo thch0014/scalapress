@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.domain.Folder
 import com.liferay.scalapress.section.SectionRenderer
+import com.liferay.scalapress.security.SecurityFuncs
 
 /**
  * @author sks 09-Feb-2006 13:48:13

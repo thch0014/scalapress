@@ -2,7 +2,7 @@ package com.liferay.scalapress.controller.web
 
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.service.theme.tag.TagRenderer
-import folder.SecurityFuncs
+import com.liferay.scalapress.security.SecurityFuncs
 
 /** @author Stephen Samuel */
 class ScalapressPageRenderer(context: ScalapressContext) {

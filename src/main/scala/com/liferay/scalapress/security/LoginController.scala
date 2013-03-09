@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account.controller
+package com.liferay.scalapress.security
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}

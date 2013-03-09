@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.security
+package com.liferay.scalapress.security
 
 import org.springframework.security.core.userdetails.{UsernameNotFoundException, UserDetails, UserDetailsService}
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,7 +31,9 @@ class ObjectUserDetails(val obj: Obj) extends UserDetails {
     def isAccountNonExpired: Boolean = true
     def getUsername: String = obj.email
     def getPassword: String = obj.passwordHash
+    @deprecated
     def userId: Long = obj.id
+    @deprecated
     def user = obj
     def getAuthorities = List(UserAuthority).asJava
 }
