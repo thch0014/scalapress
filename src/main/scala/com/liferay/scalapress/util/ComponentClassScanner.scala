@@ -4,10 +4,11 @@ import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
-import org.springframework.core.`type`.filter.AssignableTypeFilter
+import org.springframework.core.`type`.filter.{AnnotationTypeFilter, AssignableTypeFilter}
 import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.Tag
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -46,6 +47,11 @@ object ComponentClassScanner {
     def widgets = {
         val scanner = new ComponentClassScanner
         scanner.addIncludeFilter(new AssignableTypeFilter(classOf[Widget]))
+        scanner.getComponentClasses("com.liferay.scalapress")
+    }
+    def tags = {
+        val scanner = new ComponentClassScanner
+        scanner.addIncludeFilter(new AnnotationTypeFilter(classOf[Tag]))
         scanner.getComponentClasses("com.liferay.scalapress")
     }
 }

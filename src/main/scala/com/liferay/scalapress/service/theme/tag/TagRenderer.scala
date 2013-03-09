@@ -1,6 +1,7 @@
 package com.liferay.scalapress.service.theme.tag
 
-import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 object TagRenderer extends Logging {
@@ -34,6 +35,10 @@ object TagRenderer extends Logging {
         "invoice_line_options",
         "invoice_voucher_discount")
 
+    lazy val mappings = ComponentClassScanner.tags
+      .map(tag => tag.getAnnotation(classOf[Tag]).value() -> tag.newInstance.asInstanceOf[ScalapressTag])
+      .toMap ++ TagMappings.mappings
+
     def erase(text: String) = {
         require(text != null)
         deprecated.foldLeft(text)((b, a) => b.replaceAll(regex(a), ""))
@@ -52,7 +57,7 @@ object TagRenderer extends Logging {
             case None => ""
             case _ => {
                 val erased = erase(text)
-                TagMappings.mappings.foldLeft(erased)((b, a) => {
+                mappings.foldLeft(erased)((b, a) => {
                     require(erased != null)
 
                     val tagname = a._1

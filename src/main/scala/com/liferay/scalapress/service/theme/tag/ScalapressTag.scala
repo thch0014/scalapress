@@ -3,7 +3,7 @@ package com.liferay.scalapress.service.theme.tag
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
-abstract class ScalapressTag {
+trait ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String]
     def tags: Array[String] = Array()
 }
