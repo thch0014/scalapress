@@ -9,6 +9,8 @@
 
     <security:http auto-config="true" access-denied-page="/error/noaccess">
         <security:intercept-url pattern="/backoffice/**" access="ROLE_ADMIN"/>
+        <security:intercept-url pattern="/listing/package" access="ROLE_ANONYMOUS"/>
+        <security:intercept-url pattern="/listing" access="ROLE_ANONYMOUS"/>
         <security:intercept-url pattern="/listing/**" access="ROLE_USER"/>
         <security:form-login login-page="/login"/>
     </security:http>

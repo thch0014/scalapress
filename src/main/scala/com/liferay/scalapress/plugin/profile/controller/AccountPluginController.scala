@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account.controller
+package com.liferay.scalapress.plugin.profile.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -7,7 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.dao.MarkupDao
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.plugin.account.{AccountPlugin, AccountPluginDao}
+import com.liferay.scalapress.plugin.profile.{AccountPlugin, AccountPluginDao}
 
 /** @author Stephen Samuel */
 @Controller

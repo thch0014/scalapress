@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account
+package com.liferay.scalapress.plugin.profile
 
 /** @author Stephen Samuel */
 object LoginRenderer {

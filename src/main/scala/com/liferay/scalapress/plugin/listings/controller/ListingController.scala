@@ -15,6 +15,7 @@ import java.net.URL
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.FriendlyUrlGenerator
+import com.liferay.scalapress.security.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -201,8 +202,10 @@ class ListingController {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
 
+        val user = SecurityFuncs.getUser(req).get
+
         val builder = new ListingProcess2ObjectBuilder(context)
-        val obj = builder.build(process)
+        val obj = builder.build(process, user)
 
         val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>" +
           "<p>Once the listing is visble then you will be able to view it on the following url:<br/>" +

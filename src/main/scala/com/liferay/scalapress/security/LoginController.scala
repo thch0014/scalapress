@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.account.{LoginRenderer, AccountPluginDao}
+import com.liferay.scalapress.plugin.profile.{LoginRenderer, AccountPluginDao}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}

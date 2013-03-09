@@ -9,21 +9,7 @@ import org.joda.time.DateMidnight
 /** @author Stephen Samuel */
 class ListingProcess2ObjectBuilder(context: ScalapressContext) {
 
-    def createAccount(process: ListingProcess): Obj = {
-
-        val accountType = context.typeDao.findAll()
-          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
-        val account = Obj(accountType)
-        account.email = process.email
-        account.name = process.email
-        context.objectDao.save(account)
-
-        account
-    }
-
-    def build(process: ListingProcess): Obj = {
-
-        val account = createAccount(process)
+    def build(process: ListingProcess, account: Obj): Obj = {
 
         val obj = Obj(process.listingPackage.objectType)
         obj.name = process.title

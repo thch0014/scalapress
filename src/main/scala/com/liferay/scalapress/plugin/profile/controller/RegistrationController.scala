@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account.controller
+package com.liferay.scalapress.plugin.profile.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
@@ -14,7 +14,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import com.liferay.scalapress.plugin.account.{RegistrationRenderer, AccountPluginDao}
+import com.liferay.scalapress.plugin.profile.{RegistrationRenderer, AccountPluginDao}
 import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder

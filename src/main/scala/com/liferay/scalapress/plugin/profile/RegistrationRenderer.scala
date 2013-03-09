@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account
+package com.liferay.scalapress.plugin.profile
 
 import controller.RegistrationForm
 import org.springframework.validation.Errors

@@ -1,11 +1,11 @@
-package com.liferay.scalapress.plugin.account.controller
+package com.liferay.scalapress.plugin.profile.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.plugin.account.{ProfileRenderer, AccountPluginDao}
+import com.liferay.scalapress.plugin.profile.{ProfileRenderer, AccountPluginDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest

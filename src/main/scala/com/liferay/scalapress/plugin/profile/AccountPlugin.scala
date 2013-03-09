@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account
+package com.liferay.scalapress.plugin.profile
 
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component

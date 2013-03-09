@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.account.tag
+package com.liferay.scalapress.plugin.profile.tag
 
 import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}

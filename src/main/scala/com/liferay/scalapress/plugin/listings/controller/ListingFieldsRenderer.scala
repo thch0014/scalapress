@@ -16,7 +16,7 @@ object ListingFieldsRenderer {
 
         <div id="listing-process-details">
             <form method="POST">
-                <legend>Details</legend>{_title(process)}{_email(process)}{_genericAttributes(process)}{_attributes(
+                <legend>Details</legend>{_title(process)}{_genericAttributes(process)}{_attributes(
                 process)}<legend>Main Content</legend>{_content(
                 process)}<button type="submit" class="btn btn-primary">Continue</button>
             </form>
@@ -41,14 +41,6 @@ object ListingFieldsRenderer {
             <label class="control-label">Title *</label>
             <div class="controls">
                 <input type="text" class="input-xlarge" name="title" placeholder="Title" value={process.title}/>
-            </div>
-        </div>
-
-    private def _email(process: ListingProcess) =
-        <div>
-            <label class="control-label">Email *</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="email" placeholder="Your email" value={process.email}/>
             </div>
         </div>
 
