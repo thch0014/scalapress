@@ -31,7 +31,7 @@ class LoginController {
         if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest
           .getRedirectUrl
           .contains("backoffice")) {
-            "forward:/backlogin"
+            "forward:/backoffice-login"
 
         } else {
             "forward:/weblogin"

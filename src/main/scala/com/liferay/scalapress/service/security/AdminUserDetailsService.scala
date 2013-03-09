@@ -4,13 +4,12 @@ import org.springframework.security.core.userdetails.{UsernameNotFoundException,
 import com.liferay.scalapress.dao.UserDao
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util
-import org.springframework.security.core.GrantedAuthority
 import com.liferay.scalapress.domain.User
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
-class DatabaseUserDetailsService extends UserDetailsService {
+class AdminUserDetailsService extends UserDetailsService {
 
     @Autowired var userDao: UserDao = _
 
@@ -23,17 +22,10 @@ class DatabaseUserDetailsService extends UserDetailsService {
 class BasicUserDetails(val user: User) extends UserDetails {
 
     def isEnabled: Boolean = user.active
-    def isCredentialsNonExpired: Boolean = user.active
-    def isAccountNonLocked: Boolean = user.active
-    def isAccountNonExpired: Boolean = user.active
+    def isCredentialsNonExpired: Boolean = true
+    def isAccountNonLocked: Boolean = true
+    def isAccountNonExpired: Boolean = true
     def getUsername: String = user.username
     def getPassword: String = user.passwordHash
-
-    import scala.collection.JavaConverters._
-
-    def getAuthorities: util.Collection[_ <: GrantedAuthority] = List(AdminAuthority).asJava
-}
-
-object AdminAuthority extends GrantedAuthority {
-    def getAuthority: String = "ROLE_ADMIN"
+    def getAuthorities = List(AdminAuthority, UserAuthority).asJava
 }

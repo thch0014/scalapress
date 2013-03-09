@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backlogin"))
+@RequestMapping(Array("backoffice-login"))
 class AdminLoginController {
 
     @RequestMapping

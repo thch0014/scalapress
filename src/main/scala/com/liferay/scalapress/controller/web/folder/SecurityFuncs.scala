@@ -16,11 +16,11 @@ object SecurityFuncs {
           .asInstanceOf[BasicUserDetails].user
     }
 
-    def hasAdminRole(request: HttpServletRequest) = SecurityContextHolder
-      .getContext
-      .getAuthentication
-      .getAuthorities
-      .contains(AdminAuthority)
+    def hasAdminRole(request: HttpServletRequest) = {
+        Option(SecurityContextHolder.getContext.getAuthentication)
+          .map(_.getAuthorities.contains(AdminAuthority))
+          .getOrElse(false)
+    }
 
     def getAccount(request: HttpServletRequest): Option[Obj] =
         Option(SecurityContextHolder
