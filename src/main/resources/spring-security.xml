@@ -8,11 +8,12 @@
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
 
     <security:http auto-config="true" access-denied-page="/error/noaccess">
+        <security:intercept-url pattern="/backoffice/login" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
         <security:intercept-url pattern="/backoffice/**" access="ROLE_ADMIN"/>
-        <security:intercept-url pattern="/listing/package" access="ROLE_ANONYMOUS"/>
-        <security:intercept-url pattern="/listing" access="ROLE_ANONYMOUS"/>
-        <security:intercept-url pattern="/listing/**" access="ROLE_USER"/>
-        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS" />
+        <security:intercept-url pattern="/listing/package" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <security:intercept-url pattern="/listing" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
+        <security:intercept-url pattern="/listing/**" access="ROLE_USER,ROLE_ADMIN"/>
+        <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
         <security:form-login login-page="/login"/>
     </security:http>
 
