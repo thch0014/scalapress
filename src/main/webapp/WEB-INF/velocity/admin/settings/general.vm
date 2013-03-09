@@ -1,0 +1,62 @@
+#parse("/admin/header.vm")
+
+<h1>Site Settings</h1>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Offline Message</label>
+
+        <div class="controls">
+            #springFormInput("site.offlineMessage")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Offline</label>
+
+        <div class="controls">
+            #springFormCheckbox("site.offline")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("site.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Postcode</label>
+
+        <div class="controls">
+            #springFormInput("site.postcode")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Country</label>
+
+        <div class="controls">
+            #springFormInput("site.country")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Address</label>
+
+        <div class="controls">
+            #springFormInput("site.address")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

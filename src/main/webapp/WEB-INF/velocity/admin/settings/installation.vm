@@ -1,0 +1,42 @@
+#parse("/admin/header.vm")
+
+
+<h1>Installation Details</h1>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Server Info</label>
+
+        <div class="controls">
+            $serverInfo
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Domain</label>
+
+        <div class="controls">
+            $request.getLocalName
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Cdn</label>
+
+        <div class="controls">
+            $assetStore.cdn
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">CDN Object Count</label>
+
+        <div class="controls">
+            $assetStore.count()
+        </div>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

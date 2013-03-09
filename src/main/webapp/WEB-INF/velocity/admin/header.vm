@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>
+        Backoffice
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet"
+          href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
+
+    <!-- Font Awesome -->
+    <script src="/static/js/wysihtml5-0.3.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap-wysihtml5.js"></script>
+
+</head>
+<body>
+
+    #parse("/admin/navbar.vm")
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+
+            <br/>
+            #parse("/admin/navlist.vm")
+
+
+        </div>
+        <div class="span9">
+

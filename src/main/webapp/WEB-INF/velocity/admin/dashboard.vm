@@ -1,0 +1,8 @@
+#parse("/admin/header.vm")
+
+
+<h1>Dashboard</h1>
+
+Welcome to Scalapress.
+
+#parse("/admin/footer.vm")

@@ -1,0 +1,10 @@
+<div data-role="panel" id="catpanel" data-position="right" data-display="overlay" data-dismissible="true"
+     data-theme="b">
+
+    <ul data-role="listview" data-theme="a" data-divider-theme="a" data-filter="true" data-filter-theme="a"
+        data-filter-placeholder="Find page">
+        #foreach($folder in $folders)
+            <li><a href="/mobile/f/$folder.id">$folder.name</a></li>
+        #end
+    </ul>
+</div>

@@ -1,0 +1,28 @@
+#parse("/admin/header.vm")
+
+
+<h1>Users</h1>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Active</th>
+        <th></th>
+    </tr>
+    #foreach ($u in $users)
+        <tr>
+            <td>$u.id</td>
+            <td>$u.name</td>
+            <td>$u.username</td>
+            <td>$u.active</td>
+            <td><a href="$urlResolver.userEdit($u)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            </a></td>
+        </tr>
+    #end
+</table>
+
+
+#parse("/admin/footer.vm")

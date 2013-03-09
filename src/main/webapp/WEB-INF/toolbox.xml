@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolbox>
+	<tool>
+		<key>datetool</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.DateTool</class>
+	</tool>
+	<tool>
+		<key>datecmptool</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.ComparisonDateTool</class>
+	</tool>
+	<tool>
+		<key>sorttool</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.SortTool</class>
+	</tool>
+	<tool>
+		<key>math</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.MathTool</class>
+	</tool>
+	<tool>
+		<key>display</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.DisplayTool</class>
+	</tool>
+</toolbox>

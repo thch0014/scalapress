@@ -1,0 +1,40 @@
+$header
+
+<h1>Enter a delivery address</h1>
+
+<form method="POST" action="$urlResolver.checkoutAddress">
+
+<label>Contact Name</lable>
+#springFormInput("address.contactName")
+#springShowErrors("<br/>")
+
+<label>Address Line 1</label>
+#springFormInput("address.addressLine1")
+#springShowErrors("<br/>")
+
+<label>Address Line 2</label>
+#springFormInput("address.addressLine2")
+#springShowErrors("<br/>")
+
+<label>City</label>
+#springFormInput("address.town")
+#springShowErrors("<br/>")
+
+<label>Postcode</label>
+#springFormInput("address.postcode")
+#springShowErrors("<br/>")
+
+<label>Country</label>
+#springFormInput("address.country")
+#springShowErrors("<br/>")
+
+<label>Telephone</label>
+#springFormInput("address.telephone")
+#springShowErrors("<br/>")
+
+<input type="submit" value="Create"/>
+</form>
+
+
+
+$footer

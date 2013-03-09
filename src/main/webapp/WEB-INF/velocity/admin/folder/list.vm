@@ -1,0 +1,27 @@
+#parse("/admin/header.vm")
+
+<h1>Folders</h1>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    #foreach ($f in $folders)
+        <tr>
+            <td>$f.id</td>
+            <td>$f.fullName()</td>
+            <td>
+                <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-mini"> <i
+                        class="icon-pencil"></i></a>
+                <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-mini"> <i
+                        class="icon-eye-open"></i></a>
+            </td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.createFolder()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+
+#parse("/admin/footer.vm")

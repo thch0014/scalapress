@@ -1,0 +1,17 @@
+<div class="navbar navbar-static-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container" style="width: auto; padding: 0 20px;">
+            <a class="brand" href="#">
+                Scalapress
+            </a>
+            <ul class="nav">
+                <li class="active">
+                    <a href="/backoffice/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/">Home Page</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

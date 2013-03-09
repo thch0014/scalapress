@@ -1,0 +1,55 @@
+#parse("/admin/header.vm")
+
+
+<h1>Edit Markup</h1>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("markup.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Start</label>
+
+        <div class="controls">
+            #springFormTextarea("markup.start", "rows='16' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Body</label>
+
+        <div class="controls">
+            #springFormTextarea("markup.body", "rows='16' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Between</label>
+
+        <div class="controls">
+            #springFormTextarea("markup.between", "rows='16' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">End</label>
+
+        <div class="controls">
+            #springFormTextarea("markup.end", "rows='16' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

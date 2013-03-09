@@ -1,0 +1,203 @@
+#parse("/admin/header.vm")
+
+
+<h1>Edit $form.o.objectType.name: $form.o.name</h1>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+    <div class=" control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("form.o.name", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Status</label>
+
+        <div class="controls">
+            #springFormSingleSelect("form.o.status", $statuses)
+        </div>
+    </div>
+
+    #foreach ($folder in $form.o.folders)
+        <div class="control-group">
+            <label class="control-label">Folder</label>
+
+            <div class="controls">
+                <select id="folderIds" name="folderIds">
+                    #foreach($option in $folders.keySet())
+                        <option value="${option}"
+                            #if("$!folder.id" == "$option")
+                                selected="selected"
+                            #end>
+                            ${folders.get($option)}</option>
+                    #end
+                </select>
+            </div>
+        </div>
+    #end
+
+    <div class="control-group">
+        <label class="control-label">Folder</label>
+
+        <div class="controls">
+            #springFormSingleSelect("form.folderIds", $folders)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Reference</label>
+
+        <div class="controls">
+            #springFormInput("form.o.exernalReference", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Labels</label>
+
+        <div class="controls">
+            #springFormInput("form.o.labels", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Content</label>
+
+        <div class="controls">
+            #springFormTextarea("form.o.content", "rows='16' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <!--
+    if (o.objectType.name.toLowerCase.contains("product")) {
+    form.add(FormControlGroup("Price", TextInput("sellPrice").value(o.sellPrice).size(XXLarge)))
+    form.add(FormControlGroup("Cost Price", TextInput("costPrice").value(o.costPrice).size(XXLarge)))
+    form.add(FormControlGroup("Vat Rate", TextInput("vatRate").value(o.vatRate).size(XXLarge)))
+    form.add(FormControlGroup("RRP", TextInput("rrp").value(o.rrp).size(XXLarge)))
+    form.add(FormControlGroup("Stock Level", TextInput("stock").value(o.stock).size(XXLarge)))
+    } -->
+
+
+    <div class="control-group">
+        <label class="control-label">Title Tag</label>
+
+        <div class="controls">
+            #springFormInput("form.o.titleTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Description Tag</label>
+
+        <div class="controls">
+            #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Keywords Tag</label>
+
+        <div class="controls">
+            #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <!--
+
+
+    val attributesBySection = o.objectType.attributes.asScala.groupBy(arg => Option(arg.section).getOrElse("General"))
+    for (a <- attributesBySection) {
+
+    val attributesTable = BootTable[Attribute](a => {
+
+    val inputId = "attribute_value_" + a.id
+    val values = o.attributeValues.asScala.filter(a.id == _.attribute.id).map(_.value)
+    val mvalues = if (a.multipleValues || values.size == 0) values :+ "" else values
+
+    val attributeValueInput = a.attributeType match {
+
+    case AttributeType.Email
+    | AttributeType.Link
+    | AttributeType.Numerical
+    | AttributeType.Postcode
+    | AttributeType.Text => {
+
+    val inputs = mvalues.map(value => {
+    TextInput(inputId).value(value).size(XLarge)
+    })
+    inputs.mkString("\n")
+    }
+
+    case AttributeType.Selection => {
+
+    val selects = mvalues.map(value => {
+    val select = BootSelect(inputId).value(value)
+    for (option <- a.options.asScala.sortBy(_.position)) {
+    select.options(BootOption(option.value, option.value))
+    }
+    select
+    })
+    selects.mkString("\n")
+    }
+
+    case AttributeType.Boolean => {
+
+    val select = BootSelect(inputId).value(mvalues.head)
+    select.options("Yes")
+    select.options("No")
+    select.toString
+    }
+
+    case _ => values.mkString(", ")
+    }
+
+
+    Array(a.name, attributeValueInput.toString)
+    })
+    attributesTable.headers(a._1 + " Attributes", "Value")
+    attributesTable.addAll(a._2)
+    form.add(attributesTable)
+
+    }
+
+    -->
+
+    <table class="table table-bordered table-condensed table-striped">
+        <tr>
+            <th>Image</th>
+            <th>Filename</th>
+            <th>Content Type</th>
+        </tr>
+
+        #foreach ($a in $assets)
+            <tr>
+                <td>
+                    <ul class="thumbnails">
+                        <li class="span6">
+                            <div class="thumbnail"><img src="/images/$a.filename()?width=128&height=128"/></div>
+                        </li>
+                    </ul>
+                </td>
+                <td>$a.filename()</td>
+                <td>$a.contentType()</td>
+            </tr>
+        #end
+    </table>
+
+
+    Image Upload: <input type="file" name="upload"/>
+
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+
+
+#parse("/admin/footer.vm")

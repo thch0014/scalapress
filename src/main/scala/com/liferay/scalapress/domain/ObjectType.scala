@@ -1,0 +1,31 @@
+package com.liferay.scalapress.domain
+
+import attr.Attribute
+import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import java.util
+import reflect.BeanProperty
+import com.liferay.scalapress.section.Section
+
+/** @author Stephen Samuel */
+@Entity
+@Table(name = "items_types")
+class ObjectType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @BeanProperty var id: java.lang.Long = _
+
+    @Column
+    @BeanProperty var name: String = _
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
+    @BeanProperty var attributes: java.util.List[Attribute] = new util.ArrayList[Attribute]()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType")
+    @BeanProperty var sections: java.util.List[Section] = new util.ArrayList[Section]()
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "listitemmarkup", nullable = true)
+    var listItemMarkup: Markup = _
+
+}

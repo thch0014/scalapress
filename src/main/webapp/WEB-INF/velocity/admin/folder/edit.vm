@@ -1,0 +1,117 @@
+#parse("/admin/header.vm")
+
+
+<h1>Edit Folder: $folder.name</h1>
+
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("folder.name", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Parent</label>
+
+        <div class="controls">
+            #springFormSingleSelect("folder.parent", $parents)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Hidden</label>
+
+        <div class="controls">
+            #springFormCheckbox("folder.hidden")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Permalink</label>
+
+        <div class="controls">
+            #springFormInput("folder.permaLink", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Redirect</label>
+
+        <div class="controls">
+            #springFormInput("folder.redirect", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Title Tag</label>
+
+        <div class="controls">
+            #springFormInput("folder.titleTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Description Tag</label>
+
+        <div class="controls">
+            #springFormInput("folder.descriptionTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Keywords Tag</label>
+
+        <div class="controls">
+            #springFormInput("folder.keywordsTag", "class='input-xxlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Header</label>
+
+        <div class="controls">
+            #springFormTextarea("folder.header", "rows='8' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Footer</label>
+
+        <div class="controls">
+            #springFormTextarea("folder.footer", "rows='8' class='input-block-level htmleditor'")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    #foreach ($s in $sections)
+        <tr>
+            <td>$s.id</td>
+            <td>$!s.name()</td>
+            <td>$s.desc()</td>
+            <td>
+                <a href="$urlResolver.pluginEdit($s)" role="button" class="btn btn-mini"> <i
+                        class="icon-pencil"></i></a>
+            </td>
+        </tr>
+    #end
+</table>
+
+#parse("/admin/footer.vm")

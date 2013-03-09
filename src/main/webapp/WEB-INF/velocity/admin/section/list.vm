@@ -1,0 +1,27 @@
+#parse("/admin/header.vm")
+
+
+<h1>Widgets</h1>
+
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Default</th>
+        <th></th>
+    </tr>
+    #foreach ($theme in $themes)
+        <tr>
+            <td>$theme.id</td>
+            <td>$theme.name</td>
+            <td>$theme.default</td>
+            <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            </a></td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.createTheme()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+
+#parse("/admin/footer.vm")

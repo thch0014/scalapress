@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/mysql</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-context.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>ScalapressServlet</servlet-name>
+        <servlet-class>com.liferay.scalapress.handler.ScalapressServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScalapressServlet</servlet-name>
+        <url-pattern>*.c</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScalapressServlet</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScalapressServlet</servlet-name>
+        <url-pattern>*.nige</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value></param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- <filter> <filter-name>ETagFilter</filter-name> <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+        </filter> <filter-mapping> <filter-name>ETagFilter</filter-name> <url-pattern>*.ogv</url-pattern>
+        </filter-mapping> <filter-mapping> <filter-name>ETagFilter</filter-name>
+        <url-pattern>*.mp4</url-pattern> </filter-mapping> <filter-mapping> <filter-name>ETagFilter</filter-name>
+        <url-pattern>*.webm</url-pattern> </filter-mapping> <filter> <filter-name>IpAccessFilter</filter-name>
+        <filter-class>com.liferayscalapressress.handler.filters.IpAccessFilter</filter-class>
+        </filter> <filter-mapping> <filter-name>IpAccessFilter</filter-name> <url-pattern>*.jspx</url-pattern>
+        </filter-mapping> <filter-mapping> <filter-name>IpAccessFilter</filter-name>
+        <url-pattern>*.html</url-pattern> </filter-mapping> <filter> <filter-name>RestrictionFilter</filter-name>
+        <filter-class>com.liferayscalapressress.handler.filters.RestrictionFilter</filter-class>
+        </filter> <filter-mapping> <filter-name>RestrictionFilter</filter-name> <url-pattern>*.do</url-pattern>
+        </filter-mapping> <filter> <filter-name>ResourcesFilter</filter-name> <filter-class>com.liferayscalapressress.handler.filters.ResourcesFilter</filter-class>
+        </filter> <filter-mapping> <filter-name>ResourcesFilter</filter-name> <url-pattern>/*</url-pattern>
+        </filter-mapping> -->
+
+    <filter>
+        <filter-name>RewriteFilter</filter-name>
+        <filter-class>com.liferay.scalapress.handler.filters.RewriteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RewriteFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
+</web-app>

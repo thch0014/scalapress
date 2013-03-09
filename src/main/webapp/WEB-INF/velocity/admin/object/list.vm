@@ -1,0 +1,33 @@
+#parse("/admin/header.vm")
+
+
+<h1>$type.name</h1>
+
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Date Created</th>
+        <th></th>
+    </tr>
+    #foreach ($o in $objects)
+        <tr>
+            <td>$o.id</td>
+            <td>$o.name</td>
+            <td>$!o.status</td>
+            <td>$datetool.format($o.dateCreated)</td>
+            <td>
+                <a href="$urlResolver.objectEdit($o)" role="button" class="btn btn-mini"> <i
+                        class="icon-pencil"></i></a>
+                <a href="$urlResolver.objectSiteView($o)" role="button" class="btn btn-mini"> <i
+                        class="icon-eye-open"></i></a>
+            </td>
+        </tr>
+    #end
+</table>
+
+<a href="$urlResolver.objectCreate($type)" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+
+#parse("/admin/footer.vm")

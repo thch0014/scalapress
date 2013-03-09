@@ -1,0 +1,24 @@
+#parse("/admin/header.vm")
+
+
+<h1>Markup</h1>
+
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    #foreach ($m in $markups)
+        <tr>
+            <td>$m.id</td>
+            <td>$u.name</td>
+            <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            </a></td>
+        </tr>
+    #end
+</table>
+
+
+#parse("/admin/footer.vm")
