@@ -1,10 +1,12 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.AttributeType
-import com.liferay.scalapress.domain.attr.Attribute
+import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 import xml.Unparsed
+import com.liferay.scalapress.domain.Obj
+import collection.Iterable
 
 /** @author Stephen Samuel */
 object ListingFieldsRenderer {
@@ -14,41 +16,53 @@ object ListingFieldsRenderer {
         if (process.listingPackage.objectType == null)
             throw new RuntimeException("Object Type is not set on the listing package")
 
+        val attributes = process.listingPackage.objectType.attributes.asScala
+        val attributeValues = process.attributeValues.asScala
+
         <div id="listing-process-details">
             <form method="POST">
-                <legend>Details</legend>{_title(process)}{_genericAttributes(process)}{_attributes(
-                process)}<legend>Main Content</legend>{_content(
-                process)}<button type="submit" class="btn btn-primary">Continue</button>
+                <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
+                attributeValues)}{_attributes(
+                attributes, attributeValues)}<legend>Main Content</legend>{_content(
+                process.content)}<button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    }
+
+    def render(obj: Obj) = {
+
+        val attributes = obj.objectType.attributes.asScala
+        val attributeValues = obj.attributeValues.asScala
+
+        <div id="listing-edit-fields">
+            <form method="POST">
+                <legend>Details</legend>{_title(obj.name)}{_genericAttributes(attributes, attributeValues)}{_attributes(
+                attributes, attributeValues)}<legend>Main Content</legend>{_content(
+                obj.content)}<button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
     }
 
     // show attributes not in a section
-    private def _genericAttributes(process: ListingProcess) = {
-        val attributes = process
-          .listingPackage
-          .objectType
-          .attributes
-          .asScala.toSeq
-          .filter(attr => attr.section == null || attr.section.trim.length == 0)
+    private def _genericAttributes(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
+        val filtered = attributes.filter(attr => attr.section == null || attr.section.trim.length == 0)
           .filter(_.userEditable)
-          .sortBy(_.position)
-        _attributeInputs(attributes, process)
+        _attributeInputs(filtered, attributeValues)
     }
 
-    private def _title(process: ListingProcess) =
+    private def _title(title: String) =
         <div>
             <label class="control-label">Title *</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="title" placeholder="Title" value={process.title}/>
+                <input type="text" class="input-xlarge" name="title" placeholder="Title" value={title}/>
             </div>
         </div>
 
-    private def _content(process: ListingProcess) =
+    private def _content(content: String) =
         <div>
             <label class="control-label">Content *</label>
             <div class="controls">
-                <textarea class="input-block-level" rows="12" name="content" value={process.content}/>
+                <textarea class="input-block-level" rows="12" name="content" value={content}/>
             </div>
         </div>
 
@@ -93,22 +107,17 @@ object ListingFieldsRenderer {
             </div>
         </div>
 
-    def _attributes(process: ListingProcess) = {
+    def _attributes(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
 
-        val attributes = process
-          .listingPackage
-          .objectType
-          .attributes
-          .asScala
-          .toSeq
+        val filtered = attributes.toSeq
           .filterNot(attr => attr.section == null || attr.section.trim.length > 0)
           .filter(_.userEditable)
-        val sectioned = attributes.groupBy(_.section)
-        sectioned.map(arg => _section(arg._1, arg._2, process))
+        val sectioned = filtered.groupBy(_.section)
+        sectioned.map(arg => _section(arg._1, arg._2, attributeValues))
     }
 
-    def _section(section: String, attributes: Seq[Attribute], process: ListingProcess) = {
-        val inputs = _attributeInputs(attributes.sortBy(_.position), process)
+    def _section(section: String, attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
+        val inputs = _attributeInputs(attributes, attributeValues)
         <div class="attribute-section">
             <legend>
                 {section}
@@ -116,9 +125,9 @@ object ListingFieldsRenderer {
         </div>
     }
 
-    def _attributeInputs(attributes: Seq[Attribute], process: ListingProcess) = {
-        attributes.map(attr => {
-            val value = process.attributeValues.asScala.find(av => av.attribute.id == attr.id).map(_.value)
+    def _attributeInputs(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
+        attributes.toSeq.sortBy(_.position).map(attr => {
+            val value = attributeValues.find(av => av.attribute.id == attr.id).map(_.value)
             attr.attributeType match {
                 case AttributeType.Postcode | AttributeType.Numerical => _renderText(attr, "input-small", value)
                 case AttributeType.Boolean => _renderYesNo(attr)

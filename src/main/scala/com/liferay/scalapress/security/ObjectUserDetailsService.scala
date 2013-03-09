@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 /** @author Stephen Samuel
   *
   *         Loads user details from the normal objects table
-  **/
+  * */
 @Component
 class ObjectUserDetailsService extends UserDetailsService {
 
@@ -23,7 +23,7 @@ class ObjectUserDetailsService extends UserDetailsService {
         }
 }
 
-class ObjectUserDetails(obj: Obj) extends UserDetails {
+class ObjectUserDetails(obj: Obj) extends ScalaPressUserDetails {
 
     def isEnabled: Boolean = obj.status.toLowerCase == "live"
     def isCredentialsNonExpired: Boolean = true

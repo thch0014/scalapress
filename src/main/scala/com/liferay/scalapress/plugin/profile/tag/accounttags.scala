@@ -8,7 +8,7 @@ import com.liferay.scalapress.security.SecurityFuncs
   *
   *         Shows the current logged in users username or nothing
   *
-  * */
+  **/
 @Tag("account_username")
 class UsernameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
@@ -22,8 +22,8 @@ class AccountLinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         val label = params.get("label")
         val link = SecurityFuncs.hasUserRole(request.request) match {
-            case true => super.buildLink(link, label.getOrElse("Account"), params)
-            case false => super.buildLink(link, label.getOrElse("Login or Register"), params)
+            case true => super.buildLink("/account", label.getOrElse("Account"), params)
+            case false => super.buildLink("/login", label.getOrElse("Login or Register"), params)
         }
         Some(link)
     }

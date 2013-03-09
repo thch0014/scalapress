@@ -154,8 +154,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         params.put("SuccessURL", "http://" + domain + requiresPayment.successUrl)
         params.put("FailureURL", "http://" + domain + requiresPayment.failureUrl)
 
-        val firstname = requiresPayment.deliveryAddress.name.split(" ").last
-        val lastname = requiresPayment.deliveryAddress.name.split(" ").head
+        val deliveryName = Option(requiresPayment.deliveryAddress.name).getOrElse("")
+
+        val firstname = deliveryName.split(" ").last
+        val lastname = deliveryName.split(" ").head
 
         params.put("DeliveryFirstnames", firstname)
         params.put("DeliverySurname", lastname)
@@ -164,8 +166,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         params.put("DeliveryPostCode", requiresPayment.deliveryAddress.postcode)
         params.put("DeliveryCountry", "GB")
 
-        val fn = requiresPayment.billingAddress.name.split(" ").last
-        val ln = requiresPayment.billingAddress.name.split(" ").head
+        val billingName = Option(requiresPayment.billingAddress.name).getOrElse("")
+
+        val fn = billingName.split(" ").last
+        val ln = billingName.split(" ").head
 
         params.put("BillingSurname", fn)
         params.put("BillingFirstnames", ln)

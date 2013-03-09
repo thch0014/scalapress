@@ -35,6 +35,7 @@ trait SearchService {
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
+    val TIMEOUT = 5000
     val INDEX = "obj"
 
     @Value("${search.index.preload.size}") var preloadSize: Int = _
@@ -72,8 +73,8 @@ class ElasticSearchService extends SearchService with Logging {
       .field("status", "dummy")
       .endObject()
 
-    client.prepareIndex(INDEX, "dummy", "dummy").setSource(json).execute().actionGet(2000)
-    client.prepareDelete(INDEX, "dummy", "dummy").execute().actionGet(2000)
+    client.prepareIndex(INDEX, "dummy", "dummy").setSource(json).execute().actionGet(TIMEOUT)
+    client.prepareDelete(INDEX, "dummy", "dummy").execute().actionGet(TIMEOUT)
 
     @Transactional
     def index() {
@@ -98,11 +99,11 @@ class ElasticSearchService extends SearchService with Logging {
 
         try {
 
-            client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(2000)
+            client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
             client.prepareIndex(INDEX, obj.objectType.id.toString, obj.id.toString)
               .setSource(src)
               .execute()
-              .actionGet(2000)
+              .actionGet(TIMEOUT)
 
         } catch {
             case e: Exception => logger.warn(e.getMessage)

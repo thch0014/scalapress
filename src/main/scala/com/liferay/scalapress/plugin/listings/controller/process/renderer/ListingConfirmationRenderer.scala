@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import xml.Unparsed
@@ -22,7 +22,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
             <legend>
                 Listing Confirmation
             </legend>
-            <table class="table table-condensed">
+            <table class="table table-hover table-condensed">
                 <tr>
                     <td>Package</td>
                     <td>

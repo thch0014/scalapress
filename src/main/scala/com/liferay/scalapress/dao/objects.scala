@@ -27,6 +27,10 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
             s.addFetch("objectType")
             s.addFilterEqual("objectType.id", t)
         })
+        q.accountId.foreach(t => {
+//            s.addFetch("account")
+            s.addFilterEqual("account.id", t)
+        })
         val result = searchAndCount(s)
         Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
     }

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.service.{WizardRenderer, WizardStep}
 

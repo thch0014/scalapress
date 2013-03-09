@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process
 
 import com.liferay.scalapress.plugin.payments.RequiresPayment
 import com.liferay.scalapress.plugin.ecommerce.domain.Address

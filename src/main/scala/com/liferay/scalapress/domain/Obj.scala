@@ -6,6 +6,7 @@ import java.util
 import javax.persistence._
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.plugin.listings.ListingPackage
 
 /** @author Stephen Samuel */
 @Entity
@@ -31,6 +32,10 @@ class Obj {
     @ManyToOne
     @JoinColumn(name = "account")
     @BeanProperty var account: Obj = _
+
+    @ManyToOne
+    @JoinColumn(name = "listing_package")
+    @BeanProperty var listingPackage: ListingPackage = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)

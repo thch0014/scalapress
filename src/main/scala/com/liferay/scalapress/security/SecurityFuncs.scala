@@ -12,7 +12,7 @@ object SecurityFuncs {
         Option(SecurityContextHolder.getContext.getAuthentication)
 
     def getUserDetails(req: HttpServletRequest): Option[ScalaPressUserDetails] =
-        getAuth(req).map(_.asInstanceOf[ScalaPressUserDetails])
+        getAuth(req).map(_.getPrincipal.asInstanceOf[ScalaPressUserDetails])
 
     def getUser(req: HttpServletRequest): Option[Obj] = getUserDetails(req).flatMap(arg => Option(arg.userObject))
 

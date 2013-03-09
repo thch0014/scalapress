@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingProcess}
 import com.liferay.scalapress.domain.Folder

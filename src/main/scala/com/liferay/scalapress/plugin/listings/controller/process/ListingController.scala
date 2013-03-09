@@ -1,7 +1,8 @@
-package com.liferay.scalapress.plugin.listings.controller
+package com.liferay.scalapress.plugin.listings.controller.process
 
 import org.springframework.web.bind.annotation.{RequestParam, PathVariable, ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.stereotype.Controller
+import renderer.{ListingWizardRenderer, ListingFoldersRenderer, ListingPaymentRenderer, ListingPackageRenderer, ListingFieldsRenderer, ListingImagesRenderer, ListingConfirmationRenderer}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
@@ -27,9 +28,6 @@ class ListingController {
     @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
-
-    @RequestMapping
-    def start = "redirect:/listing/package"
 
     @ResponseBody
     @RequestMapping(value = Array("package"), produces = Array("text/html"))
@@ -209,7 +207,8 @@ class ListingController {
 
         val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>" +
           "<p>Once the listing is visble then you will be able to view it on the following url:<br/>" +
-          FriendlyUrlGenerator.friendlyLink(obj) + "</p>"
+          FriendlyUrlGenerator
+            .friendlyLink(obj) + "</p><p>You can view all your listings in your account " + <a href="/listing">here</a> + "</p>"
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
@@ -227,7 +226,7 @@ class ListingController {
         val page = ScalaPressPage(theme, sreq)
 
         page.body(ListingWizardRenderer.render(ListingWizardRenderer.Confirmation))
-        page.body("<p>This order was not completed.</p>")
+        page.body("<p>This listing was not completed.</p>")
         page.body("<p>Please <a href='/listing/confirmation'>click here</a> if you wish to try again.")
         page
     }
