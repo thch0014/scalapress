@@ -10,11 +10,14 @@ import org.joda.time.DateTime
 object UrlBuilder {
 
     def build(context: ScalapressContext): List[Url] = {
+
+        val domain = "http://" + context.installationDao.get.domain.replace("http://", "")
+
         val query = new ObjectQuery(status = Some("Live"))
         val objects = context.objectDao.search(query)
         val urls = new ListBuffer[Url]
         for (obj <- objects.results) {
-            val loc = FriendlyUrlGenerator.friendlyUrl(obj)
+            val loc = domain + FriendlyUrlGenerator.friendlyUrl(obj)
             val lastmod = new DateTime(obj.dateUpdated).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.8))
         }
