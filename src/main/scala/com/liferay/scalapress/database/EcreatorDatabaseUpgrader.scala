@@ -31,7 +31,7 @@ class EcreatorDatabaseUpgrader extends Logging {
         val conn = dataSource.getConnection
 
         execute("ALTER TABLE plugins_sagepay DROP enabled")
-        execute("ALTER TABLE plugins_paypalstandard DROP enabled")
+        execute("ALTER TABLE plugins_paypal_standard DROP enabled")
 
         execute("ALTER TABLE addresses MODIFY account bigint(10) null")
         execute("UPDATE addresses SET addresses=null WHERE addresses=0")

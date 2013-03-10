@@ -95,7 +95,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
       .replace("\n", "")
       .replace("\r", "")
 
-    def shipping: String = "::" + ShippingDesc + ":" + ShippingCost + " GBP"
+    def shipping: String = "GB::" + ShippingDesc + ":" + ShippingCost + " GBP"
 }
 
 /**

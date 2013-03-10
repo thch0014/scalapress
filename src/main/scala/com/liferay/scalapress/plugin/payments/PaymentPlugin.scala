@@ -38,7 +38,7 @@ class PaymentPluginValidator {
 
     @Autowired var paymentPluginDao: PaymentPluginDao = _
 
-    @PostConstruct
+  //  @PostConstruct
     def ensurePluginsCreated() {
         ComponentClassScanner.paymentPlugins.foreach(plugin => {
             val plugins = paymentPluginDao.findAll()

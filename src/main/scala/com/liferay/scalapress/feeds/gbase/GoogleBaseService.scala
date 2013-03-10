@@ -31,7 +31,7 @@ object GoogleBaseService extends Logging {
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
-        file.delete
+  //      file.delete
 
         feed.lastRuntime = System.currentTimeMillis()
         feedDao.save(feed)
