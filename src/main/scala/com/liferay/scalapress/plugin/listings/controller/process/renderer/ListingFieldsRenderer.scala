@@ -72,10 +72,11 @@ object ListingFieldsRenderer {
                 {opt.value}
             </option>)
 
-    private def _renderSelection(attr: Attribute) =
+    private def _renderSelection(attr: Attribute) = {
+        val name = attr.name + (if (attr.optional) "" else " *")
         <div>
             <label class="control-label">
-                {Unparsed(attr.name)}
+                {Unparsed(name)}
             </label>
             <div class="controls">
                 <select name={"attributeValue_" + attr.id} placeholder="Title">
@@ -83,17 +84,20 @@ object ListingFieldsRenderer {
                 </select>
             </div>
         </div>
+    }
 
-    def _renderText(attr: Attribute, size: String, value: Option[String]) =
+    def _renderText(attr: Attribute, size: String, value: Option[String]) = {
+        val name = attr.name + (if (attr.optional) "" else " *")
         <div>
             <label class="control-label">
-                {Unparsed(attr.name)}
+                {Unparsed(name)}
             </label>
             <div class="controls">
                 <input type="text" name={"attributeValue_" + attr.id}
                        placeholder={attr.placeholder} class={size} value={value.orNull}/>
             </div>
         </div>
+    }
 
     def _renderYesNo(attr: Attribute) =
         <div>
