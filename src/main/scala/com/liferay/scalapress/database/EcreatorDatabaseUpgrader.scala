@@ -140,8 +140,8 @@ class EcreatorDatabaseUpgrader extends Logging {
         execute("ALTER TABLE templates MODIFY header text null")
         execute("ALTER TABLE templates MODIFY footer text null")
 
-        execute("UPDATE users SET passwordhash='09b792e75d96dbcb3d49f5af313e9fa1', active=1 " +
-          "WHERE passwordhash IS NULL AND active=1")
+        //        execute("UPDATE users SET passwordhash='09b792e75d96dbcb3d49f5af313e9fa1', active=1 " +
+        //        "WHERE passwordhash IS NULL AND active=1")
 
         // attributes
         execute("ALTER TABLE attributes_values MODIFY item bigint(10) null")
