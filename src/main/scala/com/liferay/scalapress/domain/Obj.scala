@@ -138,6 +138,11 @@ class Obj {
 
     @BeanProperty var permaLink: String = _
 
+    @PrePersist
+    def updateLastModified {
+        dateUpdated = System.currentTimeMillis()
+    }
+
 }
 
 object Obj {
