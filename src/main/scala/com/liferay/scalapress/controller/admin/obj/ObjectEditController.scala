@@ -90,6 +90,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             }
         }
 
+        form.o.dateUpdated = System.currentTimeMillis()
         objectDao.save(form.o)
         if (!form.o.objectType.name.toLowerCase.contains("account"))
             searchService.index(form.o)
