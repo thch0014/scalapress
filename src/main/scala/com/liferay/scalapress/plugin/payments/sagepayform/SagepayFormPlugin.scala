@@ -18,7 +18,7 @@ class SagepayFormPlugin extends PaymentPlugin {
     @BeanProperty var sagePayEncryptionPassword: String = _
     @BeanProperty var sagePayVendorEmail: String = _
 
-    def name: String = "Sagepay Form"
+    def name: String = "Sagepay"
     def processor: FormPaymentProcessor = new SagepayFormProcessor(this)
     def enabled = Option(sagePayVendorName).filter(_.trim.length > 0).isDefined
 }

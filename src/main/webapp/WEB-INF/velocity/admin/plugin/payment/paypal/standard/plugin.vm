@@ -5,10 +5,10 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
-        <label class="control-label">Enabled</label>
+        <label class="control-label">Production</label>
 
         <div class="controls">
-            #springFormCheckbox("plugin.enabled")
+            #springFormCheckbox("plugin.production")
         </div>
     </div>
 

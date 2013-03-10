@@ -13,11 +13,12 @@ import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProce
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
   extends FormPaymentProcessor with Logging {
 
-    val PaymentTypeId = "PaypalStandard"
-    val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
-    val Production = "https://www.paypal.com/cgi-bin/webscr"
+    private val PaymentTypeId = "PaypalStandard"
+    private val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
+    private val Production = "https://www.paypal.com/cgi-bin/webscr"
+    private val Callback = "plugin/payment/paypal/standard/callback"
 
-    def paymentUrl: String = Production
+    def paymentUrl: String = if (plugin.production) Production else Sandbox
 
     def params(domain: String, basket: RequiresPayment): Map[String, String] = {
 
@@ -34,7 +35,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         params += ("return" -> (url + basket.successUrl))
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
-        params += ("notify_url" -> (url + "/plugin/payment/paypal/standard/callback"))
+        params += ("notify_url" -> (url + Callback))
 
         params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")
@@ -67,8 +68,6 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
     }
 
     def callback(params: Map[String, String]): Option[Payment] = {
-        logger.debug("**Paypal Callback** {}", params)
-
         _isPaymentCompleted(params) match {
             case false =>
                 logger.debug("IPN callback not valid")

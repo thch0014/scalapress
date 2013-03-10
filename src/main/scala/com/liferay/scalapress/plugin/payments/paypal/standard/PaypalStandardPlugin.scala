@@ -5,9 +5,7 @@ import reflect.BeanProperty
 import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.plugin.payments.{PaymentPluginDao, FormPaymentProcessor, PaymentPlugin}
-import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PostConstruct
+import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, PaymentPlugin}
 
 /** @author Stephen Samuel */
 @Entity
@@ -16,8 +14,10 @@ class PaypalStandardPlugin extends PaymentPlugin {
 
     @BeanProperty var accountEmail: String = _
 
+    @BeanProperty var production: Boolean = _
+
     //  def backofffice = "backoffice/plugin/payment/paypal/standard"
-    def name: String = "Paypal Standard"
+    def name: String = "Paypal"
     def processor: FormPaymentProcessor = new PaypalStandardProcessor(this)
     def enabled = Option(accountEmail).filter(_.trim.length > 0).isDefined
 }
