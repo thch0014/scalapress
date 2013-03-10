@@ -15,12 +15,12 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     val ShippingCost = "4.95"
     val ShippingDesc = "Courier"
 
-    def csv(objs: Seq[Obj], feed: GBaseFeed) = {
+    def csv(objs: Seq[Obj], feed: GBaseFeed): File = {
 
         val filtered = filter(feed, objs)
         logger.debug("Generating GBASE file for {} objects", filtered.size)
 
-        val file = File.createTempFile("gbase", "csv")
+        val file = File.createTempFile("gbase", ".csv")
         file.deleteOnExit()
         logger.debug("Writing to temp file {}", file)
 
