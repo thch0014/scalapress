@@ -9,7 +9,11 @@ import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.section.Section
 
-/** @author Stephen Samuel */
+/** @author Stephen Samuel
+  *
+  *         Shows a list of objects inside a folder.
+  *
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -30,7 +34,7 @@ class ObjectListSection extends Section {
 
     override def backoffice: String = "/backoffice/section/objectlist/" + id
 
-    def desc = "Show a paginated list of objects that are inside this general"
+    def desc = "Show a paginated list of objects that are inside this folder"
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 

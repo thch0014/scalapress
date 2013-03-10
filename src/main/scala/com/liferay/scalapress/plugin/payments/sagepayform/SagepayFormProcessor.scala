@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Payment}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Transaction}
 import java.util.UUID
-import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{IsPayable, FormPaymentProcessor}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -44,7 +44,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     }
 
     // returns the four params needed by sagepay
-    def params(domain: String, requiresPayment: RequiresPayment): Map[String, String] = {
+    def params(domain: String, requiresPayment: IsPayable): Map[String, String] = {
 
         val crypt = encryptParams(_cryptParams(requiresPayment, domain))
 
@@ -64,7 +64,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         val authCode = params.get("TxAuthNo").orNull
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
-        val payment = new Payment
+        val payment = new Transaction
         payment.paymentType = PaymentTypeId
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
@@ -111,7 +111,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         sb.toString()
     }
 
-    def callback(params: Map[String, String]): Option[Payment] = {
+    def callback(params: Map[String, String]): Option[Transaction] = {
         logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
@@ -134,7 +134,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     private def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    private def _cryptParams(requiresPayment: RequiresPayment,
+    private def _cryptParams(requiresPayment: IsPayable,
                              domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]

@@ -131,7 +131,7 @@ class CheckoutController {
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showConfirmation(req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment")
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction")
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
         val domain = if (port == 8080) host + ":8080" else host
@@ -190,7 +190,7 @@ class CheckoutController {
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def paymentFailure(req: HttpServletRequest): ScalaPressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Payment Error")
+        val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction Error")
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
         page.body("<p>There was a problem with payment for this order.</p>")

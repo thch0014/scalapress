@@ -30,7 +30,7 @@ class Order {
     @BeanProperty var datePlaced: Long = _
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
-    @BeanProperty var payments: java.util.List[Payment] = new java.util.ArrayList[Payment]()
+    @BeanProperty var payments: java.util.List[Transaction] = new java.util.ArrayList[Transaction]()
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var lines: java.util.List[OrderLine] = new java.util.ArrayList[OrderLine]()

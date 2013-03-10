@@ -1,13 +1,13 @@
 package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import java.util.UUID
-import com.liferay.scalapress.plugin.ecommerce.domain.Payment
+import com.liferay.scalapress.plugin.ecommerce.domain.Transaction
 import com.liferay.scalapress.Logging
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
-import com.liferay.scalapress.plugin.payments.{RequiresPayment, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{IsPayable, FormPaymentProcessor}
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
@@ -20,7 +20,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
 
     def paymentUrl: String = if (plugin.production) Production else Sandbox
 
-    def params(domain: String, basket: RequiresPayment): Map[String, String] = {
+    def params(domain: String, basket: IsPayable): Map[String, String] = {
 
         val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
@@ -34,7 +34,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         params += ("cancel_return" -> (url + basket.failureUrl))
         params += ("return" -> (url + basket.successUrl))
 
-        //The URL to which PayPal posts information about the payment, in the form of Instant Payment Notification messages.
+        //The URL to which PayPal posts information about the payment, in the form of Instant Transaction Notification messages.
         params += ("notify_url" -> (url + Callback))
 
         params += ("item_name" -> ("Order at " + domain))
@@ -56,10 +56,10 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         params.toMap
     }
 
-    private def _createPayment(params: Map[String, String]): Payment = {
+    private def _createPayment(params: Map[String, String]): Transaction = {
         logger.debug("Creating payment [{}]", params)
 
-        val payment = new Payment
+        val payment = new Transaction
         payment.transactionId = params("txn_id")
         payment.amount = (params("payment_gross").toDouble * 100).toInt
         payment.paymentType = "paypal-standard"
@@ -67,7 +67,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         payment
     }
 
-    def callback(params: Map[String, String]): Option[Payment] = {
+    def callback(params: Map[String, String]): Option[Transaction] = {
         _isPaymentCompleted(params) match {
             case false =>
                 logger.debug("IPN callback not valid")

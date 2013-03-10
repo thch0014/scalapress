@@ -7,7 +7,7 @@ import reflect.BeanProperty
 /** @author Stephen Samuel */
 @Table(name = "payments")
 @Entity
-class Payment {
+class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,9 +38,9 @@ class Payment {
     @BeanProperty var ipAddress: String = _
 }
 
-object Payment {
+object Transaction {
     def apply(transactionId: String, orderId: Long, amount: Int) = {
-        val payment = new Payment
+        val payment = new Transaction
         payment.paymentType = "SagePayForm"
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId

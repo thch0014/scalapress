@@ -12,7 +12,7 @@ object CheckoutWizardRenderer {
 
     def steps = List(WizardStep("/checkout/address", "Address"),
         WizardStep("/checkout/delivery", "Delivery"),
-        WizardStep("/checkout/payment", "Payment"),
+        WizardStep("/checkout/payment", "Transaction"),
         WizardStep("#", "Completed"))
 
     def render(stage: Int) = WizardRenderer.render(steps, stage)

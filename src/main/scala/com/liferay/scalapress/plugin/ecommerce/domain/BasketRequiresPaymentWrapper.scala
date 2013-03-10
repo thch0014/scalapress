@@ -1,9 +1,9 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import com.liferay.scalapress.plugin.payments.RequiresPayment
+import com.liferay.scalapress.plugin.payments.IsPayable
 
 /** @author Stephen Samuel */
-class BasketRequiresPaymentWrapper(basket: Basket) extends RequiresPayment {
+class BasketRequiresPaymentWrapper(basket: Basket) extends IsPayable {
 
     def accountName: String = basket.accountName
     def accountEmail: String = basket.accountEmail

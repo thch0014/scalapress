@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.listings.controller.process
 
-import com.liferay.scalapress.plugin.payments.RequiresPayment
+import com.liferay.scalapress.plugin.payments.IsPayable
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import com.liferay.scalapress.plugin.listings.ListingProcess
 
 /** @author Stephen Samuel */
-class ListingProcessPaymentWrapper(process: ListingProcess) extends RequiresPayment {
+class ListingProcessPaymentWrapper(process: ListingProcess) extends IsPayable {
 
     def accountName: String = ""
     def accountEmail: String = ""
