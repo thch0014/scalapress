@@ -8,7 +8,6 @@ import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
-import org.springframework.web.servlet.mvc.WebContentInterceptor
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
 import web.interceptor.SessionInterceptor
@@ -56,13 +55,13 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def addInterceptors(registry: InterceptorRegistry) {
 
-        val webContentInterceptor = new WebContentInterceptor
-        webContentInterceptor.setCacheSeconds(60)
-        webContentInterceptor.setUseExpiresHeader(true)
-        webContentInterceptor.setUseCacheControlHeader(true)
-        webContentInterceptor.setUseCacheControlNoStore(true)
-
-        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**")
+        //        val webContentInterceptor = new WebContentInterceptor
+        //        webContentInterceptor.setCacheSeconds(60)
+        //        webContentInterceptor.setUseExpiresHeader(true)
+        //        webContentInterceptor.setUseCacheControlHeader(true)
+        //        webContentInterceptor.setUseCacheControlNoStore(true)
+        //
+        //        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**")
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
