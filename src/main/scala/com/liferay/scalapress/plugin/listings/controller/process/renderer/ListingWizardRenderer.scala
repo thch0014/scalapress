@@ -13,7 +13,7 @@ object ListingWizardRenderer {
     val Completed = 6
 
     def steps = List(WizardStep("/listing/package", "Package"),
-        WizardStep("/listing/folder", "Folders"),
+        WizardStep("/listing/folder", "Sections"),
         WizardStep("/listing/field", "Details"),
         WizardStep("/listing/image", "Images"),
         WizardStep("/listing/confirmation", "Confirm"),
