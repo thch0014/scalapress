@@ -14,4 +14,5 @@ class BasketRequiresPaymentWrapper(basket: Basket) extends IsPayable {
 
     def successUrl: String = "/checkout/payment/success"
     def failureUrl: String = "/checkout/payment/failure"
+    def callbackUrl: String = "/checkout/payment/callback"
 }

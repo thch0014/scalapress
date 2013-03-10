@@ -14,4 +14,5 @@ trait IsPayable {
 
     def failureUrl: String
     def successUrl: String
+    def callbackUrl: String
 }

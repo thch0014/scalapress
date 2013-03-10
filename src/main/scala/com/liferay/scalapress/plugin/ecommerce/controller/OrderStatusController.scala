@@ -8,7 +8,7 @@ import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.OrderDao
-import com.liferay.scalapress.plugin.ecommerce.dao.PaymentDao
+import com.liferay.scalapress.plugin.ecommerce.dao.TransactionDao
 import com.liferay.scalapress.service.theme.ThemeService
 
 /** @author Stephen Samuel */
@@ -17,7 +17,7 @@ import com.liferay.scalapress.service.theme.ThemeService
 class OrderStatusController {
 
     @Autowired var orderDao: OrderDao = _
-    @Autowired var paymentDao: PaymentDao = _
+    @Autowired var paymentDao: TransactionDao = _
     @Autowired var themeService: ThemeService = _
     @Autowired var context: ScalapressContext = _
 

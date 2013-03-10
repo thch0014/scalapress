@@ -21,6 +21,7 @@ class SagepayFormPlugin extends PaymentPlugin {
     def name: String = "Sagepay"
     def processor: FormPaymentProcessor = new SagepayFormProcessor(this)
     def enabled = Option(sagePayVendorName).filter(_.trim.length > 0).isDefined
+    def paymentTypeId = "SagepayForm"
 }
 
 trait SagepayFormPluginDao extends GenericDao[SagepayFormPlugin, java.lang.Long] {

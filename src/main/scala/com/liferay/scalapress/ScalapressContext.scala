@@ -2,10 +2,10 @@ package com.liferay.scalapress
 
 import dao.settings.InstallationDao
 import dao.{AttributeValueDao, AttributeDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
-import plugin.ecommerce.dao.{PaymentDao, BasketDao, DeliveryOptionDao}
+import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
-import plugin.listings.{ListingPackageDao, ListingsPluginDao}
+import plugin.listings.{ListingProcessDao, ListingPackageDao, ListingsPluginDao}
 import plugin.payments.PaymentPluginDao
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
@@ -26,10 +26,12 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var sagepayFormPluginDao: SagepayFormPluginDao = _
 
     @Autowired var listingPackageDao: ListingPackageDao = _
-    @Autowired var paymentDao: PaymentDao = _
+    @Autowired var listingProcessDao: ListingProcessDao = _
+    @Autowired var listingsPluginDao: ListingsPluginDao = _
+
+    @Autowired var transactionDao: TransactionDao = _
     @Autowired var installationDao: InstallationDao = _
     @Autowired var formFieldDao: FormFieldDao = _
-    @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
     @Autowired var siteDao: InstallationDao = _
     @Autowired var imageService: ImageService = _

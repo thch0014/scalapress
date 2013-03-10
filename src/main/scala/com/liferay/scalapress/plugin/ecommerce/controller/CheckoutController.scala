@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.web.ScalaPressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
-import com.liferay.scalapress.plugin.ecommerce.dao.{PaymentDao, DeliveryOptionDao, AddressDao, BasketDao}
+import com.liferay.scalapress.plugin.ecommerce.dao.{TransactionDao, DeliveryOptionDao, AddressDao, BasketDao}
 import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
 import java.net.URL
 import scala.collection.JavaConverters._
@@ -27,7 +27,7 @@ class CheckoutController {
     @Autowired var addressDao: AddressDao = _
     @Autowired var basketDao: BasketDao = _
     @Autowired var orderDao: OrderDao = _
-    @Autowired var paymentDao: PaymentDao = _
+    @Autowired var paymentDao: TransactionDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _

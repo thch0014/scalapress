@@ -8,4 +8,5 @@ trait FormPaymentProcessor {
     def paymentUrl: String
     def params(domain: String, basket: IsPayable): Map[String, String]
     def callback(params: Map[String, String]): Option[Transaction]
+    def paymentTypeId: String
 }

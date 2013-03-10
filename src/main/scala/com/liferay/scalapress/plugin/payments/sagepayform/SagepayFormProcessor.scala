@@ -10,13 +10,14 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcessor with Logging {
 
-    val PaymentTypeId = "SagePayForm"
     val PaymentTypePayment = "PAYMENT"
     val PaymentTypeDeferred = "DEFERRED"
     val VPSProtocol: String = "2.23"
 
     val LiveUrl = "https://live.sagepay.com/gateway/service/vspform-register.vsp"
     val TestUrl = "https://test.sagepay.com/gateway/service/vspform-register.vsp"
+
+    def paymentTypeId = "SagePayForm"
 
     private def xor(in: Array[Byte], key: String) = {
         val result = new Array[Byte](in.length)
@@ -65,7 +66,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
         val payment = new Transaction
-        payment.paymentType = PaymentTypeId
+        payment.paymentType = paymentTypeId
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
         payment.authCode = authCode
