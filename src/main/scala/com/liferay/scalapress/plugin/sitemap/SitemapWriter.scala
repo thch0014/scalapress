@@ -11,10 +11,10 @@ object SitemapWriter {
         val doc = new Document(new Element("urlset", ns))
         for (url <- urls) {
             val element = new Element("url", ns)
-            element.addContent(new Element("loc").setText(url.loc))
-            element.addContent(new Element("lastmod").setText(url.lastmod))
-            element.addContent(new Element("changefreq").setText(url.changefreq))
-            element.addContent(new Element("priority").setText(url.priority.toString))
+            element.addContent(new Element("loc", ns).setText(url.loc))
+            element.addContent(new Element("lastmod", ns).setText(url.lastmod))
+            element.addContent(new Element("changefreq", ns).setText(url.changefreq))
+            element.addContent(new Element("priority", ns).setText(url.priority.toString))
             doc.getRootElement.addContent(element)
         }
         doc
