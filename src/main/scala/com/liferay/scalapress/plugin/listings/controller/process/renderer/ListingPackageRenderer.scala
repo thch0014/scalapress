@@ -1,6 +1,7 @@
 package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingPackage}
+import xml.Unparsed
 
 /** @author Stephen Samuel */
 object ListingPackageRenderer {
@@ -23,7 +24,7 @@ object ListingPackageRenderer {
 
                 <div class="desc">
                     <p>
-                        {pck.description}
+                        {Unparsed(pck.description)}
                     </p>
                 </div>
 
