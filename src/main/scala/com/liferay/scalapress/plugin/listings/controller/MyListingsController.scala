@@ -23,7 +23,7 @@ class MyListingsController {
     def list(req: HttpServletRequest): ScalaPressPage = {
 
         val account = SecurityFuncs.getUser(req)
-        val query = new ObjectQuery(accountId = account.map(_.id))
+        val query = new ObjectQuery().withAccountId(account.map(_.id))
         val objects = context.objectDao.search(query)
 
         val sreq = ScalapressRequest(req, context).withTitle("My Listings")

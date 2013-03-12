@@ -4,9 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
+import com.sksamuel.scoot.soa.{PagedQuery, Paging}
 
 /** @author Stephen Samuel */
 @Controller

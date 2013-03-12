@@ -13,7 +13,7 @@ object UrlBuilder {
 
         val domain = "http://" + context.installationDao.get.domain.replace("http://", "")
 
-        val query = new ObjectQuery(status = Some("LIVE")).withPageSize(10000)
+        val query = new ObjectQuery().withStatus("LIVE").withPageSize(10000)
         val objects = context.objectDao.search(query)
         val urls = new ListBuffer[Url]
         for (obj <- objects.results) {

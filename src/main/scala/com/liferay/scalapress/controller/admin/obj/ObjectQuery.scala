@@ -1,15 +1,28 @@
 package com.liferay.scalapress.controller.admin.obj
 
-import com.liferay.scalapress.Page
+import com.sksamuel.scoot.soa.PagedQuery
+import reflect.BeanProperty
 
 /** @author Stephen Samuel */
-case class ObjectQuery(objectType: Option[Long] = None,
-                       accountId: Option[Long] = None,
-                       status: Option[String] = None,
-                       pageNumber: Int = Page.FirstPage,
-                       pageSize: Int = Page.DefaultPageSize) {
-    def withType(l: Long) = copy(objectType = Option(l))
-    def offset: Int = (pageNumber - 1) * pageSize
-    def withPageNumber(pageNumber: Int) = copy(pageNumber = pageNumber)
-    def withPageSize(pageSize: Int) = copy(pageSize = pageSize)
+class ObjectQuery extends PagedQuery {
+
+    @BeanProperty var typeId: Option[Long] = None
+    @BeanProperty var accountId: Option[Long] = None
+    @BeanProperty var status: Option[String] = None
+    @BeanProperty var name: Option[String] = None
+
+    def withAccountId(a: Option[Long]) = {
+        this.accountId = a
+        this
+    }
+
+    def withStatus(status: String) = {
+        this.status = Option(status)
+        this
+    }
+
+    def withPageSize(i: Int) = {
+        this.pageSize = i
+        this
+    }
 }

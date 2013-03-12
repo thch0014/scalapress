@@ -10,6 +10,7 @@ import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDa
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.plugin.form.FormDao
+import collection.mutable
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
@@ -50,9 +51,9 @@ trait OrderStatusPopulator {
 
     var shoppingPluginDao: ShoppingPluginDao
 
-    @ModelAttribute def markups(model: ModelMap) {
+    @ModelAttribute def orderStatusMap(model: ModelMap) {
 
-        var map = TreeMap("" -> "-Change Status-")
+        var map = TreeMap("" -> "-Status-")
 
         val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("")
         statuses.split("\n").filter(_.trim.length > 0).foreach(status => {
@@ -60,6 +61,15 @@ trait OrderStatusPopulator {
         })
 
         model.put("statusMap", map.asJava)
+    }
+}
+
+trait ObjectStatusPopulator {
+
+    @ModelAttribute def objectStatusMap(model: ModelMap) {
+        val map = mutable
+          .LinkedHashMap("" -> "-Status-", "Live" -> "Live", "Disabled" -> "Hidden", "Deleted" -> "Deleted")
+        model.put("objectStatusMap", map.asJava)
     }
 }
 

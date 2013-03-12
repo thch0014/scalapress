@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
-import com.liferay.scalapress.{Page, ScalapressRequest, ScalapressContext, Logging}
+import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
 import com.liferay.scalapress.controller.web.ScalaPressPage
@@ -16,6 +16,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{PagingRenderer, SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
 import com.liferay.scalapress.section.PluginDao
 import com.liferay.scalapress.search.section.SearchFormSection
+import com.sksamuel.scoot.soa.Page
 
 /** @author Stephen Samuel */
 

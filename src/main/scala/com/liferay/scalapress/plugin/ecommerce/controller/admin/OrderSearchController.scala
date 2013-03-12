@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.OrderDao
-import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
+import com.sksamuel.scoot.soa.{PagedQuery, Paging}
 
 /** @author Stephen Samuel */
 @Controller

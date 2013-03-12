@@ -3,9 +3,8 @@ package com.liferay.scalapress.dao
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
-import com.liferay.scalapress.{Page, PagedQuery}
-import com.liferay.scalapress.plugin.form.Submission
 import com.googlecode.genericdao.search.Search
+import com.sksamuel.scoot.soa.{PagedQuery, Page}
 
 /** @author Stephen Samuel */
 

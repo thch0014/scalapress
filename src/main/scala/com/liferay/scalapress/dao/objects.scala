@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.domain.Obj
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.{Page, Logging}
+import com.liferay.scalapress.Logging
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.controller.admin.obj.ObjectQuery
+import com.sksamuel.scoot.soa.Page
 
 /** @author Stephen Samuel */
 
@@ -23,7 +24,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
 
     def search(q: ObjectQuery): Page[Obj] = {
         val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset).addSort("name", false)
-        q.objectType.foreach(t => {
+        q.typeId.foreach(t => {
             s.addFetch("objectType")
             s.addFilterEqual("objectType.id", t)
         })
@@ -32,6 +33,9 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
         })
         q.status.filter(_.trim.length > 0).foreach(t => {
             s.addFilterEqual("status", t)
+        })
+        q.name.filter(_.trim.length > 0).foreach(t => {
+            s.addFilterLike("name", "%" + t + "%")
         })
         val result = searchAndCount(s)
         Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)

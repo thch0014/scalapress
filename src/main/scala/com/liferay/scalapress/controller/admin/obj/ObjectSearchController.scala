@@ -1,25 +1,45 @@
 package com.liferay.scalapress.controller.admin.obj
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
-import com.liferay.scalapress.{Paging, ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.domain.Obj
+import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
+import reflect.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj"))
-class ObjectSearchController {
+class ObjectSearchController extends ObjectStatusPopulator {
 
     @Autowired var objectDao: ObjectDao = _
     @Autowired var typeDao: TypeDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(produces = Array("text/html"))
-    def list = "admin/object/list.vm"
+    def search(@ModelAttribute("form") form: SearchForm,
+             @RequestParam(value = "typeId") typeId: Long,
+             @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
+             model: ModelMap,
+             req: HttpServletRequest) = {
+
+        val query = new ObjectQuery
+        query.pageNumber = pageNumber
+        query.pageSize = 20
+        query.status = Option(form.status)
+        query.name = Option(form.name)
+        query.typeId = Option(typeId).filter(_ > 0)
+
+        val page = objectDao.search(query)
+        model.put("objects", page.java)
+        model.put("paging", Paging(req, page))
+
+        "admin/object/list.vm"
+    }
 
     @RequestMapping(value = Array("create"))
     def create(@RequestParam("typeId") typeId: java.lang.Long): String = {
@@ -32,13 +52,11 @@ class ObjectSearchController {
     }
 
     @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
-    @ModelAttribute def objects(model: ModelMap, @RequestParam("typeId") typeId: Long,
-                                @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-                                req: HttpServletRequest) {
+    @ModelAttribute("form") def form = new SearchForm
 
-        val page = objectDao.search(ObjectQuery().withType(typeId).copy(pageNumber = pageNumber))
-        model.put("objects", page.java)
-        model.put("paging", Paging(req, page))
+}
 
-    }
+class SearchForm {
+    @BeanProperty var status: String = _
+    @BeanProperty var name: String = _
 }
