@@ -20,7 +20,7 @@ class ObjectSearchController extends ObjectStatusPopulator {
     @Autowired var typeDao: TypeDao = _
     @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
+    @RequestMapping
     def search(@ModelAttribute("form") form: SearchForm,
              @RequestParam(value = "typeId") typeId: Long,
              @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,

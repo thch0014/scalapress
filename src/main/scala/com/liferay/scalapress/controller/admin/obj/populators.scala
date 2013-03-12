@@ -53,14 +53,15 @@ trait OrderStatusPopulator {
 
     @ModelAttribute def orderStatusMap(model: ModelMap) {
 
-        var map = TreeMap("" -> "-Status-")
+        val map = mutable.LinkedHashMap("" -> "-Status-")
 
         val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("")
         statuses.split("\n").filter(_.trim.length > 0).foreach(status => {
-            map = map + ((status -> status))
+            map.put(status.trim, status.trim)
         })
 
         model.put("statusMap", map.asJava)
+        model.put("orderStatusMap", map.asJava)
     }
 }
 
