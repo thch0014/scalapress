@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        #if ($installation.vatEnabled)
+        #if ($installation.vatEnabled())
 
             <div class="control-group">
                 <label class="control-label">Vat Rate</label>
