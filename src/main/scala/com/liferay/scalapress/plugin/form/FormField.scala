@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.form
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import scala.Predef.String
-import com.liferay.scalapress.enums.FormFieldType
+import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 
 /** @author Stephen Samuel */
 @Entity
@@ -20,6 +20,9 @@ class FormField {
 
     @Column(name = "mandatory")
     @BeanProperty var required: Boolean = _
+
+    @Column(name = "size")
+    @BeanProperty var size: FieldSize = FieldSize.Medium
 
     @Column(name = "regExp")
     @BeanProperty var regExp: String = _

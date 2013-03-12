@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.form
 import scala.collection.JavaConverters._
 import xml.{Unparsed, Elem}
 import com.liferay.scalapress.ScalapressRequest
-import com.liferay.scalapress.enums.FormFieldType
+import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 
 /** @author Stephen Samuel */
 object FormRenderer {
@@ -53,7 +53,6 @@ object FormRenderer {
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
-            case FormFieldType.Text => renderText(field, req)
             case FormFieldType.TickBox => renderCheck(field)
             case FormFieldType.TickBoxes => renderChecks(field, req)
             case FormFieldType.Radio => renderRadio(field, req)
@@ -66,7 +65,7 @@ object FormRenderer {
                     {scala.xml.Unparsed(field.name)}
                 </legend>
             case FormFieldType.Attachment => renderUpload(field)
-            case FormFieldType.Email => renderText(field, req)
+            case _ => renderText(field, req)
         }
     }
 
@@ -83,16 +82,23 @@ object FormRenderer {
     }
 
     private def renderText(field: FormField, req: ScalapressRequest) = {
+
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
         val star = if (field.required) "*" else ""
         val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
+        val css = Option(field.size).getOrElse(Some(FieldSize.Medium)) match {
+            case FieldSize.Small => "input-small"
+            case FieldSize.XLarge => "input-xlarge"
+            case FieldSize.XXLarge => "input-xxlarge"
+            case _ => "input-medium"
+        }
 
         <div class={cssClass}>
             <label class="control-label">
                 {Unparsed(field.name)}{star}
             </label>
             <div class="controls">
-                <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value}/>
+                <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value} class={css}/>
                 <span class="help-inline">
                     {req.errors.getOrElse(field.id.toString, "")}
                 </span>

@@ -17,7 +17,7 @@ class FormEditController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute form: Form) = "admin/form/edit.vm"
+    def edit(@ModelAttribute form: Form) = "admin/plugin/form/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute form: Form) = {

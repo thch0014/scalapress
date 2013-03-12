@@ -15,7 +15,7 @@ class FormListController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping
-    def list = "admin/form/list.vm"
+    def list = "admin/plugin/form/list.vm"
 
     @RequestMapping(value = Array("create"))
     def create: String = {

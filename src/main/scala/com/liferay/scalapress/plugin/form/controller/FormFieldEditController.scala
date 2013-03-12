@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.plugin.form.FormField
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.enums.FormFieldType
+import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 
 /** @author Stephen Samuel */
 @Controller
@@ -16,7 +16,7 @@ class FormFieldEditController extends EnumPopulator {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("field") field: FormField) = "admin/form/fieldedit.vm"
+    def edit(@ModelAttribute("field") field: FormField) = "admin/plugin/form/fieldedit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("field") field: FormField) = {
@@ -31,4 +31,5 @@ class FormFieldEditController extends EnumPopulator {
     }
 
     @ModelAttribute("typesMap") def typesMap = populate(FormFieldType.values)
+    @ModelAttribute("fieldSizesMap") def fieldSizesMap = populate(FieldSize.values)
 }

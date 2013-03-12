@@ -8,7 +8,6 @@ import com.liferay.scalapress.{Paging, PagedQuery, ScalapressContext}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,12 +20,18 @@ class OrderSearchController {
     @RequestMapping(produces = Array("text/html"))
     def list(model: ModelMap,
              req: HttpServletRequest,
-             @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int) = {
+             @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
+             @RequestParam(value = "orderId", required = false) orderId: Long,
+             @RequestParam(value = "status", required = false) status: String) = {
 
-        val orders = orderDao.search(PagedQuery(pageNumber, 50))
-        model.put("orders", orders.java)
-        model.put("paging", Paging(req, orders))
-        "admin/order/list.vm"
+        Option(orderId).map(id => orderDao.find(id)) match {
+            case Some(order) => "redirect:/backoffice/order/" + order.id
+            case None =>
+                val orders = orderDao.search(PagedQuery(pageNumber, 50))
+                model.put("orders", orders.java)
+                model.put("paging", Paging(req, orders))
+                "admin/order/list.vm"
+        }
     }
 
     @RequestMapping(value = Array("create"), produces = Array("text/html"))
