@@ -3,6 +3,37 @@
 
 <h3>Orders</h3>
 
+
+<form method="GET" class="form-horizontal">
+
+    <div class="control-group">
+        <label class="control-label">Order Id</label>
+
+        <div class="controls">
+            #springFormInput("form.orderId")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Customer Name</label>
+
+        <div class="controls">
+            #springFormInput("form.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Status</label>
+
+        <div class="controls">
+            #springFormSingleSelect("form.status", $orderStatusMap)
+        </div>
+    </div>
+    <button type="submit">Search</button>
+
+</form>
+
+
 <form method="POST" action="/backoffice/order/create">
     <input type="hidden" id="add-account-id" name="accountId"/>
     <input type="text" class="input-xlarge" id="add-account-typeahead" value=""/>

@@ -4,11 +4,6 @@
 <h3>$type.name</h3>
 
 
-<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
-<a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-info"> <i class="icon-download"></i> Export
-    as CSV</a>
-
-
 <form method="GET" class="form-horizontal">
     <input type="hidden" name="typeId" value="$type.id"/>
 
@@ -60,6 +55,11 @@
 </table>
 
 #paging($paging)
+
+
+<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
+<a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-info"> <i class="icon-download"></i> Export
+    as CSV</a>
 
 
 
