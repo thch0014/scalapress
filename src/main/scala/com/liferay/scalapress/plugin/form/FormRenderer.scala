@@ -88,6 +88,7 @@ object FormRenderer {
         val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
         val css = Option(field.size).getOrElse(Some(FieldSize.Medium)) match {
             case FieldSize.Small => "input-small"
+            case FieldSize.Large => "input-large"
             case FieldSize.XLarge => "input-xlarge"
             case FieldSize.XXLarge => "input-xxlarge"
             case _ => "input-medium"

@@ -22,7 +22,9 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Form</label>
+        <label class="control-label">
+            <a href="/backoffice/form/$section.form.id" class="btn btn-mini"><i class="icon-pencil"></i></a> Form
+        </label>
 
         <div class="controls">
             <select id="form" name="form">

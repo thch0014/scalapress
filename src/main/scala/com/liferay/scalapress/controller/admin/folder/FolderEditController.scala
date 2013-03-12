@@ -45,6 +45,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         if (section.isInstanceOf[FormSection])
             section.asInstanceOf[FormSection].form = context.formDao.findAll().head
         section.folder = folder
+        section.name = "new " + Class.forName(cls).getSimpleName
         section.visible = true
         folder.sections.add(section)
         folderDao.save(folder)

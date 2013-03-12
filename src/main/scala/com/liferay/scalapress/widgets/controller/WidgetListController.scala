@@ -1,7 +1,7 @@
 package com.liferay.scalapress.widgets.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
@@ -9,6 +9,7 @@ import com.liferay.scalapress.widgets.Widget
 import scala.Array
 import com.liferay.scalapress.domain.Folder
 import com.liferay.scalapress.util.ComponentClassScanner
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -28,6 +29,12 @@ class WidgetListController {
         "redirect:/backoffice/widget"
     }
 
+    @RequestMapping(value = Array("{id}/delete"))
+    def create(@PathVariable("id") id: Long) = {
+        widgetDao.removeById(id)
+        "redirect:/backoffice/widget"
+    }
+
     @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
     def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String = {
 
@@ -39,8 +46,6 @@ class WidgetListController {
         })
         "ok"
     }
-
-    import scala.collection.JavaConverters._
 
     @ModelAttribute("widgets") def widgets = {
         val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
