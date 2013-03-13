@@ -121,11 +121,12 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     private def getNormalizedKey(key: String): String = {
         try {
+            // we have to request in order to get an exception
             getAmazonS3Client.getObject(bucketName, key)
-            getNormalizedKey("copy_" + key)
+            key
         }
         catch {
-            case e: com.amazonaws.AmazonClientException => key
+            case e: com.amazonaws.AmazonClientException => getNormalizedKey("copy_" + key)
         }
     }
 
