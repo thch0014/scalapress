@@ -3,8 +3,8 @@ package com.liferay.scalapress.service.theme.tag
 import folder.{NestedFoldersTag, FolderTag, PrimaryFoldersTag, BreadcrumbsTag}
 import general._
 import obj._
-import user.{LogoutTag, UserStatusTag}
-import com.liferay.scalapress.plugin.profile.tag.{AccountLinkTag, UsernameTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
+import user.UserStatusTag
+import com.liferay.scalapress.plugin.profile.tag.{LogoutTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
 import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLinkTag}
