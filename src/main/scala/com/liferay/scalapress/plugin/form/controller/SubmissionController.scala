@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.form
+package com.liferay.scalapress.plugin.form.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
@@ -11,6 +11,7 @@ import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.controller.web.folder.FolderController
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.plugin.form.{RecaptchaClient, Form, FormService, FormDao, SubmissionDao}
 
 /** @author Stephen Samuel */
 @Controller
