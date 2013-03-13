@@ -83,31 +83,61 @@
         <a href="/backoffice/type/$attribute.objectType.id" class="btn">Return</a>
     </div>
 
-
-    #if ($attribute.attributeType == "Selection")
-        <legend>Selection Options</legend>
-        <table class="table table-condensed table-hover" id="fields-table">
-            <tr>
-                <th>Value</th>
-                <th>Actions</th>
-            </tr>
-            #foreach ($option in $attribute.options)
-                <tr data-field-id="$field.id" class="field-row">
-                    <td>$option.value</td>
-                    <td>
-                        <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
-                           class="btn btn-mini">
-                            <i class="icon-pencil"></i></a>
-                        <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
-                           class="btn btn-mini btn-danger">
-                            <i class="icon-trash icon-white"></i></a>
-                    </td>
-                </tr>
-            #end
-        </table>
-    #end
-
-
 </form>
+
+
+#if ($attribute.attributeType == "Selection")
+<legend>Selection Options</legend>
+<table class="table table-condensed table-hover" id="options-table">
+    <tr>
+        <th>Value</th>
+        <th>Actions</th>
+    </tr>
+    #foreach ($option in $attribute.options)
+        <tr data-field-id="$field.id" class="field-row">
+            <td>$option.value</td>
+            <td>
+                <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
+                   class="btn btn-mini">
+                    <i class="icon-pencil"></i></a>
+
+                <a href="/backoffice/attribute/$attribute.id/option/$option.id/delete" role="button"
+                   class="btn btn-mini btn-danger">
+                    <i class="icon-trash icon-white"></i></a>
+            </td>
+        </tr>
+    #end
+    <tr>
+        <td colspan="2"><a href="/backoffice/attribute/$attribute.id/option/create">
+            <i class="icon-plus"></i> Create New Option</a></td>
+    </tr>
+</table>
+#end
+
+
+<script>
+    $(function () {
+        $("#options-table tbody").sortable({
+
+            update: function (event, ui) {
+                var order = []
+                $("#options-table tr.field-row").each(function (v) {
+                    var id = $(this).attr("data-field-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/attribute/$attribute.id/option/order",
+                    contentType: "text/plain",
+                    data: order.join('-')
+                });
+            }
+        });
+        $("#options-table tbody").disableSelection();
+    });
+</script>
+
+
 
 #parse("/admin/footer.vm")

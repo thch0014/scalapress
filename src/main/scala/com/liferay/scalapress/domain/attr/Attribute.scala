@@ -26,7 +26,7 @@ class Attribute {
     @Index(name = "objecttype_index")
     @BeanProperty var objectType: ObjectType = _
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL))
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var options: java.util.List[AttributeOption] = new util.ArrayList[AttributeOption]()
 
     import scala.collection.JavaConverters._
