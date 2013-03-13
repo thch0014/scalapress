@@ -65,8 +65,22 @@ object FormRenderer {
                     {scala.xml.Unparsed(field.name)}
                 </legend>
             case FormFieldType.Attachment => renderUpload(field)
+            case FormFieldType.TextArea => _renderTextArea(field)
             case _ => renderText(field, req)
         }
+    }
+
+    private def _renderTextArea(field: FormField) = {
+        val star = if (field.required) "*" else ""
+        val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
+        <div class="control-group">
+            <label class="control-label">
+                {Unparsed(field.name)}{star}
+            </label>
+            <div class="controls">
+                <textarea name={field.id.toString}>{value}</textarea>
+            </div>
+        </div>
     }
 
     private def renderUpload(field: FormField) = {
