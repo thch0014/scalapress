@@ -46,7 +46,11 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/backoffice/type"><i class="icon-font"></i> Object Types</a></li>
+                        <li><a href="/backoffice/type"><i class="icon-th"></i> List All Object Types</a></li>
+                        #foreach ($type in $types)
+                            <li><a href="/backoffice/type/$type.id"><i class="icon-font"></i> $type.name</a></li>
+                        #end
+                        <li class="divider"></li>
                         <li><a href="/backoffice/theme/"><i class="icon-desktop"></i> Themes</a></li>
                         <li><a href="/backoffice/user"><i class="icon-user"></i> Users</a></li>
                         <li><a href="/backoffice/markup/"><i class="icon-eye-close"></i> Markups</a></li>
