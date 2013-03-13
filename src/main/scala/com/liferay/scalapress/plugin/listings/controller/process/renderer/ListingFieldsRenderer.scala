@@ -66,11 +66,14 @@ object ListingFieldsRenderer {
             </div>
         </div>
 
-    private def _options(attr: Attribute) =
-        attr.options.asScala.map(opt =>
+    private def _options(attr: Attribute) = {
+        val options = attr.options.asScala.map(opt =>
             <option>
                 {opt.value}
             </option>)
+        options.prepend(<option value="">-Select-</option>)
+        options
+    }
 
     private def _renderSelection(attr: Attribute) = {
         val name = attr.name + (if (attr.optional) "" else " *")
