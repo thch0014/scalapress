@@ -93,9 +93,9 @@
         <th>Value</th>
         <th>Actions</th>
     </tr>
-    #foreach ($option in $attribute.options)
+    #foreach ($option in $options)
         <tr data-field-id="$field.id" class="field-row">
-            <td>$option.value</td>
+            <td>$!option.value</td>
             <td>
                 <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
                    class="btn btn-mini">

@@ -22,13 +22,13 @@ class AttributeOptionEditController {
     @RequestMapping(Array("delete"))
     def delete(@ModelAttribute("option") option: AttributeOption): String = {
         attributeOptionDao.remove(option)
-        "redirect:backoffice/attribute/" + option.attribute.id
+        "redirect:/backoffice/attribute/" + option.attribute.id
     }
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("option") option: AttributeOption) = {
         attributeOptionDao.save(option)
-        "redirect:backoffice/attribute/" + option.attribute.id
+        "redirect:/backoffice/attribute/" + option.attribute.id
     }
 
     @ModelAttribute("option") def att(@PathVariable("optid") id: Long) = attributeOptionDao.find(id)
