@@ -1,6 +1,7 @@
 package com.liferay.scalapress.service.theme.tag.obj
 
-import com.liferay.scalapress.domain.attr.AttributeValue
+import com.liferay.scalapress.domain.attr.{Attribute, AttributeValue}
+import collection.SortedMap
 
 /** @author Stephen Samuel */
 object AttributeTableRenderer {
@@ -15,11 +16,13 @@ object AttributeTableRenderer {
         }
     }
 
-    private def _rows(attributeValues: Seq[AttributeValue]): Seq[String] =
-        attributeValues
-          .sortBy(_.attribute.position)
-          .map(av => {
-            "<tr><td class=\"attribute-label\">" + av.attribute.name + "</td><td class=\"attribute-value\">" +
-              AttributeRenderer.renderValue(av) + "</td></tr>"
+    private def _rows(attributeValues: Seq[AttributeValue]): Iterable[String] = {
+        val grouped = attributeValues.groupBy(_.attribute)
+        val sorted = SortedMap.empty(Ordering.by[Attribute, Long](a => a.position)).++(grouped)
+        sorted.map(arg => {
+            val values = arg._2.map(AttributeRenderer.renderValue(_)).mkString(", ")
+            "<tr><td class=\"attribute-label\">" + arg._1.name +
+              "</td><td class=\"attribute-value\">" + values + "</td></tr>"
         })
+    }
 }
