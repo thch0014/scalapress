@@ -12,6 +12,8 @@ import com.liferay.scalapress.section.Section
 @Table(name = "items_types")
 class ObjectType {
 
+    def searchable: Boolean = !name.toLowerCase.contains("account")
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: java.lang.Long = _

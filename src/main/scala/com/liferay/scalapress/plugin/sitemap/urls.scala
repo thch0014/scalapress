@@ -13,10 +13,10 @@ object UrlBuilder {
 
         val domain = "http://" + context.installationDao.get.domain.replace("http://", "")
 
-        val query = new ObjectQuery().withStatus("LIVE").withPageSize(10000)
-        val objects = context.objectDao.search(query)
+        val query = new ObjectQuery().withStatus("LIVE").withPageSize(50000)
+        val objects = context.objectDao.search(query).results.filter(_.objectType.searchable)
         val urls = new ListBuffer[Url]
-        for (obj <- objects.results) {
+        for (obj <- objects) {
             val loc = domain + FriendlyUrlGenerator.friendlyUrl(obj)
             val lastmod = new DateTime(obj.dateUpdated).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.8))
