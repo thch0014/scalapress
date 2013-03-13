@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.domain.attr.Attribute
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.search.{PagingRenderer, SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
+import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
 import com.liferay.scalapress.section.PluginDao
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.sksamuel.scoot.soa.Page
@@ -89,7 +89,6 @@ class SearchController extends Logging {
             page.body("<!-- search results: " + objects.size + " objects found -->")
 
             val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
-            page.body(PagingRenderer.render(paging))
 
             val markup = objects.head.objectType.objectListMarkup
             if (markup != null) {
