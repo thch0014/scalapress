@@ -81,6 +81,22 @@
         </div>
 
         <div class="control-group">
+            <label class="control-label">Included folders</label>
+
+            <div class="controls">
+                #springFormInput("widget.includeFolders", "class='input-xlarge'")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Excluded folders</label>
+
+            <div class="controls">
+                #springFormInput("widget.excludeFolders", "class='input-xlarge'")
+            </div>
+        </div>
+
+        <div class="control-group">
             <label class="control-label">Display On All Objects</label>
 
             <div class="controls">

@@ -1,7 +1,6 @@
 package com.liferay.scalapress.widgets
 
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.WidgetContainer
 
 /** @author Stephen Samuel */
@@ -23,17 +22,30 @@ object WidgetRenderer extends Logging {
     def checkWhere(widget: Widget, request: ScalapressRequest) = {
         widget.restricted match {
             case false => true
-            case true if widget.displayOnAllFolders && request.folder.isDefined
-              && request.folder.get.parent != null => true
-            case true if widget.displayOnHome && request.folder.isDefined
-              && request.folder.get.parent == null => true
-            case true if widget.displayOnAllObjects && request.obj.isDefined => true
-            case true if widget.displayOnOthers && request.folder.isEmpty && request.obj.isEmpty => true
-            case true if request.folder.isDefined && widget
-              .whichFolders
-              .asScala
-              .find(_.id == request.folder.get.id)
-              .isDefined => true
+
+            case true if request.folder.isDefined &&
+              Option(widget.excludeFolders).map(_.split(",").map(_.trim)).getOrElse(Array[String]())
+                .contains(request.folder.get.id.toString) => false
+
+            case true if widget.displayOnAllFolders &&
+              request.folder.isDefined &&
+              request.folder.get.parent != null => true
+
+            case true if request.folder.isDefined &&
+              Option(widget.includeFolders).map(_.split(",").map(_.trim)).getOrElse(Array[String]())
+                .contains(request.folder.get.id.toString) => true
+
+            case true if widget.displayOnHome &&
+              request.folder.isDefined &&
+              request.folder.get.parent == null => true
+
+            case true if widget.displayOnAllObjects &&
+              request.obj.isDefined => true
+
+            case true if widget.displayOnOthers &&
+              request.folder.isEmpty &&
+              request.obj.isEmpty => true
+
             case _ => false
         }
     }
