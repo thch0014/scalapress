@@ -30,6 +30,12 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         val conn = dataSource.getConnection
 
+
+
+
+        execute("ALTER TABLE search_forms MODIFY itemtype bigint(10) null")
+        execute("UPDATE search_forms SET itemtype=null WHERE itemtype=0")
+
         execute("ALTER TABLE plugins_sagepay DROP enabled")
         execute("ALTER TABLE plugins_paypal_standard DROP enabled")
 

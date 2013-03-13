@@ -1,8 +1,9 @@
 package com.liferay.scalapress.search
 
-import javax.persistence.{CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{JoinColumn, ManyToOne, CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import org.hibernate.annotations.{Fetch, FetchMode}
+import com.liferay.scalapress.domain.ObjectType
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,8 +16,9 @@ class SearchForm {
 
     @BeanProperty var name: String = _
 
-    @Column(name = "itemtype")
-    @BeanProperty var objectType: Long = _
+    @ManyToOne
+    @JoinColumn(name = "itemtype")
+    @BeanProperty var objectType: ObjectType = _
 
     @Column(name = "resultsperpage")
     @BeanProperty var pageSize: Int = _

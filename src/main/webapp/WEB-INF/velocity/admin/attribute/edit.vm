@@ -83,6 +83,40 @@
         <a href="/backoffice/type/$attribute.objectType.id" class="btn">Return</a>
     </div>
 
+
+    #if ($attribute.attributeType == "Selection")
+        <legend>Selection Options</legend>
+        <table class="table table-condensed table-hover" id="fields-table">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th></th>
+            </tr>
+            #foreach ($field in $fields)
+                <tr data-field-id="$field.id" class="field-row">
+                    <td>$field.id</td>
+                    <td>$field.name</td>
+                    <td>$field.fieldType</td>
+                    <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
+                    <td>
+                        <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-mini">
+                            <i class="icon-pencil"></i></a>
+
+
+                        <a onClick="bootbox.confirm('Confirm delete', function(result) {
+                                if (result) {
+                                window.location='/backoffice/form/$form.id/field/$field.id/delete';
+                                }})" role="button" class="btn btn-danger btn-mini">
+                            <i class="icon-trash icon-white"></i></a>
+                    </td>
+                </tr>
+            #end
+        </table>
+    #end
+
+
 </form>
 
 #parse("/admin/footer.vm")

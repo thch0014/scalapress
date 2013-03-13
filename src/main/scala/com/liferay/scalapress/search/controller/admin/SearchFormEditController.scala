@@ -5,15 +5,17 @@ import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.MarkupDao
+import com.liferay.scalapress.dao.{TypeDao, MarkupDao}
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.search.{SearchFormDao, SearchFormField, SearchForm}
+import com.liferay.scalapress.controller.ObjectTypePopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/searchform/{id}"))
-class SearchFormEditController extends MarkupPopulator {
+class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator {
 
+    @Autowired var objectTypeDao: TypeDao = _
     @Autowired var markupDao: MarkupDao = _
     @Autowired var searchFormDao: SearchFormDao = _
     @Autowired var context: ScalapressContext = _

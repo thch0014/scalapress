@@ -14,16 +14,16 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Search Results Markup</label>
+        <label class="control-label">Object Type</label>
 
         <div class="controls">
-            <select id="markup" name="markup">
-                #foreach($option in $markupMap.keySet())
+            <select id="objectType" name="objectType">
+                #foreach($option in $objectTypesMap.keySet())
                     <option value="${option}"
-                        #if("$!form.markup.id" == "$option")
+                        #if("$!form.objectType.id" == "$option")
                             selected="selected"
                         #end>
-                        ${markupMap.get($option)}</option>
+                        ${objectTypesMap.get($option)}</option>
                 #end
             </select>
         </div>

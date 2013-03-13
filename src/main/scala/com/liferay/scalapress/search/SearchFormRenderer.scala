@@ -16,8 +16,7 @@ object SearchFormRenderer {
 
         val submit = Option(form.submitLabel).getOrElse("Submit")
         val objectType = Option(form.objectType)
-          .filter(_ > 0)
-          .map(id => <input type="hidden" value={id.toString} name="type"/>).orNull
+          .map(objectType => <input type="hidden" value={objectType.id.toString} name="type"/>).orNull
 
         <form method="GET" action="/search">
             <input type="hidden" name="sectionId" value={section
