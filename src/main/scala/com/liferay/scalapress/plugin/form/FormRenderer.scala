@@ -65,12 +65,12 @@ object FormRenderer {
                     {scala.xml.Unparsed(field.name)}
                 </legend>
             case FormFieldType.Attachment => renderUpload(field)
-            case FormFieldType.TextArea => _renderTextArea(field)
+            case FormFieldType.TextArea => _renderTextArea(field, req)
             case _ => renderText(field, req)
         }
     }
 
-    private def _renderTextArea(field: FormField) = {
+    private def _renderTextArea(field: FormField, req: ScalapressRequest) = {
         val star = if (field.required) "*" else ""
         val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
         <div class="control-group">
