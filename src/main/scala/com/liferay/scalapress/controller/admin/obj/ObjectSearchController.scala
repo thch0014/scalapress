@@ -57,6 +57,6 @@ class ObjectSearchController extends ObjectStatusPopulator {
 }
 
 class SearchForm {
-    @BeanProperty var status: String = _
+    @BeanProperty var status: String = "Live"
     @BeanProperty var name: String = _
 }

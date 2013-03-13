@@ -25,12 +25,13 @@ class WidgetListController {
     @RequestMapping(value = Array("create"), method = Array(RequestMethod.POST))
     def create(@RequestParam("class") klass: String) = {
         val widget = Class.forName(klass).newInstance().asInstanceOf[Widget]
+        widget.init(context)
         widgetDao.save(widget)
         "redirect:/backoffice/widget"
     }
 
     @RequestMapping(value = Array("{id}/delete"))
-    def create(@PathVariable("id") id: Long) = {
+    def delete(@PathVariable("id") id: Long) = {
         widgetDao.removeById(id)
         "redirect:/backoffice/widget"
     }

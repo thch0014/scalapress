@@ -9,7 +9,7 @@ import plugin.listings.{ListingProcessDao, ListingPackageDao, ListingsPluginDao}
 import plugin.payments.PaymentPluginDao
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
-import search.{SearchFormDao, SearchService}
+import search.{SavedSearchDao, SearchFormDao, SearchService}
 import service.asset.AssetStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -36,8 +36,11 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var siteDao: InstallationDao = _
     @Autowired var imageService: ImageService = _
     @Autowired var basketDao: BasketDao = _
+
     @Autowired var searchService: SearchService = _
     @Autowired var searchFormDao: SearchFormDao = _
+    @Autowired var savedSearchDao : SavedSearchDao = _
+
     @Autowired var attributeDao: AttributeDao = _
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var folderDao: FolderDao = _

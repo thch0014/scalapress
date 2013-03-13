@@ -1,7 +1,7 @@
 package com.liferay.scalapress.search.widget
 
 import javax.persistence.{FetchType, ManyToOne, Table, Entity, JoinColumn, OneToOne}
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.service.theme.MarkupRenderer
@@ -27,6 +27,13 @@ class SearchResultsWidget extends Widget {
     @JoinColumn(name = "markup")
     @Fetch(FetchMode.JOIN)
     @BeanProperty var markup: Markup = _
+
+    override def backoffice = "/backoffice/search/widget/results/" + id
+
+    override def _init(context: ScalapressContext) {
+        search = new SavedSearch
+        context.savedSearchDao.save(search)
+    }
 
     def render(req: ScalapressRequest): Option[String] = {
         Option(search) match {

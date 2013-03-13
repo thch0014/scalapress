@@ -2,13 +2,21 @@ package com.liferay.scalapress.widgets
 
 import javax.persistence.{Column, GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
 import reflect.BeanProperty
-import com.liferay.scalapress.ScalapressRequest
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.WidgetContainer
 
 /** @author Stephen Samuel */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Widget {
+
+    final def init(context: ScalapressContext) {
+        this.location = "Left"
+        _init(context)
+        context.widgetDao.save(this)
+    }
+
+    def _init(context: ScalapressContext) {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

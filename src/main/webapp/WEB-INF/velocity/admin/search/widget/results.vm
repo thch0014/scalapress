@@ -1,0 +1,163 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Search Results Widget</h3>
+
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("widget.name")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+            #springFormCheckbox("widget.visible")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Location</label>
+
+        <div class="controls">
+            #springFormInput("widget.location")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Search</label>
+
+        <div class="controls">
+            Edit Saved Search <a href="/backoffice/savedsearch/$widget.search.id" class="btn btn-mini">
+            <i class="icon-pencil"></i></a>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Markup</label>
+
+        <div class="controls">
+            <select id="markup" name="markup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!widget.markup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        ${markupMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Container</label>
+
+        <div class="controls">
+            #springFormSingleSelect("widget.container", $widgetContainerMap)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Container Class</label>
+
+        <div class="controls">
+            #springFormInput("widget.containerClass")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Container Id</label>
+
+        <div class="controls">
+            #springFormInput("widget.containerId")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Caption</label>
+
+        <div class="controls">
+            #springFormInput("widget.caption")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Restricted</label>
+
+        <div class="controls">
+            #springFormCheckbox("widget.restricted")
+        </div>
+    </div>
+
+    #if ($widget.restricted)
+        <div class="control-group">
+            <label class="control-label">Display On All Folders</label>
+
+            <div class="controls">
+                #springFormCheckbox("widget.displayOnAllFolders")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Included folders</label>
+
+            <div class="controls">
+                #springFormInput("widget.includeFolders", "class='input-xlarge'")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Excluded folders</label>
+
+            <div class="controls">
+                #springFormInput("widget.excludeFolders", "class='input-xlarge'")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Display On All Objects</label>
+
+            <div class="controls">
+                #springFormCheckbox("widget.displayOnAllObjects")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Display On Home</label>
+
+            <div class="controls">
+                #springFormCheckbox("widget.displayOnHome")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Display On Others</label>
+
+            <div class="controls">
+                #springFormCheckbox("widget.displayOnOthers")
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Display On Search Results</label>
+
+            <div class="controls">
+                #springFormCheckbox("widget.displayOnSearchResults")
+            </div>
+        </div>
+    #end
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

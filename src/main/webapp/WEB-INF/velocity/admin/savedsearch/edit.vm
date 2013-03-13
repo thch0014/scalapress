@@ -77,7 +77,7 @@
             <select id="sortType" name="sortType">
                 #foreach($option in $sortMap.keySet())
                     <option value="${option}"
-                        #if("$!search.sortType.id" == "$option")
+                        #if("$!search.sortType" == "$option")
                             selected="selected"
                         #end>
                         ${sortMap.get($option)}</option>
