@@ -94,7 +94,7 @@
         <th>Actions</th>
     </tr>
     #foreach ($option in $options)
-        <tr data-field-id="$field.id" class="field-row">
+        <tr data-field-id="$option.id" class="option-row">
             <td>$!option.value</td>
             <td>
                 <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
@@ -121,7 +121,7 @@
 
             update: function (event, ui) {
                 var order = []
-                $("#options-table tr.field-row").each(function (v) {
+                $("#options-table tr.option-row").each(function (v) {
                     var id = $(this).attr("data-field-id")
                     order.push(id)
                 })

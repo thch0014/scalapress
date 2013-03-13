@@ -1,7 +1,7 @@
 package com.liferay.scalapress.controller.admin.obj.attribute
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{AttributeOptionDao, AttributeDao}
 import scala.Array
@@ -9,6 +9,7 @@ import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.domain.attr.{AttributeOption, Attribute}
 import com.liferay.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,8 +23,9 @@ class AttributeEditController extends EnumPopulator {
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute a: Attribute) = "admin/attribute/edit.vm"
 
+    @ResponseBody
     @RequestMapping(value = Array("option/order"), method = Array(RequestMethod.POST))
-    def reorderOptions(@ModelAttribute a: Attribute, @RequestBody order: String): String = {
+    def reorderOptions(@ModelAttribute a: Attribute, @RequestBody order: String, resp: HttpServletResponse) {
 
         val ids = order.split("-")
         a.options.asScala.foreach(option => {
@@ -31,7 +33,7 @@ class AttributeEditController extends EnumPopulator {
             option.position = pos
             attributeOptionDao.save(option)
         })
-        "ok"
+        resp.setStatus(200)
     }
 
     @RequestMapping(Array("option/create"))
