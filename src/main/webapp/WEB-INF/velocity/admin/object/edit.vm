@@ -13,9 +13,7 @@
     <li><a href="#tab4" data-toggle="tab">Content</a></li>
     <li><a href="#tab5" data-toggle="tab">Images</a></li>
     <li><a href="#tab6" data-toggle="tab">Sections</a></li>
-    #foreach ($g in $form.o.objectType.linkGroupsArray())
-        <li><a href="#tablinkgroup$g" data-toggle="tab">$g</a></li>
-    #end
+    <li><a href="#tab7" data-toggle="tab">Associations</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active" id="tab1">
@@ -305,18 +303,65 @@
 
 </div>
 
-    #foreach ($g in $form.o.objectType.linkGroupsArray())
-    <div class="tab-pane active" id="tablinkgroup$g">
 
-        <div class=" control-group">
-            <label class="control-label">Name</label>
+<div class="tab-pane" id="tab7">
 
+    <legend>Associations</legend>
+    <table class="table table-condensed table-hover" id="sections-table">
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+        #foreach ($a in $form.o.associations)
+            <tr data-section-id="$a.id" class="section-row">
+                <td>$a.id</td>
+                <td>$a.objectType.name</td>
+                <td><a href="/backoffice/obj/$a.id">$a.name</a></td>
+                <td><a href="/backoffice/obj/$form.o.id/association/$a.id/delete" role="button"
+                       class="btn btn-mini btn-danger">
+                    <i class="icon-trash icon-white"></i></a>
+                </td>
+            </tr>
+        #end
 
-        </div>
+    </table>
 
-    </div>
-    #end
+    <input type="hidden" id="add-association-id" name="associatedObjectId"/>
+    <input type="text" class="input-xlarge" id="add-association-typeahead" value=""/>
+    <script>
+        autosep = ":";
+        $('#add-association-typeahead').typeahead({
+            source: function (query, process) {
+                return $.ajax({
+                    url: "/rest/obj",
+                    type: 'GET',
+                    data: {q: query},
+                    dataType: 'json',
+                    success: function (json) {
+                        var arr = [];
+                        for (var i in json) {
+                            arr.push(json[i][0] + autosep + json[i][1]);
+                        }
+                        process(arr);
+                    }
+                });
+            }, highlighter: function (item) {
+                var parts = item.split(autosep);
+                parts.shift();
+                return parts.join(autosep);
+            }, updater: function (item) {
+                var parts = item.split(autosep);
+                var id = parts.shift();
+                $('#add-association-id').val(id);
+                return parts.join(autosep);
+            }
+        })
+    </script>
+    <button type="submit" class="btn btn-small">Add Association</button>
 
+</div>
 </div>
 </div>
 

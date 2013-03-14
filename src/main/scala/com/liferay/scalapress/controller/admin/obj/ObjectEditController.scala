@@ -90,6 +90,10 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             }
         }
 
+        val associatedObject = objectDao.find(form.associatedObjectId)
+        if (associatedObject != null)
+            form.o.associations.add(associatedObject)
+
         objectDao.save(form.o)
         if (!form.o.objectType.name.toLowerCase.contains("account"))
             searchService.index(form.o)
@@ -118,6 +122,18 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         "ok"
     }
 
+    @RequestMapping(value = Array("association/{associationId}/delete"))
+    def deleteAssociation(@ModelAttribute("form") form: EditForm,
+                          @PathVariable("associationId") associationId: Long): String = {
+        form.o.associations.asScala.find(_.id == associationId) match {
+            case None =>
+            case Some(association) =>
+                form.o.associations.remove(association)
+                objectDao.save(form.o)
+        }
+        "redirect:/backoffice/obj/" + form.o.id
+    }
+
     @RequestMapping(value = Array("section/{sectionId}/delete"))
     def deleteSection(@ModelAttribute("form") form: EditForm, @PathVariable("sectionId") sectionId: Long): String = {
         form.o.sections.asScala.find(_.id == sectionId) match {
@@ -127,7 +143,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
                 section.obj = null
                 objectDao.save(form.o)
         }
-        "redirect:/backoffice/obj/"
+        "redirect:/backoffice/obj/" + form.o.id
     }
 
     @RequestMapping(Array("image/{filename}/remove"))
@@ -186,7 +202,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 }
 
 class EditForm {
-
+    @BeanProperty var associatedObjectId: Long = _
     @BeanProperty var sellPrice: Double = _
     @BeanProperty var costPrice: Double = _
     @BeanProperty var rrp: Double = _

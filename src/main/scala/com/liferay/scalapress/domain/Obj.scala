@@ -56,11 +56,11 @@ class Obj {
     @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
-    @JoinTable(name = "objects_links",
-        joinColumns = Array(new JoinColumn(name = "parent", unique = true)),
-        inverseJoinColumns = Array(new JoinColumn(name = "child"))
+    @JoinTable(name = "items_accessories",
+        joinColumns = Array(new JoinColumn(name = "item", unique = true)),
+        inverseJoinColumns = Array(new JoinColumn(name = "accessory"))
     )
-    @BeanProperty var links: java.util.Set[Obj] = new util.HashSet[Obj]()
+    @BeanProperty var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
@@ -139,7 +139,7 @@ class Obj {
     @BeanProperty var permaLink: String = _
 
     @PrePersist
-    def updateLastModified {
+    def updateLastModified() {
         dateUpdated = System.currentTimeMillis()
     }
 

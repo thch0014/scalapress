@@ -30,8 +30,10 @@ class EcreatorDatabaseUpgrader extends Logging {
 
         val conn = dataSource.getConnection
 
-
-
+        execute("ALTER TABLE items_accessories MODIFY item bigint(10) null")
+        execute("UPDATE items_accessories SET item=null WHERE item=0")
+        execute("ALTER TABLE items_accessories MODIFY accessory bigint(10) null")
+        execute("UPDATE items_accessories SET accessory=null WHERE accessory=0")
 
         execute("ALTER TABLE search_forms MODIFY itemtype bigint(10) null")
         execute("UPDATE search_forms SET itemtype=null WHERE itemtype=0")
