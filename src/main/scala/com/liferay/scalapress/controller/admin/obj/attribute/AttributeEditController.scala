@@ -39,7 +39,7 @@ class AttributeEditController extends EnumPopulator {
     @RequestMapping(Array("option/create"))
     def createOption(@ModelAttribute a: Attribute): String = {
         val option = new AttributeOption
-        option.position = a.options.asScala.map(_.position).max + 1
+        option.position = if (a.options.isEmpty) 0 else a.options.asScala.map(_.position).max + 1
         option.attribute = a
         a.options.add(option)
         attributeDao.save(a)
