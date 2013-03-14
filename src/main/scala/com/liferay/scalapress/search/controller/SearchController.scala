@@ -17,6 +17,7 @@ import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchServic
 import com.liferay.scalapress.section.PluginDao
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.sksamuel.scoot.soa.Page
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 
@@ -38,6 +39,7 @@ class SearchController extends Logging {
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
+               @RequestParam(value = "sort", required = false) sort: Sort,
                @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String): ScalaPressPage = {
@@ -61,6 +63,7 @@ class SearchController extends Logging {
         search.keywords = q
         search.maxResults = PageSize
         search.objectType = Option(t).map(t => typeDao.find(t.toLong)).orNull
+        search.sortType = sort
 
         val response = searchService.search(search)
         val objects = response.hits.hits().map(hit => {
@@ -81,11 +84,11 @@ class SearchController extends Logging {
               .flatMap(section => Option(section.asInstanceOf[SearchFormSection].noResultsText))
               .getOrElse(plugin.noResultsText)
 
-
             page.body("<!-- search results: no objects found -->")
             page.body(noResults)
 
         } else {
+
             page.body("<!-- search results: " + objects.size + " objects found -->")
 
             val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
@@ -97,14 +100,6 @@ class SearchController extends Logging {
             }
         }
         page
-    }
-
-    @ResponseBody
-    @RequestMapping(Array("{type}"))
-    def test(@PathVariable("type") typeId: Long, @RequestParam("q") q: String) = {
-        val t = typeDao.find(typeId)
-        val response = searchService.searchType(q, t, 50)
-        response.toString
     }
 
     @ResponseBody

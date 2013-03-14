@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
-import com.liferay.scalapress.dao.{MarkupDao}
+import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.search.section.SearchResultsSection
 import com.liferay.scalapress.section.PluginDao

@@ -3,14 +3,14 @@ package com.liferay.scalapress.search
 import section.SearchFormSection
 import xml.{Unparsed, Elem}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.enums.SearchFieldType
-import com.liferay.scalapress.enums.AttributeType
+import com.liferay.scalapress.enums.{Sort, SearchFieldType, AttributeType}
 
 /** @author Stephen Samuel */
 object SearchFormRenderer {
 
     def render(form: SearchForm, section: SearchFormSection): String = {
 
+        val sort = Option(form.sort).getOrElse(Sort.Name)
         val fields = form.fields.asScala.toSeq.sortBy(_.position)
         val renderedFields = renderFields(fields)
 
@@ -19,6 +19,7 @@ object SearchFormRenderer {
           .map(objectType => <input type="hidden" value={objectType.id.toString} name="type"/>).orNull
 
         <form method="GET" action="/search">
+            <input type="hidden" name="sort" value={sort.name}/>
             <input type="hidden" name="sectionId" value={section
           .id
           .toString}/>{objectType}{renderedFields}<button type="submit">

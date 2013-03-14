@@ -3,7 +3,7 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.dao.{TypeDao, MarkupDao}
 import com.liferay.scalapress.enums.SearchFieldType
@@ -13,7 +13,7 @@ import com.liferay.scalapress.controller.ObjectTypePopulator
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/searchform/{id}"))
-class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator {
+class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator with SortPopulator {
 
     @Autowired var objectTypeDao: TypeDao = _
     @Autowired var markupDao: MarkupDao = _

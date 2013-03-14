@@ -1,9 +1,10 @@
 package com.liferay.scalapress.search
 
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import org.hibernate.annotations.{Fetch, FetchMode}
 import com.liferay.scalapress.domain.ObjectType
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,6 +23,9 @@ class SearchForm {
 
     @Column(name = "resultsperpage")
     @BeanProperty var pageSize: Int = _
+
+    @Enumerated(EnumType.STRING)
+    @BeanProperty var sort: Sort = _
 
     @BeanProperty var submitLabel: String = _
 

@@ -3,9 +3,9 @@ package com.liferay.scalapress.search.controller.admin.section
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import scala.Array
-import com.liferay.scalapress.dao.{MarkupDao}
+import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.liferay.scalapress.section.PluginDao
@@ -13,7 +13,7 @@ import com.liferay.scalapress.section.PluginDao
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/search/section/form/{id}"))
-class SearchFormSectionController extends MarkupPopulator {
+class SearchFormSectionController extends MarkupPopulator with SortPopulator {
 
     @Autowired var markupDao: MarkupDao = _
     @Autowired var sectionDao: PluginDao = _

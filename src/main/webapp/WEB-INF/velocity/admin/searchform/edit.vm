@@ -29,6 +29,22 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Sort</label>
+
+        <div class="controls">
+            <select id="sort" name="sort">
+                #foreach($option in $sortMap.keySet())
+                    <option value="${option}"
+                        #if("$!form.sort" == "$option")
+                            selected="selected"
+                        #end>
+                        ${sortMap.get($option)}</option>
+                #end
+            </select>
+        </div>
+    </div>
+
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
         <a href="/backoffice/searchform" class="btn">Return</a>
