@@ -33,11 +33,15 @@ class BasketController {
         val page = ScalaPressPage(theme, sreq)
         val markup = shoppingPluginDao.get.basketMarkup
 
+
         page.body("<form method='POST'>")
-        if (markup == null)
+        if (markup == null) {
             page.body("<!-- no basket markup set -->")
-        else
-            page.body(MarkupRenderer.render(markup, sreq, context))
+        } else {
+            val obj = Option(req.getParameter("objectId")).flatMap(objId => Option(objectDao.find(objId.toLong)))
+            page.body(MarkupRenderer.render(markup, obj.map(sreq.withObject(_)).getOrElse(sreq), context))
+        }
+
         page.body("</form>")
         page
     }
@@ -63,7 +67,7 @@ class BasketController {
 
         basket.lines.add(line)
         basketDao.save(basket)
-        "redirect:/basket"
+        "redirect:/basket?objectId=" + id
     }
 
     @RequestMapping(value = Array("remove/{id}"), produces = Array("text/html"))
