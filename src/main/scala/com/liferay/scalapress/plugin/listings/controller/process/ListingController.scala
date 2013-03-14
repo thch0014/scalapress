@@ -67,20 +67,30 @@ class ListingController {
             case None =>
                 showPackages(process, errors, req)
             case Some(lp) =>
-                val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
-                val theme = themeService.default
-                val page = ScalaPressPage(theme, sreq)
 
-                val folders = Option(process.listingPackage.folders)
-                  .filter(_.trim.length > 0)
-                  .map(_.split(","))
-                  .getOrElse(Array[String]())
-                val tree = context.folderDao.tree
-                val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
+                lp.maxFolders match {
+                    case 0 =>
+                        showFields(process, errors, req)
 
-                page.body(ListingWizardRenderer.render(ListingWizardRenderer.SelectFolder))
-                page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
-                page
+                    case _ =>
+                        val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
+                        val theme = themeService.default
+                        val page = ScalaPressPage(theme, sreq)
+
+                        val folders = Option(process.listingPackage.folders)
+                          .filter(_.trim.length > 0)
+                          .map(_.split(","))
+                          .getOrElse(Array[String]())
+
+                        val tree = context.folderDao.tree
+                        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
+
+                        page
+                          .body(ListingWizardRenderer
+                          .render(process.listingPackage, ListingWizardRenderer.SelectFolder))
+                        page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
+                        page
+                }
 
         }
     }
@@ -105,7 +115,7 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.ListingFields))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ListingFields))
         page.body(ListingFieldsRenderer.render(process))
         page
     }
@@ -147,7 +157,7 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.UploadImages))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.UploadImages))
         page.body(ListingImagesRenderer.render(process, listingsPluginDao.get))
         page
     }
@@ -183,7 +193,7 @@ class ListingController {
         val port = new URL(req.getRequestURL.toString).getPort
         val domain = if (port == 8080) host + ":8080" else host
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.Confirmation))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Confirmation))
 
         val confRenderer = new ListingConfirmationRenderer(context)
         page.body(confRenderer.render(process))
@@ -212,7 +222,7 @@ class ListingController {
 
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.Completed))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Completed))
         page.body(message)
         page
     }
@@ -225,7 +235,7 @@ class ListingController {
         val theme = themeService.default
         val page = ScalaPressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(ListingWizardRenderer.Confirmation))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Confirmation))
         page.body("<p>This listing was not completed.</p>")
         page.body("<p>Please <a href='/listing/confirmation'>click here</a> if you wish to try again.")
         page

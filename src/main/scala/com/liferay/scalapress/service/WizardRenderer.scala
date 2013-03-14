@@ -3,7 +3,7 @@ package com.liferay.scalapress.service
 /** @author Stephen Samuel */
 object WizardRenderer {
 
-    def render(steps: Seq[WizardStep], position: Int) = {
+    def render(steps: Iterable[WizardStep], position: Int) = {
 
         var index = 0
         val links = steps.map(step => {

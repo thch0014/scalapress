@@ -1,6 +1,8 @@
 package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.service.{WizardRenderer, WizardStep}
+import com.liferay.scalapress.plugin.listings.ListingPackage
+import collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 object ListingWizardRenderer {
@@ -12,13 +14,21 @@ object ListingWizardRenderer {
     val Confirmation = 5
     val Completed = 6
 
-    def steps = List(WizardStep("/listing/package", "Package"),
-        WizardStep("/listing/folder", "Sections"),
-        WizardStep("/listing/field", "Details"),
-        WizardStep("/listing/image", "Images"),
-        WizardStep("/listing/confirmation", "Confirm"),
-        WizardStep("#", "Completed"))
+    def steps(lp: ListingPackage): Iterable[WizardStep] = {
 
-    def render(stage: Int) = WizardRenderer.render(steps, stage)
+        val list = new ListBuffer[WizardStep]
+        list.append(WizardStep("/listing/package", "Package"))
+        if (lp.maxFolders > 0)
+            list.append(WizardStep("/listing/folder", "Sections"))
+
+        list.append(WizardStep("/listing/field", "Details"))
+        list.append(WizardStep("/listing/image", "Images"))
+        list.append(WizardStep("/listing/confirmation", "Confirm"))
+        list.append(WizardStep("#", "Completed"))
+
+        list.toList
+    }
+
+    def render(lp: ListingPackage, stage: Int) = WizardRenderer.render(steps(lp), stage)
 }
 
