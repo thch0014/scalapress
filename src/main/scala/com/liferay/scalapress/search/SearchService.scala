@@ -113,7 +113,7 @@ class ElasticSearchService extends SearchService with Logging {
     override def prefix(q: String, limit: Int): SearchResponse = {
 
         client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+          .setSearchType(SearchType.QUERY_AND_FETCH)
           .addField("name")
           .setQuery(new PrefixQueryBuilder("name", q))
           .setFrom(0)
@@ -154,47 +154,42 @@ class ElasticSearchService extends SearchService with Logging {
 
         val limit = if (search.maxResults < 1) 40 else search.maxResults
 
+        val req = client.prepareSearch(INDEX).addField("name").setSearchType(SearchType.QUERY_AND_FETCH)
+        Option(search.objectType).foreach(arg => {
+            req.setTypes(arg.id.toString)
+        })
+
         buffer.size match {
 
             case 0 =>
-                client.prepareSearch(INDEX)
-                  .addField("name")
-                  .setFrom(0)
+                req.setFrom(0)
                   .setSize(limit)
-                  .execute()
-                  .actionGet()
 
             case _ =>
                 val query = new QueryStringQueryBuilder(buffer.mkString(" AND "))
                 logger.debug("Performing search {}", query)
 
-                val req = client.prepareSearch(INDEX)
-                  .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                  .setQuery(query)
-                  .addField("name")
+                req.setQuery(query)
                   .setFrom(0)
                   .setSize(limit)
-
-                Option(search.objectType).foreach(arg => {
-                    req.setTypes(arg.id.toString)
-                })
 
                 val sort = search.sortType match {
                     case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
                     case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
-
                 }
 
                 req.addSort(sort.ignoreUnmapped(true))
-                req.execute().actionGet()
+                req
         }
+
+        req.execute().actionGet()
     }
 
     // search by the given query string and then return the matching doc ids
     override def search(q: String, limit: Int): SearchResponse = {
 
         val req = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+          .setSearchType(SearchType.QUERY_AND_FETCH)
           .addField("name")
           .addField("folders")
           .addField("status")
@@ -214,7 +209,7 @@ class ElasticSearchService extends SearchService with Logging {
     override def searchType(q: String, t: ObjectType, limit: Int): SearchResponse = {
 
         val search = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+          .setSearchType(SearchType.QUERY_AND_FETCH)
           .addField("name")
           .addField("folders")
           .addField("status")
