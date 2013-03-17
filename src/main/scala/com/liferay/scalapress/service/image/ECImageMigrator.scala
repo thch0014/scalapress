@@ -15,7 +15,7 @@ import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 
 /** @author Stephen Samuel */
 @Component
-class EcreatorImageMigrator extends Logging {
+class ECImageMigrator extends Logging {
 
     @Autowired var folderDao: FolderDao = _
     @Autowired var widgetDao: WidgetDao = _

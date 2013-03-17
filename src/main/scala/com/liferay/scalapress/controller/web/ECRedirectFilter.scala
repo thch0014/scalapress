@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
-class EcreatorRedirectFilter extends Filter with Logging {
+class ECRedirectFilter extends Filter with Logging {
 
     var pattern = ".*-([a-z])(\\d+)\\.html\\??(.*)$".r
 

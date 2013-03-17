@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.service.image.EcreatorImageMigrator
+import com.liferay.scalapress.service.image.ECImageMigrator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("migration"))
 class MigratorController extends Logging {
 
-    @Autowired var migrator: EcreatorImageMigrator = _
+    @Autowired var migrator: ECImageMigrator = _
 
     @RequestMapping(Array("images/{domain}"))
     @ResponseBody

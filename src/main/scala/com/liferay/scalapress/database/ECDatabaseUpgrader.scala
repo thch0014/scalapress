@@ -8,7 +8,7 @@ import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
 @Component
-class EcreatorDatabaseUpgrader extends Logging {
+class ECDatabaseUpgrader extends Logging {
 
     @Autowired var dataSource: DataSource = _
 
