@@ -20,6 +20,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.search.SearchService
 import com.liferay.scalapress.section.{PluginDao, Section}
 import com.liferay.scalapress.util.ComponentClassScanner
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -90,8 +91,8 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             }
         }
 
-        if (form.associatedObjectId != null)
-            form.o.associations.add(form.associatedObjectId)
+        if (form.associatedObjectId != null && form.associatedObjectId.trim.length > 0)
+            form.o.associations.add(objectDao.find(form.associatedObjectId.trim.toLong))
 
         objectDao.save(form.o)
         if (!form.o.objectType.name.toLowerCase.contains("account"))
@@ -181,7 +182,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         form.folderIds = Array()
         form
 
-        import scala.collection.JavaConverters._
+
         model.put("attributesWithValues",
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
         model.put("form", form)
@@ -201,7 +202,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 }
 
 class EditForm {
-    @BeanProperty var associatedObjectId: Obj = _
+    @BeanProperty var associatedObjectId: String = _
     @BeanProperty var sellPrice: Double = _
     @BeanProperty var costPrice: Double = _
     @BeanProperty var rrp: Double = _

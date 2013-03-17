@@ -19,7 +19,7 @@ class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Fold
 
 class StringObjectTypeConverter(objectTypeDao: TypeDao) extends Converter[String, ObjectType] {
     def convert(source: String): ObjectType =
-        if (source == null || source == "" || source == "0") null
+        if (source == null || source.trim.isEmpty || source == "0") null
         else objectTypeDao.find(source.toLong)
 }
 

@@ -3,6 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.sksamuel</groupId>
+        <artifactId>superpom</artifactId>
+        <version>1.0.2</version>
+    </parent>
+
     <groupId>com.cloudray.scalapress</groupId>
     <artifactId>scalapress</artifactId>
     <version>3.0.0-SNAPSHOT</version>
@@ -31,9 +37,9 @@
         <maven.plugin.surefire.version>2.12</maven.plugin.surefire.version>
         <maven.plugin.dependency.version>2.4</maven.plugin.dependency.version>
         <maven.plugin.cargo.version>1.2.2</maven.plugin.cargo.version>
-        <maven.plugin.scala.version>3.0.2</maven.plugin.scala.version>
         <maven.plugin.release.version>2.3.2</maven.plugin.release.version>
         <maven.plugin.autoinc.version>2.0-SNAPSHOT</maven.plugin.autoinc.version>
+        <maven.plugin.scala.version>3.1.3</maven.plugin.scala.version>
 
         <compiler.version.source>1.7</compiler.version.source>
         <compiler.version.target>1.7</compiler.version.target>
@@ -58,7 +64,7 @@
 
         <mysql.version>5.1.23</mysql.version>
         <jdom.version>1.1.3</jdom.version>
-        <jdom2.version>2.0.2</jdom2.version>
+        <jdom2.version>2.0.4</jdom2.version>
         <jodatime.version>1.4</jodatime.version>
 
         <jackson.version>1.9.7</jackson.version>
@@ -87,13 +93,8 @@
         <itext.version>5.2.0</itext.version>
     </properties>
 
-
+<!--
     <repositories>
-        <repository>
-            <id>repository.springframework.maven.release</id>
-            <name>Spring Framework Maven Release Repository</name>
-            <url>http://repo.springsource.org/release</url>
-        </repository>
         <repository>
             <id>maven2-repository.dev.java.net</id>
             <url>http://download.java.net/maven/2/</url>
@@ -108,7 +109,7 @@
             </releases>
         </repository>
     </repositories>
-
+-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -206,6 +207,11 @@
                     <configuration>
                         <encoding>UTF-8</encoding>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>${maven.plugin.scala.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
