@@ -132,13 +132,16 @@ class ElasticSearchService extends SearchService with Logging {
           .filterNot(_.toLowerCase == "latest")
           .foreach(_.split(",").foreach(label => buffer.append("labels:" + label)))
 
+      if (search.name == null)
+        search.name = search.keywords
+
         Option(search.name)
           .filter(_.trim.length > 0)
           .foreach(_.split(",").foreach(n => buffer.append("name:" + n)))
 
-        //      Option(search.keywords)
-        //      .filter(_.trim.length > 0)
-        //    .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
+  //            Option(search.keywords)
+    //          .filter(_.trim.length > 0)
+      //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
