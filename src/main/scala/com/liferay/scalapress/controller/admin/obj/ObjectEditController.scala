@@ -90,9 +90,8 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             }
         }
 
-        val associatedObject = objectDao.find(form.associatedObjectId)
-        if (associatedObject != null)
-            form.o.associations.add(associatedObject)
+        if (form.associatedObjectId != null)
+            form.o.associations.add(form.associatedObjectId)
 
         objectDao.save(form.o)
         if (!form.o.objectType.name.toLowerCase.contains("account"))
@@ -202,7 +201,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 }
 
 class EditForm {
-    @BeanProperty var associatedObjectId: Long = _
+    @BeanProperty var associatedObjectId: Obj = _
     @BeanProperty var sellPrice: Double = _
     @BeanProperty var costPrice: Double = _
     @BeanProperty var rrp: Double = _
