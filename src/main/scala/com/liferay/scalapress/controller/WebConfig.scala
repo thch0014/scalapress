@@ -4,7 +4,7 @@ import admin.interceptor.{SiteInterceptor, TypesInterceptor, UrlResolverIntercep
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry
-import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.{ResourceHttpMessageConverter, ByteArrayHttpMessageConverter, StringHttpMessageConverter, HttpMessageConverter}
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
@@ -18,6 +18,9 @@ import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDa
 import com.liferay.scalapress.dao.settings.InstallationDao
 import com.liferay.scalapress.plugin.form.FormDao
 import com.liferay.scalapress.search.SearchFormDao
+import org.springframework.http.converter.xml.{SourceHttpMessageConverter, XmlAwareFormHttpMessageConverter}
+import java.nio.charset.Charset
+import javax.xml.transform.Source
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -69,8 +72,16 @@ class WebConfig extends WebMvcConfigurationSupport {
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
-        super.addDefaultHttpMessageConverters(converters)
-        converters.add(0, new ScalaPressPageMessageConverter(new ScalapressPageRenderer(context)))
+
+        converters.add(new ScalaPressPageMessageConverter(new ScalapressPageRenderer(context)))
+        converters.add(new ByteArrayHttpMessageConverter)
+        val stringConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"))
+        stringConverter.setWriteAcceptCharset(false)
+        converters.add(stringConverter)
+        converters.add(new ResourceHttpMessageConverter)
+        converters.add(new SourceHttpMessageConverter[Source])
+        converters.add(new XmlAwareFormHttpMessageConverter)
+
     }
 
     override def requestMappingHandlerAdapter: RequestMappingHandlerAdapter = {

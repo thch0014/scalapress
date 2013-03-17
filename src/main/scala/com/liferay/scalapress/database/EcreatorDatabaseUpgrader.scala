@@ -263,208 +263,208 @@ class EcreatorDatabaseUpgrader extends Logging {
         execute("ALTER TABLE searches MODIFY itemType bigint(10) null")
         execute("UPDATE searches SET itemType=null WHERE itemType=0")
 
-        for (column <- Array("disableemails",
-            "pendingimagecount",
-            "imagecount",
-            "imageupdatetimestamp",
-            "imageaddedtime", "administrator", "crm", "salesperson", "restrictions", "password")) {
-            try {
-                execute("ALTER TABLE users DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
+//        for (column <- Array("disableemails",
+//            "pendingimagecount",
+//            "imagecount",
+//            "imageupdatetimestamp",
+//            "imageaddedtime", "administrator", "crm", "salesperson", "restrictions", "password")) {
+//            try {
+//                execute("ALTER TABLE users DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
+//
+//
+//        for (column <- Array("noresultsforwardurl",
+//            "autoforward",
+//            "activelocation",
+//            "noresultstext",
+//            "googlemap",
+//            "sortattribute",
+//            "submitsrc",
+//            "resultspagetitle",
+//            "savable",
+//            "excludeaccountitemtype",
+//            "excludeaccount",
+//            "filter", "alerts", "numberofhighlightedresults", "parenttemplate", "titletag", "descriptiontag")) {
+//            try {
+//                execute("ALTER TABLE search_forms DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
+//
+//
+//
+//        for (column <- Array("categorynames",
+//            "pendingimagecount",
+//            "inactivemessage",
+//            "branch",
+//            "buyerfor",
+//            "pricebreaks",
+//            "awaitingmoderation",
+//            "suggestions",
+//            "shortname",
+//            "feedsrc",
+//            "agreement",
+//            "ourcostprice",
+//            "postcount",
+//            "searchcount",
+//            "lastmessageauthor",
+//            "endofline",
+//            "priceband",
+//            "resetcode",
+//            "displayname",
+//            "mobilephone",
+//            "listingpaymentdone",
+//            "showoptionslist",
+//            "bogof",
+//            "referrer",
+//            "feedcount",
+//            "lastmessagedate",
+//            "bogofitem",
+//            "pendingreviewscount",
+//            "prioritised",
+//            "optiongroup",
+//            "orderqtymultiple",
+//            "featured",
+//            "stocknotifylevel",
+//            "friendlyurllocked",
+//            "unit",
+//            "zebraean",
+//            "attachmentcount",
+//            "messagecount",
+//            "lastactive",
+//            "categorycached",
+//            "categoryname",
+//            "categoryids",
+//            "categoryfullname",
+//            "categorycount",
+//            "optioncount",
+//            "accessorycount",
+//            "contentstripped",
+//            "balance",
+//            "awaitingvalidation",
+//            "smscredits",
+//            "expirydate",
+//            "videocount",
+//            "approvedreviewscount",
+//            "imageaddedtime",
+//            "owner",
+//            "comments",
+//            "ratingaverages", "ratingaverage",
+//            "friendlyurl",
+//            "imageupdatetimestamp",
+//            "imagecount",
+//            "openrangeproductid",
+//            "discountapplied")) {
+//            try {
+//                execute("ALTER TABLE items DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
+//
+//
+//        for (column <- Array("padding",
+//            "labelprefix",
+//            "searchcontrol", "width", "height", "autosubmit")) {
+//            try {
+//                execute("ALTER TABLE search_forms_fields DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
 
 
-        for (column <- Array("noresultsforwardurl",
-            "autoforward",
-            "activelocation",
-            "noresultstext",
-            "googlemap",
-            "sortattribute",
-            "submitsrc",
-            "resultspagetitle",
-            "savable",
-            "excludeaccountitemtype",
-            "excludeaccount",
-            "filter", "alerts", "numberofhighlightedresults", "parenttemplate", "titletag", "descriptiontag")) {
-            try {
-                execute("ALTER TABLE search_forms DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
+//        for (column <- Array("subscriber",
+//            "smsregistration",
+//            "booking",
+//            "bookingsession",
+//            "review",
+//            "promotion",
+//            "registrationsession",
+//            "order",
+//            "listingsession",
+//            "category",
+//            "basket")) {
+//            try {
+//                execute("ALTER TABLE attributes_values DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
+//
+//
+//
+//        for (column <- Array("style",
+//            "appletbackgroundcolor",
+//            "appletheadlinecolor",
+//            "appletsummarycolor",
+//            "appletsummaryfamily",
+//            "appletsummarysize",
+//            "appletheadlinefamily",
+//            "appletheadlinesize",
+//            "appletheadlinehighlightcolor",
+//            "appletsummaryhighlightcolor",
+//            "appletlinktocategory",
+//            "simpleeditor",
+//            "scrollerspeed", "scrollerheight")) {
+//            try {
+//                execute("ALTER TABLE boxes_highlighted_items DROP " + column)
+//            } catch {
+//                case e: Exception => logger.warn(e.getMessage)
+//            }
+//        }
 
-
-
-        for (column <- Array("categorynames",
-            "pendingimagecount",
-            "inactivemessage",
-            "branch",
-            "buyerfor",
-            "pricebreaks",
-            "awaitingmoderation",
-            "suggestions",
-            "shortname",
-            "feedsrc",
-            "agreement",
-            "ourcostprice",
-            "postcount",
-            "searchcount",
-            "lastmessageauthor",
-            "endofline",
-            "priceband",
-            "resetcode",
-            "displayname",
-            "mobilephone",
-            "listingpaymentdone",
-            "showoptionslist",
-            "bogof",
-            "referrer",
-            "feedcount",
-            "lastmessagedate",
-            "bogofitem",
-            "pendingreviewscount",
-            "prioritised",
-            "optiongroup",
-            "orderqtymultiple",
-            "featured",
-            "stocknotifylevel",
-            "friendlyurllocked",
-            "unit",
-            "zebraean",
-            "attachmentcount",
-            "messagecount",
-            "lastactive",
-            "categorycached",
-            "categoryname",
-            "categoryids",
-            "categoryfullname",
-            "categorycount",
-            "optioncount",
-            "accessorycount",
-            "contentstripped",
-            "balance",
-            "awaitingvalidation",
-            "smscredits",
-            "expirydate",
-            "videocount",
-            "approvedreviewscount",
-            "imageaddedtime",
-            "owner",
-            "comments",
-            "ratingaverages", "ratingaverage",
-            "friendlyurl",
-            "imageupdatetimestamp",
-            "imagecount",
-            "openrangeproductid",
-            "discountapplied")) {
-            try {
-                execute("ALTER TABLE items DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
-
-
-        for (column <- Array("padding",
-            "labelprefix",
-            "searchcontrol", "width", "height", "autosubmit")) {
-            try {
-                execute("ALTER TABLE search_forms_fields DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
-
-
-        for (column <- Array("subscriber",
-            "smsregistration",
-            "booking",
-            "bookingsession",
-            "review",
-            "promotion",
-            "registrationsession",
-            "order",
-            "listingsession",
-            "category",
-            "basket")) {
-            try {
-                execute("ALTER TABLE attributes_values DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
-
-
-
-        for (column <- Array("style",
-            "appletbackgroundcolor",
-            "appletheadlinecolor",
-            "appletsummarycolor",
-            "appletsummaryfamily",
-            "appletsummarysize",
-            "appletheadlinefamily",
-            "appletheadlinesize",
-            "appletheadlinehighlightcolor",
-            "appletsummaryhighlightcolor",
-            "appletlinktocategory",
-            "simpleeditor",
-            "scrollerspeed", "scrollerheight")) {
-            try {
-                execute("ALTER TABLE boxes_highlighted_items DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
-
-        for (column <- Array("hidediscountinfo",
-            "contentlinkingkeywords",
-            "discount",
-            "amazonbtg",
-            "shopzillacategory",
-            "membergrouppricing",
-            "pricebreakvalues",
-            "itemsperpage",
-            "liveitemscount",
-            "kelkoocategory",
-            "attributecount",
-            "searchengineurllocked",
-            "supermanlock",
-            "friendlyurllocked",
-            "permissions",
-            "primaryparent",
-            "messages",
-            "currency",
-            "filecount",
-            "contentlinkingkeyword",
-            "basketforwardcategory",
-            "childcount",
-            "background",
-            "autocontentlinking",
-            "listitemmarkup", "subcategorylistitemmarkup", "subcategorymarkup",
-            "forwardwho",
-            "advanced", "parentcount", "resultstop", "resultsbottom",
-            "manualitemsorder", "itemsort", "content", "comments", "template",
-            "includeSubcategoryItems", "noitemsmessage", "summary", "fullname", "css",
-            "simpleeditor",
-            "forum",
-            "hash",
-            "rendertags",
-            "suggestions",
-            "includesubcategoryitems",
-            "usemanualsort",
-            "imageupdatetimestamp",
-            "imagecount",
-            "imageaddedtime",
-            "pendingimagecount",
-            "videocount",
-            "restrictionforwardurl",
-            "wikiaccess")) {
-
-            execute("ALTER TABLE categories DROP " + column)
-
-        }
+//        for (column <- Array("hidediscountinfo",
+//            "contentlinkingkeywords",
+//            "discount",
+//            "amazonbtg",
+//            "shopzillacategory",
+//            "membergrouppricing",
+//            "pricebreakvalues",
+//            "itemsperpage",
+//            "liveitemscount",
+//            "kelkoocategory",
+//            "attributecount",
+//            "searchengineurllocked",
+//            "supermanlock",
+//            "friendlyurllocked",
+//            "permissions",
+//            "primaryparent",
+//            "messages",
+//            "currency",
+//            "filecount",
+//            "contentlinkingkeyword",
+//            "basketforwardcategory",
+//            "childcount",
+//            "background",
+//            "autocontentlinking",
+//            "listitemmarkup", "subcategorylistitemmarkup", "subcategorymarkup",
+//            "forwardwho",
+//            "advanced", "parentcount", "resultstop", "resultsbottom",
+//            "manualitemsorder", "itemsort", "content", "comments", "template",
+//            "includeSubcategoryItems", "noitemsmessage", "summary", "fullname", "css",
+//            "simpleeditor",
+//            "forum",
+//            "hash",
+//            "rendertags",
+//            "suggestions",
+//            "includesubcategoryitems",
+//            "usemanualsort",
+//            "imageupdatetimestamp",
+//            "imagecount",
+//            "imageaddedtime",
+//            "pendingimagecount",
+//            "videocount",
+//            "restrictionforwardurl",
+//            "wikiaccess")) {
+//
+//            execute("ALTER TABLE categories DROP " + column)
+//
+//        }
 
         //        for (table <- Array("videos",
         //            "videos_block",

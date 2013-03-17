@@ -5,6 +5,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import com.liferay.scalapress.service.theme.tag.obj.AttributeRenderer
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {
@@ -27,7 +28,10 @@ object InvoiceAccountEmailTag extends ScalapressTag {
 
 object InvoiceDeliveryAddressTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.flatMap(order => Option(order.deliveryAddress)).map(_.label)
+        request.order.flatMap(order => Option(order.deliveryAddress)).map(add => {
+            val label = add.label
+            label
+        })
     }
 }
 
@@ -42,8 +46,6 @@ object InvoiceDateTag extends ScalapressTag {
         request.order.map(arg => new DateTime(arg.datePlaced).toString("dd/MM/yyyy"))
     }
 }
-
-import scala.collection.JavaConverters._
 
 object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
 

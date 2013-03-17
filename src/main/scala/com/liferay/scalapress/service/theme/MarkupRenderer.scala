@@ -20,6 +20,7 @@ object MarkupRenderer {
     }
 
     def render(m: Markup, request: ScalapressRequest): String = render(m, request, request.context)
+
     @deprecated("use the method that takes only a request")
     def render(m: Markup, request: ScalapressRequest, context: ScalapressContext): String = {
 
