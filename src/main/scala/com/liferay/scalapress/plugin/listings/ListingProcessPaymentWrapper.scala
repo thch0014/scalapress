@@ -6,6 +6,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Address
 /** @author Stephen Samuel */
 class ListingProcessPaymentWrapper(process: ListingProcess) extends IsPayable {
 
+    def paymentDescription: String = "Payment for " + process.title
     def accountName: String = ""
     def accountEmail: String = ""
     def deliveryAddress: Address = new Address

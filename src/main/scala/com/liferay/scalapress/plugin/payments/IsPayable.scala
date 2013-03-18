@@ -5,6 +5,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Address
 /** @author Stephen Samuel */
 trait IsPayable {
 
+    def paymentDescription: String
     def uniqueIdent: String
     def total: Double
     def billingAddress: Address

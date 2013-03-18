@@ -175,7 +175,7 @@ object CheckoutConfirmationRenderer {
         val forms = context.paymentPluginDao.enabled.map(plugin => {
 
             val buttonText = "Pay with " + plugin.name
-            val params = plugin.processor.params(domain, new BasketRequiresPaymentWrapper(basket))
+            val params = plugin.processor.params(domain, new BasketRequiresPaymentWrapper(basket, context))
             val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>
