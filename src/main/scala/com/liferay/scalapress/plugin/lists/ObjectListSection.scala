@@ -13,7 +13,7 @@ import com.liferay.scalapress.section.Section
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -42,12 +42,11 @@ class ObjectListSection extends Section {
         val live = objects.filter(_.status.toLowerCase == "live")
 
         val sorted = sort match {
-            case Sort.Name => live.sortBy(_.name)
             case Sort.Price => live.sortBy(_.sellPrice)
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
             case Sort.Oldest => live.sortBy(_.id)
-            case _ => live.sortBy(_.id).reverse
+            case _ => live.sortBy(_.name)
         }
 
         sorted.size match {

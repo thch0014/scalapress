@@ -17,7 +17,7 @@ object RegistrationRenderer {
                     <label for="name">
                         Your name
                     </label>
-                    <input name="name" type="text" placeholder="Your real name" value={form.name}/>
+                    <input name="name" type="text" placeholder="Your name" value={form.name}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
