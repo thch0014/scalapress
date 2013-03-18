@@ -21,4 +21,8 @@ class FormSection extends Section {
         val rendered = FormRenderer.render(form, req)
         Option(rendered)
     }
+
+    override def _init(context: ScalapressContext) {
+        form = context.formDao.findAll().head
+    }
 }

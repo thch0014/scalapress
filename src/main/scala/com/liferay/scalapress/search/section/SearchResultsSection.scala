@@ -25,6 +25,11 @@ class SearchResultsSection extends Section {
     @JoinColumn(name = "markup")
     @BeanProperty var markup: Markup = _
 
+    override def _init(context: ScalapressContext) {
+        search = new SavedSearch
+        context.savedSearchDao.save(search)
+    }
+
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
         Option(search) match {
             case None => None

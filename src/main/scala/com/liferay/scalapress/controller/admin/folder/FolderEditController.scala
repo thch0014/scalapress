@@ -42,11 +42,10 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
     @RequestMapping(Array("section/create"))
     def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String) = {
         val section = Class.forName(cls).newInstance.asInstanceOf[Section]
-        if (section.isInstanceOf[FormSection])
-            section.asInstanceOf[FormSection].form = context.formDao.findAll().head
         section.folder = folder
         section.name = "new " + Class.forName(cls).getSimpleName
         section.visible = true
+        section.init(context)
         folder.sections.add(section)
         folderDao.save(folder)
         "redirect:/backoffice/folder/" + folder.id

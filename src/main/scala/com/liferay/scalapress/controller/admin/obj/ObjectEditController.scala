@@ -105,6 +105,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         val section = Class.forName(cls).newInstance.asInstanceOf[Section]
         section.obj = form.o
         section.visible = true
+        section.init(context)
         form.o.sections.add(section)
         objectDao.save(form.o)
         "redirect:/backoffice/obj/" + form.o.id

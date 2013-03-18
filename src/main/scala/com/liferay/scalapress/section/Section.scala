@@ -42,4 +42,10 @@ abstract class Section {
     def desc: String
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String]
     def backoffice: String = "/backoffice/section/" + id
+
+    final def init(context: ScalapressContext) {
+        _init(context)
+        context.sectionDao.save(this)
+    }
+    def _init(context: ScalapressContext) {}
 }
