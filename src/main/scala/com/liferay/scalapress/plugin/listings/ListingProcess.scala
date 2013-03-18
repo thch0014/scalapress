@@ -20,6 +20,9 @@ class ListingProcess {
 
     @BeanProperty var email: String = _
 
+    // the last account that was logged in on this listing which might change
+    @BeanProperty var accountId: String = _
+
     @ManyToOne
     @BeanProperty var listingPackage: ListingPackage = _
 

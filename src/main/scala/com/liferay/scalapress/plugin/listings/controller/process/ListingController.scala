@@ -244,13 +244,15 @@ class ListingController {
     // -- population methods --
     @ModelAttribute("process") def process(req: HttpServletRequest) = {
         val sessionId = ScalapressRequest(req, context).sessionId
-        Option(listingProcessDao.find(sessionId)) match {
+        val process = Option(listingProcessDao.find(sessionId)) match {
             case None =>
-                val process = new ListingProcess()
-                process.sessionId = sessionId
-                listingProcessDao.save(process)
-                process
-            case Some(process) => process
+                val p = new ListingProcess()
+                p.sessionId = sessionId
+                p
+            case Some(p) => p
         }
+        process.accountId = SecurityFuncs.getUser(req).map(_.id.toString).orNull
+        listingProcessDao.save(process)
+        process
     }
 }
