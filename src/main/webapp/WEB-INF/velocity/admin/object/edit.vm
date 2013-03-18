@@ -180,6 +180,12 @@
                                class="input-small"/><br/>
                     #end
 
+                #elseif ($a.attributeType == "TextArea")
+
+                    #foreach ($value in $values)
+                        <textarea name="attributeValues$a.id" class="input-block-level">$esc.html($value)</textarea><br/>
+                    #end
+
                 #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
                     #foreach ($value in $values)
                         <div class="input-append date datepicker" value="$esc.html($value)"

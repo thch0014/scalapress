@@ -9,6 +9,7 @@ public enum AttributeType {
     Postcode,
     Selection,
     Text,
+    TextArea,
     Boolean,
     Image,
     Association
