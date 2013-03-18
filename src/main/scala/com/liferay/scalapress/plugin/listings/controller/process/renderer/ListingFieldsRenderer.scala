@@ -22,7 +22,7 @@ object ListingFieldsRenderer {
         <div id="listing-process-details">
             <form method="POST">
                 <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
-                attributeValues)}{_attributes(
+                attributeValues)}{_sectionAttributes(
                 attributes, attributeValues)}<legend>Main Content</legend>{_content(
                 process.content)}<button type="submit" class="btn btn-primary">Continue</button>
             </form>
@@ -36,7 +36,8 @@ object ListingFieldsRenderer {
 
         <div id="listing-edit-fields">
             <form method="POST">
-                <legend>Details</legend>{_title(obj.name)}{_genericAttributes(attributes, attributeValues)}{_attributes(
+                <legend>Details</legend>{_title(obj.name)}{_genericAttributes(attributes,
+                attributeValues)}{_sectionAttributes(
                 attributes, attributeValues)}<legend>Main Content</legend>{_content(
                 obj.content)}<button type="submit" class="btn btn-primary">Save</button>
             </form>
@@ -71,7 +72,7 @@ object ListingFieldsRenderer {
             <option>
                 {opt.value}
             </option>)
-        options.prepend(<option value="">-Select-</option>)
+        options.prepend(<option value=" ">-Select-</option>)
         options
     }
 
@@ -114,10 +115,10 @@ object ListingFieldsRenderer {
             </div>
         </div>
 
-    def _attributes(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
+    def _sectionAttributes(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
 
         val filtered = attributes.toSeq
-          .filterNot(attr => attr.section == null || attr.section.trim.length > 0)
+          .filter(attr => Option(attr.section).exists(_.trim.length > 0))
           .filter(_.userEditable)
         val sectioned = filtered.groupBy(_.section)
         sectioned.map(arg => _section(arg._1, arg._2, attributeValues))
