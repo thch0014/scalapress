@@ -98,9 +98,10 @@ trait FolderPopulator {
     @ModelAttribute def folders(model: ModelMap) {
         val folders = folderDao.findAll()
 
-        var map = TreeMap(0l -> "-Default-")
+        val map = mutable.LinkedHashMap.empty[Long, String]
+        map.put(0l, "-Default-")
         folders.map(f => {
-            map = map + (f.id -> ("#" + f.id + " " + f.fullName))
+            map.put(f.id, "#" + f.id + " " + f.fullName)
         })
 
         model.put("folders", folders.asJava)
