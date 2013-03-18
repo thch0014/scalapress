@@ -9,6 +9,7 @@ import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
 import com.liferay.scalapress.domain.setup.Installation
+import org.apache.commons.lang.StringUtils
 
 /** @author Stephen Samuel */
 @Component
@@ -77,27 +78,25 @@ class FormService extends Logging {
     }
 
     def checkErrors(form: Form, sreq: ScalapressRequest) {
-        for (field <- form
-          .fields
-          .asScala
+        val checkedFields = form.fields.asScala
           .filterNot(_.fieldType == FormFieldType.Attachment)
           .filterNot(_.fieldType == FormFieldType.Header)
           .filterNot(_.fieldType == FormFieldType.TickBox)
-          .filterNot(_.fieldType == FormFieldType.Description)) {
-            if (field.required || field.regExp != null) {
+          .filterNot(_.fieldType == FormFieldType.Description)
 
-                val regExp =
-                    if (field.fieldType == FormFieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-                    else field.regExp
+        for (field <- checkedFields if field.required || StringUtils.isNotBlank(field.regExp)) {
 
-                val value = Option(sreq.request.getParameter(field.id.toString)).filter(_.trim.length > 0)
+            val regExp =
+                if (field.fieldType == FormFieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
+                else field.regExp
 
-                value match {
-                    case Some(v) if (regExp == null) =>
-                    case Some(v) if (v.matches(regExp)) =>
-                    case _ => sreq.error(field.id.toString, "This is a required field")
-                }
+            val value = Option(sreq.request.getParameter(field.id.toString)).filter(_.trim.length > 0)
+            value match {
+                case Some(v) if regExp == null =>
+                case Some(v) if v.matches(regExp) =>
+                case _ => sreq.error(field.id.toString, "This is a required field")
             }
         }
     }
+}
 }

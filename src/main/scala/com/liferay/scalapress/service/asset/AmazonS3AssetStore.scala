@@ -4,7 +4,7 @@ import java.io.{ByteArrayInputStream, InputStream}
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.auth.BasicAWSCredentials
 import java.util.UUID
-import org.apache.commons.io.IOUtils
+import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
 import java.util
 import scala.collection.JavaConverters._
@@ -120,14 +120,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
 
     private def getNormalizedKey(key: String): String = {
-        try {
-            // we have to request in order to get an exception
-            getAmazonS3Client.getObject(bucketName, key)
-            key
-        }
-        catch {
-            case e: com.amazonaws.AmazonClientException => getNormalizedKey("copy_" + key)
-        }
+        FilenameUtils.getBaseName(key) + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(key)
     }
 
     def add(in: InputStream): String = put(UUID.randomUUID.toString, in)

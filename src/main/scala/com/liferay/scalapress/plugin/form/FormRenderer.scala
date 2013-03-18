@@ -51,6 +51,12 @@ object FormRenderer {
     }
 
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
+
+        val name = if (field.required) "*" else ""
+        val value = Option(req.request.getParameter(field.id.toString)).orNull
+
+
+
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
             case FormFieldType.TickBox => renderCheck(field)
@@ -78,7 +84,9 @@ object FormRenderer {
                 {Unparsed(field.name)}{star}
             </label>
             <div class="controls">
-                <textarea name={field.id.toString}>{value}</textarea>
+                <textarea name={field.id.toString}>
+                    {value}
+                </textarea>
             </div>
         </div>
     }
