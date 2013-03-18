@@ -53,9 +53,8 @@ object FormRenderer {
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
 
         val name = if (field.required) "*" else ""
-        val value = Option(req.request.getParameter(field.id.toString)).orNull
-
-
+        val value = Option(req.request.getParameter(field.id.toString))
+        val error = req.error(field.id.toString)
 
         field.fieldType match {
             case FormFieldType.DropDownMenu => renderSelect(field, req)
@@ -72,7 +71,7 @@ object FormRenderer {
                 </legend>
             case FormFieldType.Attachment => renderUpload(field)
             case FormFieldType.TextArea => _renderTextArea(field, req)
-            case _ => renderText(field, req)
+            case _ => renderText(field, name, value, error, req)
         }
     }
 
@@ -103,11 +102,13 @@ object FormRenderer {
         </div>
     }
 
-    private def renderText(field: FormField, req: ScalapressRequest) = {
+    private def renderText(field: FormField,
+                           name: String,
+                           value: Option[String],
+                           error: Option[String],
+                           req: ScalapressRequest) = {
 
-        val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
-        val star = if (field.required) "*" else ""
-        val value = Option(req.request.getParameter(field.id.toString)).getOrElse("")
+        val cssClass = "control-group" + (if (error.isDefined) " error" else "")
         val css = Option(field.size).getOrElse(Some(FieldSize.Medium)) match {
             case FieldSize.Small => "input-small"
             case FieldSize.Large => "input-large"
@@ -118,12 +119,13 @@ object FormRenderer {
 
         <div class={cssClass}>
             <label class="control-label">
-                {Unparsed(field.name)}{star}
+                {Unparsed(name)}
             </label>
             <div class="controls">
-                <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value} class={css}/>
+                <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value
+              .orNull} class={css}/>
                 <span class="help-inline">
-                    {req.errors.getOrElse(field.id.toString, "")}
+                    {error.orNull}
                 </span>
             </div>
         </div>
