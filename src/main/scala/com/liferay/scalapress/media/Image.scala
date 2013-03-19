@@ -4,7 +4,6 @@ import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue,
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.MediaWidget
 import com.liferay.scalapress.plugin.gallery.Gallery
-import org.hibernate.annotations.CacheConcurrencyStrategy
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 

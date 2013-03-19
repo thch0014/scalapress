@@ -6,7 +6,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.plugin.ecommerce.controller.admin.OrderQuery
-import com.liferay.scalapress.util.GenericDao
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 

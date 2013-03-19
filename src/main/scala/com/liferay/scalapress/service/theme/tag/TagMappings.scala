@@ -1,7 +1,6 @@
 package com.liferay.scalapress.service.theme.tag
 
 import general._
-import obj._
 import user.UserStatusTag
 import com.liferay.scalapress.plugin.profile.tag.{LogoutTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
