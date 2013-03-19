@@ -26,6 +26,7 @@ class ListingController {
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
+    @Autowired var listingEmailService : ListingEmailService = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
 
@@ -206,7 +207,7 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
-    def paymentSuccess(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
+    def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
 
@@ -214,6 +215,7 @@ class ListingController {
 
         val builder = new ListingProcess2ObjectBuilder(context)
         val obj = builder.build(process, user)
+        listingEmailService.send(obj, context)
 
         val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>" +
           "<p>Once the listing is visble then you will be able to view it on the following url:<br/>" +
@@ -229,7 +231,7 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), produces = Array("text/html"))
-    def paymentFailure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
+    def failure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Transaction Not Completed")
         val theme = themeService.default

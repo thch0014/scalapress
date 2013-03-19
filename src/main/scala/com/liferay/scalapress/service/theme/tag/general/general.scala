@@ -36,7 +36,7 @@ object ScriptTag extends ScalapressTag with TagBuilder {
           <script src="/static/js/jquery.easing.1.3.js"></script>
           <script src="/static/js/jquery.galleryview-3.0-dev.js"></script>
           <script src="/static/js/jquery.timers-1.2.js"></script>
-          <script src="/static/js/jquery.eventCalendar.js" type="text/javascript"></script>
+          <script src="/static/js/jquery.eventCalendar.min.js" type="text/javascript"></script>
                   """
         Some(tag)
     }
