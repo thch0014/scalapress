@@ -71,7 +71,23 @@ trait ShoppingPluginDao extends GenericDao[ShoppingPlugin, java.lang.Long] {
 @Component
 @Transactional
 class ShoppingPluginDaoImpl extends GenericDaoImpl[ShoppingPlugin, java.lang.Long] with ShoppingPluginDao {
-    def get = findAll.head
+
+    var cached: Option[ShoppingPlugin] = None
+
+    override def save(p: ShoppingPlugin): Boolean = {
+        val b = super.save(p)
+        cached = Option(p)
+        b
+    }
+
+    override def get: ShoppingPlugin = {
+        cached match {
+            case Some(p) => p
+            case None =>
+                cached = Option(findAll.head)
+                cached.get
+        }
+    }
 }
 
 @Component
