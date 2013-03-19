@@ -7,7 +7,7 @@ import com.liferay.scalapress.dao.{ObjectDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.profile.{LoginRenderer, AccountPluginDao}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
@@ -40,12 +40,12 @@ class LoginController {
 
     @ResponseBody
     @RequestMapping(value = Array("weblogin"), produces = Array("text/html"))
-    def weblogin(req: HttpServletRequest): ScalapressPage2 = {
+    def weblogin(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Login")
         val theme = themeService.default
 
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         page.body(LoginRenderer.renderLogin)
         page
     }

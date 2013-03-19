@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.dao.ThemeDao
 import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import com.liferay.scalapress.service.theme.ThemeService
@@ -34,7 +34,7 @@ class SubmissionController extends Logging {
                req: HttpServletRequest,
                resp: HttpServletResponse,
                @RequestParam(value = "file") files: java.util.List[MultipartFile],
-               @RequestParam(value = "folder", required = false) folderId: Long): ScalapressPage2 = {
+               @RequestParam(value = "folder", required = false) folderId: Long): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
         formService.checkErrors(form, sreq)
@@ -60,7 +60,7 @@ class SubmissionController extends Logging {
                 formService.email(recipients, sub, context.installationDao.get)
 
                 val theme = themeService.default
-                val page = ScalapressPage2(theme, sreq)
+                val page = ScalapressPage(theme, sreq)
                 page.body(form.submissionText)
                 page
             }

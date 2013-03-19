@@ -7,7 +7,7 @@ import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.domain.attr.AttributeValue
@@ -42,7 +42,7 @@ class SearchController extends Logging {
                @RequestParam(value = "sort", required = false) sort: Sort,
                @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
-               @RequestParam(value = "type", required = false) t: String): ScalapressPage2 = {
+               @RequestParam(value = "type", required = false) t: String): ScalapressPage = {
 
         val plugin = searchPluginDao.get
 
@@ -75,7 +75,7 @@ class SearchController extends Logging {
 
         val sreq = ScalapressRequest(req, context).withTitle("Search Results")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
 
         if (objects.size == 0) {
 

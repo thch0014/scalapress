@@ -6,7 +6,7 @@ import org.springframework.context.annotation.{Configuration, Bean}
 
 /** @author Stephen Samuel */
 @Configuration
-class ScalapressConfiguration2 {
+class ScalapressConfiguration {
 
     @Value("${s3.accessKey}") var accessKey: String = _
     @Value("${s3.secretKey}") var secretKey: String = _

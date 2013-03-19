@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ResponseBody, PathVariable, ModelAttribute, RequestMapping}
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,11 +26,11 @@ class BasketController {
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
-    def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalapressPage2 = {
+    def view(@ModelAttribute basket: Basket, req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Your Shopping Bag")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         val markup = shoppingPluginDao.get.basketMarkup
 
 

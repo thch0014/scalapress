@@ -7,7 +7,7 @@ import com.liferay.scalapress.security.SecurityFuncs
 /** @author Stephen Samuel */
 class ScalapressPageRenderer(context: ScalapressContext) {
 
-    def render(page: ScalapressPage2): String = {
+    def render(page: ScalapressPage): String = {
 
         val sb = new StringBuilder()
 

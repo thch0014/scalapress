@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Exce
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{FolderPluginDao, FolderDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
-import com.liferay.scalapress.controller.web.{Toolbar, ScalapressPage2}
+import com.liferay.scalapress.controller.web.{Toolbar, ScalapressPage}
 import com.liferay.scalapress.controller.RedirectException
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.service.theme.ThemeService
@@ -32,16 +32,16 @@ class FolderController extends Logging {
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
-    def view(req: HttpServletRequest): ScalapressPage2 = view(folderDao.root, req)
+    def view(req: HttpServletRequest): ScalapressPage = view(folderDao.root, req)
 
     @ResponseBody
     @RequestMapping(value = Array("{id:\\d+}"), produces = Array("text/html"))
-    def view(@PathVariable("id") id: Long, req: HttpServletRequest): ScalapressPage2 = {
+    def view(@PathVariable("id") id: Long, req: HttpServletRequest): ScalapressPage = {
         val folder = folderDao.find(id)
         view(folder, req)
     }
 
-    def view(folder: Folder, req: HttpServletRequest): ScalapressPage2 = {
+    def view(folder: Folder, req: HttpServletRequest): ScalapressPage = {
         if (folder == null)
             throw new RedirectException("/")
 
@@ -55,7 +55,7 @@ class FolderController extends Logging {
 
         val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
         val theme = themeService.theme(folder)
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
 
         if (SecurityFuncs.hasAdminRole(page.req.request)) {
             page.toolbar(Toolbar.render(context.siteDao.get, folder))

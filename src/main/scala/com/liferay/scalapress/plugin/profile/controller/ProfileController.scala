@@ -10,7 +10,7 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.domain.Obj
 
 /** @author Stephen Samuel */
@@ -29,12 +29,12 @@ class ProfileController {
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showRegistrationPage(req: HttpServletRequest,
                              @ModelAttribute("account") account: Obj,
-                             errors: Errors): ScalapressPage2 = {
+                             errors: Errors): ScalapressPage = {
 
         val plugin = accountPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Your Account")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         page.body(ProfileRenderer.renderProfilePage(account, plugin, errors))
         page
     }

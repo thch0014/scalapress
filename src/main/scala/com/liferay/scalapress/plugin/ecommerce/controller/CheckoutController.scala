@@ -8,7 +8,7 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.{OrderEmailService, OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalapressPage2
+import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{TransactionDao, DeliveryOptionDao, AddressDao, BasketDao}
@@ -43,11 +43,11 @@ class CheckoutController {
     @RequestMapping(value = Array("address"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showAddress(req: HttpServletRequest,
                     @ModelAttribute("basket") basket: Basket,
-                    errors: Errors): ScalapressPage2 = {
+                    errors: Errors): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Address")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
 
         page.body(CheckoutAddressRenderer.renderDeliveryAddress(basket, errors))
         page
@@ -57,7 +57,7 @@ class CheckoutController {
     @RequestMapping(value = Array("address"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def submitAddress(@ModelAttribute("basket") basket: Basket,
                       errors: Errors,
-                      req: HttpServletRequest): ScalapressPage2 = {
+                      req: HttpServletRequest): ScalapressPage = {
 
         basket.useBillingAddress = req.getParameterMap.containsKey("useBillingAddress")
         if (basket.useBillingAddress) {
@@ -84,11 +84,11 @@ class CheckoutController {
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showDelivery(req: HttpServletRequest,
                      @ModelAttribute("basket") basket: Basket,
-                     errors: Errors): ScalapressPage2 = {
+                     errors: Errors): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Delivery")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
 
         val deliveryOptions = deliveryOptionDao.findAll().sortBy(_.position)
         if (deliveryOptions.size == 1) {
@@ -113,7 +113,7 @@ class CheckoutController {
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def submitDelivery(@ModelAttribute("basket") basket: Basket,
                        errors: Errors,
-                       req: HttpServletRequest): ScalapressPage2 = {
+                       req: HttpServletRequest): ScalapressPage = {
 
         Option(req.getParameter("deliveryOptionId")).filter(_.trim.length > 0) match {
             case None =>
@@ -129,7 +129,7 @@ class CheckoutController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showConfirmation(req: HttpServletRequest): ScalapressPage2 = {
+    def showConfirmation(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction")
         val host = new URL(req.getRequestURL.toString).getHost
@@ -137,14 +137,14 @@ class CheckoutController {
         val domain = if (port == 8080) host + ":8080" else host
 
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, sreq.context))
         page
     }
 
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def paymentSuccess(req: HttpServletRequest): ScalapressPage2 = {
+    def paymentSuccess(req: HttpServletRequest): ScalapressPage = {
 
         val shoppingPlugin = shoppingPluginDao.get
         val sagepayFormPlugin = sagepayFormPluginDao.get
@@ -179,7 +179,7 @@ class CheckoutController {
           .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>")
 
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletedStage))
         page.body(confText)
@@ -188,11 +188,11 @@ class CheckoutController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def paymentFailure(req: HttpServletRequest): ScalapressPage2 = {
+    def paymentFailure(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction Error")
         val theme = themeService.default
-        val page = ScalapressPage2(theme, sreq)
+        val page = ScalapressPage(theme, sreq)
         page.body("<p>There was a problem with payment for this order.</p>")
         page.body("<p>Please <a href='/checkout/payment'>click here</a> to return to the payment selection page " +
           "if you wish to try payment again.")
