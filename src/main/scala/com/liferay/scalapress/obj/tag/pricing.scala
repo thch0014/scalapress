@@ -3,7 +3,6 @@ package com.liferay.scalapress.obj.tag
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.StockMethod
-import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 
 /** @author Stephen Samuel */
 object RrpTag extends ScalapressTag with TagBuilder {
