@@ -13,13 +13,14 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
-import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder, FieldQueryBuilder}
+import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder}
 import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
 import com.liferay.scalapress.folder.FolderDao
+import java.util
 
 /** @author Stephen Samuel */
 
@@ -27,7 +28,8 @@ import com.liferay.scalapress.folder.FolderDao
 class ElasticSearchService extends SearchService with Logging {
 
     val TIMEOUT = 5000
-    val INDEX = "obj"
+    val INDEX = "scalapress"
+    val TYPE = "obj"
 
     @Value("${search.index.preload.size}") var preloadSize: Int = _
     @Autowired var objectDao: ObjectDao = _
@@ -56,16 +58,20 @@ class ElasticSearchService extends SearchService with Logging {
     val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
     val client = node.client()
 
-    // create dummy entry so the index is created
-    val json = XContentFactory
+    val source = XContentFactory
       .jsonBuilder()
       .startObject()
-      .field("name", "dummy")
-      .field("status", "dummy")
+      .startObject("mappings")
+      .startObject(TYPE)
+      .startObject("_source").field("enabled", false).endObject()
+      .startObject("properties")
+      .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+      .endObject()
+      .endObject()
+      .endObject()
       .endObject()
 
-    client.prepareIndex(INDEX, "dummy", "dummy").setSource(json).execute().actionGet(TIMEOUT)
-    client.prepareDelete(INDEX, "dummy", "dummy").execute().actionGet(TIMEOUT)
+    client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT)
 
     @Transactional
     def index() {
@@ -79,7 +85,7 @@ class ElasticSearchService extends SearchService with Logging {
           .setMaxResults(preloadSize))
 
         logger.info("Indexing {} objects", objs.size)
-        objs.foreach(index(_))
+        objs.filter(_.name != null).filter(!_.name.isEmpty).foreach(index(_))
 
         logger.info("Indexing finished")
     }
@@ -90,8 +96,8 @@ class ElasticSearchService extends SearchService with Logging {
 
         try {
 
-            client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
-            client.prepareIndex(INDEX, obj.objectType.id.toString, obj.id.toString)
+            //          client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
+            client.prepareIndex(INDEX, TYPE, obj.id.toString)
               .setSource(src)
               .execute()
               .actionGet(TIMEOUT)
@@ -105,7 +111,6 @@ class ElasticSearchService extends SearchService with Logging {
 
         client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
-          .addField("name")
           .setQuery(new PrefixQueryBuilder("name", q))
           .setFrom(0)
           .setSize(limit)
@@ -130,6 +135,8 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.trim.length > 0)
           .foreach(name => name.trim.split(" ").filter(_.trim.length > 0).foreach(arg => buffer.append("name:" + arg)))
 
+        Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
+
         //            Option(search.keywords)
         //          .filter(_.trim.length > 0)
         //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
@@ -148,16 +155,15 @@ class ElasticSearchService extends SearchService with Logging {
 
         val limit = if (search.maxResults < 1) 40 else search.maxResults
 
-        val req = client.prepareSearch(INDEX).addField("name").setSearchType(SearchType.QUERY_AND_FETCH)
-        Option(search.objectType).foreach(arg => {
-            req.setTypes(arg.id.toString)
-        })
+        val req = client.prepareSearch(INDEX)
+          .setSearchType(SearchType.QUERY_AND_FETCH)
+          .setTypes(TYPE)
+          .setFrom(0)
+          .setSize(limit)
 
         buffer.size match {
 
             case 0 =>
-                req.setFrom(0)
-                  .setSize(limit)
 
             case _ =>
                 logger.debug("Base Query: " + buffer)
@@ -165,70 +171,57 @@ class ElasticSearchService extends SearchService with Logging {
                 logger.debug("Performing search {}", query)
 
                 req.setQuery(query)
-                  .setFrom(0)
-                  .setSize(limit)
 
                 val sort = search.sortType match {
+                    case Sort.Random => SortBuilders
+                      .scriptSort("Math.random()", "number")
+                      .order(SortOrder.ASC)
+                    case Sort.Name => SortBuilders.fieldSort("name").order(SortOrder.ASC)
                     case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
                     case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
                 }
 
-                req.addSort(sort.ignoreUnmapped(true))
+                req.addSort(sort)
                 req
         }
+
         logger.debug("Search: " + req)
         req.execute().actionGet()
     }
 
     // search by the given query string and then return the matching doc ids
-    override def search(q: String, limit: Int): SearchResponse = {
-
-        val req = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.QUERY_AND_FETCH)
-          .addField("name")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
-          .setFrom(0)
-          .setSize(limit)
-
-        Option(q)
-          .filter(_.trim.length > 0)
-          .foreach(q => req.setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND)))
-
-        req.execute()
-          .actionGet()
+    override def search(q: String, pageSize: Int): SearchResponse = {
+        val s = new SavedSearch
+        s.name = q
+        s.maxResults = pageSize
+        search(s)
     }
 
     // search by the given query string and then return the matching doc ids
-    override def searchType(q: String, t: ObjectType, limit: Int): SearchResponse = {
-
-        val search = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.QUERY_AND_FETCH)
-          .addField("name")
-          .addField("folders")
-          .addField("status")
-          .addField("labels")
-          .setQuery(new FieldQueryBuilder("name", q).defaultOperator(FieldQueryBuilder.Operator.AND))
-          .setFrom(0).setSize(limit)
-
-        search.execute().actionGet()
+    override def searchType(q: String, t: ObjectType, pageSize: Int): SearchResponse = {
+        val s = new SavedSearch
+        s.name = q
+        s.objectType = t
+        s.maxResults = pageSize
+        search(s)
     }
 
     private def source(obj: Obj) = {
-
-        val hasImage = obj.images.size > 0
-
-        val folderIds = obj.folders.asScala.map(_.id.toString)
+        require(obj.id > 0)
 
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
+          .field("objectType", obj.objectType.id.toString)
           .field("name", obj.name)
           .field("status", obj.status)
           .field("labels", obj.labels)
-          .field("hasImage", hasImage.toString)
-          .field("folders", folderIds.toSeq: _ *)
+
+        val hasImage = obj.images.size > 0
+        json.field("hasImage", hasImage.toString)
+
+        val folderIds = obj.folders.asScala.map(_.id.toString)
+        json.field("folders", folderIds.toSeq: _ *)
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)

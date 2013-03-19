@@ -13,8 +13,6 @@ import com.liferay.scalapress.theme.Markup
 @Table(name = "items_types")
 class ObjectType {
 
-    def searchable: Boolean = !name.toLowerCase.contains("account")
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: java.lang.Long = _
@@ -22,6 +20,8 @@ class ObjectType {
     @BeanProperty var name: String = _
 
     @BeanProperty var deleted: Boolean = false
+
+    def searchable: Boolean = !name.toLowerCase.contains("account")
 
     @BeanProperty var prices: Boolean = false
 
