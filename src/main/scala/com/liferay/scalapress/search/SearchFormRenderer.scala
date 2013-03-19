@@ -70,7 +70,7 @@ object SearchFormRenderer {
     }
 
     private def renderTextAttribute(field: SearchFormField): Elem = {
-        val name = "attr_" + field.attribute.id
+        val name = "attr_" + Option(field.attribute).map(_.id).orNull
         <div>
             <label>
                 {Unparsed(field.name)}
