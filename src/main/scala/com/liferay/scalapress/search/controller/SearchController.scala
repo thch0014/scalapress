@@ -41,7 +41,8 @@ class SearchController extends Logging {
                @RequestParam(value = "sort", required = false) sort: Sort,
                @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
-               @RequestParam(value = "type", required = false) t: String): ScalapressPage = {
+               @RequestParam(value = "type", required = false) t: String,
+               @RequestParam(value = "objectType", required = false) objectTypeId: String): ScalapressPage = {
 
         val plugin = searchPluginDao.get
 
@@ -61,7 +62,7 @@ class SearchController extends Logging {
         search.attributeValues = attributeValues.toSet.asJava
         search.keywords = q
         search.maxResults = PageSize
-        search.objectType = Option(t).map(t => typeDao.find(t.toLong)).orNull
+        search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
         search.sortType = sort
 
         val response = searchService.search(search)
