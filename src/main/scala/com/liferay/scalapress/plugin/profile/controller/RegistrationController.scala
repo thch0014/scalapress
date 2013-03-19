@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.profile.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.ScalapressPage2
 import com.liferay.scalapress.service.theme.ThemeService
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
@@ -43,12 +43,12 @@ class RegistrationController {
     //
     // @ResponseBody
     // @RequestMapping(Array("type"))
-    //    def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalaPressPage = {
+    //    def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalapressPage2 = {
     //
     //        val plugin = accountPluginDao.get
     //        val sreq = ScalapressRequest(req).withTitle("Registration")
     //        val theme = themeService.default
-    //        val page = ScalaPressPage(theme, sreq)
+    //        val page = ScalapressPage2(theme, sreq)
     //
     //        page.body("<h1>Choose Account Type</h1>")
     //        page.body(RegistrationRenderer.renderChooseAccountType(plugin))
@@ -59,12 +59,12 @@ class RegistrationController {
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showRegistrationPage(req: HttpServletRequest,
                              @ModelAttribute("form") form: RegistrationForm,
-                             errors: Errors): ScalaPressPage = {
+                             errors: Errors): ScalapressPage2 = {
 
         val plugin = accountPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Registration")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
         page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
         page
     }
@@ -74,7 +74,7 @@ class RegistrationController {
     def submitRegistrationPage(req: HttpServletRequest,
                                resp: HttpServletResponse,
                                @Valid @ModelAttribute("form") form: RegistrationForm,
-                               errors: Errors): ScalaPressPage = {
+                               errors: Errors): ScalapressPage2 = {
 
         if (objectDao.byEmail(form.email).isDefined)
             errors.rejectValue("email", "email", "Email address already in use")
@@ -101,7 +101,7 @@ class RegistrationController {
                     case None =>
                         val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
                         val theme = themeService.default
-                        val page = ScalaPressPage(theme, sreq)
+                        val page = ScalapressPage2(theme, sreq)
                         page.body("<p>Thank you for registering.</p>")
                         page
                     case Some(redirect) =>

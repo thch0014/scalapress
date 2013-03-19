@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, ResponseBody, RequestMapping}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.ScalapressPage2
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.OrderDao
@@ -23,11 +23,11 @@ class OrderStatusController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showAddress(req: HttpServletRequest): ScalaPressPage = {
+    def showAddress(req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
         page.body(OrderStatusRenderer.form)
         page
     }
@@ -35,7 +35,7 @@ class OrderStatusController {
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def showAddress(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
-                    req: HttpServletRequest): ScalaPressPage = {
+                    req: HttpServletRequest): ScalapressPage2 = {
 
         val order = orderDao.find(orderId)
         if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
@@ -43,7 +43,7 @@ class OrderStatusController {
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
         page.body("Order status: " + order.status)
         page.body("The status of your order is " + order.status)
         page

@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.listings.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, ResponseBody, RequestMapping}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.ScalapressPage2
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import process.renderer.ListingFieldsRenderer
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,11 +22,11 @@ class ListingEditController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalaPressPage = {
+    def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
         page.body(ListingFieldsRenderer.render(obj))
         page
     }

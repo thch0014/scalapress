@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import renderer.{ListingWizardRenderer, ListingFoldersRenderer, ListingPaymentRenderer, ListingPackageRenderer, ListingFieldsRenderer, ListingImagesRenderer, ListingConfirmationRenderer}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalaPressPage
+import com.liferay.scalapress.controller.web.ScalapressPage2
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
@@ -34,13 +34,13 @@ class ListingController {
     @RequestMapping(value = Array("package"), produces = Array("text/html"))
     def showPackages(@ModelAttribute("process") process: ListingProcess,
                      errors: Errors,
-                     req: HttpServletRequest): ScalaPressPage = {
+                     req: HttpServletRequest): ScalapressPage2 = {
 
         val packages = listingPackageDao.findAll().filterNot(_.deleted)
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Choose Package")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
 
         // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
         page.body(ListingPackageRenderer.render(packages, listingsPluginDao.get))
@@ -76,7 +76,7 @@ class ListingController {
                     case _ =>
                         val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
                         val theme = themeService.default
-                        val page = ScalaPressPage(theme, sreq)
+                        val page = ScalapressPage2(theme, sreq)
 
                         val folders = Option(process.listingPackage.folders)
                           .filter(_.trim.length > 0)
@@ -114,7 +114,7 @@ class ListingController {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Details")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ListingFields))
         page.body(ListingFieldsRenderer.render(process))
@@ -152,11 +152,11 @@ class ListingController {
     @RequestMapping(value = Array("image"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def showImageForm(@ModelAttribute("process") process: ListingProcess,
                       errors: Errors,
-                      req: HttpServletRequest): ScalaPressPage = {
+                      req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Upload Images")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.UploadImages))
         page.body(ListingImagesRenderer.render(process, listingsPluginDao.get))
@@ -184,11 +184,11 @@ class ListingController {
     @RequestMapping(value = Array("confirmation"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def confirmation(@ModelAttribute("process") process: ListingProcess,
                      errors: Errors,
-                     req: HttpServletRequest): ScalaPressPage = {
+                     req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Transaction")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
 
         val host = new URL(req.getRequestURL.toString).getHost
         val port = new URL(req.getRequestURL.toString).getPort
@@ -207,7 +207,7 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
-    def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
+    def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
 
@@ -223,7 +223,7 @@ class ListingController {
             .friendlyLink(obj) + "</p><p>You can view all your listings in your account " + <a href="/listing">here</a> + "</p>"
 
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Completed))
         page.body(message)
         page
@@ -231,11 +231,11 @@ class ListingController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), produces = Array("text/html"))
-    def failure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalaPressPage = {
+    def failure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage2 = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Transaction Not Completed")
         val theme = themeService.default
-        val page = ScalaPressPage(theme, sreq)
+        val page = ScalapressPage2(theme, sreq)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Confirmation))
         page.body("<p>This listing was not completed.</p>")

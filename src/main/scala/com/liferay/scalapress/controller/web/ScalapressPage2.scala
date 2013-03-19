@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.domain.setup.Theme
 
 /** @author Stephen Samuel */
-class ScalaPressPage(val theme: Theme, val req: ScalapressRequest) {
+class ScalapressPage2(val theme: Theme, val req: ScalapressRequest) {
 
     val _body = new ListBuffer[Any]()
     var _toolbar: Option[String] = None
@@ -21,11 +21,11 @@ class ScalaPressPage(val theme: Theme, val req: ScalapressRequest) {
     }
 }
 
-object ScalaPressPage {
+object ScalapressPage2 {
 
     @deprecated
     def apply(theme: Theme, req: HttpServletRequest, context: ScalapressContext) =
-        new ScalaPressPage(theme, ScalapressRequest(req, context))
+        new ScalapressPage2(theme, ScalapressRequest(req, context))
 
-    def apply(theme: Theme, req: ScalapressRequest) = new ScalaPressPage(theme, req)
+    def apply(theme: Theme, req: ScalapressRequest) = new ScalapressPage2(theme, req)
 }
