@@ -12,9 +12,8 @@ class CalendarWidget extends Widget {
     def render(req: ScalapressRequest): Option[String] = {
         Some( """<div id="calendar_widget_""" + id + """"></div>
                  <script>
-                                                       | var eventsInline = [{ json }];
-                                                       | $("#calendar_widget_""" + id + """").eventCalendar({ jsonData: eventsInline });
-                                                                                          | </script> """)
+                    $("#calendar_widget_""" + id + """").eventCalendar({ eventsjson: '/plugin/calendar/json' });
+                 </script> """)
     }
 
     //    override def backoffice = "/backoffice/plugin/calendar/widget/" + id
