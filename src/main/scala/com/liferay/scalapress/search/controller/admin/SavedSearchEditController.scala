@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, P
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.obj.{FolderPopulator, AttributeValuesPopulator, MarkupPopulator}
-import com.liferay.scalapress.dao.{TypeDao, FolderDao, MarkupDao}
 import com.liferay.scalapress.domain.attr.AttributeValue
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.search.{SavedSearch, SavedSearchDao}
 import com.liferay.scalapress.controller.ObjectTypePopulator
+import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.obj.TypeDao
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

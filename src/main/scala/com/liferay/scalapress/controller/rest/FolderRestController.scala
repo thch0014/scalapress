@@ -3,9 +3,9 @@ package com.liferay.scalapress.controller.rest
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.FolderDao
 import org.springframework.http.MediaType
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 @Controller

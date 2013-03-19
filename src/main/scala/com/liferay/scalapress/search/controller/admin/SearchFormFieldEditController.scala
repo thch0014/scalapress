@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.{AttributeDao, MarkupDao}
 import com.liferay.scalapress.search.{SearchFormFieldDao, SearchFormField}
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.controller.AttributePopulator
+import com.liferay.scalapress.obj.AttributeDao
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

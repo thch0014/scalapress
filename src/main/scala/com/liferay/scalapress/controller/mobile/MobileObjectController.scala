@@ -3,8 +3,9 @@ package com.liferay.scalapress.controller.mobile
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ImageDao, FolderDao, ObjectDao}
 import org.springframework.ui.ModelMap
+import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 @Controller

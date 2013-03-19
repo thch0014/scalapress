@@ -1,4 +1,4 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.obj
 
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
@@ -7,7 +7,7 @@ import com.liferay.scalapress.Logging
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.controller.admin.obj.ObjectQuery
 import com.sksamuel.scoot.soa.Page
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 

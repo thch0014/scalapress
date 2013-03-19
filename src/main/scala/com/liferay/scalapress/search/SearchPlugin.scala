@@ -2,12 +2,12 @@ package com.liferay.scalapress.search
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Entity, Table}
 import reflect.BeanProperty
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.liferay.scalapress.domain.Markup
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 @Entity

@@ -3,7 +3,6 @@ package com.liferay.scalapress.controller.admin.folder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ThemeDao, FolderDao}
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
@@ -15,7 +14,8 @@ import com.liferay.scalapress.util.ComponentClassScanner
 import com.liferay.scalapress.plugin.form.section.FormSection
 import collection.mutable
 import com.liferay.scalapress.section.{SectionDao, Section}
-import com.liferay.scalapress.folder.Folder
+import com.liferay.scalapress.folder.{FolderDao, Folder}
+import com.liferay.scalapress.theme.ThemeDao
 
 /** @author Stephen Samuel */
 @Controller

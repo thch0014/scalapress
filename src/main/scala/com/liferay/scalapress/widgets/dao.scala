@@ -1,8 +1,8 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.widgets
 
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.widgets.Widget
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 

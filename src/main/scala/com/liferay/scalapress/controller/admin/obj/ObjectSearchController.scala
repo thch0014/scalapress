@@ -3,13 +3,12 @@ package com.liferay.scalapress.controller.admin.obj
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.ScalapressContext
 import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import reflect.BeanProperty
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
 
 /** @author Stephen Samuel */
 @Controller

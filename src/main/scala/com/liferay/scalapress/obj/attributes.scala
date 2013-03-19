@@ -1,8 +1,9 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.obj
 
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.domain.attr.{AttributeOption, AttributeValue, Attribute}
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 trait AttributeDao extends GenericDao[Attribute, java.lang.Long]

@@ -3,10 +3,10 @@ package com.liferay.scalapress.controller.rest
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ImageDao, ObjectDao}
 import org.springframework.http.MediaType
 import com.liferay.scalapress.domain.{Image}
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.{ObjectDao, Obj}
+import com.liferay.scalapress.media.ImageDao
 
 /** @author Stephen Samuel */
 @Controller

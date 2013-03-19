@@ -3,9 +3,8 @@ package com.liferay.scalapress.controller.admin.obj
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.TypeDao
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.obj.ObjectType
+import com.liferay.scalapress.obj.{TypeDao, ObjectType}
 
 /** @author Stephen Samuel */
 @Controller

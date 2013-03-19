@@ -1,4 +1,4 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.plugin.ecommerce
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -6,6 +6,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.plugin.ecommerce.controller.admin.OrderQuery
+import com.liferay.scalapress.util.GenericDao
 
 /** @author Stephen Samuel */
 

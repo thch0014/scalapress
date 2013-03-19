@@ -1,11 +1,11 @@
 package com.liferay.scalapress.controller.mobile
 
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.FolderDao
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.ui.ModelMap
 import org.springframework.stereotype.Controller
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 @Controller

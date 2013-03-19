@@ -3,11 +3,10 @@ package com.liferay.scalapress.plugin.ecommerce.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, PathVariable, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ObjectDao, OrderDao}
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, OrderLine, OrderComment, Order}
-import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.liferay.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import com.liferay.scalapress.controller.admin.obj.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
 import reflect.BeanProperty
 import scala.collection.JavaConverters._
@@ -15,6 +14,7 @@ import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDa
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 @Controller

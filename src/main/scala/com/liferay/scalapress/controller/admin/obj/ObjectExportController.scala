@@ -5,13 +5,12 @@ import org.springframework.stereotype.Controller
 import com.csvreader.CsvWriter
 import java.io.StringWriter
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ObjectDao, TypeDao}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.domain.attr.Attribute
 import javax.servlet.http.HttpServletResponse
-import com.liferay.scalapress.obj.{ObjectType, Obj}
+import com.liferay.scalapress.obj.{ObjectDao, TypeDao, ObjectType, Obj}
 
 /** @author Stephen Samuel */
 @Controller

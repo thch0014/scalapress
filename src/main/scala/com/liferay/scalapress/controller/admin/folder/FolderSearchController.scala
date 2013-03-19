@@ -3,10 +3,9 @@ package com.liferay.scalapress.controller.admin.folder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.FolderDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.folder.Folder
+import com.liferay.scalapress.folder.{FolderDao, Folder}
 
 /** @author Stephen Samuel */
 @Controller

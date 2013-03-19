@@ -3,10 +3,10 @@ package com.liferay.scalapress.controller.admin.themes
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.ThemeDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.domain.setup.Theme
+import com.liferay.scalapress.theme.ThemeDao
 
 /** @author Stephen Samuel */
 @Controller

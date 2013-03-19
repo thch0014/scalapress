@@ -1,4 +1,4 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.user
 
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.domain.User
@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.googlecode.genericdao.search.Search
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 

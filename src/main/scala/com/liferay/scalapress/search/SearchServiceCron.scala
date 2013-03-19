@@ -3,9 +3,9 @@ package com.liferay.scalapress.search
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.ObjectDao
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 @Component

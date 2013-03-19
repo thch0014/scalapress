@@ -13,14 +13,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import web.interceptor.SessionInterceptor
 import web.{ScalapressPageRenderer, ScalaPressPageMessageConverter}
 import com.liferay.scalapress.{StringToAttributeConvertor, StringFormConverter, StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
-import com.liferay.scalapress.dao.{ThemeDao, MarkupDao, TypeDao, FolderDao}
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
-import com.liferay.scalapress.dao.settings.InstallationDao
 import com.liferay.scalapress.plugin.form.FormDao
 import com.liferay.scalapress.search.SearchFormDao
 import org.springframework.http.converter.xml.{SourceHttpMessageConverter, XmlAwareFormHttpMessageConverter}
 import java.nio.charset.Charset
 import javax.xml.transform.Source
+import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.obj.TypeDao
+import com.liferay.scalapress.theme.{MarkupDao, ThemeDao}
+import com.liferay.scalapress.settings.InstallationDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

@@ -1,10 +1,11 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.theme
 
 import com.liferay.scalapress.domain.Markup
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.hibernate.criterion.Restrictions
 import com.liferay.scalapress.domain.setup.Theme
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 trait ThemeDao extends GenericDao[Theme, java.lang.Long] {

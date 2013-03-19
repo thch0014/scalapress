@@ -1,12 +1,12 @@
 package com.liferay.scalapress.plugin.profile
 
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import javax.persistence._
 import reflect.BeanProperty
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 @Entity

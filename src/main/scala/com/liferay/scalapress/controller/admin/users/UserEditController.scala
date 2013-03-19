@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.dao.UserDao
 import com.liferay.scalapress.domain.User
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import com.liferay.scalapress.user.UserDao
 
 /** @author Stephen Samuel */
 @Controller

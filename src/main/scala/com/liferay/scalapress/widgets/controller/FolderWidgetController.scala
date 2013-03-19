@@ -6,8 +6,8 @@ import scala.Array
 import com.liferay.scalapress.widgets.Widget
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.controller.admin.obj.FolderPopulator
-import com.liferay.scalapress.dao.FolderDao
 import org.springframework.beans.factory.annotation.Autowired
+import com.liferay.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 @Controller

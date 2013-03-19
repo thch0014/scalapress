@@ -8,8 +8,8 @@ import javax.validation.Valid
 import org.springframework.validation.Errors
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.ObjectDao
 import com.liferay.scalapress.plugin.ecommerce.dao.AddressDao
+import com.liferay.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 @Controller

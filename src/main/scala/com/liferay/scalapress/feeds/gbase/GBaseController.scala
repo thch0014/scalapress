@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.feeds.{Feed, FeedDao}
-import com.liferay.scalapress.dao.ObjectDao
-import com.liferay.scalapress.dao.settings.InstallationDao
+import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.settings.InstallationDao
 
 /** @author Stephen Samuel */
 @Controller

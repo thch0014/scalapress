@@ -3,7 +3,6 @@ package com.liferay.scalapress.security
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ObjectDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.profile.{LoginRenderer, AccountPluginDao}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
@@ -11,6 +10,8 @@ import com.liferay.scalapress.controller.web.ScalapressPage
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.theme.ThemeDao
 
 /** @author Stephen Samuel */
 @Controller

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao}
 import com.liferay.scalapress.controller.ObjectTypePopulator
-import com.liferay.scalapress.dao.TypeDao
+import com.liferay.scalapress.obj.TypeDao
 
 /** @author Stephen Samuel */
 @Controller

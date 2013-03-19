@@ -7,8 +7,8 @@ import com.liferay.scalapress.widgets.Widget
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.widgets.controller.WidgetEditController
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.MarkupDao
 import org.springframework.beans.factory.annotation.Autowired
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

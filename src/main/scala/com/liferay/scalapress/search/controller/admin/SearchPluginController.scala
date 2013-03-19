@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.search.{SearchPluginDao, SearchPlugin}
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

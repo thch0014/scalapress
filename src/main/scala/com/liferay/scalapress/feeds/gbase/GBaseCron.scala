@@ -4,10 +4,10 @@ import org.springframework.stereotype.Component
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.feeds.FeedDao
-import com.liferay.scalapress.dao.ObjectDao
 import com.liferay.scalapress.{Logging, ScalapressContext}
-import com.liferay.scalapress.dao.settings.InstallationDao
 import org.springframework.transaction.annotation.Transactional
+import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.settings.InstallationDao
 
 /** @author Stephen Samuel */
 @Component

@@ -8,10 +8,13 @@ import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.dao.{ObjectDao, ImageDao, WidgetDao, FolderDao}
 import scala.collection.JavaConverters._
 import actors.Futures
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
+import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.widgets.WidgetDao
+import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.media.ImageDao
 
 /** @author Stephen Samuel */
 @Component

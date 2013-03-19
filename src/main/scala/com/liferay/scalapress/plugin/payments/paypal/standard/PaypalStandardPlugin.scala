@@ -2,10 +2,10 @@ package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, PaymentPlugin}
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 @Entity

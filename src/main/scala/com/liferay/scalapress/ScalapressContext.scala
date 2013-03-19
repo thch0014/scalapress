@@ -1,7 +1,8 @@
 package com.liferay.scalapress
 
-import dao.settings.InstallationDao
-import dao.{AttributeValueDao, AttributeDao, GalleryDao, MarkupDao, FolderDao, WidgetDao, ObjectDao, TypeDao}
+import folder.FolderDao
+import media.GalleryDao
+import obj.{ObjectDao, TypeDao, AttributeValueDao, AttributeDao}
 import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.ServletContextAware
 import javax.servlet.ServletContext
 import service.image.ImageService
+import settings.InstallationDao
+import theme.MarkupDao
+import widgets.WidgetDao
 
 /** @author Stephen Samuel */
 @Component
@@ -42,7 +46,7 @@ class ScalapressContext extends ServletContextAware {
 
     @Autowired var searchService: SearchService = _
     @Autowired var searchFormDao: SearchFormDao = _
-    @Autowired var savedSearchDao : SavedSearchDao = _
+    @Autowired var savedSearchDao: SavedSearchDao = _
 
     @Autowired var attributeDao: AttributeDao = _
     @Autowired var widgetDao: WidgetDao = _

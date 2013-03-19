@@ -3,7 +3,6 @@ package com.liferay.scalapress.controller.admin.sections
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{MarkupDao, ObjectDao}
 import scala.Array
 import com.liferay.scalapress.{ScalapressContext}
 import com.liferay.scalapress.service.asset.AssetStore
@@ -12,6 +11,8 @@ import org.springframework.ui.ModelMap
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 import com.liferay.scalapress.plugin.lists.ObjectListSection
 import com.liferay.scalapress.section.{SectionDao, Section}
+import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

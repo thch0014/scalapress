@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import scala.Array
-import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.liferay.scalapress.section.SectionDao
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

@@ -3,8 +3,8 @@ package com.liferay.scalapress.plugin.form
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import com.sksamuel.scoot.soa.{PagedQuery, Page}
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 trait FormDao extends GenericDao[Form, java.lang.Long]

@@ -3,7 +3,6 @@ package com.liferay.scalapress.controller.admin.obj
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{AttributeValueDao, FolderDao, ObjectDao}
 import scala.Array
 import com.liferay.scalapress.domain.{Image}
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
@@ -21,7 +20,8 @@ import com.liferay.scalapress.search.SearchService
 import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.{ObjectDao, AttributeValueDao, Obj}
+import com.liferay.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 @Controller

@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.dao.ObjectDao
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.liferay.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
+import com.liferay.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 @Controller

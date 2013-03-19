@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{SortPopulator, ScalapressContext}
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
-import com.liferay.scalapress.dao.{TypeDao, MarkupDao}
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.search.{SearchFormDao, SearchFormField, SearchForm}
 import com.liferay.scalapress.controller.ObjectTypePopulator
+import com.liferay.scalapress.obj.TypeDao
+import com.liferay.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller

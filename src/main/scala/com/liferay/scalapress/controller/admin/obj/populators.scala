@@ -2,7 +2,6 @@ package com.liferay.scalapress.controller.admin.obj
 
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.dao.{FolderDao, ThemeDao, MarkupDao}
 import scala.collection.JavaConverters._
 import collection.immutable.TreeMap
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
@@ -11,6 +10,8 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.plugin.form.FormDao
 import collection.mutable
+import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.theme.{MarkupDao, ThemeDao}
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {

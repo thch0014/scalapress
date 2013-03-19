@@ -1,4 +1,4 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.folder
 
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.plugin.folder.FolderPlugin
 import collection.mutable.ArrayBuffer
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.folder.Folder
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {

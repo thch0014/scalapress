@@ -1,7 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce
 
 import javax.persistence.{EnumType, Enumerated, Column, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,6 +8,7 @@ import javax.annotation.PostConstruct
 import reflect.BeanProperty
 import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.enums.{StockMethod, CheckoutMethod}
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 @Entity

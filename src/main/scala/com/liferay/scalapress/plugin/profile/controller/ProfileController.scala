@@ -3,7 +3,6 @@ package com.liferay.scalapress.plugin.profile.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.profile.{ProfileRenderer, AccountPluginDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
@@ -11,7 +10,8 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
 import com.liferay.scalapress.controller.web.ScalapressPage
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
+import com.liferay.scalapress.theme.ThemeDao
 
 /** @author Stephen Samuel */
 @Controller

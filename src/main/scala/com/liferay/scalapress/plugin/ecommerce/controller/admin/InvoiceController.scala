@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.dao.OrderDao
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
+import com.liferay.scalapress.plugin.ecommerce.OrderDao
 
 /** @author Stephen Samuel */
 @Controller

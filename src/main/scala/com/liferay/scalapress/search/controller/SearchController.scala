@@ -3,7 +3,6 @@ package com.liferay.scalapress.search.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
@@ -18,6 +17,7 @@ import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.enums.Sort
+import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 
 /** @author Stephen Samuel */
 

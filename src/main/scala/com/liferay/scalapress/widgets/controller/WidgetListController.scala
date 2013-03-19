@@ -3,9 +3,8 @@ package com.liferay.scalapress.widgets.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.widgets.Widget
+import com.liferay.scalapress.widgets.{WidgetDao, Widget}
 import scala.Array
 import com.liferay.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._

@@ -3,10 +3,10 @@ package com.liferay.scalapress.controller.admin.users
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.UserDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.domain.User
+import com.liferay.scalapress.user.UserDao
 
 /** @author Stephen Samuel */
 @Controller

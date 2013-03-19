@@ -1,4 +1,4 @@
-package com.liferay.scalapress.dao
+package com.liferay.scalapress.util
 
 import com.googlecode.genericdao.search.ISearch
 

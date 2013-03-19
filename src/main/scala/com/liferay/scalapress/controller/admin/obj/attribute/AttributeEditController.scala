@@ -3,13 +3,13 @@ package com.liferay.scalapress.controller.admin.obj.attribute
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.{AttributeOptionDao, AttributeDao}
 import scala.Array
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import com.liferay.scalapress.domain.attr.{AttributeOption, Attribute}
 import com.liferay.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletResponse
+import com.liferay.scalapress.obj.{AttributeOptionDao, AttributeDao}
 
 /** @author Stephen Samuel */
 @Controller

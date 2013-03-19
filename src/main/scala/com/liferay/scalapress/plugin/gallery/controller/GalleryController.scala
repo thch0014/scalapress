@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, 
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.controller.web.ScalapressPage
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.dao.GalleryDao
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.plugin.gallery.GalleryRenderer
 import com.liferay.scalapress.controller.HttpStatusException
+import com.liferay.scalapress.media.GalleryDao
 
 /** @author Stephen Samuel
   *

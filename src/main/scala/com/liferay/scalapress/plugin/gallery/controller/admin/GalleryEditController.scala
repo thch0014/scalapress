@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.dao.GalleryDao
 import com.liferay.scalapress.domain.Image
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.service.asset.AssetStore
 import com.liferay.scalapress.plugin.gallery.Gallery
+import com.liferay.scalapress.media.GalleryDao
 
 /** @author Stephen Samuel */
 @Controller

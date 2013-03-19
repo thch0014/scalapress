@@ -3,7 +3,6 @@ package com.liferay.scalapress.search
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
 import javax.annotation.PreDestroy
-import com.liferay.scalapress.dao.{FolderDao, ObjectDao}
 import com.liferay.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +18,8 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
-import com.liferay.scalapress.obj.{ObjectType, Obj}
+import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
+import com.liferay.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 

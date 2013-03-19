@@ -2,11 +2,10 @@ package com.liferay.scalapress.plugin.payments
 
 import reflect.BeanProperty
 import javax.persistence.{InheritanceType, Inheritance, Entity, GenerationType, GeneratedValue, Id}
-import com.liferay.scalapress.dao.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
-import com.liferay.scalapress.util.ComponentClassScanner
+import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao, ComponentClassScanner}
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
