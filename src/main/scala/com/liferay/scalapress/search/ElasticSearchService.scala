@@ -20,7 +20,6 @@ import com.liferay.scalapress.enums.Sort
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
 import com.liferay.scalapress.folder.FolderDao
-import java.util
 
 /** @author Stephen Samuel */
 
@@ -167,7 +166,8 @@ class ElasticSearchService extends SearchService with Logging {
 
             case _ =>
                 logger.debug("Base Query: " + buffer)
-                val query = new QueryStringQueryBuilder(buffer.mkString(" AND "))
+                val query = new QueryStringQueryBuilder(buffer.mkString(" "))
+                  .defaultOperator(QueryStringQueryBuilder.Operator.AND)
                 logger.debug("Performing search {}", query)
 
                 req.setQuery(query)
