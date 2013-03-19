@@ -25,10 +25,13 @@ class ShoppingPlugin {
 
     @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
 
+    @Column(length = 10000)
     @BeanProperty var statuses: String = "New\nCompleted\nCancelled"
 
+    @Column(length = 10000)
     @BeanProperty var outOfStockMessage: String = _
 
+    @Column(length = 10000)
     @BeanProperty var orderConfirmationRecipients: String = _
 
     @Enumerated(EnumType.STRING)
@@ -46,18 +49,18 @@ class ShoppingPlugin {
     @JoinColumn(name = "invoiceMarkup")
     @BeanProperty var invoiceMarkup: Markup = _
 
-    @Column(length = 100000)
+    @Column(length = 10000)
     @BeanProperty var terms: String = _
 
     @BeanProperty var backorders: Boolean = _
 
-    @Column(length = 100000)
+    @Column(length = 10000)
     @BeanProperty var termsAcceptance: Boolean = _
 
-    @Column(name = "checkoutScripts", length = 100000)
+    @Column(name = "checkoutScripts", length = 10000)
     @BeanProperty var checkoutConfirmationScripts: String = _
 
-    @Column(length = 100000)
+    @Column(length = 10000)
     @BeanProperty var checkoutConfirmationText: String = _
 }
 
