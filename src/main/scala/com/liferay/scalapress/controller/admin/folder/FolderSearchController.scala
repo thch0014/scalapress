@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.FolderDao
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.domain.Folder
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Controller

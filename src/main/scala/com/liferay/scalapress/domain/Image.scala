@@ -6,6 +6,7 @@ import com.liferay.scalapress.widgets.MediaWidget
 import com.liferay.scalapress.plugin.gallery.Gallery
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.listings.controller.process.renderer
 
 import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingProcess}
-import com.liferay.scalapress.domain.Folder
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 object ListingFoldersRenderer {

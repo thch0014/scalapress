@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag.obj
+package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress.domain.attr.{Attribute, AttributeValue}
 import collection.SortedMap

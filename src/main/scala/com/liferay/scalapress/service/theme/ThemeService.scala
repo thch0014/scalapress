@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.servlet.ServletContext
 import com.liferay.scalapress.dao.ThemeDao
-import com.liferay.scalapress.domain.{Folder}
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.Folder
 
 @Service
 class ThemeService {

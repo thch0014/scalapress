@@ -4,8 +4,8 @@ import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.service.theme.tag.obj.AttributeRenderer
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.obj.tag.AttributeRenderer
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {

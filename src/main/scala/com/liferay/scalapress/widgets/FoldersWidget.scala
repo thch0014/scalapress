@@ -3,11 +3,11 @@ package com.liferay.scalapress.widgets
 import javax.persistence.{FetchType, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
-import com.liferay.scalapress.domain.Folder
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")

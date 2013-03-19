@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag.obj
+package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.FriendlyUrlGenerator

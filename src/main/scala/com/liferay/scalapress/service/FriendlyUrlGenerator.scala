@@ -1,7 +1,7 @@
 package com.liferay.scalapress.service
 
-import com.liferay.scalapress.domain.{Folder}
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 object FriendlyUrlGenerator {

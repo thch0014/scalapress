@@ -7,9 +7,9 @@ import com.liferay.scalapress.dao.WidgetDao
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.widgets.Widget
 import scala.Array
-import com.liferay.scalapress.domain.Folder
 import com.liferay.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Controller

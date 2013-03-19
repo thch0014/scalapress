@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag.folder
+package com.liferay.scalapress.folder.tag
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}

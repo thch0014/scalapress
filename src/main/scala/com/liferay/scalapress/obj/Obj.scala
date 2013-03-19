@@ -6,8 +6,9 @@ import javax.persistence._
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.plugin.listings.ListingPackage
-import com.liferay.scalapress.domain.{Folder, Image}
+import com.liferay.scalapress.domain.{Image}
 import com.liferay.scalapress.domain.attr.AttributeValue
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Entity
