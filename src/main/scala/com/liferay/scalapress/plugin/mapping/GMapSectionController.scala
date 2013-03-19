@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
-import com.liferay.scalapress.section.PluginDao
+import com.liferay.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/mapping/section/{id}"))
 class GMapSectionController {
 
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))

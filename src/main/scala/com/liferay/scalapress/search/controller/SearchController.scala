@@ -14,7 +14,7 @@ import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.domain.attr.Attribute
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
-import com.liferay.scalapress.section.PluginDao
+import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.enums.Sort
@@ -34,7 +34,7 @@ class SearchController extends Logging {
     @Autowired var themeService: ThemeService = _
     @Autowired var context: ScalapressContext = _
     @Autowired var searchPluginDao: SearchPluginDao = _
-    @Autowired var pluginDao: PluginDao = _
+    @Autowired var pluginDao: SectionDao = _
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))

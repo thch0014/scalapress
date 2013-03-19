@@ -8,7 +8,7 @@ import scala.Array
 import com.liferay.scalapress.dao.MarkupDao
 import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.search.section.SearchFormSection
-import com.liferay.scalapress.section.PluginDao
+import com.liferay.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -16,7 +16,7 @@ import com.liferay.scalapress.section.PluginDao
 class SearchFormSectionController extends MarkupPopulator with SortPopulator {
 
     @Autowired var markupDao: MarkupDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))

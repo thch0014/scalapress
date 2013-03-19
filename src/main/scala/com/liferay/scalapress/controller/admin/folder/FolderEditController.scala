@@ -15,7 +15,7 @@ import com.liferay.scalapress.controller.admin.obj.ThemePopulator
 import com.liferay.scalapress.util.ComponentClassScanner
 import com.liferay.scalapress.plugin.form.section.FormSection
 import collection.mutable
-import com.liferay.scalapress.section.{PluginDao, Section}
+import com.liferay.scalapress.section.{SectionDao, Section}
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,7 +25,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
     @Autowired var assetStore: AssetStore = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var themeDao: ThemeDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))

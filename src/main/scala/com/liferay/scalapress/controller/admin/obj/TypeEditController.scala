@@ -12,7 +12,7 @@ import com.liferay.scalapress.domain.attr.Attribute
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.section.{PluginDao, Section}
+import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
@@ -22,7 +22,7 @@ class TypeEditController extends MarkupPopulator {
 
     @Autowired var typeDao: TypeDao = _
     @Autowired var markupDao: MarkupDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

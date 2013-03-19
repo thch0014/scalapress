@@ -1,4 +1,4 @@
-package com.liferay.scalapress
+package com.liferay.scalapress.domain.attr
 
 import com.liferay.scalapress.domain.Obj
 import scala.collection.JavaConverters._

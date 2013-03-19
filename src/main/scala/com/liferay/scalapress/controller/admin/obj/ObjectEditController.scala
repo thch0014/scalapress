@@ -18,7 +18,7 @@ import java.net.URLConnection
 import com.liferay.scalapress.domain.attr.AttributeValue
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.search.SearchService
-import com.liferay.scalapress.section.{PluginDao, Section}
+import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
 
@@ -31,7 +31,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
     @Autowired var attributeValueDao: AttributeValueDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var searchService: SearchService = _
     @Autowired var passwordEncoder: PasswordEncoder = _

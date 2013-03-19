@@ -8,7 +8,7 @@ import scala.Array
 import com.liferay.scalapress.controller.admin.obj.FormPopulator
 import com.liferay.scalapress.plugin.form.FormDao
 import com.liferay.scalapress.plugin.form.section.FormSection
-import com.liferay.scalapress.section.PluginDao
+import com.liferay.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -16,7 +16,7 @@ import com.liferay.scalapress.section.PluginDao
 class FormSectionController extends FormPopulator {
 
     @Autowired var formDao: FormDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))

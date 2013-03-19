@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 import com.liferay.scalapress.plugin.lists.ObjectListSection
-import com.liferay.scalapress.section.{PluginDao, Section}
+import com.liferay.scalapress.section.{SectionDao, Section}
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,7 +20,7 @@ class SectionEditController {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var objectDao: ObjectDao = _
-    @Autowired var sectionDao: PluginDao = _
+    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _
 
