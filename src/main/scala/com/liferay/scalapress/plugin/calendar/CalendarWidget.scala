@@ -10,11 +10,11 @@ import javax.persistence.{Table, Entity}
 class CalendarWidget extends Widget {
 
     def render(req: ScalapressRequest): Option[String] = {
-        Some( """<div id="calendar_widget"></div>
+        Some( """<div id="calendar_widget_""" + id + """"></div>
                  <script>
-                | var eventsInline = [{ json }];
-                | $("#calendar_widget").eventCalendar({ jsonData: eventsInline });
-                | </script> """)
+                                                       | var eventsInline = [{ json }];
+                                                       | $("#calendar_widget_""" + id + """").eventCalendar({ jsonData: eventsInline });
+                                                                                          | </script> """)
     }
 
     //    override def backoffice = "/backoffice/plugin/calendar/widget/" + id
