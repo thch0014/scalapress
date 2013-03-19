@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.sitemap
 
 import collection.mutable.ListBuffer
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.controller.admin.obj.ObjectQuery
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import org.joda.time.DateTime
+import com.liferay.scalapress.obj.controller.admin.ObjectQuery
 
 /** @author Stephen Samuel */
 object UrlBuilder {

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.{PathVariable, RequestMethod, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao}
-import com.liferay.scalapress.controller.ObjectTypePopulator
 import com.liferay.scalapress.obj.TypeDao
+import com.liferay.scalapress.util.ObjectTypePopulator
 
 /** @author Stephen Samuel */
 @Controller

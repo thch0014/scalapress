@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.controller.web.folder.FolderController
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.form.{RecaptchaClient, Form, FormService, FormDao, SubmissionDao}
 import com.liferay.scalapress.theme.ThemeDao
+import com.liferay.scalapress.folder.controller.FolderController
+import com.liferay.scalapress.util.mvc.ScalapressPage
 
 /** @author Stephen Samuel */
 @Controller

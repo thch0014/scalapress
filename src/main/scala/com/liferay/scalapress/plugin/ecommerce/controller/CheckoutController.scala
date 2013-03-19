@@ -7,7 +7,6 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.{OrderDao, OrderEmailService, OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{TransactionDao, DeliveryOptionDao, AddressDao, BasketDao}
@@ -15,6 +14,7 @@ import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
 import java.net.URL
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
+import com.liferay.scalapress.util.mvc.ScalapressPage
 
 /** @author Stephen Samuel */
 @Controller

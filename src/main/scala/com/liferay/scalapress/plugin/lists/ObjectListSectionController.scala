@@ -3,11 +3,12 @@ package com.liferay.scalapress.plugin.lists
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{SortPopulator, ScalapressContext}
+import com.liferay.scalapress.{ScalapressContext}
 import scala.Array
-import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.theme.MarkupDao
+import com.liferay.scalapress.obj.controller.admin.MarkupPopulator
+import com.liferay.scalapress.util.SortPopulator
 
 /** @author Stephen Samuel */
 @Controller

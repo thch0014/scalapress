@@ -3,10 +3,11 @@ package com.liferay.scalapress.plugin.form.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
+import com.liferay.scalapress.{ScalapressContext}
 import com.liferay.scalapress.plugin.form.FormField
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
+import com.liferay.scalapress.util.EnumPopulator
 
 /** @author Stephen Samuel */
 @Controller

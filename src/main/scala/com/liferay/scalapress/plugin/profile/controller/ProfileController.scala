@@ -9,9 +9,9 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
-import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
 import com.liferay.scalapress.theme.ThemeDao
+import com.liferay.scalapress.util.mvc.ScalapressPage
 
 /** @author Stephen Samuel */
 @Controller

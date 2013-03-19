@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.search.SearchService
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
+import com.liferay.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */
 @Controller

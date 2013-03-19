@@ -7,7 +7,6 @@ import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, OrderLine, OrderComment, Order}
 import com.liferay.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
-import com.liferay.scalapress.controller.admin.obj.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
 import reflect.BeanProperty
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.obj.controller.admin.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
 
 /** @author Stephen Samuel */
 @Controller

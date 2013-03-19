@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
-import com.liferay.scalapress.controller.admin.obj.FormPopulator
 import com.liferay.scalapress.plugin.form.FormDao
 import com.liferay.scalapress.plugin.form.section.FormSection
 import com.liferay.scalapress.section.SectionDao
+import com.liferay.scalapress.obj.controller.admin.FormPopulator
 
 /** @author Stephen Samuel */
 @Controller

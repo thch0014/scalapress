@@ -2,13 +2,13 @@ package com.liferay.scalapress.plugin.listings.controller
 
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.security.SecurityFuncs
-import com.liferay.scalapress.controller.admin.obj.ObjectQuery
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import org.springframework.stereotype.Controller
+import com.liferay.scalapress.obj.controller.admin.ObjectQuery
+import com.liferay.scalapress.util.mvc.ScalapressPage
 
 /** @author Stephen Samuel */
 @Controller

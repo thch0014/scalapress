@@ -3,14 +3,14 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
+import com.liferay.scalapress.{ScalapressContext}
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import com.liferay.scalapress.search.{SearchFormFieldDao, SearchFormField}
 import com.liferay.scalapress.enums.SearchFieldType
-import com.liferay.scalapress.controller.AttributePopulator
 import com.liferay.scalapress.obj.AttributeDao
 import com.liferay.scalapress.theme.MarkupDao
+import com.liferay.scalapress.obj.controller.admin.MarkupPopulator
+import com.liferay.scalapress.util.{AttributePopulator, EnumPopulator}
 
 /** @author Stephen Samuel */
 @Controller

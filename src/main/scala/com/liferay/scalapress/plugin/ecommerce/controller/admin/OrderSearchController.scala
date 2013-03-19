@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.Paging
 import reflect.BeanProperty
-import com.liferay.scalapress.controller.admin.obj.OrderStatusPopulator
 import com.liferay.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
+import com.liferay.scalapress.obj.controller.admin.OrderStatusPopulator
 
 /** @author Stephen Samuel */
 @Controller

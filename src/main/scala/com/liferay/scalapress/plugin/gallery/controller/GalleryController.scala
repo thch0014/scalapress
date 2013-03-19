@@ -3,13 +3,12 @@ package com.liferay.scalapress.plugin.gallery.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, ResponseBody, RequestMapping}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.liferay.scalapress.controller.web.ScalapressPage
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.plugin.gallery.GalleryRenderer
-import com.liferay.scalapress.controller.HttpStatusException
 import com.liferay.scalapress.media.GalleryDao
+import com.liferay.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 
 /** @author Stephen Samuel
   *

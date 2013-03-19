@@ -1,6 +1,5 @@
 package com.liferay.scalapress
 
-import controller.web.ScalapressConstants
 import folder.Folder
 import javax.servlet.http.HttpServletRequest
 import obj.Obj

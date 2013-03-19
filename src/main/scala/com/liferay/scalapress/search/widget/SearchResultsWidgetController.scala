@@ -6,9 +6,9 @@ import scala.Array
 import com.liferay.scalapress.widgets.Widget
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.widgets.controller.WidgetEditController
-import com.liferay.scalapress.controller.admin.obj.MarkupPopulator
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.theme.MarkupDao
+import com.liferay.scalapress.obj.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller

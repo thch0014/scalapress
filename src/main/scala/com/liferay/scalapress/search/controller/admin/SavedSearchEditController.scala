@@ -3,15 +3,15 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{SortPopulator, ScalapressContext}
-import com.liferay.scalapress.controller.admin.obj.{FolderPopulator, AttributeValuesPopulator, MarkupPopulator}
+import com.liferay.scalapress.{ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.search.{SavedSearch, SavedSearchDao}
-import com.liferay.scalapress.controller.ObjectTypePopulator
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.obj.TypeDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.obj.attr.AttributeValue
+import com.liferay.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator, AttributeValuesPopulator}
+import com.liferay.scalapress.util.{ObjectTypePopulator, SortPopulator}
 
 /** @author Stephen Samuel */
 @Controller

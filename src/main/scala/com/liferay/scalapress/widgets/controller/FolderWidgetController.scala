@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, R
 import scala.Array
 import com.liferay.scalapress.widgets.Widget
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.controller.admin.obj.FolderPopulator
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.obj.controller.admin.FolderPopulator
 
 /** @author Stephen Samuel */
 @Controller
