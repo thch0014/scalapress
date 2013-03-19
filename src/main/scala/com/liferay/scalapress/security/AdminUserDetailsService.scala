@@ -3,11 +3,10 @@ package com.liferay.scalapress.security
 import org.springframework.security.core.userdetails.{UsernameNotFoundException, UserDetails, UserDetailsService}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.{User}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.user.UserDao
+import com.liferay.scalapress.user.{User, UserDao}
 
 /** @author Stephen Samuel */
 @Component

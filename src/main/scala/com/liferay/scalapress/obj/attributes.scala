@@ -1,7 +1,7 @@
 package com.liferay.scalapress.obj
 
+import attr.{AttributeValue, AttributeOption, Attribute}
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.attr.{AttributeOption, AttributeValue, Attribute}
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 

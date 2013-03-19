@@ -5,7 +5,7 @@ import reflect.BeanProperty
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
 import scala.Array
 import java.util
-import com.liferay.scalapress.domain.Image
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 @Entity

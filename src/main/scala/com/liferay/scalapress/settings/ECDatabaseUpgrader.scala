@@ -1,4 +1,4 @@
-package com.liferay.scalapress.database
+package com.liferay.scalapress.settings
 
 import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource

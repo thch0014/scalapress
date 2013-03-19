@@ -3,9 +3,9 @@ package com.liferay.scalapress.media
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.domain.Image
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 trait ImageDao extends GenericDao[Image, java.lang.Long] {

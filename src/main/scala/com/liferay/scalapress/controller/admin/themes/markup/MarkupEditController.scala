@@ -2,10 +2,9 @@ package com.liferay.scalapress.controller.admin.themes.markup
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
-import com.liferay.scalapress.domain.Markup
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.theme.MarkupDao
+import com.liferay.scalapress.theme.{Markup, MarkupDao}
 
 /** @author Stephen Samuel */
 @Controller

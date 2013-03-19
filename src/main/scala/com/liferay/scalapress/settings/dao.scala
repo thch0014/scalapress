@@ -1,7 +1,6 @@
 package com.liferay.scalapress.settings
 
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.setup.{GeneralSettings, Installation}
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct

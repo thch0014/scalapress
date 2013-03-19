@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, R
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.domain.setup.Installation
+import com.liferay.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 @Controller

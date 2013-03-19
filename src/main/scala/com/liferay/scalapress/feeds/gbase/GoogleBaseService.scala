@@ -6,9 +6,9 @@ import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.feeds.FeedDao
-import com.liferay.scalapress.domain.setup.Installation
 import com.liferay.scalapress.service.asset.AssetStore
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
+import com.liferay.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {

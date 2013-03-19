@@ -4,8 +4,8 @@ import javax.persistence.{Column, OneToMany, CascadeType, FetchType, ManyToOne, 
 import reflect.BeanProperty
 import scala.Array
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
-import com.liferay.scalapress.domain.attr.AttributeValue
 import java.util
+import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
 @Entity

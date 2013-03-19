@@ -1,7 +1,7 @@
 package com.liferay.scalapress.service
 
 import org.apache.commons.io.FilenameUtils
-import com.liferay.scalapress.domain.Image
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 object ImageRenderer {

@@ -9,8 +9,6 @@ import actors.Futures
 import com.liferay.scalapress.controller.web.ScalapressPage
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.domain.attr.AttributeValue
-import com.liferay.scalapress.domain.attr.Attribute
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
 import com.liferay.scalapress.section.SectionDao
@@ -18,6 +16,7 @@ import com.liferay.scalapress.search.section.SearchFormSection
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
+import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 

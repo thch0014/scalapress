@@ -7,8 +7,8 @@ import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
 import com.liferay.scalapress.{Logging}
 import com.liferay.scalapress.service.asset.AssetStore
-import com.liferay.scalapress.domain.attr.AttributeFuncs
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.attr.AttributeFuncs
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {

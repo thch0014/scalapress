@@ -2,9 +2,9 @@ package com.liferay.scalapress.controller
 
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.domain.attr.Attribute
 import java.util
 import com.liferay.scalapress.obj.TypeDao
+import com.liferay.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel */
 

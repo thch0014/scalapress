@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.gallery
 
-import com.liferay.scalapress.domain.Image
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.service.asset.AssetStore
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 object GalleryRenderer {

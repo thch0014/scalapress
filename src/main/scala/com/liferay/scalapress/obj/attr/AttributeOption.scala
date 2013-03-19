@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain.attr
+package com.liferay.scalapress.obj.attr
 
 import scala.Predef.String
 import javax.persistence.{JoinColumn, FetchType, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}

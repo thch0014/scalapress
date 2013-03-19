@@ -5,10 +5,10 @@ import reflect.BeanProperty
 import com.liferay.scalapress.ScalapressRequest
 import scala.Array
 import java.util
-import com.liferay.scalapress.domain.Image
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.ImageRenderer
 import org.hibernate.annotations.{FetchMode, Fetch}
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 

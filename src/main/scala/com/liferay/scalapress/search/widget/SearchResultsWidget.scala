@@ -5,9 +5,9 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.service.theme.MarkupRenderer
-import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations.{Fetch, FetchMode}
+import com.liferay.scalapress.theme.Markup
 
 /** @author Stephen Samuel
   *

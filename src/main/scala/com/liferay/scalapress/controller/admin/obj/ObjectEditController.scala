@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.liferay.scalapress.domain.{Image}
 import com.liferay.scalapress.{EnumPopulator, ScalapressContext}
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.controller.admin.UrlResolver
@@ -14,7 +13,6 @@ import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
-import com.liferay.scalapress.domain.attr.AttributeValue
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.search.SearchService
 import com.liferay.scalapress.section.{SectionDao, Section}
@@ -22,6 +20,8 @@ import com.liferay.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, AttributeValueDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.obj.attr.AttributeValue
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 @Controller

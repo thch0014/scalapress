@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
-import com.liferay.scalapress.domain.Markup
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
+import com.liferay.scalapress.theme.Markup
 
 /** @author Stephen Samuel */
 @Entity

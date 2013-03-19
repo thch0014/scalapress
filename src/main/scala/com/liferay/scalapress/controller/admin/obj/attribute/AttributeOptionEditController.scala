@@ -3,10 +3,10 @@ package com.liferay.scalapress.controller.admin.obj.attribute
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import scala.Array
-import com.liferay.scalapress.domain.attr.AttributeOption
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.obj.AttributeOptionDao
+import com.liferay.scalapress.obj.attr.AttributeOption
 
 /** @author Stephen Samuel */
 @Controller

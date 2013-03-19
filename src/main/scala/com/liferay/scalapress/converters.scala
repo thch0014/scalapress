@@ -1,16 +1,15 @@
 package com.liferay.scalapress
 
-import domain.attr.Attribute
-import domain.setup.Theme
 import folder.{FolderDao, Folder}
+import obj.attr.Attribute
 import obj.{TypeDao, AttributeDao, ObjectType}
 import org.springframework.core.convert.converter.Converter
-import com.liferay.scalapress.domain.{Markup}
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
 import search.{SearchFormDao, SearchForm}
-import theme.{MarkupDao, ThemeDao}
+import settings.Theme
+import theme.{Markup, MarkupDao, ThemeDao}
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {

@@ -1,8 +1,8 @@
 package com.liferay.scalapress.controller.admin.obj
 
-import com.liferay.scalapress.domain.attr.{Attribute, AttributeValue}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 trait AttributeValuesPopulator {

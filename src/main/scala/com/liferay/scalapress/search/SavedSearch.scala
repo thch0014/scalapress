@@ -4,10 +4,10 @@ import javax.persistence.{ManyToOne, CascadeType, FetchType, OneToMany, EnumType
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import scala.Array
-import com.liferay.scalapress.domain.attr.AttributeValue
 import java.util
 import org.hibernate.annotations.{FetchMode, Fetch}
 import com.liferay.scalapress.obj.ObjectType
+import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
 @Entity

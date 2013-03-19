@@ -1,8 +1,8 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.domain.attr.AttributeValue
 import com.liferay.scalapress.enums.AttributeType
 import org.joda.time.DateTime
+import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
 object AttributeRenderer {

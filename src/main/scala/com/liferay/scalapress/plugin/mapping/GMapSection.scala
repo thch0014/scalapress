@@ -4,7 +4,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Entity, Table}
 import reflect.BeanProperty
 import com.liferay.scalapress.section.Section
-import com.liferay.scalapress.domain.attr.AttributeFuncs
+import com.liferay.scalapress.obj.attr.AttributeFuncs
 
 /** @author Stephen Samuel */
 @Entity

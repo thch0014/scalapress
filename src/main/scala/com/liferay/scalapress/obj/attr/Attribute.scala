@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain.attr
+package com.liferay.scalapress.obj.attr
 
 import javax.persistence._
 import reflect.BeanProperty

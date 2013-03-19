@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.user
 
 import javax.persistence.{Transient, Column, GenerationType, GeneratedValue, Id, Entity, Table}
 import scala.Predef.String

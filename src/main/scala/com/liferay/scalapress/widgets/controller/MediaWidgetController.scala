@@ -7,10 +7,10 @@ import com.liferay.scalapress.widgets.{MediaWidget, Widget}
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.{Asset, AssetStore}
-import com.liferay.scalapress.domain.Image
 import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 @Controller

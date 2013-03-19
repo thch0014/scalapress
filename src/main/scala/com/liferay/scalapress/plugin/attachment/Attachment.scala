@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.plugin.attachment
 
 import scala.Predef.String
 import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity, JoinColumn, ManyToOne}

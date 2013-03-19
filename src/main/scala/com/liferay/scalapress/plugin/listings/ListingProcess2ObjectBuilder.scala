@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.listings
 
-import com.liferay.scalapress.domain.{Image}
-import com.liferay.scalapress.domain.attr.AttributeValue
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
 import org.joda.time.DateMidnight
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.attr.AttributeValue
+import com.liferay.scalapress.media.Image
 
 /** @author Stephen Samuel */
 class ListingProcess2ObjectBuilder(context: ScalapressContext) {

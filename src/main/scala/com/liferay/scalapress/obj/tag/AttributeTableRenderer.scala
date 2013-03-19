@@ -1,7 +1,7 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.domain.attr.{Attribute, AttributeValue}
 import collection.SortedMap
+import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 object AttributeTableRenderer {

@@ -1,12 +1,12 @@
 package com.liferay.scalapress.plugin.ecommerce
 
 import domain.Order
-import com.liferay.scalapress.domain.setup.Installation
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.Logging
 import collection.mutable.ArrayBuffer
+import com.liferay.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 @Component

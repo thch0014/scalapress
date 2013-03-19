@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.media
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty

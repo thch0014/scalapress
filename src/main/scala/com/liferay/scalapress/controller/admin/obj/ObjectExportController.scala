@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
-import com.liferay.scalapress.domain.attr.Attribute
 import javax.servlet.http.HttpServletResponse
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao, ObjectType, Obj}
+import com.liferay.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel */
 @Controller

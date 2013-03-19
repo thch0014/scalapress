@@ -3,8 +3,8 @@ package com.liferay.scalapress.search
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.SearchFieldType
-import com.liferay.scalapress.domain.attr.Attribute
 import org.hibernate.annotations.{FetchMode, Fetch}
+import com.liferay.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel */
 @Entity

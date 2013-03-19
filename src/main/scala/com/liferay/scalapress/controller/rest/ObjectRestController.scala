@@ -4,9 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
-import com.liferay.scalapress.domain.{Image}
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
-import com.liferay.scalapress.media.ImageDao
+import com.liferay.scalapress.media.{Image, ImageDao}
 
 /** @author Stephen Samuel */
 @Controller

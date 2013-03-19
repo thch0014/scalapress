@@ -3,10 +3,10 @@ package com.liferay.scalapress.plugin.listings.controller.process.renderer
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.AttributeType
-import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 import xml.Unparsed
 import collection.Iterable
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 object ListingFieldsRenderer {

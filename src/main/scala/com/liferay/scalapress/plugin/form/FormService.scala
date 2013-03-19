@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
-import com.liferay.scalapress.domain.setup.Installation
 import org.apache.commons.lang.StringUtils
+import com.liferay.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 @Component

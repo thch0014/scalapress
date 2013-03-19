@@ -1,12 +1,12 @@
 package com.liferay.scalapress.obj
 
+import attr.Attribute
 import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Table, Entity, GenerationType, GeneratedValue, Id}
 import java.util
 import reflect.BeanProperty
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
-import com.liferay.scalapress.domain.attr.Attribute
-import com.liferay.scalapress.domain.Markup
+import com.liferay.scalapress.theme.Markup
 
 /** @author Stephen Samuel */
 @Entity

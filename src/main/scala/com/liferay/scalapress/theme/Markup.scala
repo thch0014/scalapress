@@ -1,4 +1,4 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.theme
 
 import scala.Predef.String
 import javax.persistence.{Table, Entity, GenerationType, GeneratedValue, Id}

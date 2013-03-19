@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess2ObjectBuilder, ListingProcess, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
-import com.liferay.scalapress.domain.attr.AttributeValue
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
 @Controller
