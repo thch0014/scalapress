@@ -5,8 +5,8 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.AttributeType
 import com.liferay.scalapress.domain.attr.{AttributeValue, Attribute}
 import xml.Unparsed
-import com.liferay.scalapress.domain.Obj
 import collection.Iterable
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object ListingFieldsRenderer {

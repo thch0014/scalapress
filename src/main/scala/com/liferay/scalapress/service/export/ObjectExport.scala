@@ -1,6 +1,5 @@
 package com.liferay.scalapress.service.export
 
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.feeds.gbase.GBaseFeed
 import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter
@@ -9,6 +8,7 @@ import org.apache.commons.lang.WordUtils
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.service.asset.AssetStore
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 class ObjectExport(domain: String, assetStore: AssetStore) extends Logging {

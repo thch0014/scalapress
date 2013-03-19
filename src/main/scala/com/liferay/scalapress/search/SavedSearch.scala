@@ -6,8 +6,8 @@ import com.liferay.scalapress.enums.Sort
 import scala.Array
 import com.liferay.scalapress.domain.attr.AttributeValue
 import java.util
-import com.liferay.scalapress.domain.ObjectType
 import org.hibernate.annotations.{FetchMode, Fetch}
+import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Entity

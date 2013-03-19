@@ -1,7 +1,8 @@
 package com.liferay.scalapress.controller.web
 
-import com.liferay.scalapress.domain.{Folder, Obj}
+import com.liferay.scalapress.domain.{Folder}
 import com.liferay.scalapress.domain.setup.Installation
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object Toolbar {

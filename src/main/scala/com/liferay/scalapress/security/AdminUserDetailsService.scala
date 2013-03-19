@@ -4,9 +4,10 @@ import org.springframework.security.core.userdetails.{UsernameNotFoundException,
 import com.liferay.scalapress.dao.UserDao
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.domain.{Obj, User}
+import com.liferay.scalapress.domain.{User}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Component

@@ -4,8 +4,8 @@ import scala.Predef.String
 import org.hibernate.validator.constraints.{Email, NotEmpty}
 import reflect.BeanProperty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}
-import com.liferay.scalapress.domain.Obj
 import collection.mutable.ArrayBuffer
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

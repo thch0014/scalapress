@@ -8,9 +8,9 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import process.renderer.ListingFieldsRenderer
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.domain.attr.AttributeValue
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller

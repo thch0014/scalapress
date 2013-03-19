@@ -9,6 +9,7 @@ import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, Subfo
 import setup.Theme
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

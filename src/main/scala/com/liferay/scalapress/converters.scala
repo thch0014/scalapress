@@ -3,8 +3,9 @@ package com.liferay.scalapress
 import dao.{AttributeDao, ThemeDao, MarkupDao, TypeDao, FolderDao}
 import domain.attr.Attribute
 import domain.setup.Theme
+import obj.ObjectType
 import org.springframework.core.convert.converter.Converter
-import com.liferay.scalapress.domain.{Markup, ObjectType, Folder}
+import com.liferay.scalapress.domain.{Markup, Folder}
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}

@@ -3,6 +3,7 @@ package com.liferay.scalapress.domain
 import scala.Predef.String
 import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity, JoinColumn, ManyToOne}
 import reflect.BeanProperty
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

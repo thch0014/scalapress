@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.listings.controller.process
 
 import org.springframework.mail.{SimpleMailMessage, MailSender}
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Component

@@ -1,10 +1,11 @@
 package com.liferay.scalapress.section
 
 import javax.persistence.{JoinColumn, ManyToOne, Entity, Inheritance, InheritanceType, Column, GenerationType, GeneratedValue, Id}
-import com.liferay.scalapress.domain.{ObjectType, Obj, Folder}
+import com.liferay.scalapress.domain.{Folder}
 import reflect.BeanProperty
 import org.hibernate.annotations.Index
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.obj.{ObjectType, Obj}
 
 /** @author Stephen Samuel */
 @Entity

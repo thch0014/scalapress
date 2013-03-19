@@ -2,8 +2,8 @@ package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.Obj
 import collection.mutable.ArrayBuffer
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

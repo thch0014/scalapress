@@ -4,10 +4,10 @@ import javax.persistence._
 import reflect.BeanProperty
 import org.hibernate.validator.constraints.NotEmpty
 import java.util
-import com.liferay.scalapress.domain.ObjectType
 import scala.Array
 import com.liferay.scalapress.enums.AttributeType
 import org.hibernate.annotations.Index
+import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Entity

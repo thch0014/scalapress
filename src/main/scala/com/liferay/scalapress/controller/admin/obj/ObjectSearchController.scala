@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{TypeDao, ObjectDao}
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.domain.Obj
 import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import reflect.BeanProperty
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller

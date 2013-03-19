@@ -3,8 +3,8 @@ package com.liferay.scalapress.search
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
 import org.hibernate.annotations.{Fetch, FetchMode}
-import com.liferay.scalapress.domain.ObjectType
 import com.liferay.scalapress.enums.Sort
+import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Entity

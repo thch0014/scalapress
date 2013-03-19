@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, ModelAttribute
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, FolderDao}
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.controller.NotFoundException
 import com.liferay.scalapress.controller.web.{Toolbar, ScalapressPage}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import com.liferay.scalapress.section.SectionRenderer
 import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller

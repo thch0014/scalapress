@@ -3,7 +3,7 @@ package com.liferay.scalapress.security
 import javax.servlet.http.HttpServletRequest
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.Authentication
-import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object SecurityFuncs {

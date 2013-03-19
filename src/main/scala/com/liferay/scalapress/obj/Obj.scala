@@ -1,12 +1,13 @@
-package com.liferay.scalapress.domain
+package com.liferay.scalapress.obj
 
-import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.plugin.listings.ListingPackage
+import com.liferay.scalapress.domain.{Folder, Image}
+import com.liferay.scalapress.domain.attr.AttributeValue
 
 /** @author Stephen Samuel */
 @Entity

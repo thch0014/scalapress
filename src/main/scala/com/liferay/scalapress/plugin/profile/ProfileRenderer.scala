@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.profile
 
 import org.springframework.validation.Errors
-import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object ProfileRenderer {

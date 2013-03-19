@@ -1,7 +1,7 @@
 package com.liferay.scalapress.search
 
-import com.liferay.scalapress.domain.{ObjectType, Obj}
 import org.elasticsearch.action.search.SearchResponse
+import com.liferay.scalapress.obj.{ObjectType, Obj}
 
 /** @author Stephen Samuel */
 trait SearchService {

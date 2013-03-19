@@ -41,8 +41,7 @@ object AttributeSearchTag extends ScalapressTag {
             case Some(id) =>
                 val attribute = context.attributeDao.find(id.toLong)
                 val xml =
-                    <form method=" GET " action="
-        /search">
+                    <form method=" GET " action="/search">
                         <select name="q" action="/search">
                             {options(attribute.options.asScala)}
                         </select>

@@ -5,6 +5,7 @@ import reflect.BeanProperty
 import com.liferay.scalapress.widgets.MediaWidget
 import com.liferay.scalapress.plugin.gallery.Gallery
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

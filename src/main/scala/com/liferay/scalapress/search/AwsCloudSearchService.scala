@@ -1,8 +1,8 @@
 package com.liferay.scalapress.search
 
-import com.liferay.scalapress.domain.Obj
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.cloudsearch.AmazonCloudSearchClient
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 class AwsCloudSearchService(accessKey: String, secretKey: String) {

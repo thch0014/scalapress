@@ -2,12 +2,12 @@ package com.liferay.scalapress.dao
 
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.Obj
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.Logging
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.controller.admin.obj.ObjectQuery
 import com.sksamuel.scoot.soa.Page
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 

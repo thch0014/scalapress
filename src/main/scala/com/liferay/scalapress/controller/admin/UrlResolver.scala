@@ -1,6 +1,6 @@
 package com.liferay.scalapress.controller.admin
 
-import com.liferay.scalapress.domain.{User, Markup, ObjectType, Obj, Folder}
+import com.liferay.scalapress.domain.{User, Markup, Folder}
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.domain.setup.Theme
 import com.liferay.scalapress.domain.attr.Attribute
@@ -9,6 +9,7 @@ import com.liferay.scalapress.plugin.form.{Submission, Form}
 import com.liferay.scalapress.plugin.ecommerce.domain.DeliveryOption
 import com.liferay.scalapress.search.{SearchFormField, SearchForm}
 import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.obj.{ObjectType, Obj}
 
 /** @author Stephen Samuel */
 

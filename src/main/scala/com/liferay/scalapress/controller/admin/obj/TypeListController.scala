@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.TypeDao
-import com.liferay.scalapress.domain.ObjectType
 import com.googlecode.genericdao.search.Search
+import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Controller

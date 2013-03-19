@@ -3,8 +3,8 @@ package com.liferay.scalapress.plugin.ecommerce
 import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.dao.{OrderDao, ObjectDao, TypeDao}
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object OrderService {

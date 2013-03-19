@@ -7,11 +7,11 @@ import java.io.StringWriter
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.domain.{Obj, ObjectType}
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.domain.attr.Attribute
 import javax.servlet.http.HttpServletResponse
+import com.liferay.scalapress.obj.{ObjectType, Obj}
 
 /** @author Stephen Samuel */
 @Controller

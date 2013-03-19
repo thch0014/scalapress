@@ -1,7 +1,7 @@
 package com.liferay.scalapress.domain.attr
 
-import com.liferay.scalapress.domain.Obj
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object AttributeFuncs {

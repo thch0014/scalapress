@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, RequestMapping, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.FolderDao
 import org.springframework.http.MediaType
-import com.liferay.scalapress.domain.Obj
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller

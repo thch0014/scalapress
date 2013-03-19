@@ -3,10 +3,10 @@ package com.liferay.scalapress.domain.attr
 import java.lang.String
 import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.Obj
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations.{Index, BatchSize}
 import com.liferay.scalapress.plugin.listings.ListingProcess
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity

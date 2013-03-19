@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.{RequestParam, PathVariable, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{ImageDao, ObjectDao}
 import org.springframework.http.MediaType
-import com.liferay.scalapress.domain.{Image, Obj}
+import com.liferay.scalapress.domain.{Image}
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller

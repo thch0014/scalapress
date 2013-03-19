@@ -1,7 +1,6 @@
 package com.liferay.scalapress.feeds.gbase
 
 import com.googlecode.genericdao.search.Search
-import com.liferay.scalapress.domain.Obj
 import java.io.File
 import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
@@ -10,6 +9,7 @@ import com.liferay.scalapress.dao.ObjectDao
 import com.liferay.scalapress.feeds.FeedDao
 import com.liferay.scalapress.domain.setup.Installation
 import com.liferay.scalapress.service.asset.AssetStore
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {

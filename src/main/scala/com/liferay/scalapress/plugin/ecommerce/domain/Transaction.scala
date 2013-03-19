@@ -1,8 +1,8 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Column, Table, Entity}
-import com.liferay.scalapress.domain.Obj
 import reflect.BeanProperty
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Table(name = "payments")

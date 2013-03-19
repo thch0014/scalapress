@@ -1,9 +1,10 @@
 package com.liferay.scalapress.service.theme
 
 import tag.TagRenderer
-import com.liferay.scalapress.domain.{Obj, Folder, Markup}
+import com.liferay.scalapress.domain.{Folder, Markup}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object MarkupRenderer {

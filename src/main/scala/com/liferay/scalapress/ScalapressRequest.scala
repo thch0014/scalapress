@@ -1,8 +1,9 @@
 package com.liferay.scalapress
 
 import controller.web.ScalapressConstants
-import domain.{Folder, Obj}
+import domain.{Folder}
 import javax.servlet.http.HttpServletRequest
+import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 
 /** @author Stephen Samuel */

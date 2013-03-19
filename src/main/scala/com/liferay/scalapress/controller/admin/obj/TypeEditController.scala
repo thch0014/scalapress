@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestBody, PathV
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.dao.{MarkupDao, TypeDao}
 import scala.Array
-import com.liferay.scalapress.domain.ObjectType
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.controller.admin.UrlResolver
 import com.liferay.scalapress.domain.attr.Attribute
@@ -14,6 +13,7 @@ import com.liferay.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.util.ComponentClassScanner
+import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Controller

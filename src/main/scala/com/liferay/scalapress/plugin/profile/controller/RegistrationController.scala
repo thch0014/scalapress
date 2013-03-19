@@ -9,7 +9,6 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import com.liferay.scalapress.dao.{ObjectDao, TypeDao, ThemeDao}
 import reflect.BeanProperty
-import com.liferay.scalapress.domain.Obj
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
@@ -20,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import com.liferay.scalapress.controller.RedirectException
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller
