@@ -13,6 +13,8 @@ import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator}
 import com.liferay.scalapress.util.{ObjectTypePopulator, SortPopulator}
 import com.liferay.scalapress.util.mvc.AttributeValuesPopulator
+import java.text.SimpleDateFormat
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 @Controller
