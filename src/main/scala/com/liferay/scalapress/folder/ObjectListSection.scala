@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.lists
+package com.liferay.scalapress.folder
 
 import javax.persistence.{EnumType, Enumerated, ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.lists
+package com.liferay.scalapress.obj
 
 import javax.persistence.{Table, Entity, Column}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
