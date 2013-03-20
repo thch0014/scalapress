@@ -1,4 +1,4 @@
-package com.liferay.scalapress.util
+package com.liferay.scalapress.util.geo
 
 import java.io.{FileWriter, FileReader, File}
 import org.apache.commons.io.IOUtils
