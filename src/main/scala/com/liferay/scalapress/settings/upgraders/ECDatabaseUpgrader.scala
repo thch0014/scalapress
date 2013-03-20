@@ -263,6 +263,51 @@ class ECDatabaseUpgrader extends Logging {
         execute("ALTER TABLE searches MODIFY itemType bigint(10) null")
         execute("UPDATE searches SET itemType=null WHERE itemType=0")
 
+
+        for (column <- Array("pagename",
+            "membername",
+            "invoicecolumn",
+            "associationitemtype",
+            "listable",
+            "cellspan",
+            "filter",
+            "grouping",
+            "imagesonaddlisting",
+            "sellpriceadjustment",
+            "costpriceadjustment",
+            "displayonsubscriberonly",
+            "searchcontrol",
+            "incrementstep",
+            "step",
+            "imagesperrow",
+            "optioncount",
+            "registrationpage",
+            "intro",
+            "rows",
+            "cols",
+            "permissions",
+            "delivery",
+            "jobsheet",
+            "dublicate",
+            "checkalloptions",
+            "checkallfrontlabel",
+            "ibex",
+            "nofollow",
+            "ordersettings",
+            "incrementstart",
+            "smssettings",
+            "randomlength",
+            "restrictiontext",
+            "newslettercontrol",
+            "hidelabel",
+            "recommended")) {
+            try {
+                execute("ALTER TABLE attributes DROP " + column)
+            } catch {
+                case e: Exception => logger.warn(e.getMessage)
+            }
+        }
+
         //        for (column <- Array("disableemails",
         //            "pendingimagecount",
         //            "imagecount",
