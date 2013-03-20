@@ -73,14 +73,14 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         for (a <- form.o.objectType.attributes.asScala) {
             val values = req.getParameterValues("attributeValues" + a.id)
             if (values != null) {
-                values.map(_.trim).filter(_.length > 0).foreach(value => {
+                values.map(_.trim).filter(!_.isEmpty).foreach(value => {
                     val av = new AttributeValue
                     av.attribute = a
                     av.obj = form.o
 
                     // some values need to be converted first
                     av.attribute.attributeType match {
-                        case AttributeType.Date => new SimpleDateFormat("yyyy-MM-dd").parse(av.value).getTime
+                        case AttributeType.Date => new SimpleDateFormat("dd-MM-yyyy").parse(value).getTime
                         case _ => av.value = value
                     }
 

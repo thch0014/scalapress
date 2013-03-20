@@ -50,7 +50,7 @@ class SavedSearchEditController
                     av.attribute = a
                     // some values need to be converted first
                     av.attribute.attributeType match {
-                        case AttributeType.Date => new SimpleDateFormat("yyyy-MM-dd").parse(av.value).getTime
+                        case AttributeType.Date => new SimpleDateFormat("dd-MM-yyyy").parse(value).getTime
                         case _ => av.value = value
                     }
                     av.savedSearch = search

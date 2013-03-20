@@ -2,6 +2,8 @@ package com.liferay.scalapress.util.mvc
 
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
+import com.liferay.scalapress.enums.AttributeType
+import java.util.Date
 
 /** @author Stephen Samuel */
 trait AttributeValuesPopulator {
@@ -15,7 +17,14 @@ trait AttributeValuesPopulator {
                 comp < 0
         })
         val attributesWithValues = sorted.map(a => {
-            var values = attributeValues.filter(_.attribute.id == a.id).map(_.value)
+            var values = attributeValues.filter(_.attribute.id == a.id)
+              .filter(_.value != null)
+              .map(av => {
+                av.attribute.attributeType match {
+                    case AttributeType.Date => av.value.toLong
+                    case _ => av.value
+                }
+            })
             if (values.isEmpty || a.multipleValues)
                 values = values :+ ""
             (a, values.asJava)
