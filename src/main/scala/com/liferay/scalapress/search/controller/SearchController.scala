@@ -42,25 +42,29 @@ class SearchController extends Logging {
                @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String,
-               @RequestParam(value = "objectType", required = false) objectTypeId: String): ScalapressPage = {
+               @RequestParam(value = "objectType", required = false) objectTypeId: String,
+               @RequestParam(value = "distance", required = false, defaultValue = "0") distance: Int,
+               @RequestParam(value = "location", required = false) location: String): ScalapressPage = {
 
         val plugin = searchPluginDao.get
 
         val attributeValues = req.getParameterMap.asScala
-          .filter(arg => arg._1.toString.startsWith("attr_"))
-          .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
-          .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
+          .filter(arg => arg._1.startsWith("attr_"))
+          .filter(arg => arg._2.length > 0)
+          .filter(arg => arg._2.head.trim.length > 0)
           .map(arg => {
             val av = new AttributeValue
             av.attribute = new Attribute
-            av.attribute.id = arg._1.toString.drop(5).toLong
-            av.value = arg._2.asInstanceOf[Array[String]].head
+            av.attribute.id = arg._1.drop(5).toLong
+            av.value = arg._2.head
             av
         })
 
         val search = new SavedSearch
         search.attributeValues = attributeValues.toSet.asJava
         search.keywords = q
+        search.distance = distance
+        search.location = location
         search.maxResults = PageSize
         search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
         search.sortType = sort

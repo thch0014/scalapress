@@ -16,10 +16,11 @@ import org.elasticsearch.node.NodeBuilder
 import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder}
 import collection.mutable.ArrayBuffer
 import scala.Option
-import com.liferay.scalapress.enums.Sort
+import com.liferay.scalapress.enums.{AttributeType, Sort}
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
 import com.liferay.scalapress.folder.FolderDao
+import com.liferay.scalapress.util.geo.Postcode
 
 /** @author Stephen Samuel */
 
@@ -66,6 +67,7 @@ class ElasticSearchService extends SearchService with Logging {
       .startObject("properties")
       .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
       .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+      .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
       .endObject()
       .endObject()
       .endObject()
@@ -140,6 +142,11 @@ class ElasticSearchService extends SearchService with Logging {
         //            Option(search.keywords)
         //          .filter(_.trim.length > 0)
         //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
+
+        Option(search.location)
+          .flatMap(Postcode.osref(_))
+          .map(_.toGPS)
+          .foreach(gps => buffer.append("location:" + gps.lat + "," + gps.lon))
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
@@ -227,6 +234,9 @@ class ElasticSearchService extends SearchService with Logging {
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)
+            if (av.attribute.attributeType == AttributeType.Postcode) {
+                Postcode.osref(av.value).map(_.toGPS).foreach(gps => json.field("location", gps.lat + "," + gps.lon))
+            }
         })
 
         json.endObject()

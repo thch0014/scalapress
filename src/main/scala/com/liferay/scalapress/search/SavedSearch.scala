@@ -36,6 +36,12 @@ class SavedSearch {
     @Enumerated(EnumType.STRING)
     @BeanProperty var sortType: Sort = _
 
+    @Column(name = "location", nullable = true)
+    @BeanProperty var location: String = _
+
+    @Column(name = "distance", nullable = true)
+    @BeanProperty var distance: Int = 0
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemType")
     @BeanProperty var objectType: ObjectType = _
