@@ -40,7 +40,7 @@ class SavedSearch {
     @BeanProperty var location: String = _
 
     @Column(name = "distance", nullable = true)
-    @BeanProperty var distance: Int = 0
+    @BeanProperty var distance: Int = 100
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemType")

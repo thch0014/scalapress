@@ -13,7 +13,7 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
-import org.elasticsearch.index.query.{QueryStringQueryBuilder, PrefixQueryBuilder}
+import org.elasticsearch.index.query.{GeoDistanceFilterBuilder, QueryStringQueryBuilder, PrefixQueryBuilder}
 import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.{AttributeType, Sort}
@@ -21,6 +21,7 @@ import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
+import org.elasticsearch.common.unit.DistanceUnit
 
 /** @author Stephen Samuel */
 
@@ -143,11 +144,6 @@ class ElasticSearchService extends SearchService with Logging {
         //          .filter(_.trim.length > 0)
         //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
-        Option(search.location)
-          .flatMap(Postcode.osref(_))
-          .map(_.toGPS)
-          .foreach(gps => buffer.append("location:" + gps.lat + "," + gps.lon))
-
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
           .map(_.replaceAll("\\D", ""))
@@ -168,30 +164,36 @@ class ElasticSearchService extends SearchService with Logging {
           .setFrom(0)
           .setSize(limit)
 
-        buffer.size match {
+        if (buffer.size > 0) {
+            logger.debug("Base Query: " + buffer)
+            val query = new QueryStringQueryBuilder(buffer.mkString(" "))
+              .defaultOperator(QueryStringQueryBuilder.Operator.AND)
+            logger.debug("Performing search {}", query)
 
-            case 0 =>
+            req.setQuery(query)
 
-            case _ =>
-                logger.debug("Base Query: " + buffer)
-                val query = new QueryStringQueryBuilder(buffer.mkString(" "))
-                  .defaultOperator(QueryStringQueryBuilder.Operator.AND)
-                logger.debug("Performing search {}", query)
+            val sort = search.sortType match {
+                case Sort.Random => SortBuilders
+                  .scriptSort("Math.random()", "number")
+                  .order(SortOrder.ASC)
+                case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
+                case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
+                case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
+            }
 
-                req.setQuery(query)
-
-                val sort = search.sortType match {
-                    case Sort.Random => SortBuilders
-                      .scriptSort("Math.random()", "number")
-                      .order(SortOrder.ASC)
-                    case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-                    case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
-                    case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
-                }
-
-                req.addSort(sort)
-                req
+            req.addSort(sort)
+            req
         }
+
+        Option(search.location)
+          .flatMap(Postcode.osref(_))
+          .map(_.toGPS)
+          .foreach(gps => {
+            req
+              .setFilter(new GeoDistanceFilterBuilder("location")
+              .point(gps.lat, gps.lon)
+              .distance(search.distance, DistanceUnit.MILES))
+        })
 
         logger.debug("Search: " + req)
         req.execute().actionGet()

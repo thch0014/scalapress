@@ -43,7 +43,7 @@ class SearchController extends Logging {
                @RequestParam(value = "q", required = false) q: String,
                @RequestParam(value = "type", required = false) t: String,
                @RequestParam(value = "objectType", required = false) objectTypeId: String,
-               @RequestParam(value = "distance", required = false, defaultValue = "0") distance: Int,
+               @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
                @RequestParam(value = "location", required = false) location: String): ScalapressPage = {
 
         val plugin = searchPluginDao.get
