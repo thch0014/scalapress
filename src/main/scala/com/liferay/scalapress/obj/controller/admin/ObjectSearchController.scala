@@ -8,7 +8,7 @@ import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import reflect.BeanProperty
-import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
+import com.liferay.scalapress.obj.{ObjectQuery, ObjectDao, TypeDao, Obj}
 
 /** @author Stephen Samuel */
 @Controller

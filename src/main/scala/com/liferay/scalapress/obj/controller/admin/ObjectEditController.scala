@@ -4,11 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.service.asset.{Asset, AssetStore}
 import javax.servlet.http.HttpServletRequest
-import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
 import java.net.URLConnection
@@ -21,7 +20,9 @@ import com.liferay.scalapress.obj.{ObjectDao, AttributeValueDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.media.Image
-import com.liferay.scalapress.util.mvc.UrlResolver
+import com.liferay.scalapress.util.mvc.{AttributeValuesPopulator, UrlResolver}
+import com.liferay.scalapress.enums.AttributeType
+import java.text.SimpleDateFormat
 
 /** @author Stephen Samuel */
 @Controller
@@ -70,14 +71,19 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         form.o.attributeValues.clear()
 
         for (a <- form.o.objectType.attributes.asScala) {
-
             val values = req.getParameterValues("attributeValues" + a.id)
             if (values != null) {
                 values.map(_.trim).filter(_.length > 0).foreach(value => {
                     val av = new AttributeValue
                     av.attribute = a
-                    av.value = value
                     av.obj = form.o
+
+                    // some values need to be converted first
+                    av.attribute.attributeType match {
+                        case AttributeType.Date => new SimpleDateFormat("yyyy-MM-dd").parse(av.value).getTime
+                        case _ => av.value = value
+                    }
+
                     form.o.attributeValues.add(av)
                 })
             }

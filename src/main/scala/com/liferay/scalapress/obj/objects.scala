@@ -1,6 +1,5 @@
 package com.liferay.scalapress.obj
 
-import controller.admin.ObjectQuery
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import com.googlecode.genericdao.search.Search
@@ -8,6 +7,7 @@ import com.liferay.scalapress.Logging
 import org.springframework.transaction.annotation.Transactional
 import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
+import com.liferay.scalapress.obj.ObjectQuery
 
 /** @author Stephen Samuel */
 

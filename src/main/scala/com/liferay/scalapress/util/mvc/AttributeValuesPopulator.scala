@@ -1,6 +1,5 @@
-package com.liferay.scalapress.obj.controller.admin
+package com.liferay.scalapress.util.mvc
 
-import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 

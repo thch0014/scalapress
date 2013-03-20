@@ -7,8 +7,8 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.theme.ThemeService
 import org.springframework.stereotype.Controller
-import com.liferay.scalapress.obj.controller.admin.ObjectQuery
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.obj.ObjectQuery
 
 /** @author Stephen Samuel */
 @Controller

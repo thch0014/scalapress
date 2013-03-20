@@ -1,4 +1,4 @@
-package com.liferay.scalapress.controller.admin.obj.tag
+package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}

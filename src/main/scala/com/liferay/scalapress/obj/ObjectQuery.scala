@@ -1,4 +1,4 @@
-package com.liferay.scalapress.obj.controller.admin
+package com.liferay.scalapress.obj
 
 import com.sksamuel.scoot.soa.PagedQuery
 import reflect.BeanProperty

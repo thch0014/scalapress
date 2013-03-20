@@ -4,7 +4,7 @@ import collection.mutable.ListBuffer
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.service.FriendlyUrlGenerator
 import org.joda.time.DateTime
-import com.liferay.scalapress.obj.controller.admin.ObjectQuery
+import com.liferay.scalapress.obj.ObjectQuery
 
 /** @author Stephen Samuel */
 object UrlBuilder {

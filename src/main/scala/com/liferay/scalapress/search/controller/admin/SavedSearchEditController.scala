@@ -3,15 +3,16 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.search.{SavedSearch, SavedSearchDao}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.obj.TypeDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.obj.attr.AttributeValue
-import com.liferay.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator, AttributeValuesPopulator}
+import com.liferay.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator}
 import com.liferay.scalapress.util.{ObjectTypePopulator, SortPopulator}
+import com.liferay.scalapress.util.mvc.AttributeValuesPopulator
 
 /** @author Stephen Samuel */
 @Controller
@@ -45,7 +46,11 @@ class SavedSearchEditController
                 values.map(_.trim).filter(_.length > 0).foreach(value => {
                     val av = new AttributeValue
                     av.attribute = a
-                    av.value = value
+                    // some values need to be converted first
+                    av.attribute.attributeType match {
+                        case AttributeType.Date => new SimpleDateFormat("yyyy-MM-dd").parse(av.value).getTime
+                        case _ => av.value = value
+                    }
                     av.savedSearch = search
                     search.attributeValues.add(av)
                 })
