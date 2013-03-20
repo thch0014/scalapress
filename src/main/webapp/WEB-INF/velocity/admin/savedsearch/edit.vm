@@ -128,7 +128,7 @@
 
                     #if ($a.multipleValues)
 
-                        #foreach ($option in $a.orderedOptions)
+                        #foreach ($option in $a.orderedOptions())
                             #if($values.contains($option.value))
                                 #set ($checked = "checked='true'")
                             #else
@@ -146,7 +146,7 @@
 
                         <select name="attributeValues$a.id" class="input-xlarge">
                             <option value="">-Not Specified-</option>
-                            #foreach ($option in $a.options)
+                            #foreach ($option in $a.orderedOptions())
                                 #if($values.contains($option.value))
                                     #set ($selected = "selected='true'")
                                 #else
