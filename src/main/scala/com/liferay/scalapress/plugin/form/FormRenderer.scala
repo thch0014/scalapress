@@ -52,7 +52,7 @@ object FormRenderer {
 
     private def renderField(field: FormField, req: ScalapressRequest): Elem = {
 
-        val name = if (field.required) "*" else ""
+        val name = field.name + (if (field.required) "*" else "")
         val value = Option(req.request.getParameter(field.id.toString))
         val error = req.error(field.id.toString)
 
