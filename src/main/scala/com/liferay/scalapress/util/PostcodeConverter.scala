@@ -7,15 +7,15 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 object PostcodeConverter extends App {
 
-    val dir = "/home/sam/development/postcodes"
-    val output = "/home/sam/development/postcodes.csv"
+    val dir = "c:/development/postcodes"
+    val output = "c:/development/postcodes.csv"
 
     val map = new java.util.TreeMap[String, String]()
     new File(dir).listFiles().foreach(arg => {
         IOUtils.readLines(new FileReader(arg)).asScala.foreach(line => {
             val fields = line.split(",")
-            val postcode = fields(0).replace("\"", "").replace(" ", "").dropRight(2)
-            map.put(postcode.dropRight(1), postcode.dropRight(1) + "," + fields(2) + "," + fields(3))
+            val postcode = fields(0).replace("\"", "").replace(" ", "").dropRight(3)
+      //      map.put(postcode.dropRight(1), postcode.dropRight(1) + "," + fields(2) + "," + fields(3))
             map.put(postcode, postcode + "," + fields(2) + "," + fields(3))
         })
     })
