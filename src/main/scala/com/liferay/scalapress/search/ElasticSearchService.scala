@@ -65,6 +65,7 @@ class ElasticSearchService extends SearchService with Logging {
       .startObject("_source").field("enabled", false).endObject()
       .startObject("properties")
       .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+      .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
       .endObject()
       .endObject()
       .endObject()
@@ -176,7 +177,7 @@ class ElasticSearchService extends SearchService with Logging {
                     case Sort.Random => SortBuilders
                       .scriptSort("Math.random()", "number")
                       .order(SortOrder.ASC)
-                    case Sort.Name => SortBuilders.fieldSort("name").order(SortOrder.ASC)
+                    case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
                     case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
                     case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
                 }
@@ -214,6 +215,7 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject()
           .field("objectType", obj.objectType.id.toString)
           .field("name", obj.name)
+          .field("name_raw", obj.name)
           .field("status", obj.status)
           .field("labels", obj.labels)
 
