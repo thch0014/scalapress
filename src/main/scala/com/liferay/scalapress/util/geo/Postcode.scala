@@ -24,6 +24,15 @@ object Postcode {
 abstract class Coordinate {
     def toOSRef: OSRef
     def toGPS: GPS
+    def distance(other: Coordinate): Double = {
+        val R = 6371
+        val gps1 = other.toGPS
+        val gps2 = other.toGPS
+        val x = (gps2.lon - gps1.lon) * scala.math.cos((gps1.lat + gps2.lat) / 2)
+        val y = (gps2.lat - gps1.lat)
+        val d = scala.math.sqrt(x * x + y * y) * R
+        d
+    }
 }
 
 case class OSRef(easting: Int, northing: Int) extends Coordinate {
@@ -93,7 +102,7 @@ case class OSRef(easting: Int, northing: Int) extends Coordinate {
     }
 }
 
-case class GPS(lat: Double, long: Double) extends Coordinate {
+case class GPS(lat: Double, lon: Double) extends Coordinate {
     def toOSRef = null
     def toGPS = this
 }
