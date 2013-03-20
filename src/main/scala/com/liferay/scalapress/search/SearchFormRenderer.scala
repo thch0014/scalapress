@@ -33,9 +33,26 @@ object SearchFormRenderer {
             field.fieldType match {
                 case SearchFieldType.Attribute if field.preset => renderPresetAttributeField(field)
                 case SearchFieldType.Attribute => renderAttributeField(field)
+                case SearchFieldType.Distance => _renderDistanceField(field)
                 case _ => renderTextField(field)
             }
         })
+    }
+
+    def _renderDistanceField(field: SearchFormField) = {
+        <div>
+            <label>
+                {Unparsed(field.name)}
+            </label>
+            <select type="text" name="distance">
+                <option value="1">1 mile</option>
+                <option value="5">5 miles</option>
+                <option value="10">10 miles</option>
+                <option value="25">25 miles</option>
+                <option value="50">50 miles</option>
+                <option value="100">100 miles</option>
+            </select>
+        </div>
     }
 
     private def renderPresetAttributeField(field: SearchFormField) = {
