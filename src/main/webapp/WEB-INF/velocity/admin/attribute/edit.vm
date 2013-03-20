@@ -57,7 +57,7 @@
         <label class="control-label">Optional</label>
 
         <div class="controls">
-            #springFormCheckbox("attribute.optional")
+            #springFormCheckbox("attribute.optional", "")
         </div>
     </div>
 
@@ -65,7 +65,15 @@
         <label class="control-label">Multiple values</label>
 
         <div class="controls">
-            #springFormCheckbox("attribute.multipleValues")
+            #springFormCheckbox("attribute.multipleValues", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Manual options ordering</label>
+
+        <div class="controls">
+            #springFormCheckbox("attribute.manualOptionsOrdering", "")
         </div>
     </div>
 
@@ -73,7 +81,7 @@
         <label class="control-label">Facet</label>
 
         <div class="controls">
-            #springFormCheckbox("attribute.facet")
+            #springFormCheckbox("attribute.facet", "")
         </div>
     </div>
 

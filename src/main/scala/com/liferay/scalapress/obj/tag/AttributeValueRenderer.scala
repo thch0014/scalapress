@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
-object AttributeRenderer {
+object AttributeValueRenderer {
 
     def renderValue(av: AttributeValue) = {
         av.attribute.attributeType match {

@@ -128,7 +128,7 @@
 
                     #if ($a.multipleValues)
 
-                        #foreach ($option in $a.options)
+                        #foreach ($option in $a.orderedOptions)
                             #if($values.contains($option.value))
                                 #set ($checked = "checked='true'")
                             #else

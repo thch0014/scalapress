@@ -14,7 +14,7 @@ object AttributeValueTag extends ScalapressTag with TagBuilder {
                 request.obj.flatMap(obj => {
                     obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
                         case None => None
-                        case Some(av) => Some(build(AttributeRenderer.renderValue(av), params))
+                        case Some(av) => Some(build(AttributeValueRenderer.renderValue(av), params))
                     }
                 })
             }

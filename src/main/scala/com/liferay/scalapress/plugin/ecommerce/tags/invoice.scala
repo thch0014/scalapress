@@ -5,7 +5,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 import com.liferay.scalapress.service.theme.MarkupRenderer
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.obj.tag.AttributeRenderer
+import com.liferay.scalapress.obj.tag.AttributeValueRenderer
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {
@@ -56,7 +56,7 @@ object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
                 request.orderLine.flatMap(line => Option(context.objectDao.find(line.obj))).flatMap(obj => {
                     obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
                         case None => None
-                        case Some(av) => Some(build(AttributeRenderer.renderValue(av), params))
+                        case Some(av) => Some(build(AttributeValueRenderer.renderValue(av), params))
                     }
                 })
             }

@@ -20,7 +20,7 @@ object AttributeTableRenderer {
         val grouped = attributeValues.groupBy(_.attribute)
         val sorted = SortedMap.empty(Ordering.by[Attribute, Long](a => a.position)).++(grouped)
         sorted.map(arg => {
-            val values = arg._2.map(AttributeRenderer.renderValue(_)).mkString(", ")
+            val values = arg._2.map(AttributeValueRenderer.renderValue(_)).mkString(", ")
             "<tr><td class=\"attribute-label\">" + arg._1.name +
               "</td><td class=\"attribute-value\">" + values + "</td></tr>"
         })

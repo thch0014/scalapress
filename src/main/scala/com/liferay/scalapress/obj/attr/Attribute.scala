@@ -8,6 +8,7 @@ import scala.Array
 import com.liferay.scalapress.enums.AttributeType
 import org.hibernate.annotations.Index
 import com.liferay.scalapress.obj.ObjectType
+import collection.mutable
 
 /** @author Stephen Samuel */
 @Entity
@@ -31,17 +32,28 @@ class Attribute {
 
     import scala.collection.JavaConverters._
 
-    def optionsAsMap: java.util.Map[String, String] = options
-      .asScala
-      .sortBy(_.value)
-      .map(opt => (opt.value, opt.value))
-      .toMap
-      .asJava
+    def optionsAsMap: java.util.Map[String, String] = {
+        val map = new mutable.LinkedHashMap[String, String]()
+        val sorted = manualOptionsOrdering match {
+            case true => options.asScala.sortBy(_.position)
+            case _ => options.asScala.sortBy(_.value)
+        }
+        sorted.foreach(opt => map.put(opt.value, opt.value))
+        map.asJava
+    }
+
+    def orderedOptions: java.util.List[AttributeOption] = manualOptionsOrdering match {
+        case true => options.asScala.sortBy(_.position).asJava
+        case _ => options.asScala.sortBy(_.value).asJava
+    }
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     @javax.validation.constraints.NotNull
     @BeanProperty var attributeType: AttributeType = _
+
+    @Column(name = "customoptionsorder", nullable = false)
+    @BeanProperty var manualOptionsOrdering: Boolean = _
 
     @BeanProperty var description: String = _
 
