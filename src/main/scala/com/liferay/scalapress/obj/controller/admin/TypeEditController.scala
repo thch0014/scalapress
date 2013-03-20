@@ -39,6 +39,7 @@ class TypeEditController extends MarkupPopulator {
         val section = Class.forName(cls).newInstance.asInstanceOf[Section]
         section.objectType = t
         section.visible = true
+        section.init(context)
         t.sections.add(section)
         typeDao.save(t)
         "redirect:/backoffice/type/" + t.id
