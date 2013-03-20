@@ -116,9 +116,10 @@
 
                 #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
                     #foreach ($value in $values)
-                        <div class="input-append date datepicker" value="$esc.html($value)"
+                        <div class="input-append date datepicker" value="$datetool.format("dd-MM-yyyy",$value)"
                              data-date-format="dd-mm-yyyy">
-                            <input size="16" type="text" name="attributeValues$a.id" value="$esc.html($value)"/>
+                            <input size="16" type="text" name="attributeValues$a.id"
+                                   value="$datetool.format("dd-MM-yyyy",$value)"/>
                             <span class="add-on"><i class="icon-th"></i></span>
                         </div>
                     #end
@@ -158,7 +159,7 @@
                     #end
 
                 #elseif ($a.attributeType == "Boolean")
-                    <select name="attributeValues$a.id" class="input-small">
+                    <select name="attributeValues$a.id" class="input-medium">
                         <option value="">-Not Specified-</option>
                         <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
                         <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
