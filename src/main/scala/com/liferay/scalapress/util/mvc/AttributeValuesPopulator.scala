@@ -4,6 +4,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.enums.AttributeType
 import java.util.Date
+import java.text.SimpleDateFormat
 
 /** @author Stephen Samuel */
 trait AttributeValuesPopulator {
@@ -21,7 +22,11 @@ trait AttributeValuesPopulator {
               .filter(_.value != null)
               .map(av => {
                 av.attribute.attributeType match {
-                    case AttributeType.Date => av.value.toLong
+                    case AttributeType.Date =>
+                        if (av.value.matches("\\d{2}-\\d{2}-\\d{4}"))
+                            new SimpleDateFormat("dd-MM-yyyy").parse(av.value).getTime
+                        else
+                            av.value.toLong
                     case _ => av.value
                 }
             })
