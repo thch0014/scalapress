@@ -8,9 +8,7 @@ object TagRenderer extends Logging {
 
     val deprecated = Array(
         "comparison_check",
-        "distance",
         "attributes_summary_span",
-        "location",
         "favourites",
         "sms",
         "search_begin",
