@@ -213,6 +213,51 @@
                     <artifactId>scala-maven-plugin</artifactId>
                     <version>${maven.plugin.scala.version}</version>
                 </plugin>
+                <!-- disable surefire -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.plugin.surefire.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
+                </plugin>
+                <!-- enable scalatest -->
+                <plugin>
+                    <groupId>org.scalatest</groupId>
+                    <artifactId>scalatest-maven-plugin</artifactId>
+                    <version>1.0-M2</version>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                            <configuration>
+                                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                                <junitxml>.</junitxml>
+                                <parallel>false</parallel>
+                                <tagsToExclude>IntegrationTest</tagsToExclude>
+                                <filereports>ScalaTestSuite.txt</filereports>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>integration-test</id>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                            <configuration>
+                                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                                <junitxml>.</junitxml>
+                                <parallel>true</parallel>
+                                <tagsToInclude>IntegrationTest</tagsToInclude>
+                                <filereports>ScalaIntegrationTestSuite.txt</filereports>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
