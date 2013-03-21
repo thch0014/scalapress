@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.user.{User, UserDao}
 
 /** @author Stephen Samuel */
 @Controller

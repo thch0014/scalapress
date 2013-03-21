@@ -88,7 +88,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
         val mapper = new ObjectMapper
         mapper.registerModule(DefaultScalaModule)
-        mapper.registerModule(Hibernate3Module)
+        mapper.registerModule(new Hibernate3Module)
 
         val convertor = new MappingJackson2HttpMessageConverter
         convertor.setObjectMapper(mapper)

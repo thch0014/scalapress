@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, Mod
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.liferay.scalapress.user.{User, UserDao}
 
 /** @author Stephen Samuel */
 @Controller

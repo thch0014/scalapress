@@ -7,7 +7,7 @@ import com.liferay.scalapress.util.geo.Postcode
 
 /** @author Stephen Samuel */
 @Tag("distance")
-class DistanceTag extends ScalapressTag with TagBuilder {
+object DistanceTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(AttributeFuncs.locationValue(_)).flatMap(Postcode.gps(_)) match {
             case None => None
@@ -25,7 +25,7 @@ class DistanceTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("location")
-class LocationTag extends ScalapressTag with TagBuilder {
+object LocationTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         super.build(request.location, params)
     }
