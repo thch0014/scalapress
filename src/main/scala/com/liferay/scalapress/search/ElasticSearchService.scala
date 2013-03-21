@@ -166,8 +166,7 @@ class ElasticSearchService extends SearchService with Logging {
         }
 
         val filter = Option(search.location)
-          .flatMap(Postcode.osref(_))
-          .map(_.toGPS)
+          .flatMap(Postcode.gps(_))
           .map(gps => {
             new GeoDistanceFilterBuilder("location")
               .point(gps.lat, gps.lon)
@@ -238,7 +237,11 @@ class ElasticSearchService extends SearchService with Logging {
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)
             if (av.attribute.attributeType == AttributeType.Postcode) {
-                Postcode.osref(av.value).map(_.toGPS).foreach(gps => json.field("location", gps.lat + "," + gps.lon))
+                logger.debug("postcode=" + av.value)
+                Postcode.gps(av.value).foreach(gps => {
+                    json.field("location", gps.string())
+                    logger.debug("location=" + gps.string())
+                })
             }
         })
 

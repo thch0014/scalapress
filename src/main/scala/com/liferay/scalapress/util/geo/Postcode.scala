@@ -7,10 +7,9 @@ import scala.collection.JavaConverters._
 object Postcode {
 
     val input = getClass.getResourceAsStream("/postcodes.csv")
-    val lines = IOUtils.readLines(input).asScala
-    val postcodes = lines.map(line => {
+    val postcodes = IOUtils.readLines(input).asScala.map(line => {
         val array = line.split(",")
-        val postcode = array(0).toUpperCase.replace(" ", "")
+        val postcode = array(0).toUpperCase.replace(" ", "").trim
         val osref = OSRef(array(1).toInt, array(2).toInt)
         (postcode, osref)
     }).toMap
@@ -18,8 +17,10 @@ object Postcode {
     def osref(postcode: String): Option[OSRef] = _lookup(_postcodeArea(postcode))
     def gps(postcode: String): Option[GPS] = osref(postcode).map(_.toGPS)
     def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode.toUpperCase)
-    def _postcodeArea(postcode: String) =
-        if (postcode.replace(" ", "").trim.length > 4) postcode.dropRight(3) else postcode
+    def _postcodeArea(postcode: String) = {
+        val trimmed = postcode.replaceAll(" ", "").trim
+        if (trimmed.length > 4) trimmed.dropRight(3) else trimmed
+    }
 }
 
 abstract class Coordinate {
@@ -104,6 +105,7 @@ case class OSRef(easting: Int, northing: Int) extends Coordinate {
 }
 
 case class GPS(lat: Double, lon: Double) extends Coordinate {
+    def string() = lat + "," + lon
     def toOSRef = null
     def toGPS = this
 }
