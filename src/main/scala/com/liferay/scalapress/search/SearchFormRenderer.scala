@@ -40,6 +40,15 @@ object SearchFormRenderer {
         })
     }
 
+    def _renderDateField(field: SearchFormField) = {
+        <div>
+            <label>
+                {Unparsed(field.name)}
+            </label>
+            <input type="text" name={field.id.toString} class="input-medium datepicker"/>
+        </div>
+    }
+
     def _renderLocationField(field: SearchFormField) = {
         <div>
             <label>

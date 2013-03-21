@@ -16,9 +16,10 @@ object Postcode {
     }).toMap
 
     def osref(postcode: String): Option[OSRef] = _lookup(_postcodeArea(postcode))
-    private def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode.toUpperCase)
-    private def _postcodeArea(postcode: String) =
-        if (postcode.trim.length > 4) postcode.take(4) else postcode
+    def gps(postcode: String): Option[GPS] = osref(postcode).map(_.toGPS)
+    def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode.toUpperCase)
+    def _postcodeArea(postcode: String) =
+        if (postcode.trim.length > 4) postcode.dropRight(3) else postcode
 }
 
 abstract class Coordinate {
