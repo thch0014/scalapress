@@ -11,7 +11,7 @@ object Postcode {
     val postcodes = lines.map(line => {
         val array = line.split(",")
         val postcode = array(0).toUpperCase
-        val osref = OSRef(array(2).toInt, array(1).toInt)
+        val osref = OSRef(array(1).toInt, array(2).toInt)
         (postcode, osref)
     }).toMap
 
