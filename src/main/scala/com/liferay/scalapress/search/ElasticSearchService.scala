@@ -2,7 +2,6 @@ package com.liferay.scalapress.search
 
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
-import javax.annotation.PreDestroy
 import com.liferay.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
@@ -13,15 +12,16 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
-import org.elasticsearch.index.query.{GeoDistanceFilterBuilder, QueryStringQueryBuilder, PrefixQueryBuilder}
+import org.elasticsearch.index.query.{FilteredQueryBuilder, GeoDistanceFilterBuilder, QueryStringQueryBuilder, PrefixQueryBuilder}
 import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
-import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
+import com.liferay.scalapress.obj.{ObjectType, ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
+import javax.annotation.PreDestroy
 
 /** @author Stephen Samuel */
 
@@ -158,42 +158,43 @@ class ElasticSearchService extends SearchService with Logging {
 
         val limit = if (search.maxResults < 1) 40 else search.maxResults
 
+        val query = buffer.size match {
+            case 0 => new QueryStringQueryBuilder("*:*")
+            case _ =>
+                new QueryStringQueryBuilder(buffer.mkString(" "))
+                  .defaultOperator(QueryStringQueryBuilder.Operator.AND)
+        }
+
+        val filter = Option(search.location)
+          .flatMap(Postcode.osref(_))
+          .map(_.toGPS)
+          .map(gps => {
+            new GeoDistanceFilterBuilder("location")
+              .point(gps.lat, gps.lon)
+              .distance(search.distance, DistanceUnit.MILES)
+        })
+
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setTypes(TYPE)
           .setFrom(0)
           .setSize(limit)
 
-        if (buffer.size > 0) {
-            logger.debug("Base Query: " + buffer)
-            val query = new QueryStringQueryBuilder(buffer.mkString(" "))
-              .defaultOperator(QueryStringQueryBuilder.Operator.AND)
-            logger.debug("Performing search {}", query)
-
-            req.setQuery(query)
-
-            val sort = search.sortType match {
-                case Sort.Random => SortBuilders
-                  .scriptSort("Math.random()", "number")
-                  .order(SortOrder.ASC)
-                case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-                case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
-                case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
-            }
-
-            req.addSort(sort)
-            req
+        filter match {
+            case None => req.setQuery(query)
+            case Some(f) => req.setQuery(new FilteredQueryBuilder(query, f))
         }
 
-        Option(search.location)
-          .flatMap(Postcode.osref(_))
-          .map(_.toGPS)
-          .foreach(gps => {
-            req
-              .setFilter(new GeoDistanceFilterBuilder("location")
-              .point(gps.lat, gps.lon)
-              .distance(search.distance, DistanceUnit.MILES))
-        })
+        val sort = search.sortType match {
+            case Sort.Random => SortBuilders
+              .scriptSort("Math.random()", "number")
+              .order(SortOrder.ASC)
+            case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
+            case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
+            case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
+        }
+
+        req.addSort(sort)
 
         logger.debug("Search: " + req)
         req.execute().actionGet()
@@ -232,7 +233,7 @@ class ElasticSearchService extends SearchService with Logging {
         json.field("hasImage", hasImage.toString)
 
         val folderIds = obj.folders.asScala.map(_.id.toString)
-        json.field("folders", folderIds.toSeq: _ *)
+        json.field("folders", folderIds.toSeq: _*)
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)

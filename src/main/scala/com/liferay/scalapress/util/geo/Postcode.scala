@@ -11,12 +11,12 @@ object Postcode {
     val postcodes = lines.map(line => {
         val array = line.split(",")
         val postcode = array(0).toUpperCase
-        val osref = OSRef(array(1).toInt, array(2).toInt)
+        val osref = OSRef(array(2).toInt, array(1).toInt)
         (postcode, osref)
     }).toMap
 
     def osref(postcode: String): Option[OSRef] = _lookup(_postcodeArea(postcode))
-    private def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode)
+    private def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode.toUpperCase)
     private def _postcodeArea(postcode: String) =
         if (postcode.trim.length > 4) postcode.take(4) else postcode
 }
