@@ -16,11 +16,10 @@ class ObjectRestController {
     @Autowired var imageDao: ImageDao = _
 
     @ResponseBody
-    @RequestMapping
-    def typeAhead(@RequestParam("q") q: String,
-                  @RequestParam(value = "objectTypeName",
-                      required = false) objectTypeName: String): Array[Array[String]] = objectDao
-      .typeAhead(q, Option(objectTypeName))
+    @RequestMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))
+    def typeAhead(@RequestParam(value = "objectTypeName", required = false) objectTypeName: String,
+                  @RequestParam("q") q: String): Array[Array[String]] =
+        objectDao.typeAhead(q, Option(objectTypeName))
 
     @ResponseBody
     @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))

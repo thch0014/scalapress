@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-import com.liferay.scalapress.{StringToAttributeConvertor, StringFormConverter, StringToAddressConverter, StringToThemeConverter, StringDeliveryOptionConverter, StringSearchFormConverter, StringMarkupConverter, StringObjectTypeConverter, StringFolderConverter, ScalapressContext}
 import com.liferay.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.plugin.form.FormDao
 import com.liferay.scalapress.search.SearchFormDao
@@ -22,6 +21,10 @@ import com.liferay.scalapress.theme.{MarkupDao, ThemeDao}
 import com.liferay.scalapress.settings.InstallationDao
 import util.mvc._
 import interceptor.{UrlResolverInterceptor, TypesInterceptor, SiteInterceptor, SessionInterceptor}
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -83,6 +86,13 @@ class WebConfig extends WebMvcConfigurationSupport {
         converters.add(new SourceHttpMessageConverter[Source])
         converters.add(new XmlAwareFormHttpMessageConverter)
 
+        val mapper = new ObjectMapper
+        mapper.registerModule(DefaultScalaModule)
+        mapper.registerModule(Hibernate3Module)
+
+        val convertor = new MappingJackson2HttpMessageConverter
+        convertor.setObjectMapper(mapper)
+        converters.add(convertor)
     }
 
     override def requestMappingHandlerAdapter: RequestMappingHandlerAdapter = {
