@@ -10,7 +10,7 @@ import com.liferay.scalapress.plugin.payments.PaymentPluginDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("listing/payment/callback"))
+@RequestMapping(Array("payment/callback/listing"))
 class ListingPaymentCallbackController extends Logging {
 
     @Autowired var context: ScalapressContext = _

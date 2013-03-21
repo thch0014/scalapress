@@ -16,5 +16,5 @@ class ListingProcessPaymentWrapper(process: ListingProcess) extends IsPayable {
 
     def successUrl: String = "/listing/payment/success"
     def failureUrl: String = "/listing/payment/failure"
-    def callbackUrl: String = "/listing/payment/callback"
+    def callbackUrl: String = "/payment/callback/listing"
 }
