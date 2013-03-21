@@ -27,12 +27,20 @@ abstract class Coordinate {
     def toOSRef: OSRef
     def toGPS: GPS
     def distance(other: Coordinate): Double = {
-        val R = 6371
-        val gps1 = other.toGPS
+
+        val gps1 = this.toGPS
         val gps2 = other.toGPS
-        val x = (gps2.lon - gps1.lon) * scala.math.cos((gps1.lat + gps2.lat) / 2)
-        val y = (gps2.lat - gps1.lat)
-        val d = scala.math.sqrt(x * x + y * y) * R
+
+        val R = 6371 // earths radius
+        val dLat = scala.math.toRadians(gps2.lat - gps1.lat)
+        val dLon = scala.math.toRadians(gps2.lon - gps1.lon)
+        val lat1 = scala.math.toRadians(gps1.lat)
+        val lat2 = scala.math.toRadians(gps2.lat)
+
+        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math
+          .cos(lat1) * Math.cos(lat2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        val d = R * c
         d
     }
 }

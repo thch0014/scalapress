@@ -9,6 +9,7 @@ import com.liferay.scalapress.enums.AttributeType
 import org.hibernate.annotations.Index
 import com.liferay.scalapress.obj.ObjectType
 import collection.mutable
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,8 +30,6 @@ class Attribute {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var options: java.util.List[AttributeOption] = new util.ArrayList[AttributeOption]()
-
-    import scala.collection.JavaConverters._
 
     def optionsAsMap: java.util.Map[String, String] = {
         val map = new mutable.LinkedHashMap[String, String]()

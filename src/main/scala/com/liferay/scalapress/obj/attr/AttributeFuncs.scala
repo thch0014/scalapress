@@ -2,15 +2,16 @@ package com.liferay.scalapress.obj.attr
 
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.util.geo.Postcode
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 object AttributeFuncs {
 
     def locationValue(obj: Obj): Option[String] = {
-        obj.attributeValues.asScala
-          .find(_.attribute.attributeType == Postcode)
+        val qqq = obj.attributeValues.asScala
+          .find(_.attribute.attributeType == AttributeType.Postcode)
           .map(_.value)
+        qqq
     }
 
     def attributeValue(obj: Obj, s: String): Option[String] = {
