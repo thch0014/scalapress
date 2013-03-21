@@ -10,7 +10,7 @@ object Postcode {
     val lines = IOUtils.readLines(input).asScala
     val postcodes = lines.map(line => {
         val array = line.split(",")
-        val postcode = array(0).toUpperCase
+        val postcode = array(0).toUpperCase.replace(" ", "")
         val osref = OSRef(array(1).toInt, array(2).toInt)
         (postcode, osref)
     }).toMap
@@ -19,7 +19,7 @@ object Postcode {
     def gps(postcode: String): Option[GPS] = osref(postcode).map(_.toGPS)
     def _lookup(postcode: String): Option[OSRef] = postcodes.get(postcode.toUpperCase)
     def _postcodeArea(postcode: String) =
-        if (postcode.trim.length > 4) postcode.dropRight(3) else postcode
+        if (postcode.replace(" ", "").trim.length > 4) postcode.dropRight(3) else postcode
 }
 
 abstract class Coordinate {

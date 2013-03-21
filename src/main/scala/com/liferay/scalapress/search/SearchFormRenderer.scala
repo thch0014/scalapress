@@ -79,11 +79,14 @@ object SearchFormRenderer {
             <input type="hidden" name={name} value={field.value}/>
     }
 
-    private def renderAttributeField(field: SearchFormField): Elem =
-        Option(field.attribute).flatMap(attr => Option(attr.attributeType)) match {
+    private def renderAttributeField(field: SearchFormField): Elem = {
+        val attributeType = Option(field.attribute).flatMap(attr => Option(attr.attributeType))
+        attributeType match {
             case Some(AttributeType.Selection) => renderSelectionAttribute(field)
+            case Some(AttributeType.Date) => _renderDateField(field)
             case _ => renderTextAttribute(field)
         }
+    }
 
     private def renderSelectionAttribute(field: SearchFormField): Elem = {
         val options = field.attribute.options.asScala.map(opt =>
