@@ -19,7 +19,7 @@ class ListingPaymentCallbackController extends Logging {
     @ResponseBody
     @RequestMapping
     def calback(req: HttpServletRequest, resp: HttpServletResponse) {
-        val params = req.getParameterMap.asScala.asInstanceOf[Map[String, String]]
+        val params = req.getParameterMap.asScala.map(arg => (arg._1.toString, arg._2.toString)).toMap
         logger.info("Paypal Callback...", params)
         logger.info("... params [{}]", params)
         logger.info("... req    [{}]", req)
