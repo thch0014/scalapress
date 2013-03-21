@@ -13,7 +13,8 @@ case class ScalapressRequest(request: HttpServletRequest,
                              order: Option[Order] = None,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
-                             line: Option[BasketLine] = None) {
+                             line: Option[BasketLine] = None,
+                             location: Option[String] = None) {
 
     if (request.getAttribute("errors") == null)
         request.setAttribute("errors", scala.collection.mutable.Map.empty)
@@ -46,6 +47,7 @@ case class ScalapressRequest(request: HttpServletRequest,
 
     def sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).toString
 
+    def withLocation(location: String): ScalapressRequest = copy(location = Option(location))
     def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
     def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))
     def withFolder(f: Folder): ScalapressRequest = copy(folder = Option(f))

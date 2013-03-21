@@ -25,6 +25,7 @@ trait TagBuilder {
         "<a href='" + href + "' class='" + cssClass + "' id='" + id + "' rel='" + rel + "'>" + sb + "</a>"
     }
 
+    def build(body: Option[String], params: Map[String, String]): Option[String] = body.map(build(_, params))
     def build(body: Any, params: Map[String, String]): String = {
 
         val tag = params.get("tag")
