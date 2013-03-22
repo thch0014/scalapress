@@ -39,6 +39,10 @@ object WidgetRenderer extends Logging {
               request.folder.isDefined &&
               request.folder.get.parent == null => true
 
+            case true if !widget.displayOnHome &&
+              request.folder.isDefined &&
+              request.folder.get.parent == null => false
+
             case true if widget.displayOnAllObjects &&
               request.obj.isDefined => true
 
