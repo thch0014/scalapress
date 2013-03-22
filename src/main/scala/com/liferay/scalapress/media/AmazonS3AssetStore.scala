@@ -118,7 +118,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         key
     }
 
-    private def getNormalizedKey(key: String): String = {
+    def getNormalizedKey(key: String): String = {
         FilenameUtils.getBaseName(key) + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(key)
     }
 
