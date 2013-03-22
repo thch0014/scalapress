@@ -1,4 +1,4 @@
-package com.liferay.scalapress.widgets
+package com.liferay.scalapress.folder
 
 import javax.persistence.{FetchType, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
@@ -6,8 +6,8 @@ import com.liferay.scalapress.{Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.service.FriendlyUrlGenerator
-import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
-import com.liferay.scalapress.folder.Folder
+import org.hibernate.annotations.{FetchMode, Fetch}
+import com.liferay.scalapress.widgets.Widget
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -30,14 +30,14 @@ class FoldersWidget extends Widget with Logging {
     override def render(req: ScalapressRequest): Option[String] = {
         val buffer = new ArrayBuffer[String]
         val root = Option(start).getOrElse(req.context.folderDao.root)
-        renderFolderLevel(root, 1, buffer)
+        _renderFolderLevel(root, 1, buffer)
         Some(buffer.mkString("\n"))
     }
 
-    private def renderFolderLevel(parent: Folder, level: Int, buffer: ArrayBuffer[String]) {
+    def _renderFolderLevel(parent: Folder, level: Int, buffer: ArrayBuffer[String]) {
 
         if (level == 1)
-            buffer.append("<ul class='widget-folder-plugin'>")
+            buffer.append("<ul class=\"widget-folder-plugin\">")
         else
             buffer.append("<ul>")
 
@@ -57,10 +57,10 @@ class FoldersWidget extends Widget with Logging {
           .sortBy(_.name)
 
         for (folder <- children) {
-            buffer.append("<li id='w" + id + "_f" + folder.id + "' class='l" + level + "'>")
+            buffer.append("<li class=\"l" + level + "\" id=\"w" + id + "_f" + folder.id + "\">")
             buffer.append(FriendlyUrlGenerator.friendlyLink(folder))
             if (level < depth)
-                renderFolderLevel(folder, level + 1, buffer)
+                _renderFolderLevel(folder, level + 1, buffer)
             buffer.append("</li>")
         }
 

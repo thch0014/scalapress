@@ -3,14 +3,14 @@ package com.liferay.scalapress.widgets.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMethod, RequestMapping}
 import scala.Array
-import com.liferay.scalapress.widgets.{MediaWidget, Widget}
+import com.liferay.scalapress.widgets.{Widget}
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.service.asset.{Asset, AssetStore}
 import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.media.Image
+import com.liferay.scalapress.media.{MediaWidget, Image}
 
 /** @author Stephen Samuel */
 @Controller
