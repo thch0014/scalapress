@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Exce
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.section.SectionRenderer
 import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.folder.{FolderPluginDao, FolderDao, Folder}
 import com.liferay.scalapress.util.mvc.{Toolbar, ScalapressPage, RedirectException}
+import com.liferay.scalapress.theme.ThemeService
 
 /**
  * @author sks 09-Feb-2006 13:48:13

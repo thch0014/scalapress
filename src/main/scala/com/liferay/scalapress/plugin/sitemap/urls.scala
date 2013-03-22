@@ -1,8 +1,7 @@
 package com.liferay.scalapress.plugin.sitemap
 
 import collection.mutable.ListBuffer
-import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.service.FriendlyUrlGenerator
+import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
 import org.joda.time.DateTime
 import com.liferay.scalapress.obj.ObjectQuery
 

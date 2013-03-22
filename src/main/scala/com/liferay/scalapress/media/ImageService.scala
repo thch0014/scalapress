@@ -1,8 +1,7 @@
-package com.liferay.scalapress.service.image
+package com.liferay.scalapress.media
 
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.asset.AssetStore
 import org.apache.commons.io.{IOUtils, FilenameUtils}
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage

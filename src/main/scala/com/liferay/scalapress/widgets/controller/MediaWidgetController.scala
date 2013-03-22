@@ -6,11 +6,10 @@ import scala.Array
 import com.liferay.scalapress.widgets.{Widget}
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.asset.{Asset, AssetStore}
 import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.media.{MediaWidget, Image}
+import com.liferay.scalapress.media.{Asset, AssetStore, MediaWidget, Image}
 
 /** @author Stephen Samuel */
 @Controller

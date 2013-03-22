@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
-import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.{OrderDao, OrderEmailService, OrderService, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
@@ -15,6 +14,7 @@ import java.net.URL
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel */
 @Controller

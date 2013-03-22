@@ -3,8 +3,7 @@ package com.liferay.scalapress.plugin.gallery
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.service.asset.AssetStore
-import com.liferay.scalapress.media.Image
+import com.liferay.scalapress.media.{AssetStore, Image}
 import com.liferay.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */

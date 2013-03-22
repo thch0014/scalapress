@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.asset
+package com.liferay.scalapress.media
 
 import java.io.{ByteArrayInputStream, InputStream}
 import com.amazonaws.services.s3.AmazonS3Client
@@ -9,7 +9,6 @@ import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, List
 import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
-import com.liferay.scalapress.service.image.ImageTools
 import com.liferay.scalapress.Logging
 import actors.Futures
 

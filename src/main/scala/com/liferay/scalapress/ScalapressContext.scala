@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
 import folder.FolderDao
-import media.GalleryDao
+import media.{AssetStore, ImageService, GalleryDao}
 import obj.{ObjectDao, TypeDao, AttributeValueDao, AttributeDao}
 import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.ShoppingPluginDao
@@ -12,12 +12,10 @@ import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
 import search.{SavedSearchDao, SearchFormDao, SearchService}
 import section.SectionDao
-import service.asset.AssetStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.context.ServletContextAware
 import javax.servlet.ServletContext
-import service.image.ImageService
 import settings.InstallationDao
 import theme.MarkupDao
 import widgets.WidgetDao

@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.plugin.ecommerce.dao.TransactionDao
-import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel */
 @Controller

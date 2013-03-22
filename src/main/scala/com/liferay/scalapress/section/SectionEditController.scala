@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, Re
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.service.asset.AssetStore
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.folder.ObjectListSection
+import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Controller

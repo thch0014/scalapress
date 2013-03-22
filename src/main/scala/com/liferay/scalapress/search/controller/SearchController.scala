@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import actors.Futures
-import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
@@ -17,6 +16,7 @@ import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.{ThemeService, MarkupRenderer}
 
 /** @author Stephen Samuel */
 

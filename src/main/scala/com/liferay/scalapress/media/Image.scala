@@ -5,7 +5,6 @@ import reflect.BeanProperty
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
-import com.liferay.scalapress.media.MediaWidget
 
 /** @author Stephen Samuel */
 @Entity

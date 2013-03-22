@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, ResponseBody, RequestMapping}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.plugin.gallery.GalleryRenderer
 import com.liferay.scalapress.media.GalleryDao
 import com.liferay.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
+import com.liferay.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel
   *

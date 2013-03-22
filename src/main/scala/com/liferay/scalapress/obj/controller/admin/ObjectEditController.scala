@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
-import com.liferay.scalapress.service.asset.{Asset, AssetStore}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import reflect.BeanProperty
@@ -19,7 +18,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, AttributeValueDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.obj.attr.AttributeValue
-import com.liferay.scalapress.media.Image
+import com.liferay.scalapress.media.{Asset, AssetStore, Image}
 import com.liferay.scalapress.util.mvc.{AttributeValuesPopulator, UrlResolver}
 import com.liferay.scalapress.enums.AttributeType
 import java.text.SimpleDateFormat

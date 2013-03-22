@@ -8,10 +8,6 @@ import org.apache.commons.io.IOUtils
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
-import com.liferay.scalapress.service.asset.AssetStore
-import com.liferay.scalapress.service.asset.Asset
-import scala.Some
-import com.liferay.scalapress.service.image.ImageTools
 
 @Controller
 @RequestMapping(Array("images"))
@@ -33,7 +29,7 @@ class ImageController extends Logging {
             case None => throw new RuntimeException
             case Some(in) =>
 
-                val image = ImageIO.read(in)
+                val image: java.awt.Image = ImageIO.read(in)
                 val thumbnail = ImageTools.fit(image, (width, height))
                 ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
                 resp.setContentType("image/png")

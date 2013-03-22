@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.controller
 
-import com.liferay.scalapress.service.{WizardStep, WizardRenderer}
+import com.liferay.scalapress.util.{WizardStep, WizardRenderer}
 
 /** @author Stephen Samuel */
 object CheckoutWizardRenderer {

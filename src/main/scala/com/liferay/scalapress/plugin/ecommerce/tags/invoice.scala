@@ -3,9 +3,9 @@ package com.liferay.scalapress.plugin.ecommerce.tags
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
-import com.liferay.scalapress.service.theme.MarkupRenderer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.tag.AttributeValueRenderer
+import com.liferay.scalapress.theme.MarkupRenderer
 
 /** @author Stephen Samuel */
 object InvoiceAccountNumberTag extends ScalapressTag {

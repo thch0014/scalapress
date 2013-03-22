@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.util.mvc.UrlResolver
+import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Controller

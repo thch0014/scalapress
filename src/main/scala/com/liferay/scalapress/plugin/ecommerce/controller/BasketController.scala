@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.{RequestMethod, ResponseBody, Pat
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.theme.{MarkupRenderer, ThemeService}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.liferay.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.{ThemeService, MarkupRenderer}
 
 /** @author Stephen Samuel */
 @Controller

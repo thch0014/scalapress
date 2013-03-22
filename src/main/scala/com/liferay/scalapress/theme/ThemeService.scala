@@ -1,11 +1,10 @@
-package com.liferay.scalapress.service.theme
+package com.liferay.scalapress.theme
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.servlet.ServletContext
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
-import com.liferay.scalapress.theme.ThemeDao
 
 @Service
 class ThemeService {

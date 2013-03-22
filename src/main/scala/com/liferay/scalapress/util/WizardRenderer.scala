@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service
+package com.liferay.scalapress.util
 
 /** @author Stephen Samuel */
 object WizardRenderer {

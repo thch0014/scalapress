@@ -2,10 +2,9 @@ package com.liferay.scalapress.folder
 
 import javax.persistence.{FetchType, ManyToOne, JoinColumn, Entity, Table}
 import reflect.BeanProperty
-import com.liferay.scalapress.{Logging, ScalapressRequest}
+import com.liferay.scalapress.{FriendlyUrlGenerator, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 import org.hibernate.annotations.{FetchMode, Fetch}
 import com.liferay.scalapress.widgets.Widget
 

@@ -1,12 +1,11 @@
 package com.liferay.scalapress.plugin.ecommerce.tags
 
 import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.service.theme.MarkupRenderer
+import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.enums.StockMethod
 import com.liferay.scalapress.util.mvc.UrlResolver
+import com.liferay.scalapress.theme.MarkupRenderer
 
 /** @author Stephen Samuel */
 object BasketLinkTag extends ScalapressTag with TagBuilder {

@@ -1,7 +1,6 @@
-package com.liferay.scalapress.service.image
+package com.liferay.scalapress.media
 
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.service.asset.AssetStore
 import java.io.ByteArrayInputStream
 import java.net.URL
 import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
@@ -14,7 +13,6 @@ import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.widgets.WidgetDao
 import com.liferay.scalapress.obj.ObjectDao
-import com.liferay.scalapress.media.ImageDao
 
 /** @author Stephen Samuel */
 @Component

@@ -1,9 +1,8 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{FriendlyUrlGenerator, Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 

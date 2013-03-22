@@ -6,7 +6,6 @@ import com.liferay.scalapress.folder.{FolderDao, FoldersWidget, Folder}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
-import xml.{Source, Elem, XML}
 
 /** @author Stephen Samuel */
 class FolderWidgetTest extends FunSuite with MockitoSugar with BeforeAndAfter {

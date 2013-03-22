@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import process.renderer.ListingFieldsRenderer
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.theme.ThemeService
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel */
 @Controller

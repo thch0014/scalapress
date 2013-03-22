@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.listings.controller
 
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object ListingsRenderer {

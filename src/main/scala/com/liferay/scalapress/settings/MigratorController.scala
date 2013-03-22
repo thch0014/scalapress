@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.service.image.ECImageMigrator
+import com.liferay.scalapress.media.ECImageMigrator
 
 /** @author Stephen Samuel */
 @Controller

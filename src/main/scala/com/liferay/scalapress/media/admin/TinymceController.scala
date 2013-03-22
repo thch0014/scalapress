@@ -3,7 +3,7 @@ package com.liferay.scalapress.media.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.asset.AssetStore
+import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Controller

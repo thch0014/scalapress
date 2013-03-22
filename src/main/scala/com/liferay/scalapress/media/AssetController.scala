@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, ExceptionHandler, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletResponse
-import com.liferay.scalapress.service.asset.AssetStore
 
 /** @author Stephen Samuel */
 @Controller

@@ -5,18 +5,17 @@ import org.springframework.stereotype.Controller
 import renderer.{ListingWizardRenderer, ListingFoldersRenderer, ListingPaymentRenderer, ListingPackageRenderer, ListingFieldsRenderer, ListingImagesRenderer, ListingConfirmationRenderer}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.service.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess2ObjectBuilder, ListingProcess, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.service.FriendlyUrlGenerator
 import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel */
 @Controller

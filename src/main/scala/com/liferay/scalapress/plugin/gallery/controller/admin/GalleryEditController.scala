@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.springframework.web.multipart.MultipartFile
-import com.liferay.scalapress.service.asset.AssetStore
 import com.liferay.scalapress.plugin.gallery.Gallery
-import com.liferay.scalapress.media.{Image, GalleryDao}
+import com.liferay.scalapress.media.{AssetStore, Image, GalleryDao}
 
 /** @author Stephen Samuel */
 @Controller

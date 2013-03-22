@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressContext}
-import com.liferay.scalapress.service.asset.AssetStore
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
@@ -16,6 +15,7 @@ import com.liferay.scalapress.folder.{FolderDao, Folder}
 import com.liferay.scalapress.theme.ThemeDao
 import com.liferay.scalapress.obj.controller.admin.ThemePopulator
 import com.liferay.scalapress.util.mvc.UrlResolver
+import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Controller

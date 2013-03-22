@@ -1,7 +1,6 @@
-package com.liferay.scalapress.service.image
+package com.liferay.scalapress.media
 
 import java.awt.image.BufferedImage
-import java.awt.Image
 import java.awt.Color
 import org.apache.commons.io.FilenameUtils
 import java.net.URLConnection
@@ -27,14 +26,14 @@ object ImageTools {
     /**
      * Scales the given image to fit the target dimensions while keeping the current aspect ratio.
      */
-    def fit(source: Image, size: (Int, Int)): BufferedImage = {
+    def fit(source: java.awt.Image, size: (Int, Int)): BufferedImage = {
         val fitted = dimensionsToFit(size, (source.getWidth(null), source.getHeight(null)))
-        val scaled = source.getScaledInstance(fitted._1, fitted._2, SCALING_METHOD)
+        val scaled: java.awt.Image = source.getScaledInstance(fitted._1, fitted._2, SCALING_METHOD)
         val offset = ((size._1 - fitted._1) / 2, (size._2 - fitted._2) / 2)
         _draw(size, offset, scaled)
     }
 
-    private def _draw(size: (Int, Int), offset: (Int, Int), image: Image) = {
+    def _draw(size: (Int, Int), offset: (Int, Int), image: java.awt.Image) = {
         val target = new BufferedImage(size._1, size._2, BufferedImage.TYPE_INT_RGB)
         val g = target.createGraphics
         g.setColor(BG_COLOR)
@@ -46,12 +45,12 @@ object ImageTools {
     /**
      * Resizes the given image into the new target dimensions.
      */
-    def resize(source: Image, target: (Int, Int)): BufferedImage = {
+    def resize(source: java.awt.Image, target: (Int, Int)): BufferedImage = {
         val scaled = source.getScaledInstance(target._1, target._2, SCALING_METHOD)
         _draw(target, (0, 0), scaled)
     }
 
-    private[image] def ratio(width: Int, height: Int): Double = width / height.toDouble
+    def ratio(width: Int, height: Int): Double = width / height.toDouble
 
     /**
      * Returns width and height that allow the given source width, height to fit inside the target width, height

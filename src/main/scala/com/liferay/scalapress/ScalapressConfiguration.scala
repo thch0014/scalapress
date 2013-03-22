@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
+import media.AmazonS3AssetStore
 import org.springframework.beans.factory.annotation.Value
-import service.asset.AmazonS3AssetStore
 import org.springframework.context.annotation.{Configuration, Bean}
 
 /** @author Stephen Samuel */

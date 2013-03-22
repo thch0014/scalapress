@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
-import com.liferay.scalapress.service.theme.MarkupRenderer
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
+import com.liferay.scalapress.theme.MarkupRenderer
 
 /** @author Stephen Samuel */
 @Controller
