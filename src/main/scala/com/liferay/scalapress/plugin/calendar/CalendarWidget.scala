@@ -28,7 +28,7 @@ class CalendarWidget extends Widget {
     def render(req: ScalapressRequest): Option[String] = {
         Some( """<div id="calendar_widget_""" + id + """"></div>
                  <script>
-                    $("#calendar_widget_""" + id + """").eventCalendar({ eventsjson: '/plugin/calendar/event/widget/""" + id + """' });
+                    $("#calendar_widget_""" + id + """").eventCalendar({  moveSpeed: 200, showDescription: true, eventsScrollable: true, eventsjson: '/plugin/calendar/event/widget/""" + id + """' });
                  </script> """)
     }
 
@@ -36,8 +36,9 @@ class CalendarWidget extends Widget {
         val search = new SavedSearch
         search.objectType = objectType
         search.status = "Live"
+        search.maxResults = 100
         search
     }
 
-    //    override def backoffice = "/backoffice/plugin/calendar/widget/" + id
+    override def backoffice = "/backoffice/plugin/calendar/widget/" + id
 }

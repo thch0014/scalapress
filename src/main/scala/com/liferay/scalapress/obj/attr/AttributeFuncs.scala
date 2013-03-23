@@ -14,6 +14,12 @@ object AttributeFuncs {
         qqq
     }
 
+    def attributeValue(obj: Obj, attribute: Attribute): Option[String] = {
+        Option(attribute).flatMap(a => obj.attributeValues.asScala
+          .find(_.attribute.id == attribute.id)
+          .map(_.value))
+    }
+
     def attributeValue(obj: Obj, s: String): Option[String] = {
         obj.attributeValues.asScala
           .filter(_.attribute.name != null)

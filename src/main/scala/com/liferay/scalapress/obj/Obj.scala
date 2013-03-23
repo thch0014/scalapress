@@ -96,6 +96,12 @@ class Obj {
     @Column(length = 5000)
     @BeanProperty var summary: String = _
 
+    def summary(max: Int): Option[String] = {
+        Option(content)
+          .map(_.replaceAll("<.*?>", ""))
+          .map(_.take(max).reverse.dropWhile(_ != ' ').reverse.trim + "...")
+    }
+
     @Index(name = "sellPrice_index")
     @Column(name = "genericSellPrice")
     @BeanProperty var sellPrice: Int = _

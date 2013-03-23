@@ -1,4 +1,4 @@
-package com.liferay.scalapress.media
+package com.liferay.scalapress.plugin.amazons3
 
 import java.io.{ByteArrayInputStream, InputStream}
 import com.amazonaws.services.s3.AmazonS3Client
@@ -11,6 +11,7 @@ import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.liferay.scalapress.Logging
 import actors.Futures
+import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,

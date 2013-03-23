@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import reflect.BeanProperty
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.search.SearchService
-import org.joda.time.DateTime
+import org.joda.time.{DateMidnight, DateTime}
 import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
+import com.liferay.scalapress.obj.attr.AttributeFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -24,15 +25,17 @@ class CalendarJsonController {
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
         val results = searchService.search(widget.search)
 
-        results.hits.hits.map(hit => {
-
+        results.hits.hits.flatMap(hit => {
             val obj = context.objectDao.find(hit.id.toLong)
-
+            AttributeFuncs.attributeValue(obj, widget.startDateAttribute).map(date => (obj, date))
+        }).filter(_._2.forall(_.isDigit))
+          .map(arg => {
             val e = new Event
-            e.date = System.currentTimeMillis.toString
-            e.dateString = new DateTime(e.date.toLong).toString("dd/MM/yyyy")
-            e.description = obj.name
-            e.url = FriendlyUrlGenerator.friendlyUrl(obj)
+            e.date = new DateMidnight(arg._2.toLong).getMillis.toString
+            e.dateString = new DateTime(arg._2.toLong).toString("dd/MM/yyyy")
+            e.title = arg._1.name
+            e.description = arg._1.summary(200).orNull
+            e.url = FriendlyUrlGenerator.friendlyUrl(arg._1)
             e
         })
     }
@@ -41,7 +44,8 @@ class CalendarJsonController {
 class Event {
     @BeanProperty var date: String = _
     @BeanProperty var dateString: String = _
-    @BeanProperty var `type`: String = _
-    @BeanProperty var description: String = "meeting"
+    @BeanProperty var `type`: String = "meeting"
+    @BeanProperty var title: String = _
+    @BeanProperty var description: String = _
     @BeanProperty var url: String = _
 }
