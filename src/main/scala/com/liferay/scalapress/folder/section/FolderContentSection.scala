@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.folder.section
+package com.liferay.scalapress.folder.section
 
 import javax.persistence.{Column, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}

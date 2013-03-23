@@ -5,7 +5,6 @@ import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.folder.FolderPlugin
 import collection.mutable.ArrayBuffer
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}

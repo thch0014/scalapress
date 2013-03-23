@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import actors.Futures
-import com.liferay.scalapress.plugin.folder.section.FolderContentSection
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.widgets.WidgetDao
 import com.liferay.scalapress.obj.ObjectDao
+import com.liferay.scalapress.folder.section.FolderContentSection
 
 /** @author Stephen Samuel */
 @Component

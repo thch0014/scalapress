@@ -5,11 +5,11 @@ import java.util
 import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
-import com.liferay.scalapress.plugin.folder.section.{FolderContentSection, SubfolderSection}
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.settings.Theme
+import section.{FolderContentSection, SubfolderSection}
 
 /** @author Stephen Samuel */
 @Entity

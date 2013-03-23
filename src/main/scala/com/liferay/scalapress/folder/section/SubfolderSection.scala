@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.folder.section
+package com.liferay.scalapress.folder.section
 
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
@@ -24,16 +24,20 @@ class SubfolderSection extends Section {
         default.body = "<li>[category?link=1]</li>"
         default.end = "</ul>"
 
+        val m = Option(markup)
+          .orElse(Option(context.markupDao.byName("Default subcategories markup")))
+          .getOrElse(default)
+        val render = MarkupRenderer.renderFolders(_folders, default, request, context)
+        Option(render)
+    }
+
+    def _folders = {
         val subfolders = folder.subfolders.asScala.toSeq.filterNot(_.hidden)
         val sorted = folder.folderOrdering match {
             case FolderOrdering.Alphabetical => subfolders.sortBy(f => Option(f.name).getOrElse(""))
             case _ => subfolders.sortBy(_.position)
         }
-
-        val m = Option(markup)
-          .orElse(Option(context.markupDao.byName("Default subcategories markup"))).getOrElse(default)
-        val render = MarkupRenderer.renderFolders(sorted, default, request, context)
-        Option(render)
+        sorted
     }
 
     def desc = "Show a clickable list of the sub folders of this folder"

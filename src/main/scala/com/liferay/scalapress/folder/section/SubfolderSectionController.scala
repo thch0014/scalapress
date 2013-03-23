@@ -1,9 +1,9 @@
-package com.liferay.scalapress.plugin.folder.section
+package com.liferay.scalapress.folder.section
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.theme.MarkupDao

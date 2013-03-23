@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.folder
+package com.liferay.scalapress.folder
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
