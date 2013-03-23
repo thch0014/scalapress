@@ -103,7 +103,8 @@ object BasketLineQtyTag extends ScalapressTag {
     }
 }
 
-object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
+@Tag("basket_delivery_charge")
+class BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
@@ -115,7 +116,8 @@ object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object BasketDeliveryDescTag extends ScalapressTag {
+@Tag("basket_delivery_desc")
+class BasketDeliveryDescTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {

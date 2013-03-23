@@ -47,6 +47,25 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with BeforeAndAfter 
         assert("earl grey" === AttributeFuncs.attributeValue(obj, "tea").get)
     }
 
+    test("that multiple attribute values are looked up by name") {
+
+        val av1 = new AttributeValue
+        av1.value = "lady grey"
+        av1.attribute = new Attribute
+        av1.attribute.name = "tea"
+
+        val av2 = new AttributeValue
+        av2.value = "earl grey"
+        av2.attribute = new Attribute
+        av2.attribute.name = "tea"
+
+        val obj = new Obj
+        obj.attributeValues.add(av1)
+        obj.attributeValues.add(av2)
+
+        assert(Set("earl grey", "lady grey") === AttributeFuncs.attributeValues(obj, "tea").toSet)
+    }
+
     test("that no matching attribute name returns none") {
 
         val av1 = new AttributeValue

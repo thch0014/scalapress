@@ -1,10 +1,9 @@
 package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.plugin.profile.tag.{LoginEmailTag, LoginPasswordTag, RegisterTag}
+import com.liferay.scalapress.plugin.profile.tag.{LoginEmailTag, LoginPasswordTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
-import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLinkTag}
-import com.liferay.scalapress.search.tag.{AttributeSearchTag, QuickSearchTag}
+import com.liferay.scalapress.search.tag.AttributeSearchTag
 import com.liferay.scalapress.obj.tag._
 import com.liferay.scalapress.folder.tag.{PrimaryFoldersTag, BreadcrumbsTag, FolderTag}
 import com.liferay.scalapress.media.AssetTag
@@ -43,8 +42,6 @@ object TagMappings {
         "basket_lines_count" -> BasketLineCountTag,
         "basket_lines_total" -> BasketLinesTotalTag,
         "basket_items_total" -> BasketLinesTotalTag,
-        "basket_delivery_charge" -> BasketDeliveryChargeTag,
-        "basket_delivery_desc" -> BasketDeliveryDescTag,
         "invoice_account_number" -> InvoiceAccountNumberTag,
         "invoice_account_email" -> InvoiceAccountEmailTag,
         "invoice_account_name" -> InvoiceAccountNameTag,
@@ -65,20 +62,16 @@ object TagMappings {
         "delivery_selector" -> DeliveryOptionsTag,
         "url" -> LinkTag,
         "item_url" -> LinkTag,
-        "attribute_value" -> AttributeValueTag,
         "attribute_table" -> AttributeTableTag,
         "attributes_table" -> AttributeTableTag,
-        "attribute_name" -> AttributeNameTag,
-        "attribute_section" -> AttributeSectionTag,
-        "attribute" -> AttributeValueTag,
+        "attribute" -> new AttributeValueTag(),
         "search_attribute" -> AttributeSearchTag,
         "image_browser" -> new ColorboxTag(),
         "user_status" -> UserStatusTag,
         "account_status" -> UserStatusTag,
         "member_status" -> UserStatusTag,
-        "boxes" -> WidgetsTag,
-        "widgets" -> WidgetsTag,
-        "widget" -> WidgetsTag,
+        "boxes" -> new WidgetsTag(),
+        "widget" -> new WidgetsTag(),
         "breadcrumbs" -> BreadcrumbsTag,
         "breadcrumb" -> BreadcrumbsTag,
         "login_username" -> LoginEmailTag,

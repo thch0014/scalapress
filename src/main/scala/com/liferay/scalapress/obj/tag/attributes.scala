@@ -1,11 +1,12 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
-object AttributeValueTag extends ScalapressTag with TagBuilder {
+@Tag("attribute_value")
+class AttributeValueTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         params.get("id") match {
@@ -22,7 +23,8 @@ object AttributeValueTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
+@Tag("attribute_name")
+class AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,
@@ -40,7 +42,8 @@ object AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
     }
 }
 
-object AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
+@Tag("attribute_section")
+class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,
