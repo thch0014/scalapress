@@ -32,6 +32,8 @@ object SearchFormRenderer {
         fields.map(field => {
             field.fieldType match {
                 case SearchFieldType.Attribute if field.preset => renderPresetAttributeField(field)
+                case SearchFieldType.Categories if field.preset => _renderPresetField("folder", field.value)
+                case SearchFieldType.Name if field.preset => _renderPresetField("name", field.value)
                 case SearchFieldType.Attribute => renderAttributeField(field)
                 case SearchFieldType.Distance => _renderDistanceField(field)
                 case SearchFieldType.Location => _renderLocationField(field)
@@ -67,16 +69,20 @@ object SearchFormRenderer {
                 <option value="1">1 mile</option>
                 <option value="5">5 miles</option>
                 <option value="10">10 miles</option>
-                <option value="25">25 miles</option>
+                <option value="25" selected="true">25 miles</option>
                 <option value="50">50 miles</option>
                 <option value="100">100 miles</option>
             </select>
         </div>
     }
 
-    private def renderPresetAttributeField(field: SearchFormField) = {
+    private def renderPresetAttributeField(field: SearchFormField): Elem = {
         val name = "attr_" + Option(field.attribute).map(_.id).getOrElse("~")
             <input type="hidden" name={name} value={field.value}/>
+    }
+
+    def _renderPresetField(name: String, value: String): Elem = {
+            <input type="hidden" name={name} value={value}/>
     }
 
     private def renderAttributeField(field: SearchFormField): Elem = {

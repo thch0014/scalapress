@@ -219,7 +219,8 @@
                     #else
 
                         <select name="attributeValues$a.id" class="input-xlarge">
-                            #if ($a.optional)<option value="">-None-</option>#end
+                            #if ($a.optional)
+                                <option value="">-None-</option>#end
                             #foreach ($option in $a.orderedOptions())
                                 #if($values.contains($option.value))
                                     #set ($selected = "selected='true'")
@@ -393,6 +394,21 @@
     </select>
     <button type="submit">Submit</button>
 </form>
+
+
+<script>
+
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href=#' + url.split('#')[1] + ']').tab('show');
+    }
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown', function (e) {
+        window.location.hash = e.target.hash;
+    })
+
+</script>
 
 
 #parse("/admin/footer.vm")
