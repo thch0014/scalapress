@@ -45,7 +45,7 @@ class ScriptTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("css")
-object CssTag extends ScalapressTag with TagBuilder {
+class CssTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val tag = """   <link href="/static/css/bootstrap-combined.min.css" rel="stylesheet">
                         <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
