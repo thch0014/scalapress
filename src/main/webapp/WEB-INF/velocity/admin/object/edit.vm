@@ -219,6 +219,7 @@
                     #else
 
                         <select name="attributeValues$a.id" class="input-xlarge">
+                            #if ($a.optional)<option value="">-None-</option>#end
                             #foreach ($option in $a.orderedOptions())
                                 #if($values.contains($option.value))
                                     #set ($selected = "selected='true'")
