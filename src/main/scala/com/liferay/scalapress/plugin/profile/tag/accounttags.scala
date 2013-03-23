@@ -20,7 +20,7 @@ class UsernameTag extends ScalapressTag with TagBuilder {
 @Tag("account_link")
 class AccountLinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        val label = params.get("label")
+        val label = params.get("label").orElse(params.get("text"))
         val link = SecurityFuncs.hasUserRole(request.request) match {
             case true => super.buildLink("/account", label.getOrElse("Account"), params)
             case false => super.buildLink("/login", label.getOrElse("Login or Register"), params)
