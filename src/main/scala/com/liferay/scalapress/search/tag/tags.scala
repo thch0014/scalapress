@@ -1,9 +1,9 @@
 package com.liferay.scalapress.search.tag
 
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.AttributeOption
+import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
 object SearchFormTag extends ScalapressTag {

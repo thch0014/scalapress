@@ -1,16 +1,18 @@
-package com.liferay.scalapress.service.theme.tag.general
+package com.liferay.scalapress.settings
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import collection.mutable.ArrayBuffer
+import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 
 /** @author Stephen Samuel */
-object SiteAddressTag extends ScalapressTag with TagBuilder {
+@Tag("comp_address")
+class SiteAddressTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         context.siteDao.findAll().headOption.map(_.address)
 }
 
-object SiteAddressLabelTag extends ScalapressTag with TagBuilder {
+@Tag("comp_address_label")
+class SiteAddressLabelTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val sep = params.get("sep").getOrElse(", ")
         context.siteDao.findAll().headOption match {
@@ -26,42 +28,50 @@ object SiteAddressLabelTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object SiteNameTag extends ScalapressTag with TagBuilder {
+@Tag("comp_name")
+class SiteNameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.name)
 }
 
-object SiteCountryTag extends ScalapressTag with TagBuilder {
+@Tag("comp_country")
+class SiteCountryTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.country)
 }
 
-object SiteEmailTag extends ScalapressTag with TagBuilder {
+@Tag("comp_email")
+class SiteEmailTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.email).map(email => "<a href='mailto:" + email + "'>" + email + "</a>")
 }
 
-object SitePhoneTag extends ScalapressTag with TagBuilder {
+@Tag("site_name")
+class SitePhoneTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.telephone)
 }
 
-object SitePostcodeTag extends ScalapressTag with TagBuilder {
+@Tag("comp_postcode")
+class SitePostcodeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.postcode)
 }
 
-object SiteVatTag extends ScalapressTag with TagBuilder {
+@Tag("comp_vat")
+class SiteVatTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.vatNumber)
 }
 
-object SiteCompanyNumberTag extends ScalapressTag with TagBuilder {
+@Tag("comp_telephone")
+class SiteCompanyNumberTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.siteDao.get.companyNumber)
 }
 
-object SiteGoogleMapTag extends ScalapressTag with TagBuilder {
+@Tag("comp_postcode_gmap")
+class SiteGoogleMapTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         context
           .siteDao

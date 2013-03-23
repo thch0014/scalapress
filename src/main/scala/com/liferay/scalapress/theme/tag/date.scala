@@ -1,12 +1,11 @@
-package com.liferay.scalapress.service.theme.tag.general
+package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
-import java.text.SimpleDateFormat
 
 /** @author Stephen Samuel */
-object DateTag extends ScalapressTag {
+@Tag("date")
+class DateTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val format = params.get("format").getOrElse("dd/MM/yyyy")
         Some(new DateTime().toString(format))

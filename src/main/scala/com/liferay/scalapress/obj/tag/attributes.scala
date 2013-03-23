@@ -1,8 +1,8 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 object AttributeValueTag extends ScalapressTag with TagBuilder {

@@ -1,14 +1,14 @@
 package com.liferay.scalapress.plugin.profile.tag
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel
   *
   *         Shows the current logged in users username or nothing
   *
-  **/
+  * */
 @Tag("account_username")
 class UsernameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {

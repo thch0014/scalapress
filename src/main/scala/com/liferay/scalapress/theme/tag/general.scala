@@ -1,11 +1,11 @@
-package com.liferay.scalapress.service.theme.tag.general
+package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import org.joda.time.DateTime
 
 /** @author Stephen Samuel */
-object HomeTag extends ScalapressTag with TagBuilder {
+@Tag("home")
+class HomeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val root = context.folderDao.root
         val text = params.get("text").getOrElse(root.name)
@@ -13,7 +13,8 @@ object HomeTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object TitleTag extends ScalapressTag with TagBuilder {
+@Tag("title")
+class TitleTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
 
         val excludeHome = params.contains("exhome")
@@ -27,7 +28,8 @@ object TitleTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object ScriptTag extends ScalapressTag with TagBuilder {
+@Tag("script")
+class ScriptTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val tag = """
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -42,6 +44,7 @@ object ScriptTag extends ScalapressTag with TagBuilder {
     }
 }
 
+@Tag("css")
 object CssTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val tag = """   <link href="/static/css/bootstrap-combined.min.css" rel="stylesheet">
@@ -55,7 +58,8 @@ object CssTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object CopyrightTag extends ScalapressTag with TagBuilder {
+@Tag("copyright")
+class CopyrightTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         Some("Copyright &copy; " + new DateTime().toString("yyyy"))

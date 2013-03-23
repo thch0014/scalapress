@@ -1,4 +1,4 @@
-package com.liferay.scalapress.service.theme.tag
+package com.liferay.scalapress.theme.tag
 
 import com.liferay.scalapress.{Tag, Logging, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.util.ComponentClassScanner

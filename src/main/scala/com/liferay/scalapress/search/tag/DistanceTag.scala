@@ -1,9 +1,9 @@
 package com.liferay.scalapress.search.tag
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest, Tag}
 import com.liferay.scalapress.obj.attr.AttributeFuncs
 import com.liferay.scalapress.util.geo.Postcode
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 @Tag("distance")

@@ -1,6 +1,7 @@
-package com.liferay.scalapress.service.theme.tag
+package com.liferay.scalapress.media
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest, Logging}
+import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 
 /** @author Stephen Samuel */
 object AssetTag extends ScalapressTag with TagBuilder with Logging {

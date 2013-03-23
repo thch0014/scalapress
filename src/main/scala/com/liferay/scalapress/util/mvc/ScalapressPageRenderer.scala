@@ -1,8 +1,7 @@
 package com.liferay.scalapress.util.mvc
 
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.service.theme.tag.TagRenderer
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.theme.tag.TagRenderer
 
 /** @author Stephen Samuel */
 class ScalapressPageRenderer(context: ScalapressContext) {

@@ -1,7 +1,6 @@
 package com.liferay.scalapress.theme
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
+import tag.ScalapressTag
 
 abstract class CookieConsentTag extends ScalapressTag {
 

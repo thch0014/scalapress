@@ -1,10 +1,10 @@
-package com.liferay.scalapress.service.theme.tag.general
+package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
-object TitleTagTag extends ScalapressTag with TagBuilder {
+@Tag("meta_title")
+class TitleTagTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
@@ -16,7 +16,8 @@ object TitleTagTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object KeywordsTagTag extends ScalapressTag {
+@Tag("meta_keywords")
+class KeywordsTagTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
@@ -26,7 +27,8 @@ object KeywordsTagTag extends ScalapressTag {
     }
 }
 
-object DescriptionTagTag extends ScalapressTag {
+@Tag("meta_description")
+class DescriptionTagTag extends ScalapressTag {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {

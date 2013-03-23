@@ -1,9 +1,9 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.theme.MarkupRenderer
+import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
 @Tag("associations")

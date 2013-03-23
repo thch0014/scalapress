@@ -1,6 +1,7 @@
 package com.liferay.scalapress.service.theme.tag
 
 import org.scalatest.FunSuite
+import com.liferay.scalapress.theme.tag.TagRenderer
 
 /** @author Stephen Samuel */
 class TagRendererTest extends FunSuite {

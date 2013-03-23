@@ -1,7 +1,7 @@
 package com.liferay.scalapress.widgets
 
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
 object WidgetsTag extends ScalapressTag with Logging {

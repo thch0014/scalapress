@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.attachment
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 object AttachmentLinkTag extends ScalapressTag with TagBuilder {

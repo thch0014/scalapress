@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.profile.tag
 
-import com.liferay.scalapress.service.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 
 /** @author Stephen Samuel */
 object RegisterTag extends ScalapressTag with TagBuilder {

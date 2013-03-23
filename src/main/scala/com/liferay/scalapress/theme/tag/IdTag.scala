@@ -1,6 +1,5 @@
-package com.liferay.scalapress.service.theme.tag.general
+package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.service.theme.tag.{TagBuilder, ScalapressTag}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */

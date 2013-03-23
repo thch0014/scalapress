@@ -1,7 +1,7 @@
-package com.liferay.scalapress.service.theme.tag.user
+package com.liferay.scalapress.user
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.service.theme.tag.ScalapressTag
+import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
 object UserStatusTag extends ScalapressTag {

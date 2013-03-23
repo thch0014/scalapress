@@ -1,14 +1,14 @@
-package com.liferay.scalapress.service.theme.tag
+package com.liferay.scalapress.theme.tag
 
-import general._
-import user.UserStatusTag
-import com.liferay.scalapress.plugin.profile.tag.{LogoutTag, LoginEmailTag, LoginPasswordTag, RegisterTag}
+import com.liferay.scalapress.plugin.profile.tag.{LoginEmailTag, LoginPasswordTag, RegisterTag}
 import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
 import com.liferay.scalapress.plugin.attachment.{AttachmentNameTag, AttachmentLinkTag}
 import com.liferay.scalapress.search.tag.{AttributeSearchTag, QuickSearchTag}
 import com.liferay.scalapress.obj.tag._
-import com.liferay.scalapress.folder.tag.{NestedFoldersTag, PrimaryFoldersTag, BreadcrumbsTag, FolderTag}
+import com.liferay.scalapress.folder.tag.{PrimaryFoldersTag, BreadcrumbsTag, FolderTag}
+import com.liferay.scalapress.media.AssetTag
+import com.liferay.scalapress.user.UserStatusTag
 
 /** @author Stephen Samuel */
 object TagMappings {
@@ -16,7 +16,6 @@ object TagMappings {
     val mappings: Map[String, ScalapressTag] = Map("item" -> ObjectTag, "object" -> ObjectTag,
         "categories_primary" -> PrimaryFoldersTag,
         "folders_primary" -> PrimaryFoldersTag,
-        "folders_nested" -> NestedFoldersTag,
         "summary" -> SummaryTag,
         "content" -> ContentTag,
         "pricing_sell" -> ObjectSellPriceTag,
@@ -35,12 +34,10 @@ object TagMappings {
         "thumbnail" -> ImagesTag,
         "image_url" -> ImageUrlTag,
         "images_url" -> ImageUrlTag,
-        "attachments" -> AttachmentsTag,
         "ordering_buy" -> AddToBasketTag,
         "addtobasket" -> AddToBasketTag,
         "register" -> RegisterTag,
         "id" -> IdTag,
-        "basket" -> BasketLinkTag,
         "basket_total" -> BasketTotalTag,
         "basket_lines" -> BasketLinesTag,
         "basket_items" -> BasketLinesTag,
@@ -79,12 +76,6 @@ object TagMappings {
         "item_url" -> LinkTag,
         "quicksearch" -> QuickSearchTag,
         "search_keywords" -> QuickSearchTag,
-        "meta_title" -> TitleTagTag,
-        "meta_keywords" -> KeywordsTagTag,
-        "meta_description" -> DescriptionTagTag,
-        "date" -> DateTag,
-        "home" -> HomeTag,
-        "logout" -> LogoutTag,
         "attachment_link" -> AttachmentLinkTag,
         "attachment_name" -> AttachmentNameTag,
         "attribute_value" -> AttributeValueTag,
@@ -94,11 +85,6 @@ object TagMappings {
         "attribute_section" -> AttributeSectionTag,
         "attribute" -> AttributeValueTag,
         "search_attribute" -> AttributeSearchTag,
-        "site_name" -> SiteNameTag,
-        "title" -> TitleTag,
-        "css" -> CssTag,
-        "script" -> ScriptTag,
-        "scripts" -> ScriptTag,
         "colorbox" -> ColorboxTag,
         "image_browser" -> ColorboxTag,
         "user_status" -> UserStatusTag,
@@ -113,16 +99,5 @@ object TagMappings {
         "breadcrumb" -> BreadcrumbsTag,
         "login_username" -> LoginEmailTag,
         "login_email" -> LoginEmailTag,
-        "login_password" -> LoginPasswordTag,
-        "comp_name" -> SiteNameTag,
-        "comp_vat" -> SiteVatTag,
-        "comp_number" -> SiteCompanyNumberTag,
-        "comp_email" -> SiteEmailTag,
-        "comp_postcode" -> SitePostcodeTag,
-        "comp_address_label" -> SiteAddressLabelTag,
-        "comp_address" -> SiteAddressTag,
-        "comp_country" -> SiteCountryTag,
-        "comp_telephone" -> SitePhoneTag,
-        "copyright" -> CopyrightTag,
-        "multimap" -> SiteGoogleMapTag, "comp_postcode_gmap" -> SiteGoogleMapTag)
+        "login_password" -> LoginPasswordTag)
 }

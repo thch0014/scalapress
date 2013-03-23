@@ -4,7 +4,7 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
-import com.liferay.scalapress.service.theme.tag.TagRenderer
+import tag.TagRenderer
 
 /** @author Stephen Samuel */
 object MarkupRenderer {
