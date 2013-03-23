@@ -1,9 +1,10 @@
 package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
-object IdTag extends ScalapressTag with TagBuilder {
+@Tag("id")
+class IdTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         val objId = request.obj.map(_.id.toString)

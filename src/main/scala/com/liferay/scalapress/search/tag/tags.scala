@@ -1,6 +1,6 @@
 package com.liferay.scalapress.search.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.AttributeOption
 import com.liferay.scalapress.theme.tag.ScalapressTag
@@ -12,7 +12,8 @@ object SearchFormTag extends ScalapressTag {
                params: Map[String, String]): Option[String] = None
 }
 
-object QuickSearchTag extends ScalapressTag {
+@Tag("quicksearch")
+class QuickSearchTag extends ScalapressTag {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,

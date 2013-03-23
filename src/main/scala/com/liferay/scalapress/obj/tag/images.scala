@@ -1,8 +1,9 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{FriendlyUrlGenerator, Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress._
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import scala.Some
 
 /** @author Stephen Samuel */
 
@@ -65,7 +66,8 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object ColorboxTag extends ScalapressTag with TagBuilder {
+@Tag("colorbox")
+class ColorboxTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {

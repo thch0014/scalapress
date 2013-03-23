@@ -12,7 +12,8 @@ class DateTag extends ScalapressTag {
     }
 }
 
-object DateCreatedTag extends ScalapressTag {
+@Tag("date_created")
+class DateCreatedTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val format = params.get("format").getOrElse("dd/MM/yyyy")
 

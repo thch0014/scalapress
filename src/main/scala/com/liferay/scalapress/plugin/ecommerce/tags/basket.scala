@@ -16,11 +16,10 @@ class BasketLinkTag extends ScalapressTag with TagBuilder {
         val text = params.get("text").getOrElse("Basket")
         Some(buildLink(link, text, params))
     }
-
-    override def tags = Array("basket")
 }
 
-object BasketTotalTag extends ScalapressTag with TagBuilder {
+@Tag("basket_total")
+class BasketTotalTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
         val text = if (params.contains("ex"))
@@ -81,8 +80,6 @@ object BasketLinesTag extends ScalapressTag {
                 Some(render)
         }
     }
-
-    override def tags = Array("basket_lines")
 }
 
 object BasketLineCountTag extends ScalapressTag with TagBuilder {
@@ -93,7 +90,6 @@ object BasketLineCountTag extends ScalapressTag with TagBuilder {
         Some(build(text, params))
     }
 
-    override def tags = Array("basket_lines_count")
 }
 
 object BasketLineQtyTag extends ScalapressTag {
@@ -105,8 +101,6 @@ object BasketLineQtyTag extends ScalapressTag {
           .map(line => "<input type='text' class='input-mini' name='qty" +
           line.id + "' value='" + line.qty + "'/>")
     }
-
-    override def tags = Array("basket_line_qty")
 }
 
 object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
@@ -119,7 +113,6 @@ object BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
             build(textFormatted, params)
         })
     }
-    override def tags = Array("basket_delivery_charge")
 }
 
 object BasketDeliveryDescTag extends ScalapressTag {
@@ -128,7 +121,6 @@ object BasketDeliveryDescTag extends ScalapressTag {
                params: Map[String, String]): Option[String] = {
         Option(request.basket.deliveryOption).map(_.name)
     }
-    override def tags = Array("basket_delivery_desc")
 }
 
 object BasketLineItemTag extends ScalapressTag {
@@ -142,8 +134,6 @@ object BasketLineItemTag extends ScalapressTag {
             }
         })
     }
-
-    override def tags = Array("basket_line_item")
 }
 
 object BasketLinePriceTag extends ScalapressTag {
@@ -165,8 +155,6 @@ object BasketLinePriceTag extends ScalapressTag {
                 Some(textFormatted)
         }
     }
-
-    override def tags = Array("basket_line_price")
 }
 
 object BasketLineTotalTag extends ScalapressTag {
@@ -188,8 +176,6 @@ object BasketLineTotalTag extends ScalapressTag {
                 Some(textFormatted)
         }
     }
-
-    override def tags = Array("basket_line_total")
 }
 
 object BasketLineStockTag extends ScalapressTag with TagBuilder {
@@ -198,8 +184,6 @@ object BasketLineStockTag extends ScalapressTag with TagBuilder {
                params: Map[String, String]): Option[String] = {
         request.line.map(line => build(line.obj.stock.toString, params))
     }
-
-    override def tags = Array("basket_line_stock")
 }
 
 object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
@@ -211,11 +195,10 @@ object BasketRemoveItemTag extends ScalapressTag with TagBuilder {
         val link = buildLink(href, text, params)
         Some(link)
     }
-
-    override def tags = Array("basket_line_remove")
 }
 
-object CheckoutTag extends ScalapressTag with TagBuilder {
+@Tag("checkout")
+class CheckoutTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,
@@ -224,6 +207,4 @@ object CheckoutTag extends ScalapressTag with TagBuilder {
         val text = params.get("text").getOrElse("Checkout")
         Some(buildLink(link, text, params))
     }
-
-    override def tags = Array("checkout")
 }

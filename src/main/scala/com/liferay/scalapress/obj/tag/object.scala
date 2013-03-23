@@ -1,6 +1,6 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 
 /** @author Stephen Samuel */
@@ -23,7 +23,8 @@ object ObjectTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object SummaryTag extends ScalapressTag with TagBuilder {
+@Tag("summary")
+class SummaryTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
 
         val max = params.get("max").getOrElse("200").toInt
@@ -45,7 +46,8 @@ object LinkTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object ContentTag extends ScalapressTag with TagBuilder {
+@Tag("content")
+class ContentTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         request.obj.map(_.content)
     }

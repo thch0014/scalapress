@@ -1,6 +1,6 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.StockMethod
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
@@ -51,7 +51,8 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object ObjectStockTag extends ScalapressTag with TagBuilder {
+@Tag("stock")
+class ObjectStockTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
@@ -68,7 +69,8 @@ object ObjectStockTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
+@Tag("availability")
+class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest,
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
