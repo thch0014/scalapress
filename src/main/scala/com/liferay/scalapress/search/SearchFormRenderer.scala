@@ -95,7 +95,7 @@ object SearchFormRenderer {
     }
 
     private def renderSelectionAttribute(field: SearchFormField): Elem = {
-        val options = field.attribute.options.asScala.map(opt =>
+        val renderedOptions = field.attribute.orderedOptions.asScala.map(opt =>
             <option value={opt.value}>
                 {opt.value}
             </option>)
@@ -109,7 +109,7 @@ object SearchFormRenderer {
             <select name={name}>
                 <option value=" ">
                     Any
-                </option>{options}
+                </option>{renderedOptions}
             </select>
         </div>
     }

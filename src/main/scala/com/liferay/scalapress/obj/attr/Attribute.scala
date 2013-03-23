@@ -42,8 +42,8 @@ class Attribute {
     }
 
     def orderedOptions: java.util.List[AttributeOption] = manualOptionsOrdering match {
-        case true => options.asScala.sortBy(_.position).asJava
-        case _ => options.asScala.sortBy(_.value).asJava
+        case true => options.asScala.sortBy(arg => Option(arg.position).getOrElse(0)).asJava
+        case false => options.asScala.sortBy(arg => Option(arg.value).getOrElse("")).asJava
     }
 
     @Column(name = "type")
