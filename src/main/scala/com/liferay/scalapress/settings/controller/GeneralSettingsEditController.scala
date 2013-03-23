@@ -1,9 +1,10 @@
-package com.liferay.scalapress.settings
+package com.liferay.scalapress.settings.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.settings.{Installation, GeneralSettings, GeneralSettingsDao, InstallationDao}
 
 /** @author Stephen Samuel */
 @Controller

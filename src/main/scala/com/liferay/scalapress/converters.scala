@@ -8,8 +8,7 @@ import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
 import search.{SearchFormDao, SearchForm}
-import settings.Theme
-import theme.{Markup, MarkupDao, ThemeDao}
+import theme.{Theme, Markup, MarkupDao, ThemeDao}
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {

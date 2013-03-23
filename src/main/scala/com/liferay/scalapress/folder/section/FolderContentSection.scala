@@ -18,8 +18,8 @@ class FolderContentSection extends Section {
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
         Option(content)
           .map(c => {
-            c.replace("src=\"/images/", "src=\"" + context.assetStore.cdn + "/")
-              .replace("src=\"images/", "src=\"" + context.assetStore.cdn + "/")
+            c.replace("src=\"/images/", "src=\"" + context.assetStore.baseUrl + "/")
+              .replace("src=\"images/", "src=\"" + context.assetStore.baseUrl + "/")
         })
     }
 }

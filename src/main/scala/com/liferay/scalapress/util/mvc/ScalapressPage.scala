@@ -3,7 +3,7 @@ package com.liferay.scalapress.util.mvc
 import collection.mutable.ListBuffer
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.settings.Theme
+import com.liferay.scalapress.theme.Theme
 
 /** @author Stephen Samuel */
 class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {

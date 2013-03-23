@@ -8,8 +8,8 @@ import com.liferay.scalapress.enums.FolderOrdering
 import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.settings.Theme
 import section.{FolderContentSection, SubfolderSection}
+import com.liferay.scalapress.theme.Theme
 
 /** @author Stephen Samuel */
 @Entity

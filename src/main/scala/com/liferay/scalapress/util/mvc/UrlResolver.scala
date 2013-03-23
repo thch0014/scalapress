@@ -9,9 +9,8 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.obj.attr.Attribute
-import com.liferay.scalapress.settings.Theme
 import com.liferay.scalapress.user.User
-import com.liferay.scalapress.theme.Markup
+import com.liferay.scalapress.theme.{Theme, Markup}
 
 /** @author Stephen Samuel */
 

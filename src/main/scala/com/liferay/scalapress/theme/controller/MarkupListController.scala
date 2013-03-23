@@ -1,9 +1,10 @@
-package com.liferay.scalapress.theme
+package com.liferay.scalapress.theme.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
+import com.liferay.scalapress.theme.{Markup, MarkupDao}
 
 /** @author Stephen Samuel */
 @Controller

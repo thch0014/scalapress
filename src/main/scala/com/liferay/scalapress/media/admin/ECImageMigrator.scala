@@ -1,4 +1,4 @@
-package com.liferay.scalapress.media
+package com.liferay.scalapress.media.admin
 
 import com.liferay.scalapress.Logging
 import java.io.ByteArrayInputStream
@@ -13,6 +13,7 @@ import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.widgets.WidgetDao
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.folder.section.FolderContentSection
+import com.liferay.scalapress.media.{AssetStore, ImageDao}
 
 /** @author Stephen Samuel */
 @Component

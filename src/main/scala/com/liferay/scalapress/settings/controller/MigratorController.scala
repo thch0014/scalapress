@@ -1,10 +1,10 @@
-package com.liferay.scalapress.settings
+package com.liferay.scalapress.settings.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.media.ECImageMigrator
+import com.liferay.scalapress.media.admin.ECImageMigrator
 
 /** @author Stephen Samuel */
 @Controller

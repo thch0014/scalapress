@@ -1,4 +1,4 @@
-package com.liferay.scalapress.settings
+package com.liferay.scalapress.theme
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, Column, Table, Entity}
 import reflect.BeanProperty

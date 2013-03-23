@@ -14,8 +14,8 @@ class HtmlWidget extends Widget {
             case None => None
             case Some(c) =>
                 Some(c
-                  .replace("src=\"/images/", "src=\"" + req.context.assetStore.cdn + "/")
-                  .replace("src=\"images/", "src=\"" + req.context.assetStore.cdn + "/"))
+                  .replace("src=\"/images/", "src=\"" + req.context.assetStore.baseUrl + "/")
+                  .replace("src=\"images/", "src=\"" + req.context.assetStore.baseUrl + "/"))
         }
     }
 }

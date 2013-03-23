@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
+import tag._
 
 /** @author Stephen Samuel */
 class SiteTagsTest extends FunSuite with MockitoSugar with BeforeAndAfter {

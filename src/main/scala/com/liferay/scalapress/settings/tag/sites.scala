@@ -1,4 +1,4 @@
-package com.liferay.scalapress.settings
+package com.liferay.scalapress.settings.tag
 
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import collection.mutable.ArrayBuffer

@@ -30,8 +30,6 @@ class AmazonS3AssetStore(val cdnUrl: String,
           .toArray
     }
 
-    def cdn = cdnUrl
-
     def exists(key: String) = {
         try {
             getAmazonS3Client.getObjectMetadata(bucketName, key) != null
@@ -73,6 +71,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
         all.asScala.toArray.drop(start).take(limit)
     }
 
+    override def baseUrl = cdnUrl
+
     override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
     override def list(limit: Int): Array[Asset] = search(null, limit)
@@ -100,9 +100,10 @@ class AmazonS3AssetStore(val cdnUrl: String,
     def add(key: String, in: InputStream): String = {
         val normalizedKey = getNormalizedKey(key)
         put(normalizedKey, in)
+        normalizedKey
     }
 
-    def put(key: String, in: InputStream): String = {
+    def put(key: String, in: InputStream) {
 
         val array: Array[Byte] = IOUtils.toByteArray(in)
 
@@ -115,14 +116,17 @@ class AmazonS3AssetStore(val cdnUrl: String,
         request.setStorageClass(StorageClass.ReducedRedundancy)
 
         getAmazonS3Client.putObject(request)
-        key
     }
 
     def getNormalizedKey(key: String): String = {
         FilenameUtils.getBaseName(key) + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(key)
     }
 
-    def add(in: InputStream): String = put(UUID.randomUUID.toString, in)
+    def add(in: InputStream): String = {
+        val key = UUID.randomUUID.toString
+        put(key, in)
+        key
+    }
 
     def getAmazonS3Client: AmazonS3Client = {
         val cred: BasicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
