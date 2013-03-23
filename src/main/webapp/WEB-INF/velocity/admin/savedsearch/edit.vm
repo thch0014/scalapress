@@ -77,16 +77,29 @@
             <select id="sortType" name="sortType">
                 #foreach($option in $sortMap.keySet())
                     <option value="${option}"
-                        #if("$!search.sortType" == "$option")
-                            selected="selected"
-                        #end>
-                        ${sortMap.get($option)}</option>
+                        #if("$!search.sortType" == "$option") selected="selected" #end>
+                        ${sortMap.get($option)}
+                    </option>
                 #end
             </select>
         </div>
     </div>
 
 
+    <div class="control-group">
+        <label class="control-label">Sort Attribute</label>
+
+        <div class="controls">
+            <select id="sortAttribute" name="sortAttribute">
+                #foreach($option in $attributesMap.keySet())
+                    <option value="${option}"
+                        #if("$!search.sortAttribute.id" == "$option") selected="selected" #end>
+                        ${attributesMap.get($option)}
+                    </option>
+                #end
+            </select>
+        </div>
+    </div>
 
 
 

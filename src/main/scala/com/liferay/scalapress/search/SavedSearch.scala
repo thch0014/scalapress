@@ -7,7 +7,7 @@ import scala.Array
 import java.util
 import org.hibernate.annotations.{FetchMode, Fetch}
 import com.liferay.scalapress.obj.ObjectType
-import com.liferay.scalapress.obj.attr.AttributeValue
+import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,6 +19,10 @@ class SavedSearch {
     @BeanProperty var id: java.lang.Long = _
 
     @BeanProperty var status: String = _
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sortAttribute")
+    @BeanProperty var sortAttribute: Attribute = _
 
     // search inside this folder
     @Column(name = "searchCategory", nullable = true)

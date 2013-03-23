@@ -189,6 +189,13 @@ class ElasticSearchService extends SearchService with Logging {
             case Sort.Random => SortBuilders
               .scriptSort("Math.random()", "number")
               .order(SortOrder.ASC)
+            case Sort.Attribute if search.sortAttribute != null =>
+                SortBuilders.fieldSort("attribute_" + search.sortAttribute.id).order(SortOrder.ASC).ignoreUnmapped(true)
+            case Sort.AttributeDesc if search.sortAttribute != null =>
+                SortBuilders
+                  .fieldSort("attribute_" + search.sortAttribute.id)
+                  .order(SortOrder.DESC)
+                  .ignoreUnmapped(true)
             case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
             case Sort.Oldest => SortBuilders.fieldSort("_uid").order(SortOrder.ASC)
             case _ => SortBuilders.fieldSort("_uid").order(SortOrder.DESC)

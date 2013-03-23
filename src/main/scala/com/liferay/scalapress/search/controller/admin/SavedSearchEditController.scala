@@ -11,19 +11,20 @@ import com.liferay.scalapress.obj.TypeDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator}
-import com.liferay.scalapress.util.{ObjectTypePopulator, SortPopulator}
+import com.liferay.scalapress.util.{AttributePopulator, ObjectTypePopulator, SortPopulator}
 import com.liferay.scalapress.util.mvc.AttributeValuesPopulator
 import java.text.SimpleDateFormat
 import com.liferay.scalapress.enums.AttributeType
+import scala.collection.JavaConverters._
+import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/savedsearch/{id}"))
 class SavedSearchEditController
-  extends MarkupPopulator with
-  SortPopulator with
-  FolderPopulator with
-  AttributeValuesPopulator with
+  extends MarkupPopulator with SortPopulator with FolderPopulator
+  with AttributePopulator
+  with AttributeValuesPopulator with
   ObjectTypePopulator {
 
     @Autowired var objectTypeDao: TypeDao = _
@@ -33,45 +34,43 @@ class SavedSearchEditController
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("search") search: SavedSearch) = "admin/savedsearch/edit.vm"
+    def edit(@ModelAttribute("search") search: SavedSearch, model: ModelMap) = {
+
+        if (search.objectType != null) {
+            model.put("attributesMap", attributesMap(search.objectType.sortedAttributes))
+            model.put("attributesWithValues",
+                attributeEditMap(search.objectType.sortedAttributes, search.attributeValues.asScala.toSeq))
+        }
+
+        "admin/savedsearch/edit.vm"
+    }
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("search") search: SavedSearch, req: HttpServletRequest) = {
 
         search.attributeValues.clear()
+        if (search.objectType != null)
+            for (a <- search.objectType.attributes.asScala) {
 
-        import scala.collection.JavaConverters._
-        for (a <- search.objectType.attributes.asScala) {
-
-            val values = req.getParameterValues("attributeValues" + a.id)
-            if (values != null) {
-                values.map(_.trim).filter(_.length > 0).foreach(value => {
-                    val av = new AttributeValue
-                    av.attribute = a
-                    // some values need to be converted first
-                    av.attribute.attributeType match {
-                        case AttributeType.Date => new SimpleDateFormat("dd-MM-yyyy").parse(value).getTime
-                        case _ => av.value = value
-                    }
-                    av.savedSearch = search
-                    search.attributeValues.add(av)
-                })
+                val values = req.getParameterValues("attributeValues" + a.id)
+                if (values != null) {
+                    values.map(_.trim).filter(_.length > 0).foreach(value => {
+                        val av = new AttributeValue
+                        av.attribute = a
+                        // some values need to be converted first
+                        av.attribute.attributeType match {
+                            case AttributeType.Date => new SimpleDateFormat("dd-MM-yyyy").parse(value).getTime
+                            case _ => av.value = value
+                        }
+                        av.savedSearch = search
+                        search.attributeValues.add(av)
+                    })
+                }
             }
-        }
 
         savedSearchDao.save(search)
         "redirect:/backoffice/savedsearch/" + search.id
     }
 
-    @ModelAttribute("search") def search(@PathVariable("id") id: Long) = savedSearchDao.find(id)
-
-    import scala.collection.JavaConverters._
-
-    @ModelAttribute("attributesWithValues") def attributesWithValues(@PathVariable("id") id: Long) = {
-        val ss = savedSearchDao.find(id)
-        if (ss.objectType == null)
-            null
-        else
-            attributeEditMap(ss.objectType.attributes.asScala.toSeq, ss.attributeValues.asScala.toSeq)
-    }
+    @ModelAttribute("search") def _search(@PathVariable("id") id: Long) = savedSearchDao.find(id)
 }

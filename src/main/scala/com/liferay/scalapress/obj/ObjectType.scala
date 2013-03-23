@@ -7,6 +7,7 @@ import reflect.BeanProperty
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.Markup
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
@@ -33,6 +34,8 @@ class ObjectType {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.JOIN)
     @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
+
+    def sortedAttributes = attributes.asScala.toSeq.sortBy(_.position)
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
