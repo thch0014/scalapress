@@ -17,7 +17,7 @@ class GBaseFeed extends Feed {
     @BeanProperty var brandAttrName: String = _
     @BeanProperty var partAttrName: String = _
 
-    @Column(name = "producttype")
+    @Column(name = "productType")
     @BeanProperty var productCategory: String = _
 
     def backoffice: String = "/backoffice/feed/gbase/" + id
