@@ -11,6 +11,7 @@ import com.sksamuel.scoot.soa.Paging
 import reflect.BeanProperty
 import com.liferay.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import com.liferay.scalapress.obj.controller.admin.OrderStatusPopulator
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -48,8 +49,16 @@ class OrderSearchController extends OrderStatusPopulator {
     }
 
     @RequestMapping(value = Array("create"), produces = Array("text/html"))
-    def create(req: HttpServletRequest, @RequestParam("accountId") accountId: Long) = {
-        val account = context.objectDao.find(accountId)
+    def create(req: HttpServletRequest, @RequestParam(value = "accountId", defaultValue = "0") accountId: Long) = {
+        val account = accountId match {
+            case 0 =>
+                val account = Obj(context.typeDao.getAccount.get)
+                account.status = "Disabled"
+                account.name = "New Account"
+                context.objectDao.save(account)
+                account
+            case _ => context.objectDao.find(accountId)
+        }
         val u = Order(req.getRemoteAddr, account)
         orderDao.save(u)
         "redirect:/backoffice/order"
