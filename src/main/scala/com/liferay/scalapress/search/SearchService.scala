@@ -6,10 +6,15 @@ import com.liferay.scalapress.obj.{ObjectType, Obj}
 /** @author Stephen Samuel */
 trait SearchService {
 
-    def index()
     def index(obj: Obj)
-    def prefix(q: String, limit: Int): SearchResponse
-    def search(q: String, limit: Int): SearchResponse
     def search(search: SavedSearch): SearchResponse
+
+    @deprecated
+    def index()
+    @deprecated
+    def prefix(q: String, limit: Int): SearchResponse
+    @deprecated
+    def search(q: String, limit: Int): SearchResponse
+    @deprecated
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }

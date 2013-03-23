@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestParam, Requ
 import reflect.BeanProperty
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.search.SearchService
+import org.joda.time.DateTime
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,6 +22,7 @@ class CalendarJsonController {
 
         val testEvent = new Event
         testEvent.date = System.currentTimeMillis.toString
+        testEvent.dateString = new DateTime(testEvent.date).toString("dd/MM/yyyy")
         testEvent.description = "Some sample description"
         testEvent.url = "/obj/12345"
         Array(testEvent)
@@ -29,6 +31,7 @@ class CalendarJsonController {
 
 class Event {
     @BeanProperty var date: String = _
+    @BeanProperty var dateString: String = _
     @BeanProperty var `type`: String = _
     @BeanProperty var description: String = "meeting"
     @BeanProperty var url: String = _

@@ -22,6 +22,7 @@ import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
+import java.util.concurrent.TimeUnit
 
 /** @author Stephen Samuel */
 
@@ -103,7 +104,7 @@ class ElasticSearchService extends SearchService with Logging {
             client.prepareIndex(INDEX, TYPE, obj.id.toString)
               .setSource(src)
               .execute()
-              .actionGet(TIMEOUT)
+              .get(TIMEOUT, TimeUnit.MILLISECONDS)
 
         } catch {
             case e: Exception => logger.warn(e.getMessage)
@@ -189,8 +190,8 @@ class ElasticSearchService extends SearchService with Logging {
               .scriptSort("Math.random()", "number")
               .order(SortOrder.ASC)
             case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-            case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
-            case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
+            case Sort.Oldest => SortBuilders.fieldSort("_uid").order(SortOrder.ASC)
+            case _ => SortBuilders.fieldSort("_uid").order(SortOrder.DESC)
         }
 
         req.addSort(sort)

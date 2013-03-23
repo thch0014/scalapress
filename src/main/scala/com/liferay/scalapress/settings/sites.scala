@@ -8,23 +8,19 @@ import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 @Tag("comp_address")
 class SiteAddressTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context.siteDao.findAll().headOption.map(_.address)
+        Option(context.siteDao.get.address)
 }
 
 @Tag("comp_address_label")
 class SiteAddressLabelTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
         val sep = params.get("sep").getOrElse(", ")
-        context.siteDao.findAll().headOption match {
-            case None => None
-            case Some(site) => {
-                val a = new ArrayBuffer[String]()
-                Option(site.address).foreach(add => a ++= add.split("\n"))
-                Option(site.postcode).foreach(p => a += p)
-                Option(site.country).foreach(c => a += c)
-                Option(a.map(_.trim).mkString(sep))
-            }
-        }
+        val site = context.siteDao.get
+        val a = new ArrayBuffer[String]()
+        Option(site.address).foreach(add => a ++= add.split("\n"))
+        Option(site.postcode).foreach(p => a += p)
+        Option(site.country).foreach(c => a += c)
+        Option(a.map(_.trim).mkString(sep))
     }
 }
 
@@ -72,11 +68,9 @@ class SiteCompanyNumberTag extends ScalapressTag with TagBuilder {
 
 @Tag("comp_postcode_gmap")
 class SiteGoogleMapTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
-        context
-          .siteDao
-          .findAll()
-          .headOption
-          .map(site =>
-            "<a href='http://maps.google.co.uk/maps?hl=en&safe=off&q=" + site.postcode + "'>" + site.postcode + "</a/>")
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+        val site = context.siteDao.get
+        Option("<a href='http://maps.google.co.uk/maps?hl=en&safe=off&q=" + site.postcode + "'>" + site
+          .postcode + "</a/>")
+    }
 }
