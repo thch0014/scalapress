@@ -23,11 +23,13 @@ class Attachment {
     @JoinColumn(name = "obj")
     @BeanProperty var obj: Obj = _
 
-    // link the file in the asset store
+    // link to the file in the asset store
     @BeanProperty var filename: String = _
 
-    // proper name of this file, like a heading
+    // proper name of this file, used for display to humans
     @BeanProperty var name: String = _
+
+    // a full description of the upload
     @BeanProperty var description: String = _
 
 }

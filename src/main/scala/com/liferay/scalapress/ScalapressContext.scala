@@ -19,6 +19,7 @@ import javax.servlet.ServletContext
 import settings.InstallationDao
 import theme.MarkupDao
 import widgets.WidgetDao
+import org.springframework.web.context.support.WebApplicationContextUtils
 
 /** @author Stephen Samuel */
 @Component
@@ -62,6 +63,11 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var submissionDao: SubmissionDao = _
     @Autowired var formDao: FormDao = _
     @Autowired var attributeValueDao: AttributeValueDao = _
+
+    def bean[T](implicit m: Manifest[T]) =
+        WebApplicationContextUtils
+          .getRequiredWebApplicationContext(servletContext)
+          .getBean(m.erasure.asInstanceOf[Class[T]])
 
     var servletContext: ServletContext = _
     def setServletContext(servletContext: ServletContext) {
