@@ -1,4 +1,4 @@
-package com.liferay.scalapress.search
+package com.liferay.scalapress.plugin.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
@@ -23,6 +23,7 @@ import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
 import java.util.concurrent.TimeUnit
+import com.liferay.scalapress.search.{SavedSearch, SearchService}
 
 /** @author Stephen Samuel */
 

@@ -6,6 +6,7 @@ import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.media.Image
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
+import com.liferay.scalapress.plugin.elasticsearch.ElasticSearchService
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {

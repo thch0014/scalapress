@@ -1,7 +1,7 @@
 package com.liferay.scalapress.search
 
 import section.SearchFormSection
-import xml.{Unparsed, Elem}
+import xml.{Node, Unparsed, Elem}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.{Sort, SearchFieldType, AttributeType}
 
@@ -28,40 +28,40 @@ object SearchFormRenderer {
         </form>.toString()
     }
 
-    private def renderFields(fields: Seq[SearchFormField]): Seq[Elem] = {
+    private def renderFields(fields: Seq[SearchFormField]): Iterable[Node] = {
         fields.map(field => {
             field.fieldType match {
-                case SearchFieldType.Attribute if field.preset => renderPresetAttributeField(field)
+                case SearchFieldType.Attribute if field.preset => _renderPresetAttributeField(field)
                 case SearchFieldType.Categories if field.preset => _renderPresetField("folder", field.value)
                 case SearchFieldType.Name if field.preset => _renderPresetField("name", field.value)
                 case SearchFieldType.Attribute => renderAttributeField(field)
                 case SearchFieldType.Distance => _renderDistanceField(field)
                 case SearchFieldType.Location => _renderLocationField(field)
-                case _ => renderTextField(field)
+                case _ => _renderTextField(field.id.toString, field.name)
             }
         })
     }
 
-    def _renderDateField(field: SearchFormField) = {
-        <div>
+    def _renderDateField(field: SearchFormField): Node = {
+        scala.xml.Utility.trim(<div>
             <label>
                 {Unparsed(field.name)}
             </label>
             <input type="text" name={field.id.toString} class="input-medium datepicker"/>
-        </div>
+        </div>)
     }
 
-    def _renderLocationField(field: SearchFormField) = {
-        <div>
+    def _renderLocationField(field: SearchFormField): Node = {
+        scala.xml.Utility.trim(<div>
             <label>
                 {Unparsed(field.name)}
             </label>
             <input type="text" name="location" class="input-medium"/>
-        </div>
+        </div>)
     }
 
-    def _renderDistanceField(field: SearchFormField) = {
-        <div>
+    def _renderDistanceField(field: SearchFormField): Node = {
+        scala.xml.Utility.trim(<div>
             <label>
                 {Unparsed(field.name)}
             </label>
@@ -73,10 +73,10 @@ object SearchFormRenderer {
                 <option value="50">50 miles</option>
                 <option value="100">100 miles</option>
             </select>
-        </div>
+        </div>)
     }
 
-    private def renderPresetAttributeField(field: SearchFormField): Elem = {
+    def _renderPresetAttributeField(field: SearchFormField): Elem = {
         val name = "attr_" + Option(field.attribute).map(_.id).getOrElse("~")
             <input type="hidden" name={name} value={field.value}/>
     }
@@ -85,50 +85,52 @@ object SearchFormRenderer {
             <input type="hidden" name={name} value={value}/>
     }
 
-    private def renderAttributeField(field: SearchFormField): Elem = {
+    private def renderAttributeField(field: SearchFormField): Node = {
         val attributeType = Option(field.attribute).flatMap(attr => Option(attr.attributeType))
         attributeType match {
             case Some(AttributeType.Selection) => renderSelectionAttribute(field)
             case Some(AttributeType.Date) => _renderDateField(field)
-            case _ => renderTextAttribute(field)
+            case _ => _renderTextAttribute(field)
         }
     }
 
-    private def renderSelectionAttribute(field: SearchFormField): Elem = {
-        val renderedOptions = field.attribute.orderedOptions.asScala.map(opt =>
-            <option value={opt.value}>
+    def _renderOptions(field: SearchFormField) = {
+        field.attribute.orderedOptions.asScala.map(opt =>
+            scala.xml.Utility.trim(<option value={opt.value}>
                 {opt.value}
-            </option>)
+            </option>))
+    }
 
-        val name = "attr_" + field.attribute.id
+    private def renderSelectionAttribute(field: SearchFormField): Node = {
+        val renderedOptions = _renderOptions(field)
+        val name = "attr_" + Option(field.attribute).map(_.id).orNull
+        _renderSelection(name, field.name, renderedOptions)
+    }
 
-        <div>
+    def _renderSelection(name: String, label: String, options: Iterable[Node]) = {
+        scala.xml.Utility.trim(<div>
             <label>
-                {Unparsed(field.name)}
+                {Unparsed(label)}
             </label>
             <select name={name}>
                 <option value=" ">
                     Any
-                </option>{renderedOptions}
+                </option>{options}
             </select>
-        </div>
+        </div>)
     }
 
-    private def renderTextAttribute(field: SearchFormField): Elem = {
+    def _renderTextAttribute(field: SearchFormField): Node = {
         val name = "attr_" + Option(field.attribute).map(_.id).orNull
-        <div>
+        _renderTextField(name, field.name)
+    }
+
+    def _renderTextField(name: String, label: String): Node = {
+        scala.xml.Utility.trim(<div>
             <label>
-                {Unparsed(field.name)}
+                {Unparsed(label)}
             </label>
             <input type="text" name={name}/>
-        </div>
+        </div>)
     }
-
-    private def renderTextField(field: SearchFormField): Elem =
-        <div>
-            <label>
-                {Unparsed(field.name)}
-            </label>
-            <input type="text" name={field.id.toString}/>
-        </div>
 }
