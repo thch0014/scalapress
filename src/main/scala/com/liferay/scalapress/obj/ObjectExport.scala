@@ -1,12 +1,12 @@
 package com.liferay.scalapress.obj
 
-import com.liferay.scalapress.feeds.gbase.GBaseFeed
 import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter
 import com.liferay.scalapress.{FriendlyUrlGenerator, Logging}
 import org.apache.commons.lang.WordUtils
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.media.AssetStore
+import com.liferay.scalapress.plugin.feed.gbase.GBaseFeed
 
 /** @author Stephen Samuel */
 class ObjectExport(domain: String, assetStore: AssetStore) extends Logging {
