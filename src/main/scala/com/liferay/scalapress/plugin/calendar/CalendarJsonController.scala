@@ -28,7 +28,8 @@ class CalendarJsonController {
         results.hits.hits.flatMap(hit => {
             val obj = context.objectDao.find(hit.id.toLong)
             AttributeFuncs.attributeValue(obj, widget.startDateAttribute).map(date => (obj, date))
-        }).filter(_._2.forall(_.isDigit))
+        }).filter(_._2 != null)
+          .filter(_._2.forall(_.isDigit))
           .map(arg => {
             val e = new Event
             e.date = new DateMidnight(arg._2.toLong).getMillis.toString
