@@ -138,7 +138,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         Option(search.name)
           .filter(_.trim.length > 0)
-          .foreach(name => name.trim.split(" ").filter(_.trim.length > 0).foreach(arg => buffer.append("name:" + arg)))
+          .foreach(name => name.trim.split(" ").filter(_.trim.length > 0).foreach(arg => buffer.append("name:" + arg.replace("!", ""))))
 
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
 
