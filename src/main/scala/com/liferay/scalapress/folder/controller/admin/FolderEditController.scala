@@ -114,6 +114,6 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
         val map = sections.map(c => (c.getName, c.getSimpleName)).toMap
         import scala.collection.immutable.SortedMap
-        SortedMap() ++ map
+        SortedMap[String, String]() ++ map
     }
 }

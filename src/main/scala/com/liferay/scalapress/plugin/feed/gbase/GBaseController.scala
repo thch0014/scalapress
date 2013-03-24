@@ -7,7 +7,6 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.feeds.{Feed, FeedDao}
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.settings.InstallationDao
-import com.liferay.scalapress.feeds.gbase.GoogleBaseService
 
 /** @author Stephen Samuel */
 @Controller

@@ -16,8 +16,13 @@ case class ScalapressRequest(request: HttpServletRequest,
                              line: Option[BasketLine] = None,
                              location: Option[String] = None) {
 
-    if (request.getAttribute("errors") == null)
-        request.setAttribute("errors", scala.collection.mutable.Map.empty)
+    val errors = if (request.getAttribute("errors") == null) {
+        val e = scala.collection.mutable.Map.empty[String, String]
+        request.setAttribute("errors", e)
+        e
+    } else {
+        request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
+    }
 
     def basket: Basket = {
         Option(request.getAttribute(ScalapressConstants.BasketKey)) match {
@@ -37,7 +42,6 @@ case class ScalapressRequest(request: HttpServletRequest,
         }
     }
 
-    def errors = request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
     def error(key: String) = errors.get(key)
     def error(key: String, value: String) {
         errors.put(key, value)

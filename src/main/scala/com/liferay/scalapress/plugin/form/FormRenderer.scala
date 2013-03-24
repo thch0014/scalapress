@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.form
 
 import scala.collection.JavaConverters._
-import xml.{Unparsed, Elem}
+import xml.{Node, Unparsed}
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 
@@ -50,15 +50,15 @@ object FormRenderer {
         </div>
     }
 
-    private def renderField(field: FormField, req: ScalapressRequest): Elem = {
+    private def renderField(field: FormField, req: ScalapressRequest): Node = {
 
         val name = field.name + (if (field.required) "*" else "")
         val value = Option(req.request.getParameter(field.id.toString))
         val error = req.error(field.id.toString)
 
         field.fieldType match {
-            case FormFieldType.DropDownMenu => renderSelect(field, req)
-            case FormFieldType.TickBox => renderCheck(field)
+            case FormFieldType.DropDownMenu => _renderSelect(field, req)
+            case FormFieldType.TickBox => _renderCheck(field)
             case FormFieldType.TickBoxes => renderChecks(field, req)
             case FormFieldType.Radio => renderRadio(field, req)
             case FormFieldType.Description =>
@@ -131,16 +131,20 @@ object FormRenderer {
         </div>
     }
 
-    private def renderSelect(field: FormField, req: ScalapressRequest) = {
+    def _renderOptions(options: Array[String]): Seq[Node] = {
+        options.map(opt =>
+            scala.xml.Utility.trim(<option>
+                {opt}
+            </option>))
+    }
+
+    def _renderSelect(field: FormField, req: ScalapressRequest) = {
         val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
         val star = if (field.required) "*" else ""
 
-        val opts = field.optionsList.map(opt =>
-            <option>
-                {opt}
-            </option>)
+        val opts = _renderOptions(field.optionsList)
 
-        <div class={cssClass}>
+        scala.xml.Utility.trim(<div class={cssClass}>
             <label class="control-label">
                 {Unparsed(field.name)}{star}
             </label>
@@ -152,17 +156,17 @@ object FormRenderer {
                     {req.errors.getOrElse(field.id.toString, "")}
                 </span>
             </div>
-        </div>
+        </div>)
     }
 
-    private def renderCheck(field: FormField) = {
-        <div class="control-group">
+    def _renderCheck(field: FormField) = {
+        scala.xml.Utility.trim(<div class="control-group">
             <div class="controls">
                 <label class="checkbox">
                     <input type="checkbox" name={field.id.toString}/>{Unparsed(field.name)}
                 </label>
             </div>
-        </div>
+        </div>)
     }
 
     private def renderChecks(field: FormField, req: ScalapressRequest) = {
