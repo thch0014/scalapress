@@ -3,7 +3,6 @@ package com.liferay.scalapress.plugin.feed.gbase
 import org.springframework.stereotype.Component
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.feeds.FeedDao
 import com.liferay.scalapress.{Logging, ScalapressContext}
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.obj.ObjectDao
@@ -14,7 +13,7 @@ import com.liferay.scalapress.settings.InstallationDao
 class GBaseCron extends CronTask with Logging {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var feedDao: FeedDao = _
+    @Autowired var feedDao: GBaseFeedDao = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var installationDao: InstallationDao = _
 
@@ -22,11 +21,11 @@ class GBaseCron extends CronTask with Logging {
     @Transactional
     def run() {
         logger.info("Running GBase Cron")
-        feedDao.findAll().filter(_.isInstanceOf[GBaseFeed]).foreach(g => {
+        feedDao.findAll().foreach(g => {
             GoogleBaseService.run(objectDao,
                 feedDao,
                 installationDao.get,
-                g.asInstanceOf[GBaseFeed],
+                g,
                 context.assetStore)
         })
     }

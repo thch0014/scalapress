@@ -5,7 +5,6 @@ import java.io.File
 import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.feeds.FeedDao
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.settings.Installation
 import com.liferay.scalapress.media.AssetStore
@@ -14,7 +13,7 @@ import com.liferay.scalapress.media.AssetStore
 object GoogleBaseService extends Logging {
 
     def run(objectDao: ObjectDao,
-            feedDao: FeedDao,
+            gfeedDao: GBaseFeedDao,
             installation: Installation,
             feed: GBaseFeed,
             assetStore: AssetStore) = {
@@ -30,10 +29,10 @@ object GoogleBaseService extends Logging {
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
-        //      file.delete
+        file.delete
 
         feed.lastRuntime = System.currentTimeMillis()
-        feedDao.save(feed)
+        gfeedDao.save(feed)
     }
 
     def upload(file: File, feed: GBaseFeed) {

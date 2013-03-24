@@ -1,12 +1,12 @@
-package com.liferay.scalapress.feeds
+package com.liferay.scalapress.plugin.feed.gbase
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
-trait FeedDao extends GenericDao[Feed, java.lang.Long]
+trait GBaseFeedDao extends GenericDao[GBaseFeed, java.lang.Long]
 
 @Component
 @Transactional
-class FeedDaoImpl extends GenericDaoImpl[Feed, java.lang.Long] with FeedDao
+class GBaseFeedDaoImpl extends GenericDaoImpl[GBaseFeed, java.lang.Long] with GBaseFeedDao

@@ -1,13 +1,18 @@
 package com.liferay.scalapress.plugin.feed.gbase
 
-import javax.persistence.{Column, Entity, Table}
+import javax.persistence._
 import reflect.BeanProperty
-import com.liferay.scalapress.feeds.Feed
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "feeds_googlebase")
-class GBaseFeed extends Feed {
+class GBaseFeed {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @BeanProperty var id: Long = _
+
+    @BeanProperty var lastRuntime: Long = _
 
     @BeanProperty var ftpHostname: String = _
     @BeanProperty var ftpUsername: String = _

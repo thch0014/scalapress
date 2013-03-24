@@ -1,18 +1,18 @@
-package com.liferay.scalapress.feeds
+package com.liferay.scalapress.plugin.feed.gbase.controller
 
-import gbase.GBaseFeed
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.plugin.feed.gbase.{GBaseFeedDao, GBaseFeed}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/feed"))
-class FeedListController {
+class GBaseListController {
 
-    @Autowired var feedDao: FeedDao = _
+    @Autowired var feedDao: GBaseFeedDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping
