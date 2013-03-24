@@ -23,11 +23,12 @@ class ListingPaymentCallbackController extends Logging {
         val params = req
           .getParameterMap
           .asScala
-          .map(arg => (arg._1.asInstanceOf[String], arg._2.asInstanceOf[Array[String]].head))
+          .map(arg => (arg._1, arg._2.head))
           .toMap
 
-        logger.info("Paypal Callback...", params)
-        logger.info("... req    [{}]", req)
+        logger.info("Paypal Callback...")
+        params.foreach(entry => logger.info("{}={}", entry._1, entry._2))
+        logger.info("... req={}", req)
 
         dao.enabled.foreach(plugin => {
             plugin.processor.callback(params) match {
