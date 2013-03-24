@@ -1,4 +1,4 @@
-package com.liferay.scalapress.feeds.gbase
+package com.liferay.scalapress.plugin.feed.gbase
 
 import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter

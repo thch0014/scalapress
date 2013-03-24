@@ -1,4 +1,4 @@
-package com.liferay.scalapress.feeds.gbase
+package com.liferay.scalapress.plugin.feed.gbase
 
 import com.googlecode.genericdao.search.Search
 import java.io.File
@@ -30,7 +30,7 @@ object GoogleBaseService extends Logging {
         logger.debug("Gbase file generated [{}]", file)
 
         upload(file, feed)
-  //      file.delete
+        //      file.delete
 
         feed.lastRuntime = System.currentTimeMillis()
         feedDao.save(feed)

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.search
+package com.liferay.scalapress.plugin.elastic
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
@@ -7,6 +7,7 @@ import com.liferay.scalapress.media.Image
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.plugin.elasticsearch.ElasticSearchService
+import com.liferay.scalapress.search.SavedSearch
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {

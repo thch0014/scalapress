@@ -1,4 +1,4 @@
-package com.liferay.scalapress.feeds.gbase
+package com.liferay.scalapress.plugin.feed.gbase
 
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.stereotype.Controller
@@ -7,6 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.feeds.{Feed, FeedDao}
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.settings.InstallationDao
+import com.liferay.scalapress.feeds.gbase.GoogleBaseService
 
 /** @author Stephen Samuel */
 @Controller

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.feeds.gbase
+package com.liferay.scalapress.plugin.feed.gbase
 
 import org.springframework.stereotype.Component
 import org.springframework.scheduling.annotation.Scheduled
