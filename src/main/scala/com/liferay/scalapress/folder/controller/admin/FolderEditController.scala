@@ -3,12 +3,11 @@ package com.liferay.scalapress.folder.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.util.{EnumPopulator, ComponentClassScanner}
-import com.liferay.scalapress.plugin.form.section.FormSection
 import collection.mutable
 import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.folder.{FolderDao, Folder}
@@ -111,9 +110,10 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         map.put("sections", sections)
     }
 
-    @ModelAttribute("classes") def classes = ComponentClassScanner
-      .sections
-      .map(c => (c.getName, c.getSimpleName))
-      .toMap
-      .asJava
+    @ModelAttribute("classes") def classes: Map[String, String] = {
+        val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
+        val map = sections.map(c => (c.getName, c.getSimpleName)).toMap
+        import scala.collection.immutable.SortedMap
+        SortedMap() ++ map
+    }
 }
