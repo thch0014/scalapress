@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller
 import renderer.{ListingWizardRenderer, ListingFoldersRenderer, ListingPaymentRenderer, ListingPackageRenderer, ListingFieldsRenderer, ListingImagesRenderer, ListingConfirmationRenderer}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess2ObjectBuilder, ListingProcess, ListingProcessDao, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
@@ -25,7 +25,6 @@ class ListingController {
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
-    @Autowired var listingEmailService : ListingEmailService = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
 
@@ -209,17 +208,7 @@ class ListingController {
     def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
-
-        val user = SecurityFuncs.getUser(req).get
-
-        val builder = new ListingProcess2ObjectBuilder(context)
-        val obj = builder.build(process, user)
-        listingEmailService.send(obj, context)
-
-        val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>" +
-          "<p>Once the listing is visble then you will be able to view it on the following url:<br/>" +
-          FriendlyUrlGenerator
-            .friendlyLink(obj) + "</p><p>You can view all your listings in your account " + <a href="/listing">here</a> + "</p>"
+        val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>"
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)

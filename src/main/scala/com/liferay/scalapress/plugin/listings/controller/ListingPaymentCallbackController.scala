@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{Logging, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
+import process.ListingEmailService
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
+import com.liferay.scalapress.plugin.listings.ListingProcess2ObjectBuilder
 
 /** @author Stephen Samuel */
 @Controller
@@ -15,6 +17,8 @@ class ListingPaymentCallbackController extends Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var dao: PaymentPluginDao = _
+
+    @Autowired var listingEmailService: ListingEmailService = _
 
     @ResponseBody
     @RequestMapping
@@ -35,8 +39,21 @@ class ListingPaymentCallbackController extends Logging {
                 case None =>
                 case Some(tx) =>
                     context.transactionDao.save(tx)
-                    resp.setStatus(204)
+                    Option(context.listingProcessDao.find(params.get("custom").getOrElse("0"))) match {
+                        case None =>
+                        case (Some(process)) =>
+                            logger.info("Processing process to listing [{}]", process)
+
+                            val builder = new ListingProcess2ObjectBuilder(context)
+                            val obj = builder.build(process)
+                            listingEmailService.send(obj, context)
+
+                            logger.info("Process completed - removing from database")
+                            context.listingProcessDao.remove(process)
+                    }
             }
         })
+
+        resp.setStatus(200)
     }
 }

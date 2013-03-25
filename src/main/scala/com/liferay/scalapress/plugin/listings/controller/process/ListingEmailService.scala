@@ -1,18 +1,19 @@
 package com.liferay.scalapress.plugin.listings.controller.process
 
 import org.springframework.mail.{SimpleMailMessage, MailSender}
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.{Logging, ScalapressContext}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Component
-class ListingEmailService {
+class ListingEmailService extends Logging {
 
     @Autowired var mailSender: MailSender = _
 
     def send(obj: Obj, context: ScalapressContext) {
+        logger.info("Emailing new listing [{}]", obj)
         val msg = new SimpleMailMessage
         msg.setTo(obj.account.email)
         msg.setFrom("donotreply@" + context.installationDao.get.domain)
