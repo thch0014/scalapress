@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
-import com.liferay.scalapress.plugin.ecommerce.domain.{Basket, Transaction}
+import com.liferay.scalapress.plugin.ecommerce.domain.Basket
 import java.util.UUID
-import com.liferay.scalapress.plugin.payments.{IsPayable, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -60,13 +60,13 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     // creates a payment object for the given set of response params
     private def createPayment(params: Map[String, String]) = {
 
-        val orderId = params.get("VendorTxCode").getOrElse("0").toLong
+        val orderId = params.get("VendorTxCode").getOrElse("0")
         val transactionId = params.get("VPSTxId").orNull
         val authCode = params.get("TxAuthNo").orNull
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
         val payment = new Transaction
-        payment.paymentType = paymentTypeId
+        payment.paymentProcessor = paymentTypeId
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
         payment.authCode = authCode

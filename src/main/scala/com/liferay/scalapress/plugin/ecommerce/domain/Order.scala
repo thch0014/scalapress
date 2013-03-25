@@ -4,6 +4,7 @@ import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column,
 import reflect.BeanProperty
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.plugin.payments.Transaction
 
 /** @author Stephen Samuel */
 @Entity

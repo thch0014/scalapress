@@ -1,0 +1,34 @@
+#parse("/admin/header.vm")
+
+
+<h3>Transactions</h3>
+
+#paging($paging)
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Transaction ID</th>
+        <th>Status</th>
+        <th>Processor</th>
+        <th>Amount</th>
+        <th>Currency</th>
+    </tr>
+    #foreach ($tx in $results)
+        <tr>
+            <td>$tx.id</td>
+            <td>$datetool.format("dd-MM-yyyy", $tx.date)</td>
+            <td>$!tx.transactionId</td>
+            <td>$!tx.status</td>
+            <td>$!tx.paymentProcessor</td>
+            <td>$tx.amountDecimal()</td>
+            <td>$!tx.currency</td>
+        </tr>
+    #end
+</table>
+
+#paging($paging)
+
+
+#parse("/admin/footer.vm")

@@ -1,7 +1,5 @@
 package com.liferay.scalapress.plugin.payments
 
-import com.liferay.scalapress.plugin.ecommerce.domain.Transaction
-
 /** @author Stephen Samuel */
 trait FormPaymentProcessor {
 

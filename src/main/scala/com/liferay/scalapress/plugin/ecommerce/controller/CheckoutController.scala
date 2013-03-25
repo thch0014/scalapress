@@ -160,7 +160,7 @@ class CheckoutController {
         context.paymentPluginDao.enabled.foreach(plugin => {
             plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
                 case Some(payment) =>
-                    payment.order = order.id
+                    payment.order = order.id.toString
                     order.payments.add(payment)
                     orderDao.save(order)
                 case None =>

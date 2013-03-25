@@ -1,8 +1,7 @@
-package com.liferay.scalapress.plugin.ecommerce.domain
+package com.liferay.scalapress.plugin.payments
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Column, Table, Entity}
 import reflect.BeanProperty
-import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Table(name = "payments")
@@ -18,18 +17,26 @@ class Transaction {
 
     @BeanProperty var authCode: String = _
 
+    @BeanProperty var payerStatus: String = _
+
     @BeanProperty var date: Long = _
 
     @BeanProperty var details: String = _
 
-    @ManyToOne
+    @BeanProperty var currency: String = _
+
+    @BeanProperty var status: String = _
+
     @JoinColumn(name = "account", nullable = true)
-    @BeanProperty var account: Obj = _
+    @BeanProperty var account: String = _
 
     @Column(name = "orderid", nullable = true)
-    @BeanProperty var order: Long = _
+    @BeanProperty var order: String = _
 
-    @BeanProperty var paymentType: String = _
+    @Column(name = "paymentType", nullable = true)
+    @BeanProperty var paymentProcessor: String = _
+
+    @BeanProperty var transactionType: String = _
 
     @Column(name = "processorTransactionId")
     @BeanProperty var transactionId: String = _
@@ -39,12 +46,10 @@ class Transaction {
 }
 
 object Transaction {
-    def apply(transactionId: String, orderId: Long, amount: Int) = {
+    def apply(transactionId: String, paymentProcessor: String, amount: Int) = {
         val payment = new Transaction
-        payment.paymentType = "SagePayForm"
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
-        payment.order = orderId
         payment.amount = amount
         payment
     }

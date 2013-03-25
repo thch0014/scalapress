@@ -1,13 +1,12 @@
 package com.liferay.scalapress.plugin.payments.paypal.standard
 
 import java.util.UUID
-import com.liferay.scalapress.plugin.ecommerce.domain.Transaction
 import com.liferay.scalapress.Logging
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
-import com.liferay.scalapress.plugin.payments.{IsPayable, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
@@ -56,31 +55,33 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         params.toMap
     }
 
-    private def _createPayment(params: Map[String, String]): Transaction = {
-        logger.debug("Creating payment [{}]", params)
+    def _createPayment(params: Map[String, String]): Transaction = {
+        logger.debug("Creating Tx from Params [{}]", params)
 
-        val payment = new Transaction
-        payment.transactionId = params("txn_id")
-        payment.amount = (params("payment_gross").toDouble * 100).toInt
-        payment.paymentType = "paypal-standard"
-        payment.date = System.currentTimeMillis()
-        payment.paymentType = paymentTypeId
-        payment
+        val transactionId = params("txn_id")
+        val amount = (params.get("payment_gross").getOrElse("0").toDouble * 100).toInt
+
+        val tx = Transaction(transactionId, paymentTypeId, amount)
+        tx.status = params("payment_status")
+        tx.currency = params("mc_currency")
+        tx.transactionType = params("payment_type")
+        tx.payerStatus = params("payer_status")
+        tx
     }
 
     def callback(params: Map[String, String]): Option[Transaction] = {
         _isPaymentCompleted(params) match {
             case false =>
-                logger.debug("IPN callback not valid")
+                logger.info("IPN callback not valid")
                 None
             case true =>
-                logger.debug("IPN callback is valid")
+                logger.info("IPN callback is valid")
                 val payment = _createPayment(params)
                 Option(payment)
         }
     }
 
-    private def _isGenuineCallback(params: Map[String, String]): Boolean = {
+    def _isGenuineCallback(params: Map[String, String]): Boolean = {
 
         val queryParams = new BasicHttpParams()
         queryParams.setParameter("cmd", "_notify-validate")
@@ -98,7 +99,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         "VERIFIED".equalsIgnoreCase(string)
     }
 
-    private def _isPaymentCompleted(params: Map[String, String]): Boolean = {
+    def _isPaymentCompleted(params: Map[String, String]): Boolean = {
         // check the callback was genuine from paypal
         _isGenuineCallback(params) &&
           // determines whether the transaction is complete
