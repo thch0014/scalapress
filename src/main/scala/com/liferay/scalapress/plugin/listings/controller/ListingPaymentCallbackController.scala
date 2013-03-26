@@ -9,6 +9,8 @@ import process.ListingEmailService
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
 import com.liferay.scalapress.plugin.listings.ListingProcess2ObjectBuilder
+import com.liferay.scalapress.plugin.ecommerce.domain.Order
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -44,9 +46,22 @@ class ListingPaymentCallbackController extends Logging {
                         case (Some(process)) =>
                             logger.info("Processing process to listing [{}]", process)
 
+                            logger.info("Building account")
+                            val account = new Obj()
+                            account.status = "Disabled"
+                            account.name = tx.payee
+                            account.email = tx.payeeEmail
+                            context.objectDao.save(account)
+                            logger.info("Acount saved [{}]", account)
+
                             val builder = new ListingProcess2ObjectBuilder(context)
                             val obj = builder.build(process)
+                            obj.account = account
+                            context.objectDao.save(obj)
                             listingEmailService.send(obj, context)
+
+                            val order = Order(req.getRemoteAddr, account)
+                            context.orderDao.save(order)
 
                             logger.info("Process completed - removing from database")
                             context.listingProcessDao.remove(process)

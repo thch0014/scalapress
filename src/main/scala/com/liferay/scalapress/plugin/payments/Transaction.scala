@@ -27,6 +27,10 @@ class Transaction {
 
     @BeanProperty var status: String = _
 
+    @BeanProperty var payee: String = _
+
+    @BeanProperty var payeeEmail: String = _
+
     @JoinColumn(name = "account", nullable = true)
     @BeanProperty var account: String = _
 

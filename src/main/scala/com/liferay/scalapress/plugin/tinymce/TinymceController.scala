@@ -1,4 +1,4 @@
-package com.liferay.scalapress.media.admin
+package com.liferay.scalapress.plugin.tinymce
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}

@@ -4,7 +4,7 @@ import folder.FolderDao
 import media.{AssetStore, ImageService, GalleryDao}
 import obj.{ObjectDao, TypeDao, AttributeValueDao, AttributeDao}
 import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
-import plugin.ecommerce.ShoppingPluginDao
+import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
 import plugin.listings.{ListingProcessDao, ListingPackageDao, ListingsPluginDao}
 import plugin.payments.PaymentPluginDao
@@ -37,6 +37,8 @@ class ScalapressContext extends ServletContextAware {
 
     @Autowired var transactionDao: TransactionDao = _
     @Autowired var installationDao: InstallationDao = _
+
+    @Autowired var orderDao: OrderDao = _
 
     @deprecated
     def siteDao = installationDao

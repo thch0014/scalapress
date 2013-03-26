@@ -7,6 +7,7 @@ import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
 import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.ecommerce.domain.Order
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
@@ -66,19 +67,21 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         tx.currency = params("mc_currency")
         tx.transactionType = params("payment_type")
         tx.payerStatus = params("payer_status")
+        tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
+        tx.payeeEmail = params.get("payer_email").orNull
         tx
     }
 
     def callback(params: Map[String, String]): Option[Transaction] = {
-        _isPaymentCompleted(params) match {
-            case false =>
-                logger.info("IPN callback not valid")
-                None
-            case true =>
-                logger.info("IPN callback is valid")
-                val payment = _createPayment(params)
-                Option(payment)
-        }
+        //    _isPaymentCompleted(params) match {
+        //        case false =>
+        //            logger.info("IPN callback not valid")
+        //            None
+        //       case true =>
+        //            logger.info("IPN callback is valid")
+        val tx = _createPayment(params)
+        Option(tx)
+        //    }
     }
 
     def _isGenuineCallback(params: Map[String, String]): Boolean = {
