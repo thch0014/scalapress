@@ -60,7 +60,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         logger.debug("Creating Tx from Params [{}]", params)
 
         val transactionId = params("txn_id")
-        val amount = (params.get("payment_gross").getOrElse("0").toDouble * 100).toInt
+        val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
 
         val tx = Transaction(transactionId, paymentTypeId, amount)
         tx.status = params("payment_status")
