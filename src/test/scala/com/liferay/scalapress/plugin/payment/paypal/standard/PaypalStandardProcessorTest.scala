@@ -16,7 +16,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
             "payment_type" -> "instant",
             "mc_currency" -> "GBP",
             "txn_id" -> "739653939S128390K",
-            "payment_gross" -> "20.00",
+            "mc_gross" -> "20.00",
             "custom" -> "0a1d74c2-f809-4815-a53b-60a28e8da6a0")
 
         val tx = processor._createPayment(params)
