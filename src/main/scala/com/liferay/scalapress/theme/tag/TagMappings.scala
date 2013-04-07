@@ -8,6 +8,7 @@ import com.liferay.scalapress.obj.tag._
 import com.liferay.scalapress.folder.tag.{PrimaryFoldersTag, BreadcrumbsTag, FolderTag}
 import com.liferay.scalapress.media.AssetTag
 import com.liferay.scalapress.user.UserStatusTag
+import com.liferay.scalapress.settings.tag.SiteGoogleMapTag
 
 /** @author Stephen Samuel */
 object TagMappings {
@@ -77,5 +78,6 @@ object TagMappings {
         "breadcrumb" -> BreadcrumbsTag,
         "login_username" -> LoginEmailTag,
         "login_email" -> LoginEmailTag,
-        "login_password" -> LoginPasswordTag)
+        "login_password" -> LoginPasswordTag,
+        "multimap" -> new SiteGoogleMapTag)
 }

@@ -18,26 +18,31 @@ class AdsenseSection extends Section {
     override def backoffice: String = "/backoffice/plugin/adsense/section/" + id
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        Option(googleAdClient).map(arg => {
-            val rendered = String
-              .format(AdsenseSection.TEMPLATE, googleAdClient, googleAdSlot, googleAdWidth, googleAdHeight)
-            rendered
-        })
+        try {
+            Option(googleAdClient).filter(_.trim.length > 0).map(arg => {
+                googleAdWidth.toInt
+                googleAdHeight.toInt
+                val rendered = String.format(AdsenseSection.TEMPLATE,
+                    googleAdClient,
+                    googleAdSlot,
+                    googleAdWidth,
+                    googleAdHeight)
+                rendered
+            })
+        } catch {
+            case e: Exception => None
+        }
     }
 
     def desc: String = "Google adsense block"
 }
 
 object AdsenseSection {
-    val TEMPLATE = """<script type="text/javascript"><!--
-                     |google_ad_client = "%s";
-                     |/* Show Page Top */
-                     |google_ad_slot = "%s";
-                     |google_ad_width = %s;
-                     |google_ad_height = %s;
-                     |//-->
-                     |</script>
-                     |<script type="text/javascript"
-                     |src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                     |</script>"""
+    val TEMPLATE = """<script type="text/javascript">
+                        google_ad_client = "%s";
+                        google_ad_slot = "%s";
+                        google_ad_width = %s;
+                        google_ad_height = %s;
+                     </script>
+                     <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>"""
 }
