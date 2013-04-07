@@ -15,6 +15,7 @@ import com.liferay.scalapress.theme.ThemeDao
 import com.liferay.scalapress.obj.controller.admin.ThemePopulator
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.AssetStore
+import scala.collection.immutable.SortedMap
 
 /** @author Stephen Samuel */
 @Controller
@@ -110,10 +111,11 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         map.put("sections", sections)
     }
 
-    @ModelAttribute("classes") def classes: Map[String, String] = {
+    @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
         val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
         val map = sections.map(c => (c.getName, c.getSimpleName)).toMap
-        import scala.collection.immutable.SortedMap
-        SortedMap[String, String]() ++ map
+
+        val sortedMap = SortedMap[String, String]() ++ map
+        sortedMap.asJava
     }
 }

@@ -167,8 +167,6 @@ object InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
             build(textFormatted, params)
         })
     }
-
-    override def tags = Array("basket_line_total")
 }
 
 object InvoiceTotalTag extends ScalapressTag with TagBuilder {
