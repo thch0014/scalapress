@@ -17,6 +17,7 @@ object TagMappings {
         "folders_primary" -> PrimaryFoldersTag,
         "pricing_sell" -> ObjectSellPriceTag,
         "asset" -> AssetTag,
+        "scripts" -> new ScriptTag,
         "price" -> ObjectSellPriceTag,
         "pricing" -> ObjectSellPriceTag,
         "pricing_rrp" -> RrpTag,
