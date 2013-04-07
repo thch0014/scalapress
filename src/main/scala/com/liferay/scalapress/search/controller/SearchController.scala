@@ -70,10 +70,11 @@ class SearchController extends Logging {
         search.sortType = sort
 
         val response = searchService.search(search)
-        val objects = response.hits.hits().map(hit => {
+        val results = response.hits.hits().map(hit => {
             val id = hit.id().toLong
             objectDao.find(id)
         }).toList
+        val live = results.filter(_.status.equalsIgnoreCase("live"))
 
         // val objects = objectDao.search(new Search(classOf[Obj]).addFilterIn("id", ids.toSeq.asJava))
 
@@ -81,7 +82,7 @@ class SearchController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        if (objects.size == 0) {
+        if (live.size == 0) {
 
             val noResults = Option(sectionId).map(_.toLong)
               .flatMap(id => Option(pluginDao.find(id)))
@@ -93,14 +94,14 @@ class SearchController extends Logging {
 
         } else {
 
-            page.body("<!-- search results: " + objects.size + " objects found -->")
+            page.body("<!-- search results: " + live.size + " objects found -->")
 
-            val paging = Page(objects, 1, PageSize, response.hits.totalHits.toInt)
+            val paging = Page(live, 1, PageSize, response.hits.totalHits.toInt)
 
-            val markup = objects.head.objectType.objectListMarkup
+            val markup = live.head.objectType.objectListMarkup
             if (markup != null) {
                 page.body("<!-- search results: no object list markup found -->")
-                page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
+                page.body(MarkupRenderer.renderObjects(live, markup, sreq, context))
             }
         }
         page
