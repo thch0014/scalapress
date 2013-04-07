@@ -111,11 +111,11 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
         map.put("sections", sections)
     }
 
-    @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
+    @ModelAttribute("classes") def classes: java.util.Map[Class[_], String] = {
         val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
-        val map = sections.map(c => (c.getName, c.getSimpleName)).toMap
+        val map = sections.map(c => (c, c.getSimpleName)).toMap
 
-        val sortedMap = SortedMap[String, String]() ++ map
+        val sortedMap = SortedMap.empty[Class[_], String](Ordering.by(_.getSimpleName)) ++ map
         sortedMap.asJava
     }
 }
