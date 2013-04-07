@@ -1,0 +1,69 @@
+#parse("/admin/header.vm")
+
+
+<h3>Edit Section</h3>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("section.name", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+            #springFormCheckbox("section.visible", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Google Ad Client</label>
+
+        <div class="controls">
+            #springFormInput("section.googleAdClient", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Google Ad Slot</label>
+
+        <div class="controls">
+            #springFormInput("section.googleAdSlot", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">google_ad_width</label>
+
+        <div class="controls">
+            #springFormInput("section.googleAdWidth", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">google_ad_height</label>
+
+        <div class="controls">
+            #springFormInput("section.googleAdHeight", "")
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+
+        #if ($section.folder)
+            <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+        #end
+        #if ($section.obj)
+            <a href="/backoffice/obj/$section.obj.id" class="btn">Return</a>
+        #end
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

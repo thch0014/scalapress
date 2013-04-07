@@ -22,6 +22,8 @@ import com.liferay.scalapress.media.{Asset, AssetStore, Image}
 import com.liferay.scalapress.util.mvc.{AttributeValuesPopulator, UrlResolver}
 import com.liferay.scalapress.enums.AttributeType
 import java.text.SimpleDateFormat
+import scala.collection.immutable.SortedMap
+import scala.collection.mutable
 
 /** @author Stephen Samuel */
 @Controller
@@ -208,11 +210,12 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 
     @ModelAttribute("installation") def installation = context.installationDao.get
 
-    @ModelAttribute("classes") def classes = ComponentClassScanner
-      .sections
-      .map(c => (c.getName, c.getSimpleName))
-      .toMap
-      .asJava
+    @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
+        val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
+        val empty = mutable.LinkedHashMap.empty[String, String]
+        val map = empty ++ sections.map(c => (c.getName, c.getSimpleName)).toMap
+        map.asJava
+    }
 }
 
 class EditForm {
