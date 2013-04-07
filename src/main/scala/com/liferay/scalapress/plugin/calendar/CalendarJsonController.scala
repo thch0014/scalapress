@@ -25,10 +25,12 @@ class CalendarJsonController {
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
         val results = searchService.search(widget.search)
 
-        results.hits.hits.flatMap(hit => {
+        val loaded = results.hits.hits.flatMap(hit => {
             val obj = context.objectDao.find(hit.id.toLong)
             AttributeFuncs.attributeValue(obj, widget.startDateAttribute).map(date => (obj, date))
-        }).filter(_._2 != null)
+        })
+
+        loaded.filter(_._2 != null)
           .filter(_._2.forall(_.isDigit))
           .map(arg => {
             val e = new Event
