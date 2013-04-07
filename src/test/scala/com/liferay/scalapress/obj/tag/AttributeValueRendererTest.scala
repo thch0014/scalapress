@@ -29,7 +29,7 @@ class AttributeValueRendererTest extends FunSuite with MockitoSugar with BeforeA
         av.attribute.attributeType = AttributeType.Email
         av.value = "sam@sam.com"
         val rendered = AttributeValueRenderer.renderValue(av)
-        assert("<a href=\"mailto:sam@sam.com\">sam@sam.com</a>" === rendered)
+        assert("<a href=\"mailto:sam@sam.com\">Email Here</a>" === rendered)
     }
 
     test("date attribute happy path") {
