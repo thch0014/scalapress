@@ -172,6 +172,10 @@ class ECDatabaseUpgrader extends Logging {
         execute("UPDATE orders SET account=null WHERE account=0")
 
 
+        execute("ALTER TABLE payments MODIFY account bigint(10) null")
+        execute("UPDATE payments SET account=null WHERE account=0")
+
+
 
         // copy the searchbox from forms to the box
         try {

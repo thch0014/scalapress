@@ -22,15 +22,17 @@ class ListingPaymentCallbackController extends Logging {
 
     @Autowired var listingEmailService: ListingEmailService = _
 
+    def _params(req: HttpServletRequest): Map[String, String] = req
+      .getParameterMap
+      .asScala
+      .map(arg => (arg._1.asInstanceOf[String], arg._2.asInstanceOf[Array[String]].head))
+      .toMap
+
     @ResponseBody
     @RequestMapping
     def calback(req: HttpServletRequest, resp: HttpServletResponse) {
 
-        val params = req
-          .getParameterMap
-          .asScala
-          .map(arg => (arg._1.asInstanceOf[String], arg._2.asInstanceOf[Array[String]].head))
-          .toMap
+        val params = _params(req)
 
         logger.info("Paypal Callback...")
         params.foreach(entry => logger.info("{}={}", entry._1, entry._2))
@@ -42,7 +44,7 @@ class ListingPaymentCallbackController extends Logging {
                 case Some(tx) =>
                     context.transactionDao.save(tx)
                     Option(context.listingProcessDao.find(params.get("custom").getOrElse("0"))) match {
-                        case None =>
+                        case None => logger.warn("Could not find listing process session for callback")
                         case (Some(process)) =>
                             logger.info("Processing process to listing [{}]", process)
 

@@ -12,7 +12,7 @@ import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -37,7 +37,11 @@ class ObjectListSection extends Section {
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-        val objects = folder.objects.asScala.toSeq
+        val objects = try {
+            folder.objects.asScala.toSeq
+        } catch {
+            case e: Exception => Nil
+        }
         val live = objects.filter(_.status.toLowerCase == "live")
 
         val sorted = sort match {
