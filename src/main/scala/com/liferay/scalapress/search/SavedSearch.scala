@@ -24,8 +24,11 @@ class SavedSearch {
     @JoinColumn(name = "sortAttribute")
     @BeanProperty var sortAttribute: Attribute = _
 
+    @BeanProperty var hasAttributes: String = _
+
     // search inside this folder
-    @Column(name = "searchCategory", nullable = true)
+    @Column(name = "searchCategory"
+        , nullable = true)
     @BeanProperty var searchFolders: String = _
 
     @OneToMany(mappedBy = "savedSearch", cascade = Array(CascadeType.ALL), orphanRemoval = true)

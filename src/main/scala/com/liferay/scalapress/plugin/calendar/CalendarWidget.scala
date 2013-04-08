@@ -7,6 +7,7 @@ import com.liferay.scalapress.search.SavedSearch
 import reflect.BeanProperty
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.Attribute
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 @Entity
@@ -36,7 +37,9 @@ class CalendarWidget extends Widget {
         val search = new SavedSearch
         search.objectType = objectType
         search.status = "Live"
-        search.maxResults = 1000
+        search.maxResults = 100
+        search.sortType = Sort.Newest
+        search.hasAttributes = startDateAttribute.id.toString
         search
     }
 
