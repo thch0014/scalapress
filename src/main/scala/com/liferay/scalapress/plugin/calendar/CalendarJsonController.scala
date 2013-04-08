@@ -30,7 +30,7 @@ class CalendarJsonController {
             AttributeFuncs.attributeValue(obj, widget.startDateAttribute).map(date => (obj, date))
         })
 
-        loaded.filter(_._2 != null)
+        loaded
           .filter(_._2.forall(_.isDigit))
           .map(arg => {
             val e = new Event
