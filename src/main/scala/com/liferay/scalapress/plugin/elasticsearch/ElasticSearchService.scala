@@ -162,7 +162,7 @@ class ElasticSearchService extends SearchService with Logging {
         Option(search.hasAttributes)
           .filter(_.trim.length > 0)
           .foreach(arg => {
-            buffer.append("has_attribute_" + arg + ":true")
+            buffer.append("has_attribute_" + arg + ":1")
         })
 
         if (search.imageOnly)
@@ -255,7 +255,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         obj.attributeValues.asScala.foreach(av => {
             json.field("attribute_" + av.attribute.id.toString, av.value)
-            json.field("has_attribute_" + av.attribute.id.toString, "true")
+            json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {
                 logger.debug("postcode=" + av.value)
                 Postcode.gps(av.value).foreach(gps => {
