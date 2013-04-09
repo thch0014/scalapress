@@ -42,6 +42,7 @@ class ListingPaymentCallbackController extends Logging {
             plugin.processor.callback(params) match {
                 case None =>
                 case Some(tx) =>
+                    logger.debug("Persisting transaction [{}]", tx)
                     context.transactionDao.save(tx)
                     Option(context.listingProcessDao.find(params.get("custom").getOrElse("0"))) match {
                         case None => logger.warn("Could not find listing process session for callback")
@@ -53,6 +54,7 @@ class ListingPaymentCallbackController extends Logging {
                             account.status = "Disabled"
                             account.name = tx.payee
                             account.email = tx.payeeEmail
+                            account.objectType = context.typeDao.getAccount.get
                             context.objectDao.save(account)
                             logger.info("Acount saved [{}]", account)
 
