@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{Logging, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import process.ListingEmailService
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
-import com.liferay.scalapress.plugin.listings.ListingProcess2ObjectBuilder
+import com.liferay.scalapress.plugin.listings.{ListingEmailService, ListingProcess2ObjectBuilder}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.obj.Obj
 

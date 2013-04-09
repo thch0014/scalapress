@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller.process
+package com.liferay.scalapress.plugin.listings
 
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.liferay.scalapress.{Logging, ScalapressContext}
