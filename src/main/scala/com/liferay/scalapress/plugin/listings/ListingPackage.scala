@@ -28,6 +28,8 @@ class ListingPackage {
 
     @BeanProperty var deleted: Boolean = _
 
+    @BeanProperty var autoPublish: Boolean = _
+
     @BeanProperty var labels: String = _
 
     @Column(length = 10000)

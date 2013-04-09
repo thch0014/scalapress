@@ -85,6 +85,14 @@
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Auto Publish</label>
+
+        <div class="controls">
+            #springFormCheckbox("package.autoPublish", "")
+        </div>
+    </div>
+
 ##    #foreach ($folder in $package.folders)
 ##        <div class="control-group">
 ##            <label class="control-label">Folder</label>

@@ -16,7 +16,7 @@ class ListingProcess2ObjectBuilder(context: ScalapressContext) extends Logging {
         val obj = Obj(process.listingPackage.objectType)
         obj.name = process.title
         obj.content = process.content
-        obj.status = "Disabled"
+        obj.status = if (process.listingPackage.autoPublish) "Live" else "Disabled"
         obj.account = context.objectDao.find(process.accountId.toLong)
         obj.expiry = new DateMidnight().plusDays(process.listingPackage.duration).getMillis
         context.objectDao.save(obj)
