@@ -17,7 +17,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     val LiveUrl = "https://live.sagepay.com/gateway/service/vspform-register.vsp"
     val TestUrl = "https://test.sagepay.com/gateway/service/vspform-register.vsp"
 
-    def paymentTypeId = "SagePayForm"
+    def paymentProcessorName = "SagePayForm"
 
     private def xor(in: Array[Byte], key: String) = {
         val result = new Array[Byte](in.length)
@@ -65,13 +65,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         val authCode = params.get("TxAuthNo").orNull
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
-        val payment = new Transaction
-        payment.paymentProcessor = paymentTypeId
-        payment.date = System.currentTimeMillis()
+        val payment = new Transaction(transactionId, paymentProcessorName, amount)
         payment.transactionId = transactionId
         payment.authCode = authCode
         payment.order = orderId
-        payment.amount = amount
         payment
     }
 
