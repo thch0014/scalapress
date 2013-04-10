@@ -51,6 +51,15 @@ object OrderLine {
         l.qty = line.qty
         l
     }
+    def apply(desc: String, price: Int): OrderLine = {
+        val l = new OrderLine
+        l.price = price
+        l.vatRate = 20.0
+        l.date = System.currentTimeMillis()
+        l.qty = 1
+        l.description = desc
+        l
+    }
     def apply(obj: Obj): OrderLine = {
         val l = new OrderLine
         l.price = obj.sellPrice

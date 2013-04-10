@@ -16,7 +16,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
     private val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
     private val Production = "https://www.paypal.com/cgi-bin/webscr"
 
-    def paymentTypeId = "PaypalStandard"
+    def paymentProcessorName = "PaypalStandard"
     def paymentUrl: String = if (plugin.production) Production else Sandbox
 
     def params(domain: String, payable: IsPayable): Map[String, String] = {
@@ -62,11 +62,12 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         val transactionId = params("txn_id")
         val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
 
-        val tx = Transaction(transactionId, paymentTypeId, amount)
+        val tx = Transaction(transactionId, paymentProcessorName, amount)
         tx.status = params("payment_status")
         tx.currency = params("mc_currency")
         tx.transactionType = params("payment_type")
         tx.payerStatus = params("payer_status")
+        tx.paymentProcessor = paymentProcessorName
         tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
         tx.payeeEmail = params.get("payer_email").orNull
         tx

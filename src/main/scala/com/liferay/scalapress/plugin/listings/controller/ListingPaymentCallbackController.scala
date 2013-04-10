@@ -7,9 +7,6 @@ import com.liferay.scalapress.{Logging, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
-import com.liferay.scalapress.plugin.listings.{ListingNotificationService, ListingEmailService, ListingProcess2ObjectBuilder}
-import com.liferay.scalapress.plugin.ecommerce.domain.Order
-import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,9 +15,7 @@ class ListingPaymentCallbackController extends Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var dao: PaymentPluginDao = _
-
-    @Autowired var listingNotificationService: ListingNotificationService = _
-    @Autowired var listingEmailService: ListingEmailService = _
+    @Autowired var listingProcessService: ListingProcessService = _
 
     def _params(req: HttpServletRequest): Map[String, String] = req
       .getParameterMap
@@ -48,33 +43,7 @@ class ListingPaymentCallbackController extends Logging {
                         case None => logger.warn("Could not find listing process session for callback")
                         case (Some(process)) =>
                             logger.info("Processing process to listing [{}]", process)
-
-                            logger.info("Building account")
-                            val account = new Obj()
-                            account.status = "Disabled"
-                            account.name = tx.payee
-                            account.email = tx.payeeEmail
-                            account.objectType = context.typeDao.getAccount.get
-                            context.objectDao.save(account)
-                            logger.info("Acount saved [{}]", account)
-
-                            val builder = new ListingProcess2ObjectBuilder(context)
-                            val obj = builder.build(process)
-                            obj.account = account
-                            context.objectDao.save(obj)
-
-
-                            logger.debug("Sending email to customer")
-                            listingEmailService.send(obj, context)
-
-                            logger.debug("Sending email to admin")
-                            listingNotificationService.notify(obj, process)
-
-                            val order = Order(req.getRemoteAddr, account)
-                            context.orderDao.save(order)
-
-                            logger.info("Process completed - removing from database")
-                            context.listingProcessDao.remove(process)
+                            listingProcessService.process(tx, process, req)
                     }
             }
         })

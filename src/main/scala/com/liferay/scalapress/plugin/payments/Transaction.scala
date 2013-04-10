@@ -50,11 +50,12 @@ class Transaction {
 }
 
 object Transaction {
-    def apply(transactionId: String, paymentProcessor: String, amount: Int) = {
+    def apply(transactionId: String, paymentProcessorName: String, amount: Int) = {
         val payment = new Transaction
         payment.date = System.currentTimeMillis()
         payment.transactionId = transactionId
         payment.amount = amount
+        payment.paymentProcessor = paymentProcessorName
         payment
     }
 }
