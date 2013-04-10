@@ -65,7 +65,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         val authCode = params.get("TxAuthNo").orNull
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
 
-        val payment = new Transaction(transactionId, paymentProcessorName, amount)
+        val payment = Transaction(transactionId, paymentProcessorName, amount)
         payment.transactionId = transactionId
         payment.authCode = authCode
         payment.order = orderId
