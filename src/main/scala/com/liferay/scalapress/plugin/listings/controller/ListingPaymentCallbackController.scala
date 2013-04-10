@@ -7,7 +7,7 @@ import com.liferay.scalapress.{Logging, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
-import com.liferay.scalapress.plugin.listings.{ListingEmailService, ListingProcess2ObjectBuilder}
+import com.liferay.scalapress.plugin.listings.{ListingNotificationService, ListingEmailService, ListingProcess2ObjectBuilder}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.obj.Obj
 
@@ -19,6 +19,7 @@ class ListingPaymentCallbackController extends Logging {
     @Autowired var context: ScalapressContext = _
     @Autowired var dao: PaymentPluginDao = _
 
+    @Autowired var listingNotificationService: ListingNotificationService = _
     @Autowired var listingEmailService: ListingEmailService = _
 
     def _params(req: HttpServletRequest): Map[String, String] = req
@@ -61,7 +62,13 @@ class ListingPaymentCallbackController extends Logging {
                             val obj = builder.build(process)
                             obj.account = account
                             context.objectDao.save(obj)
+
+
+                            logger.debug("Sending email to customer")
                             listingEmailService.send(obj, context)
+
+                            logger.debug("Sending email to admin")
+                            listingNotificationService.notify(obj, process)
 
                             val order = Order(req.getRemoteAddr, account)
                             context.orderDao.save(order)

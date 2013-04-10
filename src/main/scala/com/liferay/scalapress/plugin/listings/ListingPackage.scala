@@ -56,13 +56,4 @@ class ListingPackage {
             })
         buffer.mkString(" ")
     }
-
-    //
-    //    @ManyToMany
-    //    @CollectionTable(
-    //        name = "listings_packages_categories",
-    //        joinColumns = Array(new JoinColumn(name = "listingpackage"))
-    //    )
-    //    @Column(name = "category")
-    //    @BeanProperty var folders: java.util.List[Folder] = new util.ArrayList[Folder]()
 }
