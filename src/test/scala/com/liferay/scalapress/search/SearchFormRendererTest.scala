@@ -28,7 +28,7 @@ class SearchFormRendererTest extends FunSuite with MockitoSugar {
           ._renderSelection("selfield", "my sel field", SearchFormRenderer._renderOptions(field))
         assert(scala.xml.Utility.trim(<div>
             <label>my sel field</label> <select name="selfield">
-                <option value=" ">Any</option> <option value="coldplay">coldplay</option> <option value="keane">keane</option>
+                <option value="">Any</option> <option value="coldplay">coldplay</option> <option value="keane">keane</option>
             </select>
         </div>) === rendered)
     }

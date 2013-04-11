@@ -113,7 +113,7 @@ object SearchFormRenderer {
             <label>
                 {Unparsed(label)}
             </label>
-            <select name={name}>[JIRA] (SP-49) Search results are not as expected
+            <select name={name}>
                 <option value={any}>
                     Any
                 </option>{options}

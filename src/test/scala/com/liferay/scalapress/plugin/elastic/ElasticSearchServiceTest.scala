@@ -2,12 +2,14 @@ package com.liferay.scalapress.plugin.elastic
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.obj.{ObjectType, Obj}
+import com.liferay.scalapress.obj.{AttributeDao, ObjectType, Obj}
 import com.liferay.scalapress.media.Image
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.plugin.elasticsearch.ElasticSearchService
 import com.liferay.scalapress.search.SavedSearch
+import com.liferay.scalapress.ScalapressContext
+import org.mockito.Mockito
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
@@ -68,6 +70,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj3.attributeValues.add(av6)
 
     val service = new ElasticSearchService
+    service.context = new ScalapressContext
+    service.context.attributeDao = mock[AttributeDao]
+    Mockito.when(service.context.attributeDao.findAll()).thenReturn(Nil)
+    service.setupIndex()
     service.index(obj2)
     service.index(obj3)
     service.index(obj)
