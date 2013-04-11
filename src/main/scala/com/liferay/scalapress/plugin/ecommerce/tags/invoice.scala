@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce.tags
 
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.tag.AttributeValueRenderer
 import com.liferay.scalapress.theme.MarkupRenderer
@@ -44,7 +44,8 @@ object InvoiceBillingAddressTag extends ScalapressTag {
 @Tag("invoice_date")
 class InvoiceDateTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
-        request.order.map(arg => new DateTime(arg.datePlaced).toString("dd/MM/yyyy"))
+        request.order
+          .map(arg => new DateTime(arg.datePlaced, DateTimeZone.forID("Europe/London")).toString("dd/MM/yyyy"))
     }
 }
 

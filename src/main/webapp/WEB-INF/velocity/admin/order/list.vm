@@ -83,7 +83,7 @@
     #foreach ($o in $orders)
         <tr>
             <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
-            <td>$datetool.format($o.datePlaced)</td>
+            <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
             <td>$!o.status</td>
             <td>$!o.account.name $!o.account.email</td>
             <td>$o.total()</td>

@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
-import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.plugin.payments.Transaction
+import org.joda.time.{DateTime, DateTimeZone}
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,6 +29,7 @@ class Order {
 
     @Column(name = "datePlaced")
     @BeanProperty var datePlaced: Long = _
+    def datePlacedLondon = new DateTime(datePlaced, DateTimeZone.forID("Europe/London"))
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
     @BeanProperty var payments: java.util.List[Transaction] = new java.util.ArrayList[Transaction]()
