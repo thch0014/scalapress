@@ -50,7 +50,11 @@ class ListingProcessService extends Logging {
         listingNotificationService.notify(obj, process)
     }
 
+    import scala.collection.JavaConverters._
+
     def _cleanup(process: ListingProcess) {
+        process.attributeValues.asScala.foreach(_.listingProcess = null)
+        process.attributeValues.clear()
         logger.info("Process completed - removing from database")
         context.listingProcessDao.remove(process)
     }
