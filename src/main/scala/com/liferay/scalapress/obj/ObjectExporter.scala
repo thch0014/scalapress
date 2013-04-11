@@ -1,6 +1,6 @@
 package com.liferay.scalapress.obj
 
-import com.liferay.scalapress.obj.attr.Attribute
+import com.liferay.scalapress.obj.attr.{AttributeFuncs, Attribute}
 import scala.collection.mutable.ArrayBuffer
 import org.joda.time.DateTime
 import com.liferay.scalapress.FriendlyUrlGenerator
@@ -58,10 +58,9 @@ class ObjectExporter {
         buffer.append(obj.id.toString)
         buffer.append(new DateTime(obj.dateCreated).toString("dd-MM-yyyy"))
         buffer.append(obj.name)
-        buffer.append("http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj))
-        val values = obj.attributeValues.asScala
+        buffer.append("http://" + domain + FriendlyUrlGenerator.friendlyUrl(obj))
         for (attribute <- attributes) {
-            val value = values.find(av => av.attribute.id == attribute.id).map(_.value).orNull
+            val value = AttributeFuncs.attributeValue(obj, attribute).orNull
             buffer.append(value)
         }
         buffer.toArray
