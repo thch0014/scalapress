@@ -37,7 +37,7 @@ object SearchFormRenderer {
                 case SearchFieldType.Attribute => renderAttributeField(field)
                 case SearchFieldType.Distance => _renderDistanceField(field)
                 case SearchFieldType.Location => _renderLocationField(field)
-                case _ => _renderTextField(field.id.toString, field.name)
+                case _ => _renderTextField("name", field.name)
             }
         })
     }
@@ -108,12 +108,13 @@ object SearchFormRenderer {
     }
 
     def _renderSelection(name: String, label: String, options: Iterable[Node]) = {
+        val any = ""
         scala.xml.Utility.trim(<div>
             <label>
                 {Unparsed(label)}
             </label>
-            <select name={name}>
-                <option value=" ">
+            <select name={name}>[JIRA] (SP-49) Search results are not as expected
+                <option value={any}>
                     Any
                 </option>{options}
             </select>
