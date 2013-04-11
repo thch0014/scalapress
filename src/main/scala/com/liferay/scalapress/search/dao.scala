@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
+
 trait SearchFormDao extends GenericDao[SearchForm, java.lang.Long]
 
 @Component

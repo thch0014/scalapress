@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
-import com.liferay.scalapress.Logging
+import com.liferay.scalapress.{ScalapressContext, Logging}
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
@@ -21,7 +21,7 @@ import com.liferay.scalapress.obj.{ObjectType, ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
-import javax.annotation.PreDestroy
+import javax.annotation.{PostConstruct, PreDestroy}
 import java.util.concurrent.TimeUnit
 import com.liferay.scalapress.search.{SavedSearch, SearchService}
 
@@ -37,6 +37,8 @@ class ElasticSearchService extends SearchService with Logging {
     @Value("${search.index.preload.size}") var preloadSize: Int = _
     @Autowired var objectDao: ObjectDao = _
     @Autowired var folderDao: FolderDao = _
+    @Autowired var context: ScalapressContext = _
+    var setup = false
 
     val tempDir = File.createTempFile("anything", "tmp").getParent
     val dataDir = new File(tempDir + "/" + UUID.randomUUID().toString)
@@ -61,25 +63,55 @@ class ElasticSearchService extends SearchService with Logging {
     val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
     val client = node.client()
 
-    val source = XContentFactory
-      .jsonBuilder()
-      .startObject()
-      .startObject("mappings")
-      .startObject(TYPE)
-      .startObject("_source").field("enabled", false).endObject()
-      .startObject("properties")
-      .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-      .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-      .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
-      .endObject()
-      .endObject()
-      .endObject()
-      .endObject()
+    def setupIndex() {
 
-    client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT)
+        val source = XContentFactory
+          .jsonBuilder()
+          .startObject()
+          .startObject("mappings")
+          .startObject(TYPE)
+          .startObject("_source")
+          .field("enabled", false)
+          .endObject()
+          .startObject("properties")
+          .startObject("_id")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("name_raw")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("location")
+          .field("type", "geo_point")
+          .field("index", "not_analyzed")
+          .endObject()
+
+        context.attributeDao.findAll().foreach(attr => {
+            source
+              .startObject("attribute_" + attr.id)
+              .field("type", "string")
+              .field("index", "not_analyzed")
+              .endObject()
+        })
+
+        source.endObject()
+          .endObject()
+          .endObject()
+          .endObject()
+
+        client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT)
+    }
 
     @Transactional
     def index() {
+
+        if (!setup) {
+            setupIndex()
+            setup = true
+        }
 
         val objs = objectDao.search(new Search(classOf[Obj])
           .addFilterLike("status", "live")
