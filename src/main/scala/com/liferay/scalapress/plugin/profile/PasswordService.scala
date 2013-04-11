@@ -33,7 +33,7 @@ class PasswordService extends Logging {
                 logger.debug("Token generated [{},{}]", pt.email, pt.token)
 
                 val domain = installationDao.get.domain
-                val body = "A message from the admin at " + domain + ".\n\nSomeone requested that the password for " + email + " be reset.\n.If this was not you then you can ignore this email.\nIf it was you then click the following link to reset your password:\nhttp://" + domain + "/password?token=" + pt
+                val body = "A message from the admin at " + domain + ".\n\nSomeone requested that the password for " + email + " be reset.\n\nIf this was not you then you can ignore this email.\n\nIf it was you then click the following link to reset your password:\nhttp://" + domain + "/password?token=" + pt
                   .token + "&email=" + email
 
                 val msg = new SimpleMailMessage
@@ -58,7 +58,7 @@ class PasswordService extends Logging {
                 logger.debug("Saving account with updated password")
                 objectDao.save(account)
 
-                val body = "A message from the admin at " + domain + ".\n\nYour password has been reset to:\n" + password
+                val body = "A message from the admin at " + domain + ".\n\nYour password has been reset to:\n" + password + "\n\nYou can login to your account here:\nhttp://" + domain + "/login"
 
                 val msg = new SimpleMailMessage
                 msg.setTo(email)

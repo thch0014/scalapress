@@ -11,7 +11,7 @@ object ForgottonPasswordRenderer {
 
     def resetSuccess = {
         <div class="forgotton-password-request">
-            Your password has been reset. An email has been sent to your address which contains your new password. You should login and change the password at your earliest opportunity."
+            Your password has been reset. An email has been sent to your address which contains your new password. You should login and change the password at your earliest opportunity.
         </div>
     }
 
