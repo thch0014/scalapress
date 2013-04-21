@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.feed.gbase
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.media.{Image, AssetStore}
 import com.liferay.scalapress.obj.Obj
@@ -8,7 +8,7 @@ import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
-class GoogleBaseBuilderTest extends FunSuite with MockitoSugar {
+class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val image = new Image
     image.filename = "coldplay.png"
@@ -73,8 +73,9 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar {
         assert(builder.filter(feed, Array(obj)).size == 1)
     }
 
+    test("given an available object then the availability field shows in stock") {
 
-    test("row is built to the gbase spec") {
+        obj.stock = 100
 
         obj.images.clear()
         obj.images.add(image)
@@ -88,8 +89,27 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar {
 
         val row = builder.row(feed, obj)
         assert(
-            "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,available for order,Sony,BB66,GB::Courier:4.95 GBP" ===
+            "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,in stock,Sony,BB66,GB::Courier:4.95 GBP" ===
               row.mkString(","))
     }
 
+    test("given an unavailable object then the availability field shows out of stock") {
+
+        obj.stock = 0
+
+        obj.images.clear()
+        obj.images.add(image)
+
+        obj.folders.clear()
+        obj.folders.add(folder)
+
+        obj.attributeValues.clear()
+        obj.attributeValues.add(av1)
+        obj.attributeValues.add(av2)
+
+        val row = builder.row(feed, obj)
+        assert(
+            "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:4.95 GBP" ===
+              row.mkString(","))
+    }
 }
