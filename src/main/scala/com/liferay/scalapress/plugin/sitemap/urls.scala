@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.sitemap
 
 import collection.mutable.ListBuffer
 import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import com.liferay.scalapress.obj.ObjectQuery
 
 /** @author Stephen Samuel */
@@ -15,9 +15,9 @@ object UrlBuilder {
         val query = new ObjectQuery().withStatus("LIVE").withPageSize(50000)
         val objects = context.objectDao.search(query).results.filter(_.objectType.searchable)
         val urls = new ListBuffer[Url]
-        for (obj <- objects) {
+        for ( obj <- objects ) {
             val loc = domain + FriendlyUrlGenerator.friendlyUrl(obj)
-            val lastmod = new DateTime(obj.dateUpdated).toString("yyyy-MM-dd")
+            val lastmod = new DateTime(obj.dateUpdated, DateTimeZone.UTC).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.8))
         }
         urls.toList

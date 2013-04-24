@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import reflect.BeanProperty
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.search.SearchService
-import org.joda.time.{DateMidnight, DateTime}
+import org.joda.time.{DateTimeZone, DateMidnight, DateTime}
 import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
 import com.liferay.scalapress.obj.attr.AttributeFuncs
 
@@ -34,8 +34,8 @@ class CalendarJsonController {
           .filter(_._2.forall(_.isDigit))
           .map(arg => {
             val e = new Event
-            e.date = new DateMidnight(arg._2.toLong).getMillis.toString
-            e.dateString = new DateTime(arg._2.toLong).toString("dd/MM/yyyy")
+            e.date = new DateMidnight(arg._2.toLong, DateTimeZone.UTC).getMillis.toString
+            e.dateString = new DateTime(arg._2.toLong, DateTimeZone.UTC).toString("dd/MM/yyyy")
             e.title = arg._1.name
             e.description = arg._1.summary(200).orNull
             e.url = FriendlyUrlGenerator.friendlyUrl(arg._1)

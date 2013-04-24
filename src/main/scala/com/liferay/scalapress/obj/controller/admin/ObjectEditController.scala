@@ -21,9 +21,9 @@ import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.media.{Asset, AssetStore, Image}
 import com.liferay.scalapress.util.mvc.{AttributeValuesPopulator, UrlResolver}
 import com.liferay.scalapress.enums.AttributeType
-import java.text.SimpleDateFormat
-import scala.collection.immutable.SortedMap
 import scala.collection.mutable
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.DateTimeZone
 
 /** @author Stephen Samuel */
 @Controller
@@ -61,7 +61,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 
         form.o.folders.asScala.foreach(folder => folder.objects.remove(form.o))
         form.o.folders.clear()
-        for (id <- form.folderIds) {
+        for ( id <- form.folderIds ) {
             val folder = folderDao.find(id)
             if (folder != null) {
                 form.o.folders.add(folder)
@@ -70,7 +70,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         }
 
         form.o.attributeValues.clear()
-        for (a <- form.o.objectType.attributes.asScala) {
+        for ( a <- form.o.objectType.attributes.asScala ) {
             val values = req.getParameterValues("attributeValues" + a.id)
             if (values != null) {
                 values.map(_.trim)
@@ -80,7 +80,8 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
                     a.attributeType match {
                         case AttributeType.Date =>
                             try {
-                                new SimpleDateFormat("dd-MM-yyyy").parse(value).getTime.toString
+                                DateTimeFormat.forPattern("dd-MM-yyyy")
+                                  .withZone(DateTimeZone.UTC).parseMillis(value).toString
                             } catch {
                                 case e: Exception => null
                             }

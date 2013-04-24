@@ -2,7 +2,7 @@ package com.liferay.scalapress.obj
 
 import com.liferay.scalapress.obj.attr.{AttributeFuncs, Attribute}
 import scala.collection.mutable.ArrayBuffer
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import com.liferay.scalapress.FriendlyUrlGenerator
 import scala.collection.JavaConverters._
 import java.io.{BufferedWriter, FileWriter, File}
@@ -33,7 +33,7 @@ class ObjectExporter {
         val csv = new CsvWriter(writer, ',')
         csv.writeRecord(_header(attributes))
 
-        for (obj <- objects) {
+        for ( obj <- objects ) {
             csv.writeRecord(_row(obj, attributes, domain))
         }
 
@@ -47,7 +47,7 @@ class ObjectExporter {
         buffer.append("date")
         buffer.append("name")
         buffer.append("url")
-        for (attribute <- attributes) {
+        for ( attribute <- attributes ) {
             buffer.append(attribute.name)
         }
         buffer.toArray
@@ -56,10 +56,10 @@ class ObjectExporter {
     def _row(obj: Obj, attributes: Seq[Attribute], domain: String): Array[String] = {
         val buffer = new ArrayBuffer[String]
         buffer.append(obj.id.toString)
-        buffer.append(new DateTime(obj.dateCreated).toString("dd-MM-yyyy"))
+        buffer.append(new DateTime(obj.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
         buffer.append(obj.name)
         buffer.append("http://" + domain + FriendlyUrlGenerator.friendlyUrl(obj))
-        for (attribute <- attributes) {
+        for ( attribute <- attributes ) {
             val value = AttributeFuncs.attributeValue(obj, attribute).orNull
             buffer.append(value)
         }
