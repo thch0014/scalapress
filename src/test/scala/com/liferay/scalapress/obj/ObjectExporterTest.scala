@@ -44,7 +44,7 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
 
         val header = new ObjectExporter()._row(obj, attributes, "mysite.com")
         assert(Array("123",
-            "12-04-2013",
+            "11-04-2013",
             "coldplay tickets",
             "http://mysite.com/object-123-coldplay-tickets",
             "Samsung",

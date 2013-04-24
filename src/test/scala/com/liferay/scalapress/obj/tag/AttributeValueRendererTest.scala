@@ -43,6 +43,6 @@ class AttributeValueRendererTest extends FunSuite with MockitoSugar with BeforeA
         av.attribute.attributeType = AttributeType.DateTime
         av.value = "1000443423423"
         val rendered = AttributeValueRenderer.renderValue(av)
-        assert("14/09/2001 05:57" === rendered)
+        assert("14/09/2001 04:57" === rendered)
     }
 }
