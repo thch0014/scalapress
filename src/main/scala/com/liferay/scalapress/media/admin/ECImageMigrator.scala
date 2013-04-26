@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import actors.Futures
 import com.liferay.scalapress.folder.FolderDao
-import com.liferay.scalapress.widgets.WidgetDao
+import com.liferay.scalapress.widgets.{HtmlWidget, WidgetDao}
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.folder.section.FolderContentSection
 import com.liferay.scalapress.media.{AssetStore, ImageDao}
@@ -88,8 +88,8 @@ class ECImageMigrator extends Logging {
     def migrateSideboxes(domain: String, executor: ExecutorService) {
         val widgets = widgetDao.findAll()
         logger.info("Migrating {} widgets", widgets.size)
-        widgets.filter(_.isInstanceOf[FolderContentSection])
-          .map(_.asInstanceOf[FolderContentSection])
+        widgets.filter(_.isInstanceOf[HtmlWidget])
+          .map(_.asInstanceOf[HtmlWidget])
           .foreach(arg => {
             executor.submit(new Runnable() {
                 def run() {

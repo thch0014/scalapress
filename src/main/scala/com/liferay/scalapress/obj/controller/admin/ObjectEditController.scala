@@ -197,8 +197,6 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         val form = new EditForm
         form.o = obj
         form.folderIds = Array()
-        form
-
 
         model.put("attributesWithValues",
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))

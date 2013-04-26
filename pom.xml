@@ -3,15 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.sksamuel</groupId>
-        <artifactId>superpom</artifactId>
-        <version>1.0.2</version>
-    </parent>
-
     <groupId>com.cloudray.scalapress</groupId>
     <artifactId>scalapress</artifactId>
-    <version>0.12-SNAPSHOT</version>
+    <version>0.14-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <prerequisites>
@@ -39,7 +33,7 @@
         <maven.plugin.cargo.version>1.2.2</maven.plugin.cargo.version>
         <maven.plugin.release.version>2.3.2</maven.plugin.release.version>
         <maven.plugin.autoinc.version>2.0-SNAPSHOT</maven.plugin.autoinc.version>
-        <maven.plugin.scala.version>3.1.3</maven.plugin.scala.version>
+        <maven.plugin.scala.version>3.1.4</maven.plugin.scala.version>
 
         <compiler.version.source>1.7</compiler.version.source>
         <compiler.version.target>1.7</compiler.version.target>
@@ -68,7 +62,7 @@
         <jodatime.version>1.4</jodatime.version>
 
         <jackson.version>1.9.7</jackson.version>
-        <jackson2.version>2.0.4</jackson2.version>
+        <jackson2.version>2.1.3</jackson2.version>
         <jackson.scala.version>1.9.3</jackson.scala.version>
 
         <google.guava.version>13.0.1</google.guava.version>
@@ -78,7 +72,7 @@
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.6.6</slf4j.version>
 
-        <scala.version>2.9.3</scala.version>
+        <scala.version>2.10.1</scala.version>
 
         <javax.servlet.version>2.5</javax.servlet.version>
         <javax.jsp.version>2.1</javax.jsp.version>
@@ -88,7 +82,6 @@
         <javax.jms.version>1.1</javax.jms.version>
 
         <javacsv.version>2.0</javacsv.version>
-
 
         <itext.version>5.2.0</itext.version>
     </properties>
@@ -242,20 +235,6 @@
                                 <filereports>ScalaTestSuite.txt</filereports>
                             </configuration>
                         </execution>
-                        <execution>
-                            <id>integration-test</id>
-                            <phase>integration-test</phase>
-                            <goals>
-                                <goal>test</goal>
-                            </goals>
-                            <configuration>
-                                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                                <junitxml>.</junitxml>
-                                <parallel>true</parallel>
-                                <tagsToInclude>IntegrationTest</tagsToInclude>
-                                <filereports>ScalaIntegrationTestSuite.txt</filereports>
-                            </configuration>
-                        </execution>
                     </executions>
                 </plugin>
             </plugins>
@@ -350,7 +329,7 @@
         <dependency>
             <groupId>com.sksamuel.scoot</groupId>
             <artifactId>scoot</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.enterprisedt</groupId>

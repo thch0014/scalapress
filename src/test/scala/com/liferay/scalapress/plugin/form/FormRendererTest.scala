@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
+import scala.xml.Unparsed
 
 /** @author Stephen Samuel */
 class FormRendererTest extends FunSuite with MockitoSugar {
@@ -14,7 +15,7 @@ class FormRendererTest extends FunSuite with MockitoSugar {
 
     test("checkbox rendering happy path") {
         assert(
-            "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input name=\"124\" type=\"checkbox\"></input>my field</label></div></div>" === FormRenderer
+            "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"124\"></input>my field</label></div></div>" === FormRenderer
               ._renderCheck(field).toString)
     }
 
