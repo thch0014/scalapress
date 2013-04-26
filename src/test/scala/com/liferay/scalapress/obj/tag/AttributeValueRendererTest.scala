@@ -22,7 +22,7 @@ class AttributeValueRendererTest extends FunSuite with MockitoSugar with BeforeA
         av.attribute.attributeType = AttributeType.Link
         av.value = "www.coldplay.com"
         val rendered = AttributeValueRenderer.renderValue(av)
-        assert("<a target=\"_blank\" href=\"www.coldplay.com\">Please click here</a>" === rendered)
+        assert("<a href=\"www.coldplay.com\" target=\"_blank\" >Please click here</a>" === rendered)
     }
 
     test("email attribute happy path") {
