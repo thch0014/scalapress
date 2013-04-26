@@ -42,7 +42,7 @@ class SiteEmailTag extends ScalapressTag with TagBuilder {
         Option(context.installationDao.get.email).map(email => "<a href='mailto:" + email + "'>" + email + "</a>")
 }
 
-@Tag("site_name")
+@Tag("comp_telephone")
 class SitePhoneTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.installationDao.get.telephone)
@@ -60,7 +60,7 @@ class SiteVatTag extends ScalapressTag with TagBuilder {
         Option(context.installationDao.get.vatNumber)
 }
 
-@Tag("comp_telephone")
+@Tag("comp_number")
 class SiteCompanyNumberTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Option(context.installationDao.get.companyNumber)
