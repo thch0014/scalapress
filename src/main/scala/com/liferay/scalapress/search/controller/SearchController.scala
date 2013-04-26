@@ -5,18 +5,17 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
-import actors.Futures
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
 import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.search.section.SearchFormSection
-import com.sksamuel.scoot.soa.Page
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.{ThemeService, MarkupRenderer}
+import scala.concurrent._
 
 /** @author Stephen Samuel */
 
@@ -49,14 +48,14 @@ class SearchController extends Logging {
         val plugin = searchPluginDao.get
 
         val attributeValues = req.getParameterMap.asScala
-          .filter(arg => arg._1.startsWith("attr_"))
-          .filter(arg => arg._2.length > 0)
-          .filter(arg => arg._2.head.trim.length > 0)
+          .filter(arg => arg._1.toString.startsWith("attr_"))
+          .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
+          .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
           .map(arg => {
             val av = new AttributeValue
             av.attribute = new Attribute
-            av.attribute.id = arg._1.drop(5).toLong
-            av.value = arg._2.head
+            av.attribute.id = arg._1.toString.drop(5).toLong
+            av.value = arg._2.asInstanceOf[Array[String]].head
             av
         })
 
@@ -96,7 +95,7 @@ class SearchController extends Logging {
 
             page.body("<!-- search results: " + live.size + " objects found -->")
 
-            val paging = Page(live, 1, PageSize, response.hits.totalHits.toInt)
+            //val paging = Page(live, 1, PageSize, response.hits.totalHits.toInt)
 
             val markup = live.head.objectType.objectListMarkup
             if (markup != null) {
@@ -117,7 +116,8 @@ class SearchController extends Logging {
 
     @PostConstruct
     def index() {
-        Futures.future {
+        import ExecutionContext.Implicits.global
+        future {
             searchService.index()
         }
     }

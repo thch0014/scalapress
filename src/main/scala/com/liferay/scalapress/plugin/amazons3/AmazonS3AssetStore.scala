@@ -10,7 +10,8 @@ import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.liferay.scalapress.Logging
-import actors.Futures
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 
 /** @author Stephen Samuel */
@@ -135,7 +136,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
 
     def run() {
-        Futures.future {
+        future {
             val list = listObjects(null, 0, 100000)
             logger.debug("Updating content type on {} objects", list.size)
             list.foreach(arg => {

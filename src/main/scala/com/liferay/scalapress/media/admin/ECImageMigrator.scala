@@ -8,12 +8,13 @@ import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import actors.Futures
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.widgets.{HtmlWidget, WidgetDao}
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.folder.section.FolderContentSection
 import com.liferay.scalapress.media.{AssetStore, ImageDao}
+import scala.concurrent._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /** @author Stephen Samuel */
 @Component
@@ -128,7 +129,7 @@ class ECImageMigrator extends Logging {
         migrateCategories(domain, executor)
         migrateItems(domain, executor)
 
-        Futures.future {
+        future {
             executor.shutdown()
             executor.awaitTermination(1, TimeUnit.HOURS)
             logger.info("Migration completed, asset store contains {} objects", store.count)
