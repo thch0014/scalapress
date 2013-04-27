@@ -24,6 +24,7 @@ import com.liferay.scalapress.enums.AttributeType
 import scala.collection.mutable
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeZone
+import org.apache.commons.lang.WordUtils
 
 /** @author Stephen Samuel */
 @Controller
@@ -197,6 +198,9 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         val form = new EditForm
         form.o = obj
         form.folderIds = Array()
+
+        // fix status so it matches the title case of the selects
+        obj.status = WordUtils.capitalizeFully(obj.status)
 
         model.put("attributesWithValues",
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
