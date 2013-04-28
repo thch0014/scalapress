@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import collection.mutable.ArrayBuffer
-import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.hibernate.criterion.Restrictions
 
@@ -41,7 +40,12 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
         c.list().asScala.head.asInstanceOf[Folder]
     }
 
-    override def findAll: List[Folder] = super.findAll.sortWith((a, b) => a.name < b.name)
+    override def findAll: List[Folder] = {
+        val c = getSession.createCriteria(classOf[Folder])
+        c.setCacheable(true)
+        val results = c.list.asInstanceOf[java.util.List[Folder]]
+        results.asScala.sortWith((a, b) => a.name < b.name).toList
+    }
 }
 
 trait FolderPluginDao extends GenericDao[FolderPlugin, java.lang.Long] {
