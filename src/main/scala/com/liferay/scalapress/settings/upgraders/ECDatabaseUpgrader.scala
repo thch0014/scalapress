@@ -3,11 +3,10 @@ package com.liferay.scalapress.settings.upgraders
 import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource
 import javax.annotation.PostConstruct
-import org.springframework.stereotype.Component
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
-@Component
+//@Component
 class ECDatabaseUpgrader extends Logging {
 
     @Autowired var dataSource: DataSource = _
