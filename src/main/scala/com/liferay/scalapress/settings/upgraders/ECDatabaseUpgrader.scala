@@ -82,7 +82,7 @@ class ECDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
-        for (col <- Array("item", "category")) {
+        for ( col <- Array("item", "category") ) {
             execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
             execute("UPDATE forms_submissions SET " + col + "=null where " + col + "=0")
         }
@@ -98,7 +98,7 @@ class ECDatabaseUpgrader extends Logging {
         execute("UPDATE categories set parent=null WHERE parent=0")
 
         <!-- update image assocations -->
-        for (col <- Array("imageBox", "item", "gallery", "category")) {
+        for ( col <- Array("imageBox", "item", "gallery", "category") ) {
             execute("alter table images MODIFY " + col + " bigint(10) null")
             execute("update images set " + col + "=null WHERE " + col + "=0")
         }
@@ -268,50 +268,50 @@ class ECDatabaseUpgrader extends Logging {
         execute("UPDATE searches SET itemType=null WHERE itemType=0")
 
 
-        for (column <- Array("pagename",
-            "membername",
-            "invoicecolumn",
-            "associationitemtype",
-            "listable",
-            "cellspan",
-            "filter",
-            "grouping",
-            "imagesonaddlisting",
-            "sellpriceadjustment",
-            "costpriceadjustment",
-            "displayonsubscriberonly",
-            "searchcontrol",
-            "incrementstep",
-            "step",
-            "imagesperrow",
-            "optioncount",
-            "registrationpage",
-            "intro",
-            "rows",
-            "cols",
-            "permissions",
-            "delivery",
-            "jobsheet",
-            "dublicate",
-            "checkalloptions",
-            "checkallfrontlabel",
-            "ibex",
-            "nofollow",
-            "ordersettings",
-            "incrementstart",
-            "smssettings",
-            "randomlength",
-            "restrictiontext",
-            "newslettercontrol",
-            "hidelabel",
-            "recommended")) {
-            try {
-                execute("ALTER TABLE attributes DROP " + column)
-            } catch {
-                case e: Exception => logger.warn(e.getMessage)
-            }
-        }
-
+        //        for (column <- Array("pagename",
+        //            "membername",
+        //            "invoicecolumn",
+        //            "associationitemtype",
+        //            "listable",
+        //            "cellspan",
+        //            "filter",
+        //            "grouping",
+        //            "imagesonaddlisting",
+        //            "sellpriceadjustment",
+        //            "costpriceadjustment",
+        //            "displayonsubscriberonly",
+        //            "searchcontrol",
+        //            "incrementstep",
+        //            "step",
+        //            "imagesperrow",
+        //            "optioncount",
+        //            "registrationpage",
+        //            "intro",
+        //            "rows",
+        //            "cols",
+        //            "permissions",
+        //            "delivery",
+        //            "jobsheet",
+        //            "dublicate",
+        //            "checkalloptions",
+        //            "checkallfrontlabel",
+        //            "ibex",
+        //            "nofollow",
+        //            "ordersettings",
+        //            "incrementstart",
+        //            "smssettings",
+        //            "randomlength",
+        //            "restrictiontext",
+        //            "newslettercontrol",
+        //            "hidelabel",
+        //            "recommended")) {
+        //            try {
+        //                execute("ALTER TABLE attributes DROP " + column)
+        //            } catch {
+        //                case e: Exception => logger.warn(e.getMessage)
+        //            }
+        //        }
+        //
         //        for (column <- Array("disableemails",
         //            "pendingimagecount",
         //            "imagecount",

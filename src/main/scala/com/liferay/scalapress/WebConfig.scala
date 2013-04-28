@@ -65,16 +65,16 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def addInterceptors(registry: InterceptorRegistry) {
 
-        registry.addInterceptor(VaryEncodingInterceptor).addPathPatterns("/static/**")
+        registry.addInterceptor(VaryEncodingInterceptor).addPathPatterns("/static/**/*")
 
         val webContentInterceptor = new WebContentInterceptor
         webContentInterceptor.setUseCacheControlHeader(true)
         webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
-        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**", "/asset/**")
+        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**/*", "/asset/**/*")
 
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)
-        registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
+        registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**/*")
         registry.addInterceptor(new SiteInterceptor(siteDao))
     }
 

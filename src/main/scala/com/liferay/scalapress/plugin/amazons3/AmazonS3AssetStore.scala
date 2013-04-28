@@ -140,7 +140,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         new AmazonS3Client(cred)
     }
 
-    @PostConstruct
+    //@PostConstruct
     def run() {
 
         import java.util.concurrent.Executors
@@ -150,29 +150,31 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val list = listObjects(null, 0, 100000)
         logger.debug("Updating content type on {} objects", list.size)
-        list.foreach(arg => {
-            future {
-                logger.info("Updating image" + arg.getKey)
-
-                try {
-
-                    val md = new ObjectMetadata
-                    md.setContentType(ImageTools.contentType(arg.getKey))
-                    md.setCacheControl("max-age=2592000")
-
-                    val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
-                    copy.setNewObjectMetadata(md)
-                    copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-                    copy.setStorageClass(STORAGE_CLASS)
-                    getAmazonS3Client.copyObject(copy)
-
-                } catch {
-                    case e: Exception => logger.warn("{}", e)
-                }
-            }
-        })
         future {
-            logger.ingo("Finished image updates")
+            list.foreach(arg => {
+                future {
+                    logger.info("Updating image" + arg.getKey)
+
+                    try {
+
+                        val md = new ObjectMetadata
+                        md.setContentType(ImageTools.contentType(arg.getKey))
+                        md.setCacheControl("max-age=2592000")
+
+                        val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
+                        copy.setNewObjectMetadata(md)
+                        copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
+                        copy.setStorageClass(STORAGE_CLASS)
+                        getAmazonS3Client.copyObject(copy)
+
+                    } catch {
+                        case e: Exception => logger.warn("{}", e)
+                    }
+                }
+            })
+            future {
+                logger.info("Finished image updates")
+            }
         }
         logger.debug("Upgrade completed", list.size)
     }
