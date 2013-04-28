@@ -10,7 +10,6 @@ import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.liferay.scalapress.Logging
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
@@ -143,12 +142,17 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     @PostConstruct
     def run() {
-        future {
-            val list = listObjects(null, 0, 100000)
-            logger.debug("Updating content type on {} objects", list.size)
-            list.foreach(arg => {
 
-                logger.info("Updating image" + arg)
+        import java.util.concurrent.Executors
+        import scala.concurrent._
+
+        implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
+
+        val list = listObjects(null, 0, 100000)
+        logger.debug("Updating content type on {} objects", list.size)
+        list.foreach(arg => {
+            future {
+                logger.info("Updating image" + arg.getKey)
 
                 try {
 
@@ -165,8 +169,11 @@ class AmazonS3AssetStore(val cdnUrl: String,
                 } catch {
                     case e: Exception => logger.warn("{}", e)
                 }
-            })
-            logger.debug("Upgrade completed", list.size)
+            }
+        })
+        future {
+            logger.ingo("Finished image updates")
         }
+        logger.debug("Upgrade completed", list.size)
     }
 }
