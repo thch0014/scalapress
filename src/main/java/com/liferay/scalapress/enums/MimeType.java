@@ -173,7 +173,7 @@ public enum MimeType {
     jpeg("image/jpeg"),
     jpe("image/jpeg"),
     jpg("image/jpeg"),
-    js("application/x-javascript"),
+    js("application/javascript"),
     kar("audio/midi"),
     key("application/pgp-keys"),
     kil("application/x-killustrator"),
