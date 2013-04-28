@@ -14,12 +14,15 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
                          val secretKey: String,
                          val accessKey: String,
                          val bucketName: String) extends AssetStore with Logging {
+
+    val STORAGE_CLASS = StorageClass.ReducedRedundancy
 
     def delete(key: String) {
         getAmazonS3Client.deleteObject(bucketName, key)
@@ -117,7 +120,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)
-        request.setStorageClass(StorageClass.ReducedRedundancy)
+        request.setStorageClass(STORAGE_CLASS)
 
         getAmazonS3Client.putObject(request)
     }
@@ -138,21 +141,25 @@ class AmazonS3AssetStore(val cdnUrl: String,
         new AmazonS3Client(cred)
     }
 
+
     def run() {
         future {
             val list = listObjects(null, 0, 100000)
             logger.debug("Updating content type on {} objects", list.size)
             list.foreach(arg => {
 
+                logger.debug("Updating image" + arg)
+
                 try {
 
                     val md = new ObjectMetadata
                     md.setContentType(ImageTools.contentType(arg.getKey))
+                    md.setCacheControl("max-age=2592000")
 
                     val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
                     copy.setNewObjectMetadata(md)
                     copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-                    copy.setStorageClass(StorageClass.Standard)
+                    copy.setStorageClass(STORAGE_CLASS)
                     getAmazonS3Client.copyObject(copy)
 
                 } catch {

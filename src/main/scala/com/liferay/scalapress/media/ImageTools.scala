@@ -8,7 +8,7 @@ import java.net.URLConnection
 object ImageTools {
 
     def contentType(filename: String) = {
-        val ext = FilenameUtils.getExtension(filename)
+        val ext = FilenameUtils.getExtension(filename).toLowerCase
         ext match {
             case "css" => "text/css"
             case "js" => "text/javascript"
@@ -16,7 +16,7 @@ object ImageTools {
             case "jpg" => "image/jpg"
             case "jpeg" => "image/jpeg"
             case "png" => "image/png"
-            case _ => Option(URLConnection.guessContentTypeFromName(filename)).getOrElse("application/octet-stream")
+            case _ => "application/octet-stream"
         }
     }
 
