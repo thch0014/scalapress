@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module
 import org.springframework.web.servlet.mvc.WebContentInterceptor
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -63,11 +65,11 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def addInterceptors(registry: InterceptorRegistry) {
 
+        registry.addInterceptor(VaryEncodingInterceptor).addPathPatterns("/static/**")
+
         val webContentInterceptor = new WebContentInterceptor
-        webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
-        webContentInterceptor.setUseExpiresHeader(true)
         webContentInterceptor.setUseCacheControlHeader(true)
-        webContentInterceptor.setUseCacheControlNoStore(true)
+        webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
         registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**", "/asset/**")
 
         registry.addInterceptor(SessionInterceptor)
@@ -111,4 +113,12 @@ class WebConfig extends WebMvcConfigurationSupport {
 
 }
 
+object VaryEncodingInterceptor extends HandlerInterceptorAdapter {
+    override def afterCompletion(request: HttpServletRequest,
+                                 response: HttpServletResponse,
+                                 handler: Any,
+                                 ex: Exception) {
+        response.setHeader("Vary", "Accept-Encoding")
+    }
+}
 
