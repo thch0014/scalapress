@@ -4,7 +4,6 @@ import javax.persistence.{ManyToOne, CascadeType, FetchType, OneToMany, EnumType
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import scala.Array
-import java.util
 import org.hibernate.annotations.{FetchMode, Fetch}
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
@@ -33,7 +32,7 @@ class SavedSearch {
 
     @OneToMany(mappedBy = "savedSearch", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
-    @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
+    @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new java.util.HashSet[AttributeValue]()
 
     @BeanProperty var imageOnly: Boolean = _
 

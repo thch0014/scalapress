@@ -16,9 +16,11 @@ trait AssetStore {
     // adds the given stream and overrides any existing
     def put(key: String, input: InputStream)
 
+    // returns a stream of the given key or none if the file was not found
     def get(key: String): Option[InputStream]
 
     def delete(key: String)
+
     def list(limit: Int): Array[Asset]
 
     def search(query: String, limit: Int): Array[Asset]
