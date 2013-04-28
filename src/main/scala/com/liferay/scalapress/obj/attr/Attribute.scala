@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty
 import java.util
 import scala.Array
 import com.liferay.scalapress.enums.AttributeType
-import org.hibernate.annotations.Index
+import org.hibernate.annotations.{CacheConcurrencyStrategy, Index}
 import com.liferay.scalapress.obj.ObjectType
 import collection.mutable
 import scala.collection.JavaConverters._
@@ -14,6 +14,8 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "attributes")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Attribute {
 
     @Id

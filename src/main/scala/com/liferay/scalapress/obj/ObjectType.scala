@@ -1,10 +1,10 @@
 package com.liferay.scalapress.obj
 
 import attr.Attribute
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, OneToMany, FetchType, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import java.util
 import reflect.BeanProperty
-import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.Markup
 import scala.collection.JavaConverters._
@@ -12,6 +12,8 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items_types")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class ObjectType {
 
     @Id

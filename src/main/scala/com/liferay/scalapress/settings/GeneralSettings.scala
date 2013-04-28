@@ -1,11 +1,14 @@
 package com.liferay.scalapress.settings
 
-import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence._
 import reflect.BeanProperty
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "settings_misc")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 class GeneralSettings {
 
     @Id

@@ -1,8 +1,8 @@
 package com.liferay.scalapress.section
 
-import javax.persistence.{JoinColumn, ManyToOne, Entity, Inheritance, InheritanceType, Column, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import reflect.BeanProperty
-import org.hibernate.annotations.Index
+import org.hibernate.annotations.{CacheConcurrencyStrategy, Index}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.folder.Folder
@@ -10,6 +10,8 @@ import com.liferay.scalapress.folder.Folder
 /** @author Stephen Samuel */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 abstract class Section {
 
     @Id

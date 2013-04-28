@@ -5,16 +5,22 @@ import java.util
 import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
-import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.Obj
 import section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.theme.Theme
 import org.joda.time.{DateTime, DateTimeZone}
+import scala.Some
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.CascadeType
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "categories")
+@Table (name = "categories")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Folder {
 
     @Id

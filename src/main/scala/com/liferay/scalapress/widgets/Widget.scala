@@ -1,13 +1,16 @@
 package com.liferay.scalapress.widgets
 
-import javax.persistence.{Column, GenerationType, GeneratedValue, Id, InheritanceType, Inheritance, Entity}
+import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.WidgetContainer
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 abstract class Widget {
 
     final def init(context: ScalapressContext) {

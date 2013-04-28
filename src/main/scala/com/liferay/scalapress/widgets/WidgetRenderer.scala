@@ -2,6 +2,7 @@ package com.liferay.scalapress.widgets
 
 import com.liferay.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.WidgetContainer
+import net.sf.ehcache.CacheManager
 
 /** @author Stephen Samuel */
 object WidgetRenderer extends Logging {

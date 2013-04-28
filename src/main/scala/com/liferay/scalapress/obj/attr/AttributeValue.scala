@@ -1,16 +1,18 @@
 package com.liferay.scalapress.obj.attr
 
 import java.lang.String
-import javax.persistence.{FetchType, JoinColumn, ManyToOne, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.search.SavedSearch
-import org.hibernate.annotations.{Index, BatchSize}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, Index, BatchSize}
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "attributes_values")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class AttributeValue {
 
     @Id

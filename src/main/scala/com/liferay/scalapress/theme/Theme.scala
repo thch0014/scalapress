@@ -1,11 +1,14 @@
 package com.liferay.scalapress.theme
 
-import javax.persistence.{GenerationType, GeneratedValue, Id, Column, Table, Entity}
+import javax.persistence._
 import reflect.BeanProperty
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "templates")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Theme {
 
     @Id

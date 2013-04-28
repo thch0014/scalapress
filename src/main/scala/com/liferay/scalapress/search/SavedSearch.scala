@@ -1,16 +1,18 @@
 package com.liferay.scalapress.search
 
-import javax.persistence.{ManyToOne, CascadeType, FetchType, OneToMany, EnumType, Enumerated, Entity, Table, GenerationType, GeneratedValue, Id, JoinColumn, Column}
+import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import scala.Array
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "searches")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SavedSearch {
 
     @Id

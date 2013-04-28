@@ -1,14 +1,16 @@
 package com.liferay.scalapress.search
 
-import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, CascadeType, Column, OneToMany, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence._
 import reflect.BeanProperty
-import org.hibernate.annotations.{Fetch, FetchMode}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.ObjectType
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "search_forms")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SearchForm {
 
     @Id
