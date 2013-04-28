@@ -55,14 +55,11 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
                context: ScalapressContext,
                params: Map[String, String]): Option[String] = {
 
-        request.obj match {
-
-            case None => None
-            case Some(obj) =>
-                val limit = params.get("limit").getOrElse("1").toInt
-                val rendered = obj.images.asScala.take(limit).map(i => "/images/" + i.filename)
-                Option(rendered.mkString("\n"))
-        }
+        request.obj.map(obj => {
+            val limit = params.get("limit").getOrElse("1").toInt
+            val rendered = obj.images.asScala.toSeq.sortBy(_.id).take(limit).map(i => "/images/" + i.filename)
+            rendered.mkString("\n")
+        })
     }
 }
 
