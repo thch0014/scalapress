@@ -19,7 +19,8 @@
     <cache name="com.liferay.scalapress.theme.Theme" eternal="false" maxElementsInMemory="20" overflowToDisk="false"
            diskPersistent="false"/>
     <cache name="com.liferay.scalapress.search.SavedSearch" eternal="false" maxElementsInMemory="100"
-           overflowToDisk="false"
-           diskPersistent="false"/>
+           overflowToDisk="false" diskPersistent="false"/>
+    <cache name="com.liferay.scalapress.widgets.Widget" eternal="false" maxElementsInMemory="100"
+           overflowToDisk="false" diskPersistent="false"/>
 
 </ehcache>
