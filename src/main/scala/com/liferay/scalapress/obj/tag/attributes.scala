@@ -9,16 +9,16 @@ import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 class AttributeValueTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        val sep = params.get("sep").getOrElse(" ")
         params.get("id") match {
             case None => Some("<!-- no id specified for attribute tag -->")
-            case Some(id) => {
-                request.obj.flatMap(obj => {
-                    obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
-                        case None => None
-                        case Some(av) => Some(build(AttributeValueRenderer.renderValue(av), params))
-                    }
-                })
-            }
+            case Some(id) => request.obj.map(obj => {
+                obj.attributeValues.asScala
+                  .filter(_.attribute.id == id.trim.toLong)
+                  .toSeq.sortBy(_.id)
+                  .map(av => build(AttributeValueRenderer.renderValue(av), params))
+                  .mkString(sep)
+            })
         }
     }
 }
