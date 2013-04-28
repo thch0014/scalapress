@@ -9,15 +9,8 @@ object ObjectTag extends ScalapressTag with TagBuilder {
         request.obj.map(obj => {
             val text = params.get("text").getOrElse(obj.name)
             params.contains("link") match {
-                case true => {
-
-                    val url = FriendlyUrlGenerator.friendlyUrl(obj)
-                    val link = <a href={url}>
-                        {text}
-                    </a>.toString()
-                    buildLink(url, text, params)
-                }
-                case false => build(obj.name, params)
+                case true => buildLink(FriendlyUrlGenerator.friendlyUrl(obj), text, params)
+                case false => build(text, params)
             }
         })
     }

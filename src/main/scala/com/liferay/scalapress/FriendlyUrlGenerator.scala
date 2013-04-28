@@ -7,9 +7,17 @@ import obj.Obj
 object FriendlyUrlGenerator {
 
     def friendlyLink(obj: Obj): String = friendlyLink(obj, obj.name)
-    def friendlyLink(obj: Obj, label: String): String = "<a href=\"" + friendlyUrl(obj) + "\">" + label + "</a>"
+    def friendlyLink(obj: Obj, label: String): String =
+        <a href={friendlyUrl(obj)}>
+            {label}
+        </a>.toString()
+
     def friendlyLink(folder: Folder): String = friendlyLink(folder, folder.name)
-    def friendlyLink(folder: Folder, label: String): String = "<a href=\"" + friendlyUrl(folder) + "\">" + label + "</a>"
+    def friendlyLink(folder: Folder,
+                     label: String): String =
+        <a href={friendlyUrl(folder)}>
+            {label}
+        </a>.toString()
 
     def friendlyUrl(obj: Obj): String = {
         "/object-" + obj.id + "-" + Option(obj.name).getOrElse("").replaceAll("[^a-zA-Z0-9\\s\\-]", "")
