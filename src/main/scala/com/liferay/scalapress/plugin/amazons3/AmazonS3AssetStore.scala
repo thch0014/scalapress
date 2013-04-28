@@ -113,6 +113,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         val md = new ObjectMetadata
         md.setContentLength(array.length)
         md.setContentType(ImageTools.contentType(key))
+        md.setCacheControl("max-age=604800001")
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
         request.setCannedAcl(CannedAccessControlList.PublicRead)
