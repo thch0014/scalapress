@@ -31,6 +31,7 @@ class MarkupDaoImpl extends GenericDaoImpl[Markup, java.lang.Long] with MarkupDa
     def byName(name: String): Markup = {
         getSession
           .createCriteria(classOf[Markup])
+          .setCacheable(true)
           .add(Restrictions.eq("name", name))
           .uniqueResult()
           .asInstanceOf[Markup]

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import collection.mutable.ArrayBuffer
 import com.googlecode.genericdao.search.Search
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
+import org.hibernate.criterion.Restrictions
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
@@ -27,14 +28,18 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
     private def tree(parent: Folder): ArrayBuffer[Folder] = {
         val buffer = new ArrayBuffer[Folder]
         buffer.append(parent)
-        for (child <- parent.subfolders.asScala)
+        for ( child <- parent.subfolders.asScala )
             buffer.appendAll(tree(child))
         buffer
     }
 
     override def findTopLevel: Array[Folder] = root.subfolders.asScala.toArray
 
-    override def root: Folder = search(new Search(classOf[Folder]).addFilterNull("parent")).head
+    override def root: Folder = {
+        val c = getSession.createCriteria(classOf[Folder]).add(Restrictions.isNull("parent"))
+        c.setCacheable(true)
+        c.list().asScala.head.asInstanceOf[Folder]
+    }
 
     override def findAll: List[Folder] = super.findAll.sortWith((a, b) => a.name < b.name)
 }
