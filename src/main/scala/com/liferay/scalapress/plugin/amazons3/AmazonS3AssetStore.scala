@@ -140,7 +140,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         new AmazonS3Client(cred)
     }
 
-    @PostConstruct
+    //@PostConstruct
     def run() {
 
         import java.util.concurrent.Executors
