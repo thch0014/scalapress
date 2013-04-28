@@ -148,7 +148,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
             logger.debug("Updating content type on {} objects", list.size)
             list.foreach(arg => {
 
-                logger.debug("Updating image" + arg)
+                logger.info("Updating image" + arg)
 
                 try {
 

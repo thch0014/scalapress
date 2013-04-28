@@ -25,6 +25,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module
+import org.springframework.web.servlet.mvc.WebContentInterceptor
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -62,13 +63,13 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def addInterceptors(registry: InterceptorRegistry) {
 
-        //        val webContentInterceptor = new WebContentInterceptor
-        //        webContentInterceptor.setCacheSeconds(60)
-        //        webContentInterceptor.setUseExpiresHeader(true)
-        //        webContentInterceptor.setUseCacheControlHeader(true)
-        //        webContentInterceptor.setUseCacheControlNoStore(true)
-        //
-        //        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**")
+        val webContentInterceptor = new WebContentInterceptor
+        webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
+        webContentInterceptor.setUseExpiresHeader(true)
+        webContentInterceptor.setUseCacheControlHeader(true)
+        webContentInterceptor.setUseCacheControlNoStore(true)
+        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**")
+
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
