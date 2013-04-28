@@ -12,7 +12,7 @@ import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget {
@@ -39,7 +39,9 @@ class SearchResultsWidget extends Widget {
             case None => None
             case Some(s) =>
                 val results = req.context.searchService.search(search)
-                val objs = results.hits().hits().map(arg => req.context.objectDao.find(arg.id.toLong))
+                val objs = results.hits().hits()
+                  .map(arg => req.context.objectDao.find(arg.id.toLong))
+                  .filter(_.status.equalsIgnoreCase("live"))
                 objs.size match {
                     case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
                     case _ =>
