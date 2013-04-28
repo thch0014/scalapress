@@ -68,7 +68,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         webContentInterceptor.setUseExpiresHeader(true)
         webContentInterceptor.setUseCacheControlHeader(true)
         webContentInterceptor.setUseCacheControlNoStore(true)
-        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**")
+        registry.addInterceptor(webContentInterceptor).addPathPatterns("/static/**", "/asset/**")
 
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)

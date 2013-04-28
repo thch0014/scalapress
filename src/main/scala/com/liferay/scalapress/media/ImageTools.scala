@@ -3,20 +3,16 @@ package com.liferay.scalapress.media
 import java.awt.image.BufferedImage
 import java.awt.Color
 import org.apache.commons.io.FilenameUtils
-import java.net.URLConnection
+import com.liferay.scalapress.enums.MimeType
+import javax.ws.rs.core.MediaType
 
 object ImageTools {
 
     def contentType(filename: String) = {
         val ext = FilenameUtils.getExtension(filename).toLowerCase
-        ext match {
-            case "css" => "text/css"
-            case "js" => "text/javascript"
-            case "gif" => "image/gif"
-            case "jpg" => "image/jpg"
-            case "jpeg" => "image/jpeg"
-            case "png" => "image/png"
-            case _ => "application/octet-stream"
+        MimeType.values.find(_.name.toLowerCase == ext) match {
+            case None => MediaType.WILDCARD
+            case Some(enum) => enum.contentType
         }
     }
 

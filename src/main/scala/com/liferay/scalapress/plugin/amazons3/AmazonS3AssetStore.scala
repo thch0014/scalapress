@@ -141,7 +141,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
         new AmazonS3Client(cred)
     }
 
-
+    @PostConstruct
     def run() {
         future {
             val list = listObjects(null, 0, 100000)
