@@ -9,6 +9,7 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.plugin.listings.ListingPackage
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.media.Image
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Entity
@@ -148,7 +149,7 @@ class Obj {
 
     @PrePersist
     def updateLastModified() {
-        dateUpdated = System.currentTimeMillis()
+        dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
     }
 
 }
@@ -160,8 +161,8 @@ object Obj {
         val obj = new Obj
         obj.objectType = t
         obj.name = "new object"
-        obj.dateCreated = System.currentTimeMillis
-        obj.dateUpdated = System.currentTimeMillis
+        obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+        obj.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
         obj.status = "Live"
         obj
     }

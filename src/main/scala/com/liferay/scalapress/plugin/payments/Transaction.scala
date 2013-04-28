@@ -2,6 +2,7 @@ package com.liferay.scalapress.plugin.payments
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Column, Table, Entity}
 import reflect.BeanProperty
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Table(name = "payments")
@@ -52,7 +53,7 @@ class Transaction {
 object Transaction {
     def apply(transactionId: String, paymentProcessorName: String, amount: Int) = {
         val payment = new Transaction
-        payment.date = System.currentTimeMillis()
+        payment.date = new DateTime(DateTimeZone.UTC).getMillis
         payment.transactionId = transactionId
         payment.amount = amount
         payment.paymentProcessor = paymentProcessorName

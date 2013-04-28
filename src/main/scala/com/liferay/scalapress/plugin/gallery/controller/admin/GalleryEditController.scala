@@ -8,6 +8,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.springframework.web.multipart.MultipartFile
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.media.{AssetStore, Image, GalleryDao}
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Controller
@@ -30,7 +31,7 @@ class GalleryEditController {
             val image = new Image
             image.filename = key
             image.name = file.getOriginalFilename
-            image.date = System.currentTimeMillis()
+            image.date = new DateTime(DateTimeZone.UTC).getMillis
             image.gallery = g
             g.images.add(image)
         }

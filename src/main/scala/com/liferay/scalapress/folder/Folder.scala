@@ -10,6 +10,7 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.Obj
 import section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.theme.Theme
+import org.joda.time.{DateTime, DateTimeZone}
 
 /** @author Stephen Samuel */
 @Entity
@@ -25,7 +26,7 @@ class Folder {
     @BatchSize(size = 20)
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
-    @Index(name="parent_index")
+    @Index(name = "parent_index")
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 40)
@@ -45,7 +46,7 @@ class Folder {
     @JoinColumn(name = "theme")
     @BeanProperty var theme: Theme = _
 
-    @Index(name="name_index")
+    @Index(name = "name_index")
     @BeanProperty var name: String = _
 
     @Column(name = "subcategoryordering")
@@ -106,8 +107,8 @@ object Folder {
         folder.sections.add(section2)
         folder.sections.add(section1)
 
-        folder.dateCreated = System.currentTimeMillis
-        folder.dateUpdated = System.currentTimeMillis
+        folder.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+        folder.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
         folder
     }
 }

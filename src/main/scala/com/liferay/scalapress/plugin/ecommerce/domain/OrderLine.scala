@@ -3,6 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce.domain
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import reflect.BeanProperty
 import com.liferay.scalapress.obj.Obj
+import org.joda.time.{DateTime, DateTimeZone}
 
 /** @author Stephen Samuel */
 @Entity
@@ -55,7 +56,7 @@ object OrderLine {
         val l = new OrderLine
         l.price = price
         l.vatRate = 20.0
-        l.date = System.currentTimeMillis()
+        l.date = new DateTime(DateTimeZone.UTC).getMillis
         l.qty = 1
         l.description = desc
         l
@@ -66,7 +67,7 @@ object OrderLine {
         l.obj = obj.id
         l.qty = 1
         l.description = obj.name
-        l.date = System.currentTimeMillis()
+        l.date = new DateTime(DateTimeZone.UTC).getMillis
         l.vatRate = obj.vatRate
         l
     }

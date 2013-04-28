@@ -5,6 +5,7 @@ import reflect.BeanProperty
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Entity
@@ -47,7 +48,7 @@ object Image {
     def apply(key: String) = {
         val image = new Image
         image.filename = key
-        image.date = System.currentTimeMillis()
+        image.date = new DateTime(DateTimeZone.UTC).getMillis
         image
     }
 }

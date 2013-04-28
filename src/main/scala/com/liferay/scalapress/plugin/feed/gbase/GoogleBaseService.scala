@@ -8,6 +8,7 @@ import com.liferay.scalapress.Logging
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.settings.Installation
 import com.liferay.scalapress.media.AssetStore
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
@@ -31,7 +32,7 @@ object GoogleBaseService extends Logging {
         upload(file, feed)
         file.delete
 
-        feed.lastRuntime = System.currentTimeMillis()
+        feed.lastRuntime = new DateTime(DateTimeZone.UTC).getMillis
         gfeedDao.save(feed)
     }
 

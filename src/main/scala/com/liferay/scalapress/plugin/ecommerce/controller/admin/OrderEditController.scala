@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap
 import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.obj.controller.admin.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Controller
@@ -100,7 +101,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
     @RequestMapping(value = Array("comment/add"), method = Array(RequestMethod.POST))
     def addComment(req: HttpServletRequest, @RequestParam("message") message: String, @ModelAttribute order: Order) = {
         val comment = new OrderComment
-        comment.date = System.currentTimeMillis()
+        comment.date = new DateTime(DateTimeZone.UTC).getMillis
         comment.author = SecurityFuncs.getUserDetails(req).get.username
         comment.body = message
         comment.order = order

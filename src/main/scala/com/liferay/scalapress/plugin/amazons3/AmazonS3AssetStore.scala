@@ -13,6 +13,7 @@ import com.liferay.scalapress.Logging
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent._
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -121,7 +122,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
 
     def getNormalizedKey(key: String): String = {
-        FilenameUtils.getBaseName(key) + "_" + System.currentTimeMillis() + "." + FilenameUtils.getExtension(key)
+        FilenameUtils.getBaseName(key) + "_" + new DateTime(DateTimeZone.UTC).getMillis + "." + FilenameUtils
+          .getExtension(key)
     }
 
     def add(in: InputStream): String = {

@@ -10,6 +10,7 @@ import com.liferay.scalapress.enums.FormFieldType
 import org.apache.commons.lang.StringUtils
 import com.liferay.scalapress.settings.Installation
 import com.liferay.scalapress.media.AssetStore
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Component
@@ -30,7 +31,7 @@ class FormService extends Logging {
         val submission = new Submission
         submission.attachments = keys.asJava
         submission.formName = form.name
-        submission.date = System.currentTimeMillis()
+        submission.date = new DateTime(DateTimeZone.UTC).getMillis
         submission.ipAddress = req.request.getRemoteAddr
         submission.folder = req.folder.orNull
         submission.obj = req.obj.orNull

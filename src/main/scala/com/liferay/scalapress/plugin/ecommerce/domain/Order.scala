@@ -77,7 +77,7 @@ class Order {
 object Order {
     def apply(ipAddress: String, account: Obj) = {
         val order = new Order
-        order.datePlaced = System.currentTimeMillis()
+        order.datePlaced = new DateTime(DateTimeZone.UTC).getMillis
         order.status = "New"
         order.ipAddress = ipAddress
         order.vatable = true
