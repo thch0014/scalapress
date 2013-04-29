@@ -12,6 +12,8 @@ class DeliveryOption {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
+    @BeanProperty var deleted: Int = 0
+
     @BeanProperty var name: String = _
 
     @Column(name = "flatCharge")
