@@ -1,16 +1,19 @@
 package com.liferay.scalapress.folder
 
-import javax.persistence.{FetchType, ManyToOne, JoinColumn, Entity, Table}
+import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.{FriendlyUrlGenerator, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
 import com.liferay.scalapress.widgets.Widget
+import scala.Some
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class FoldersWidget extends Widget with Logging {
 
     @BeanProperty var depth: Int = _

@@ -51,6 +51,11 @@
         <form enctype="multipart/form-data" method="POST" class="form-horizontal"><p>
             Select file to upload
         </p>
+
+            <label> Minify CSS / JS Uploads:
+                <input type="checkbox" name="minify" value="true"/>
+            </label>
+
             <input type="file" name="upload"/>
             <input type="file" name="upload"/>
             <input type="file" name="upload"/>
@@ -61,6 +66,8 @@
             <input type="file" name="upload"/>
             <input type="file" name="upload"/>
             <input type="file" name="upload"/>
+
+
             <button class="btn btn-success" type="submit">
                 Upload File
             </button>

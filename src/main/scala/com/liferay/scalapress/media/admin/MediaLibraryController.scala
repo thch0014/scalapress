@@ -8,6 +8,10 @@ import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.AssetStore
+import javax.ws.rs.DefaultValue
+import java.io._
+import com.googlecode.htmlcompressor.compressor.{YuiCssCompressor, YuiJavaScriptCompressor}
+import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,10 +25,34 @@ class MediaLibraryController {
     def list = "admin/media/library.vm"
 
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def upload(@RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
-        for (upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty))
-            assetStore.put(upload.getOriginalFilename, upload.getInputStream)
+    def upload(@RequestParam("minify") @DefaultValue("false") minify: Boolean,
+               @RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
+        for (upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty)) {
+
+            if (upload.getOriginalFilename.toLowerCase.endsWith(".css")) {
+                val minified = _minifyCss(upload.getInputStream)
+                assetStore.put(upload.getOriginalFilename, new ByteArrayInputStream(minified))
+
+            } else if (upload.getOriginalFilename.toLowerCase.endsWith(".js")) {
+                val minified = _minifyJs(upload.getInputStream)
+                assetStore.put(upload.getOriginalFilename, new ByteArrayInputStream(minified))
+
+            } else {
+
+                assetStore.put(upload.getOriginalFilename, upload.getInputStream)
+            }
+        }
         "redirect:" + UrlResolver.medialib
+    }
+
+    def _minifyCss(input: InputStream) = {
+        val compressed = new YuiCssCompressor().compress(IOUtils.toString(input, "UTF-8"))
+        compressed.getBytes("UTF-8")
+    }
+
+    def _minifyJs(input: InputStream) = {
+        val compressed = new YuiJavaScriptCompressor().compress(IOUtils.toString(input, "UTF-8"))
+        compressed.getBytes("UTF-8")
     }
 
     @ModelAttribute("assets") def assets(@RequestParam(value = "pageNumber",
