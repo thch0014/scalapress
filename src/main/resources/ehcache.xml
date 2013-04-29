@@ -22,5 +22,7 @@
            overflowToDisk="false" diskPersistent="false"/>
     <cache name="com.liferay.scalapress.widgets.Widget" eternal="false" maxElementsInMemory="100"
            overflowToDisk="false" diskPersistent="false"/>
+    <cache name="com.liferay.scalapress.theme.Markup" eternal="false" maxElementsInMemory="100"
+           overflowToDisk="false" diskPersistent="false"/>
 
 </ehcache>
