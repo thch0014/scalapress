@@ -13,7 +13,7 @@
         <level value="debug"/>
     </logger>
     <logger name="org.hibernate">
-        <level value="info"/>
+        <level value="debug"/>
     </logger>
     <logger name="net.sf.ehcache">
         <level value="info"/>
