@@ -2,16 +2,20 @@ package com.liferay.scalapress.plugin.calendar
 
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.widgets.Widget
-import javax.persistence.{JoinColumn, ManyToOne, Table, Entity}
+import javax.persistence._
 import com.liferay.scalapress.search.SavedSearch
 import reflect.BeanProperty
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.Attribute
 import com.liferay.scalapress.enums.Sort
+import scala.Some
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "plugins_calendar_widget")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class CalendarWidget extends Widget {
 
     @ManyToOne

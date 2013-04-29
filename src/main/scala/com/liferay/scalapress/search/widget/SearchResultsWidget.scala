@@ -1,12 +1,13 @@
 package com.liferay.scalapress.search.widget
 
-import javax.persistence.{FetchType, ManyToOne, Table, Entity, JoinColumn, OneToOne}
+import javax.persistence._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.search.SavedSearch
-import org.hibernate.annotations.{Fetch, FetchMode}
+import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
+import scala.Some
 
 /** @author Stephen Samuel
   *
@@ -15,6 +16,8 @@ import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
   * */
 @Entity
 @Table(name = "boxes_highlighted_items")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SearchResultsWidget extends Widget {
 
     @OneToOne(fetch = FetchType.EAGER)

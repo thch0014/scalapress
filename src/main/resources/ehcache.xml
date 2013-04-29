@@ -28,11 +28,18 @@
     <cache name="Widget" eternal="false" maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"/>
     <cache name="com.liferay.scalapress.widgets.Widget" eternal="false" maxElementsInMemory="100"
            overflowToDisk="false" diskPersistent="false"/>
-    <cache name="com.liferay.scalapress.theme.Markup" eternal="false" maxElementsInMemory="100"
+
+    <cache name="Markup" eternal="false" maxElementsInMemory="50" overflowToDisk="false" diskPersistent="false"/>
+    <cache name="com.liferay.scalapress.theme.Markup" eternal="false" maxElementsInMemory="50"
            overflowToDisk="false" diskPersistent="false"/>
 
     <cache name="FolderWidget" eternal="false" maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"/>
     <cache name="com.liferay.scalapress.folder.FolderWidget" eternal="false" maxElementsInMemory="100"
            overflowToDisk="false" diskPersistent="false"/>
+
+    <cache name="BasketWidget" eternal="false" maxElementsInMemory="5" overflowToDisk="false" diskPersistent="false"/>
+    <cache name="com.liferay.scalapress.plugin.ecommerce.widgets.BasketWidget" eternal="false" maxElementsInMemory="5"
+           overflowToDisk="false" diskPersistent="false"/>
+
 
 </ehcache>

@@ -1,10 +1,11 @@
 package com.liferay.scalapress.search.widget
 
-import javax.persistence.{OneToOne, JoinColumn, Entity, Table}
+import javax.persistence._
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import reflect.BeanProperty
 import com.liferay.scalapress.search.SearchForm
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel
   *
@@ -13,6 +14,8 @@ import com.liferay.scalapress.search.SearchForm
   * */
 @Entity
 @Table(name = "boxes_search")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SearchFormWidget extends Widget {
 
     @OneToOne

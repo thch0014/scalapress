@@ -1,11 +1,14 @@
 package com.liferay.scalapress.plugin.form
 
-import javax.persistence.{CascadeType, Column, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import reflect.BeanProperty
+import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "forms")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Form {
 
     @Id
