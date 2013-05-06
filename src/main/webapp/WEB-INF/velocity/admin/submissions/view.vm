@@ -24,14 +24,19 @@
 #springShowErrors()
 
 
+#if ($submission.attachments.size > 0)
+<legend>Attachments</legend>
 <table class="table table-condensed table-striped table-hover">
     #foreach ($a in $submission.attachments)
         <tr>
-            <th>Attachment</th>
             <td><a href="$assetStore.link($a)">$a</a></td>
         </tr>
     #end
+    <tr>
+        <td><a href="/backoffice/submission/$submission.id/downloadall">Download All</a></td>
+    </tr>
 </table>
+#end
 
 
 #parse("/admin/footer.vm")
