@@ -17,7 +17,7 @@ class ListingsPlugin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "double default 0")
     @BeanProperty var vatRate: Double = 0
 
     @BeanProperty var packagesPageText: String = _
