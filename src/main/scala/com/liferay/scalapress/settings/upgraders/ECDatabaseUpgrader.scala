@@ -29,6 +29,8 @@ class ECDatabaseUpgrader extends Logging {
 
         val conn = dataSource.getConnection
 
+        execute("ALTER TABLE blocks_highlighted_items DROP pagesize")
+
         execute("ALTER TABLE items_accessories MODIFY item bigint(10) null")
         execute("UPDATE items_accessories SET item=null WHERE item=0")
         execute("ALTER TABLE items_accessories MODIFY accessory bigint(10) null")

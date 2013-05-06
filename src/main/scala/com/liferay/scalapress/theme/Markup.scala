@@ -2,7 +2,7 @@ package com.liferay.scalapress.theme
 
 import scala.Predef.String
 import javax.persistence.{Table, Entity, GenerationType, GeneratedValue, Id}
-import reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
