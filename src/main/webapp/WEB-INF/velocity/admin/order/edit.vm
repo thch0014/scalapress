@@ -19,7 +19,7 @@
     <label class="control-label">Date Placed</label>
 
     <div class="controls">
-        <span class="uneditable-input">$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</span>
+        <span class="uneditable-input">$!o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</span>
         <a href="/backoffice/invoice/$order.id" class="btn btn-small" role="button">Print Invoice</a>
     </div>
 </div>
@@ -29,7 +29,7 @@
 
     <div class="controls">
         <span class="uneditable-input">$order.status</span>
-        #springFormSingleSelect("order.status", $statusMap)
+        #springFormSingleSelect("order.status", $statusMap. "")
     </div>
 </div>
 <div class="control-group">
@@ -37,6 +37,22 @@
 
     <div class="controls">
         #springFormCheckbox("order.vatable", $order.vatable)
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"></label>
+
+    <div class="controls">
+        #springFormCheckbox("order.customerNote", $order.vatable)
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Customer Note</label>
+
+    <div class="controls">
+        <input type="text" class="input-xxlarge" name="customerNote" id="customerNote"
+               placeholder="Enter a customer note here"/>
     </div>
 </div>
 
