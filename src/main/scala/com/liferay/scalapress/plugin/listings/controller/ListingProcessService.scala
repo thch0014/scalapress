@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.listings.controller
 
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, Order}
-import com.liferay.scalapress.plugin.listings.{ListingEmailService, ListingNotificationService, ListingProcess2ObjectBuilder, ListingProcess}
+import com.liferay.scalapress.plugin.listings._
 import com.liferay.scalapress.obj.Obj
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{Logging, ScalapressContext}
@@ -25,7 +25,8 @@ class ListingProcessService extends Logging {
 
         _emails(obj, process)
 
-        val order = _order(account, process, req)
+        val plugin = context.listingsPluginDao.get
+        val order = _order(account, process, req, plugin)
         tx.order = order.id.toString
         context.transactionDao.save(tx)
 
@@ -73,13 +74,14 @@ class ListingProcessService extends Logging {
         account
     }
 
-    def _order(account: Obj, process: ListingProcess, req: HttpServletRequest) = {
+    def _order(account: Obj, process: ListingProcess, req: HttpServletRequest, plugin: ListingsPlugin) = {
         logger.debug("Creating order for the listing")
 
         val order = Order(req.getRemoteAddr, account)
         context.orderDao.save(order)
 
         val orderLine = OrderLine(process.listingPackage.name, process.listingPackage.fee)
+        orderLine.vatRate = plugin.vatRate
         orderLine.order = order
         order.lines.add(orderLine)
         context.orderDao.save(order)

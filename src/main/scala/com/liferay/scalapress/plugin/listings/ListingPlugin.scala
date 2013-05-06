@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings
 
-import javax.persistence.{GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence._
 import reflect.BeanProperty
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -16,6 +16,9 @@ class ListingsPlugin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
+
+    @Column(nullable = false)
+    @BeanProperty var vatRate: Double = 0
 
     @BeanProperty var packagesPageText: String = _
     @BeanProperty var foldersPageText: String = _
