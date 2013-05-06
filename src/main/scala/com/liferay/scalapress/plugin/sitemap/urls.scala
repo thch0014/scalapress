@@ -8,17 +8,35 @@ import com.liferay.scalapress.obj.ObjectQuery
 /** @author Stephen Samuel */
 object UrlBuilder {
 
-    def build(context: ScalapressContext): List[Url] = {
+    def build(context: ScalapressContext): Seq[Url] = {
 
         val domain = "http://" + context.installationDao.get.domain.replace("http://", "")
+        folders(context, domain) ++ objects(context, domain)
+    }
+
+    def objects(context: ScalapressContext, domain: String): List[Url] = {
 
         val query = new ObjectQuery().withStatus("LIVE").withPageSize(50000)
         val objects = context.objectDao.search(query).results.filter(_.objectType.searchable)
+
         val urls = new ListBuffer[Url]
         for ( obj <- objects ) {
             val loc = domain + FriendlyUrlGenerator.friendlyUrl(obj)
             val lastmod = new DateTime(obj.dateUpdated, DateTimeZone.UTC).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.8))
+        }
+        urls.toList
+    }
+
+    def folders(context: ScalapressContext, domain: String): List[Url] = {
+
+        val folders = context.folderDao.findAll().filterNot(_.hidden)
+
+        val urls = new ListBuffer[Url]
+        for ( f <- folders ) {
+            val loc = domain + FriendlyUrlGenerator.friendlyUrl(f)
+            val lastmod = new DateTime(f.dateUpdated, DateTimeZone.UTC).toString("yyyy-MM-dd")
+            urls.append(Url(loc, lastmod, "weekly", 0.6))
         }
         urls.toList
     }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletResponse
-import org.jdom.output.{XMLOutputter, Format}
+import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Controller
@@ -17,7 +17,7 @@ class SitemapController {
     @RequestMapping(value = Array("sitemap"), produces = Array("text/xml"))
     def sitemap(resp: HttpServletResponse) {
         val urls = UrlBuilder.build(context)
-        val doc = SitemapWriter.write(urls)
-        new XMLOutputter(Format.getPrettyFormat).output(doc, resp.getOutputStream)
+        val sitemap = SitemapWriter.write(urls)
+        IOUtils.write(sitemap, resp.getOutputStream)
     }
 }
