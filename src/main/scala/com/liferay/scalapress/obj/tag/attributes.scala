@@ -13,9 +13,9 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
         params.get("id") match {
             case None => Some("<!-- no id specified for attribute tag -->")
             case Some(id) => request.obj.map(obj => {
-                obj.attributeValues.asScala
+                obj.attributeValues.asScala.toSeq
                   .filter(_.attribute.id == id.trim.toLong)
-                  .toSeq.sortBy(_.id)
+                  .sortBy(_.id)
                   .map(av => build(AttributeValueRenderer.renderValue(av), params))
                   .mkString(sep)
             })
