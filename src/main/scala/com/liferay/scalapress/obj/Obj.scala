@@ -31,8 +31,6 @@ class Obj {
 
     @BeanProperty var labels: String = _
 
-    @BeanProperty var customerNote: String = _
-
     @Index(name = "owner_index")
     @ManyToOne
     @JoinColumn(name = "account")

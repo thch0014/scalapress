@@ -20,6 +20,8 @@ class Order {
     @BeanProperty var deliveryCharge: Int = _
     @BeanProperty var deliveryVatRate: Double = _
 
+    @BeanProperty var customerNote: String = _
+
     def deliveryEx: Double = deliveryCharge / 100.0
     def deliveryVat: Double = if (vatable) deliveryEx * deliveryVatRate / 100.0 else 0
     def deliveryInc: Double = deliveryEx + deliveryVat

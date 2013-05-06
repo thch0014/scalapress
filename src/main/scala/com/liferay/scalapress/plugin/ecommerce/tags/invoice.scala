@@ -49,6 +49,13 @@ class InvoiceDateTag extends ScalapressTag {
     }
 }
 
+@Tag("invoice_customer_note")
+class InvoiceCustomerNoteTag extends ScalapressTag {
+    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+        request.order.flatMap(o => Option(o.customerNote))
+    }
+}
+
 object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
