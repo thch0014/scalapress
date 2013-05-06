@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.AssetStore
-import javax.ws.rs.DefaultValue
 import java.io._
 import com.googlecode.htmlcompressor.compressor.{YuiCssCompressor, YuiJavaScriptCompressor}
 import org.apache.commons.io.IOUtils
@@ -25,9 +24,9 @@ class MediaLibraryController {
     def list = "admin/media/library.vm"
 
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def upload(@RequestParam("minify") @DefaultValue("false") minify: Boolean,
+    def upload(@RequestParam(value = "minify", defaultValue = "false") minify: Boolean,
                @RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
-        for (upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty)) {
+        for ( upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty) ) {
 
             if (upload.getOriginalFilename.toLowerCase.endsWith(".css")) {
                 val minified = _minifyCss(upload.getInputStream)
