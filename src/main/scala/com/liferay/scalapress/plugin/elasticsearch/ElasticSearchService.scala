@@ -12,7 +12,7 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import org.elasticsearch.node.NodeBuilder
-import org.elasticsearch.index.query.{FilteredQueryBuilder, GeoDistanceFilterBuilder, QueryStringQueryBuilder, PrefixQueryBuilder}
+import org.elasticsearch.index.query._
 import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.{AttributeType, Sort}
@@ -21,9 +21,10 @@ import com.liferay.scalapress.obj.{ObjectType, ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
-import javax.annotation.{PostConstruct, PreDestroy}
+import javax.annotation.PreDestroy
 import java.util.concurrent.TimeUnit
 import com.liferay.scalapress.search.{SavedSearch, SearchService}
+import scala.Some
 
 /** @author Stephen Samuel */
 
@@ -125,6 +126,21 @@ class ElasticSearchService extends SearchService with Logging {
         objs.filter(_.name != null).filter(!_.name.isEmpty).foreach(index(_))
 
         logger.info("Indexing finished")
+    }
+
+    override def contains(id: String): Boolean = {
+        val resp = client.prepareSearch(INDEX)
+          .setSearchType(SearchType.QUERY_AND_FETCH)
+          .setTypes(TYPE)
+          .setQuery(new TermQueryBuilder("_id", id))
+          .setFrom(0)
+          .setSize(1)
+          .execute()
+          .actionGet()
+        resp.hits.totalHits() match {
+            case 1 => true
+            case _ => false
+        }
     }
 
     override def index(obj: Obj) {

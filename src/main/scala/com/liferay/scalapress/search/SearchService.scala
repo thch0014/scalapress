@@ -7,6 +7,7 @@ import com.liferay.scalapress.obj.{ObjectType, Obj}
 trait SearchService {
 
     def index(obj: Obj)
+    def contains(id: String): Boolean
     def search(search: SavedSearch): SearchResponse
 
     @deprecated

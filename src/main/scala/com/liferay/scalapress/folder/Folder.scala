@@ -18,7 +18,7 @@ import javax.persistence.CascadeType
 
 /** @author Stephen Samuel */
 @Entity
-@Table (name = "categories")
+@Table(name = "categories")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Folder {
@@ -101,6 +101,7 @@ class Folder {
 
 object Folder {
     def apply(root: Folder) = {
+
         val folder = new Folder
         folder.name = "new folder"
         folder.parent = root

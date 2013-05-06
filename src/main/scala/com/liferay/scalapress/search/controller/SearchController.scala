@@ -37,6 +37,7 @@ class SearchController extends Logging {
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
+               @RequestParam(value = "id", required = false, defaultValue = "0") id: Long,
                @RequestParam(value = "sort", required = false) sort: Sort,
                @RequestParam(value = "sectionId", required = false) sectionId: String,
                @RequestParam(value = "q", required = false) q: String,
@@ -45,35 +46,51 @@ class SearchController extends Logging {
                @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
                @RequestParam(value = "location", required = false) location: String): ScalapressPage = {
 
-        val plugin = searchPluginDao.get
+        val objects = if (id > 0) {
 
-        val attributeValues = req.getParameterMap.asScala
-          .filter(arg => arg._1.toString.startsWith("attr_"))
-          .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
-          .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
-          .map(arg => {
-            val av = new AttributeValue
-            av.attribute = new Attribute
-            av.attribute.id = arg._1.toString.drop(5).toLong
-            av.value = arg._2.asInstanceOf[Array[String]].head
-            av
-        })
+            if (searchService.contains(id.toString)) {
 
-        val search = new SavedSearch
-        search.attributeValues = attributeValues.toSet.asJava
-        search.keywords = q
-        search.distance = distance
-        search.location = location
-        search.maxResults = PageSize
-        search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
-        search.sortType = sort
+                Option(objectDao.find(id)) match {
+                    case Some(obj) if obj.status.equalsIgnoreCase("live") => List(obj)
+                    case _ => Nil
+                }
 
-        val response = searchService.search(search)
-        val results = response.hits.hits().map(hit => {
-            val id = hit.id().toLong
-            objectDao.find(id)
-        }).toList
-        val live = results.filter(_.status.equalsIgnoreCase("live"))
+            } else {
+                Nil
+            }
+
+        } else {
+
+            val attributeValues = req.getParameterMap.asScala
+              .filter(arg => arg._1.toString.startsWith("attr_"))
+              .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
+              .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
+              .map(arg => {
+                val av = new AttributeValue
+                av.attribute = new Attribute
+                av.attribute.id = arg._1.toString.drop("attr_".length).toLong
+                av.value = arg._2.asInstanceOf[Array[String]].head
+                av
+            })
+
+            val search = new SavedSearch
+            search.attributeValues = attributeValues.toSet.asJava
+            search.keywords = q
+            search.distance = distance
+            search.location = location
+            search.maxResults = PageSize
+            search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
+            search.sortType = sort
+
+            val response = searchService.search(search)
+            val results = response.hits.hits().map(hit => {
+                val id = hit.id().toLong
+                objectDao.find(id)
+            }).toList
+            val live = results.filter(_.status.equalsIgnoreCase("live"))
+
+            live
+        }
 
         // val objects = objectDao.search(new Search(classOf[Obj]).addFilterIn("id", ids.toSeq.asJava))
 
@@ -81,7 +98,9 @@ class SearchController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        if (live.size == 0) {
+        val plugin = searchPluginDao.get
+
+        if (objects.size == 0) {
 
             val noResults = Option(sectionId).map(_.toLong)
               .flatMap(id => Option(pluginDao.find(id)))
@@ -93,14 +112,14 @@ class SearchController extends Logging {
 
         } else {
 
-            page.body("<!-- search results: " + live.size + " objects found -->")
+            page.body("<!-- search results: " + objects.size + " objects found -->")
 
             //val paging = Page(live, 1, PageSize, response.hits.totalHits.toInt)
 
-            val markup = live.head.objectType.objectListMarkup
+            val markup = objects.head.objectType.objectListMarkup
             if (markup != null) {
                 page.body("<!-- search results: no object list markup found -->")
-                page.body(MarkupRenderer.renderObjects(live, markup, sreq, context))
+                page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
             }
         }
         page
