@@ -3,11 +3,12 @@ package com.liferay.scalapress.obj.attr
 import scala.Predef.String
 import javax.persistence.{JoinColumn, FetchType, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import reflect.BeanProperty
+import com.liferay.scalapress.NaturalOrderComparator
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "attributes_options")
-class AttributeOption {
+class AttributeOption extends Ordered[AttributeOption] {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +22,6 @@ class AttributeOption {
 
     @BeanProperty var position: Int = _
 
-    //    @BeanProperty var defaultForSearch: Boolean = false
-    //  @BeanProperty var defaultForNew: Boolean = false
-
-    //  @BeanProperty var location: String = _
-    //    @BeanProperty var showValue: Boolean = _
-    //  @BeanProperty var rnid: String = _
+    def compare(that: AttributeOption): Int =
+        new NaturalOrderComparator().compare(Option(value).getOrElse(""), Option(that.value).getOrElse(""))
 }

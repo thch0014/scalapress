@@ -3,7 +3,6 @@ package com.liferay.scalapress.util.mvc
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.enums.AttributeType
-import java.util.Date
 import java.text.SimpleDateFormat
 
 /** @author Stephen Samuel */
