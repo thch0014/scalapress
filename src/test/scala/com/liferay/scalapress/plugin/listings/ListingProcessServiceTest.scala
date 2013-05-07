@@ -21,7 +21,6 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     account.id = 123
 
     val plugin = new ListingsPlugin
-    plugin.vatRate = 11.22
 
     val service = new ListingProcessService()
     service.context = new ScalapressContext
@@ -30,7 +29,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     test("order uses vat rate from listing plugin") {
         val order = service._order(account, process, req, plugin)
         val actual = order.lines.asScala.head.vatRate
-        assert(11.22 === actual)
+        assert(0 === actual)
     }
 
     test("order line uses name from listing package as description") {
