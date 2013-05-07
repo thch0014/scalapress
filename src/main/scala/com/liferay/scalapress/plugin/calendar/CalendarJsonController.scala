@@ -19,8 +19,7 @@ class CalendarJsonController {
 
     @RequestMapping(produces = Array("application/json"), value = Array("widget/{id}"))
     @ResponseBody
-    def json(@RequestParam(value = "objectType", required = false, defaultValue = "0") objectType: Long,
-             @PathVariable("id") id: Long): Array[Event] = {
+    def json(@PathVariable("id") id: Long): Array[Event] = {
 
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
         val results = searchService.search(widget.search)

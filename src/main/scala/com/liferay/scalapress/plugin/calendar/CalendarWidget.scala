@@ -41,7 +41,7 @@ class CalendarWidget extends Widget {
         val search = new SavedSearch
         search.objectType = objectType
         search.status = "Live"
-        search.maxResults = 200
+        search.maxResults = 1000
         search.sortType = Sort.Newest
         search.hasAttributes = startDateAttribute.id.toString
         search
