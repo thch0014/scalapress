@@ -1,4 +1,4 @@
-package com.liferay.scalapress.widget
+package com.liferay.scalapress.widgets
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
 import org.scalatest.mock.MockitoSugar

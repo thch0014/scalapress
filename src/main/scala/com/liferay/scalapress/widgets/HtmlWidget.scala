@@ -16,9 +16,10 @@ class HtmlWidget extends Widget {
         Option(content) match {
             case None => None
             case Some(c) =>
-                Some(c
+                val replaced = c
                   .replace("src=\"/images/", "src=\"" + req.context.assetStore.baseUrl + "/")
-                  .replace("src=\"images/", "src=\"" + req.context.assetStore.baseUrl + "/"))
+                  .replace("src=\"images/", "src=\"" + req.context.assetStore.baseUrl + "/")
+                Some(replaced)
         }
     }
 }
