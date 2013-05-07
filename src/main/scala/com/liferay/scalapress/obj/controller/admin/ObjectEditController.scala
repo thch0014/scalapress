@@ -15,9 +15,9 @@ import com.liferay.scalapress.search.SearchService
 import com.liferay.scalapress.section.{SectionDao, Section}
 import com.liferay.scalapress.util.{EnumPopulator, ComponentClassScanner}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.obj.{ObjectDao, AttributeValueDao, Obj}
+import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
-import com.liferay.scalapress.obj.attr.AttributeValue
+import com.liferay.scalapress.obj.attr.{AttributeValueDao, AttributeValue}
 import com.liferay.scalapress.media.{Asset, AssetStore, Image}
 import com.liferay.scalapress.util.mvc.{AttributeValuesPopulator, UrlResolver}
 import com.liferay.scalapress.enums.AttributeType

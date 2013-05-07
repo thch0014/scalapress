@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import scala.Array
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.obj.AttributeOptionDao
-import com.liferay.scalapress.obj.attr.AttributeOption
+import com.liferay.scalapress.obj.attr.{AttributeOptionDao, AttributeOption}
 
 /** @author Stephen Samuel */
 @Controller

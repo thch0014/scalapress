@@ -8,8 +8,7 @@ import com.liferay.scalapress.{ScalapressContext}
 import com.liferay.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletResponse
-import com.liferay.scalapress.obj.{AttributeOptionDao, AttributeDao}
-import com.liferay.scalapress.obj.attr.{AttributeOption, Attribute}
+import com.liferay.scalapress.obj.attr.{AttributeOptionDao, AttributeDao, AttributeOption, Attribute}
 import com.liferay.scalapress.util.EnumPopulator
 
 /** @author Stephen Samuel */

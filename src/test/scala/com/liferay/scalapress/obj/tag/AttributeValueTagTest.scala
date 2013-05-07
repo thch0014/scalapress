@@ -40,4 +40,9 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
         val actual = new AttributeValueTag().render(sreq, context, Map("id" -> "2", "sep" -> "!"))
         assert("strawberry!swing" === actual.get)
     }
+
+    test("multiple values ues single prefix") {
+        val actual = new AttributeValueTag().render(sreq, context, Map("id" -> "2", "prefix" -> "before"))
+        assert("beforestrawberry swing" === actual.get)
+    }
 }

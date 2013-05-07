@@ -7,10 +7,10 @@ import com.liferay.scalapress.{ScalapressContext}
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.liferay.scalapress.search.{SearchFormFieldDao, SearchFormField}
 import com.liferay.scalapress.enums.SearchFieldType
-import com.liferay.scalapress.obj.AttributeDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.obj.controller.admin.MarkupPopulator
 import com.liferay.scalapress.util.{AttributePopulator, EnumPopulator}
+import com.liferay.scalapress.obj.attr.AttributeDao
 
 /** @author Stephen Samuel */
 @Controller

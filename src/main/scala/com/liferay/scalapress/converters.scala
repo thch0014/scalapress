@@ -1,8 +1,8 @@
 package com.liferay.scalapress
 
 import folder.{FolderDao, Folder}
-import obj.attr.Attribute
-import obj.{TypeDao, AttributeDao, ObjectType}
+import com.liferay.scalapress.obj.attr.{AttributeDao, Attribute}
+import obj.{TypeDao, ObjectType}
 import org.springframework.core.convert.converter.Converter
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.ecommerce.domain.{Address, DeliveryOption}

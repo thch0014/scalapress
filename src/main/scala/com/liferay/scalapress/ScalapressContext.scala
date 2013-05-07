@@ -2,7 +2,7 @@ package com.liferay.scalapress
 
 import folder.FolderDao
 import media.{AssetStore, ImageService, GalleryDao}
-import obj.{ObjectDao, TypeDao, AttributeValueDao, AttributeDao}
+import obj.{ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
@@ -20,6 +20,7 @@ import settings.InstallationDao
 import theme.MarkupDao
 import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
+import com.liferay.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
 
 /** @author Stephen Samuel */
 @Component

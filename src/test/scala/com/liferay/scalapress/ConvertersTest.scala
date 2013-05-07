@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
 import folder.FolderDao
-import obj.{AttributeDao, TypeDao}
+import obj.{TypeDao}
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
@@ -9,6 +9,7 @@ import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.form.FormDao
 import search.SearchFormDao
 import theme.{ThemeDao, MarkupDao}
+import com.liferay.scalapress.obj.attr.AttributeDao
 
 /** @author Stephen Samuel */
 class ConvertersTest extends FunSuite with MockitoSugar with BeforeAndAfter {
