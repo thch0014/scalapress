@@ -19,15 +19,15 @@ object FriendlyUrlGenerator {
             {label}
         </a>.toString()
 
-    def friendlyUrl(obj: Obj): String = {
-        "/object-" + obj.id + "-" + Option(obj.name).getOrElse("").replaceAll("[^a-zA-Z0-9\\s\\-]", "")
+    def friendlyUrl(id: Long, name: String) =
+        "/object-" + id + "-" + name.replaceAll("[^a-zA-Z0-9\\s\\-]", "")
           .replaceAll("\\s", "-")
           .replaceAll("-{2,}", "-")
           .replaceAll("-$", "")
           .replaceAll("^-", "")
           .toLowerCase
 
-    }
+    def friendlyUrl(obj: Obj): String = friendlyUrl(obj.id, obj.name)
 
     def friendlyUrl(folder: Folder): String = {
         "/folder-" + folder.id + "-" + Option(folder.name).getOrElse("").replaceAll("[^a-zA-Z0-9\\s\\-]", "")

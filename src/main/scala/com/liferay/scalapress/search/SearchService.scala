@@ -8,14 +8,12 @@ trait SearchService {
 
     def index(obj: Obj)
     def contains(id: String): Boolean
-    def search(search: SavedSearch): SearchResponse
+    def search(search: SavedSearch): Seq[ObjectRef]
 
     @deprecated
     def index()
     @deprecated
     def prefix(q: String, limit: Int): SearchResponse
-    @deprecated
-    def search(q: String, limit: Int): SearchResponse
     @deprecated
     def searchType(q: String, t: ObjectType, limit: Int): SearchResponse
 }

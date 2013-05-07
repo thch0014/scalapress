@@ -23,7 +23,7 @@ import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
 import java.util.concurrent.TimeUnit
-import com.liferay.scalapress.search.{SavedSearch, SearchService}
+import com.liferay.scalapress.search.{ObjectRef, SavedSearch, SearchService}
 import scala.Some
 
 /** @author Stephen Samuel */
@@ -71,24 +71,12 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject()
           .startObject("mappings")
           .startObject(TYPE)
-          .startObject("_source")
-          .field("enabled", false)
-          .endObject()
+          //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
+          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes")
           .endObject()
-          .startObject("name_raw")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("location")
-          .field("type", "geo_point")
-          .field("index", "not_analyzed")
-          .endObject()
+          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
 
         context.attributeDao.findAll().foreach(attr => {
             source
@@ -171,7 +159,12 @@ class ElasticSearchService extends SearchService with Logging {
           .actionGet()
     }
 
-    override def search(search: SavedSearch): SearchResponse = {
+    override def search(search: SavedSearch): Seq[ObjectRef] = {
+        val resp = _search(search)
+        _resp2ref(resp)
+    }
+
+    def _search(search: SavedSearch): SearchResponse = {
 
         val buffer = new ArrayBuffer[String]()
 
@@ -266,12 +259,29 @@ class ElasticSearchService extends SearchService with Logging {
         req.execute().actionGet()
     }
 
+    def _resp2ref(resp: SearchResponse): Seq[ObjectRef] = {
+        resp.hits().asScala.map(arg => {
+            val id = arg.id.toLong
+            val objectType = arg.getSource.get("objectType").toString.toLong
+            val name = arg.getSource.get("name").toString
+            val status = arg.getSource.get("status").toString
+            val attributes = arg.getSource.asScala
+              .filter(_._2 != null)
+              .filter(_._1.startsWith("attribute_")).map(field => {
+                val id = field._1.drop("attribute_".length).toLong
+                val value = field._2.toString
+                (id, value)
+            }).toMap
+            new ObjectRef(id, objectType, name, status, attributes, Nil)
+        }).toSeq
+    }
+
     // search by the given query string and then return the matching doc ids
-    override def search(q: String, pageSize: Int): SearchResponse = {
+    def search(q: String, pageSize: Int): SearchResponse = {
         val s = new SavedSearch
         s.name = q
         s.maxResults = pageSize
-        search(s)
+        _search(s)
     }
 
     // search by the given query string and then return the matching doc ids
@@ -280,7 +290,7 @@ class ElasticSearchService extends SearchService with Logging {
         s.name = q
         s.objectType = t
         s.maxResults = pageSize
-        search(s)
+        _search(s)
     }
 
     private def source(obj: Obj) = {

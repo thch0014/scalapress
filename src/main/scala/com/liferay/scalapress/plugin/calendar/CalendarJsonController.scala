@@ -1,13 +1,12 @@
 package com.liferay.scalapress.plugin.calendar
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
-import reflect.BeanProperty
+import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.search.SearchService
-import org.joda.time.{DateTimeZone, DateMidnight, DateTime}
+import org.joda.time.{DateMidnight, DateTimeZone}
 import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
-import com.liferay.scalapress.obj.attr.AttributeFuncs
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,25 +21,26 @@ class CalendarJsonController {
     def json(@PathVariable("id") id: Long): Array[Event] = {
 
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
-        val results = searchService.search(widget.search)
+        val refs = searchService.search(widget.search)
+        refs.flatMap(ref => {
 
-        val loaded = results.hits.hits.flatMap(hit => {
-            val obj = context.objectDao.find(hit.id.toLong)
-            AttributeFuncs.attributeValue(obj, widget.startDateAttribute).map(date => (obj, date))
-        })
+            ref.attributes.get(widget.startDateAttribute.id) match {
 
-        loaded
-          .filter(_._2 != null)
-          .filter(_._2.forall(_.isDigit))
-          .map(arg => {
-            val e = new Event
-            e.date = new DateMidnight(arg._2.toLong, DateTimeZone.UTC).getMillis.toString
-            e.dateString = new DateTime(arg._2.toLong, DateTimeZone.UTC).toString("dd/MM/yyyy")
-            e.title = arg._1.name
-            e.description = arg._1.summary(200).orNull
-            e.url = FriendlyUrlGenerator.friendlyUrl(arg._1)
-            e
-        })
+                case Some(date) if date.forall(_.isDigit) =>
+
+                    val dateMidnight = new DateMidnight(date.toLong, DateTimeZone.UTC)
+
+                    val e = new Event
+                    e.date = dateMidnight.getMillis.toString
+                    e.dateString = dateMidnight.toString("dd/MM/yyyy")
+                    e.title = ref.name
+                    e.url = FriendlyUrlGenerator.friendlyUrl(ref.id, ref.name)
+                    Some(e)
+
+                case _ => None
+            }
+
+        }).toArray
     }
 }
 

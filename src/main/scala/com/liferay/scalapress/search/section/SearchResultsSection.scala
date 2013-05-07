@@ -2,10 +2,10 @@ package com.liferay.scalapress.search.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{OneToOne, ManyToOne, JoinColumn, Entity, Table}
-import reflect.BeanProperty
 import com.liferay.scalapress.search.SavedSearch
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel
   *
@@ -34,7 +34,7 @@ class SearchResultsSection extends Section {
             case None => None
             case Some(s) =>
                 val results = context.searchService.search(search)
-                val objs = results.hits().hits().map(arg => context.objectDao.find(arg.id.toLong))
+                val objs = results.map(arg => context.objectDao.find(arg.id))
                 objs.size match {
                     case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
                     case _ =>

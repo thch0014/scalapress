@@ -1,6 +1,9 @@
 package com.liferay.scalapress.search
 
 /** @author Stephen Samuel */
-class ObjectRef {
-
-}
+case class ObjectRef(id: Long,
+                     objectType: Long,
+                     name: String,
+                     status: String,
+                     attributes: Map[Long, String],
+                     folders: Seq[Long])

@@ -3,11 +3,11 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
-import com.liferay.scalapress.search.SearchService
+import com.liferay.scalapress.search.{SavedSearch, SearchService}
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.util.mvc.UrlResolver
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -21,24 +21,23 @@ class BackofficeSearchController {
     @RequestMapping
     def test(@RequestParam("q") q: String, model: ModelMap) = {
 
-        val response = service.search(q, 50)
-        val results = response.hits().hits().map(hit => {
+        val s = new SavedSearch
+        s.name = q
+        s.maxResults = 50
 
-            val `type` = hit.getType.toLowerCase match {
-                case s: String if s.matches("\\d+") => typeDao.find(s.toLong).name
-                case _ => "unknown"
-            }
+        val refs = service.search(s)
+        val results = refs.map(ref => {
 
-            SearchResult(hit.id().toLong,
-                `type`,
-                hit.field("name").value(),
-                UrlResolver.objectEdit(hit.id.toLong),
-                UrlResolver.objectSiteView(hit.id.toLong))
+            SearchResult(ref.id,
+                ref.objectType,
+                ref.name,
+                UrlResolver.objectEdit(ref.id),
+                UrlResolver.objectSiteView(ref.id))
         })
 
-        model.put("results", results.toList.asJava)
+        model.put("results", results.asJava)
         "admin/search/results.vm"
     }
 }
 
-case class SearchResult(id: Long, t: String, name: String, editUrl: String, viewUrl: String)
+case class SearchResult(id: Long, t: Long, name: String, editUrl: String, viewUrl: String)

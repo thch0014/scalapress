@@ -82,11 +82,8 @@ class SearchController extends Logging {
             search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
             search.sortType = sort
 
-            val response = searchService.search(search)
-            val results = response.hits.hits().map(hit => {
-                val id = hit.id().toLong
-                objectDao.find(id)
-            }).toList
+            val refs = searchService.search(search)
+            val results = refs.map(ref => objectDao.find(ref.id)).toList
             val live = results.filter(_.status.equalsIgnoreCase("live"))
 
             live
@@ -130,7 +127,7 @@ class SearchController extends Logging {
     def savedSearch(@PathVariable("id") id: Long) = {
         val savedSearch = savedSearchDao.find(id)
         val response = searchService.search(savedSearch)
-        response.toString
+        response.toString()
     }
 
     @PostConstruct

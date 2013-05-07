@@ -2,18 +2,18 @@ package com.liferay.scalapress.search.widget
 
 import javax.persistence._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import reflect.BeanProperty
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.Some
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 @Cacheable
@@ -42,8 +42,7 @@ class SearchResultsWidget extends Widget {
             case None => None
             case Some(s) =>
                 val results = req.context.searchService.search(search)
-                val objs = results.hits().hits()
-                  .map(arg => req.context.objectDao.find(arg.id.toLong))
+                val objs = results.map(arg => req.context.objectDao.find(arg.id))
                   .filter(_.status.equalsIgnoreCase("live"))
                 objs.size match {
                     case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
