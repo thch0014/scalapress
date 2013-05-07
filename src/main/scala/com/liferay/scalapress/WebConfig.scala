@@ -74,7 +74,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
         registry.addInterceptor(SessionInterceptor)
         registry.addInterceptor(UrlResolverInterceptor)
-        registry.addInterceptor(new TypesInterceptor(typeDao))
+        registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
         registry.addInterceptor(new SiteInterceptor(siteDao))
     }
 
