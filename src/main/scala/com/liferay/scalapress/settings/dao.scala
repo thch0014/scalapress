@@ -21,23 +21,7 @@ trait InstallationDao extends GenericDao[Installation, java.lang.Long] {
 @Component
 @Transactional
 class InstallationDaoImpl extends GenericDaoImpl[Installation, java.lang.Long] with InstallationDao {
-
-    var cached: Option[Installation] = None
-
-    override def save(installation: Installation): Boolean = {
-        val b = super.save(installation)
-        cached = None
-        b
-    }
-
-    override def get: Installation = {
-        cached match {
-            case Some(installation) => installation
-            case None =>
-                cached = Option(findAll.head)
-                cached.get
-        }
-    }
+    override def get = findAll.head
 }
 
 @Component

@@ -29,7 +29,7 @@
 
     <div class="controls">
         <span class="uneditable-input">$order.status</span>
-        #springFormSingleSelect("order.status", $statusMap. "")
+        #springFormSingleSelect("order.status", $statusMap, "")
     </div>
 </div>
 <div class="control-group">
@@ -51,8 +51,7 @@
     <label class="control-label">Customer Note</label>
 
     <div class="controls">
-        <input type="text" class="input-xxlarge" name="customerNote" id="customerNote"
-               placeholder="Enter a customer note here"/>
+        #springFormInput("order.customerNote", "class='input-xxlarge'")
     </div>
 </div>
 
