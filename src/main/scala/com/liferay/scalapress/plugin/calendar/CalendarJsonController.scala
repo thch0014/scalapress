@@ -30,6 +30,7 @@ class CalendarJsonController {
         })
 
         loaded
+          .filter(_._2 != null)
           .filter(_._2.forall(_.isDigit))
           .map(arg => {
             val e = new Event
