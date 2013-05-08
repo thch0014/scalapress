@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.form
 
-import reflect.BeanProperty
 import javax.persistence.{Entity, GenerationType, GeneratedValue, Id, JoinColumn, Column, Table, ManyToOne}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
