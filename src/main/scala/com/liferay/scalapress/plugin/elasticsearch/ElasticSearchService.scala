@@ -73,7 +73,7 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(TYPE)
           //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("_id").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
           .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes")
           .endObject()
           .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
@@ -249,8 +249,8 @@ class ElasticSearchService extends SearchService with Logging {
                   .order(SortOrder.DESC)
                   .ignoreUnmapped(true)
             case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-            case Sort.Oldest => SortBuilders.fieldSort("_uid").order(SortOrder.ASC)
-            case _ => SortBuilders.fieldSort("_uid").order(SortOrder.DESC)
+            case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
+            case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
         }
 
         req.addSort(sort)
