@@ -11,6 +11,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils
 /** @author Stephen Samuel */
 class WriteoutCacheFilter extends Filter with Logging {
 
+    val MIN_CACHE_SIZE = 1000
+
     var context: ServletContext = _
     var properties: WriteoutCacheProperties = _
 
@@ -71,7 +73,8 @@ class WriteoutCacheFilter extends Filter with Logging {
 
                             val output = IOUtils.toString(branch.toByteArray, "utf-8")
                             logger.debug("Cache fail - Writing {} chars", output.length)
-                            FileUtils.write(file, output)
+                            if (output.length > MIN_CACHE_SIZE)
+                                FileUtils.write(file, output)
                         }
                 }
         }
