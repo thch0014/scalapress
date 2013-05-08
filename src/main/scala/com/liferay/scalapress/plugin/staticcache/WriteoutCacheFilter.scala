@@ -43,7 +43,7 @@ class WriteoutCacheFilter extends Filter with Logging {
         // we only want to cache non-resource files, easist way is to look for files without an extension
         // as they will be proper spring controllers, and only ones without query param
         if (uri.startsWith("/backoffice")
-          || uri.startsWith("backoffice")
+          || uri.startsWith("/login")
           || ext.length > 0
           || request.asInstanceOf[HttpServletRequest].getQueryString != null) {
 
