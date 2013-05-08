@@ -2,7 +2,6 @@ package com.liferay.scalapress.folder
 
 import javax.persistence._
 import java.util
-import reflect.BeanProperty
 import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
 import org.hibernate.annotations._
@@ -15,6 +14,7 @@ import scala.Some
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
