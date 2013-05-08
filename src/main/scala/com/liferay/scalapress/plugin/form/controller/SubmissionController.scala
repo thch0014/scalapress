@@ -56,7 +56,8 @@ class SubmissionController extends Logging {
                 val recipients = Option(form.recipients)
                   .map(_.split("\n").map(_.trim).filter(_.length > 0))
                   .getOrElse(Array[String]())
-                formService.email(recipients, sub, context.installationDao.get)
+                formService.adminEmail(recipients, sub, context.installationDao.get)
+                formService.submitterEmail(sub, form, context.installationDao.get)
 
                 val theme = themeService.default
                 val page = ScalapressPage(theme, sreq)

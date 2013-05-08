@@ -1,8 +1,9 @@
 package com.liferay.scalapress.plugin.form
 
+import scala.collection.JavaConverters._
 import javax.persistence._
-import reflect.BeanProperty
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -21,6 +22,7 @@ class Form {
 
     @BeanProperty var submitButtonText: String = _
 
+    // text used on the web page
     @Column(name = "submissionmessage")
     @BeanProperty var submissionText: String = _
 
@@ -30,9 +32,12 @@ class Form {
     // redirect on completion
     @Column(name = "submissionforward")
     @BeanProperty var submissionRedirect: String = _
+
     // shows in email
     @Column(name = "submissionEmailMessage")
     @BeanProperty var submissionEmailBody: String = _
+    @BeanProperty var submissionEmailSubject: String = _
+
     @BeanProperty var submissionScript: String = _
 
     @Column(name = "emails")
@@ -43,4 +48,6 @@ class Form {
 
     @Column(name = "ccItemListers")
     @BeanProperty var emailObjectOwner: Boolean = _
+
+    def submissionField: Option[FormField] = fields.asScala.find(_.submitterEmailField)
 }

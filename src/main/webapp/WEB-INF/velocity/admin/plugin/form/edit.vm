@@ -31,6 +31,30 @@
                 </div>
 
                 <div class="control-group">
+                    <label class="control-label">Submission Email Subject</label>
+
+                    <div class="controls">
+                        #springFormInput("form.submissionEmailSubject")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Submission Email Body</label>
+
+                    <div class="controls">
+                        #springFormTextarea("form.submissionEmailBody")
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Submission Redirect</label>
+
+                    <div class="controls">
+                        #springFormInput("form.submissionRedirect")
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label class="control-label">Use Captcha</label>
 
                     <div class="controls">

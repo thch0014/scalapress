@@ -31,6 +31,9 @@ class FormField {
 
     @BeanProperty var placeholder: String = _
 
+    @Column(name = "submitterEmailField", columnDefinition = "tinyint default 0")
+    @BeanProperty var submitterEmailField: Boolean = false
+
     @Column(name = "options")
     @BeanProperty var options: String = _
     def optionsList: Array[String] = Option(options).getOrElse("").split("\n")

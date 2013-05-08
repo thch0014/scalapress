@@ -51,22 +51,54 @@ class FormService extends Logging {
         submission
     }
 
-    def email(recipients: Seq[String], submission: Submission, installation: Installation) {
-
-        val body = new StringBuilder
-        for (kv <- submission.data.asScala) {
-            body.append(kv.key + ": " + kv.value + "\n")
-        }
-
-        val message = new SimpleMailMessage()
-
-        val nowww = Option(installation.domain) match {
+    def _domain(installation: Installation) =
+        Option(installation.domain) match {
             case Some(domain) if domain.startsWith("www") => domain.drop(4)
             case Some(domain) => domain
             case _ => "nodomain.com"
         }
 
-        message.setFrom("nodotreply@" + nowww)
+    def submitterEmail(submission: Submission,
+                       form: Form,
+                       installation: Installation) {
+
+        Option(form.submissionEmailBody) match {
+            case Some(body) =>
+                form.submissionField match {
+                    case Some(field) =>
+                        submission.data.asScala.find(_.key.equalsIgnoreCase(field.name)) match {
+                            case Some(kv) =>
+
+                                val subject = Option(form.submissionEmailSubject).getOrElse("Form submission received")
+
+                                val message = new SimpleMailMessage()
+                                message.setFrom("nodotreply@" + _domain(installation))
+                                message.setTo(kv.value)
+                                message.setSubject(subject)
+                                message.setText(body)
+
+                                try {
+                                    mailSender.send(message)
+                                } catch {
+                                    case e: Exception => logger.warn(e.toString)
+                                }
+                            case _ =>
+                        }
+                    case _ =>
+                }
+            case _ =>
+        }
+    }
+
+    def adminEmail(recipients: Seq[String], submission: Submission, installation: Installation) {
+
+        val body = new StringBuilder
+        for ( kv <- submission.data.asScala ) {
+            body.append(kv.key + ": " + kv.value + "\n")
+        }
+
+        val message = new SimpleMailMessage()
+        message.setFrom("nodotreply@" + _domain(installation))
         message.setTo(recipients.toArray)
         message.setSubject("Submission: " + submission.formName)
         message.setText(body.toString())
@@ -85,7 +117,7 @@ class FormService extends Logging {
           .filterNot(_.fieldType == FormFieldType.TickBox)
           .filterNot(_.fieldType == FormFieldType.Description)
 
-        for (field <- checkedFields if field.required || StringUtils.isNotBlank(field.regExp)) {
+        for ( field <- checkedFields if field.required || StringUtils.isNotBlank(field.regExp) ) {
 
             val regExp =
                 if (field.fieldType == FormFieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
