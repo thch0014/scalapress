@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.form.controller
+package com.liferay.scalapress.plugin.form.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._

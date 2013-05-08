@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.form.controller
+package com.liferay.scalapress.plugin.form.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
@@ -17,7 +17,7 @@ class SubmissionListController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(produces = Array("text/html"))
-    def list = "admin/submissions/list.vm"
+    def list = "admin/plugin/form/submissions/list.vm"
 
     @ModelAttribute def submissions(req: HttpServletRequest,
                                     @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,

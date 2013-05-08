@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.form.controller
+package com.liferay.scalapress.plugin.form.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, ModelAttribute, PathVariable, RequestMapping}
@@ -20,7 +20,7 @@ class SubmissionViewController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(produces = Array("text/html"))
-    def list = "admin/submissions/view.vm"
+    def list = "admin/plugin/form/submissions/view.vm"
 
     @RequestMapping(produces = Array("text/html"), value = Array("downloadall"))
     @ResponseBody
