@@ -34,6 +34,7 @@ class CalendarJsonController {
                     e.date = dateMidnight.getMillis.toString
                     e.dateString = dateMidnight.toString("dd/MM/yyyy")
                     e.title = ref.name
+                    e.description = ""
                     e.url = FriendlyUrlGenerator.friendlyUrl(ref.id, ref.name)
                     Some(e)
 

@@ -2,7 +2,6 @@ package com.liferay.scalapress.widgets
 
 import org.scalatest.{FunSuite, BeforeAndAfter}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.widgets.{HtmlWidget, WidgetRenderer}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.obj.Obj
