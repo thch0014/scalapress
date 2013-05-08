@@ -1,7 +1,7 @@
-package com.liferay.scalapress
+package com.liferay.scalapress.plugin.friendlyurl
 
-import folder.Folder
-import obj.Obj
+import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 object FriendlyUrlGenerator {

@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.mapping
+package com.liferay.scalapress.plugin.gmap
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Entity, Table}

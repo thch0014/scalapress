@@ -1,7 +1,8 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Tag, FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object ObjectTag extends ScalapressTag with TagBuilder {

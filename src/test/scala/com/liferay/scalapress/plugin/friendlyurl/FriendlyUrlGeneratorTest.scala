@@ -1,9 +1,9 @@
-package com.liferay.scalapress
+package com.liferay.scalapress.plugin.friendlyurl
 
-import folder.Folder
-import obj.Obj
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.mock.MockitoSugar
+import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with BeforeAndAfter {

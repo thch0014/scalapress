@@ -1,9 +1,10 @@
 package com.liferay.scalapress.plugin.sitemap
 
 import collection.mutable.ListBuffer
-import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext}
+import com.liferay.scalapress.{ScalapressContext}
 import org.joda.time.{DateTimeZone, DateTime}
 import com.liferay.scalapress.obj.ObjectQuery
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 object UrlBuilder {

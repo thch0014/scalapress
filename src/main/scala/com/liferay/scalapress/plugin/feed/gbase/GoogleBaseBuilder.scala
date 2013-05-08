@@ -4,10 +4,11 @@ import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter
 import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
-import com.liferay.scalapress.{FriendlyUrlGenerator, Logging}
+import com.liferay.scalapress.{Logging}
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.AttributeFuncs
 import com.liferay.scalapress.media.AssetStore
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {

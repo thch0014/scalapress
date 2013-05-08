@@ -1,7 +1,8 @@
 package com.liferay.scalapress.plugin.fbopengraph
 
 import com.liferay.scalapress.theme.tag.ScalapressTag
-import com.liferay.scalapress.{Tag, FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("og_title")

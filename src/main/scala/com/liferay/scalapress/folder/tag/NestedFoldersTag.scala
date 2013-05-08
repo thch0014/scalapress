@@ -1,10 +1,11 @@
 package com.liferay.scalapress.folder.tag
 
-import com.liferay.scalapress.{Tag, FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("folders_nested")

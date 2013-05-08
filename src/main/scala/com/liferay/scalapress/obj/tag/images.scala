@@ -4,6 +4,7 @@ import com.liferay.scalapress._
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import scala.Some
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 

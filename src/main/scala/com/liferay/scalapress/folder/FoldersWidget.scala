@@ -2,12 +2,13 @@ package com.liferay.scalapress.folder
 
 import javax.persistence._
 import reflect.BeanProperty
-import com.liferay.scalapress.{FriendlyUrlGenerator, Logging, ScalapressRequest}
+import com.liferay.scalapress.{Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
 import com.liferay.scalapress.widgets.Widget
 import scala.Some
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")

@@ -2,7 +2,7 @@ package com.liferay.scalapress.obj
 
 import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter
-import com.liferay.scalapress.{FriendlyUrlGenerator, Logging}
+import com.liferay.scalapress.{Logging}
 import org.apache.commons.lang.WordUtils
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.media.AssetStore

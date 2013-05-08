@@ -3,13 +3,13 @@ package com.liferay.scalapress.obj
 import com.liferay.scalapress.obj.attr.{AttributeFuncs, Attribute}
 import scala.collection.mutable.ArrayBuffer
 import org.joda.time.{DateTimeZone, DateTime}
-import com.liferay.scalapress.FriendlyUrlGenerator
 import scala.collection.JavaConverters._
 import java.io.{BufferedWriter, FileWriter, File}
 import com.csvreader.CsvWriter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.settings.InstallationDao
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Component

@@ -1,10 +1,11 @@
 package com.liferay.scalapress.folder.tag
 
-import com.liferay.scalapress.{FriendlyUrlGenerator, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 
