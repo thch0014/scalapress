@@ -38,45 +38,46 @@ class WriteoutCacheFilter extends Filter with Logging {
     def doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
 
         val uri = request.asInstanceOf[HttpServletRequest].getRequestURI
+        val ext = FilenameUtils.getExtension(uri)
 
         // we only want to cache non-resource files, easist way is to look for files without an extension
         // as they will be proper spring controllers, and only ones without query param
-        Option(FilenameUtils.getExtension(uri)) match {
+        if (uri.startsWith("/backoffice")
+          || uri.startsWith("backoffice")
+          || ext.length > 0
+          || request.asInstanceOf[HttpServletRequest].getQueryString != null) {
 
-            case Some(extension) if extension.length > 0 => chain.doFilter(request, response)
-            case _ =>
+            chain.doFilter(request, response)
 
-                Option(request.asInstanceOf[HttpServletRequest].getQueryString) match {
+        } else {
 
-                    case Some(query) => chain.doFilter(request, response)
-                    case _ =>
+            val filename = uri.replace("-", "_").replace("/", "_")
+            val path = context.getRealPath(properties.directory + "/" + filename)
+            logger.debug("Cache check [{}]", path)
+            val file = new File(path)
+            if (file.exists && file.lastModified > System.currentTimeMillis - properties
+              .timeout * 1000l) {
 
+                logger.debug("Cache hit [{}]", path)
+                val input = FileUtils.openInputStream(file)
+                IOUtils.copy(input, response.getOutputStream)
 
-                        val filename = uri.replace("-", "_").replace("/", "_")
-                        val path = context.getRealPath(properties.directory + "/" + filename)
-                        logger.debug("Cache check [{}]", path)
-                        val file = new File(path)
-                        if (file.exists && file.lastModified > System.currentTimeMillis - properties.timeout * 1000l) {
+            } else {
 
-                            logger.debug("Cache hit [{}]", path)
-                            val input = FileUtils.openInputStream(file)
-                            IOUtils.copy(input, response.getOutputStream)
-
-                        } else {
-
-                            val branch = new ByteArrayOutputStream
-                            val tee = new TeeServletOutputStream(new TeeOutputStream(response.getOutputStream, branch))
-                            val wrapper = new HttpServletResponseWrapper(response.asInstanceOf[HttpServletResponse]) {
-                                override def getOutputStream: ServletOutputStream = tee
-                            }
-                            chain.doFilter(request, wrapper)
-
-                            val output = IOUtils.toString(branch.toByteArray, "utf-8")
-                            logger.debug("Cache fail - Writing {} chars", output.length)
-                            if (output.length > MIN_CACHE_SIZE)
-                                FileUtils.write(file, output)
-                        }
+                val branch = new ByteArrayOutputStream
+                val tee = new
+                    TeeServletOutputStream(new TeeOutputStream(response.getOutputStream, branch))
+                val wrapper = new
+                    HttpServletResponseWrapper(response.asInstanceOf[HttpServletResponse]) {
+                    override def getOutputStream: ServletOutputStream = tee
                 }
+                chain.doFilter(request, wrapper)
+
+                val output = IOUtils.toString(branch.toByteArray, "utf-8")
+                logger.debug("Cache fail - Writing {} chars", output.length)
+                if (output.length > MIN_CACHE_SIZE)
+                    FileUtils.write(file, output)
+            }
         }
     }
 }
