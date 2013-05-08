@@ -73,10 +73,25 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(TYPE)
           //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes")
+          .startObject("_id")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
           .endObject()
-          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
+          .startObject("objectid")
+          .field("type", "integer")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("name_raw")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("location")
+          .field("type", "geo_point")
+          .field("index", "not_analyzed")
+          .endObject()
 
         context.attributeDao.findAll().foreach(attr => {
             source
@@ -249,8 +264,8 @@ class ElasticSearchService extends SearchService with Logging {
                   .order(SortOrder.DESC)
                   .ignoreUnmapped(true)
             case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-            case Sort.Oldest => SortBuilders.fieldSort("_id").order(SortOrder.ASC)
-            case _ => SortBuilders.fieldSort("_id").order(SortOrder.DESC)
+            case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
+            case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
         }
 
         req.addSort(sort)
@@ -299,6 +314,7 @@ class ElasticSearchService extends SearchService with Logging {
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
+          .field("objectid", obj.id)
           .field("objectType", obj.objectType.id.toString)
           .field("name", obj.name)
           .field("name_raw", obj.name)

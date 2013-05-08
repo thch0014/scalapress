@@ -61,7 +61,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj2.attributeValues.add(av5)
 
     val obj3 = new Obj
-    obj3.id = 6
+    obj3.id = 20
     obj3.name = "steve mclaren"
     obj3.objectType = new ObjectType
     obj3.objectType.id = 3
@@ -123,7 +123,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search)
         assert(results.size === 3)
         assert(results(0).id === 4)
-        assert(results(1).id === 6)
+        assert(results(1).id === 20)
         assert(results(2).id === 2)
     }
 
@@ -133,7 +133,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortType = Sort.Newest
         val results = service.search(search)
         assert(results.size === 3)
-        assert(results(0).id === 6)
+        assert(results(0).id === 20)
         assert(results(1).id === 4)
         assert(results(2).id === 2)
     }
@@ -146,7 +146,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(results.size === 3)
         assert(results(0).id === 2)
         assert(results(1).id === 4)
-        assert(results(2).id === 6)
+        assert(results(2).id === 20)
     }
 
     test("sorting by attribute value happy path") {
@@ -157,7 +157,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val results = service.search(search)
         assert(results.size === 3)
-        assert(results(0).id === 6)
+        assert(results(0).id === 20)
         assert(results(1).id === 2)
         assert(results(2).id === 4)
     }
@@ -172,7 +172,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(results.size === 3)
         assert(results(0).id === 4)
         assert(results(1).id === 2)
-        assert(results(2).id === 6)
+        assert(results(2).id === 20)
     }
 
     test("distance search happy path") {
