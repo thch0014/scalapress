@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.theme.MarkupDao
-import com.liferay.scalapress.folder.ObjectListSection
 import com.liferay.scalapress.media.AssetStore
-import com.liferay.scalapress.folder.section.FolderContentSection
+import com.liferay.scalapress.folder.section.{ObjectListSection, FolderContentSection}
 
 /** @author Stephen Samuel */
 @Controller

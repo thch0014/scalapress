@@ -2,8 +2,8 @@ package com.liferay.scalapress.folder.section
 
 import javax.persistence.{Column, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import reflect.BeanProperty
 import com.liferay.scalapress.section.Section
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

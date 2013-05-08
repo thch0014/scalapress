@@ -3,10 +3,10 @@ package com.liferay.scalapress.folder.section
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
-import reflect.BeanProperty
 import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

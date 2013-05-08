@@ -1,4 +1,4 @@
-package com.liferay.scalapress.folder
+package com.liferay.scalapress.folder.section
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}

@@ -1,11 +1,11 @@
 package com.liferay.scalapress.folder.section
 
-import javax.persistence.{Table, Entity, JoinColumn, ManyToOne}
-import reflect.BeanProperty
+import javax.persistence.{JoinColumn, ManyToOne}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 //@Entity
