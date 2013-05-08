@@ -16,7 +16,7 @@ class ListingNotificationService extends Logging {
 
     def notify(obj: Obj, listingProcess: ListingProcess) {
         val msg = new SimpleMailMessage
-        msg.setTo("admin@" + installationDao.get.domain)
+        msg.setTo(installationDao.get.adminEmail)
         msg.setFrom("donotreply@" + installationDao.get.domain)
         msg.setText(message(obj, listingProcess.listingPackage))
         msg.setSubject("Listing: " + obj.name)

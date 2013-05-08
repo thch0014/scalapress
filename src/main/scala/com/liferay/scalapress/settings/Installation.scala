@@ -15,8 +15,12 @@ class Installation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
+    // email for the software to send emails to
+    @BeanProperty var adminEmail: String = _
+
     @BeanProperty var postcode: String = null
 
+    // public contact email
     @BeanProperty var email: String = null
 
     @BeanProperty var telephone: String = null

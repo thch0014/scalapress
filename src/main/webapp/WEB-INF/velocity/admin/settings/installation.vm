@@ -13,7 +13,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Domain</label>
+        <label class="control-label">Local Name</label>
 
         <div class="controls">
             $request.getLocalName
@@ -33,6 +33,14 @@
 
         <div class="controls">
             #springFormInput("installation.domain")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Admin Email</label>
+
+        <div class="controls">
+            #springFormInput("installation.adminEmail")
         </div>
     </div>
 
@@ -69,7 +77,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">email</label>
+        <label class="control-label">Email</label>
 
         <div class="controls">
             #springFormInput("installation.email")
@@ -77,7 +85,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">telephone</label>
+        <label class="control-label">Telephone</label>
 
         <div class="controls">
             #springFormInput("installation.telephone")
@@ -85,7 +93,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">vatNumber</label>
+        <label class="control-label">Vat Number</label>
 
         <div class="controls">
             #springFormInput("installation.vatNumber")
@@ -93,7 +101,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">companyNumber</label>
+        <label class="control-label">Company Number</label>
 
         <div class="controls">
             #springFormInput("installation.companyNumber")
