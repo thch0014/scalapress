@@ -40,6 +40,19 @@ class GalleryEditController {
         edit(g)
     }
 
+    @RequestMapping(value = Array("delete/{filename}"))
+    def deleteImage(@ModelAttribute("gallery") g: Gallery, @PathVariable("filename") filename: String) = {
+        import scala.collection.JavaConverters._
+        g.getImages.asScala.find(_.filename == filename) match {
+            case None =>
+            case Some(image) =>
+                g.getImages.remove(image)
+                image.setGallery(null)
+                galleryDao.save(g)
+        }
+        "redirect:/backoffice/gallery/" + g.id
+    }
+
     @RequestMapping(value = Array("delete"))
     def delete(@ModelAttribute("gallery") g: Gallery) = {
         galleryDao.remove(g)

@@ -21,7 +21,7 @@ class Gallery {
 
     @BeanProperty var showDateUploaded: Boolean = _
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL))
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
 }

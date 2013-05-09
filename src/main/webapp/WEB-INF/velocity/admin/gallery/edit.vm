@@ -32,7 +32,11 @@
 <ul class="thumbnails">
     #foreach ($image in $gallery.images)
         <li class="span2">
-            <img data-src="holder.js/300x200" src="/images/$image.filename">
+            <div class="thumbnail">
+                <img data-src="holder.js/300x200" src="/images/$image.filename?width=200&height=160">
+                <a class="btn btn-danger btn-mini" href="/backoffice/gallery/$gallery.id/delete/$image.filename">
+                    <i class="icon-trash icon-white"></i> Remove</a>
+            </div>
         </li>
     #end
 </ul>

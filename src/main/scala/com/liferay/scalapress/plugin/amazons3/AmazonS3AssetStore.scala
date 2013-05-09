@@ -10,10 +10,8 @@ import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.liferay.scalapress.Logging
-import scala.concurrent._
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
-import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -90,6 +88,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
                     Option(obj.getObjectContent) match {
                         case Some(in) =>
                             val b = IOUtils.toByteArray(in)
+                            IOUtils.closeQuietly(in)
                             if (b.length == 0)
                                 None
                             else

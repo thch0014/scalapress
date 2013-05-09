@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
+import com.liferay.scalapress.util.mvc.NotFoundException
 
 @Controller
 @RequestMapping(Array("images"))
@@ -16,8 +17,8 @@ class ImageController extends Logging {
     @Autowired
     var imageProvider: AssetStore = _
 
-    @ExceptionHandler(Array(classOf[RuntimeException]))
-    def handleException1(e: RuntimeException, resp: HttpServletResponse) {
+    @ExceptionHandler(Array(classOf[NotFoundException]))
+    def handleException1(e: NotFoundException, resp: HttpServletResponse) {
         resp.setStatus(404)
     }
 
@@ -26,13 +27,14 @@ class ImageController extends Logging {
                      @RequestParam("height") height: Int, resp: HttpServletResponse) {
 
         imageProvider.get(filename) match {
-            case None => throw new RuntimeException
+            case None => throw new NotFoundException
             case Some(in) =>
 
                 val image: java.awt.Image = ImageIO.read(in)
                 val thumbnail = ImageTools.fit(image, (width, height))
-                ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
                 resp.setContentType("image/png")
+                ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
+
         }
     }
 
@@ -51,5 +53,3 @@ class ImageController extends Logging {
         }
     }
 }
-
-case class CacheElement(filename: String, w: Int, h: Int)
