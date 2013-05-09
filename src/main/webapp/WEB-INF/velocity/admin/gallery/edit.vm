@@ -34,6 +34,8 @@
         <li class="span2">
             <div class="thumbnail">
                 <img data-src="holder.js/300x200" src="/images/$image.filename?width=200&height=160">
+                <a class="btn btn-mini" href="/images/$image.filename">
+                    <i class="icon-eyeball icon-white"></i> View Original</a>
                 <a class="btn btn-danger btn-mini" href="/backoffice/gallery/$gallery.id/delete/$image.filename">
                     <i class="icon-trash icon-white"></i> Remove</a>
             </div>

@@ -46,10 +46,11 @@ class ImageController extends Logging {
     def image(@PathVariable("filename") filename: String, resp: HttpServletResponse) {
         resp.setContentType(URLConnection.guessContentTypeFromName(filename))
         imageProvider.get(filename) match {
-            case None => {
+            case None =>
                 logger.debug("Could not find file {}", filename)
-            }
-            case Some(in) => IOUtils.copy(in, resp.getOutputStream)
+            case Some(in) =>
+                IOUtils.copy(in, resp.getOutputStream)
+                IOUtils.closeQuietly(in)
         }
     }
 }
