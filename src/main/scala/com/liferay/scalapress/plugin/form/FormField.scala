@@ -1,9 +1,10 @@
 package com.liferay.scalapress.plugin.form
 
-import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import scala.Predef.String
 import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 import scala.beans.BeanProperty
+import javax.persistence.Column
 
 /** @author Stephen Samuel */
 @Entity
@@ -31,8 +32,8 @@ class FormField {
 
     @BeanProperty var placeholder: String = _
 
-    @Column(name = "submitterEmailField", columnDefinition = "tinyint default 0")
-    @BeanProperty var submitterEmailField: Boolean = _
+    @Column(name = "submitterEmail", nullable = false)
+    @BeanProperty var submitterEmailField: Boolean = true
 
     @Column(name = "options")
     @BeanProperty var options: String = _
