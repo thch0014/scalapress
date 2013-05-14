@@ -18,6 +18,12 @@ object ListingsRenderer {
                     </a>
                 </td>
                 <td>
+                    {obj.status}
+                </td>
+                <td>
+                    {obj.status}
+                </td>
+                <td>
                     <a href={"/listing/" + obj.id}>Edit</a>
                 </td>
             </tr>)

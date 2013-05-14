@@ -11,6 +11,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
+import com.liferay.scalapress.security.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -23,6 +24,9 @@ class ListingEditController {
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
+
+        val account = SecurityFuncs.getUser(req)
+        require(account.get.id == obj.account.id)
 
         val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")
         val theme = themeService.default
@@ -38,7 +42,7 @@ class ListingEditController {
         obj.content = req.getParameter("content")
 
         obj.attributeValues.clear()
-        for (a <- obj.objectType.attributes.asScala) {
+        for ( a <- obj.objectType.attributes.asScala ) {
 
             val values = req.getParameterValues("attributeValue_" + a.id)
             if (values != null) {

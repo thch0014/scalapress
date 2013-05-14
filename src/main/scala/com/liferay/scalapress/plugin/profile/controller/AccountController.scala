@@ -3,19 +3,19 @@ package com.liferay.scalapress.plugin.profile.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.profile.{ProfileRenderer, AccountPluginDao}
+import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
+import com.liferay.scalapress.plugin.profile.{AccountLink, AccountPluginDao}
+import com.liferay.scalapress.obj.{Obj, ObjectDao, TypeDao}
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import org.springframework.validation.Errors
-import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
-import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("profile"))
-class ProfileController {
+@RequestMapping(Array("account"))
+class AccountController {
 
     @Autowired var themeDao: ThemeDao = _
     @Autowired var themeService: ThemeService = _
@@ -26,17 +26,14 @@ class ProfileController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showRegistrationPage(req: HttpServletRequest,
-                             @ModelAttribute("account") account: Obj,
-                             errors: Errors): ScalapressPage = {
+    def show(req: HttpServletRequest, @ModelAttribute("account") account: Obj): ScalapressPage = {
 
-        val plugin = accountPluginDao.get
-        val sreq = ScalapressRequest(req, context).withTitle("Your Profile")
+        val links = new ComponentClassScanner().getSubtypes(classOf[AccountLink])
+
+        val sreq = ScalapressRequest(req, context).withTitle("Your Account")
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(ProfileRenderer.renderProfilePage(account, plugin, errors))
+        page.body(AccountRenderer.links(links))
         page
     }
-
-    @ModelAttribute("account") def account(req: HttpServletRequest) = req.getUserPrincipal
 }
