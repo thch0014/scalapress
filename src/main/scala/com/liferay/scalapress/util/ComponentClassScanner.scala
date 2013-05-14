@@ -4,7 +4,7 @@ import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
-import org.springframework.core.`type`.filter.{AnnotationTypeFilter, AssignableTypeFilter}
+import org.springframework.core.`type`.filter.AssignableTypeFilter
 import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.section.Section
@@ -17,7 +17,7 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
     def getComponentClasses(basePackage: String): List[Class[_]] = {
         val buffer = new ListBuffer[Class[_]]
 
-        for (candidate <- findCandidateComponents(basePackage)) {
+        for ( candidate <- findCandidateComponents(basePackage) ) {
             try {
                 val cls: Class[_] = ClassUtils
                   .resolveClassName(candidate.getBeanClassName, ClassUtils.getDefaultClassLoader)
@@ -32,34 +32,19 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 
         buffer.toList
     }
+
+    def getSubtypes[T](klass: Class[T]) = {
+        val scanner = new ComponentClassScanner
+        scanner.addIncludeFilter(new AssignableTypeFilter(klass))
+        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[T]])
+    }
 }
 
 object ComponentClassScanner {
 
-    def paymentPlugins = {
-        val scanner = new ComponentClassScanner
-        scanner.addIncludeFilter(new AssignableTypeFilter(classOf[PaymentPlugin]))
-        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[PaymentPlugin]])
-    }
-
-    def sections = {
-        val scanner = new ComponentClassScanner
-        scanner.addIncludeFilter(new AssignableTypeFilter(classOf[Section]))
-        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[Section]])
-    }
-    def plugins = {
-        val scanner = new ComponentClassScanner
-        scanner.addIncludeFilter(new AssignableTypeFilter(classOf[Plugin]))
-        scanner.getComponentClasses("com.liferay.scalapress")
-    }
-    def widgets = {
-        val scanner = new ComponentClassScanner
-        scanner.addIncludeFilter(new AssignableTypeFilter(classOf[Widget]))
-        scanner.getComponentClasses("com.liferay.scalapress")
-    }
-    def tags = {
-        val scanner = new ComponentClassScanner
-        scanner.addIncludeFilter(new AnnotationTypeFilter(classOf[Tag]))
-        scanner.getComponentClasses("com.liferay.scalapress")
-    }
+    def paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
+    def sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
+    def plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])
+    def widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
+    def tags: Seq[Class[Tag]] = new ComponentClassScanner().getSubtypes(classOf[Tag])
 }
