@@ -4,9 +4,12 @@ import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import scala.Array
-import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
+import javax.persistence.Table
+import javax.persistence.CascadeType
+import javax.persistence.Entity
 
 /** @author Stephen Samuel */
 @Entity
@@ -52,6 +55,7 @@ class SavedSearch {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemType")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectType: ObjectType = _
 
     @Column(name = "inStockOnly", nullable = false)

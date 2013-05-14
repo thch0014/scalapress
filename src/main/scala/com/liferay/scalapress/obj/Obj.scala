@@ -4,12 +4,15 @@ import attr.AttributeValue
 import reflect.BeanProperty
 import java.util
 import javax.persistence._
-import org.hibernate.annotations.{Index, BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.plugin.listings.ListingPackage
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.media.Image
 import org.joda.time.{DateTimeZone, DateTime}
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.CascadeType
 
 /** @author Stephen Samuel */
 @Entity
@@ -34,15 +37,18 @@ class Obj {
     @Index(name = "owner_index")
     @ManyToOne
     @JoinColumn(name = "account")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var account: Obj = _
 
     @ManyToOne
     @JoinColumn(name = "listing_package")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var listingPackage: ListingPackage = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
     @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY,
@@ -56,6 +62,7 @@ class Obj {
         joinColumns = Array(new JoinColumn(name = "item", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "category"))
     )
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
@@ -63,16 +70,19 @@ class Obj {
         joinColumns = Array(new JoinColumn(name = "item", unique = true)),
         inverseJoinColumns = Array(new JoinColumn(name = "accessory"))
     )
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
     @Index(name = "objecttype_index")
     @ManyToOne
     @JoinColumn(name = "itemType")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectType: ObjectType = _
 
     @Column

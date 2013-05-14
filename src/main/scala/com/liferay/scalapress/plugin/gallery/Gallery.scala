@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.gallery
 
-import scala.Predef.String
-import reflect.BeanProperty
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
 import scala.Array
 import java.util
 import com.liferay.scalapress.media.Image
+import scala.beans.BeanProperty
+import org.hibernate.annotations.{NotFound, NotFoundAction}
 
 /** @author Stephen Samuel */
 @Entity
@@ -22,6 +22,7 @@ class Gallery {
     @BeanProperty var showDateUploaded: Boolean = _
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
 }

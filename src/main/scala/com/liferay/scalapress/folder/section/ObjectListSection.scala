@@ -7,6 +7,7 @@ import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
+import org.hibernate.annotations.{NotFound, NotFoundAction}
 
 /** @author Stephen Samuel
   *
@@ -29,6 +30,7 @@ class ObjectListSection extends Section {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listMarkup", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
     override def backoffice: String = "/backoffice/section/objectlist/" + id

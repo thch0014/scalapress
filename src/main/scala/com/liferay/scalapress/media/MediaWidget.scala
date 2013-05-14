@@ -1,13 +1,13 @@
 package com.liferay.scalapress.media
 
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity}
-import reflect.BeanProperty
 import com.liferay.scalapress.ScalapressRequest
 import scala.Array
 import java.util
 import scala.collection.JavaConverters._
-import org.hibernate.annotations.{FetchMode, Fetch}
+import org.hibernate.annotations.{NotFound, NotFoundAction, FetchMode, Fetch}
 import com.liferay.scalapress.widgets.Widget
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 
@@ -22,6 +22,7 @@ class MediaWidget extends Widget {
         cascade = Array(CascadeType.ALL),
         orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
     override def backoffice = "/backoffice/widget/media/" + id

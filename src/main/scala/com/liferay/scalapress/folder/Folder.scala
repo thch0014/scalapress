@@ -2,7 +2,6 @@ package com.liferay.scalapress.folder
 
 import javax.persistence._
 import java.util
-import scala.Array
 import com.liferay.scalapress.enums.FolderOrdering
 import org.hibernate.annotations._
 import com.liferay.scalapress.section.Section
@@ -10,7 +9,6 @@ import com.liferay.scalapress.obj.Obj
 import section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.theme.Theme
 import org.joda.time.{DateTime, DateTimeZone}
-import scala.Some
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
@@ -46,6 +44,7 @@ class Folder {
     @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "parent")
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var parent: Folder = _
 
     @ManyToOne

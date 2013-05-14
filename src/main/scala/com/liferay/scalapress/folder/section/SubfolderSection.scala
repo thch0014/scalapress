@@ -7,6 +7,7 @@ import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
+import org.hibernate.annotations.{NotFound, NotFoundAction}
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,6 +16,7 @@ class SubfolderSection extends Section {
 
     @ManyToOne
     @JoinColumn(name = "markup", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {

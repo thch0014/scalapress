@@ -1,11 +1,12 @@
 package com.liferay.scalapress.media
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import reflect.BeanProperty
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 import org.joda.time.{DateTimeZone, DateTime}
+import org.hibernate.annotations.{NotFound, NotFoundAction}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -28,18 +29,22 @@ class Image {
 
     @ManyToOne
     @JoinColumn(name = "item", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
 
     @ManyToOne
     @JoinColumn(name = "gallery", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var gallery: Gallery = _
 
     @ManyToOne
     @JoinColumn(name = "category", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var folder: Folder = _
 
     @ManyToOne
     @JoinColumn(name = "imageBox", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var mediaWidget: MediaWidget = _
 
 }

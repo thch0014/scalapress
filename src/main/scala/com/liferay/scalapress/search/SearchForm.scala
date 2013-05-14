@@ -1,10 +1,10 @@
 package com.liferay.scalapress.search
 
 import javax.persistence._
-import reflect.BeanProperty
 import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.ObjectType
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

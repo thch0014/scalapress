@@ -1,8 +1,8 @@
 package com.liferay.scalapress.theme
 
 import javax.persistence._
-import reflect.BeanProperty
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

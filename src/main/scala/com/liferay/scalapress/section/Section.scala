@@ -1,11 +1,11 @@
 package com.liferay.scalapress.section
 
 import javax.persistence._
-import reflect.BeanProperty
-import org.hibernate.annotations.{CacheConcurrencyStrategy, Index}
+import org.hibernate.annotations.{NotFound, NotFoundAction, CacheConcurrencyStrategy, Index}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.folder.Folder
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -30,16 +30,19 @@ abstract class Section {
     @ManyToOne
     @JoinColumn(name = "ownerCategory", nullable = true)
     @Index(name = "folder_index")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var folder: Folder = _
 
     @ManyToOne
     @JoinColumn(name = "ownerItem", nullable = true)
     @Index(name = "object_index")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
 
     @ManyToOne
     @JoinColumn(name = "ownerItemType", nullable = true)
     @Index(name = "objecttype_index")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectType: ObjectType = _
 
     def desc: String

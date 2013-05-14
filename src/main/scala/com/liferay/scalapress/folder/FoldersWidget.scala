@@ -5,10 +5,12 @@ import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
-import org.hibernate.annotations.{CacheConcurrencyStrategy, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.liferay.scalapress.widgets.Widget
-import scala.Some
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import javax.persistence.Table
+import scala.Some
+import javax.persistence.Entity
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -24,6 +26,7 @@ class FoldersWidget extends Widget with Logging {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "root")
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var start: Folder = _
 
     @BeanProperty var exclusions: String = _
@@ -59,7 +62,7 @@ class FoldersWidget extends Widget with Logging {
           .filterNot(_.name == null)
           .sortBy(_.name)
 
-        for (folder <- children) {
+        for ( folder <- children ) {
             buffer.append("<li class=\"l" + level + "\" id=\"w" + id + "_f" + folder.id + "\">")
             buffer.append(FriendlyUrlGenerator.friendlyLink(folder))
             if (level < depth)
