@@ -4,12 +4,13 @@ import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
-import org.springframework.core.`type`.filter.AssignableTypeFilter
+import org.springframework.core.`type`.filter.{AnnotationTypeFilter, AssignableTypeFilter}
 import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.Tag
 import com.liferay.scalapress.plugin.payments.PaymentPlugin
+import java.lang.annotation.Annotation
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -38,6 +39,12 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
         scanner.addIncludeFilter(new AssignableTypeFilter(klass))
         scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[T]])
     }
+
+    def getAnnotatedClasses[T <: Annotation](annotationType: Class[T]) = {
+        val scanner = new ComponentClassScanner
+        scanner.addIncludeFilter(new AnnotationTypeFilter(annotationType))
+        scanner.getComponentClasses("com.liferay.scalapress").map(_.asInstanceOf[Class[T]])
+    }
 }
 
 object ComponentClassScanner {
@@ -46,5 +53,5 @@ object ComponentClassScanner {
     def sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
     def plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])
     def widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
-    def tags: Seq[Class[Tag]] = new ComponentClassScanner().getSubtypes(classOf[Tag])
+    def tags: Seq[Class[Tag]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Tag])
 }
