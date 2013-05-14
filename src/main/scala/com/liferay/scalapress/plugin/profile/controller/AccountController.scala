@@ -33,7 +33,7 @@ class AccountController {
         val sreq = ScalapressRequest(req, context).withTitle("Your Account")
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(AccountRenderer.links(links))
+        page.body(AccountRenderer.links(links, context))
         page
     }
 }
