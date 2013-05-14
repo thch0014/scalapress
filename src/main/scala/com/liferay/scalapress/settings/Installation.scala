@@ -8,7 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy
 @Entity
 @Table(name = "settings_site")
 @Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Installation {
 
     @Id
