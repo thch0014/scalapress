@@ -63,7 +63,7 @@ object ListingFieldsRenderer {
         <div>
             <label class="control-label">Content *</label>
             <div class="controls">
-                <textarea class="input-block-level" rows="12" name="content" value={content}/>
+                <textarea class="input-block-level" rows="12" name="content">{content}</textarea>
             </div>
         </div>
 
