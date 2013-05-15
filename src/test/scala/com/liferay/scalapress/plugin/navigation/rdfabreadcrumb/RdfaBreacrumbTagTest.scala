@@ -25,8 +25,8 @@ class RdfaBreacrumbTagTest extends FunSuite with OneInstancePerTest with Mockito
     test("rdfa markup") {
         val rendered = new RdfaBreacrumbTag().render(sreq, context, Map.empty)
         assert(
-            "<ul class='breadcrumb'><div xmlns:v='http://rdf.data-vocabulary.org/#'><span typeof='v:Breadcrumb'><span class='parent'><a href='/folder-5-food'rel=\"v:url\" property=\"v:title\">food</a></span><span class='divider'> / </span><span rel='v:child'><span class='active'>spaghetti</span></span></span></div></ul>" === rendered
-              .get
+            "<ul class='breadcrumb'><div xmlns:v='http://rdf.data-vocabulary.org/#'><span typeof='v:Breadcrumb'><span class='parent'><a href='/folder-5-food'rel=\"v:url\" property=\"v:title\">food</a></span><span class='divider'> / </span><span rel='v:child'><span typeof='v:Breadcrumb'><span class='active'>spaghetti</span></span></span></span></div></ul>"
+              === rendered.get
               .replaceAll("\\n", "")
               .replaceAll("\\r", "")
               .replaceAll("\\s{2,}", ""))
