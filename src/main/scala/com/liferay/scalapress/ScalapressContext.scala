@@ -21,6 +21,7 @@ import theme.MarkupDao
 import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
 import com.liferay.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
+import com.liferay.scalapress.plugin.profile.AccountPluginDao
 
 /** @author Stephen Samuel */
 @Component
@@ -31,6 +32,7 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var paymentPluginDao: PaymentPluginDao = _
     @Autowired var paypalStandardPluginDao: PaypalStandardPluginDao = _
     @Autowired var sagepayFormPluginDao: SagepayFormPluginDao = _
+    @Autowired var accountPluginDao: AccountPluginDao = _
 
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var listingProcessDao: ListingProcessDao = _

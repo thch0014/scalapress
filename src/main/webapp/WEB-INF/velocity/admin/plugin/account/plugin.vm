@@ -5,10 +5,18 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
-        <label class="control-label">Name</label>
+        <label class="control-label">Account Page Header</label>
 
         <div class="controls">
-            #springFormInput("plugin.accountTypes")
+            #springFormTextarea("plugin.accountPageHeader")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Account Page Footer</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.accountPageFooter")
         </div>
     </div>
 

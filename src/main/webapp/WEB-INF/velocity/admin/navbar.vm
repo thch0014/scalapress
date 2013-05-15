@@ -32,6 +32,7 @@
                         <li><a href="/backoffice/feed"><i class="icon-cloud-upload"></i> Feeds</a></li>
                         <li><a href=/backoffice/delivery/><i class="icon-desktop"></i> Delivery Options</a></li>
                         <li><a href="/backoffice/plugin/listings"><i class=" icon-th-large"></i> Listings</a>
+                        <li><a href="/backoffice/plugin/account"><i class=" icon-th-large"></i> Accounts</a>
                         <li class="divider"></li>
                         <li><a href="/backoffice/plugin/sagepayform"><i class="icon-credit-card"></i> Sagepay</a>
                         <li><a href="/backoffice/plugin/payment/paypal/standard">

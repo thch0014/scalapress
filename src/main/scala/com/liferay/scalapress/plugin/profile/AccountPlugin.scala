@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import javax.persistence._
-import reflect.BeanProperty
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,6 +19,9 @@ class AccountPlugin {
 
     @ElementCollection
     @BeanProperty var accounts: java.util.List[java.lang.Long] = new java.util.ArrayList[java.lang.Long]()
+
+    @BeanProperty var accountPageHeader: String = _
+    @BeanProperty var accountPageFooter: String = _
 }
 
 trait AccountPluginDao extends GenericDao[AccountPlugin, java.lang.Long] {
