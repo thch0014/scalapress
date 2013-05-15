@@ -15,7 +15,6 @@ import com.liferay.scalapress.theme.ThemeDao
 import com.liferay.scalapress.obj.controller.admin.ThemePopulator
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.AssetStore
-import scala.collection.immutable.SortedMap
 
 /** @author Stephen Samuel */
 @Controller

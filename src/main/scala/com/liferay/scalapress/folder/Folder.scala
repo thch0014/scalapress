@@ -12,6 +12,7 @@ import org.joda.time.{DateTime, DateTimeZone}
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
+import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
@@ -35,6 +36,8 @@ class Folder {
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 40)
     @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
+
+    def sortedSubfolders: Array[Folder] = subfolders.asScala.toArray.sortBy(_.position)
 
     //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
     //    @Fetch(FetchMode.SELECT)

@@ -67,10 +67,13 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">Folder Ordering</label>
+                    <label class="control-label">Subfolder Ordering</label>
 
                     <div class="controls">
                         #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
+                        #if ($folder.folderOrdering == "Manual")
+                            <a href="/backoffice/folder/$folder.id/suborder" class="btn">Edit Subfolder Order</a>
+                        #end
                     </div>
                 </div>
 

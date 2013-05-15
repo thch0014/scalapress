@@ -1,0 +1,48 @@
+#parse("/admin/header.vm")
+
+<h3>Subfolder Ordering</h3>
+
+
+<table class="table table-condensed table-hover" id="subfolders-table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+    </tr>
+    #foreach ($f in $folder.sortedSubfolders())
+        <tr data-section-id="$f.id" class="subfolder-row">
+            <td>$f.id</td>
+            <td>$f.fullName()</td>
+        </tr>
+    #end
+</table>
+
+<div class="form-actions">
+    <a href="/backoffice/folder/$folder.id" class="btn">Return</a>
+</div>
+
+
+<script>
+    $(function () {
+        $("#subfolders-table tbody").sortable({
+
+            update: function (event, ui) {
+                var order = []
+                $("#subfolders-table tr.subfolder-row").each(function (v) {
+                    var id = $(this).attr("data-section-id")
+                    order.push(id)
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/backoffice/folder/$folder.id/suborder",
+                    contentType: "text/plain",
+                    data: order.join('-')
+                });
+            }
+        });
+        $("#sections-table tbody").disableSelection();
+    });
+</script>
+
+
+#parse("/admin/footer.vm")
