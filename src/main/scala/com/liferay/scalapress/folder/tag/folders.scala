@@ -2,8 +2,6 @@ package com.liferay.scalapress.folder.tag
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import collection.mutable.ArrayBuffer
-import scala.collection.JavaConverters._
-import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
@@ -30,12 +28,7 @@ object FolderTag extends ScalapressTag with TagBuilder {
 
 object SubfoldersTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
-        request.folder.map(f => {
-            f.subfolders
-              .asScala
-              .map(FriendlyUrlGenerator.friendlyLink(_)).mkString("\n")
-        })
-        None
+        request.folder.map(_.sortedSubfolders.map(FriendlyUrlGenerator.friendlyLink(_)).mkString("\n"))
     }
 }
 
@@ -82,14 +75,9 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val activeClass = params.get("activeclass").getOrElse("current active")
 
         val root = context.folderDao.root
-        val folders = root.subfolders.asScala.toSeq.sortBy(_.name)
-        val filtered = folders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
-        val sorted = root.folderOrdering match {
-            case FolderOrdering.Manual => filtered.sortBy(_.position)
-            case _ => filtered
-        }
+        val filtered = root.sortedSubfolders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
 
-        val links = sorted.map(f => {
+        val links = filtered.map(f => {
 
             val startTag = if (request.folder.orNull == f)
                 "<" + tag + " class='" + cssClass + " " + activeClass + "'>"

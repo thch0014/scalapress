@@ -2,8 +2,6 @@ package com.liferay.scalapress.folder.section
 
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import scala.collection.JavaConverters._
-import com.liferay.scalapress.enums.FolderOrdering
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -33,14 +31,7 @@ class SubfolderSection extends Section {
         Option(render)
     }
 
-    def _folders = {
-        val subfolders = folder.subfolders.asScala.toSeq.filterNot(_.hidden)
-        val sorted = folder.folderOrdering match {
-            case FolderOrdering.Alphabetical => subfolders.sortBy(f => Option(f.name).getOrElse(""))
-            case _ => subfolders.sortBy(_.position)
-        }
-        sorted
-    }
+    def _folders = folder.sortedSubfolders.filterNot(_.hidden)
 
     def desc = "Show a clickable list of the sub folders of this folder"
 
