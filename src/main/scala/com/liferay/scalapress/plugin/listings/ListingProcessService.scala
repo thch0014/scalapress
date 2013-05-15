@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{OrderLine, Order}
+import com.liferay.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
 import com.liferay.scalapress.obj.Obj
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{Logging, ScalapressContext}
@@ -26,6 +26,7 @@ class ListingProcessService extends Logging {
 
         val plugin = context.listingsPluginDao.get
         val order = _order(account, obj, process, req, plugin)
+
         tx.order = order.id.toString
         context.transactionDao.save(tx)
 
@@ -83,8 +84,13 @@ class ListingProcessService extends Logging {
         orderLine.vatRate = plugin.vatRate
         orderLine.order = order
         order.lines.add(orderLine)
-        context.orderDao.save(order)
 
+        val comment = OrderComment(order,
+            "This order was created for <a href='/backoffice/object/" + listing.id + "'>Listing #" + listing
+              .id + "</a>")
+        order.comments.add(comment)
+
+        context.orderDao.save(order)
         order
     }
 }

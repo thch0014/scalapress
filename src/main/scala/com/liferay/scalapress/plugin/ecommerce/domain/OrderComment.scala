@@ -1,7 +1,8 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Entity, Table}
-import reflect.BeanProperty
+import scala.beans.BeanProperty
+import org.joda.time.{DateTimeZone, DateTime}
 
 /** @author Stephen Samuel */
 @Entity
@@ -20,4 +21,14 @@ class OrderComment {
 
     @BeanProperty var author: String = _
     @BeanProperty var body: String = _
+}
+
+object OrderComment {
+    def apply(order: Order, body: String): OrderComment = {
+        val c = new OrderComment
+        c.date = new DateTime(DateTimeZone.UTC).getMillis
+        c.order = order
+        c.body = body
+        c
+    }
 }
