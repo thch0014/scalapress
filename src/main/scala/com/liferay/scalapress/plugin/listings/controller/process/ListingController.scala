@@ -128,7 +128,7 @@ class ListingController {
         process.content = req.getParameter("content")
 
         process.attributeValues.clear()
-        for (a <- process.listingPackage.objectType.attributes.asScala) {
+        for ( a <- process.listingPackage.objectType.attributes.asScala ) {
 
             val values = req.getParameterValues("attributeValue_" + a.id)
             if (values != null) {

@@ -1,9 +1,9 @@
 package com.liferay.scalapress.plugin.listings
 
 import javax.persistence.{Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
-import reflect.BeanProperty
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.obj.ObjectType
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

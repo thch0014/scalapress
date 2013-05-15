@@ -7,6 +7,7 @@ import com.liferay.scalapress.{Logging, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.payments.PaymentPluginDao
+import com.liferay.scalapress.plugin.listings.ListingProcessService
 
 /** @author Stephen Samuel */
 @Controller

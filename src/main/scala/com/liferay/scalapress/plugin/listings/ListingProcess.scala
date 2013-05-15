@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.listings
 
 import javax.persistence.{Column, OneToMany, CascadeType, FetchType, ManyToOne, Table, Entity, Id}
-import reflect.BeanProperty
 import scala.Array
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import java.util
 import com.liferay.scalapress.obj.attr.AttributeValue
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

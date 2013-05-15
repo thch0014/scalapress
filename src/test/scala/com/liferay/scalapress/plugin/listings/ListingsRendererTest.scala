@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.listings
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.plugin.listings.controller.ListingsRenderer
+import com.liferay.scalapress.plugin.listings.controller.process.renderer.ListingsRenderer
 
 /** @author Stephen Samuel */
 class ListingsRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

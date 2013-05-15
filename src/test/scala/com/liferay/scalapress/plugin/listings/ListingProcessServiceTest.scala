@@ -2,13 +2,13 @@ package com.liferay.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.listings.controller.ListingProcessService
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.obj.Obj
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 import org.mockito.Mockito
+import com.liferay.scalapress.plugin.listings.ListingProcessService
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
