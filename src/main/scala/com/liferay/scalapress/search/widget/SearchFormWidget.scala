@@ -3,9 +3,9 @@ package com.liferay.scalapress.search.widget
 import javax.persistence._
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import reflect.BeanProperty
 import com.liferay.scalapress.search.SearchForm
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel
   *

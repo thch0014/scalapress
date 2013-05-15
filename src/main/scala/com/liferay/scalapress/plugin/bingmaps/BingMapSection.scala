@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.bingmaps
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Entity, Table}
-import reflect.BeanProperty
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.attr.AttributeFuncs
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

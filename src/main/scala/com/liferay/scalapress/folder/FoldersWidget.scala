@@ -1,7 +1,6 @@
 package com.liferay.scalapress.folder
 
 import javax.persistence._
-import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import org.hibernate.annotations._
@@ -10,6 +9,7 @@ import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import javax.persistence.Table
 import scala.Some
 import javax.persistence.Entity
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")

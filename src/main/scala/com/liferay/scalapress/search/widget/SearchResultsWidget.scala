@@ -6,7 +6,6 @@ import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
-import scala.Some
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel

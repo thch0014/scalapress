@@ -2,7 +2,7 @@ package com.liferay.scalapress.user
 
 import javax.persistence.{Transient, Column, GenerationType, GeneratedValue, Id, Entity, Table}
 import scala.Predef.String
-import reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Table(name = "users")

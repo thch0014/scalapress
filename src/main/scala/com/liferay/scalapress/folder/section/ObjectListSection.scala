@@ -14,7 +14,7 @@ import scala.util.Random
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {

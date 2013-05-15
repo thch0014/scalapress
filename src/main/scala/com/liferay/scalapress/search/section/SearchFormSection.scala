@@ -2,9 +2,9 @@ package com.liferay.scalapress.search.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Column, JoinColumn, ManyToOne, Table, Entity}
-import reflect.BeanProperty
 import com.liferay.scalapress.search.{SearchFormRenderer, SearchForm}
 import com.liferay.scalapress.section.Section
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,11 +1,11 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{Transient, JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
-import reflect.BeanProperty
+import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
 import java.util
 import scala.collection.JavaConverters._
 import javax.validation.Valid
 import org.hibernate.validator.constraints.{Email, NotEmpty}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -48,7 +48,7 @@ class Basket {
 
     def linesTotal: Double = {
         var total = 0.0
-        for (line <- lines.asScala) {
+        for ( line <- lines.asScala ) {
             total = total + line.total
         }
         total
@@ -57,7 +57,7 @@ class Basket {
 
     def linesSubtotal: Double = {
         var total = 0.0
-        for (line <- lines.asScala) {
+        for ( line <- lines.asScala ) {
             total = total + line.subtotal
         }
         total
@@ -66,7 +66,7 @@ class Basket {
 
     def linesVat: Double = {
         var total = 0.0
-        for (line <- lines.asScala) {
+        for ( line <- lines.asScala ) {
             total = total + line.vat
         }
         total

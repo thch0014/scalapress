@@ -1,8 +1,8 @@
 package com.liferay.scalapress.plugin.payments
 
-import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Column, Table, Entity}
-import reflect.BeanProperty
+import javax.persistence.{JoinColumn, GenerationType, GeneratedValue, Id, Column, Table, Entity}
 import org.joda.time.{DateTimeZone, DateTime}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Table(name = "payments")

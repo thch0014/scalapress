@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
-import reflect.BeanProperty
 import com.liferay.scalapress.enums.{StockMethod, CheckoutMethod}
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.liferay.scalapress.theme.Markup
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

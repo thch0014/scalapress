@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.search.SearchService
 import org.joda.time.{DateMidnight, DateTimeZone}
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import scala.beans.BeanProperty
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 

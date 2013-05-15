@@ -1,11 +1,9 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import scala.Predef.String
-import org.hibernate.validator.constraints.{Email, NotEmpty}
-import reflect.BeanProperty
+import org.hibernate.validator.constraints.NotEmpty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}
 import collection.mutable.ArrayBuffer
-import com.liferay.scalapress.obj.Obj
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

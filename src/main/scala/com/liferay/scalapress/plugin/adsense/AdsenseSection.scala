@@ -2,8 +2,8 @@ package com.liferay.scalapress.plugin.adsense
 
 import javax.persistence.{Table, Entity}
 import com.liferay.scalapress.section.Section
-import scala.reflect.BeanProperty
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,9 +1,9 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
-import reflect.BeanProperty
 import com.liferay.scalapress.obj.Obj
 import org.joda.time.{DateTime, DateTimeZone}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

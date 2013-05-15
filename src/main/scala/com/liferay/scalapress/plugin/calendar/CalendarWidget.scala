@@ -4,12 +4,12 @@ import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.widgets.Widget
 import javax.persistence._
 import com.liferay.scalapress.search.SavedSearch
-import reflect.BeanProperty
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.Attribute
 import com.liferay.scalapress.enums.Sort
 import scala.Some
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

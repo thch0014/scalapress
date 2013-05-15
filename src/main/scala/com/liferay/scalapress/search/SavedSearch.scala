@@ -1,7 +1,6 @@
 package com.liferay.scalapress.search
 
 import javax.persistence._
-import reflect.BeanProperty
 import com.liferay.scalapress.enums.Sort
 import scala.Array
 import org.hibernate.annotations._
@@ -10,6 +9,7 @@ import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
 import javax.persistence.Table
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
