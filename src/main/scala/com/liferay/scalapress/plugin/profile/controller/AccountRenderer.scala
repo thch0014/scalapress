@@ -7,14 +7,21 @@ import com.liferay.scalapress.ScalapressContext
 object AccountRenderer {
     def links(links: Seq[Class[AccountLink]], context: ScalapressContext): String = {
 
-        val more = links :+ classOf[LogoutAccountLink]
-
-        more.map(klass => klass.newInstance)
+        links.map(klass => klass.newInstance)
+          .sortBy(_.accountLinkPriority)
           .filter(_.accountLinkEnabled(context))
           .map(link => {
-            <a href={link.profilePageLinkUrl} class="btn btn-info" id={link.profilePageLinkId}>
-                {link.profilePageLinkText}
-            </a>
+            <div class="row">
+                <div class="span9">
+                    {link.accountLinkText}
+                </div>
+                <div class="span3">
+                    <a href={link.profilePageLinkUrl} class="btn btn-block" id={link.profilePageLinkId}>
+                        {link.profilePageLinkText}
+                    </a>
+                </div>
+            </div>
+
         }).mkString("<br/>")
     }
 }
@@ -24,4 +31,6 @@ class LogoutAccountLink extends AccountLink {
     def profilePageLinkId: String = "accountlink-logout"
     def profilePageLinkUrl: String = "/j_spring_security_logout"
     def profilePageLinkText: String = "Logout"
+    def accountLinkText: String = "Logout of your account"
+    override def accountLinkPriority: Int = Integer.MAX_VALUE
 }
