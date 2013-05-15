@@ -19,7 +19,7 @@ object LoginRenderer {
             </div>
             <button type="submit" name="submit" class="btn btn-success">Login</button>
             <a href="/register" class="btn btn-primary">Register</a>
-            <a href="/password" class="btn btn-info">Forgotton Password</a>
+            <a href="/password" class="btn btn-info">Forgotten Password</a>
         </form>
 }
 
