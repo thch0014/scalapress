@@ -1,7 +1,6 @@
 package com.liferay.scalapress.obj.attr
 
 import javax.persistence._
-import reflect.BeanProperty
 import org.hibernate.validator.constraints.NotEmpty
 import java.util
 import scala.Array
@@ -10,6 +9,7 @@ import org.hibernate.annotations.{CacheConcurrencyStrategy, Index}
 import com.liferay.scalapress.obj.ObjectType
 import collection.mutable
 import scala.collection.JavaConverters._
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

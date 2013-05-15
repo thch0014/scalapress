@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.media.smush
 
-import com.liferay.scalapress.settings.lifecycle.AssetLifecycleListener
 import java.io.{ByteArrayInputStream, InputStream}
 import org.springframework.stereotype.Component
 import org.apache.commons.io.IOUtils
 import com.googlecode.htmlcompressor.compressor.{YuiCssCompressor, YuiJavaScriptCompressor}
+import com.liferay.scalapress.media.AssetLifecycleListener
 
 /** @author Stephen Samuel */
 @Component

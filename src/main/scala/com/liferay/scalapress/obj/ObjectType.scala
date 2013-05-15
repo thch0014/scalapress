@@ -3,11 +3,11 @@ package com.liferay.scalapress.obj
 import attr.Attribute
 import javax.persistence._
 import java.util
-import reflect.BeanProperty
 import org.hibernate.annotations.{CacheConcurrencyStrategy, BatchSize, FetchMode, Fetch}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.Markup
 import scala.collection.JavaConverters._
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

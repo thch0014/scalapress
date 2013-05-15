@@ -2,13 +2,13 @@ package com.liferay.scalapress.obj.attr
 
 import java.lang.String
 import javax.persistence._
-import reflect.BeanProperty
 import com.liferay.scalapress.search.SavedSearch
 import org.hibernate.annotations._
 import com.liferay.scalapress.plugin.listings.ListingProcess
 import com.liferay.scalapress.obj.Obj
 import javax.persistence.Table
 import javax.persistence.Entity
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

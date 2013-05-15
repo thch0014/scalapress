@@ -1,4 +1,4 @@
-package com.liferay.scalapress.settings.lifecycle
+package com.liferay.scalapress.media
 
 import java.io.InputStream
 

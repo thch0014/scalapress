@@ -2,8 +2,8 @@ package com.liferay.scalapress.obj.attr
 
 import scala.Predef.String
 import javax.persistence.{JoinColumn, FetchType, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import reflect.BeanProperty
 import com.liferay.scalapress.NaturalOrderComparator
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

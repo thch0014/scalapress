@@ -7,10 +7,9 @@ import com.liferay.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.util.mvc.UrlResolver
-import com.liferay.scalapress.media.AssetStore
+import com.liferay.scalapress.media.{AssetLifecycleListener, AssetStore}
 import java.io._
 import org.springframework.context.ApplicationContext
-import com.liferay.scalapress.settings.lifecycle.AssetLifecycleListener
 
 /** @author Stephen Samuel */
 @Controller

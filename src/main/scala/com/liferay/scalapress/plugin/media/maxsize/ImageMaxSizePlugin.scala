@@ -1,9 +1,8 @@
 package com.liferay.scalapress.plugin.media.maxsize
 
-import com.liferay.scalapress.settings.lifecycle.AssetLifecycleListener
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, InputStream}
 import javax.imageio.ImageIO
-import com.liferay.scalapress.media.ImageTools
+import com.liferay.scalapress.media.{AssetLifecycleListener, ImageTools}
 import org.springframework.stereotype.Component
 import scala.beans.BeanProperty
 import org.springframework.beans.factory.annotation.Value
