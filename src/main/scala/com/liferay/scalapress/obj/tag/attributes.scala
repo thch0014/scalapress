@@ -12,16 +12,20 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
         val sep = params.get("sep").getOrElse(" ")
         params.get("id") match {
             case None => Some("<!-- no id specified for attribute tag -->")
-            case Some(id) => request.obj.map(obj => {
+            case Some(id) => request.obj match {
+                case Some(obj) =>
 
-                val values = obj.attributeValues.asScala.toSeq
-                  .filter(_.attribute.id == id.trim.toLong)
-                  .sortBy(_.id)
-                  .map(AttributeValueRenderer.renderValue(_))
-                  .mkString(sep)
+                    val values = obj.attributeValues.asScala.toSeq
+                      .filter(_.attribute.id == id.trim.toLong)
+                      .sortBy(_.id)
+                      .map(AttributeValueRenderer.renderValue(_))
 
-                build(values, params)
-            })
+                    values.size match {
+                        case 0 => None
+                        case _ => Some(build(values.mkString(sep), params))
+                    }
+                case None => None
+            }
         }
     }
 }
