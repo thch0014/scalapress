@@ -11,7 +11,7 @@ object AccountRenderer {
           .sortBy(_.accountLinkPriority)
           .filter(_.accountLinkEnabled(context))
           .map(link => {
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span9">
                     {link.accountLinkText}
                 </div>
