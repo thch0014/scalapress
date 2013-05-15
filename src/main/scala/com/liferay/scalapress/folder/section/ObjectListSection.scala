@@ -8,6 +8,7 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
+import scala.util.Random
 
 /** @author Stephen Samuel
   *
@@ -51,6 +52,7 @@ class ObjectListSection extends Section {
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
             case Sort.Oldest => live.sortBy(_.id)
+            case Sort.Random => Random.shuffle(live)
             case _ => live.sortBy(_.name)
         }
 
