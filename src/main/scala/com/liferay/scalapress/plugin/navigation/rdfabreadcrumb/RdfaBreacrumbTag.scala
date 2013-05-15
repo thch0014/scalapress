@@ -36,7 +36,9 @@ class RdfaBreacrumbTag extends ScalapressTag with TagBuilder {
 
                 for ( parent <- parents ) {
                     buffer.append("<span typeof='v:Breadcrumb'>")
-                    buffer.append("<span class='parent'>" + FriendlyUrlGenerator.friendlyLink(parent) + "</span>")
+                    buffer
+                      .append("<span class='parent'><a href='" + FriendlyUrlGenerator
+                      .friendlyUrl(parent) + "'  rel=\"v:url\" property=\"v:title\">" + parent.name + "</a></span>")
                     buffer.append("<span class='divider'>" + sep + "</span>")
                     buffer.append("<span rel='v:child'>")
                 }

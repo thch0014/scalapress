@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.smush
+package com.liferay.scalapress.plugin.media.smush
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
