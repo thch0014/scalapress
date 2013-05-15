@@ -41,6 +41,11 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     av6.attribute = av4.attribute
     av6.value = "TS19"
 
+    val av7 = new AttributeValue
+    av7.attribute = new Attribute
+    av7.attribute.id = 62
+    av7.value = "attribute with space"
+
     val obj = new Obj
     obj.id = 2
     obj.name = "tony mowbray"
@@ -50,6 +55,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj.images.add(new Image)
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av4)
+    obj.attributeValues.add(av7)
 
     val obj2 = new Obj
     obj2.id = 4
@@ -197,6 +203,23 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(2 === results(0).id)
         assert("tony mowbray" === results(0).name)
         assert("Live" === results(0).status)
-        assert(2 === results(0).attributes.size)
+        assert(3 === results(0).attributes.size)
+    }
+
+    test("attribute search with spaces") {
+
+        val searchav = new AttributeValue
+        searchav.attribute = new Attribute
+        searchav.attribute.id = 62
+        searchav.value = "attribute with space"
+
+        import scala.collection.JavaConverters._
+        val search = new SavedSearch
+        search.attributeValues = Set(searchav).asJava
+
+        val results = service.search(search)
+        assert(results.size === 1)
+        assert(2 === results(0).id)
+        assert("tony mowbray" === results(0).name)
     }
 }

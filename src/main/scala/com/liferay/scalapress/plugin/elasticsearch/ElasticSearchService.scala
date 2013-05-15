@@ -31,6 +31,7 @@ import scala.Some
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
+    val FIELD_ATTRIBUTE = "attribute_"
     val TIMEOUT = 5000
     val INDEX = "scalapress"
     val TYPE = "obj"
@@ -212,7 +213,7 @@ class ElasticSearchService extends SearchService with Logging {
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
         search.attributeValues.asScala.filter(_.value.trim.length > 0).foreach(av => {
-            av.value.split(" ").foreach(value => buffer.append("attribute_" + av.attribute.id + ":" + value))
+            buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + av.value.replace(" ", "_"))
         })
 
         Option(search.hasAttributes)
@@ -260,7 +261,7 @@ class ElasticSearchService extends SearchService with Logging {
                 SortBuilders.fieldSort("attribute_" + search.sortAttribute.id).order(SortOrder.ASC).ignoreUnmapped(true)
             case Sort.AttributeDesc if search.sortAttribute != null =>
                 SortBuilders
-                  .fieldSort("attribute_" + search.sortAttribute.id)
+                  .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
                   .order(SortOrder.DESC)
                   .ignoreUnmapped(true)
             case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
@@ -282,7 +283,7 @@ class ElasticSearchService extends SearchService with Logging {
             val status = arg.getSource.get("status").toString
             val attributes = arg.getSource.asScala
               .filter(_._2 != null)
-              .filter(_._1.startsWith("attribute_")).map(field => {
+              .filter(_._1.startsWith(FIELD_ATTRIBUTE)).map(field => {
                 val id = field._1.drop("attribute_".length).toLong
                 val value = field._2.toString
                 (id, value)
@@ -328,7 +329,7 @@ class ElasticSearchService extends SearchService with Logging {
         json.field("folders", folderIds.toSeq: _*)
 
         obj.attributeValues.asScala.foreach(av => {
-            json.field("attribute_" + av.attribute.id.toString, av.value)
+            json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, av.value.replace(" ", "_"))
             json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {
                 logger.debug("postcode=" + av.value)
