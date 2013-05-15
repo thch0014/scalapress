@@ -6,5 +6,5 @@ import java.io.InputStream
 trait AssetLifecycleListener {
 
     def onStore(key: String, input: InputStream): (String, InputStream)
-    def onDelete(key: String): Boolean
+    def onDelete(key: String): Boolean = true
 }

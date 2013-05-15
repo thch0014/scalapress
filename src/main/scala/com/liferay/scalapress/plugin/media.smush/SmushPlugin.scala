@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.smush
+package com.liferay.scalapress.plugin.media.smush
 
 import com.liferay.scalapress.settings.lifecycle.AssetLifecycleListener
 import java.io.{ByteArrayInputStream, InputStream}
@@ -9,8 +9,6 @@ import com.googlecode.htmlcompressor.compressor.{YuiCssCompressor, YuiJavaScript
 /** @author Stephen Samuel */
 @Component
 class SmushPlugin extends AssetLifecycleListener {
-
-    def onDelete(key: String): Boolean = true
 
     def onStore(key: String, input: InputStream): (String, InputStream) = {
 
