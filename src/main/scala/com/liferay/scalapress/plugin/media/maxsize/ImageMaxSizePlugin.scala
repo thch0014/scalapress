@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Value
 @Component
 class ImageMaxSizePlugin extends AssetLifecycleListener {
 
-    @Value("plugin.media.maxsize.enabled:false")
+    @Value("${plugin.media.maxsize.enabled:false}")
     @BeanProperty var enabled: Boolean = _
 
-    @Value("plugin.media.maxsize.width:0")
+    @Value("${plugin.media.maxsize.width:0}")
     @BeanProperty var maxWidth: Int = _
 
-    @Value("plugin.media.maxsize.height:0")
+    @Value("${plugin.media.maxsize.height:0}")
     @BeanProperty var maxHeight: Int = _
 
     def onStore(key: String, input: InputStream): (String, InputStream) = {
