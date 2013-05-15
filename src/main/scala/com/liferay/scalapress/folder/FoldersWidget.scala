@@ -3,7 +3,6 @@ package com.liferay.scalapress.folder
 import javax.persistence._
 import reflect.BeanProperty
 import com.liferay.scalapress.{Logging, ScalapressRequest}
-import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import org.hibernate.annotations._
 import com.liferay.scalapress.widgets.Widget
@@ -52,10 +51,7 @@ class FoldersWidget extends Widget with Logging {
           .map(_.split("\n").flatMap(_.split(",")))
           .getOrElse(Array[String]()).map(_.trim)
 
-        val children = parent
-          .subfolders
-          .asScala
-          .toSeq
+        val children = parent.sortedSubfolders
           .filterNot(_.hidden)
           .filterNot(f => excluded.contains(f.id.toString))
           .filterNot(f => excluded.contains(f.name.toLowerCase.trim))
