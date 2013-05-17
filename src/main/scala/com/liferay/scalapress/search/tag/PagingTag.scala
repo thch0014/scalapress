@@ -3,13 +3,14 @@ package com.liferay.scalapress.search.tag
 import com.liferay.scalapress.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.sksamuel.scoot.soa.Paging
+import scala.xml.Utility
 
 /** @author Stephen Samuel */
 @Tag("pagination")
 class PagingTag extends ScalapressTag {
 
-    def _renderPages(paging: Paging) = {
-        paging.range(5).map(p => {
+    def _renderPages(paging: Paging, range: Int) = {
+        paging.range(range).map(p => {
             val url = paging.url(p)
             <li>
                 <a href={url}>
@@ -25,13 +26,15 @@ class PagingTag extends ScalapressTag {
             case None => None
             case Some(paging) =>
 
-                val pages = _renderPages(paging)
-                val pagination = <div class="pagination">
+                val range = params.get("range").getOrElse("5").toInt
+                val pages = _renderPages(paging, range)
+                val xml = <div class="pagination">
                     <ul>
                         {pages}
                     </ul>
                 </div>
-                Some(pagination.toString())
+                val trimmed = Utility.trim(xml)
+                Some(trimmed.toString())
         }
     }
 }

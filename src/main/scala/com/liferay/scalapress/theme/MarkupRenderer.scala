@@ -56,10 +56,13 @@ object MarkupRenderer {
         start + body + end
     }
     @deprecated
-    def renderObjects(objects: Seq[Obj], m: Markup, request: ScalapressRequest, context: ScalapressContext) =
+    def renderObjects(objects: Seq[Obj], m: Markup, request: ScalapressRequest, context: ScalapressContext): String =
         renderObjects(objects, m, request)
 
-    def renderFolders(folders: Seq[Folder], m: Markup, request: ScalapressRequest, context: ScalapressContext) = {
+    def renderFolders(folders: Seq[Folder],
+                      m: Markup,
+                      request: ScalapressRequest,
+                      context: ScalapressContext): String = {
         val start = TagRenderer.render(m.start, request, context)
         val body = folders.map(f => TagRenderer.render(m.body, request.withFolder(f), context))
           .mkString(TagRenderer.render(m.between, request, context))
