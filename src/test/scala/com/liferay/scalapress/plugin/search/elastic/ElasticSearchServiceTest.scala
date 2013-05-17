@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.elastic
+package com.liferay.scalapress.plugin.search.elastic
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
@@ -6,10 +6,10 @@ import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.media.Image
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import com.liferay.scalapress.obj.attr.{AttributeDao, AttributeValue, Attribute}
-import com.liferay.scalapress.plugin.elasticsearch.ElasticSearchService
 import com.liferay.scalapress.search.SavedSearch
 import com.liferay.scalapress.ScalapressContext
 import org.mockito.Mockito
+import com.liferay.scalapress.plugin.search.elasticsearch.ElasticSearchService
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
@@ -221,5 +221,33 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(results.size === 1)
         assert(2 === results(0).id)
         assert("tony mowbray" === results(0).name)
+    }
+
+    test("wildcard search count brings back total count") {
+
+        val search = new SavedSearch
+        val count = service.count(search)
+        assert(3 === count)
+    }
+
+    test("name search returns query based count") {
+        val search = new SavedSearch
+        search.name = "mowbray"
+        val count = service.count(search)
+        assert(1 === count)
+    }
+
+    test("attribute search returns query based count") {
+
+        val searchav = new AttributeValue
+        searchav.attribute = new Attribute
+        searchav.attribute.id = 62
+        searchav.value = "attribute with space"
+
+        val search = new SavedSearch
+        search.attributeValues.add(searchav)
+
+        val count = service.count(search)
+        assert(1 === count)
     }
 }

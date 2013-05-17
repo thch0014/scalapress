@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.elasticsearch
+package com.liferay.scalapress.plugin.search.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.{SearchType, SearchResponse}
@@ -175,6 +175,15 @@ class ElasticSearchService extends SearchService with Logging {
         _resp2ref(resp)
     }
 
+    override def count(search: SavedSearch): Long = {
+        val query = _buildQuery(search)
+        client.prepareCount(INDEX)
+          .setQuery(query)
+          .execute()
+          .actionGet(4000)
+          .count()
+    }
+
     override def search(search: SavedSearch): Seq[ObjectRef] = {
         val resp = _search(search)
         val refs = _resp2ref(resp)
@@ -182,7 +191,15 @@ class ElasticSearchService extends SearchService with Logging {
         refs
     }
 
-    def _search(search: SavedSearch): SearchResponse = {
+    def _buildQuery(search: SavedSearch): QueryStringQueryBuilder = {
+        val queryString = _buildQueryString(search)
+        queryString.length match {
+            case 0 => new QueryStringQueryBuilder("*:*")
+            case _ => new QueryStringQueryBuilder(queryString).defaultOperator(QueryStringQueryBuilder.Operator.AND)
+        }
+    }
+
+    def _buildQueryString(search: SavedSearch): String = {
 
         val buffer = new ArrayBuffer[String]()
 
@@ -228,14 +245,10 @@ class ElasticSearchService extends SearchService with Logging {
         if (search.imageOnly)
             buffer.append("hasImage:true")
 
-        val limit = if (search.maxResults < 1) 40 else search.maxResults
+        buffer.mkString(" ")
+    }
 
-        val query = buffer.size match {
-            case 0 => new QueryStringQueryBuilder("*:*")
-            case _ =>
-                new QueryStringQueryBuilder(buffer.mkString(" "))
-                  .defaultOperator(QueryStringQueryBuilder.Operator.AND)
-        }
+    def _search(search: SavedSearch): SearchResponse = {
 
         val filter = Option(search.location)
           .flatMap(Postcode.gps(_))
@@ -245,11 +258,15 @@ class ElasticSearchService extends SearchService with Logging {
               .distance(search.distance, DistanceUnit.MILES)
         })
 
+        val limit = if (search.maxResults < 1) 40 else search.maxResults
+
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setTypes(TYPE)
           .setFrom(0)
           .setSize(limit)
+
+        val query = _buildQuery(search)
 
         filter match {
             case None => req.setQuery(query)
@@ -273,7 +290,6 @@ class ElasticSearchService extends SearchService with Logging {
         }
 
         req.addSort(sort)
-
         logger.debug("Search: " + req)
         req.execute().actionGet()
     }
