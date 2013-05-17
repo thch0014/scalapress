@@ -10,6 +10,8 @@ import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import scala.util.Random
 import com.sksamuel.scoot.soa.{Paging, Page}
+import scala.collection.mutable.ListBuffer
+import com.liferay.scalapress.search.PagingRenderer
 
 /** @author Stephen Samuel
   *
@@ -58,21 +60,29 @@ class ObjectListSection extends Section {
         }
 
         val safePageSize = if (pageSize < 1) PAGE_SIZE_DEFAULT else pageSize
+        val usePaging = sorted.size > safePageSize
         val page = _paginate(sorted, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
 
-        sorted.size match {
-            case 0 => Some("<!-- No objects in folder -->")
+        val renderedObjects = sorted.size match {
+            case 0 => "<!-- No objects in folder -->"
             case _ => {
                 val first = sorted.head
                 Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
-                    case None => Some("<!-- No markup found for folder -->")
-                    case Some(m) => {
-                        Some(MarkupRenderer.renderObjects(sorted, m, sreq.withPaging(paging)))
-                    }
+                    case None => "<!-- No markup found for folder -->"
+                    case Some(m) => MarkupRenderer.renderObjects(sorted, m, sreq.withPaging(paging))
                 }
             }
         }
+
+        val buffer = new ListBuffer[String]
+        buffer.append(renderedObjects)
+        if (usePaging) {
+            buffer.prepend(PagingRenderer.render(paging))
+            buffer.append(PagingRenderer.render(paging))
+        }
+
+        Some(buffer.mkString("\n"))
     }
 
     def _paginate[T](results: Iterable[T], pageNumber: Int, pageSize: Int): Page[T] = {
