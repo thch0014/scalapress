@@ -15,17 +15,19 @@ import com.sksamuel.scoot.soa.{Paging, Page}
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
+
+    val PAGE_SIZE_DEFAULT = 50
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "sortType")
     @BeanProperty var sort: Sort = _
 
     @Column(name = "itemsPerPage")
-    @BeanProperty var pageSize: Int = _
+    @BeanProperty var pageSize: Int = PAGE_SIZE_DEFAULT
 
     @Column(name = "includeSubcategoryItems")
     @BeanProperty var includeSubfolderObjects: Boolean = false
@@ -55,7 +57,8 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
-        val page = _paginate(sorted, pageNumber, pageSize)
+        val safePageSize = if (pageSize < 1) PAGE_SIZE_DEFAULT else pageSize
+        val page = _paginate(sorted, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
 
         sorted.size match {
