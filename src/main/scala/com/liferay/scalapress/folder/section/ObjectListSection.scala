@@ -17,19 +17,17 @@ import com.liferay.scalapress.search.PagingRenderer
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
-
-    val PAGE_SIZE_DEFAULT = 50
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "sortType")
     @BeanProperty var sort: Sort = _
 
     @Column(name = "itemsPerPage")
-    @BeanProperty var pageSize: Int = PAGE_SIZE_DEFAULT
+    @BeanProperty var pageSize: Int = ObjectListSection.PAGE_SIZE_DEFAULT
 
     @Column(name = "includeSubcategoryItems")
     @BeanProperty var includeSubfolderObjects: Boolean = false
@@ -41,7 +39,7 @@ class ObjectListSection extends Section {
 
     def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-        val pageNumber = sreq.param("page").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
 
         val objects = try {
             folder.objects.asScala.toSeq
@@ -59,18 +57,18 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
-        val safePageSize = if (pageSize < 1) PAGE_SIZE_DEFAULT else pageSize
+        val safePageSize = 7 //if (pageSize < 1) ObjectListSection.PAGE_SIZE_DEFAULT else pageSize
         val usePaging = sorted.size > safePageSize
         val page = _paginate(sorted, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
 
-        val renderedObjects = sorted.size match {
+        val renderedObjects = page.results.size match {
             case 0 => "<!-- No objects in folder -->"
             case _ => {
-                val first = sorted.head
+                val first = page.results.head
                 Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
                     case None => "<!-- No markup found for folder -->"
-                    case Some(m) => MarkupRenderer.renderObjects(sorted, m, sreq.withPaging(paging))
+                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
                 }
             }
         }
@@ -95,4 +93,8 @@ class ObjectListSection extends Section {
 
     def desc = "Show a paginated list of objects that are inside this folder"
     override def backoffice: String = "/backoffice/section/objectlist/" + id
+}
+
+object ObjectListSection {
+    val PAGE_SIZE_DEFAULT = 50
 }
