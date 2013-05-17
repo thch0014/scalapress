@@ -5,6 +5,7 @@ import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.liferay.scalapress.enums.Sort
 import com.liferay.scalapress.obj.ObjectType
 import scala.beans.BeanProperty
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
@@ -34,5 +35,7 @@ class SearchForm {
     @OneToMany(mappedBy = "searchForm", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.JOIN)
     @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
+
+    def sortedFields = fields.asScala.toSeq.sortBy(_.name).sortBy(_.position)
 
 }

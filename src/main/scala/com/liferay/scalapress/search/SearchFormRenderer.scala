@@ -2,8 +2,8 @@ package com.liferay.scalapress.search
 
 import section.SearchFormSection
 import xml.{Node, Unparsed, Elem}
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.{Sort, SearchFieldType, AttributeType}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object SearchFormRenderer {
@@ -11,7 +11,7 @@ object SearchFormRenderer {
     def render(form: SearchForm, section: SearchFormSection): String = {
 
         val sort = Option(form.sort).getOrElse(Sort.Name)
-        val fields = form.fields.asScala.toSeq.sortBy(_.position)
+        val fields = form.sortedFields
         val renderedFields = renderFields(fields)
 
         val submit = Option(form.submitLabel).getOrElse("Submit")
@@ -28,7 +28,7 @@ object SearchFormRenderer {
         </form>.toString()
     }
 
-    private def renderFields(fields: Seq[SearchFormField]): Iterable[Node] = {
+    private def renderFields(fields: Seq[SearchFormField]): Seq[Node] = {
         fields.map(field => {
             field.fieldType match {
                 case SearchFieldType.Attribute if field.preset => _renderPresetAttributeField(field)
