@@ -8,7 +8,7 @@ object ListingPackageRenderer {
 
     def render(packages: Seq[ListingPackage], plugin: ListingsPlugin) = {
         <div id="listing-process-packages">
-            {plugin.packagesPageText}{_renderPackages(packages)}
+            {Unparsed(plugin.packagesPageText)}{_renderPackages(packages)}
         </div>
     }
 
