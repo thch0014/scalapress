@@ -55,6 +55,7 @@ class Obj {
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 20)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
@@ -85,7 +86,6 @@ class Obj {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectType: ObjectType = _
 
-    @Column
     @BeanProperty var content: String = _
     def content(limit: Int): String = content.take(limit)
 
@@ -95,13 +95,13 @@ class Obj {
     @Column(name = "reference", length = 5000)
     @BeanProperty var exernalReference: String = _
 
-    @Column(length = 5000)
+    @Column(length = 500)
     @BeanProperty var descriptionTag: String = _
 
-    @Column(length = 5000)
+    @Column(length = 500)
     @BeanProperty var titleTag: String = _
 
-    @Column(name = "keywords", length = 5000)
+    @Column(name = "keywords", length = 500)
     @BeanProperty var keywordsTag: String = _
 
     @Column(length = 5000)
@@ -154,8 +154,6 @@ class Obj {
     @BeanProperty var passwordHash: String = _
 
     @BeanProperty var ipAddress: String = _
-
-    @BeanProperty var permaLink: String = _
 
     @PrePersist
     def updateLastModified() {
