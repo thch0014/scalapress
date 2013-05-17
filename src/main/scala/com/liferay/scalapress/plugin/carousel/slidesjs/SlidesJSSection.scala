@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.carousel.caroufredsel
+package com.liferay.scalapress.plugin.carousel.slidesjs
 
 import com.liferay.scalapress.section.Section
 import javax.persistence._
@@ -10,10 +10,10 @@ import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugin_caroufredsel")
-class CaroufredselSection extends Section {
+@Table(name = "plugin_slidesjs")
+class SlidesJSSection extends Section {
 
-    override def backoffice: String = "/backoffice/plugin/caroufredsel/section/" + id
+    override def backoffice: String = "/backoffice/plugin/slidesjs/section/" + id
 
     @Autowired var assetStore: AssetStore = _
     @BeanProperty var images: Array[String] = Array()
@@ -46,5 +46,5 @@ class CaroufredselSection extends Section {
         Some(html.toString() + "\n" + script)
     }
 
-    def desc: String = "Caroufredsel is a circular responsive jQuery carousel."
+    def desc: String = "SlidesJS is a responsive slideshow with CSS3 transitions."
 }
