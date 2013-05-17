@@ -4,6 +4,7 @@ import folder.Folder
 import javax.servlet.http.HttpServletRequest
 import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
+import com.sksamuel.scoot.soa.Paging
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
@@ -14,7 +15,8 @@ case class ScalapressRequest(request: HttpServletRequest,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
                              line: Option[BasketLine] = None,
-                             location: Option[String] = None) {
+                             location: Option[String] = None,
+                             paging: Option[Paging] = None) {
 
     val errors = if (request.getAttribute("errors") == null) {
         val e = scala.collection.mutable.Map.empty[String, String]
@@ -42,6 +44,8 @@ case class ScalapressRequest(request: HttpServletRequest,
         }
     }
 
+    def param(key: String): Option[String] = Option(request.getParameter(key))
+
     def error(key: String) = errors.get(key)
     def error(key: String, value: String) {
         errors.put(key, value)
@@ -51,6 +55,7 @@ case class ScalapressRequest(request: HttpServletRequest,
 
     def sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).toString
 
+    def withPaging(paging: Paging): ScalapressRequest = copy(paging = Option(paging))
     def withLocation(location: String): ScalapressRequest = copy(location = Option(location))
     def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
     def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))

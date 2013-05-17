@@ -9,6 +9,7 @@ import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import scala.util.Random
+import com.sksamuel.scoot.soa.{Paging, Page}
 
 /** @author Stephen Samuel
   *
@@ -34,11 +35,9 @@ class ObjectListSection extends Section {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
-    override def backoffice: String = "/backoffice/section/objectlist/" + id
+    def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-    def desc = "Show a paginated list of objects that are inside this folder"
-
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+        val pageNumber = sreq.param("page").getOrElse("1").toInt
 
         val objects = try {
             folder.objects.asScala.toSeq
@@ -56,6 +55,9 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
+        val page = _paginate(sorted, pageNumber, pageSize)
+        val paging = Paging(sreq.request, page)
+
         sorted.size match {
             case 0 => Some("<!-- No objects in folder -->")
             case _ => {
@@ -63,10 +65,21 @@ class ObjectListSection extends Section {
                 Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
                     case None => Some("<!-- No markup found for folder -->")
                     case Some(m) => {
-                        Some(MarkupRenderer.renderObjects(sorted, m, request, context))
+                        Some(MarkupRenderer.renderObjects(sorted, m, sreq.withPaging(paging)))
                     }
                 }
             }
         }
     }
+
+    def _paginate[T](results: Iterable[T], pageNumber: Int, pageSize: Int): Page[T] = {
+        require(pageNumber > 0)
+        require(pageSize > 0)
+        val total = results.size
+        val pagedResults = results.drop((pageNumber - 1) * pageSize).take(pageSize)
+        Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
+    }
+
+    def desc = "Show a paginated list of objects that are inside this folder"
+    override def backoffice: String = "/backoffice/section/objectlist/" + id
 }
