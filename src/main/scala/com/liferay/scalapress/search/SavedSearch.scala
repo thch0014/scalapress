@@ -29,6 +29,7 @@ class SavedSearch {
     @BeanProperty var sortAttribute: Attribute = _
 
     @BeanProperty var hasAttributes: String = _
+    @BeanProperty var prefix: String = _
 
     // search inside this folder
     @Column(name = "searchCategory"

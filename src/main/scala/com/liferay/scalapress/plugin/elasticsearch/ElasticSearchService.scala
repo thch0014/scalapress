@@ -164,20 +164,22 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
-    override def prefix(q: String, limit: Int): SearchResponse = {
-
-        client.prepareSearch(INDEX)
+    override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
+        val resp = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
-          .setQuery(new PrefixQueryBuilder("name", q))
+          .setQuery(new PrefixQueryBuilder("name", q.toLowerCase))
           .setFrom(0)
           .setSize(limit)
           .execute()
           .actionGet()
+        _resp2ref(resp)
     }
 
     override def search(search: SavedSearch): Seq[ObjectRef] = {
         val resp = _search(search)
-        _resp2ref(resp)
+        val refs = _resp2ref(resp)
+        logger.debug("Search returned {} refs", refs.size)
+        refs
     }
 
     def _search(search: SavedSearch): SearchResponse = {
@@ -199,7 +201,8 @@ class ElasticSearchService extends SearchService with Logging {
           .trim
           .split(" ")
           .filter(_.trim.length > 0)
-          .foreach(arg => buffer.append("name:" + arg.replace("!", ""))))
+          .map(_.replace("!", "").toLowerCase)
+          .foreach(arg => buffer.append(s"name:${arg}")))
 
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
 
@@ -279,7 +282,7 @@ class ElasticSearchService extends SearchService with Logging {
         resp.hits().asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
-            val name = arg.getSource.get("name").toString
+            val name = arg.getSource.get("name_raw").toString
             val status = arg.getSource.get("status").toString
             val attributes = arg.getSource.asScala
               .filter(_._2 != null)
@@ -317,7 +320,7 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject()
           .field("objectid", obj.id)
           .field("objectType", obj.objectType.id.toString)
-          .field("name", obj.name)
+          .field("name", obj.name.toLowerCase)
           .field("name_raw", obj.name)
           .field("status", obj.status)
           .field("labels", obj.labels)

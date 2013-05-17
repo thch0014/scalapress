@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.media.maxsize
+package com.liferay.scalapress.plugin.asset.maxsize
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, InputStream}
 import javax.imageio.ImageIO

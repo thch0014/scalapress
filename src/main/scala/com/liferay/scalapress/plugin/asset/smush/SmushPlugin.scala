@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.media.smush
+package com.liferay.scalapress.plugin.asset.smush
 
 import java.io.{ByteArrayInputStream, InputStream}
 import org.springframework.stereotype.Component
