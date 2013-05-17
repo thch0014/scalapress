@@ -17,6 +17,9 @@ object SecurityFuncs {
           .filter(_.isInstanceOf[ScalaPressUserDetails])
           .map(_.asInstanceOf[ScalaPressUserDetails])
 
+    def getAdminDetails(req: HttpServletRequest): AdminUserDetails =
+        getUserDetails(req).get.asInstanceOf[AdminUserDetails]
+
     def getUser(req: HttpServletRequest): Option[Obj] = getUserDetails(req).flatMap(arg => Option(arg.userObject))
 
     def hasAdminRole(req: HttpServletRequest): Boolean =

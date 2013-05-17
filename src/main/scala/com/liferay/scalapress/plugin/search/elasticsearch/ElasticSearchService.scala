@@ -175,6 +175,10 @@ class ElasticSearchService extends SearchService with Logging {
         _resp2ref(resp)
     }
 
+    override def count: Long = {
+        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(4000).count()
+    }
+
     override def count(search: SavedSearch): Long = {
         val query = _buildQuery(search)
         client.prepareCount(INDEX)

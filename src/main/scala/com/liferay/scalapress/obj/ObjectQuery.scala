@@ -1,7 +1,7 @@
 package com.liferay.scalapress.obj
 
 import com.sksamuel.scoot.soa.PagedQuery
-import reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 class ObjectQuery extends PagedQuery {

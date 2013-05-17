@@ -8,6 +8,7 @@ trait SearchService {
 
     def index(obj: Obj)
     def contains(id: String): Boolean
+    def count: Long
     def count(search: SavedSearch): Long
     def search(search: SavedSearch): Seq[ObjectRef]
     def typeahead(q: String, limit: Int): Seq[ObjectRef]
