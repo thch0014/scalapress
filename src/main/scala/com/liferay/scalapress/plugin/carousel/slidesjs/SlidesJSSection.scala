@@ -5,8 +5,6 @@ import javax.persistence._
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.Array
 import scala.beans.BeanProperty
-import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,13 +13,12 @@ class SlidesJSSection extends Section {
 
     override def backoffice: String = "/backoffice/plugin/slidesjs/section/" + id
 
-    @Autowired var assetStore: AssetStore = _
     @BeanProperty var images: Array[String] = Array()
 
     def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
         val renderedImages = images.map(image => {
-            val src = assetStore.link(image)
+            val src = context.assetStore.link(image)
             <li>
                 <img src={src}/>
             </li>
