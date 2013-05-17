@@ -57,7 +57,7 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
-        val safePageSize = 7 //if (pageSize < 1) ObjectListSection.PAGE_SIZE_DEFAULT else pageSize
+        val safePageSize = if (pageSize < 1) ObjectListSection.PAGE_SIZE_DEFAULT else pageSize
         val usePaging = sorted.size > safePageSize
         val page = _paginate(sorted, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
