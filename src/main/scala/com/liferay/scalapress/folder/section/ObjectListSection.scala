@@ -37,7 +37,7 @@ class ObjectListSection extends Section {
 
     def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
 
-        val pageNumber = sreq.param("page").getOrElse("1").toInt
+        val pageNumber = sreq.param("page").filter(_.forall(_.isDigit)).getOrElse("1").toInt
 
         val objects = try {
             folder.objects.asScala.toSeq
