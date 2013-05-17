@@ -29,6 +29,10 @@ class TypeaheadTag extends ScalapressTag {
                                       process(json);
                                 }
                             });
+                        },
+                        updater: function(item) {
+                            window.location = '/search?q=' + item;
+                            return item;
                         }
                     })
                 </script>"""
