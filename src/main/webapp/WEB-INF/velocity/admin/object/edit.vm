@@ -65,7 +65,7 @@
         <label class="control-label">Tags</label>
 
         <div class="controls">
-            #springFormInput("form.o.labels", "class='tagManager'")
+            #springFormInput("form.o.labels", "data-provide='tag'")
         </div>
     </div>
 
@@ -395,11 +395,6 @@
     </select>
     <button type="submit">Submit</button>
 </form>
-
-
-<script>
-    $(".tagManager").tagsManager();
-</script>
 
 
 <script>
