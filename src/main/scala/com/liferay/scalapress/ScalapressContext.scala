@@ -1,6 +1,6 @@
 package com.liferay.scalapress
 
-import folder.FolderDao
+import com.liferay.scalapress.folder.{FolderPluginDao, FolderDao}
 import media.{AssetStore, ImageService, GalleryDao}
 import obj.{ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{TransactionDao, BasketDao, DeliveryOptionDao}
@@ -27,6 +27,7 @@ import com.liferay.scalapress.plugin.profile.AccountPluginDao
 @Component
 class ScalapressContext extends ServletContextAware {
 
+    @Autowired var folderPluginDao: FolderPluginDao = _
     @Autowired var sectionDao: SectionDao = _
 
     @Autowired var paymentPluginDao: PaymentPluginDao = _

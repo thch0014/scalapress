@@ -78,7 +78,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val service = new ElasticSearchService
     service.context = new ScalapressContext
     service.context.attributeDao = mock[AttributeDao]
-    Mockito.when(service.context.attributeDao.findAll()).thenReturn(Nil)
+    Mockito.when(service.context.attributeDao.findAll()).thenReturn(List(av1.attribute, av4.attribute, av7.attribute))
+
     service.setupIndex()
     service.index(obj2)
     service.index(obj3)

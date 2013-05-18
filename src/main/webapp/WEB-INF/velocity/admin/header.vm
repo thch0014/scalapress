@@ -9,9 +9,8 @@
     <meta charset="utf-8"/>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css"/>
-    <link type="text/css" rel="stylesheet"
-          href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"/>
     <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-tagmanager.css"/>
 
     <script src="/static/js/wysihtml5-0.3.0.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -20,7 +19,7 @@
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="/static/js/bootstrap-wysihtml5.js"></script>
     <script src="/static/js/bootstrap-datepicker.js"></script>
-    <script src="/static/js/bootbox.min.js"></script>
+    <script src="/static/js/bootstrap-tagmanager.js"></script>
 
     <script type="text/javascript" src="/static/tiny_mce/tiny_mce.js"></script>
 
