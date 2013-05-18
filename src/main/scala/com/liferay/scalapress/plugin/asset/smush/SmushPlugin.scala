@@ -10,6 +10,14 @@ import com.liferay.scalapress.media.AssetLifecycleListener
 @Component
 class SmushPlugin extends AssetLifecycleListener {
 
+    val js = new YuiJavaScriptCompressor()
+    js.setPreserveAllSemiColons(true)
+    js.setLineBreak(1000)
+    js.setDisableOptimizations(true)
+
+    val css = new YuiCssCompressor()
+    css.setLineBreak(1000)
+
     def onStore(key: String, input: InputStream): (String, InputStream) = {
 
         if (key.toLowerCase.endsWith(".css")) {
@@ -26,12 +34,22 @@ class SmushPlugin extends AssetLifecycleListener {
     }
 
     def _minifyCss(input: InputStream) = {
-        val compressed = new YuiCssCompressor().compress(IOUtils.toString(input, "UTF-8"))
-        compressed.getBytes("UTF-8")
+        val source = IOUtils.toString(input, "UTF-8")
+        val minified = try {
+            css.compress(source)
+        } catch {
+            case e: Exception => source
+        }
+        minified.getBytes("UTF-8")
     }
 
     def _minifyJs(input: InputStream) = {
-        val compressed = new YuiJavaScriptCompressor().compress(IOUtils.toString(input, "UTF-8"))
-        compressed.getBytes("UTF-8")
+        val source = IOUtils.toString(input, "UTF-8")
+        val minified = try {
+            css.compress(source)
+        } catch {
+            case e: Exception => source
+        }
+        minified.getBytes("UTF-8")
     }
 }
