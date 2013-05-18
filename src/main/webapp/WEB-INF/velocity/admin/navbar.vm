@@ -53,9 +53,14 @@
                             <li><a href="/backoffice/type/$type.id"><i class="icon-font"></i> $type.name</a></li>
                         #end
                         <li class="divider"></li>
+
                         <li><a href="/backoffice/theme/"><i class="icon-desktop"></i> Themes</a></li>
-                        <li><a href="/backoffice/user"><i class="icon-user"></i> Users</a></li>
                         <li><a href="/backoffice/markup/"><i class="icon-eye-close"></i> Markups</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="/backoffice/folder/settings"><i class="icon-desktop"></i> Folder Settings</a></li>
+                        <li><a href="/backoffice/user"><i class="icon-user"></i> Users</a></li>
                         <li><a href="/backoffice/settings/installation"><i class="icon-cog"></i> Installation</a></li>
                     </ul>
                 </li>

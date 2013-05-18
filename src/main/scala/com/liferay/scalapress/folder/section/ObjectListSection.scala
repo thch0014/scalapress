@@ -17,7 +17,7 @@ import com.liferay.scalapress.search.PagingRenderer
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -57,7 +57,7 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
-        val safePageSize = if (pageSize < 1) ObjectListSection.PAGE_SIZE_DEFAULT else pageSize
+        val safePageSize = _pageSize(context)
         val usePaging = sorted.size > safePageSize
         val page = _paginate(sorted, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
@@ -89,6 +89,18 @@ class ObjectListSection extends Section {
         val total = results.size
         val pagedResults = results.drop((pageNumber - 1) * pageSize).take(pageSize)
         Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
+    }
+
+    def _pageSize(context: ScalapressContext) = {
+        if (pageSize > 0)
+            pageSize
+        else {
+            val settingsPageSize = context.folderSettingsDao.head.pageSize
+            if (settingsPageSize > 0)
+                settingsPageSize
+            else
+                ObjectListSection.PAGE_SIZE_DEFAULT
+        }
     }
 
     def desc = "Show a paginated list of objects that are inside this folder"

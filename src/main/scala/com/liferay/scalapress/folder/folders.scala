@@ -48,14 +48,14 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
     }
 }
 
-trait FolderPluginDao extends GenericDao[FolderPlugin, java.lang.Long] {
-    def head: FolderPlugin
+trait FolderPluginDao extends GenericDao[FolderSettings, java.lang.Long] {
+    def head: FolderSettings
 }
 
 @Component
 @Transactional
-class FolderPluginDaoImpl extends GenericDaoImpl[FolderPlugin, java.lang.Long] with FolderPluginDao {
-    def head: FolderPlugin = findAll.head
+class FolderPluginDaoImpl extends GenericDaoImpl[FolderSettings, java.lang.Long] with FolderPluginDao {
+    def head: FolderSettings = findAll.head
 }
 
 @Component
@@ -66,7 +66,7 @@ class FoldersValidator {
 
     @PostConstruct def ensureOnePlugin() {
         if (folderPluginDao.findAll().size == 0) {
-            val plugin = new FolderPlugin
+            val plugin = new FolderSettings
             folderPluginDao.save(plugin)
         }
     }

@@ -27,7 +27,7 @@ import com.liferay.scalapress.plugin.profile.AccountPluginDao
 @Component
 class ScalapressContext extends ServletContextAware {
 
-    @Autowired var folderPluginDao: FolderPluginDao = _
+    @Autowired var folderSettingsDao: FolderPluginDao = _
     @Autowired var sectionDao: SectionDao = _
 
     @Autowired var paymentPluginDao: PaymentPluginDao = _

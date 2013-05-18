@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/folder"))
-class FolderPluginController {
+@RequestMapping(Array("backoffice/folder/settings"))
+class FolderSettingsController {
 
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
-    def edit(req: HttpServletRequest) = "admin/plugin/folder/plugin.vm"
+    def edit(req: HttpServletRequest) = "admin/folder/settings.vm"
 
     @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def save(req: HttpServletRequest, @ModelAttribute("plugin") plugin: FolderPlugin) = {
-        context.folderPluginDao.save(plugin)
+    def save(req: HttpServletRequest, @ModelAttribute("settings") settings: FolderSettings) = {
+        context.folderSettingsDao.save(settings)
         edit(req)
     }
 
-    @ModelAttribute("plugin") def plugin = context.folderPluginDao.head
+    @ModelAttribute("settings") def settings = context.folderSettingsDao.head
 }
