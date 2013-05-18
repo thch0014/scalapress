@@ -1,8 +1,9 @@
-package com.liferay.scalapress.plugin.asset.smush
+package com.liferay.scalapress.plugin.media.smush
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import java.io.ByteArrayInputStream
+import com.liferay.scalapress.plugin.asset.smush.SmushPlugin
 
 /** @author Stephen Samuel */
 class SmushPluginTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -11,7 +12,7 @@ class SmushPluginTest extends FunSuite with MockitoSugar with OneInstancePerTest
 
         val js = "var a = Array();            var b         =Array(); "
         val actual = new SmushPlugin()._minifyJs(new ByteArrayInputStream(js.getBytes("UTF-8")))
-        assert("var a=Array();var b=Array();" === new String(actual, "utf-8"))
+        assert("var a = Array();var b =Array();" === new String(actual, "utf-8"))
     }
 
     test("css is minified") {
