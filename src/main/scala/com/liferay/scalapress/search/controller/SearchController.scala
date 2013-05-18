@@ -82,9 +82,9 @@ class SearchController extends Logging {
             search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
             search.sortType = sort
 
-            val refs = searchService.search(search)
-            val results = refs.map(ref => objectDao.find(ref.id)).toList
-            val live = results.filter(_.status.equalsIgnoreCase("live"))
+            val result = searchService.search(search)
+            val refs = result.refs.map(ref => objectDao.find(ref.id)).toList
+            val live = refs.filter(_.status.equalsIgnoreCase("live"))
 
             live
         }

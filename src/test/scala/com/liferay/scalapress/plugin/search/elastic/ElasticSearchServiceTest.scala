@@ -9,6 +9,7 @@ import com.liferay.scalapress.obj.attr.{AttributeDao, AttributeValue, Attribute}
 import com.liferay.scalapress.search.SavedSearch
 import com.liferay.scalapress.ScalapressContext
 import org.mockito.Mockito
+import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.search.elasticsearch.ElasticSearchService
 
 /** @author Stephen Samuel */
@@ -91,7 +92,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.name = "tony"
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(results(0).id === 2)
     }
@@ -100,7 +101,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.name = "tony mowbray"
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(results(0).id === 2)
     }
@@ -109,7 +110,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.objectType = obj2.objectType
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(results(0).id === 4)
     }
@@ -118,7 +119,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.imageOnly = true
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(results(0).id === 2)
     }
@@ -127,7 +128,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.sortType = Sort.Name
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 3)
         assert(results(0).id === 4)
         assert(results(1).id === 20)
@@ -138,7 +139,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.sortType = Sort.Newest
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 3)
         assert(results(0).id === 20)
         assert(results(1).id === 4)
@@ -149,7 +150,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         search.sortType = Sort.Oldest
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 3)
         assert(results(0).id === 2)
         assert(results(1).id === 4)
@@ -162,7 +163,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortType = Sort.Attribute
         search.sortAttribute = av1.attribute
 
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 3)
         assert(results(0).id === 20)
         assert(results(1).id === 2)
@@ -175,7 +176,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortType = Sort.AttributeDesc
         search.sortAttribute = av1.attribute
 
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 3)
         assert(results(0).id === 4)
         assert(results(1).id === 2)
@@ -188,10 +189,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.location = "SW11"
         search.distance = 100 // only two should be within 100m, TS19 should be 250m away
         search.sortType = Sort.Distance
-        assert(service.search(search).size === 2)
+        assert(service.search(search).refs.size === 2)
 
         search.distance = 300 // only two should be within 100m, TS19 should be 250m away
-        assert(service.search(search).size === 3)
+        assert(service.search(search).refs.size === 3)
     }
 
     test("resp2ref happy path") {
@@ -199,7 +200,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val search = new SavedSearch
         search.keywords = "mowbray"
 
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(2 === results(0).id)
         assert("tony mowbray" === results(0).name)
@@ -214,11 +215,11 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         searchav.attribute.id = 62
         searchav.value = "attribute with space"
 
-        import scala.collection.JavaConverters._
+
         val search = new SavedSearch
         search.attributeValues = Set(searchav).asJava
 
-        val results = service.search(search)
+        val results = service.search(search).refs
         assert(results.size === 1)
         assert(2 === results(0).id)
         assert("tony mowbray" === results(0).name)
@@ -227,14 +228,14 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     test("wildcard search count brings back total count") {
 
         val search = new SavedSearch
-        val count = service.count(search)
+        val count = service.search(search).count
         assert(3 === count)
     }
 
     test("name search returns query based count") {
         val search = new SavedSearch
         search.name = "mowbray"
-        val count = service.count(search)
+        val count = service.search(search).count
         assert(1 === count)
     }
 
@@ -248,7 +249,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val search = new SavedSearch
         search.attributeValues.add(searchav)
 
-        val count = service.count(search)
+        val count = service.search(search).count
         assert(1 === count)
     }
 }

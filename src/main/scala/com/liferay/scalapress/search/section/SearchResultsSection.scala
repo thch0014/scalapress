@@ -33,8 +33,8 @@ class SearchResultsSection extends Section {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val results = context.searchService.search(search)
-                val objs = results.map(arg => context.objectDao.find(arg.id))
+                val result = context.searchService.search(search)
+                val objs = result.refs.map(arg => context.objectDao.find(arg.id))
                 objs.size match {
                     case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
                     case _ =>

@@ -17,7 +17,7 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
-import com.liferay.scalapress.obj.{ObjectType, ObjectDao, Obj}
+import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
@@ -165,7 +165,7 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
-    override def typeahead(q: String, limit: Int): SearchResult = {
+    override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
         val resp = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setQuery(new PrefixQueryBuilder("name", q.toLowerCase))
@@ -173,28 +173,28 @@ class ElasticSearchService extends SearchService with Logging {
           .setSize(limit)
           .execute()
           .actionGet()
-        val refs = _resp2ref(resp)
-        SearchResult(refs)
+        _resp2ref(resp)
     }
 
     override def count: Long = {
         client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(4000).count()
     }
 
-    override def count(search: SavedSearch): Long = {
+    def _count(search: SavedSearch): Int = {
         val query = _buildQuery(search)
         client.prepareCount(INDEX)
           .setQuery(query)
           .execute()
           .actionGet(4000)
-          .count()
+          .count().toInt
     }
 
-    override def search(search: SavedSearch): Seq[ObjectRef] = {
+    override def search(search: SavedSearch): SearchResult = {
         val resp = _search(search)
         val refs = _resp2ref(resp)
+        val count = _count(search)
         logger.debug("Search returned {} refs", refs.size)
-        refs
+        SearchResult(refs, Nil, count)
     }
 
     def _buildQuery(search: SavedSearch): QueryStringQueryBuilder = {
@@ -315,23 +315,6 @@ class ElasticSearchService extends SearchService with Logging {
             }).toMap
             new ObjectRef(id, objectType, name, status, attributes, Nil)
         }).toSeq
-    }
-
-    // search by the given query string and then return the matching doc ids
-    def search(q: String, pageSize: Int): SearchResponse = {
-        val s = new SavedSearch
-        s.name = q
-        s.maxResults = pageSize
-        _search(s)
-    }
-
-    // search by the given query string and then return the matching doc ids
-    override def searchType(q: String, t: ObjectType, pageSize: Int): SearchResponse = {
-        val s = new SavedSearch
-        s.name = q
-        s.objectType = t
-        s.maxResults = pageSize
-        _search(s)
     }
 
     private def source(obj: Obj) = {

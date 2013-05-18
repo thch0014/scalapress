@@ -22,8 +22,8 @@ class CalendarJsonController {
     def json(@PathVariable("id") id: Long): Array[Event] = {
 
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
-        val refs = searchService.search(widget.search)
-        refs.flatMap(ref => {
+        val result = searchService.search(widget.search)
+        result.refs.flatMap(ref => {
 
             ref.attributes.get(widget.startDateAttribute.id) match {
 

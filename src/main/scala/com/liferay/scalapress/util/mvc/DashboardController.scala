@@ -28,7 +28,7 @@ class DashboardController {
         val search = new SavedSearch
         search.sortType = Sort.Newest
         search.maxResults = 8
-        val refs = context.searchService.search(search)
-        refs.asJava
+        val result = context.searchService.search(search)
+        result.refs.asJava
     }
 }

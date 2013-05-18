@@ -25,8 +25,8 @@ class BackofficeSearchController {
         s.name = q
         s.maxResults = 50
 
-        val refs = service.search(s)
-        val results = refs.map(ref => {
+        val result = service.search(s)
+        val results = result.refs.map(ref => {
 
             SearchResult(ref.id,
                 ref.objectType,

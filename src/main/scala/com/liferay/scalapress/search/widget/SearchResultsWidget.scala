@@ -40,8 +40,8 @@ class SearchResultsWidget extends Widget {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val results = req.context.searchService.search(search)
-                val objs = results.map(arg => req.context.objectDao.find(arg.id))
+                val result = req.context.searchService.search(search)
+                val objs = result.refs.map(arg => req.context.objectDao.find(arg.id))
                   .filter(_.status.equalsIgnoreCase("live"))
                 objs.size match {
                     case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
