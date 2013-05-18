@@ -23,9 +23,12 @@ import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
 import java.util.concurrent.TimeUnit
-import com.liferay.scalapress.search.{SearchResult, ObjectRef, SavedSearch, SearchService}
-import scala.Some
+import com.liferay.scalapress.search._
 import org.elasticsearch.action.search.SearchResponse
+import org.elasticsearch.search.facet.terms.{TermsFacet, TermsFacetBuilder}
+import scala.Some
+import com.liferay.scalapress.search.ObjectRef
+import com.liferay.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 
@@ -178,9 +181,10 @@ class ElasticSearchService extends SearchService with Logging {
     override def search(search: SavedSearch): SearchResult = {
         val resp = _search(search)
         val refs = _resp2ref(resp)
+        val facets = _resp2facets(resp)
         val count = _count(search)
         logger.debug("Search returned {} refs", refs.size)
-        SearchResult(refs, Nil, count)
+        SearchResult(refs, facets, count)
     }
 
     def _buildQuery(search: SavedSearch): QueryStringQueryBuilder = {
@@ -285,10 +289,29 @@ class ElasticSearchService extends SearchService with Logging {
             case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
             case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
         }
-
         req.addSort(sort)
+
+        search.facets.map(facet => {
+            req.addFacet(new TermsFacetBuilder(facet).field(facet))
+        })
+
         logger.debug("Search: " + req)
         req.execute().actionGet()
+    }
+
+    def _resp2facets(resp: SearchResponse): Seq[Facet] = {
+        Option(resp.facets()) match {
+            case None => Nil
+            case Some(facets) =>
+                facets.facets()
+                  .asScala
+                  .filter(_.isInstanceOf[TermsFacet])
+                  .map(_.asInstanceOf[TermsFacet])
+                  .map(arg => {
+                    val terms = arg.entries().asScala.map(entry => FacetTerm(entry.term, entry.count))
+                    Facet(arg.name, terms)
+                })
+        }
     }
 
     def _resp2ref(resp: SearchResponse): Seq[ObjectRef] = {
@@ -319,7 +342,8 @@ class ElasticSearchService extends SearchService with Logging {
           .field("name", obj.name.toLowerCase)
           .field("name_raw", obj.name)
           .field("status", obj.status)
-          .field("tags", obj.labels.split(","))
+
+        Option(obj.labels).map(tags => json.field("tags", tags.split(","): _*))
 
         val hasImage = obj.images.size > 0
         json.field("hasImage", hasImage.toString)

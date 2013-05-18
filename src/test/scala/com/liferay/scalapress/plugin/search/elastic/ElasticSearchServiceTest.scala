@@ -6,7 +6,7 @@ import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.media.Image
 import com.liferay.scalapress.enums.{AttributeType, Sort}
 import com.liferay.scalapress.obj.attr.{AttributeDao, AttributeValue, Attribute}
-import com.liferay.scalapress.search.SavedSearch
+import com.liferay.scalapress.search.{SearchService, SavedSearch}
 import com.liferay.scalapress.ScalapressContext
 import org.mockito.Mockito
 import scala.collection.JavaConverters._
@@ -57,6 +57,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av4)
     obj.attributeValues.add(av7)
+    obj.labels = "coldplay,jethro tull"
 
     val obj2 = new Obj
     obj2.id = 4
@@ -66,6 +67,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj2.status = "Disabled"
     obj2.attributeValues.add(av2)
     obj2.attributeValues.add(av5)
+    obj2.labels = "coldplay"
 
     val obj3 = new Obj
     obj3.id = 20
@@ -251,5 +253,17 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val count = service.search(search).count
         assert(1 === count)
+    }
+
+    test("wildcard search getting tag facets") {
+
+        val search = new SavedSearch
+        search.facets = Seq(SearchService.FACET_TAGS)
+        val result = service.search(search)
+
+        assert(1 === result.facets.size)
+        assert(SearchService.FACET_TAGS === result.facets.head.name)
+        assert(2 === result.facets.head.terms.find(_.term == "coldplay").get.count)
+        assert(1 === result.facets.head.terms.find(_.term == "jethro tull").get.count)
     }
 }
