@@ -12,12 +12,13 @@ import scala.util.Random
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
 import com.liferay.scalapress.search.PagingRenderer
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -37,15 +38,14 @@ class ObjectListSection extends Section {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
-    def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
-
-        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+    def _objects: Seq[Obj] = {
 
         val objects = try {
             folder.objects.asScala.toSeq
         } catch {
             case e: Exception => Nil
         }
+
         val live = objects.filter(_.status.toLowerCase == "live")
 
         val sorted = sort match {
@@ -57,9 +57,18 @@ class ObjectListSection extends Section {
             case _ => live.sortBy(_.name)
         }
 
+        sorted
+    }
+
+    def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
+
+        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+
+        val objects = _objects
+
         val safePageSize = _pageSize(context)
-        val usePaging = sorted.size > safePageSize
-        val page = _paginate(sorted, pageNumber, safePageSize)
+        val usePaging = objects.size > safePageSize
+        val page = _paginate(objects, pageNumber, safePageSize)
         val paging = Paging(sreq.request, page)
 
         val renderedObjects = page.results.size match {
@@ -91,7 +100,7 @@ class ObjectListSection extends Section {
         Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
     }
 
-    def _pageSize(context: ScalapressContext) = {
+    def _pageSize(context: ScalapressContext): Int = {
         if (pageSize > 0)
             pageSize
         else {
