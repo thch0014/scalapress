@@ -75,25 +75,11 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(TYPE)
           //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("objectid")
-          .field("type", "integer")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("name_raw")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("location")
-          .field("type", "geo_point")
-          .field("index", "not_analyzed")
-          .endObject()
+          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("objectid").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
+          .startObject("tags").field("type", "string").field("index", "not_analyzed").endObject()
 
         context.attributeDao.findAll().foreach(attr => {
             source
@@ -229,6 +215,11 @@ class ElasticSearchService extends SearchService with Logging {
 
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
 
+        Option(search.labels) match {
+            case Some(labels) => labels.split(",").filterNot(_.isEmpty).foreach(tag => buffer.append("tags:" + tag))
+            case _ =>
+        }
+
         //            Option(search.keywords)
         //          .filter(_.trim.length > 0)
         //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
@@ -328,7 +319,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("name", obj.name.toLowerCase)
           .field("name_raw", obj.name)
           .field("status", obj.status)
-          .field("labels", obj.labels)
+          .field("tags", obj.labels.split(","))
 
         val hasImage = obj.images.size > 0
         json.field("hasImage", hasImage.toString)
