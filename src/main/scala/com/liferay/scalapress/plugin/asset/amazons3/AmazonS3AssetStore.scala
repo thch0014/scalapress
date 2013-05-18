@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.amazons3
+package com.liferay.scalapress.plugin.asset.amazons3
 
 import java.io.{ByteArrayInputStream, InputStream}
 import com.amazonaws.services.s3.AmazonS3Client
@@ -44,6 +44,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
 
     def count: Int = {
+
         val req: ListObjectsRequest = new ListObjectsRequest
         req.setBucketName(bucketName)
 

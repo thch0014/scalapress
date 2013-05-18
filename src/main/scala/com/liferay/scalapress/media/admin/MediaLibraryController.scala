@@ -56,7 +56,7 @@ class MediaLibraryController {
         val paging = Paging(req, page)
         model.put("paging", paging)
 
-        val pagination = PagingRenderer.render(paging)
+        val pagination = PagingRenderer.render(paging, 10)
         model.put("pagination", pagination)
     }
 }

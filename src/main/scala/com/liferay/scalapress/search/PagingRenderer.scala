@@ -17,7 +17,8 @@ object PagingRenderer {
         })
     }
 
-    def render(paging: Paging): String = {
+    def render(paging: Paging): String = render(paging, 5)
+    def render(paging: Paging, range: Int): String = {
 
         val range = 5
         val pages = _renderPages(paging, range)
