@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils
 import com.liferay.scalapress.settings.Installation
 import com.liferay.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 @Component
@@ -92,16 +93,18 @@ class FormService extends Logging {
 
     def adminEmail(recipients: Seq[String], submission: Submission, installation: Installation) {
 
-        val body = new StringBuilder
+        val body = new ListBuffer[String]
+        body.append("Form name: " + submission.formName)
+        body.append("Submitted on page: " + submission.page.name)
         for ( kv <- submission.data.asScala ) {
-            body.append(kv.key + ": " + kv.value + "\n")
+            body.append(kv.key + ": " + kv.value)
         }
 
         val message = new SimpleMailMessage()
         message.setFrom("nodotreply@" + _domain(installation))
         message.setTo(recipients.toArray)
         message.setSubject("Submission: " + submission.formName)
-        message.setText(body.toString())
+        message.setText(body.mkString("\n"))
 
         try {
             mailSender.send(message)

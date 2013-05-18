@@ -2,6 +2,7 @@ package com.liferay.scalapress.plugin.form
 
 import javax.persistence.{Entity, GenerationType, GeneratedValue, Id, JoinColumn, Column, Table, ManyToOne}
 import scala.beans.BeanProperty
+import org.hibernate.annotations.{NotFoundAction, NotFound}
 
 /** @author Stephen Samuel */
 @Entity
@@ -14,6 +15,7 @@ class SubmissionKeyValue {
 
     @ManyToOne
     @JoinColumn(name = "submission")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var submission: Submission = _
 
     @Column(name = "name")

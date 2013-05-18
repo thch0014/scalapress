@@ -4,6 +4,8 @@ import javax.persistence.{FetchType, Column, ElementCollection, CascadeType, One
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 import scala.beans.BeanProperty
+import org.hibernate.annotations.{NotFoundAction, NotFound}
+import com.liferay.scalapress.util.Page
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,6 +17,7 @@ class Submission {
     @BeanProperty var id: Long = _
 
     @OneToMany(mappedBy = "submission", cascade = Array(CascadeType.ALL))
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var data: java.util.List[SubmissionKeyValue] = new java.util.ArrayList[SubmissionKeyValue]
 
     @Column(name = "name")
@@ -24,11 +27,15 @@ class Submission {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var folder: Folder = _
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
+
+    def page = Page(obj)
 
     @BeanProperty var ipAddress: String = _
 
