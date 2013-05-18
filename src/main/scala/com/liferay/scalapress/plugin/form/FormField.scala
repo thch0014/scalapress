@@ -1,7 +1,6 @@
 package com.liferay.scalapress.plugin.form
 
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import scala.Predef.String
 import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
 import scala.beans.BeanProperty
 import javax.persistence.Column

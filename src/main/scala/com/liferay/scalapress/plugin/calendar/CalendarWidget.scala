@@ -7,7 +7,6 @@ import com.liferay.scalapress.search.SavedSearch
 import com.liferay.scalapress.obj.ObjectType
 import com.liferay.scalapress.obj.attr.Attribute
 import com.liferay.scalapress.enums.Sort
-import scala.Some
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import scala.beans.BeanProperty
 

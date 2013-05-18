@@ -1,10 +1,10 @@
 package com.liferay.scalapress.widgets
 
 import javax.persistence._
-import reflect.BeanProperty
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.enums.WidgetContainer
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

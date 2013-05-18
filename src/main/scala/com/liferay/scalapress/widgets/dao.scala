@@ -3,7 +3,6 @@ package com.liferay.scalapress.widgets
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
-import com.liferay.scalapress.folder.Folder
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
