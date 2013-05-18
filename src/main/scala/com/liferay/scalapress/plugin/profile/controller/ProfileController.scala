@@ -11,6 +11,7 @@ import org.springframework.validation.Errors
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
 import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import com.liferay.scalapress.security.SecurityFuncs
 
 /** @author Stephen Samuel */
 @Controller
@@ -26,9 +27,9 @@ class ProfileController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showRegistrationPage(req: HttpServletRequest,
-                             @ModelAttribute("account") account: Obj,
-                             errors: Errors): ScalapressPage = {
+    def show(req: HttpServletRequest,
+             @ModelAttribute("account") account: Obj,
+             errors: Errors): ScalapressPage = {
 
         val plugin = accountPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Your Profile")
@@ -38,5 +39,5 @@ class ProfileController {
         page
     }
 
-    @ModelAttribute("account") def account(req: HttpServletRequest) = req.getUserPrincipal
+    @ModelAttribute("account") def account(req: HttpServletRequest) = SecurityFuncs.getUser(req).get
 }
