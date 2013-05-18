@@ -12,6 +12,7 @@ import java.net.URLConnection
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
+import com.sksamuel.scoot.soa.PagedQuery
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -25,8 +26,9 @@ class AmazonS3AssetStore(val cdnUrl: String,
         getAmazonS3Client.deleteObject(bucketName, key)
     }
 
-    def search(query: String, limit: Int): Array[Asset] = {
-        listObjects(query, 0, limit).toList.map(arg => Asset(arg.getKey,
+    def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = {
+        val pq = PagedQuery(pageNumber, pageSize)
+        listObjects(query, pq.offset, pageSize).toList.map(arg => Asset(arg.getKey,
             arg.getSize,
             link(arg.getKey),
             URLConnection.guessContentTypeFromName(arg.getKey)))
@@ -78,7 +80,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
-    override def list(limit: Int): Array[Asset] = search(null, limit)
+    override def list(limit: Int): Array[Asset] = search(null, 0, limit)
 
     def get(key: String): Option[InputStream] = {
         try {

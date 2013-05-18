@@ -16,6 +16,8 @@ import org.springframework.context.ApplicationContext
 @RequestMapping(Array("backoffice/medialib"))
 class MediaLibraryController {
 
+    val PAGE_SIZE = 50
+
     @Autowired var assetStore: AssetStore = _
     @Autowired var context: ScalapressContext = _
     @Autowired var appContext: ApplicationContext = _
@@ -40,8 +42,6 @@ class MediaLibraryController {
     }
 
     @ModelAttribute("assets") def assets(@RequestParam(value = "q", required = false) q: String,
-                                         @RequestParam(value = "pageNumber",
-                                             required = false,
-                                             defaultValue = "1") pageNumber: Int) =
-        assetStore.search(q, 50).toList.asJava
+                                         @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int) =
+        assetStore.search(q, pageNumber, PAGE_SIZE).toList.asJava
 }

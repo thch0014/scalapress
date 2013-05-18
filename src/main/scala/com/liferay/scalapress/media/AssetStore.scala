@@ -23,7 +23,7 @@ trait AssetStore {
 
     def list(limit: Int): Array[Asset]
 
-    def search(query: String, limit: Int): Array[Asset]
+    def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset]
 
     // returns an externally accessible base URL for this store.
     def baseUrl: String
