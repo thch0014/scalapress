@@ -10,13 +10,17 @@ import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.{AssetLifecycleListener, AssetStore}
 import java.io._
 import org.springframework.context.ApplicationContext
+import org.springframework.ui.ModelMap
+import com.sksamuel.scoot.soa.{Paging, Page}
+import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.search.PagingRenderer
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/medialib"))
 class MediaLibraryController {
 
-    val PAGE_SIZE = 50
+    val PAGE_SIZE = 36
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var context: ScalapressContext = _
@@ -41,7 +45,18 @@ class MediaLibraryController {
         "redirect:" + UrlResolver.medialib
     }
 
-    @ModelAttribute("assets") def assets(@RequestParam(value = "q", required = false) q: String,
-                                         @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int) =
-        assetStore.search(q, pageNumber, PAGE_SIZE).toList.asJava
+    @ModelAttribute def assets(@RequestParam(value = "q", required = false) q: String,
+                               @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
+                               req: HttpServletRequest,
+                               model: ModelMap) {
+        val assets = assetStore.search(q, pageNumber, PAGE_SIZE).toList
+        model.put("assets", assets.asJava)
+
+        val page = Page(assets, pageNumber, PAGE_SIZE, assetStore.count)
+        val paging = Paging(req, page)
+        model.put("paging", paging)
+
+        val pagination = PagingRenderer.render(paging)
+        model.put("pagination", pagination)
+    }
 }

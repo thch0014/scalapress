@@ -16,7 +16,7 @@ class FilesystemAssetStore extends AssetStore {
     // returns an externally accessible base URL for this store.
     def baseUrl: String = "http://domain.com"
 
-    def search(query: String, limit: Int): Array[Asset] = Array()
+    def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = Array()
 
     def list(limit: Int): Array[Asset] = Array()
 

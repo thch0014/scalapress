@@ -14,31 +14,47 @@
     </button>
 </form>
 
+<style>
 
-<table class="table table-bordered table-condensed table-striped">
-    <tr>
-        <th>Image</th>
-        <th>Filename</th>
-        <th>Content Type</th>
-        <th>Size</th>
-    </tr>
+    div.assetinfo {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 8pt;
+    }
 
-    #foreach ($a in $assets)
-        <tr>
-            <td>
-                <ul class="thumbnails">
-                    <li class="span6">
-                        <div class="thumbnail"><img src="/images/$a.filename()?width=128&height=128"/></div>
-                    </li>
-                </ul>
-            </td>
-            <td>$a.filename()</td>
-            <td>$a.contentType()</td>
-            <td>$a.size() bytes</td>
-        </tr>
-    #end
-</table>
+    .row-fluid .thumbnails /**/li {
+        min-height: 140px;
+    }
 
+    .row-fluid .thumbnails [class*="span"] {
+        margin-left: 0;
+        margin-right: 1.5%;
+    }
+
+</style>
+
+$pagination
+
+<div class="row-fluid">
+    <ul class="thumbnails">
+        #foreach ($a in $assets)
+            <li class="span2">
+                <div class="thumbnail">
+                    <img data-src="holder.js/300x200" src="/images/$a.filename()?width=128&height=128">
+
+                    <div class="assetinfo">$a.filename()</div>
+                    <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
+
+                    <a class="btn btn-mini" href="/images/$a.filename()">
+                        <i class="icon-eye-open icon-white"></i> View Original</a>
+                </div>
+            </li>
+        #end
+    </ul>
+</div>
+
+$pagination
 
 <div class="modal hide fade" role="dialog" id="10e7a108-b33d-431b-9091-0e4cadb3b7de">
     <div class="modal-header">
