@@ -85,4 +85,6 @@ class SavedSearch {
 
     // find objects newer than this date
     @BeanProperty var newerThanTimestamp: Long = _
+
+    @Transient var facets: Seq[String] = Nil
 }

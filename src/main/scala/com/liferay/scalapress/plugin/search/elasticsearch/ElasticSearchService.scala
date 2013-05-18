@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.search.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
-import org.elasticsearch.action.search.{SearchType, SearchResponse}
+import org.elasticsearch.action.search.SearchType
 import com.liferay.scalapress.{ScalapressContext, Logging}
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
@@ -23,8 +23,9 @@ import com.liferay.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
 import java.util.concurrent.TimeUnit
-import com.liferay.scalapress.search.{ObjectRef, SavedSearch, SearchService}
+import com.liferay.scalapress.search.{SearchResult, ObjectRef, SavedSearch, SearchService}
 import scala.Some
+import org.elasticsearch.action.search.SearchResponse
 
 /** @author Stephen Samuel */
 
@@ -164,7 +165,7 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
-    override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
+    override def typeahead(q: String, limit: Int): SearchResult = {
         val resp = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setQuery(new PrefixQueryBuilder("name", q.toLowerCase))
@@ -172,7 +173,8 @@ class ElasticSearchService extends SearchService with Logging {
           .setSize(limit)
           .execute()
           .actionGet()
-        _resp2ref(resp)
+        val refs = _resp2ref(resp)
+        SearchResult(refs)
     }
 
     override def count: Long = {

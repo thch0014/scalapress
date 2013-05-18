@@ -18,6 +18,6 @@ class TypeaheadController {
     @RequestMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))
     def search(@RequestParam("q") q: String,
                @RequestParam(value = "objectTypeId", required = false) objectTypeId: String): Array[String] = {
-        service.typeahead(q, 8).map(_.name).toArray
+        service.typeahead(q, 8).refs.map(_.name).toArray
     }
 }
