@@ -48,28 +48,28 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
     Mockito.when(context.folderSettingsDao.head).thenReturn(settings)
 
     test("only live object are included") {
-        val objects = section._objects
+        val objects = section._objects(context)
         assert(0 === objects.count(_.status != "live"))
         assert(2 === objects.size)
     }
 
     test("name sort happy path") {
         section.sort = Sort.Name
-        val objects = section._objects
+        val objects = section._objects(context)
         assert(objects(0) === obj1)
         assert(objects(1) === obj3)
     }
 
     test("newest sort happy path") {
         section.sort = Sort.Newest
-        val objects = section._objects
+        val objects = section._objects(context)
         assert(objects(0) === obj1)
         assert(objects(1) === obj3)
     }
 
     test("oldest sort happy path") {
         section.sort = Sort.Oldest
-        val objects = section._objects
+        val objects = section._objects(context)
         assert(objects(0) === obj3)
         assert(objects(1) === obj1)
     }
@@ -105,5 +105,19 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
         settings.pageSize = 0
         val pageSize = section._pageSize(context)
         assert(ObjectListSection.PAGE_SIZE_DEFAULT === pageSize)
+    }
+
+    test("section uses sort from folder settings if not specified in section") {
+        section.sort = null
+        settings.sort = Sort.Oldest
+        val sort = section._sort(context)
+        assert(Sort.Oldest === sort)
+    }
+
+    test("folder settings sort is not used if sort from folder is not null") {
+        section.sort = Sort.Price
+        settings.sort = Sort.Oldest
+        val sort = section._sort(context)
+        assert(Sort.Price === sort)
     }
 }

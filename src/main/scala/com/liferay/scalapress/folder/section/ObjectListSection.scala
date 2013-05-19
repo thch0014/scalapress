@@ -38,7 +38,7 @@ class ObjectListSection extends Section {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
-    def _objects: Seq[Obj] = {
+    def _objects(context: ScalapressContext): Seq[Obj] = {
 
         val objects = try {
             folder.objects.asScala.toSeq
@@ -48,7 +48,7 @@ class ObjectListSection extends Section {
 
         val live = objects.filter(_.status.toLowerCase == "live")
 
-        val sorted = sort match {
+        val sorted = _sort(context) match {
             case Sort.Price => live.sortBy(_.sellPrice)
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
@@ -64,7 +64,7 @@ class ObjectListSection extends Section {
 
         val pageNumber = request.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
 
-        val objects = _objects
+        val objects = _objects(request.context)
 
         val safePageSize = _pageSize(request.context)
         val usePaging = objects.size > safePageSize
@@ -100,6 +100,7 @@ class ObjectListSection extends Section {
         Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
     }
 
+    def _sort(context: ScalapressContext): Sort = Option(sort).getOrElse(context.folderSettingsDao.head.sort)
     def _pageSize(context: ScalapressContext): Int = {
         if (pageSize > 0)
             pageSize

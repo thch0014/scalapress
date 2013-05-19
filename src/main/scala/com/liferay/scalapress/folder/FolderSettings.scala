@@ -2,6 +2,7 @@ package com.liferay.scalapress.folder
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, Entity, Table}
 import scala.beans.BeanProperty
+import com.liferay.scalapress.enums.Sort
 
 /** @author Stephen Samuel */
 @Entity
@@ -11,6 +12,8 @@ class FolderSettings {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
+
+    @BeanProperty var sort: Sort = Sort.Name
 
     @BeanProperty var pageSize: Int = _
     @BeanProperty var header: String = _

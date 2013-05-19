@@ -1,4 +1,4 @@
-package com.liferay.scalapress.folder
+package com.liferay.scalapress.folder.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.folder.FolderSettings
+import com.liferay.scalapress.util.SortPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/settings"))
-class FolderSettingsController {
+class FolderSettingsController extends SortPopulator {
 
     @Autowired var context: ScalapressContext = _
 
