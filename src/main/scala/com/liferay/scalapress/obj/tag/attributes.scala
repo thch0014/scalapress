@@ -80,12 +80,10 @@ object AttributeTableTag extends ScalapressTag with TagBuilder {
         val excludes = params.get("exclude").map(_.trim.split(",")).getOrElse(Array[String]())
         val includes = params.get("include").map(_.trim.split(",")).getOrElse(Array[String]())
 
-        import scala.collection.JavaConverters._
-
         request.obj match {
             case None => None
             case Some(obj) => {
-                val objects = obj.attributeValues.asScala
+                val objects = obj.sortedAttributeValues
                   .filter(_.attribute.public)
                   .filterNot(av => excludes.contains(av.attribute.id.toString))
                   .filter(av => includes.isEmpty || includes.contains(av.attribute.id.toString))

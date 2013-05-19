@@ -58,6 +58,10 @@ class Obj {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
 
+    import scala.collection.JavaConverters._
+
+    def sortedAttributeValues = attributeValues.asScala.toSeq.sortBy(_.value).sortBy(_.attribute.name).sortBy(_.attribute.position)
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "categories_items",
         joinColumns = Array(new JoinColumn(name = "item", unique = true)),
