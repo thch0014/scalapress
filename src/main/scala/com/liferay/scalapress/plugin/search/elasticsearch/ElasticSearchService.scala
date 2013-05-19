@@ -274,21 +274,7 @@ class ElasticSearchService extends SearchService with Logging {
             case Some(f) => req.setQuery(new FilteredQueryBuilder(query, f))
         }
 
-        val sort = search.sortType match {
-            case Sort.Random => SortBuilders
-              .scriptSort("Math.random()", "number")
-              .order(SortOrder.ASC)
-            case Sort.Attribute if search.sortAttribute != null =>
-                SortBuilders.fieldSort("attribute_" + search.sortAttribute.id).order(SortOrder.ASC).ignoreUnmapped(true)
-            case Sort.AttributeDesc if search.sortAttribute != null =>
-                SortBuilders
-                  .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
-                  .order(SortOrder.DESC)
-                  .ignoreUnmapped(true)
-            case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
-            case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
-            case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
-        }
+        val sort = _sort(search)
         req.addSort(sort)
 
         search.facets.map(facet => {
@@ -297,6 +283,30 @@ class ElasticSearchService extends SearchService with Logging {
 
         logger.debug("Search: " + req)
         req.execute().actionGet()
+    }
+
+    def _sort(search: SavedSearch) = search.sortType match {
+
+        case Sort.Random =>
+            SortBuilders
+              .scriptSort("Math.random()", "number")
+              .order(SortOrder.ASC)
+
+        case Sort.Attribute if search.sortAttribute != null =>
+            SortBuilders
+              .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
+              .order(SortOrder.ASC)
+              .ignoreUnmapped(true)
+
+        case Sort.AttributeDesc if search.sortAttribute != null =>
+            SortBuilders
+              .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
+              .order(SortOrder.DESC)
+              .ignoreUnmapped(true)
+
+        case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
+        case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
+        case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
     }
 
     def _resp2facets(resp: SearchResponse): Seq[Facet] = {
