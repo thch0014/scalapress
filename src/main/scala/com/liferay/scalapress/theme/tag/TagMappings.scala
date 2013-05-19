@@ -4,7 +4,6 @@ import com.liferay.scalapress.widgets.WidgetsTag
 import com.liferay.scalapress.plugin.ecommerce.tags._
 import com.liferay.scalapress.obj.tag._
 import com.liferay.scalapress.folder.tag.{PrimaryFoldersTag, BreadcrumbsTag, FolderTag}
-import com.liferay.scalapress.user.UserStatusTag
 import com.liferay.scalapress.settings.tag.SiteGoogleMapTag
 
 /** @author Stephen Samuel */
@@ -34,9 +33,6 @@ object TagMappings {
         "item_url" -> LinkTag,
         "attribute" -> new AttributeValueTag(),
         "image_browser" -> new ColorboxTag(),
-        "user_status" -> UserStatusTag,
-        "account_status" -> UserStatusTag,
-        "member_status" -> UserStatusTag,
         "boxes" -> new WidgetsTag(),
         "widget" -> new WidgetsTag(),
         "breadcrumbs" -> BreadcrumbsTag,
