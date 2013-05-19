@@ -26,11 +26,11 @@ class FormService extends Logging {
     def doSubmission(form: Form, req: ScalapressRequest, files: Seq[MultipartFile]) = {
 
         // upload files first
-        val keys = files.map(file => assetStore.add(file.getOriginalFilename, file.getInputStream))
-        logger.debug("Saved attachments [{}]", keys)
+        val assetKeys = files.map(file => assetStore.add(file.getOriginalFilename, file.getInputStream))
+        logger.debug("Saved attachments [{}]", assetKeys)
 
         val submission = new Submission
-        submission.attachments = keys.asJava
+        submission.attachments = assetKeys.asJava
         submission.formName = form.name
         submission.date = new DateTime(DateTimeZone.UTC).getMillis
         submission.ipAddress = req.request.getRemoteAddr

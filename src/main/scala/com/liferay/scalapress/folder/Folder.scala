@@ -73,7 +73,10 @@ class Folder {
     @BeanProperty var dateCreated: java.lang.Long = _
     @BeanProperty var dateUpdated: java.lang.Long = _
 
+    @Column(name = "footer", length = 100000)
     @BeanProperty var footer: String = _
+
+    @Column(name = "header", length = 100000)
     @BeanProperty var header: String = _
 
     @Column(name = "forwardUrl")

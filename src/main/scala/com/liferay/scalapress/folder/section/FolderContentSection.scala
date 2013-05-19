@@ -10,7 +10,7 @@ import scala.beans.BeanProperty
 @Table(name = "blocks_content")
 class FolderContentSection extends Section {
 
-    @Column(name = "content", length = 10000)
+    @Column(name = "content", length = 100000)
     @BeanProperty var content: String = _
 
     def desc = "Edit and then display a section of content when viewing this object"

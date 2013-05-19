@@ -20,7 +20,7 @@ class SubmissionViewController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(produces = Array("text/html"))
-    def list = "admin/plugin/form/submissions/view.vm"
+    def view = "admin/plugin/form/submissions/view.vm"
 
     @RequestMapping(produces = Array("text/html"), value = Array("downloadall"))
     @ResponseBody

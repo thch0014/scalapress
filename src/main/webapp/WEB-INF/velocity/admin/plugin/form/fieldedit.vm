@@ -37,21 +37,25 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Placeholder</label>
+    #if ($field.fieldType == "Email" || $field.fieldType == "Text")
+        <div class="control-group">
+            <label class="control-label">Placeholder</label>
 
-        <div class="controls">
-            #springFormInput("field.placeholder")
+            <div class="controls">
+                #springFormInput("field.placeholder")
+            </div>
         </div>
-    </div>
+    #end
 
-    <div class="control-group">
-        <label class="control-label">Submitter Email Field</label>
+    #if ($field.fieldType == "Email")
+        <div class="control-group">
+            <label class="control-label">Submitter Email Field</label>
 
-        <div class="controls">
-            #springFormCheckbox("field.submitterEmailField")
+            <div class="controls">
+                #springFormCheckbox("field.submitterEmailField")
+            </div>
         </div>
-    </div>
+    #end
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>

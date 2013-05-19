@@ -42,7 +42,7 @@ abstract class Widget {
 
     @BeanProperty var position: Int = _
 
-    @Column(name = "content")
+    @Column(name = "content", length = 100000)
     @BeanProperty var content: String = _
 
     @BeanProperty var name: String = _
