@@ -11,6 +11,7 @@ import com.liferay.scalapress.obj.ObjectDao
 import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.media.AssetStore
 import com.liferay.scalapress.folder.section.{ObjectListSection, FolderContentSection}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -48,7 +49,7 @@ class SectionEditController {
         model.put("contentable", section.isInstanceOf[FolderContentSection].toString)
         model.put("markupable", section.isInstanceOf[ObjectListSection].toString)
         model.put("section", section)
-        import scala.collection.JavaConverters._
+
         val markups = markupDao.findAll()
         val map = markups.map(m => (m.id, m.name)).toMap + ((0, "-None-"))
         model.put("markups", markups.asJava)
