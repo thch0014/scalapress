@@ -1,14 +1,14 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.theme.MarkupRenderer
-import com.liferay.scalapress.theme.tag.ScalapressTag
+import com.liferay.scalapress.theme.tag.ScalapressTag2
 
 /** @author Stephen Samuel */
 @Tag("associations")
-class AssociationsTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+class AssociationsTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         request.obj.flatMap(obj => {
             val associations = obj.associations.asScala.toSeq
@@ -16,7 +16,7 @@ class AssociationsTag extends ScalapressTag {
                 case 0 => None
                 case _ =>
                     params.get("markup")
-                      .flatMap(id => Option(context.markupDao.find(id.toLong)))
+                      .flatMap(id => Option(request.context.markupDao.find(id.toLong)))
                       .map(m => MarkupRenderer.renderObjects(associations, m, request))
             }
         })

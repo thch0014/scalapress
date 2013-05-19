@@ -1,14 +1,14 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Tag, Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
 
 /** @author Stephen Samuel */
 @Tag("attribute_value")
-class AttributeValueTag extends ScalapressTag with TagBuilder {
+class AttributeValueTag extends ScalapressTag2 with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val sep = params.get("sep").getOrElse(" ")
         params.get("id") match {
             case None => Some("<!-- no id specified for attribute tag -->")
@@ -31,10 +31,10 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("attribute_name")
-class AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
+class AttributeNameTag extends ScalapressTag2 with TagBuilder with Logging {
 
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         params.get("id") match {
             case None => None
@@ -50,10 +50,10 @@ class AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
 }
 
 @Tag("attribute_section")
-class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
+class AttributeSectionTag extends ScalapressTag2 with TagBuilder with Logging {
 
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         params.get("id") match {
             case None => None
@@ -72,10 +72,10 @@ class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
 }
 
 @Tag("attributes_table")
-class AttributeTableTag extends ScalapressTag with TagBuilder {
+class AttributeTableTag extends ScalapressTag2 with TagBuilder {
 
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
 
         val excludes = params.get("exclude").map(_.trim.split(",")).getOrElse(Array[String]())

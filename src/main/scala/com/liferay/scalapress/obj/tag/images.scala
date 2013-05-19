@@ -2,15 +2,15 @@ package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress._
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.theme.tag.{ScalapressTag2, ScalapressTag, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
 import scala.Some
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 
-object ImagesTag extends ScalapressTag with TagBuilder with Logging {
+object ImagesTag extends ScalapressTag2 with TagBuilder with Logging {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val h = params.get("h").orElse(params.get("height")).getOrElse("0").toInt
         val w = params.get("w").orElse(params.get("width")).getOrElse("0").toInt
@@ -24,9 +24,9 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                 val sorted = images.sortBy(_.position)
                 val rendered = sorted.take(limit).map(i => {
                     val src = if (w == 0 || h == 0)
-                        context.assetStore.link(i.filename)
+                        request.context.assetStore.link(i.filename)
                     else
-                        context.imageService.imageLink(i.filename, w, h)
+                        request.context.imageService.imageLink(i.filename, w, h)
 
                     val html = if (w == 0 || h == 0)
                             <img src={src}/>.toString()
@@ -36,7 +36,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                     params.get("link") match {
 
                         case Some(link) if link == "image" =>
-                            buildLink(context.assetStore.link(i.filename), html, params)
+                            buildLink(request.context.assetStore.link(i.filename), html, params)
 
                         case Some(link) if link == "object" =>
                             buildLink(FriendlyUrlGenerator.friendlyUrl(o), html, params)

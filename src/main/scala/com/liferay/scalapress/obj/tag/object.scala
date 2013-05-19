@@ -1,12 +1,12 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
-import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
+import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
-object ObjectTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+object ObjectTag extends ScalapressTag2 with TagBuilder {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(obj => {
             val text = params.get("text").getOrElse(obj.name)
             params.contains("link") match {
@@ -18,8 +18,8 @@ object ObjectTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("summary")
-class SummaryTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+class SummaryTag extends ScalapressTag2 with TagBuilder {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val max = params.get("max").getOrElse("200").toInt
         val objectContent = request.obj.flatMap(arg => Option(arg.content))
@@ -31,8 +31,8 @@ class SummaryTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object LinkTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+object LinkTag extends ScalapressTag2 with TagBuilder {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val folderUrl = request.folder.map(FriendlyUrlGenerator.friendlyUrl(_))
         val objectUrl = request.obj.map(FriendlyUrlGenerator.friendlyUrl(_))
@@ -41,8 +41,8 @@ object LinkTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("content")
-class ContentTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+class ContentTag extends ScalapressTag2 with TagBuilder {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(_.content)
     }
 }
