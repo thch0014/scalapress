@@ -14,6 +14,7 @@ import javax.persistence.Table
 import javax.persistence.CascadeType
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
+import org.hibernate.annotations.Index
 
 /** @author Stephen Samuel */
 @Entity
@@ -84,10 +85,8 @@ class Folder {
 
     @BeanProperty var position: Int = _
 
-    // hidden when browsing but visible in search
     @BeanProperty var hidden: Boolean = false
 
-    // meta data
     @BeanProperty var titleTag: String = _
     @BeanProperty var descriptionTag: String = _
 
