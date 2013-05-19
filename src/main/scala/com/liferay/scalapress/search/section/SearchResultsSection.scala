@@ -29,19 +29,19 @@ class SearchResultsSection extends Section {
         context.savedSearchDao.save(search)
     }
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val result = context.searchService.search(search)
-                val objs = result.refs.map(arg => context.objectDao.find(arg.id))
+                val result = request.context.searchService.search(search)
+                val objs = result.refs.map(arg => request.context.objectDao.find(arg.id))
                 objs.size match {
                     case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
                     case _ =>
                         Option(markup).orElse(Option(objs.head.objectType.objectListMarkup)) match {
                             case None => Some("<!-- no search results markup -->")
                             case Some(m) =>
-                                val rendered = MarkupRenderer.renderObjects(objs, m, request, context)
+                                val rendered = MarkupRenderer.renderObjects(objs, m, request)
                                 Some(rendered)
                         }
                 }

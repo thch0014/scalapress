@@ -12,12 +12,12 @@ class AttachmentSection extends Section {
 
     def desc: String = "Shows attachments for a folder or object"
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
-        val attachments = _loadAttachments(request, context)
+    def render(request: ScalapressRequest): Option[String] = {
+        val attachments = _loadAttachments(request, request.context)
         if (attachments.isEmpty)
             None
         else
-            Some(_xml(attachments, context).toString())
+            Some(_xml(attachments, request.context).toString())
     }
 
     def _loadAttachments(request: ScalapressRequest, context: ScalapressContext): Iterable[Attachment] = {

@@ -76,13 +76,13 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
 
     test("pagination is included if objects > pageSize") {
         section.pageSize = 1
-        val render = section.render(sreq, context).get
+        val render = section.render(sreq).get
         assert(render.contains("pagination"))
     }
 
     test("pagination is not included if objects <= pageSize") {
         section.pageSize = 11
-        val render = section.render(sreq, context).get
+        val render = section.render(sreq).get
         assert(!render.contains("pagination"))
     }
 

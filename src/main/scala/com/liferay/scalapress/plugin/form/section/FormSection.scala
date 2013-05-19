@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.form.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import reflect.BeanProperty
 import javax.persistence.{ManyToOne, Entity, Table, JoinColumn}
 import com.liferay.scalapress.plugin.form.{FormRenderer, Form}
 import com.liferay.scalapress.section.Section
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,7 +17,7 @@ class FormSection extends Section {
 
     def desc: String = "For showing a form on a folder or object page"
     override def backoffice: String = "/backoffice/plugin/form/section/" + id
-    def render(req: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(req: ScalapressRequest): Option[String] = {
         val rendered = FormRenderer.render(form, req)
         Option(rendered)
     }

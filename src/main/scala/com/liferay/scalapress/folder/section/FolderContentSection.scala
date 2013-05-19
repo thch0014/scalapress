@@ -15,11 +15,11 @@ class FolderContentSection extends Section {
 
     def desc = "Edit and then display a section of content when viewing this object"
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
         Option(content)
           .map(c => {
-            c.replace("src=\"/images/", "src=\"" + context.assetStore.baseUrl + "/")
-              .replace("src=\"images/", "src=\"" + context.assetStore.baseUrl + "/")
+            c.replace("src=\"/images/", "src=\"" + request.context.assetStore.baseUrl + "/")
+              .replace("src=\"images/", "src=\"" + request.context.assetStore.baseUrl + "/")
         })
     }
 }

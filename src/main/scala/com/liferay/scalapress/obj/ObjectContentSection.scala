@@ -1,7 +1,7 @@
 package com.liferay.scalapress.obj
 
 import javax.persistence.{Table, Entity, Column}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.section.Section
 
 /** @author Stephen Samuel */
@@ -14,5 +14,5 @@ class ObjectContentSection extends Section {
 
     def desc = "Edit and then display a section of content when viewing this object"
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = Option(content)
+    def render(request: ScalapressRequest): Option[String] = Option(content)
 }

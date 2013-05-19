@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.gmap
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.obj.attr.AttributeFuncs
@@ -15,7 +15,7 @@ class GMapSection extends Section {
 
     override def backoffice: String = "/backoffice/plugin/mapping/section/" + id
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
 
         Option(postcode).filter(_.trim.length > 0)
           .orElse(request.obj.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))

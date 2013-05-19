@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.carousel.tinycarousel
 
 import com.liferay.scalapress.section.Section
 import javax.persistence._
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import scala.Array
 import scala.beans.BeanProperty
 
@@ -15,10 +15,10 @@ class TinyCarouselSection extends Section {
 
     @BeanProperty var images: Array[String] = Array()
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
 
         val renderedImages = images.map(image => {
-            val src = context.assetStore.link(image)
+            val src = request.context.assetStore.link(image)
             <li>
                 <img src={src}/>
             </li>

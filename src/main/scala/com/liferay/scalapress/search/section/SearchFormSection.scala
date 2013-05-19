@@ -22,7 +22,7 @@ class SearchFormSection extends Section {
 
     override def backoffice: String = "/backoffice/search/section/form/" + id
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = Option(searchForm) match {
+    def render(request: ScalapressRequest): Option[String] = Option(searchForm) match {
         case None => Some("<!--no search form set-->")
         case Some(form) =>
             val rendered = SearchFormRenderer.render(form, this)

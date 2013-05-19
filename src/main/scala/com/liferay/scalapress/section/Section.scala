@@ -46,7 +46,7 @@ abstract class Section {
     @BeanProperty var objectType: ObjectType = _
 
     def desc: String
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String]
+    def render(request: ScalapressRequest): Option[String]
     def backoffice: String = "/backoffice/section/" + id
 
     final def init(context: ScalapressContext) {

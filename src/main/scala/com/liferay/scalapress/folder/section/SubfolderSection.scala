@@ -1,7 +1,7 @@
 package com.liferay.scalapress.folder.section
 
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -17,7 +17,7 @@ class SubfolderSection extends Section {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
-    def render(request: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
 
         val default = new Markup
         default.start = "<ul>"
@@ -25,9 +25,9 @@ class SubfolderSection extends Section {
         default.end = "</ul>"
 
         val m = Option(markup)
-          .orElse(Option(context.markupDao.byName("Default subcategories markup")))
+          .orElse(Option(request.context.markupDao.byName("Default subcategories markup")))
           .getOrElse(default)
-        val render = MarkupRenderer.renderFolders(_folders, default, request, context)
+        val render = MarkupRenderer.renderFolders(_folders, default, request, request.context)
         Option(render)
     }
 

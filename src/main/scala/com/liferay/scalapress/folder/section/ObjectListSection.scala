@@ -60,16 +60,16 @@ class ObjectListSection extends Section {
         sorted
     }
 
-    def render(sreq: ScalapressRequest, context: ScalapressContext): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
 
-        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+        val pageNumber = request.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
 
         val objects = _objects
 
-        val safePageSize = _pageSize(context)
+        val safePageSize = _pageSize(request.context)
         val usePaging = objects.size > safePageSize
         val page = _paginate(objects, pageNumber, safePageSize)
-        val paging = Paging(sreq.request, page)
+        val paging = Paging(request.request, page)
 
         val renderedObjects = page.results.size match {
             case 0 => "<!-- No objects in folder -->"
@@ -77,7 +77,7 @@ class ObjectListSection extends Section {
                 val first = page.results.head
                 Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
                     case None => "<!-- No markup found for folder -->"
-                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
+                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, request.withPaging(paging))
                 }
             }
         }
