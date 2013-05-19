@@ -4,6 +4,8 @@ import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 
 /** @author Stephen Samuel */
 trait ScalapressTag {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = render(request, request.context, params)
+    @deprecated
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String]
 }
 

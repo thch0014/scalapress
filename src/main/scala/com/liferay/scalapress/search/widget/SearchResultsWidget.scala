@@ -12,7 +12,7 @@ import scala.beans.BeanProperty
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
 @Cacheable
@@ -49,7 +49,7 @@ class SearchResultsWidget extends Widget {
                         Option(markup).orElse(Option(objs.head.objectType.objectListMarkup)) match {
                             case None => Some("<!-- search widget #" + id + ": no markup -->")
                             case Some(m) =>
-                                val rendered = MarkupRenderer.renderObjects(objs, m, req, req.context)
+                                val rendered = MarkupRenderer.renderObjects(objs, m, req)
                                 Some(rendered)
                         }
                 }

@@ -31,7 +31,7 @@ class SiblingSection extends Section {
                 val siblings = parent.subfolders.asScala - folder
                 val m = Option(markup)
                   .orElse(Option(request.context.markupDao.byName("Default siblings markup"))).getOrElse(default)
-                val render = MarkupRenderer.renderFolders(siblings.toList, default, request, request.context)
+                val render = MarkupRenderer.renderFolders(siblings.toList, default, request)
                 Option(render)
         }
     }

@@ -11,9 +11,9 @@ class ScalapressPageRenderer(context: ScalapressContext) {
 
         val sb = new StringBuilder()
         sb.append(page._toolbar.getOrElse(""))
-        sb.append(TagRenderer.render(page.theme.header, page.req, context))
+        sb.append(TagRenderer.render(page.theme.header, page.req))
         page._body.filter(_ != null).map(_.toString).filter(_ != null).foreach(sb.append(_))
-        sb.append(TagRenderer.render(page.theme.footer, page.req, context))
+        sb.append(TagRenderer.render(page.theme.footer, page.req))
         val preCompressed = sb.toString()
 
         val compressor = new HtmlCompressor()

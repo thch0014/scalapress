@@ -116,7 +116,7 @@ class SearchController extends Logging {
             val markup = objects.head.objectType.objectListMarkup
             if (markup != null) {
                 page.body("<!-- search results: no object list markup found -->")
-                page.body(MarkupRenderer.renderObjects(objects, markup, sreq, context))
+                page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
             }
         }
         page
@@ -127,7 +127,7 @@ class SearchController extends Logging {
     def savedSearch(@PathVariable("id") id: Long) = {
         val savedSearch = savedSearchDao.find(id)
         val response = searchService.search(savedSearch)
-        response.toString()
+        response.toString
     }
 
     @PostConstruct

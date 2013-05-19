@@ -39,7 +39,7 @@ class BasketController {
             page.body("<!-- no basket markup set -->")
         } else {
             val obj = Option(req.getParameter("objectId")).flatMap(objId => Option(objectDao.find(objId.toLong)))
-            page.body(MarkupRenderer.render(markup, obj.map(sreq.withObject(_)).getOrElse(sreq), context))
+            page.body(MarkupRenderer.render(markup, obj.map(sreq.withObject(_)).getOrElse(sreq)))
         }
 
         page.body("</form>")

@@ -1,6 +1,6 @@
 package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{Tag, Logging, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, Logging, ScalapressRequest}
 import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
@@ -50,7 +50,7 @@ object TagRenderer extends Logging {
 
     def regex(tag: String) = "\\[" + tag + "(\\?.*?)?\\]"
 
-    def render(text: String, request: ScalapressRequest, context: ScalapressContext): String = {
+    def render(text: String, request: ScalapressRequest): String = {
         Option(text) match {
             case None => ""
             case _ => {
@@ -72,7 +72,7 @@ object TagRenderer extends Logging {
                             case _ => Map.empty[String, String]
                         }
 
-                        tag.render(request, context, params) match {
+                        tag.render(request, params) match {
                             case None => ""
                             case Some(value) =>
                                 if (value == null) ""

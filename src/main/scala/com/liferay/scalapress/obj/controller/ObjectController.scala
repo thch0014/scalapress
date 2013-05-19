@@ -48,13 +48,13 @@ class ObjectController extends Logging {
         val page = ScalapressPage(theme, sreq)
 
         if (SecurityFuncs.hasAdminRole(page.req.request)) {
-            page.toolbar(Toolbar.render(context.siteDao.get, obj))
+            page.toolbar(Toolbar.render(context.installationDao.get, obj))
         }
 
         Option(obj.objectType.objectViewMarkup) match {
             case None =>
             case Some(m) =>
-                val main = MarkupRenderer.render(obj, m, sreq, context)
+                val main = MarkupRenderer.render(obj, m, sreq)
                 page.body("<!-- start object markup -->")
                 page.body(main)
                 page.body("<!-- end object markup -->")

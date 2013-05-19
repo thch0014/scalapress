@@ -27,7 +27,7 @@ class SubfolderSection extends Section {
         val m = Option(markup)
           .orElse(Option(request.context.markupDao.byName("Default subcategories markup")))
           .getOrElse(default)
-        val render = MarkupRenderer.renderFolders(_folders, default, request, request.context)
+        val render = MarkupRenderer.renderFolders(_folders, default, request)
         Option(render)
     }
 

@@ -17,7 +17,7 @@ class AssociationsTag extends ScalapressTag {
                 case _ =>
                     params.get("markup")
                       .flatMap(id => Option(context.markupDao.find(id.toLong)))
-                      .map(m => MarkupRenderer.renderObjects(associations, m, request, context))
+                      .map(m => MarkupRenderer.renderObjects(associations, m, request))
             }
         })
     }
