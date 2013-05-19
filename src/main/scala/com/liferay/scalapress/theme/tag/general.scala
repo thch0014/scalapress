@@ -1,13 +1,13 @@
 package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import org.joda.time.DateTime
 
 /** @author Stephen Samuel */
 @Tag("home")
 class HomeTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
-        val root = context.folderDao.root
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
+        val root = request.context.folderDao.root
         val text = params.get("text").getOrElse(root.name)
         Option(buildLink("/", text, params))
     }
@@ -15,7 +15,7 @@ class HomeTag extends ScalapressTag with TagBuilder {
 
 @Tag("title")
 class TitleTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val excludeHome = params.contains("exhome")
         val home = request.folder.exists(_.parent == null)
@@ -30,7 +30,7 @@ class TitleTag extends ScalapressTag with TagBuilder {
 
 @Tag("script")
 class ScriptTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         val tag = """
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
           <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
@@ -46,7 +46,7 @@ class ScriptTag extends ScalapressTag with TagBuilder {
 
 @Tag("css")
 class CssTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         val tag = """   <link href="/static/css/bootstrap-combined.min.css" rel="stylesheet">
                         <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
                         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
@@ -61,7 +61,7 @@ class CssTag extends ScalapressTag with TagBuilder {
 @Tag("copyright")
 class CopyrightTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         Some("Copyright &copy; " + new DateTime().toString("yyyy"))
     }
 }

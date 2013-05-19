@@ -30,17 +30,17 @@ class AttributeSectionTagTest extends FunSuite with MockitoSugar with OneInstanc
     val sreq = ScalapressRequest(req, context).withObject(obj)
 
     test("tag uses id from params") {
-        val actual = new AttributeSectionTag().render(sreq, context, Map("id" -> "456"))
+        val actual = new AttributeSectionTag().render(sreq, Map("id" -> "456"))
         assert("my section" === actual.get)
     }
 
     test("an attribute with null section returns None") {
-        val actual = new AttributeSectionTag().render(sreq, context, Map("id" -> "123"))
+        val actual = new AttributeSectionTag().render(sreq, Map("id" -> "123"))
         assert(actual.isEmpty)
     }
 
     test("invalid id returns None") {
-        val actual = new AttributeSectionTag().render(sreq, context, Map("id" -> "5756"))
+        val actual = new AttributeSectionTag().render(sreq, Map("id" -> "5756"))
         assert(actual.isEmpty)
     }
 }

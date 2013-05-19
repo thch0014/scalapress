@@ -19,7 +19,7 @@ class InvoiceCustomerNoteTagTest extends FunSuite with MockitoSugar with OneInst
 
     test("customer note tag uses customer note from order") {
         assert("snow patrol are on patrol in the snow" === new InvoiceCustomerNoteTag()
-          .render(sreq, context, Map.empty)
+          .render(sreq, Map.empty)
           .get)
     }
 

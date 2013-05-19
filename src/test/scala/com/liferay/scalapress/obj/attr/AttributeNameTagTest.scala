@@ -29,10 +29,10 @@ class AttributeNameTagTest extends FunSuite with MockitoSugar {
     val sreq = ScalapressRequest(req, context).withObject(obj)
 
     test("that the correct attribute is pulled out from the id") {
-        val rendered = new AttributeNameTag().render(sreq, context, Map("id" -> "456"))
+        val rendered = new AttributeNameTag().render(sreq, Map("id" -> "456"))
         assert("jethro tull" === rendered.get)
 
-        val rendered2 = new AttributeNameTag().render(sreq, context, Map("id" -> "123"))
+        val rendered2 = new AttributeNameTag().render(sreq, Map("id" -> "123"))
         assert("coldplay" === rendered2.get)
     }
 

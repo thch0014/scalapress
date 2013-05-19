@@ -24,13 +24,13 @@ class DescriptionTagTagTest extends FunSuite with OneInstancePerTest with Mockit
 
     test("description tag uses desc field of object") {
         val sreq = new ScalapressRequest(req, context).withObject(obj)
-        val rendered = new DescriptionTagTag().render(sreq, context, Map.empty)
+        val rendered = new DescriptionTagTag().render(sreq, Map.empty)
         assert("<meta name='description' content='I love descriptions me'/>" === rendered.get)
     }
 
     test("description tag uses desc field of folder") {
         val sreq = new ScalapressRequest(req, context).withFolder(f)
-        val rendered = new DescriptionTagTag().render(sreq, context, Map.empty)
+        val rendered = new DescriptionTagTag().render(sreq, Map.empty)
         assert("<meta name='description' content='folders have the best descriptions'/>" === rendered.get)
     }
 }

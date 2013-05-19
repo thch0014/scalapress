@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.navigation.rdfabreadcrumb
 
 import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import scala.collection.mutable.{ListBuffer, ArrayBuffer}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import com.liferay.scalapress.folder.Folder
@@ -10,7 +10,7 @@ import com.liferay.scalapress.folder.Folder
 @Tag("rdfa_breadcrumb")
 class RdfaBreacrumbTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val sep = params.get("sep").getOrElse(" / ")
         val excludeHome = params.contains("exhome")

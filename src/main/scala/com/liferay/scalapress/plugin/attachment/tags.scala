@@ -1,12 +1,12 @@
 package com.liferay.scalapress.plugin.attachment
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 @Tag("attachment_link")
 class AttachmentLinkTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         //        request.attachment match {
         //            case None => None
         //            case Some(a) => {
@@ -27,7 +27,7 @@ class AttachmentLinkTag extends ScalapressTag with TagBuilder {
 
 @Tag("attachment_name")
 class AttachmentNameTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         //        request.attachment match {
         //            case None => None
         //            case Some(a) => {

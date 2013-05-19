@@ -1,13 +1,13 @@
 package com.liferay.scalapress.obj.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import com.liferay.scalapress.enums.StockMethod
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel */
 object RrpTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(obj => {
             obj.rrp match {
                 case 0 => None
@@ -21,7 +21,7 @@ object RrpTag extends ScalapressTag with TagBuilder {
 
 object RrpDiscountTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(obj => {
 
             val saving = obj.rrp - obj.sellPriceInc
@@ -36,7 +36,7 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 }
 
 object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(obj => {
             val text = if (params.contains("ex"))
                 obj.getSellPrice
@@ -53,11 +53,9 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
 
 @Tag("stock")
 class ObjectStockTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.obj.map(obj => {
-            context.shoppingPluginDao.get.stockMethod match {
+            request.context.shoppingPluginDao.get.stockMethod match {
                 case StockMethod.Automatic => build(obj.stock.toString, params)
                 case StockMethod.InOut =>
                     val stock = if (obj.stock > 0) "1" else "0"
@@ -71,12 +69,10 @@ class ObjectStockTag extends ScalapressTag with TagBuilder {
 
 @Tag("availability")
 class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         request.obj.map(obj => {
-            val plugin = context.shoppingPluginDao.get
+            val plugin = request.context.shoppingPluginDao.get
             val msg = Option(obj.outStockMsg).filter(_.trim.length > 0).getOrElse(plugin.outOfStockMessage)
             plugin.stockMethod match {
                 case StockMethod.Off => ""

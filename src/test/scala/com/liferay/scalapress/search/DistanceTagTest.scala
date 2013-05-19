@@ -26,7 +26,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
         obj.attributeValues.add(av)
 
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("TS19")
-        val render = new DistanceTag().render(sreq, context, Map.empty)
+        val render = new DistanceTag().render(sreq, Map.empty)
         assert(render.get === "218.46")
     }
 
@@ -41,7 +41,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
         obj.attributeValues.add(av)
 
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("rg10")
-        val render = new DistanceTag().render(sreq, context, Map.empty)
+        val render = new DistanceTag().render(sreq, Map.empty)
         assert(render.get === "32.85")
     }
 
@@ -49,7 +49,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
 
         val obj = new Obj
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("TS19")
-        val render = new LocationTag().render(sreq, context, Map.empty)
+        val render = new LocationTag().render(sreq, Map.empty)
         assert(render.get === "TS19")
     }
 }

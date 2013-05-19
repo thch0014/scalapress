@@ -1,6 +1,6 @@
 package com.liferay.scalapress.folder.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
@@ -9,11 +9,11 @@ import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 // link to a specific folder or the one in the current context
 object FolderTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val folder = params
           .get("id")
-          .flatMap(id => Option(context.folderDao.find(id.toLong)))
+          .flatMap(id => Option(request.context.folderDao.find(id.toLong)))
           .orElse(request.folder)
 
         folder.map(f => {
@@ -27,13 +27,13 @@ object FolderTag extends ScalapressTag with TagBuilder {
 }
 
 object SubfoldersTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.folder.map(_.sortedSubfolders.map(FriendlyUrlGenerator.friendlyLink(_)).mkString("\n"))
     }
 }
 
 object BreadcrumbsTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val sep = params.get("sep").getOrElse("/")
         val excludeHome = params.contains("exhome")
@@ -66,7 +66,7 @@ object BreadcrumbsTag extends ScalapressTag with TagBuilder {
 
 // shows top level folders
 object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) = {
+    def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val tag = params.get("tag").getOrElse("span")
         val cssClass = params.get("class").getOrElse("cat_link")
@@ -74,7 +74,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
         val sep = params.get("sep").getOrElse("")
         val activeClass = params.get("activeclass").getOrElse("current active")
 
-        val root = context.folderDao.root
+        val root = request.context.folderDao.root
         val filtered = root.sortedSubfolders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
 
         val links = filtered.map(f => {

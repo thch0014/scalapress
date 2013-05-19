@@ -30,21 +30,21 @@ class WidgetsTagTest extends FunSuite with MockitoSugar with OneInstancePerTest 
     Mockito.when(context.widgetDao.findAll()).thenReturn(List(widget1, widget2, widget3))
 
     test("no location returns none") {
-        val actual = new WidgetsTag().render(ScalapressRequest(req, context), context, Map.empty)
+        val actual = new WidgetsTag().render(ScalapressRequest(req, context), Map.empty)
         assert(None === actual)
     }
 
     test("tag uses sep param") {
         val actual =
             new WidgetsTag()
-              .render(ScalapressRequest(req, context), context, Map("sep" -> "!m!55!!", "location" -> "right"))
+              .render(ScalapressRequest(req, context), Map("sep" -> "!m!55!!", "location" -> "right"))
         assert(actual.get.contains("!m!55!!"))
     }
 
     test("tag only renders correct location") {
         val actual =
             new WidgetsTag()
-              .render(ScalapressRequest(req, context), context, Map("sep" -> "!", "location" -> "upside"))
+              .render(ScalapressRequest(req, context), Map("sep" -> "!", "location" -> "upside"))
         assert(
             "<!-- widget: class com.liferay.scalapress.widgets.HtmlWidget-->\n<table cellspacing='0' cellpadding='0' id='widget0' class=' widgetcontainer'><caption></caption><tr><td>mcnulty</td></tr></table>\n<!-- end widget -->"
               .trim === actual.get.trim)

@@ -34,7 +34,7 @@ class PrimaryFoldersTagTest extends FunSuite with MockitoSugar with BeforeAndAft
 
     test("rendering happy path") {
 
-        val actual = PrimaryFoldersTag.render(sreq, context, Map.empty).get.replaceAll("\\s{2,}", "").replace("\n", "")
+        val actual = PrimaryFoldersTag.render(sreq, Map.empty).get.replaceAll("\\s{2,}", "").replace("\n", "")
         assert(
             "<span class='cat_link'><a href='/folder-667-assam'>Assam</a></span><span class='cat_link'><a href='/folder-123-earl-grey'>Earl Grey</a></span>" === actual)
     }

@@ -1,17 +1,13 @@
 package com.liferay.scalapress.theme.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.ScalapressRequest
 
 /** @author Stephen Samuel */
 trait ScalapressTag {
-    @deprecated
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String]
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
 }
 
 trait ScalapressTag2 extends ScalapressTag {
-    def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
-    override final def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String]
-    = render(request, params)
 }
 
 trait TagBuilder {

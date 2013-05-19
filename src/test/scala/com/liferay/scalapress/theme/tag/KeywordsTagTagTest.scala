@@ -24,13 +24,13 @@ class KeywordsTagTagTest extends FunSuite with OneInstancePerTest with MockitoSu
 
     test("keywords tag uses desc field of object") {
         val sreq = new ScalapressRequest(req, context).withObject(obj)
-        val rendered = new KeywordsTagTag().render(sreq, context, Map.empty)
+        val rendered = new KeywordsTagTag().render(sreq, Map.empty)
         assert("<meta name='keywords' content='I love keywords me'/>" === rendered.get)
     }
 
     test("keywords tag uses desc field of folder") {
         val sreq = new ScalapressRequest(req, context).withFolder(f)
-        val rendered = new KeywordsTagTag().render(sreq, context, Map.empty)
+        val rendered = new KeywordsTagTag().render(sreq, Map.empty)
         assert("<meta name='keywords' content='folders have the best keywords'/>" === rendered.get)
     }
 }

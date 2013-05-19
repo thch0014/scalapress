@@ -23,13 +23,13 @@ class LinkTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     test("obj is used if set") {
         val sreq = ScalapressRequest(req, context).withObject(obj)
-        val actual = LinkTag.render(sreq, context, Map.empty).get
+        val actual = LinkTag.render(sreq, Map.empty).get
         assert("/object-12-meatballs" === actual)
     }
 
     test("folder is used if set") {
         val sreq = ScalapressRequest(req, context).withFolder(f)
-        val actual = LinkTag.render(sreq, context, Map.empty).get
+        val actual = LinkTag.render(sreq, Map.empty).get
         assert("/folder-435-italian-foods" === actual)
     }
 }

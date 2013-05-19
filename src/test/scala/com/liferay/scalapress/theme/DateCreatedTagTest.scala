@@ -24,13 +24,13 @@ class DateCreatedTagTest extends FunSuite with BeforeAndAfter with MockitoSugar 
     test("custom format object happy path") {
 
         val sreq = new ScalapressRequest(req, context).withObject(obj)
-        val rendered = new DateCreatedTag().render(sreq, context, Map("format" -> "yyyy!MM!dd"))
+        val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy!MM!dd"))
         assert("2013!03!24" === rendered.get)
     }
 
     test("custom format folder happy path") {
         val sreq = new ScalapressRequest(req, context).withFolder(f)
-        val rendered = new DateCreatedTag().render(sreq, context, Map("format" -> "yyyy^MM^dd"))
+        val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy^MM^dd"))
         assert("2013^03^24" === rendered.get)
     }
 }

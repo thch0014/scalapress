@@ -32,17 +32,17 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
     val sreq = ScalapressRequest(req, context).withObject(obj)
 
     test("multiple values in id order") {
-        val actual = new AttributeValueTag().render(sreq, context, Map("id" -> "2"))
+        val actual = new AttributeValueTag().render(sreq, Map("id" -> "2"))
         assert("strawberry swing" === actual.get)
     }
 
     test("multiple values use seq") {
-        val actual = new AttributeValueTag().render(sreq, context, Map("id" -> "2", "sep" -> "!"))
+        val actual = new AttributeValueTag().render(sreq, Map("id" -> "2", "sep" -> "!"))
         assert("strawberry!swing" === actual.get)
     }
 
     test("multiple values ues single prefix") {
-        val actual = new AttributeValueTag().render(sreq, context, Map("id" -> "2", "prefix" -> "before"))
+        val actual = new AttributeValueTag().render(sreq, Map("id" -> "2", "prefix" -> "before"))
         assert("beforestrawberry swing" === actual.get)
     }
 }

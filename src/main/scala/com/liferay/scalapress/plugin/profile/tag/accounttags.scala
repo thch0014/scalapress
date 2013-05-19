@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.profile.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
@@ -8,10 +8,10 @@ import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
   *
   *         Shows the current logged in users username or nothing
   *
-  * */
+  **/
 @Tag("account_username")
 class UsernameTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         SecurityFuncs.getUserDetails(request.request).map(_.username)
     }
 }
@@ -19,7 +19,7 @@ class UsernameTag extends ScalapressTag with TagBuilder {
 /*Makes a link to the accounts page, or if the user is not logged in then shows a login link */
 @Tag("account_link")
 class AccountLinkTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val label = params.get("label").orElse(params.get("text"))
         val link = SecurityFuncs.hasUserRole(request.request) match {
             case true => super.buildLink("/account", label.getOrElse("Account"), params)

@@ -1,15 +1,13 @@
 package com.liferay.scalapress.plugin.search.typeahead
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import com.liferay.scalapress.theme.tag.ScalapressTag
 import java.util.UUID
 
 /** @author Stephen Samuel */
 @Tag("typeahead")
 class TypeaheadTag extends ScalapressTag {
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val id = params.get("id").getOrElse(UUID.randomUUID().toString)
         // val limit = params.get("limit").getOrElse("8")

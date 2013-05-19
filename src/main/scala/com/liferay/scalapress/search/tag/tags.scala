@@ -1,23 +1,19 @@
 package com.liferay.scalapress.search.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.attr.AttributeOption
 import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
 object SearchFormTag extends ScalapressTag {
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = None
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = None
 }
 
 @Tag("quicksearch")
 class QuickSearchTag extends ScalapressTag {
 
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val placeholder = params.get("placeholder").orElse(params.get("initial")).getOrElse("")
         val objectType = params
@@ -34,14 +30,12 @@ class QuickSearchTag extends ScalapressTag {
 @Tag("search_attribute")
 class AttributeSearchTag extends ScalapressTag {
 
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         params.get(" id ") match {
             case None => None
             case Some(id) =>
-                val attribute = context.attributeDao.find(id.toLong)
+                val attribute = request.context.attributeDao.find(id.toLong)
                 val xml =
                     <form method=" GET " action="/search">
                         <select name="q" action="/search">

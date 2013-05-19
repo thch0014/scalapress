@@ -31,10 +31,10 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
     val sreq = ScalapressRequest(req, context).withObject(obj)
 
     test("that the correct attribute is pulled out from the id") {
-        val rendered = new AttributeValueTag().render(sreq, context, Map("id" -> "456"))
+        val rendered = new AttributeValueTag().render(sreq, Map("id" -> "456"))
         assert("aqualung" === rendered.get)
 
-        val rendered2 = new AttributeValueTag().render(sreq, context, Map("id" -> "123"))
+        val rendered2 = new AttributeValueTag().render(sreq, Map("id" -> "123"))
         assert("violet hill" === rendered2.get)
     }
 
@@ -48,7 +48,7 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
         av3.value = "milonga"
         obj.attributeValues.add(av3)
 
-        val rendered = new AttributeValueTag().render(sreq, context, Map("id" -> "456", "sep" -> "!"))
+        val rendered = new AttributeValueTag().render(sreq, Map("id" -> "456", "sep" -> "!"))
         assert("aqualung!milonga" === rendered.get)
     }
 
@@ -62,13 +62,13 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
         av3.value = "milonga"
         obj.attributeValues.add(av3)
 
-        val rendered = new AttributeValueTag().render(sreq, context, Map("id" -> "456"))
+        val rendered = new AttributeValueTag().render(sreq, Map("id" -> "456"))
         assert("aqualung milonga" === rendered.get)
     }
 
     test("that no value renders None") {
 
-        val rendered = new AttributeValueTag().render(sreq, context, Map("id" -> "6666", "prefix" -> "don't want this"))
+        val rendered = new AttributeValueTag().render(sreq, Map("id" -> "6666", "prefix" -> "don't want this"))
         assert(rendered.isEmpty)
     }
 }

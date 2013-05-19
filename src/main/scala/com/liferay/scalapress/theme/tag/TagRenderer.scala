@@ -70,7 +70,7 @@ object TagRenderer extends Logging {
                             case _ => Map.empty[String, String]
                         }
 
-                        tag.render(request, request.context, params) match {
+                        tag.render(request, params) match {
                             case None => ""
                             case Some(value) =>
                                 if (value == null) ""

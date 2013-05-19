@@ -24,7 +24,7 @@ class BreadcrumbTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     test("breadcrumb output") {
 
-        val actual = BreadcrumbsTag.render(sreq, context, Map.empty).get.replaceAll("\\s{2,}", "").replace("\n", "")
+        val actual = BreadcrumbsTag.render(sreq, Map.empty).get.replaceAll("\\s{2,}", "").replace("\n", "")
         assert(
             "<ul class='breadcrumb'><li><a href=\"/folder-15-tea\">tea</a> <span class='divider'>/</span></li><li class='active'>Earl Grey</li></ul>" === actual)
     }

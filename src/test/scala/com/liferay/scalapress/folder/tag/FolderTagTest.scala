@@ -18,7 +18,7 @@ class FolderTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     test("folders tag creates link when set") {
 
-        val render = FolderTag.render(ScalapressRequest(req, context).withFolder(folder), context, Map("link" -> "1"))
+        val render = FolderTag.render(ScalapressRequest(req, context).withFolder(folder), Map("link" -> "1"))
         assert("<a href=\"/folder-123-earl-grey-tea\">Earl Grey Tea</a>" === render
           .get
           .replace("\n", "")
@@ -28,7 +28,7 @@ class FolderTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     test("folders tag creates name when link is not set") {
 
-        val render = FolderTag.render(ScalapressRequest(req, context).withFolder(folder), context, Map.empty)
+        val render = FolderTag.render(ScalapressRequest(req, context).withFolder(folder), Map.empty)
         assert("Earl Grey Tea" === render.get)
     }
 }

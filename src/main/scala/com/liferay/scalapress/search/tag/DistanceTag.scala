@@ -1,6 +1,6 @@
 package com.liferay.scalapress.search.tag
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest, Tag}
+import com.liferay.scalapress.{ScalapressRequest, Tag}
 import com.liferay.scalapress.obj.attr.AttributeFuncs
 import com.liferay.scalapress.util.geo.Postcode
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
@@ -8,7 +8,7 @@ import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 /** @author Stephen Samuel */
 @Tag("distance")
 class DistanceTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.obj.flatMap(AttributeFuncs.locationValue(_).flatMap(Postcode.gps(_))) match {
             case None => None
             case Some(coord1) => {
@@ -27,7 +27,7 @@ class DistanceTag extends ScalapressTag with TagBuilder {
 
 @Tag("location")
 class LocationTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         super.build(request.location, params)
     }
 }

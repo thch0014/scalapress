@@ -20,7 +20,7 @@ class ContentTagTest extends FunSuite with OneInstancePerTest with MockitoSugar 
     val sreq = new ScalapressRequest(req, context).withObject(obj)
 
     test("content tag uses object content") {
-        val render = new ContentTag().render(sreq, context, Map("link" -> "1"))
+        val render = new ContentTag().render(sreq, Map("link" -> "1"))
         assert("in your place and yellow are my favs" === render.get)
     }
 }

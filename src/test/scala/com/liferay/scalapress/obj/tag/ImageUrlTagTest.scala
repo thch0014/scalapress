@@ -31,12 +31,12 @@ class ImageUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar
     val sreq = new ScalapressRequest(req, context).withObject(obj)
 
     test("image url tag uses limit from params") {
-        val render = ImageUrlTag.render(sreq, context, Map("limit" -> "1"))
+        val render = ImageUrlTag.render(sreq, Map("limit" -> "1"))
         assert("/images/qwe" === render.get)
     }
 
     test("image url tag renders multiple images") {
-        val render = ImageUrlTag.render(sreq, context, Map("limit" -> "4"))
+        val render = ImageUrlTag.render(sreq, Map("limit" -> "4"))
         assert("/images/qwe\n/images/dfg" === render.get)
     }
 
@@ -48,7 +48,7 @@ class ImageUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar
 
         obj.images.add(i3)
 
-        val render = ImageUrlTag.render(sreq, context, Map("limit" -> "4"))
+        val render = ImageUrlTag.render(sreq, Map("limit" -> "4"))
         assert("/images/qwe\n/images/bbbb\n/images/dfg" === render.get)
     }
 }

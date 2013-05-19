@@ -19,7 +19,7 @@ class LabelsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
     val sreq = ScalapressRequest(req, context).withObject(o)
 
     test("labels rendering") {
-        val actual = new LabelsTag().render(sreq, context, Map.empty)
+        val actual = new LabelsTag().render(sreq, Map.empty)
         assert("<span class='label'>superman</span><br/><span class='label'>batman</span>" === actual.get)
     }
 }

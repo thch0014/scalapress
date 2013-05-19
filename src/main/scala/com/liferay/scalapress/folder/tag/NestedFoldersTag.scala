@@ -1,6 +1,6 @@
 package com.liferay.scalapress.folder.tag
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.folder.Folder
@@ -11,7 +11,7 @@ import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 @Tag("folders_nested")
 class NestedFoldersTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val depth = params.get("depth").getOrElse("1").toInt
         val excluded = params.get("exclude").getOrElse("").split(",")
