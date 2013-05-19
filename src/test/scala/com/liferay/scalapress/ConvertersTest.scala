@@ -1,7 +1,7 @@
 package com.liferay.scalapress
 
 import folder.FolderDao
-import obj.{TypeDao}
+import obj.TypeDao
 import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito

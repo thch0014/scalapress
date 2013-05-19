@@ -1,33 +1,36 @@
 package com.liferay.scalapress.plugin.ecommerce.tags
 
-import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressRequest}
 import org.joda.time.{DateTimeZone, DateTime}
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.tag.AttributeValueRenderer
 import com.liferay.scalapress.theme.MarkupRenderer
-import com.liferay.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
 
 /** @author Stephen Samuel */
-object InvoiceAccountNumberTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_account_number")
+class InvoiceAccountNumberTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.map(_.account.id.toString)
     }
 }
 
-object InvoiceAccountNameTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_account_name")
+class InvoiceAccountNameTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.map(_.account.name)
     }
 }
 
-object InvoiceAccountEmailTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_account_email")
+class InvoiceAccountEmailTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.map(_.account.email)
     }
 }
 
-object InvoiceDeliveryAddressTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_delivery_address")
+class InvoiceDeliveryAddressTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.flatMap(order => Option(order.deliveryAddress)).map(add => {
             val label = add.label
             label
@@ -35,34 +38,38 @@ object InvoiceDeliveryAddressTag extends ScalapressTag {
     }
 }
 
-object InvoiceBillingAddressTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_billing_address")
+class InvoiceBillingAddressTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.flatMap(order => Option(order.billingAddress)).map(_.label)
     }
 }
 
 @Tag("invoice_date")
-class InvoiceDateTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+class InvoiceDateTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order
           .map(arg => new DateTime(arg.datePlaced, DateTimeZone.forID("Europe/London")).toString("dd/MM/yyyy"))
     }
 }
 
 @Tag("invoice_customer_note")
-class InvoiceCustomerNoteTag extends ScalapressTag {
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+class InvoiceCustomerNoteTag extends ScalapressTag2 {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.flatMap(o => Option(o.customerNote))
     }
 }
 
-object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
+import scala.collection.JavaConverters._
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+@Tag("invoice_attribute_value")
+class InvoiceAttributeValueTag extends ScalapressTag2 with TagBuilder {
+
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         params.get("id") match {
             case None => Some("<!-- no id specified for attribute tag -->")
             case Some(id) => {
-                request.orderLine.flatMap(line => Option(context.objectDao.find(line.obj))).flatMap(obj => {
+                request.orderLine.flatMap(line => Option(request.context.objectDao.find(line.obj))).flatMap(obj => {
                     obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
                         case None => None
                         case Some(av) => Some(build(AttributeValueRenderer.renderValue(av), params))
@@ -73,23 +80,23 @@ object InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object InvoiceLineQtyTag extends ScalapressTag {
+@Tag("invoice_line_qty")
+class InvoiceLineQtyTag extends ScalapressTag2 {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         request.orderLine.map(_.qty.toString)
     }
 }
 
-import scala.collection.JavaConverters._
-
-object InvoiceLinesTag extends ScalapressTag {
+@Tag("invoice_lines")
+class InvoiceLinesTag extends ScalapressTag2 {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
 
         request.order.flatMap(order => {
-            Option(context.shoppingPluginDao.get.invoiceLineMarkup) match {
+            Option(request.context.shoppingPluginDao.get.invoiceLineMarkup) match {
                 case None => None
                 case Some(m) =>
                     val render = MarkupRenderer.renderOrderLines(order.lines.asScala, m, request)
@@ -99,25 +106,28 @@ object InvoiceLinesTag extends ScalapressTag {
     }
 }
 
-object InvoiceNumberTag extends ScalapressTag {
+@Tag("invoice_number")
+class InvoiceNumberTag extends ScalapressTag2 {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         request.order.map(order => order.id.toString)
     }
 }
 
-object InvoiceDeliveryDetailsTag extends ScalapressTag {
+@Tag("invoice_delivery_desc")
+class InvoiceDeliveryDetailsTag extends ScalapressTag2 {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         request.order.flatMap(order => Option(order.deliveryDetails))
     }
 }
 
-object InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
+@Tag("invoice_delivery_charge")
+class InvoiceDeliveryChargeTag extends ScalapressTag2 with TagBuilder {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
 
         request.order.map(order => {
@@ -133,17 +143,19 @@ object InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object InvoiceLineDescTag extends ScalapressTag {
+@Tag("invoice_line_desc")
+class InvoiceLineDescTag extends ScalapressTag2 {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
         request.orderLine.map(line => line.description)
     }
 }
 
-object InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
+@Tag("invoice_line_price")
+class InvoiceLinePriceTag extends ScalapressTag2 with TagBuilder {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
 
         request.orderLine.map(line => {
@@ -159,9 +171,10 @@ object InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
+@Tag("invoice_line_total")
+class InvoiceLineTotalTag extends ScalapressTag2 with TagBuilder {
     def render(request: ScalapressRequest,
-               context: ScalapressContext,
+
                params: Map[String, String]): Option[String] = {
 
         request.orderLine.map(line => {
@@ -177,9 +190,10 @@ object InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object InvoiceTotalTag extends ScalapressTag with TagBuilder {
+@Tag("invoice_total")
+class InvoiceTotalTag extends ScalapressTag2 with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.map(order => {
             val text = if (params.contains("ex"))
                 order.subtotal
@@ -193,9 +207,10 @@ object InvoiceTotalTag extends ScalapressTag with TagBuilder {
     }
 }
 
-object InvoiceLinesTotalTag extends ScalapressTag with TagBuilder {
+@Tag("invoice_lines_total")
+class InvoiceLinesTotalTag extends ScalapressTag2 with TagBuilder {
 
-    def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.order.map(order => {
             val text = if (params.contains("ex"))
                 order.linesSubtotal

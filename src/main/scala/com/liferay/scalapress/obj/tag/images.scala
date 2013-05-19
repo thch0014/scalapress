@@ -2,7 +2,7 @@ package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress._
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag2, ScalapressTag, TagBuilder}
 import scala.Some
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
@@ -50,11 +50,9 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
     }
 }
 
-object ImageUrlTag extends ScalapressTag with TagBuilder {
+object ImageUrlTag extends ScalapressTag2 with TagBuilder {
 
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+    override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         request.obj.map(obj => {
             val limit = params.get("limit").getOrElse("1").toInt
@@ -65,10 +63,8 @@ object ImageUrlTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("colorbox")
-class ColorboxTag extends ScalapressTag with TagBuilder {
-    def render(request: ScalapressRequest,
-               context: ScalapressContext,
-               params: Map[String, String]): Option[String] = {
+class ColorboxTag extends ScalapressTag2 with TagBuilder {
+    override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val height = params.get("height").getOrElse("120").toInt
         val width = params.get("width").getOrElse("160").toInt
@@ -80,8 +76,8 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
             val sorted = images.sortBy(_.position)
             val rendered = obj.images.asScala.map(image => {
 
-                val original = context.assetStore.link(image.filename)
-                val thumb = context.imageService.imageLink(image.filename, width, height)
+                val original = request.context.assetStore.link(image.filename)
+                val thumb = request.context.imageService.imageLink(image.filename, width, height)
                 val display = if (count == 0) "" else "display: none"
                 count = count + 1
 

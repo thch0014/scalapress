@@ -29,9 +29,7 @@ object TagRenderer extends Logging {
         "newsletter",
         "pricing_original",
         "accessories",
-        "options",
-        "invoice_line_options",
-        "invoice_voucher_discount")
+        "options")
 
     lazy val mappings = ComponentClassScanner.tags
       .map(tag => tag.getAnnotation(classOf[Tag]).value() -> tag.newInstance.asInstanceOf[ScalapressTag])
@@ -72,7 +70,7 @@ object TagRenderer extends Logging {
                             case _ => Map.empty[String, String]
                         }
 
-                        tag.render(request, params) match {
+                        tag.render(request, request.context, params) match {
                             case None => ""
                             case Some(value) =>
                                 if (value == null) ""

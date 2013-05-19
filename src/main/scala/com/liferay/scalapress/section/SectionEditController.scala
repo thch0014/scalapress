@@ -31,7 +31,6 @@ class SectionEditController {
 
         val content = req.getParameter("content")
         val visible = req.getParameter("visible")
-        val markup = req.getParameter("markup")
 
         section.setVisible(visible != null)
         section match {
