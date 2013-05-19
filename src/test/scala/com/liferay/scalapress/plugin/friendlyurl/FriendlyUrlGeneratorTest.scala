@@ -1,12 +1,12 @@
 package com.liferay.scalapress.plugin.friendlyurl
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
-class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("object friendly url happy path") {
         val obj = new Obj
