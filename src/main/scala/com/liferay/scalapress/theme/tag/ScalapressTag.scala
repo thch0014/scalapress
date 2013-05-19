@@ -7,9 +7,6 @@ trait ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
 }
 
-trait ScalapressTag2 extends ScalapressTag {
-}
-
 trait TagBuilder {
 
     def buildLink(href: String, label: String, params: Map[String, String]): String = {

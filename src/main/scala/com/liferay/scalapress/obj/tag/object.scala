@@ -1,11 +1,11 @@
 package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress.{Tag, ScalapressRequest}
-import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
-object ObjectTag extends ScalapressTag2 with TagBuilder {
+object ObjectTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(obj => {
             val text = params.get("text").getOrElse(obj.name)
@@ -18,7 +18,7 @@ object ObjectTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("summary")
-class SummaryTag extends ScalapressTag2 with TagBuilder {
+class SummaryTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val max = params.get("max").getOrElse("200").toInt
@@ -31,7 +31,7 @@ class SummaryTag extends ScalapressTag2 with TagBuilder {
     }
 }
 
-object LinkTag extends ScalapressTag2 with TagBuilder {
+object LinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
 
         val folderUrl = request.folder.map(FriendlyUrlGenerator.friendlyUrl(_))
@@ -41,7 +41,7 @@ object LinkTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("content")
-class ContentTag extends ScalapressTag2 with TagBuilder {
+class ContentTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(_.content)
     }

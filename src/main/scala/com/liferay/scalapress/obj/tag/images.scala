@@ -2,13 +2,13 @@ package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress._
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import scala.Some
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 
-object ImagesTag extends ScalapressTag2 with TagBuilder with Logging {
+object ImagesTag extends ScalapressTag with TagBuilder with Logging {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
@@ -50,7 +50,7 @@ object ImagesTag extends ScalapressTag2 with TagBuilder with Logging {
     }
 }
 
-object ImageUrlTag extends ScalapressTag2 with TagBuilder {
+object ImageUrlTag extends ScalapressTag with TagBuilder {
 
     override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
@@ -63,7 +63,7 @@ object ImageUrlTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("colorbox")
-class ColorboxTag extends ScalapressTag2 with TagBuilder {
+class ColorboxTag extends ScalapressTag with TagBuilder {
     override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val height = params.get("height").getOrElse("120").toInt

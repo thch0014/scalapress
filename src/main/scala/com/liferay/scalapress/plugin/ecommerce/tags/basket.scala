@@ -5,12 +5,12 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.StockMethod
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.theme.MarkupRenderer
-import com.liferay.scalapress.theme.tag.{ScalapressTag2, TagBuilder}
+import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("basket")
-class BasketLinkTag extends ScalapressTag2 with TagBuilder {
+class BasketLinkTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val link = UrlResolver.basket
@@ -20,7 +20,7 @@ class BasketLinkTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("basket_total")
-class BasketTotalTag extends ScalapressTag2 with TagBuilder {
+class BasketTotalTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val text = if (params.contains("ex"))
@@ -35,7 +35,7 @@ class BasketTotalTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("basket_lines_total")
-class BasketLinesTotalTag extends ScalapressTag2 with TagBuilder {
+class BasketLinesTotalTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val text = if (params.contains("ex"))
@@ -50,7 +50,7 @@ class BasketLinesTotalTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("addtobasket")
-class AddToBasketTag extends ScalapressTag2 with TagBuilder {
+class AddToBasketTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
@@ -70,7 +70,7 @@ class AddToBasketTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("basket_lines")
-class BasketLinesTag extends ScalapressTag2 {
+class BasketLinesTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         // we need to be inside a basket context
@@ -85,7 +85,7 @@ class BasketLinesTag extends ScalapressTag2 {
 }
 
 @Tag("basket_lines_count")
-class BasketLineCountTag extends ScalapressTag2 with TagBuilder {
+class BasketLineCountTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val text = request.basket.lines.size().toString
         Some(build(text, params))
@@ -94,7 +94,7 @@ class BasketLineCountTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("basket_line_qty")
-class BasketLineQtyTag extends ScalapressTag2 {
+class BasketLineQtyTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request
           .line
@@ -104,7 +104,7 @@ class BasketLineQtyTag extends ScalapressTag2 {
 }
 
 @Tag("basket_delivery_charge")
-class BasketDeliveryChargeTag extends ScalapressTag2 with TagBuilder {
+class BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         Option(request.basket.deliveryOption).map(d => {
             val textFormatted = "&pound;%1.2f".format(d.chargeIncVat / 100.0)
@@ -114,7 +114,7 @@ class BasketDeliveryChargeTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("basket_delivery_desc")
-class BasketDeliveryDescTag extends ScalapressTag2 {
+class BasketDeliveryDescTag extends ScalapressTag {
     def render(request: ScalapressRequest,
 
                params: Map[String, String]): Option[String] = {
@@ -123,7 +123,7 @@ class BasketDeliveryDescTag extends ScalapressTag2 {
 }
 
 @Tag("basket_line_item")
-class BasketLineItemTag extends ScalapressTag2 {
+class BasketLineItemTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.line.map(line => {
             params.contains("link") match {
@@ -135,7 +135,7 @@ class BasketLineItemTag extends ScalapressTag2 {
 }
 
 @Tag("basket_line_price")
-class BasketLinePriceTag extends ScalapressTag2 {
+class BasketLinePriceTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val text = if (params.contains("ex"))
@@ -155,7 +155,7 @@ class BasketLinePriceTag extends ScalapressTag2 {
 }
 
 @Tag("basket_line_total")
-class BasketLineTotalTag extends ScalapressTag2 {
+class BasketLineTotalTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val total = if (params.contains("ex"))
@@ -175,14 +175,14 @@ class BasketLineTotalTag extends ScalapressTag2 {
 }
 
 @Tag("basket_line_stock")
-class BasketLineStockTag extends ScalapressTag2 with TagBuilder {
+class BasketLineStockTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.line.map(line => build(line.obj.stock.toString, params))
     }
 }
 
 @Tag("basket_line_remove")
-class BasketRemoveItemTag extends ScalapressTag2 with TagBuilder {
+class BasketRemoveItemTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val text = params.get("text").getOrElse("Remove")
         val href = "/basket/remove/" + request.line.map(_.id.toString).getOrElse("")
@@ -192,7 +192,7 @@ class BasketRemoveItemTag extends ScalapressTag2 with TagBuilder {
 }
 
 @Tag("checkout")
-class CheckoutTag extends ScalapressTag2 with TagBuilder {
+class CheckoutTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val link = UrlResolver.checkout
