@@ -41,7 +41,7 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
     val sreq = ScalapressRequest(req, context).withObject(obj)
 
     test("table includes only public attributes") {
-        val actual = AttributeTableTag.render(sreq, context, Map.empty).get
+        val actual = new AttributeTableTag().render(sreq, context, Map.empty).get
         assert(actual.contains("band"))
         assert(actual.contains("coldplay"))
         assert(actual.contains("singer"))
@@ -51,7 +51,7 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
     }
 
     test("exclude param removes attributes") {
-        val actual = AttributeTableTag.render(sreq, context, Map("exclude" -> "456")).get
+        val actual = new AttributeTableTag().render(sreq, context, Map("exclude" -> "456")).get
         assert(actual.contains("band"))
         assert(actual.contains("coldplay"))
         assert(!actual.contains("singer"))
@@ -59,7 +59,7 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
     }
 
     test("include param implicitly excludes anything not included") {
-        val actual = AttributeTableTag.render(sreq, context, Map("include" -> "456")).get
+        val actual = new AttributeTableTag().render(sreq, context, Map("include" -> "456")).get
         assert(!actual.contains("band"))
         assert(!actual.contains("coldplay"))
         assert(actual.contains("singer"))

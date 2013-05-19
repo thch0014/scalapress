@@ -71,7 +71,8 @@ class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
     }
 }
 
-object AttributeTableTag extends ScalapressTag with TagBuilder {
+@Tag("attributes_table")
+class AttributeTableTag extends ScalapressTag with TagBuilder {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,

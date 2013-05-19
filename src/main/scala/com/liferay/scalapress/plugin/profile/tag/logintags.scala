@@ -8,12 +8,14 @@ import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
   *         Used on login pages to render a username input that works with spring security login processors.
   *
   **/
-object LoginEmailTag extends ScalapressTag with TagBuilder {
+@Tag("login_email")
+class LoginEmailTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Some(<input name="j_username" type="email" placeholder="Email Address"/>.toString())
 }
 
-object LoginPasswordTag extends ScalapressTag with TagBuilder {
+@Tag("login_password")
+class LoginPasswordTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]) =
         Some(<input name="j_password" type="password" placeholder="Password"/>.toString())
 }

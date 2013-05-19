@@ -31,7 +31,8 @@ class QuickSearchTag extends ScalapressTag {
     }
 }
 
-object AttributeSearchTag extends ScalapressTag {
+@Tag("search_attribute")
+class AttributeSearchTag extends ScalapressTag {
 
     def render(request: ScalapressRequest,
                context: ScalapressContext,

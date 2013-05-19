@@ -1,10 +1,11 @@
 package com.liferay.scalapress.plugin.ecommerce.tags
 
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
+import com.liferay.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
-object DeliveryOptionsTag extends ScalapressTag {
+@Tag("delivery_options")
+class DeliveryOptionsTag extends ScalapressTag {
     def render(request: ScalapressRequest, context: ScalapressContext, params: Map[String, String]): Option[String] = {
 
         val options = context.deliveryOptionDao.findAll().sortBy(_.position)
