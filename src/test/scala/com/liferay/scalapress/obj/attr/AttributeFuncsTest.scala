@@ -1,12 +1,12 @@
 package com.liferay.scalapress.obj.attr
 
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.{FunSuite, BeforeAndAfter}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import com.liferay.scalapress.enums.AttributeType
 import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
-class AttributeFuncsTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("that a postcode attribute is used for location value") {
 

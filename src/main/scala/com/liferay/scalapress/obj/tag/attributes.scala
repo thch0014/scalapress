@@ -58,11 +58,14 @@ class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
         params.get("id") match {
             case None => None
             case Some(id) => {
-                request.obj.flatMap(obj => {
-                    obj.attributeValues.asScala
-                      .find(_.attribute.id == id.trim.toLong)
-                      .map(av => build(av.attribute.section, params))
-                })
+                request.obj match {
+                    case None => None
+                    case Some(obj) =>
+                        obj.attributeValues.asScala
+                          .find(_.attribute.id == id.trim.toLong)
+                          .flatMap(av => Option(av.attribute.section))
+                          .map(build(_, params))
+                }
             }
         }
     }
