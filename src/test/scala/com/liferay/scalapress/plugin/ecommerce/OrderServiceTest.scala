@@ -1,14 +1,14 @@
 package com.liferay.scalapress.plugin.ecommerce
 
 import domain.{Address, DeliveryOption, Basket}
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
-class OrderServiceTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class OrderServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val basket = new Basket
     basket.billingAddress = new Address

@@ -11,13 +11,12 @@ object SectionRenderer {
 
     def _render(sections: Seq[Section], req: ScalapressRequest): String = {
         val buffer = new ArrayBuffer[String]
-
         val sorted = sections.toSeq.sortBy(_.position)
         val visible = sorted.filter(_.visible)
         for ( section <- visible ) {
             buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
             section.render(req).foreach(buffer += _)
-            buffer += "<!-- end section -->\n\n"
+            buffer += "\n<!-- end section -->\n\n"
         }
 
         buffer.mkString
