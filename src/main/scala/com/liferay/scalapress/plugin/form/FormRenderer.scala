@@ -34,7 +34,14 @@ object FormRenderer {
     }
 
     private def _captcha() = {
+
+        val style = ".form-horizontal .controls #recaptcha_widget_div { margin-left: -160px; }"
+        SP-112
+        Template distortion
         <div class="control-group">
+            <style>
+                {Unparsed(style)}
+            </style>
             <div class="controls" style="height: 120px">
 
                 <script type="text/javascript"
