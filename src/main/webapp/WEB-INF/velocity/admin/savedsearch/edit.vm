@@ -66,7 +66,7 @@
         <label class="control-label">Images Only</label>
 
         <div class="controls">
-            #springFormCheckbox("search.imageOnly")
+            #springFormCheckbox("search.imageOnly", "")
         </div>
     </div>
 
@@ -86,22 +86,22 @@
     </div>
 
 
-    <div class="control-group">
-        <label class="control-label">Sort Attribute</label>
+    #if ($search.sortType == "Attribute" || $search.sortType == "AttributeDesc")
+        <div class="control-group">
+            <label class="control-label">Sort Attribute</label>
 
-        <div class="controls">
-            <select id="sortAttribute" name="sortAttribute">
-                #foreach($option in $attributesMap.keySet())
-                    <option value="${option}"
-                        #if("$!search.sortAttribute.id" == "$option") selected="selected" #end>
-                        ${attributesMap.get($option)}
-                    </option>
-                #end
-            </select>
+            <div class="controls">
+                <select id="sortAttribute" name="sortAttribute">
+                    #foreach($option in $attributesMap.keySet())
+                        <option value="${option}"
+                            #if("$!search.sortAttribute.id" == "$option") selected="selected" #end>
+                            ${attributesMap.get($option)}
+                        </option>
+                    #end
+                </select>
+            </div>
         </div>
-    </div>
-
-
+    #end
 
 
 

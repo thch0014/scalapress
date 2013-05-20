@@ -3,7 +3,7 @@ package com.liferay.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{ScalapressContext}
+import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.enums.SearchFieldType
 import com.liferay.scalapress.search.{SearchFormDao, SearchFormField, SearchForm}
 import com.liferay.scalapress.obj.TypeDao

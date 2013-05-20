@@ -26,6 +26,7 @@ class SavedSearch {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sortAttribute")
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var sortAttribute: Attribute = _
 
     @BeanProperty var hasAttributes: String = _
@@ -38,6 +39,7 @@ class SavedSearch {
 
     @OneToMany(mappedBy = "savedSearch", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new java.util.HashSet[AttributeValue]()
 
     @BeanProperty var imageOnly: Boolean = _

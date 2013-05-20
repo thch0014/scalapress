@@ -17,7 +17,7 @@
         <label class="control-label">Visible</label>
 
         <div class="controls">
-            #springFormCheckbox("section.visible")
+            #springFormCheckbox("section.visible", "")
         </div>
     </div>
 
