@@ -15,16 +15,19 @@ object AttributeFuncs {
     }
 
     def attributeValue(obj: Obj, attribute: Attribute): Option[String] = {
-        Option(attribute).flatMap(a => obj.attributeValues.asScala
+        Option(attribute)
+          .flatMap(a => obj
+          .attributeValues
+          .asScala
           .find(_.attribute.id == attribute.id)
-          .map(_.value))
+          .flatMap(av => Option(av.value)))
     }
 
     def attributeValue(obj: Obj, s: String): Option[String] = {
         obj.attributeValues.asScala
           .filter(_.attribute.name != null)
           .find(_.attribute.name.toLowerCase.trim == s.toLowerCase.trim)
-          .map(_.value)
+          .flatMap(av => Option(av.value))
     }
 
     def attributeValues(obj: Obj, s: String): Seq[String] = {

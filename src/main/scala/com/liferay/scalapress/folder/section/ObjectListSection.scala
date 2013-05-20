@@ -13,6 +13,7 @@ import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
 import com.liferay.scalapress.search.PagingRenderer
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.attr.{AttributeFuncs, Attribute}
 
 /** @author Stephen Samuel
   *
@@ -26,6 +27,11 @@ class ObjectListSection extends Section {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "sortType")
     @BeanProperty var sort: Sort = _
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sortAttribute")
+    @NotFound(action = NotFoundAction.IGNORE)
+    @BeanProperty var sortAttribute: Attribute = _
 
     @Column(name = "itemsPerPage")
     @BeanProperty var pageSize: Int = ObjectListSection.PAGE_SIZE_DEFAULT
@@ -49,6 +55,13 @@ class ObjectListSection extends Section {
         val live = objects.filter(_.status.toLowerCase == "live")
 
         val sorted = _sort(context) match {
+
+            case Sort.Attribute if sortAttribute != null =>
+                live.sortBy(obj => AttributeFuncs.attributeValue(obj, sortAttribute).getOrElse(""))
+
+            case Sort.AttributeDesc if sortAttribute != null =>
+                live.sortBy(obj => AttributeFuncs.attributeValue(obj, sortAttribute).getOrElse("")).reverse
+
             case Sort.Price => live.sortBy(_.sellPrice)
             case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
             case Sort.Newest => live.sortBy(_.id).reverse

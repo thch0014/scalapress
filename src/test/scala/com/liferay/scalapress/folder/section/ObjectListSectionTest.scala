@@ -9,6 +9,7 @@ import com.liferay.scalapress.enums.Sort
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
+import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -119,5 +120,55 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
         settings.sort = Sort.Oldest
         val sort = section._sort(context)
         assert(Sort.Price === sort)
+    }
+
+    test("sorting by attribute handles empty attribute values") {
+        section.sort = Sort.Attribute
+        section.sortAttribute = new Attribute
+
+        val av1 = new AttributeValue
+        av1.attribute = section.sortAttribute
+        av1.value = "jethro tull"
+        obj1.attributeValues.add(av1)
+
+        val av2 = new AttributeValue
+        av2.attribute = section.sortAttribute
+        av2.value = "coldplay"
+        obj2.attributeValues.add(av2)
+        obj2.status = "live"
+
+        val av3 = new AttributeValue
+        av3.attribute = section.sortAttribute
+        obj3.attributeValues.add(av3)
+
+        val objects = section._objects(context)
+        assert(objects(0) === obj3)
+        assert(objects(1) === obj2)
+        assert(objects(2) === obj1)
+    }
+
+    test("sorting by attribute reverse handles empty attribute values") {
+        section.sort = Sort.AttributeDesc
+        section.sortAttribute = new Attribute
+
+        val av1 = new AttributeValue
+        av1.attribute = section.sortAttribute
+        av1.value = "jethro tull"
+        obj1.attributeValues.add(av1)
+
+        val av2 = new AttributeValue
+        av2.attribute = section.sortAttribute
+        av2.value = "coldplay"
+        obj2.status = "live"
+        obj2.attributeValues.add(av2)
+
+        val av3 = new AttributeValue
+        av3.attribute = section.sortAttribute
+        obj3.attributeValues.add(av3)
+
+        val objects = section._objects(context)
+        assert(objects(0) === obj1)
+        assert(objects(1) === obj2)
+        assert(objects(2) === obj3)
     }
 }

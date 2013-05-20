@@ -10,10 +10,6 @@ import com.liferay.scalapress.theme.MarkupDao
 import com.liferay.scalapress.obj.controller.admin.MarkupPopulator
 import com.liferay.scalapress.util.{AttributePopulator, SortPopulator}
 import com.liferay.scalapress.folder.section.ObjectListSection
-import javax.persistence.{JoinColumn, FetchType, ManyToOne}
-import scala.beans.BeanProperty
-import com.liferay.scalapress.obj.attr.Attribute
-import org.hibernate.annotations.{NotFoundAction, NotFound}
 import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
@@ -24,11 +20,6 @@ class ObjectListSectionController extends MarkupPopulator with SortPopulator wit
     @Autowired var markupDao: MarkupDao = _
     @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sortAttribute")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var sortAttribute: Attribute = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute("section") section: ObjectListSection, model: ModelMap) = {
