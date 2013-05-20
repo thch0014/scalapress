@@ -7,7 +7,7 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.search.{SavedSearch, SearchPluginDao, SearchService, SavedSearchDao}
+import com.liferay.scalapress.search._
 import com.liferay.scalapress.section.SectionDao
 import com.liferay.scalapress.search.section.SearchFormSection
 import com.liferay.scalapress.enums.Sort
@@ -16,6 +16,8 @@ import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.{ThemeService, MarkupRenderer}
 import scala.concurrent._
+import com.sksamuel.scoot.soa.{Paging, Page}
+import scala.Some
 
 /** @author Stephen Samuel */
 
@@ -105,18 +107,23 @@ class SearchController extends Logging {
               .getOrElse(plugin.noResultsText)
 
             page.body("<!-- search results: no objects found -->")
-            page.body(noResults)
+            if (noResults != null)
+                page.body(noResults)
 
         } else {
 
             page.body("<!-- search results: " + objects.size + " objects found -->")
 
-            //val paging = Page(live, 1, PageSize, response.hits.totalHits.toInt)
+            val p = Page(objects, 1, PageSize, objects.size)
+            val paging = Paging(req, p)
 
             val markup = objects.head.objectType.objectListMarkup
-            if (markup != null) {
+            if (markup == null) {
                 page.body("<!-- search results: no object list markup found -->")
+            } else {
+                page.body(PagingRenderer.render(paging))
                 page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
+                page.body(PagingRenderer.render(paging))
             }
         }
         page
