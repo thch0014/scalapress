@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.tag.AttributeTableRenderer
 import com.liferay.scalapress.enums.AttributeType
+import scala.util.Random
 
 /** @author Stephen Samuel */
 class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -50,5 +51,55 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
         assert(
             """<tr><td class="attribute-label">band</td><td class="attribute-value"><a href="http://mysite.com" target="_blank">Please click here</a></td></tr>""" ===
               actual(0).toString())
+    }
+
+    test("ordering is stable") {
+
+        val av3 = new AttributeValue
+        av3.attribute = new Attribute
+        av3.attribute.id = 123
+        av3.attribute.name = "guitar"
+        av3.value = "johnny"
+        av3.attribute.public = true
+
+        val av4 = new AttributeValue
+        av4.attribute = new Attribute
+        av4.attribute.id = 456
+        av4.attribute.name = "bass"
+        av4.value = "guy"
+        av4.attribute.public = true
+
+        val av5 = new AttributeValue
+        av5.attribute = new Attribute
+        av5.attribute.id = 123
+        av5.attribute.name = "album"
+        av5.value = "mylo"
+        av5.attribute.public = true
+
+        val av6 = new AttributeValue
+        av6.attribute = new Attribute
+        av6.attribute.id = 456
+        av6.attribute.name = "location"
+        av6.value = "uk"
+        av6.attribute.public = true
+
+        av1.attribute.position = 15
+        av2.attribute.position = 6
+        av3.attribute.position = 9
+        av4.attribute.position = 2
+        av5.attribute.position = 12
+        av6.attribute.position = 19
+
+        for (i <- 1 to 10) {
+            val seq = Seq(av1, av2, av3, av4, av5, av6)
+            val shuffled = Random.shuffle(seq)
+            val actual = AttributeTableRenderer._rows(shuffled)
+            actual(0).toString().contains("guy")
+            actual(1).toString().contains("martin")
+            actual(2).toString().contains("johnny")
+            actual(3).toString().contains("mylo")
+            actual(4).toString().contains("coldplay")
+            actual(5).toString().contains("uk")
+        }
     }
 }
