@@ -4,6 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.tag.AttributeTableRenderer
+import com.liferay.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -29,6 +30,25 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
     test("HTML values are rendered without enclosing quotes") {
         av1.value = "<b>coldplay</b>"
         val actual = AttributeTableRenderer._rows(Seq(av1))
-        println( """<tr><td class="attribute-label">band</td><td class="attribute-value"><b>coldplay</b></td></tr>""" === actual(0))
+        assert( """<tr><td class="attribute-label">band</td><td class="attribute-value"><b>coldplay</b></td></tr>""" === actual(
+            0).toString())
+    }
+
+    test("email values are rendered without enclosing quotes") {
+        av1.value = "sam@sam.com"
+        av1.attribute.attributeType = AttributeType.Email
+        val actual = AttributeTableRenderer._rows(Seq(av1))
+        assert(
+            """<tr><td class="attribute-label">band</td><td class="attribute-value"><a href="mailto:sam@sam.com">Email Here</a></td></tr>""" === actual(
+                0).toString())
+    }
+
+    test("link values are rendered without enclosing quotes") {
+        av1.value = "http://mysite.com"
+        av1.attribute.attributeType = AttributeType.Link
+        val actual = AttributeTableRenderer._rows(Seq(av1))
+        assert(
+            """<tr><td class="attribute-label">band</td><td class="attribute-value"><a href="http://mysite.com" target="_blank">Please click here</a></td></tr>""" ===
+              actual(0).toString())
     }
 }
