@@ -17,12 +17,12 @@ class GMapSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest
 
     test("href src removes postcode spaces") {
         val href = section._href("sw10 9nj")
-        assert(href.contains("SW109NJ"))
+        assert(href.contains("sw109nj"))
     }
 
     test("iframe src removes postcode spaces") {
         val iframe = section._iframe("sw10 9nj")
-        assert(iframe.contains("SW109NJ"))
+        assert(iframe.contains("sw109nj"))
     }
 
     test("rendered section contains postcode") {
