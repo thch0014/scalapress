@@ -1,8 +1,7 @@
 package com.liferay.scalapress.util.mvc
 
 import collection.mutable.ListBuffer
-import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.theme.Theme
 
 /** @author Stephen Samuel */
@@ -22,10 +21,5 @@ class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {
 }
 
 object ScalapressPage {
-
-    @deprecated
-    def apply(theme: Theme, req: HttpServletRequest, context: ScalapressContext) =
-        new ScalapressPage(theme, ScalapressRequest(req, context))
-
     def apply(theme: Theme, req: ScalapressRequest) = new ScalapressPage(theme, req)
 }

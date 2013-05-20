@@ -7,16 +7,21 @@ import com.googlecode.htmlcompressor.compressor.HtmlCompressor
 /** @author Stephen Samuel */
 class ScalapressPageRenderer(context: ScalapressContext) {
 
+    val compressor = new HtmlCompressor()
+
     def render(page: ScalapressPage): String = {
 
-        val sb = new StringBuilder()
-        sb.append(page._toolbar.getOrElse(""))
-        sb.append(TagRenderer.render(page.theme.header, page.req))
-        page._body.filter(_ != null).map(_.toString).filter(_ != null).foreach(sb.append(_))
-        sb.append(TagRenderer.render(page.theme.footer, page.req))
-        val preCompressed = sb.toString()
+        val toolbar = page._toolbar.getOrElse("")
+        val header = TagRenderer.render(page.theme.header, page.req)
+        val footer = TagRenderer.render(page.theme.footer, page.req)
 
-        val compressor = new HtmlCompressor()
+        val sb = new StringBuilder()
+
+        sb.append(header.replace("<body>", s"<body>\n$toolbar\n"))
+        page._body.filter(_ != null).map(_.toString).filter(_ != null).foreach(sb.append(_))
+        sb.append(footer)
+
+        val preCompressed = sb.toString()
         compressor.compress(preCompressed)
     }
 }
