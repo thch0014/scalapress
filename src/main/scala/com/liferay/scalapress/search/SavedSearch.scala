@@ -64,9 +64,7 @@ class SavedSearch {
     @Column(name = "inStockOnly", nullable = false)
     @BeanProperty var inStockOnly: Boolean = _
 
-    // search all content
     @BeanProperty var keywords: String = _
-    // search name only
     @BeanProperty var name: String = _
 
     //  @Column(name = "itemTypes")

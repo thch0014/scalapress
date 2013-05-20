@@ -78,11 +78,29 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(TYPE)
           //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("objectid").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
-          .startObject("tags").field("type", "string").field("index", "not_analyzed").endObject()
+          .startObject("_id")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("objectid")
+          .field("type", "integer")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("name_raw")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .field("store", "yes")
+          .endObject()
+          .startObject("location")
+          .field("type", "geo_point")
+          .field("index", "not_analyzed")
+          .endObject()
+          .startObject("tags")
+          .field("type", "string")
+          .field("index", "not_analyzed")
+          .endObject()
 
         context.attributeDao.findAll().foreach(attr => {
             source
@@ -117,7 +135,7 @@ class ElasticSearchService extends SearchService with Logging {
           .setMaxResults(preloadSize))
 
         logger.info("Indexing {} objects", objs.size)
-        objs.filter(_.name != null).filter(!_.name.isEmpty).foreach(index(_))
+        objs.filterNot(_.name == null).filterNot(_.name.isEmpty).foreach(index(_))
 
         logger.info("Indexing finished")
     }
@@ -205,10 +223,14 @@ class ElasticSearchService extends SearchService with Logging {
           .filterNot(_.toLowerCase == "latest")
           .foreach(_.split(",").foreach(label => buffer.append("labels:" + label)))
 
-        if (search.name == null)
-            search.name = search.keywords
+
+
+        //            Option(search.keywords)
+        //          .filter(_.trim.length > 0)
+        //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
         Option(search.name)
+          .orElse(Option(search.keywords))
           .filter(_.trim.length > 0)
           .foreach(name => name
           .trim
@@ -224,9 +246,7 @@ class ElasticSearchService extends SearchService with Logging {
             case _ =>
         }
 
-        //            Option(search.keywords)
-        //          .filter(_.trim.length > 0)
-        //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
+
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
@@ -328,7 +348,7 @@ class ElasticSearchService extends SearchService with Logging {
         resp.hits().asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
-            val name = arg.getSource.get("name_raw").toString
+            val n = arg.getSource.get("name_raw").toString
             val status = arg.getSource.get("status").toString
             val attributes = arg.getSource.asScala
               .filter(_._2 != null)
@@ -337,7 +357,7 @@ class ElasticSearchService extends SearchService with Logging {
                 val value = field._2.toString
                 (id, value)
             }).toMap
-            new ObjectRef(id, objectType, name, status, attributes, Nil)
+            new ObjectRef(id, objectType, n, status, attributes, Nil)
         }).toSeq
     }
 
@@ -353,15 +373,21 @@ class ElasticSearchService extends SearchService with Logging {
           .field("name_raw", obj.name)
           .field("status", obj.status)
 
+        logger.trace("Adding tags [{}]", obj.labels)
         Option(obj.labels).map(tags => json.field("tags", tags.split(","): _*))
 
         val hasImage = obj.images.size > 0
         json.field("hasImage", hasImage.toString)
 
         val folderIds = obj.folders.asScala.map(_.id.toString)
+        logger.trace("Adding folders [{}]", folderIds)
         json.field("folders", folderIds.toSeq: _*)
 
-        obj.attributeValues.asScala.foreach(av => {
+        logger.trace("Processing attributes")
+        obj.attributeValues.asScala
+          .filterNot(_.value == null)
+          .filterNot(_.value.isEmpty)
+          .foreach(av => {
             json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, av.value.replace(" ", "_"))
             json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {

@@ -266,4 +266,25 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(2 === result.facets.head.terms.find(_.term == "coldplay").get.count)
         assert(1 === result.facets.head.terms.find(_.term == "jethro tull").get.count)
     }
+
+    test("that elastic does not err on null av inputs") {
+
+        val av = new AttributeValue
+        av.attribute = new Attribute
+        av.attribute.id = 9184
+
+        val obj = new Obj
+        obj.id = 2
+        obj.name = "null-av-object"
+        obj.objectType = new ObjectType
+        obj.objectType.id = 1
+        obj.status = "Live"
+        obj.images.add(new Image)
+        obj.attributeValues.add(av)
+
+        val before = service.count
+        service.index(obj)
+        val after = service.count
+        assert(before + 1 === after)
+    }
 }

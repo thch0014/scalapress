@@ -37,6 +37,10 @@ class SearchController extends Logging {
     @Autowired var pluginDao: SectionDao = _
 
     @ResponseBody
+    @RequestMapping(value = Array("count"), produces = Array("text/html"))
+    def count = searchService.count.toString
+
+    @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def search(req: HttpServletRequest,
                @RequestParam(value = "id", required = false, defaultValue = "0") id: Long,
