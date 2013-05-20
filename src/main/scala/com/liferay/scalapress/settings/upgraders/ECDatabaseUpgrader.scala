@@ -83,7 +83,7 @@ class ECDatabaseUpgrader extends Logging {
             case e: Exception => logger.warn(e.getMessage)
         }
 
-        for ( col <- Array("item", "category") ) {
+        for (col <- Array("item", "category")) {
             execute("alter TABLE forms_submissions MODIFY " + col + " bigint(10) null")
             execute("UPDATE forms_submissions SET " + col + "=null where " + col + "=0")
         }
@@ -99,7 +99,7 @@ class ECDatabaseUpgrader extends Logging {
         execute("UPDATE categories set parent=null WHERE parent=0")
 
         <!-- update image assocations -->
-        for ( col <- Array("imageBox", "item", "gallery", "category") ) {
+        for (col <- Array("imageBox", "item", "gallery", "category")) {
             execute("alter table images MODIFY " + col + " bigint(10) null")
             execute("update images set " + col + "=null WHERE " + col + "=0")
         }
@@ -134,6 +134,9 @@ class ECDatabaseUpgrader extends Logging {
 
         execute("ALTER TABLE blocks_subcategories MODIFY markup bigint(10) null")
         execute("UPDATE blocks_subcategories set markup=null WHERE markup=0")
+
+        execute("ALTER TABLE search_forms MODIFY itemtype bigint(10) null")
+        execute("UPDATE search_forms set itemtype=null WHERE itemtype=0")
 
         execute("ALTER TABLE search_forms MODIFY markup bigint(10) null")
         execute("UPDATE search_forms set markup=null WHERE markup=0")
