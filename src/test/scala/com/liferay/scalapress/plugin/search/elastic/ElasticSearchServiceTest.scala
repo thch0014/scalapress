@@ -274,16 +274,16 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         av.attribute.id = 9184
 
         val obj = new Obj
-        obj.id = 2
+        obj.id = 199
         obj.name = "null-av-object"
         obj.objectType = new ObjectType
         obj.objectType.id = 1
         obj.status = "Live"
-        obj.images.add(new Image)
         obj.attributeValues.add(av)
 
         val before = service.count
         service.index(obj)
+        Thread.sleep(1200)
         val after = service.count
         assert(before + 1 === after)
     }

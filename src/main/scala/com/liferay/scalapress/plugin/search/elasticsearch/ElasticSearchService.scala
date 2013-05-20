@@ -165,7 +165,7 @@ class ElasticSearchService extends SearchService with Logging {
             client.prepareIndex(INDEX, TYPE, obj.id.toString)
               .setSource(src)
               .execute()
-              .get(TIMEOUT, TimeUnit.MILLISECONDS)
+              .actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
 
         } catch {
             case e: Exception => logger.warn(e.getMessage)
