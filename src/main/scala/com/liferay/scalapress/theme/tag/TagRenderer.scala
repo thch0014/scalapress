@@ -6,39 +6,9 @@ import com.liferay.scalapress.util.ComponentClassScanner
 /** @author Stephen Samuel */
 object TagRenderer extends Logging {
 
-    val deprecated = Array(
-        "comparison_check",
-        "attributes_summary_span",
-        "favourites",
-        "sms",
-        "search_begin",
-        "search_end",
-        "pricing_able2buy",
-        "submit",
-        "voucher",
-        "referafriend",
-        "alternatives",
-        "gallery_image",
-        "sitemap",
-        "printer_friendly",
-        "member",
-        "ordering_qty",
-        "ordering_buy",
-        "external_links",
-        "pricing_discount",
-        "newsletter",
-        "pricing_original",
-        "accessories",
-        "options")
-
     lazy val mappings = ComponentClassScanner.tags
       .map(tag => tag.getAnnotation(classOf[Tag]).value() -> tag.newInstance.asInstanceOf[ScalapressTag])
       .toMap ++ TagMappings.mappings
-
-    def erase(text: String) = {
-        require(text != null)
-        deprecated.foldLeft(text)((b, a) => b.replaceAll(regex(a), ""))
-    }
 
     def parseQueryString(string: String) =
         string.split("&")
@@ -52,9 +22,9 @@ object TagRenderer extends Logging {
         Option(text) match {
             case None => ""
             case _ => {
-                val erased = erase(text)
-                mappings.foldLeft(erased)((b, a) => {
-                    require(erased != null)
+
+                mappings.foldLeft(text)((b, a) => {
+                    require(text != null)
 
                     val tagname = a._1
                     val tag = a._2
