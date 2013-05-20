@@ -1,7 +1,7 @@
 package com.liferay.scalapress.obj.tag
 
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
-import scala.xml.Node
+import scala.xml.{Utility, Unparsed, Node}
 import scala.collection.immutable.TreeMap
 
 /** @author Stephen Samuel */
@@ -18,20 +18,21 @@ object AttributeTableRenderer {
         }
     }
 
-    private def _rows(attributeValues: Seq[AttributeValue]): Iterable[Node] = {
+    def _rows(attributeValues: Seq[AttributeValue]): Seq[Node] = {
         val groupedByAttribute = attributeValues.groupBy(_.attribute)
         val sorted = new TreeMap()(Ordering.by[Attribute, Long](a => a.position)) ++: groupedByAttribute
         val nodes = sorted.map(arg => {
-            val values = arg._2.map(AttributeValueRenderer.renderValue(_)).mkString(", ")
-            <tr>
+            val label = Unparsed(arg._1.name)
+            val values = arg._2.map(AttributeValueRenderer.renderValue(_)).mkString(" ")
+            Utility.trim(<tr>
                 <td class="attribute-label">
-                    {arg._1.name}
+                    {label}
                 </td>
                 <td class="attribute-value">
-                    {values}
+                    {Unparsed(values)}
                 </td>
-            </tr>
+            </tr>)
         })
-        nodes
+        nodes.toSeq
     }
 }

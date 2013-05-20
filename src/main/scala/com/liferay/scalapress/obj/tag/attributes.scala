@@ -74,9 +74,7 @@ class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
 @Tag("attributes_table")
 class AttributeTableTag extends ScalapressTag with TagBuilder {
 
-    def render(request: ScalapressRequest,
-
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val excludes = params.get("exclude").map(_.trim.split(",")).getOrElse(Array[String]())
         val includes = params.get("include").map(_.trim.split(",")).getOrElse(Array[String]())
