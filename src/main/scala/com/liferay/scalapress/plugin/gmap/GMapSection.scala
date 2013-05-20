@@ -34,7 +34,7 @@ class GMapSection extends Section {
     }
 
     def _iframe(pc: String) = "https://maps.google.co.uk/maps?q=" + pc.replace(" ", "") + "&z=10&output=embed"
-    def _href(cp: String) = "https://maps.google.co.uk/maps?q=" + pc.replace(" ", "") + "&z=10"
+    def _href(pc: String) = "https://maps.google.co.uk/maps?q=" + pc.replace(" ", "") + "&z=10"
     def desc: String = "Google maps embedded iframe"
     override def backoffice: String = "/backoffice/plugin/mapping/section/" + id
 }
