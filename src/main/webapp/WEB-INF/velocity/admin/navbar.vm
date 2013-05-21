@@ -25,21 +25,20 @@
                         <li><a href="/backoffice/plugin/search"><i class="icon-search"></i> Search</a></li>
                         <li><a href="/backoffice/searchform""><i class="icon-search"></i> Search Forms</a></li>
                         <li><a href="/backoffice/savedsearch""><i class="icon-search"></i> Saved Search</a></li>
-                        <li class="divider"></li>
+
                         <li><a href="/backoffice/gallery"><i class="icon-picture"></i> Galleries</a></li>
-                        <li><a href="/backoffice/plugin/shopping"><i class="icon-shopping-cart"></i> Ecommerce</a></li>
                         <li><a href="/"><i class="icon-folder-open"></i> Folder</a></li>
                         <li><a href="/backoffice/feed"><i class="icon-cloud-upload"></i> Feeds</a></li>
-                        <li><a href=/backoffice/delivery/><i class="icon-desktop"></i> Delivery Options</a></li>
-                        <li><a href="/backoffice/plugin/listings"><i class=" icon-th-large"></i> Listings</a>
                         <li><a href="/backoffice/plugin/account"><i class=" icon-th-large"></i> Accounts</a>
-                        <li class="divider"></li>
+
                         <li><a href="/backoffice/plugin/sagepayform"><i class="icon-credit-card"></i> Sagepay</a>
                         <li><a href="/backoffice/plugin/payment/paypal/standard">
                             <i class="icon-credit-card"></i> Paypal Standard</a>
-
                         </li>
 
+                        #foreach ($menu in $menus)
+                            <li><a href="$menu.link().get()"><i class="$menu.icon().get()"></i> $menu.name()</a></li>
+                        #end
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -11,6 +11,7 @@ import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.Tag
 import com.liferay.scalapress.plugin.payments.PaymentPlugin
 import java.lang.annotation.Annotation
+import com.liferay.scalapress.settings.lifecycle.MenuItem
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -49,6 +50,7 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 
 object ComponentClassScanner {
 
+    def menus: Seq[Class[MenuItem]] = new ComponentClassScanner().getSubtypes(classOf[MenuItem])
     def paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
     def sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
     def plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])

@@ -20,7 +20,7 @@ import com.liferay.scalapress.obj.TypeDao
 import com.liferay.scalapress.theme.{MarkupDao, ThemeDao}
 import com.liferay.scalapress.settings.InstallationDao
 import util.mvc._
-import interceptor.{UrlResolverInterceptor, TypesInterceptor, SiteInterceptor, SessionInterceptor}
+import com.liferay.scalapress.util.mvc.interceptor._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
@@ -76,6 +76,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
         registry.addInterceptor(new SiteInterceptor(siteDao))
+        registry.addInterceptor(MenuInterceptor)
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {

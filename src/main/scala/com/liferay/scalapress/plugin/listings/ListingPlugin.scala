@@ -6,13 +6,12 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
-import com.liferay.scalapress.settings.lifecycle.{MenuItem, MenuLifecycle}
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "plugins_listings")
-class ListingsPlugin extends MenuLifecycle {
+class ListingsPlugin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,8 +24,7 @@ class ListingsPlugin extends MenuLifecycle {
     @BeanProperty var foldersPageText: String = _
     @BeanProperty var imagesPageText: String = _
 
-    def menu: Option[MenuItem] =
-        Some(MenuItem("Plugins", MenuItem("Listing Packages", "icon-th-large", "/backoffice/plugin/listings")))
+    //def menu: Option[MenuItem] =    Some(MenuItem("Plugins", MenuItem("Listing Packages", "icon-th-large", "/backoffice/plugin/listings")))
 }
 
 trait ListingsPluginDao extends GenericDao[ListingsPlugin, java.lang.Long] {

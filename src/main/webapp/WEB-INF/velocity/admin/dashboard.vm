@@ -76,7 +76,8 @@
 
                     #foreach ($recent in $recentObjects)
                         <p>
-                            <span class="label">$recent.id()</span> &nbsp; <a
+                            <span class="label" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">$recent.id()</span>
+                            &nbsp; <a
                                 href="/backoffice/object/$recent.id()">$recent.name()</a>
                         </p>
                     #end
