@@ -288,7 +288,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <buildNumberPropertiesFileLocation>/src/main/resources/buildNumber.properties</buildNumberPropertiesFileLocation>
+                    <buildNumberPropertiesFileLocation>src/main/resources/buildNumber.properties</buildNumberPropertiesFileLocation>
                     <format>{0,number}</format>
                     <items>
                         <item>buildNumber</item>
