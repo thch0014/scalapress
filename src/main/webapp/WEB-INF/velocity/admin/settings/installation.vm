@@ -5,18 +5,10 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
-        <label class="control-label">Server Info</label>
+        <label class="control-label">Server</label>
 
         <div class="controls">
-            $serverInfo
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Local Name</label>
-
-        <div class="controls">
-            $request.getLocalName
+            $request.localName
         </div>
     </div>
 
