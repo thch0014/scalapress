@@ -9,11 +9,18 @@ import com.liferay.scalapress.enums.Sort
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.security.SecurityFuncs
 import javax.servlet.http.HttpServletRequest
+import java.util.Properties
+import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice"))
 class DashboardController {
+
+    val in = getClass.getResourceAsStream("/buildNumber.properties")
+    val props = new Properties()
+    props.load(in)
+    IOUtils.closeQuietly(in)
 
     @Autowired var context: ScalapressContext = _
 
@@ -31,4 +38,6 @@ class DashboardController {
         val result = context.searchService.search(search)
         result.refs.asJava
     }
+
+    @ModelAttribute("buildNumber") def buildNumber = props.get("buildNumber")
 }

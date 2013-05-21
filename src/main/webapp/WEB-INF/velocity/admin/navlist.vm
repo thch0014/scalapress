@@ -13,3 +13,9 @@
     <li><a href="/j_spring_security_logout"><i class="icon-lock"></i> Logout</a></li>
 </ul>
 
+#if ($buildNumber)
+<p>
+    <small>(build $buildNumber)</small>
+</p>
+#end
+
