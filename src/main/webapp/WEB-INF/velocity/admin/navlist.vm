@@ -8,7 +8,7 @@
     <li><a href="/backoffice/submission"><i class="icon-pencil"></i> Submissions</a></li>
     <li><a href="/backoffice/medialib"><i class="icon-camera"></i> Media Library</a></li>
     <li><a href="/backoffice/order"><i class="icon-shopping-cart"></i> Orders</a></li>
-    <li><a href="/backoffice/tx"><i class="icon-picture"></i> Transactions</a></li>
+    <li><a href="/backoffice/tx"><i class="icon-credit-card"></i> Transactions</a></li>
     <li><a href="/backoffice/widget"><i class="icon-asterisk"></i> Widgets</a></li>
     <li><a href="/j_spring_security_logout"><i class="icon-lock"></i> Logout</a></li>
 </ul>
