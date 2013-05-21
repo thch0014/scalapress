@@ -34,6 +34,9 @@ class Obj {
 
     @BeanProperty var labels: String = _
 
+    @Version
+    @BeanProperty var version: Int = _
+
     @Index(name = "owner_index")
     @ManyToOne
     @JoinColumn(name = "account")

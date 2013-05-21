@@ -7,7 +7,6 @@ import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
 import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
-import com.liferay.scalapress.plugin.ecommerce.domain.Order
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
@@ -89,7 +88,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
 
         val queryParams = new BasicHttpParams()
         queryParams.setParameter("cmd", "_notify-validate")
-        for ((key, value) <- params) {
+        for ( (key, value) <- params ) {
             queryParams.setParameter(key, value)
         }
 
