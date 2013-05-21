@@ -50,4 +50,6 @@ class AttributeValue {
     @BeanProperty var listingProcess: ListingProcess = _
 
     @BeanProperty var value: String = _
+
+    override def toString: String = s"AttributeValue [obj=$obj attribute=$attribute value=$value]"
 }

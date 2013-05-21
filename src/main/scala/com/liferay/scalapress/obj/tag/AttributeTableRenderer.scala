@@ -19,8 +19,19 @@ object AttributeTableRenderer {
     }
 
     def _rows(attributeValues: Seq[AttributeValue]): Seq[Node] = {
+
         val groupedByAttribute = attributeValues.groupBy(_.attribute)
-        val sorted = new TreeMap()(Ordering.by[Attribute, Long](a => a.position)) ++: groupedByAttribute
+
+        val ordering = new Ordering[Attribute] {
+            def compare(x: Attribute, y: Attribute): Int = {
+                x.position.compare(y.position) match {
+                    case 0 => x.name.toLowerCase.compareTo(y.name.toLowerCase)
+                    case i => i
+                }
+            }
+        }
+
+        val sorted = new TreeMap()(ordering) ++ groupedByAttribute
         val nodes = sorted.map(arg => {
             val label = Unparsed(arg._1.name)
             val values = arg._2.map(AttributeValueRenderer.renderValue(_)).mkString(" ")

@@ -88,7 +88,7 @@ class AttributeTableTag extends ScalapressTag with TagBuilder {
                   .filter(av => includes.isEmpty || includes.contains(av.attribute.id.toString))
                 objects.size match {
                     case 0 => None
-                    case _ => Some(AttributeTableRenderer.render(objects.toSeq).toString)
+                    case _ => Some(AttributeTableRenderer.render(objects).toString)
                 }
             }
         }

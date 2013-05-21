@@ -1,7 +1,6 @@
 package com.liferay.scalapress.obj
 
 import attr.AttributeValue
-import reflect.BeanProperty
 import java.util
 import javax.persistence._
 import org.hibernate.annotations._
@@ -13,6 +12,8 @@ import org.joda.time.{DateTimeZone, DateTime}
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
+import scala.collection.JavaConverters._
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -57,10 +58,12 @@ class Obj {
     @BatchSize(size = 20)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
-
-    import scala.collection.JavaConverters._
-
-    def sortedAttributeValues = attributeValues.asScala.toSeq.sortBy(_.value).sortBy(_.attribute.name).sortBy(_.attribute.position)
+    def sortedAttributeValues: Seq[AttributeValue] = attributeValues
+      .asScala
+      .toSeq
+      .sortBy(_.value)
+      .sortBy(_.attribute.name)
+      .sortBy(_.attribute.position)
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
     @JoinTable(name = "categories_items",
