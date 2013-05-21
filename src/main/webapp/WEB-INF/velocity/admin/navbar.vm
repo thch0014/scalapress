@@ -61,6 +61,7 @@
                         <li><a href="/backoffice/folder/settings"><i class="icon-desktop"></i> Folder Settings</a></li>
                         <li><a href="/backoffice/user"><i class="icon-user"></i> Users</a></li>
                         <li><a href="/backoffice/settings/installation"><i class="icon-cog"></i> Installation</a></li>
+                        <li><a href="/backoffice/debug"><i class="icon-asterisk"></i> Debug</a></li>
                     </ul>
                 </li>
                 #if ($eyeball)

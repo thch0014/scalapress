@@ -1,0 +1,15 @@
+#parse("/admin/header.vm")
+
+<h3>Debug</h3>
+
+<table class="table table-condensed">
+
+    #foreach ($entry in $properties.entrySet())
+        <tr>
+            <td>$entry.key</td>
+            <td>$entry.value</td>
+        </tr>
+    #end
+</table>
+
+#parse("/admin/footer.vm")
