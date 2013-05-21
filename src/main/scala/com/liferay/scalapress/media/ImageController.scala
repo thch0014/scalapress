@@ -8,7 +8,7 @@ import org.apache.commons.io.IOUtils
 import com.liferay.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
-import com.liferay.scalapress.util.mvc.NotFoundException
+import java.io.ByteArrayInputStream
 
 @Controller
 @RequestMapping(Array("images"))
@@ -17,24 +17,35 @@ class ImageController extends Logging {
     @Autowired
     var imageProvider: AssetStore = _
 
-    @ExceptionHandler(Array(classOf[NotFoundException]))
-    def handleException1(e: NotFoundException, resp: HttpServletResponse) {
-        resp.setStatus(404)
-    }
-
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
     def imageResized(@PathVariable("filename") filename: String, @RequestParam("width") width: Int,
                      @RequestParam("height") height: Int, resp: HttpServletResponse) {
 
         imageProvider.get(filename) match {
-            case None => throw new NotFoundException
+            case None =>
+                logger.debug("Could not find file {}", filename)
+                resp.setStatus(404)
             case Some(in) =>
 
-                val image: java.awt.Image = ImageIO.read(in)
-                val thumbnail = ImageTools.fit(image, (width, height))
-                resp.setContentType("image/png")
-                ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
+                val bytes = IOUtils.toByteArray(in)
+                IOUtils.closeQuietly(in)
 
+                bytes.length match {
+                    case 0 =>
+                        logger.debug("Image asset has 0 bytes [{}]", filename)
+                        resp.setStatus(404)
+                    case _ =>
+                        val image = ImageIO.read(new ByteArrayInputStream(bytes))
+                        Option(image) match {
+                            case None =>
+                                logger.debug("Image could not be decoded by ImageIO [{}]", filename)
+                                resp.setStatus(404)
+                            case Some(i) =>
+                                val thumbnail = ImageTools.fit(image, (width, height))
+                                resp.setContentType("image/png")
+                                ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
+                        }
+                }
         }
     }
 
@@ -48,6 +59,7 @@ class ImageController extends Logging {
         imageProvider.get(filename) match {
             case None =>
                 logger.debug("Could not find file {}", filename)
+                resp.setStatus(404)
             case Some(in) =>
                 IOUtils.copy(in, resp.getOutputStream)
                 IOUtils.closeQuietly(in)

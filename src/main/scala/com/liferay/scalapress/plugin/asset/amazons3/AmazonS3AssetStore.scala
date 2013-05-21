@@ -6,13 +6,13 @@ import com.amazonaws.auth.BasicAWSCredentials
 import java.util.UUID
 import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
-import java.util
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.media.{ImageTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
 import com.sksamuel.scoot.soa.PagedQuery
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -28,10 +28,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
     def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = {
         val pq = PagedQuery(pageNumber, pageSize)
-        listObjects(query, pq.offset, pageSize).toList.map(arg => Asset(arg.getKey,
-            arg.getSize,
-            link(arg.getKey),
-            URLConnection.guessContentTypeFromName(arg.getKey)))
+        listObjects(Option(query), pq.offset, pageSize).toList
+          .map(arg => Asset(arg.getKey, arg.getSize, link(arg.getKey), URLConnection.guessContentTypeFromName(arg.getKey)))
           .toArray
     }
 
@@ -60,21 +58,23 @@ class AmazonS3AssetStore(val cdnUrl: String,
     /**
      * Lists all objects in the images bucket
      */
-    private def listObjects(prefix: String, start: Int, limit: Int): Array[S3ObjectSummary] = {
+    private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3ObjectSummary] = {
 
         val req: ListObjectsRequest = new ListObjectsRequest
         req.setBucketName(bucketName)
-        req.setPrefix(prefix)
+        req.setPrefix(prefix.orNull)
+
+        val buffer = new ListBuffer[S3ObjectSummary]
 
         var listing = getAmazonS3Client.listObjects(req)
         var summaries = listing.getObjectSummaries
-        val all = new util.ArrayList[S3ObjectSummary](summaries)
+        buffer.appendAll(summaries.asScala)
         while (summaries.size > 0) {
             listing = getAmazonS3Client.listNextBatchOfObjects(listing)
             summaries = listing.getObjectSummaries
-            all.addAll(summaries)
+            buffer.appendAll(summaries.asScala)
         }
-        all.asScala.toArray.drop(start).take(limit)
+        buffer.drop(start).take(limit)
     }
 
     override def baseUrl = cdnUrl

@@ -25,6 +25,7 @@ class AssetController {
             case None => throw new RuntimeException
             case Some(input) =>
                 IOUtils.copy(input, resp.getOutputStream)
+                IOUtils.closeQuietly(input)
                 resp.setHeader("Content-Type", ImageTools.contentType(key))
         }
     }

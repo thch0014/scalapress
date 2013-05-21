@@ -23,6 +23,7 @@ object ImageTools {
      * Scales the given image to fit the target dimensions while keeping the current aspect ratio.
      */
     def fit(source: java.awt.Image, size: (Int, Int)): BufferedImage = {
+        require(source != null)
         val fitted = dimensionsToFit(size, (source.getWidth(null), source.getHeight(null)))
         val scaled: java.awt.Image = source.getScaledInstance(fitted._1, fitted._2, SCALING_METHOD)
         val offset = ((size._1 - fitted._1) / 2, (size._2 - fitted._2) / 2)
@@ -30,6 +31,7 @@ object ImageTools {
     }
 
     def _draw(size: (Int, Int), offset: (Int, Int), image: java.awt.Image) = {
+        require(image != null)
         val target = new BufferedImage(size._1, size._2, BufferedImage.TYPE_INT_RGB)
         val g = target.createGraphics
         g.setColor(BG_COLOR)
@@ -42,6 +44,7 @@ object ImageTools {
      * Resizes the given image into the new target dimensions.
      */
     def resize(source: java.awt.Image, target: (Int, Int)): BufferedImage = {
+        require(source != null)
         val scaled = source.getScaledInstance(target._1, target._2, SCALING_METHOD)
         _draw(target, (0, 0), scaled)
     }

@@ -49,6 +49,7 @@ class MediaLibraryController {
                                @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
                                req: HttpServletRequest,
                                model: ModelMap) {
+
         val assets = assetStore.search(q, pageNumber, PAGE_SIZE).toList
         model.put("assets", assets.asJava)
 
