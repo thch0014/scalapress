@@ -19,7 +19,7 @@ class GallerifficSection extends Section {
     override def backoffice: String = "/backoffice/plugin/galleriffic/section/" + id
     override def render(request: ScalapressRequest): Option[String] = {
 
-        val rows = images.asScala.map(i => _rows(i))
+        val rows = _images.map(i => _rows(i))
         val controls = <div id="galleriffic" class="content">
             <div id="galleriffic-loading" class="loader"></div>
             <div id="galleriffic-slideshow" class="slideshow"></div>
@@ -31,6 +31,11 @@ class GallerifficSection extends Section {
             </ul>
         </div>
         Some(controls + "\n\n" + thumbs + "\n\n" + _script)
+    }
+
+    def _images: Iterable[String] = images.size match {
+        case 0 => images.asScala
+        case _ => Option(super.obj).map(_.images.asScala.map(_.filename)).getOrElse(Nil)
     }
 
     def _script = {
