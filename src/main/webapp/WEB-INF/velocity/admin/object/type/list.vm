@@ -22,4 +22,7 @@
 </table>
 
 
+<a href="/backoffice/type/create" role="button" class="btn btn-inverse"> <i class="icon-white icon-plus"></i> Create New Item Type</a>
+
+
 #parse("/admin/footer.vm")

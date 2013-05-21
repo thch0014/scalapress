@@ -36,7 +36,6 @@ class ObjectType {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.JOIN)
     @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
-
     def sortedAttributes = attributes.asScala.toSeq.sortBy(_.position)
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
