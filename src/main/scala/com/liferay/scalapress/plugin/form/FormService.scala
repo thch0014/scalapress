@@ -95,7 +95,7 @@ class FormService extends Logging {
 
         val body = new ListBuffer[String]
         body.append("Form name: " + submission.formName)
-        body.append("Submitted on page: " + submission.page.name)
+        submission.page.foreach(page => body.append("Submitted on page: " + page.name))
         for ( kv <- submission.data.asScala ) {
             body.append(kv.key + ": " + kv.value)
         }

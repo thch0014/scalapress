@@ -35,7 +35,12 @@ class Submission {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
 
-    def page = Page(obj)
+    def page: Option[Page] = if (obj != null)
+        Some(Page(obj))
+    else if (folder != null)
+        Some(Page(folder))
+    else
+        None
 
     @BeanProperty var ipAddress: String = _
 
