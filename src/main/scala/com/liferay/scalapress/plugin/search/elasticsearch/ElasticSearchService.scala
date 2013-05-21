@@ -36,6 +36,7 @@ import com.liferay.scalapress.search.SearchResult
 class ElasticSearchService extends SearchService with Logging {
 
     val FIELD_ATTRIBUTE = "attribute_"
+    val FIELD_TAGS = "tags"
     val TIMEOUT = 5000
     val INDEX = "scalapress"
     val TYPE = "obj"
@@ -78,29 +79,11 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(TYPE)
           //   .startObject("_source").field("enabled", false).endObject()
           .startObject("properties")
-          .startObject("_id")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("objectid")
-          .field("type", "integer")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("name_raw")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .field("store", "yes")
-          .endObject()
-          .startObject("location")
-          .field("type", "geo_point")
-          .field("index", "not_analyzed")
-          .endObject()
-          .startObject("tags")
-          .field("type", "string")
-          .field("index", "not_analyzed")
-          .endObject()
+          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("objectid").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
+          .startObject(FIELD_TAGS).field("type", "string").field("index", "not_analyzed").endObject()
 
         context.attributeDao.findAll().foreach(attr => {
             source
@@ -161,7 +144,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         try {
 
-            //          client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
+            // client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
             client.prepareIndex(INDEX, TYPE, obj.id.toString)
               .setSource(src)
               .execute()
@@ -217,17 +200,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         val buffer = new ArrayBuffer[String]()
 
-        Option(search.labels)
-          .filter(_.trim.length > 0)
-          .filterNot(_.toLowerCase == "random")
-          .filterNot(_.toLowerCase == "latest")
-          .foreach(_.split(",").foreach(label => buffer.append("labels:" + label)))
 
-
-
-        //            Option(search.keywords)
-        //          .filter(_.trim.length > 0)
-        //      .foreach(_.split(",").foreach(c => buffer.append("content:" + c)))
 
         Option(search.name)
           .orElse(Option(search.keywords))
@@ -242,11 +215,12 @@ class ElasticSearchService extends SearchService with Logging {
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
 
         Option(search.labels) match {
-            case Some(labels) => labels.split(",").filterNot(_.isEmpty).foreach(tag => buffer.append("tags:" + tag))
+            case Some(labels) =>
+                labels.split(",")
+                  .filterNot(_.isEmpty).filterNot(_.toLowerCase == "random").filterNot(_.toLowerCase == "latest")
+                  .foreach(tag => buffer.append(FIELD_TAGS + ":\"" + tag + "\""))
             case _ =>
         }
-
-
 
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
@@ -280,22 +254,20 @@ class ElasticSearchService extends SearchService with Logging {
         })
 
         val limit = if (search.maxResults < 1) 40 else search.maxResults
+        val query = _buildQuery(search)
+        val sort = _sort(search)
 
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setTypes(TYPE)
           .setFrom(0)
           .setSize(limit)
-
-        val query = _buildQuery(search)
+          .addSort(sort)
 
         filter match {
             case None => req.setQuery(query)
             case Some(f) => req.setQuery(new FilteredQueryBuilder(query, f))
         }
-
-        val sort = _sort(search)
-        req.addSort(sort)
 
         search.facets.map(facet => {
             req.addFacet(new TermsFacetBuilder(facet).field(facet))
@@ -374,7 +346,7 @@ class ElasticSearchService extends SearchService with Logging {
           .field("status", obj.status)
 
         logger.trace("Adding tags [{}]", obj.labels)
-        Option(obj.labels).map(tags => json.field("tags", tags.split(","): _*))
+        Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => json.field(FIELD_TAGS, tag)))
 
         val hasImage = obj.images.size > 0
         json.field("hasImage", hasImage.toString)

@@ -287,4 +287,21 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val after = service.count
         assert(before + 1 === after)
     }
+
+    test("label search works on labels with a space") {
+
+        val search = new SavedSearch
+        search.labels = "jethro tull"
+        val result = service.search(search)
+        assert(1 === result.refs.size)
+    }
+
+    test("label search works on objects with multiple labels") {
+
+        val search = new SavedSearch
+        search.labels = "coldplay"
+        val result = service.search(search)
+
+        assert(2 === result.refs.size)
+    }
 }

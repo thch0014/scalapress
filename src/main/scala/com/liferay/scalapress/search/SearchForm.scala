@@ -21,7 +21,7 @@ class SearchForm {
     @BeanProperty var name: String = _
 
     @ManyToOne
-    @JoinColumn(name = "itemtype")
+    @JoinColumn(name = "itemtype", nullable = true)
     @BeanProperty var objectType: ObjectType = _
 
     @Column(name = "resultsperpage")
