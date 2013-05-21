@@ -6,6 +6,7 @@ import com.liferay.scalapress.section.Section
 import scala.beans.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
+import scala.::
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,18 +20,21 @@ class GallerifficSection extends Section {
     override def backoffice: String = "/backoffice/plugin/galleriffic/section/" + id
     override def render(request: ScalapressRequest): Option[String] = {
 
-        val rows = _images.map(i => _rows(i))
-        val controls = <div id="galleriffic" class="content">
-            <div id="galleriffic-loading" class="loader"></div>
-            <div id="galleriffic-slideshow" class="slideshow"></div>
-            <div id="galleriffic-caption" class="embox"></div>
-        </div>
-        val thumbs = <div id="galleriffic-thumbs" class="thumbs navigation">
-            <ul class="thumbs noscript">
-                {rows}
-            </ul>
-        </div>
-        Some(controls + "\n\n" + thumbs + "\n\n" + _script)
+        _images.map(i => _rows(i)) match {
+            case xs if xs.isEmpty => None
+            case rows =>
+                val controls = <div id="galleriffic" class="content">
+                    <div id="galleriffic-loading" class="loader"></div>
+                    <div id="galleriffic-slideshow" class="slideshow"></div>
+                    <div id="galleriffic-caption" class="embox"></div>
+                </div>
+                val thumbs = <div id="galleriffic-thumbs" class="thumbs navigation">
+                    <ul class="thumbs noscript">
+                        {rows}
+                    </ul>
+                </div>
+                Some(controls + "\n\n" + thumbs + "\n\n" + _script)
+        }
     }
 
     def _images: Iterable[String] = images.size match {
