@@ -7,7 +7,7 @@ import com.liferay.scalapress.Logging
 import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
-@Component
+//@Component
 class ECDatabaseUpgrader extends Logging {
 
     @Autowired var dataSource: DataSource = _
