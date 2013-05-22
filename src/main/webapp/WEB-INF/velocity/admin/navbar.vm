@@ -27,7 +27,6 @@
                         <li><a href="/backoffice/savedsearch""><i class="icon-search"></i> Saved Search</a></li>
 
                         <li><a href="/backoffice/gallery"><i class="icon-picture"></i> Galleries</a></li>
-                        <li><a href="/"><i class="icon-folder-open"></i> Folder</a></li>
                         <li><a href="/backoffice/feed"><i class="icon-cloud-upload"></i> Feeds</a></li>
                         <li><a href="/backoffice/plugin/account"><i class=" icon-th-large"></i> Accounts</a>
 
