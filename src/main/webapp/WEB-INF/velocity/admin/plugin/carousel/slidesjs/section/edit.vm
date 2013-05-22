@@ -1,6 +1,6 @@
 #parse("/admin/header.vm")
 
-<h3>Caroufredsel Section</h3>
+<h3>SlidesJS Section</h3>
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 
@@ -41,7 +41,7 @@
                 <img data-src="holder.js/300x200" src="/images/$filename?width=200&height=160">
                 <a class="btn btn-mini" href="/images/$filename">
                     <i class="icon-eyeball icon-white"></i> View Original</a>
-                <a class="btn btn-danger btn-mini" href="/backoffice/plugin/caroufredsel/$section.id/delete/$filename">
+                <a class="btn btn-danger btn-mini" href="/backoffice/plugin/slidesjs/$section.id/delete/$filename">
                     <i class="icon-trash icon-white"></i> Remove</a>
             </div>
         </li>

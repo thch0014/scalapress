@@ -1,29 +1,42 @@
 package com.liferay.scalapress.plugin.carousel.tinycarousel
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
-import com.liferay.scalapress.section.SectionDao
+import org.springframework.web.multipart.MultipartFile
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/tinycarousel/section/{id}"))
+@RequestMapping(Array("backoffice/plugin/carousel/tinycarousel/section/{id}"))
 class TinyCarouselSectionController {
 
-    @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: TinyCarouselSection) = "admin/plugin/tinycarousel/section/edit.vm"
+    def edit(@ModelAttribute("section") section: TinyCarouselSection) = "admin/plugin/carousel/tinycarousel/section/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: TinyCarouselSection) = {
-        sectionDao.save(section)
+    def save(@ModelAttribute("section") section: TinyCarouselSection,
+             @RequestParam(value = "upload", required = false) upload: MultipartFile) = {
+
+        if (upload != null && !upload.isEmpty) {
+            val key = context.assetStore.add(upload.getOriginalFilename, upload.getInputStream)
+            section.images.add(key)
+        }
+
+        context.sectionDao.save(section)
+        edit(section)
+    }
+
+    @RequestMapping(value = Array("delete/{filename}"))
+    def deleteImage(@ModelAttribute("section") section: TinyCarouselSection, @PathVariable("filename") filename: String) = {
+        section.images.remove(filename)
+        context.sectionDao.save(section)
         edit(section)
     }
 
     @ModelAttribute("section") def section(@PathVariable("id") id: Long): TinyCarouselSection =
-        sectionDao.find(id).asInstanceOf[TinyCarouselSection]
+        context.sectionDao.find(id).asInstanceOf[TinyCarouselSection]
 }

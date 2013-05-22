@@ -1,23 +1,20 @@
 package com.liferay.scalapress.plugin.carousel.tinycarousel
 
-import com.liferay.scalapress.section.Section
 import javax.persistence._
 import com.liferay.scalapress.ScalapressRequest
-import scala.Array
-import scala.beans.BeanProperty
+import com.liferay.scalapress.plugin.carousel.CarouselSection
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugin_tinycarousel")
-class TinyCarouselSection extends Section {
+@Table(name = "plugin_carousel_tinycarousel")
+class TinyCarouselSection extends CarouselSection {
 
-    override def backoffice: String = "/backoffice/plugin/tinycarousel/section/" + id
-
-    @BeanProperty var images: Array[String] = Array()
+    override def backoffice: String = "/backoffice/plugin/carousel/tinycarousel/section/" + id
+    def desc: String = "Tiny Carousel is a lightweight carousel for sliding html based content"
 
     def render(request: ScalapressRequest): Option[String] = {
 
-        val renderedImages = images.map(image => {
+        val renderedImages = _images.map(image => {
             val src = request.context.assetStore.link(image)
             <li>
                 <img src={src}/>
@@ -43,5 +40,4 @@ class TinyCarouselSection extends Section {
         Some(html.toString() + "\n" + script)
     }
 
-    def desc: String = "Tiny Carousel is a lightweight carousel for sliding html based content"
 }

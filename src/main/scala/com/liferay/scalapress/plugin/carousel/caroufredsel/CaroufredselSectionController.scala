@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/caroufredsel/section/{id}"))
+@RequestMapping(Array("backoffice/plugin/carousel/caroufredsel/section/{id}"))
 class CaroufredselSectionController {
 
     @Autowired var context: ScalapressContext = _
