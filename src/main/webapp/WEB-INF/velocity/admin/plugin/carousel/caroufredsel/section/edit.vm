@@ -1,0 +1,51 @@
+#parse("/admin/header.vm")
+
+<h3>Caroufresel Section</h3>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            #springFormInput("section.name", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+            #springFormCheckbox("section.visible")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Upload</label>
+
+        <div class="controls">
+            <input type="file" name="upload"/>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+
+</form>
+
+<ul class="thumbnails">
+    #foreach ($filename in $section.images)
+        <li class="span2">
+            <div class="thumbnail">
+                <img data-src="holder.js/300x200" src="/images/$filename?width=200&height=160">
+                <a class="btn btn-mini" href="/images/$filename">
+                    <i class="icon-eyeball icon-white"></i> View Original</a>
+                <a class="btn btn-danger btn-mini" href="/backoffice/plugin/caroufresel/$section.id/delete/$filename">
+                    <i class="icon-trash icon-white"></i> Remove</a>
+            </div>
+        </li>
+    #end
+</ul>
+
+#parse("/admin/footer.vm")

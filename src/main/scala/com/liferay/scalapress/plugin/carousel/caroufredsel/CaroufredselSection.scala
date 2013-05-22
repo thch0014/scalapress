@@ -3,21 +3,24 @@ package com.liferay.scalapress.plugin.carousel.caroufredsel
 import com.liferay.scalapress.section.Section
 import javax.persistence._
 import com.liferay.scalapress.ScalapressRequest
-import scala.Array
 import scala.beans.BeanProperty
+import java.util
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugin_caroufredsel")
+@Table(name = "plugin_carousel_caroufredsel")
 class CaroufredselSection extends Section {
 
     override def backoffice: String = "/backoffice/plugin/caroufredsel/section/" + id
+    def desc: String = "Caroufredsel is a circular responsive jQuery carousel."
 
-    @BeanProperty var images: Array[String] = Array()
+    @ElementCollection
+    @BeanProperty var images: java.util.Set[String] = new util.HashSet[String]()
 
     def render(request: ScalapressRequest): Option[String] = {
 
-        val renderedImages = images.map(image => {
+        val renderedImages = _images.map(image => {
             val src = request.context.assetStore.link(image)
             <li>
                 <img src={src}/>
@@ -43,5 +46,8 @@ class CaroufredselSection extends Section {
         Some(html.toString() + "\n" + script)
     }
 
-    def desc: String = "Caroufredsel is a circular responsive jQuery carousel."
+    def _images: Iterable[String] = images.size match {
+        case 0 => Option(obj).map(_.images.asScala.map(_.filename)).getOrElse(Nil)
+        case _ => images.asScala
+    }
 }
