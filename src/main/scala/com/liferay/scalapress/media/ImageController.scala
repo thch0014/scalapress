@@ -17,9 +17,19 @@ class ImageController extends Logging {
     @Autowired
     var imageProvider: AssetStore = _
 
+    @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("w", "h"))
+    def imageResized2(@PathVariable("filename") filename: String,
+                      @RequestParam("w") width: Int,
+                      @RequestParam("h") height: Int,
+                      resp: HttpServletResponse) {
+        imageResized(filename, width, height, resp)
+    }
+
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
-    def imageResized(@PathVariable("filename") filename: String, @RequestParam("width") width: Int,
-                     @RequestParam("height") height: Int, resp: HttpServletResponse) {
+    def imageResized(@PathVariable("filename") filename: String,
+                     @RequestParam("width") width: Int,
+                     @RequestParam("height") height: Int,
+                     resp: HttpServletResponse) {
 
         imageProvider.get(filename) match {
             case None =>

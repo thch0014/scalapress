@@ -6,7 +6,6 @@ import com.liferay.scalapress.section.Section
 import scala.beans.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
-import scala.::
 
 /** @author Stephen Samuel */
 @Entity
@@ -20,15 +19,16 @@ class GallerifficSection extends Section {
     override def backoffice: String = "/backoffice/plugin/galleriffic/section/" + id
     override def render(request: ScalapressRequest): Option[String] = {
 
-        _images.map(i => _rows(i)) match {
-            case xs if xs.isEmpty => None
-            case rows =>
-                val controls = <div id="galleriffic" class="content">
-                    <div id="galleriffic-loading" class="loader"></div>
-                    <div id="galleriffic-slideshow" class="slideshow"></div>
-                    <div id="galleriffic-caption" class="embox"></div>
+        val rows = _images.map(i => _rows(i))
+        rows.size match {
+            case 0 => None
+            case _ =>
+                val controls = <div id="gallery" class="content">
+                    <div id="loading" class="loader"></div>
+                    <div id="slideshow" class="slideshow"></div>
+                    <div id="caption" class="embox"></div>
                 </div>
-                val thumbs = <div id="galleriffic-thumbs" class="thumbs navigation">
+                val thumbs = <div id="thumbs" class="navigation">
                     <ul class="thumbs noscript">
                         {rows}
                     </ul>
@@ -37,66 +37,68 @@ class GallerifficSection extends Section {
         }
     }
 
+    def _rows(filename: String) = {
+        val fullsize = "/images/" + filename + "?width=800&height=600"
+        val thumbnail = "/images/" + filename + "?width=100&height=100"
+        <li>
+            <a class="thumb" href={fullsize}>
+                <img src={thumbnail}/>
+            </a>
+        </li>
+    }
+
     def _images: Iterable[String] = images.size match {
-        case 0 => images.asScala
-        case _ => Option(super.obj).map(_.images.asScala.map(_.filename)).getOrElse(Nil)
+        case 0 => Option(obj).map(_.images.asScala.map(_.filename)).getOrElse(Nil)
+        case _ => images.asScala
     }
 
     def _script = {
         """<script>
-
             // We only want these styles applied when javascript is enabled
 			$('div.navigation').css({'width' : '300px', 'float' : 'left'});
 			$('div.content').css('display', 'block');
 
+            // Initially set opacity on thumbs and add additional styling for hover effect on thumbs
+            var onMouseOutOpacity = 0.67;
+            $('#thumbs ul.thumbs li').css('opacity', onMouseOutOpacity).hover(function () {
+                   $(this).not('.selected').fadeTo('fast', 1.0);
+               }, function () {
+                   $(this).not('.selected').fadeTo('fast', onMouseOutOpacity);
+               });
 
            $(document).ready(function() {
-             var gallery = $('#galleriffic-thumbs').galleriffic({
-                delay: 3000, // in milliseconds
-                numThumbs: 20, // The number of thumbnails to show page
-                preloadAhead: 40, // Set to -1 to preload all images
-                enableTopPager: false,
+             var gallery = $('#gallery').galleriffic('#thumbs', {
+                delay: 10000, // in milliseconds
+                numThumbs: 50, // The number of thumbnails to show page
+                preloadAhead: 10, // Set to -1 to preload all images
+                enableTopPager: true,
                 enableBottomPager: true,
                 maxPagesToShow: 7, // The maximum number of pages to display in either the top or bottom pager
-                imageContainerSel: '#galleriffic-slideshow', // The CSS selector for the element within which the main slideshow image should be rendered
+                imageContainerSel: '#slideshow', // The CSS selector for the element within which the main slideshow image should be rendered
                 controlsContainerSel: '', // The CSS selector for the element within which the slideshow controls should be rendered
-                captionContainerSel: '#galleriffic-caption', // The CSS selector for the element within which the captions should be rendered
-                loadingContainerSel: '#galleriffic-loading', // The CSS selector for the element within which should be shown when an image is loading
+                captionContainerSel: '#caption', // The CSS selector for the element within which the captions should be rendered
+                loadingContainerSel: '#loading', // The CSS selector for the element within which should be shown when an image is loading
                 renderSSControls: true, // Specifies whether the slideshow's Play and Pause links should be rendered
                 renderNavControls: true, // Specifies whether the slideshow's Next and Previous links should be rendered
                 playLinkText: 'Play ',
                 pauseLinkText: 'Pause ',
                 prevLinkText: 'Previous ',
                 nextLinkText: 'Next ',
-                nextPageLinkText: 'Next &rsaquo;',
-                prevPageLinkText: '&lsaquo; Prev ',
+                nextPageLinkText: 'Next',
+                prevPageLinkText: 'Prev ',
                 enableHistory: false, // Specifies whether the url's hash and the browser's history cache should update when the current slideshow image changes
                 enableKeyboardNavigation: true, // Specifies whether keyboard navigation is enabled
                 autoStart: false, // Specifies whether the slideshow should be playing or paused when the page first loads
                 syncTransitions: false, // Specifies whether the out and in transitions occur simultaneously or distinctly
                 defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
-                onSlideChange: undefined, // accepts a delegate like such: function(prevIndex, nextIndex) { ... }
-                onTransitionOut: undefined, // accepts a delegate like such: function(slide, caption, isSync, callback) { ... }
-                onTransitionIn: undefined, // accepts a delegate like such: function(slide, caption, isSync) { ... }
-                onPageTransitionOut: undefined, // accepts a delegate like such: function(callback) { ... }
-                onPageTransitionIn: undefined, // accepts a delegate like such: function() { ... }
-                onImageAdded: undefined, // accepts a delegate like such: function(imageData, $li) { ... }
-                onImageRemoved: undefined // accepts a delegate like such: function(imageData, $li) { ... }
+                onChange: function(prevIndex, nextIndex) { $('#thumbs ul.thumbs').children() .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end() .eq(nextIndex).fadeTo('fast', 1.0); },
+                onTransitionOut: function(callback) { $('#caption').fadeOut('fast'); $('#slideshow').fadeOut('fast', callback); }                ,
+                onTransitionIn: function() { $('#slideshow, #caption').fadeIn('fast'); },
+                onPageTransitionOut: function(callback) { $('#thumbs ul.thumbs').fadeOut('fast', callback); },
+                onPageTransitionIn: function() { $('#thumbs ul.thumbs').fadeIn('fast'); }
             });
         });
         </script>"""
     }
 
-    def _rows(filename: String) = {
-        val fullsize = "/images/" + filename
-        val thumbnail = "/images/" + filename + "?w=100&h=100"
-        <li>
-            <a class="thumb" href={fullsize}>
-                <img src={thumbnail}/>
-            </a>
-            <div class="caption">
-                To do caption
-            </div>
-        </li>
-    }
 }

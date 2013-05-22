@@ -53,6 +53,7 @@ class CssTag extends ScalapressTag with TagBuilder {
                         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
                         <link rel="stylesheet" href="/static/css/colorbox.css"/>
                         <link rel="stylesheet" href="/static/css/wizard.css"/>
+                        <link rel="stylesheet" href="/static/css/galleriffic.css"/>
                         <link rel="stylesheet" href="/static/css/eventCalendar.css">
                     	<link rel="stylesheet" href="/static/css/eventCalendar_theme_responsive.css">"""
         Some(tag)

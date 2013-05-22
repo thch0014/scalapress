@@ -1,0 +1,168 @@
+/* markup: Gallery list markup #11 */
+
+div.content {
+    /* The display of content is enabled by a javascript generated style on the page.
+       This is so that the slideshow content won't display unless javascript is enabled. */
+    display: none;
+    float:left;
+    width:615px;
+    height: 250px;
+    position: relative;
+}
+
+div.caption  { margin: 0; padding: 0; color: #ffffff; }
+div.content a, div.navigation a {
+    text-decoration: none;
+    color: #777;
+}
+div.content  a:focus, div.content  a:hover, div.content  a:active {
+    text-decoration: underline;
+}
+div.controls {
+    margin-top: 5px;
+    height: 23px;
+}
+div.controls a {
+    padding: 5px;
+}
+div.ss-controls {
+    float: left;
+}
+div.nav-controls {
+    float: right;
+}
+
+div.loader {
+    background-image: url(loader.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 615px;
+    height: 250px
+}
+div.slideshow {
+    clear: both;
+}
+div.slideshow span.image-wrapper {
+    float: left;
+}
+div.slideshow a.advance-link {
+    padding: 0;
+    display: block;
+}
+div.slideshow img {
+    border: none;
+    display: block;
+    height: 250px;
+}
+div.download {
+    float: right;
+}
+div.embox {
+    clear: both; font-family: "Segoe UI", Arial, Helvetica, sans-serif; font-size: 14px;
+    padding: 4px;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    background-color: #000;
+    opacity: .5; /* Firefox 1.5, Safari, Opera 9 */
+    -moz-opacity: .5; /* Firefox 1.0.x */
+    filter: alpha(opacity=50); /* IE */
+    width: 607px;
+}
+
+div.embox a:link, div.embox a:visited {
+    color: yellow;
+    text-decoration: underline;
+}
+
+div.embox a:hover {
+    text-decoration: none;
+}
+
+div.image-title {
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+div.image-desc {
+    line-height: 1.3em;
+    padding-top: 12px;
+}
+div.navigation {
+    /* The navigation style is set by a javascript generated style on the page.
+       This is so that the javascript specific styles won't be applied unless javascript is enabled. */
+}
+ul.thumbs {
+    clear: both;
+    margin: -40px auto 0 auto;
+    padding: 0; text-align: center;
+}
+ul.thumbs li {
+    display: inline-block; background: white;
+    padding: 0;
+    margin: 5px 10px 5px 0;
+    list-style: none;
+}
+a.thumb {
+    padding: 2px;
+    display: block; width: 100px;
+    border: 1px solid #ccc;
+}
+ul.thumbs li.selected a.thumb {
+    background: #000;
+}
+a.thumb:focus {
+    outline: none;
+}
+ul.thumbs img {
+    border: none;
+    display: block;
+}
+div.pagination {
+    clear: both;
+}
+div.navigation div.top {
+    /*margin-bottom: 12px;
+    height: 11px;*/
+}
+div.navigation div.bottom {
+    margin-top: 12px;
+}
+div.pagination a, div.pagination span.current {
+    display: block;
+    float: left;
+    margin-right: 2px;
+    padding: 4px 7px 2px 7px;
+    border: 1px solid #ccc;
+}
+div.pagination a:hover {
+    background-color: #eee;
+    text-decoration: none;
+}
+div.pagination span.current {
+    font-weight: bold;
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
+
+/* Minimal Gallery Styles */
+#thumbs-min ul.thumbs li {
+    float: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#thumbs-min a.thumb {
+    padding: 0px;
+    display: inline;
+    border: none;
+}
+
+#thumbs-min ul.thumbs li.selected a.thumb {
+    background: inherit;
+    color: #000;
+    font-weight: bold;
+}
