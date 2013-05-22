@@ -95,7 +95,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
 
         val map = new mutable.LinkedHashMap[Long, String]
         map.put(0, "-None-")
-        for (folder <- folders)
+        for ( folder <- folders )
             map.put(folder.id, folder.fullName)
         map.asJava
     }
@@ -113,7 +113,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
     @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
         val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
         val empty = mutable.LinkedHashMap.empty[String, String]
-        val map = empty ++ sections.map(c => (c.getName, c.getSimpleName)).toMap
+        val map = empty ++: sections.map(c => (c.getName, c.getSimpleName)).toMap
         map.asJava
     }
 }

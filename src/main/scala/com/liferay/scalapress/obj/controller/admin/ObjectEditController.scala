@@ -216,7 +216,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
     @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
         val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
         val empty = mutable.LinkedHashMap.empty[String, String]
-        val map = empty ++ sections.map(c => (c.getName, c.getSimpleName)).toMap
+        val map = empty ++: sections.map(c => (c.getName, c.getSimpleName)).toMap
         map.asJava
     }
 }
