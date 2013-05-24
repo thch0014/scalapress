@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.payments.worldpay.selectjunior
 
-import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, Transaction, IsPayable}
+import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, Transaction, Purchase}
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
@@ -12,7 +12,7 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
     def paymentUrl: String = URL
     def paymentProcessorName: String = NAME
 
-    def params(domain: String, purchase: IsPayable): Map[String, String] = {
+    def params(domain: String, purchase: Purchase): Map[String, String] = {
 
         val params = scala.collection.mutable.Map[String, String]()
 

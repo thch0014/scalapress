@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.payments
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 
 /** @author Stephen Samuel */
-trait IsPayable {
+trait Purchase {
 
     def paymentDescription: String
     def uniqueIdent: String

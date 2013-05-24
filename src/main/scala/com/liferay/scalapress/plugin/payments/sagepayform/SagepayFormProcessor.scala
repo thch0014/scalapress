@@ -4,7 +4,7 @@ import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
 import java.util.UUID
-import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{Transaction, Purchase, FormPaymentProcessor}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -45,7 +45,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     }
 
     // returns the four params needed by sagepay
-    def params(domain: String, requiresPayment: IsPayable): Map[String, String] = {
+    def params(domain: String, requiresPayment: Purchase): Map[String, String] = {
 
         val crypt = encryptParams(_cryptParams(requiresPayment, domain))
 
@@ -132,7 +132,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
     private def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    private def _cryptParams(requiresPayment: IsPayable,
+    private def _cryptParams(requiresPayment: Purchase,
                              domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]

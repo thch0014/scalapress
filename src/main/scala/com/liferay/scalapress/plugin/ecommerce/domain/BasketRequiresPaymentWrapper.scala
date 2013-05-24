@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import com.liferay.scalapress.plugin.payments.IsPayable
+import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
-class BasketRequiresPaymentWrapper(basket: Basket, context: ScalapressContext) extends IsPayable {
+class BasketRequiresPaymentWrapper(basket: Basket, context: ScalapressContext) extends Purchase {
 
     def paymentDescription: String = "Order at " + context.installationDao.get.domain
     def accountName: String = basket.accountName

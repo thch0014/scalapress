@@ -6,7 +6,7 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
-import com.liferay.scalapress.plugin.payments.{Transaction, IsPayable, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{Transaction, Purchase, FormPaymentProcessor}
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
@@ -18,7 +18,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
     def paymentProcessorName = "PaypalStandard"
     def paymentUrl: String = if (plugin.production) Production else Sandbox
 
-    def params(domain: String, payable: IsPayable): Map[String, String] = {
+    def params(domain: String, payable: Purchase): Map[String, String] = {
 
         val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
