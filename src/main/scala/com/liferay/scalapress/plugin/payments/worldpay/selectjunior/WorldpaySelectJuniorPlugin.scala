@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.payments.worldpay.selectjunior
 
 import javax.persistence.{Table, Entity}
-import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, PaymentPlugin}
+import com.liferay.scalapress.plugin.payments.{PaymentProcessor, PaymentPlugin}
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,6 +15,6 @@ class WorldpaySelectJuniorPlugin extends PaymentPlugin {
     var callbackPassword: String = _
 
     def enabled: Boolean = live
-    def processor: FormPaymentProcessor = new WorldpaySelectJuniorProcessor(this)
+    def processor: PaymentProcessor = new WorldpaySelectJuniorProcessor(this)
     def name: String = "Worldpay Select Junior"
 }

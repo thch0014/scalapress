@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.payments.paypal.standard
 import javax.persistence.{Entity, Table}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, PaymentPlugin}
+import com.liferay.scalapress.plugin.payments.{PaymentProcessor, PaymentPlugin}
 import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 import scala.beans.BeanProperty
 
@@ -18,7 +18,7 @@ class PaypalStandardPlugin extends PaymentPlugin {
 
     //  def backofffice = "backoffice/plugin/payment/paypal/standard"
     def name: String = "Paypal"
-    def processor: FormPaymentProcessor = new PaypalStandardProcessor(this)
+    def processor: PaymentProcessor = new PaypalStandardProcessor(this)
     def enabled = Option(accountEmail).filter(_.trim.length > 0).isDefined
 }
 

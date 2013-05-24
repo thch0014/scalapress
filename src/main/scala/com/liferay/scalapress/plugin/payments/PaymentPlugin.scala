@@ -18,7 +18,7 @@ abstract class PaymentPlugin {
     @BeanProperty var id: Long = _
 
     def name: String
-    def processor: FormPaymentProcessor
+    def processor: PaymentProcessor
     def enabled: Boolean
 }
 

@@ -10,6 +10,7 @@ import com.liferay.scalapress.plugin.ecommerce.dao.TransactionDao
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
+import com.liferay.scalapress.plugin.ecommerce.controller.renderers.OrderStatusRenderer
 
 /** @author Stephen Samuel */
 @Controller

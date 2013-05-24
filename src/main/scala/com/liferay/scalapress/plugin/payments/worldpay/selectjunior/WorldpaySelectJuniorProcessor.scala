@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.payments.worldpay.selectjunior
 
-import com.liferay.scalapress.plugin.payments.{FormPaymentProcessor, Transaction, Purchase}
+import com.liferay.scalapress.plugin.payments.{CallbackResult, PaymentProcessor, Transaction, Purchase}
 import com.liferay.scalapress.Logging
 
 /** @author Stephen Samuel */
-class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends FormPaymentProcessor with Logging {
+class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends PaymentProcessor with Logging {
 
     val URL = "https://select.worldpay.com/wcc/purchase"
     val NAME: String = "WorldpaySelectJunior"
@@ -76,7 +76,7 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
 
     }
 
-    def callback(params: Map[String, String]): Option[Transaction] = None
+    def callback(params: Map[String, String]): Option[CallbackResult] = None
 
 }
 

@@ -1,9 +1,7 @@
-package com.liferay.scalapress.plugin.listings.controller.process
+package com.liferay.scalapress.plugin.listings.controller
 
 import org.springframework.web.bind.annotation.{RequestParam, PathVariable, ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.stereotype.Controller
-import renderer.{ListingWizardRenderer, ListingFoldersRenderer, ListingPaymentRenderer, ListingPackageRenderer, ListingFieldsRenderer, ListingImagesRenderer, ListingConfirmationRenderer}
-import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,11 +14,12 @@ import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
+import com.liferay.scalapress.plugin.listings.controller.process.renderer._
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("listing"))
-class ListingController {
+class AddListingController {
 
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
@@ -206,6 +205,16 @@ class ListingController {
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
     def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
+
+        // For all enabled payment processors see if we have one that accepts the parameters and creates a transaction.
+        // This would be if the there was a client side callback going on.
+        val params = req.getParameterMap
+        context.paymentPluginDao.enabled.foreach(plugin => {
+            plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
+                case Some(tx) =>
+                case None =>
+            }
+        })
 
         val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
         val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>"

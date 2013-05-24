@@ -15,6 +15,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
+import com.liferay.scalapress.plugin.ecommerce.controller.renderers.{CheckoutWizardRenderer, CheckoutDeliveryOptionRenderer, CheckoutConfirmationRenderer, CheckoutAddressRenderer}
 
 /** @author Stephen Samuel */
 @Controller
@@ -147,7 +148,6 @@ class CheckoutController {
     def paymentSuccess(req: HttpServletRequest): ScalapressPage = {
 
         val shoppingPlugin = shoppingPluginDao.get
-        val sagepayFormPlugin = sagepayFormPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Completed")
         val params = req.getParameterMap
 
@@ -157,12 +157,11 @@ class CheckoutController {
         sreq.basket.empty()
         basketDao.save(sreq.basket)
 
+        // For all enabled payment processors see if we have one that accepts the parameters and creates a transaction.
+        // This would be if the there was a client side callback going on.
         context.paymentPluginDao.enabled.foreach(plugin => {
             plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
-                case Some(payment) =>
-                    payment.order = order.id.toString
-                    order.payments.add(payment)
-                    orderDao.save(order)
+                case Some(tx) =>
                 case None =>
             }
         })

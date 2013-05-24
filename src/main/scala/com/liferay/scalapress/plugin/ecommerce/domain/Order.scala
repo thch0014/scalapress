@@ -77,6 +77,9 @@ class Order {
 }
 
 object Order {
+
+    val STATUS_PAID = "Paid"
+
     def apply(ipAddress: String, account: Obj) = {
         val order = new Order
         order.datePlaced = new DateTime(DateTimeZone.UTC).getMillis

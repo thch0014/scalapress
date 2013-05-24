@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce.controller
+package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 
 /** @author Stephen Samuel */
 object OrderStatusRenderer {

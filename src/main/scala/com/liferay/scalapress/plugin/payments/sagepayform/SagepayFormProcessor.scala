@@ -4,11 +4,11 @@ import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
 import java.util.UUID
-import com.liferay.scalapress.plugin.payments.{Transaction, Purchase, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcessor with Logging {
+class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor with Logging {
 
     val PaymentTypePayment = "PAYMENT"
     val PaymentTypeDeferred = "DEFERRED"
@@ -21,7 +21,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
 
     private def xor(in: Array[Byte], key: String) = {
         val result = new Array[Byte](in.length)
-        for (k <- 0 until in.length) {
+        for ( k <- 0 until in.length ) {
             val b = in(k) ^ key.charAt(k % key.length)
             result(k) = b.toByte
         }
@@ -57,8 +57,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         params
     }
 
-    // creates a payment object for the given set of response params
-    private def createPayment(params: Map[String, String]) = {
+    def _createTx(params: Map[String, String]) = {
 
         val orderId = params.get("VendorTxCode").getOrElse("0")
         val transactionId = params.get("VPSTxId").orNull
@@ -79,7 +78,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         val sb = new StringBuilder
         sb.append(count)
 
-        for (line <- basket.lines.asScala) {
+        for ( line <- basket.lines.asScala ) {
             sb.append(":")
             sb.append(line.obj.name.replaceAll("[=:&$*]", ""))
             sb.append(":")
@@ -109,7 +108,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
         sb.toString()
     }
 
-    def callback(params: Map[String, String]): Option[Transaction] = {
+    def callback(params: Map[String, String]): Option[CallbackResult] = {
         logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
@@ -123,17 +122,21 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends FormPaymentProcess
                 val sageTxId = p.get("VPSTxId").getOrElse("NoId")
                 _isExistingTransaction(sageTxId) match {
                     case true => None
-                    case false => Some(createPayment(p))
+                    case false =>
+                        val tx = _createTx(p)
+                        val sessionId = _sessionId(p)
+                        Some(CallbackResult(tx, sessionId))
                 }
             case _ => None
         }
     }
 
-    private def _isExistingTransaction(sageTxId: String) = false
+    def _sessionId(params: Map[String, String]) = params("VendorTxCode")
+    def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    private def _cryptParams(requiresPayment: Purchase,
-                             domain: String): Map[String, String] = {
+    def _cryptParams(requiresPayment: Purchase,
+                     domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", UUID.randomUUID.toString)

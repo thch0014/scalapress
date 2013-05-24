@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.ecommerce.controller
+package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 
 import com.liferay.scalapress.plugin.ecommerce.domain.{BasketRequiresPaymentWrapper, Address, BasketLine, Basket}
 import scala.collection.JavaConverters._

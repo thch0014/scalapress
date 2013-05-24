@@ -6,11 +6,11 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
-import com.liferay.scalapress.plugin.payments.{Transaction, Purchase, FormPaymentProcessor}
+import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
-  extends FormPaymentProcessor with Logging {
+  extends PaymentProcessor with Logging {
 
     private val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
     private val Production = "https://www.paypal.com/cgi-bin/webscr"
@@ -55,7 +55,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         params.toMap
     }
 
-    def _createPayment(params: Map[String, String]): Transaction = {
+    def _createTx(params: Map[String, String]): Transaction = {
         logger.debug("Creating Tx from Params [{}]", params)
 
         val transactionId = params("txn_id")
@@ -72,17 +72,19 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
         tx
     }
 
-    def callback(params: Map[String, String]): Option[Transaction] = {
+    def callback(params: Map[String, String]): Option[CallbackResult] = {
         //    _isPaymentCompleted(params) match {
         //        case false =>
         //            logger.info("IPN callback not valid")
         //            None
         //       case true =>
         //            logger.info("IPN callback is valid")
-        val tx = _createPayment(params)
-        Option(tx)
+        val tx = _createTx(params)
+        Some(CallbackResult(tx, _sessionId(params)))
         //    }
     }
+
+    def _sessionId(params: Map[String, String]): String = params("custom")
 
     def _isGenuineCallback(params: Map[String, String]): Boolean = {
 
