@@ -3,8 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
 import org.springframework.validation.Errors
 import xml.{Text, Attribute}
-import com.liferay.scalapress.plugin.ecommerce.controller.{BootstrapHelpers}
-import com.liferay.scalapress.util.CountrySelectOptions
+import com.liferay.scalapress.util.{BootstrapHelpers, CountrySelectOptions}
 
 /** @author Stephen Samuel */
 object CheckoutAddressRenderer {

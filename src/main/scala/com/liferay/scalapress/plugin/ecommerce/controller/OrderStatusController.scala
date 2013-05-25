@@ -6,11 +6,11 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.ecommerce.dao.TransactionDao
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.controller.renderers.OrderStatusRenderer
+import com.liferay.scalapress.plugin.payments.TransactionDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -24,7 +24,7 @@ class OrderStatusController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showAddress(req: HttpServletRequest): ScalapressPage = {
+    def get(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status")
         val theme = themeService.default
@@ -35,12 +35,12 @@ class OrderStatusController {
 
     @ResponseBody
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def showAddress(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
-                    req: HttpServletRequest): ScalapressPage = {
+    def post(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
+             req: HttpServletRequest): ScalapressPage = {
 
         val order = orderDao.find(orderId)
         if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
-            showAddress(req)
+            get(req)
 
         val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
         val theme = themeService.default

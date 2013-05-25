@@ -4,18 +4,17 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
-import com.liferay.scalapress.plugin.ecommerce.{OrderDao, OrderEmailService, OrderService, ShoppingPluginDao}
+import com.liferay.scalapress.plugin.ecommerce.{OrderBuilder, ShoppingPluginDao}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
-import com.liferay.scalapress.plugin.ecommerce.dao.{TransactionDao, DeliveryOptionDao, AddressDao, BasketDao}
-import com.liferay.scalapress.plugin.payments.sagepayform.SagepayFormPluginDao
+import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, AddressDao, BasketDao}
 import java.net.URL
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.controller.renderers.{CheckoutWizardRenderer, CheckoutDeliveryOptionRenderer, CheckoutConfirmationRenderer, CheckoutAddressRenderer}
+import com.liferay.scalapress.plugin.payments.PaymentCallbackService
 
 /** @author Stephen Samuel */
 @Controller
@@ -23,19 +22,16 @@ import com.liferay.scalapress.plugin.ecommerce.controller.renderers.{CheckoutWiz
 class CheckoutController {
 
     @Autowired var objectDao: ObjectDao = _
-    @Autowired var sagepayFormPluginDao: SagepayFormPluginDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var addressDao: AddressDao = _
     @Autowired var basketDao: BasketDao = _
-    @Autowired var orderDao: OrderDao = _
-    @Autowired var paymentDao: TransactionDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
     @Autowired var typeDao: TypeDao = _
-    @Autowired var orderEmailService: OrderEmailService = _
-
+    @Autowired var paymentCallbackService: PaymentCallbackService = _
     @Autowired var validator: Validator = _
+    @Autowired var orderBuilder: OrderBuilder = _
 
     @RequestMapping
     def start = "redirect:/checkout/address"
@@ -145,29 +141,13 @@ class CheckoutController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def paymentSuccess(req: HttpServletRequest): ScalapressPage = {
+    def success(req: HttpServletRequest): ScalapressPage = {
 
-        val shoppingPlugin = shoppingPluginDao.get
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Completed")
-        val params = req.getParameterMap
+        val shoppingPlugin = shoppingPluginDao.get
 
-        val account = OrderService.createAccount(typeDao, objectDao, sreq.basket)
-        val order = OrderService.createOrder(account, orderDao, sreq.basket, req)
-
-        sreq.basket.empty()
-        basketDao.save(sreq.basket)
-
-        // For all enabled payment processors see if we have one that accepts the parameters and creates a transaction.
-        // This would be if the there was a client side callback going on.
-        context.paymentPluginDao.enabled.foreach(plugin => {
-            plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
-                case Some(tx) =>
-                case None =>
-            }
-        })
-
-        val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
-        orderEmailService.email(recipients, order, context.installationDao.get)
+        val order = orderBuilder.build(sreq)
+        paymentCallbackService.callbacks(req)
 
         val confText = Option(shoppingPlugin.checkoutConfirmationText).filter(_.trim.length > 0)
           .map(text => text
@@ -176,6 +156,7 @@ class CheckoutController {
           .replace("[order_name]", order.account.name)
           .replace("[order_total]", order.total.toString))
           .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>")
+
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
@@ -187,11 +168,12 @@ class CheckoutController {
 
     @ResponseBody
     @RequestMapping(value = Array("payment/failure"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def paymentFailure(req: HttpServletRequest): ScalapressPage = {
+    def failure(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction Error")
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
+
         page.body("<p>There was a problem with payment for this order.</p>")
         page.body("<p>Please <a href='/checkout/payment'>click here</a> to return to the payment selection page " +
           "if you wish to try payment again.")

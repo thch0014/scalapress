@@ -8,7 +8,7 @@ import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Component
-class ListingEmailService extends Logging {
+class ListingCustomerNotificationService extends Logging {
 
     @Autowired var mailSender: MailSender = _
 
@@ -17,18 +17,19 @@ class ListingEmailService extends Logging {
         val msg = new SimpleMailMessage
         msg.setTo(obj.account.email)
         msg.setFrom("donotreply@" + context.installationDao.get.domain)
-        msg.setText(message)
+        msg.setText(_message)
         msg.setSubject("Listing: " + obj.name)
         mailSender.send(msg)
     }
 
-    def message: String = {
+    def _message: String = {
 
         val sb = new StringBuffer("Hello.\n\n")
         sb.append("Thank you for submitting a listing to our site.\n\n")
         sb
           .append(
-            "Once payment has finished processing then your listing will be visible on our site. We will send you another email once this is completed.\n\nIn the meantime, hang tight.\n\n")
+            "Once payment has finished processing then your listing will be visible on our site. " +
+              "We will send you another email once this is completed.\n\nIn the meantime, hang tight.\n\n")
         sb.append("Regards.")
         sb.toString
     }

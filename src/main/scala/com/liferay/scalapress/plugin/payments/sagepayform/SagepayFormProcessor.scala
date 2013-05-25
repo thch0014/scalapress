@@ -135,8 +135,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     def _isExistingTransaction(sageTxId: String) = false
 
     // returns the unencrpyted params used in the crypt field
-    def _cryptParams(requiresPayment: Purchase,
-                     domain: String): Map[String, String] = {
+    def _cryptParams(purchase: Purchase, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
         params.put("VendorTxCode", UUID.randomUUID.toString)
@@ -144,43 +143,47 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
 
-        val amount = "%1.2f".format(requiresPayment.total / 100.0)
+        val amount = "%1.2f".format(purchase.total / 100.0)
 
         params.put("Currency", "GBP")
         params.put("Amount", amount)
-        params.put("CustomerName", requiresPayment.accountName)
-        params.put("CustomerEmail", requiresPayment.accountEmail)
+        params.put("CustomerName", purchase.accountName)
+        params.put("CustomerEmail", purchase.accountEmail)
         params.put("Description", "Order at " + domain)
 
-        params.put("SuccessURL", "http://" + domain + requiresPayment.successUrl)
-        params.put("FailureURL", "http://" + domain + requiresPayment.failureUrl)
+        params.put("SuccessURL", "http://" + domain + purchase.successUrl)
+        params.put("FailureURL", "http://" + domain + purchase.failureUrl)
 
-        val deliveryName = Option(requiresPayment.deliveryAddress.name).getOrElse("")
+        purchase.deliveryAddress.foreach(address => {
 
-        val firstname = deliveryName.split(" ").last
-        val lastname = deliveryName.split(" ").head
+            val name = Option(address.name).getOrElse("")
+            val fn = name.split(" ").last
+            val ln = name.split(" ").head
 
-        params.put("DeliveryFirstnames", firstname)
-        params.put("DeliverySurname", lastname)
-        params.put("DeliveryAddress1", requiresPayment.deliveryAddress.address1)
-        params.put("DeliveryCity", requiresPayment.deliveryAddress.town)
-        params.put("DeliveryPostCode", requiresPayment.deliveryAddress.postcode)
-        params.put("DeliveryCountry", "GB")
+            params.put("DeliveryFirstnames", fn)
+            params.put("DeliverySurname", ln)
+            params.put("DeliveryAddress1", address.address1)
+            params.put("DeliveryCity", address.town)
+            params.put("DeliveryPostCode", address.postcode)
+            params.put("DeliveryCountry", "GB")
+        })
 
-        val billingName = Option(requiresPayment.billingAddress.name).getOrElse("")
+        purchase.billingAddress.foreach(address => {
 
-        val fn = billingName.split(" ").last
-        val ln = billingName.split(" ").head
+            val name = Option(address.name).getOrElse("")
+            val fn = name.split(" ").last
+            val ln = name.split(" ").head
 
-        params.put("BillingSurname", fn)
-        params.put("BillingFirstnames", ln)
-        params.put("BillingAddress1", requiresPayment.billingAddress.address1)
-        params.put("BillingCity", requiresPayment.billingAddress.town)
-        params.put("BillingPostCode", requiresPayment.billingAddress.postcode)
-        params.put("BillingCountry", "GB")
+            params.put("BillingSurname", fn)
+            params.put("BillingFirstnames", ln)
+            params.put("BillingAddress1", address.address1)
+            params.put("BillingCity", address.town)
+            params.put("BillingPostCode", address.postcode)
+            params.put("BillingCountry", "GB")
+        })
 
-        if (requiresPayment.isInstanceOf[Basket])
-            params.put("Basket", sageBasketString(requiresPayment.asInstanceOf[Basket]))
+        if (purchase.isInstanceOf[Basket])
+            params.put("Basket", sageBasketString(purchase.asInstanceOf[Basket]))
 
         logger.debug("Params [{}]", params)
         params.toMap

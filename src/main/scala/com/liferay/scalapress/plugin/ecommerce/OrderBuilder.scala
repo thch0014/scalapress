@@ -3,39 +3,50 @@ package com.liferay.scalapress.plugin.ecommerce
 import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
-import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
+import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.{ScalapressRequest, Logging, ScalapressContext}
+import org.springframework.stereotype.Component
+import com.liferay.scalapress.plugin.ecommerce.dao.BasketDao
+import org.springframework.beans.factory.annotation.Autowired
 
-/** @author Stephen Samuel */
-object OrderService {
+/** @author Stephen Samuel
+  *
+  *         Creates an order from the basket
+  *
+  **/
+@Component
+class OrderBuilder extends Logging {
 
-    def createAccount(typeDao: TypeDao, objectDao: ObjectDao, basket: Basket) = {
+    @Autowired var orderDao: OrderDao = _
+    @Autowired var basketDao: BasketDao = _
+    @Autowired var context: ScalapressContext = _
 
-        val accountType = typeDao.findAll()
+    def build(sreq: ScalapressRequest): Order = build(sreq.basket, sreq.request)
+    def build(basket: Basket, req: HttpServletRequest): Order = {
+
+        val account = _account(basket)
+        val order = _order(account, basket, req)
+        _cleanup(basket)
+        order
+    }
+
+    def _cleanup(basket: Basket) {
+        basket.empty()
+        basketDao.save(basket)
+    }
+
+    def _account(basket: Basket) = {
+
+        val accountType = context.typeDao.findAll()
           .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
         val account = Obj(accountType)
         account.email = basket.accountEmail
         account.name = basket.accountName
-        objectDao.save(account)
-
+        context.objectDao.save(account)
         account
     }
 
-    def createOrder(context: ScalapressContext, sreq: ScalapressRequest): Order = {
-
-        val account = createAccount(context.typeDao, context.objectDao, sreq.basket)
-        val order = createOrder(account, context.orderDao, sreq.basket, sreq.request)
-
-        sreq.basket.empty()
-        context.basketDao.save(sreq.basket)
-
-        //       val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
-        //     orderEmailService.email(recipients, order, context.installationDao.get)
-
-        null
-    }
-
-    def createOrder(account: Obj, orderDao: OrderDao, basket: Basket, req: HttpServletRequest): Order = {
+    def _order(account: Obj, basket: Basket, req: HttpServletRequest): Order = {
 
         val order = Order(req.getRemoteAddr, account)
 
@@ -49,7 +60,7 @@ object OrderService {
             order.deliveryAddress.active = true
         }
 
-        order.status = "New"
+        order.status = Order.STATUS_NEW
         order.deliveryCharge = Option(basket.deliveryOption).map(_.charge).getOrElse(0)
         order.deliveryVatRate = Option(basket.deliveryOption).map(_.vatRate).getOrElse(0)
         order.deliveryDetails = Option(basket.deliveryOption).map(_.name).orNull

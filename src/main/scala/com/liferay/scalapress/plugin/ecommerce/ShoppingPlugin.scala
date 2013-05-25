@@ -28,11 +28,14 @@ class ShoppingPlugin {
     @Column(length = 10000)
     @BeanProperty var statuses: String = "New\nCompleted\nCancelled"
 
-    @Column(length = 10000)
+    @Column(length = 100000)
     @BeanProperty var outOfStockMessage: String = _
 
-    @Column(length = 10000)
+    @Column(length = 100000)
     @BeanProperty var orderConfirmationRecipients: String = _
+
+    @Column(length = 100000)
+    @BeanProperty var orderConfirmationMessageBody: String = _
 
     @Enumerated(EnumType.STRING)
     @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS

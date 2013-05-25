@@ -5,13 +5,11 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Address
 import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
-class ListingProcessPaymentWrapper(process: ListingProcess) extends Purchase {
+class ListingProcessPurchase(process: ListingProcess) extends Purchase {
 
     def paymentDescription: String = "Payment for " + process.title
     def accountName: String = ""
     def accountEmail: String = ""
-    def deliveryAddress: Address = new Address
-    def billingAddress: Address = new Address
     def total: Double = process.listingPackage.fee
     def uniqueIdent: String = process.sessionId
 

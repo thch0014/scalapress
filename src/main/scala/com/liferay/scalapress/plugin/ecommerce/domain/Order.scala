@@ -78,6 +78,7 @@ class Order {
 
 object Order {
 
+    val STATUS_NEW = "New"
     val STATUS_PAID = "Paid"
 
     def apply(ipAddress: String, account: Obj) = {

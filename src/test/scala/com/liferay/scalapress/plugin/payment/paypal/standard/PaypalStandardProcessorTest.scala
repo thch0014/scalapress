@@ -10,7 +10,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
     val plugin = mock[PaypalStandardPlugin]
     val processor = new PaypalStandardProcessor(plugin)
 
-    test("create payment happy path") {
+    test("given a parameter map with valid paypal fields then a transaction is created") {
         val params = Map("payment_status" -> "Completed",
             "payer_status" -> "unverified",
             "payment_type" -> "instant",
@@ -19,7 +19,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
             "mc_gross" -> "20.00",
             "custom" -> "0a1d74c2-f809-4815-a53b-60a28e8da6a0")
 
-        val tx = processor._createPayment(params)
+        val tx = processor._createTx(params)
         assert(tx.transactionId === "739653939S128390K")
         assert(tx.amount === 2000)
         assert(tx.currency === "GBP")

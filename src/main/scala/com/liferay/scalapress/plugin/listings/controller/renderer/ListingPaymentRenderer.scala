@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.ListingProcessPaymentWrapper
+import com.liferay.scalapress.plugin.listings.ListingProcessPurchase
 import com.liferay.scalapress.ScalapressContext
 import xml.Elem
 import com.liferay.scalapress.plugin.listings.domain.ListingProcess
@@ -14,7 +14,7 @@ object ListingPaymentRenderer {
         val forms = payments.map(plugin => {
 
             val buttonText = "Pay with " + plugin.name
-            val params = plugin.processor.params(domain, new ListingProcessPaymentWrapper(process))
+            val params = plugin.processor.params(domain, new ListingProcessPurchase(process))
             val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>

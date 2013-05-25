@@ -170,6 +170,10 @@ class Obj {
 }
 
 object Obj {
+
+    val STATUS_LIVE = "Live"
+    val STATUS_DISABLED = "Disabled"
+
     def apply(t: ObjectType) = {
         require(t != null)
 
@@ -178,7 +182,7 @@ object Obj {
         obj.name = "new object"
         obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
         obj.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
-        obj.status = "Live"
+        obj.status = STATUS_LIVE
         obj
     }
 }

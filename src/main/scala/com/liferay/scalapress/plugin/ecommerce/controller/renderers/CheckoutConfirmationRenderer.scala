@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 
-import com.liferay.scalapress.plugin.ecommerce.domain.{BasketRequiresPaymentWrapper, Address, BasketLine, Basket}
+import com.liferay.scalapress.plugin.ecommerce.domain._
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
 
@@ -172,10 +172,12 @@ object CheckoutConfirmationRenderer {
 
     def renderPaymentForms(basket: Basket, context: ScalapressContext, domain: String) = {
 
-        val forms = context.paymentPluginDao.enabled.map(plugin => {
+        val purchase = new BasketPurchase(basket, context)
+        val processors = context.paymentPluginDao.enabled
+        val forms = processors.map(plugin => {
 
             val buttonText = "Pay with " + plugin.name
-            val params = plugin.processor.params(domain, new BasketRequiresPaymentWrapper(basket, context))
+            val params = plugin.processor.params(domain, purchase)
             val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>

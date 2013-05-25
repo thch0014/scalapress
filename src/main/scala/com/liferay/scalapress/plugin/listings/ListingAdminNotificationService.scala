@@ -8,9 +8,14 @@ import com.liferay.scalapress.obj.Obj
 import com.sksamuel.scoot.rest.Logging
 import com.liferay.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
 
-/** @author Stephen Samuel */
+/** @author Stephen Samuel
+  *
+  *         Notifies admin users that a new listing has been added.
+  *
+  *
+  * */
 @Component
-class ListingNotificationService extends Logging {
+class ListingAdminNotificationService extends Logging {
 
     @Autowired var mailSender: MailSender = _
     @Autowired var installationDao: InstallationDao = _
@@ -19,12 +24,12 @@ class ListingNotificationService extends Logging {
         val msg = new SimpleMailMessage
         msg.setTo(installationDao.get.adminEmail)
         msg.setFrom("donotreply@" + installationDao.get.domain)
-        msg.setText(message(obj, listingProcess.listingPackage))
+        msg.setText(_message(obj, listingProcess.listingPackage))
         msg.setSubject("Listing: " + obj.name)
         mailSender.send(msg)
     }
 
-    def message(obj: Obj, listingPackage: ListingPackage): String = {
+    def _message(obj: Obj, listingPackage: ListingPackage): String = {
         val sb = new StringBuffer("Hello Admin\n\n")
         sb.append("A new listing has been added to your site:\n")
         sb.append(obj.name + "\n\n")

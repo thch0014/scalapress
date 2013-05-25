@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.listings.{ListingProcessDao, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings.{ListingBuilder, ListingsPluginDao, ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
@@ -14,21 +14,23 @@ import com.liferay.scalapress.security.SecurityFuncs
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
-import com.liferay.scalapress.plugin.listings.controller.process.renderer._
-import com.liferay.scalapress.plugin.listings.domain.{ListingsPluginDao, ListingProcess}
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.plugin.listings.controller.renderer._
 import scala.Some
+import com.liferay.scalapress.plugin.payments.PaymentCallbackService
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("listing"))
 class AddListingController {
 
+    @Autowired var listingBuilder: ListingBuilder = _
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
+    @Autowired var paymentCallbackService: PaymentCallbackService = _
 
     @ResponseBody
     @RequestMapping(value = Array("package"), produces = Array("text/html"))
@@ -38,7 +40,7 @@ class AddListingController {
 
         val packages = listingPackageDao.findAll().filterNot(_.deleted)
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Choose Package")
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_PACKAGE)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
@@ -65,8 +67,7 @@ class AddListingController {
                     req: HttpServletRequest) = {
 
         Option(process.listingPackage) match {
-            case None =>
-                showPackages(process, errors, req)
+            case None => showPackages(process, errors, req)
             case Some(lp) =>
 
                 lp.maxFolders match {
@@ -74,7 +75,7 @@ class AddListingController {
                         showFields(process, errors, req)
 
                     case _ =>
-                        val sreq = ScalapressRequest(req, context).withTitle("Listing - Select Folders")
+                        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
                         val theme = themeService.default
                         val page = ScalapressPage(theme, sreq)
 
@@ -92,7 +93,6 @@ class AddListingController {
                         page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
                         page
                 }
-
         }
     }
 
@@ -209,18 +209,13 @@ class AddListingController {
     @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
     def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
 
-        // For all enabled payment processors see if we have one that accepts the parameters and creates a transaction.
-        // This would be if the there was a client side callback going on.
-        val params = req.getParameterMap
-        context.paymentPluginDao.enabled.foreach(plugin => {
-            plugin.processor.callback(params.asInstanceOf[java.util.Map[String, String]].asScala.toMap) match {
-                case Some(tx) =>
-                case None =>
-            }
-        })
+        if (process.listingPackage.fee == 0) // free listings will not have been shown the payment page
+            listingBuilder.build(process)
+        else
+            paymentCallbackService.callbacks(req)
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Completed")
-        val message = "<p>Thank you.</p><p>Your listing is now completed. It will show on the site shortly.</p>"
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.COMPLETED)
+        val message = <p>Thank you.</p> <p>Your listing is now completed. It will show on the site shortly.</p>.toString()
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
@@ -238,13 +233,16 @@ class AddListingController {
         val page = ScalapressPage(theme, sreq)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.Confirmation))
-        page.body("<p>This listing was not completed.</p>")
-        page.body("<p>Please <a href='/listing/confirmation'>click here</a> if you wish to try again.")
+        page.body(<p>This listing was not completed.</p>)
+        page.body(<p>Please
+            <a href='/listing/confirmation'>click here</a>
+            if you wish to try again.</p>)
         page
     }
 
     // -- population methods --
     @ModelAttribute("process") def process(req: HttpServletRequest) = {
+
         val sessionId = ScalapressRequest(req, context).sessionId
         val process = Option(listingProcessDao.find(sessionId)) match {
             case None =>
@@ -253,6 +251,7 @@ class AddListingController {
                 p
             case Some(p) => p
         }
+
         process.accountId = SecurityFuncs.getUser(req).map(_.id.toString).orNull
         listingProcessDao.save(process)
         process

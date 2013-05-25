@@ -32,8 +32,9 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
         params += ("return" -> (url + payable.successUrl))
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Transaction Notification messages.
-        params += ("notify_url" -> (url + payable.callbackUrl + "?paymentPluginClass=" + classOf[PaypalStandardPlugin]
-          .getName))
+        // todo setup paypal callback url
+        //        params += ("notify_url" -> (url + payable.callbackUrl + "?paymentPluginClass=" + classOf[PaypalStandardPlugin]
+        //        .getName))
 
         params += ("item_name" -> ("Order at " + domain))
         params += ("quantity" -> "1")

@@ -11,7 +11,7 @@ import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
-class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class ListingBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val req = mock[HttpServletRequest]
     val process = new ListingProcess
@@ -26,31 +26,31 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
 
     val plugin = new ListingsPlugin
 
-    val service = new ListingProcessService()
+    val service = new ListingBuilder()
     service.context = new ScalapressContext
     service.context.orderDao = mock[OrderDao]
 
     test("order uses vat rate from listing plugin") {
-        val order = service._order(account, listing, process, req, plugin)
+        val order = service._order(account, listing, process, plugin)
         val actual = order.lines.asScala.head.vatRate
         assert(0 === actual)
     }
 
     test("order line uses name from listing package as description") {
-        val order = service._order(account, listing, process, req, plugin)
+        val order = service._order(account, listing, process, plugin)
         val actual = order.lines.asScala.head.description
         assert("superpack Listing #565" === actual)
     }
 
     test("order line includes listing # in the description") {
         listing.id = 1555555
-        val order = service._order(account, listing, process, req, plugin)
+        val order = service._order(account, listing, process, plugin)
         val actual = order.lines.asScala.head.description
         assert(actual.contains("1555555"))
     }
 
     test("order is saved") {
-        val order = service._order(account, listing, process, req, plugin)
+        val order = service._order(account, listing, process, plugin)
         Mockito.verify(service.context.orderDao, Mockito.atLeastOnce).save(order)
     }
 }
