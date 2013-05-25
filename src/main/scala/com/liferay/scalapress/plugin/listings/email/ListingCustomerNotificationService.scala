@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.email
 
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.liferay.scalapress.{Logging, ScalapressContext}
@@ -26,10 +26,8 @@ class ListingCustomerNotificationService extends Logging {
 
         val sb = new StringBuffer("Hello.\n\n")
         sb.append("Thank you for submitting a listing to our site.\n\n")
-        sb
-          .append(
-            "Once payment has finished processing then your listing will be visible on our site. " +
-              "We will send you another email once this is completed.\n\nIn the meantime, hang tight.\n\n")
+        sb.append("Once payment has finished processing then your listing will be visible on our site. " +
+          "We will send you another email once this is completed.\n\nIn the meantime, hang tight.\n\n")
         sb.append("Regards.")
         sb.toString
     }

@@ -26,7 +26,7 @@ class ListingBuilderTest extends FunSuite with OneInstancePerTest with MockitoSu
 
     val plugin = new ListingsPlugin
 
-    val service = new ListingBuilder()
+    val service = new ListingProcessService()
     service.context = new ScalapressContext
     service.context.orderDao = mock[OrderDao]
 

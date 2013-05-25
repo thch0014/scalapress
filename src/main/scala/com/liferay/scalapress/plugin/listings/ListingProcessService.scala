@@ -7,14 +7,15 @@ import org.springframework.stereotype.Component
 import com.liferay.scalapress.obj.Obj
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
+import com.liferay.scalapress.plugin.listings.email.{ListingCustomerNotificationService, ListingAdminNotificationService}
 
 /** @author Stephen Samuel
   *
-  *         This service will build a listing from a given process
+  *         This service will complete a listing process
   *
-  * */
+  **/
 @Component
-class ListingBuilder extends Logging {
+class ListingProcessService extends Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var listingProcessDao: ListingProcessDao = _
@@ -22,7 +23,7 @@ class ListingBuilder extends Logging {
     @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
     @Autowired var listingCustomerNotificationService: ListingCustomerNotificationService = _
 
-    def build(process: ListingProcess): Obj = {
+    def complete(process: ListingProcess): Obj = {
         logger.info("Building listing for process [{}]", process)
         val plugin = listingsPluginDao.get
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.listings.{ListingBuilder, ListingsPluginDao, ListingProcessDao, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings._
 import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
@@ -16,15 +16,15 @@ import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.plugin.listings.controller.renderer._
-import scala.Some
 import com.liferay.scalapress.plugin.payments.PaymentCallbackService
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("listing"))
 class AddListingController {
 
-    @Autowired var listingBuilder: ListingBuilder = _
+    @Autowired var listingProcessService: ListingProcessService = _
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingPackageDao: ListingPackageDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
@@ -112,7 +112,7 @@ class AddListingController {
                    errors: Errors,
                    req: HttpServletRequest) = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Details")
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.DETAILS)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
@@ -154,7 +154,7 @@ class AddListingController {
                       errors: Errors,
                       req: HttpServletRequest): ScalapressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Upload Images")
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.UPLOAD_IMAGES)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
@@ -186,7 +186,7 @@ class AddListingController {
                      errors: Errors,
                      req: HttpServletRequest): ScalapressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Transaction")
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CONFIRMATION)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
@@ -209,8 +209,9 @@ class AddListingController {
     @RequestMapping(value = Array("payment/success"), produces = Array("text/html"))
     def success(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
 
-        if (process.listingPackage.fee == 0) // free listings will not have been shown the payment page
-            listingBuilder.build(process)
+        // free listings will not have been shown the payment page and so no callback will ever be issued
+        if (process.listingPackage.fee == 0)
+            listingProcessService.complete(process)
         else
             paymentCallbackService.callbacks(req)
 

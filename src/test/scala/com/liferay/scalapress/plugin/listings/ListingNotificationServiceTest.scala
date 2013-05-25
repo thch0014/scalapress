@@ -6,6 +6,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings.domain.ListingPackage
+import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
 
 /** @author Stephen Samuel */
 class ListingNotificationServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {

@@ -29,6 +29,7 @@ object OrderComment {
         c.date = new DateTime(DateTimeZone.UTC).getMillis
         c.order = order
         c.body = body
+        c.author = "System"
         c
     }
 }

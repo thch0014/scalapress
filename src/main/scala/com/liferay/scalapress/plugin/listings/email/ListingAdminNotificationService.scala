@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.email
 
 import com.liferay.scalapress.settings.InstallationDao
 import org.springframework.stereotype.Component
