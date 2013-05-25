@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao, ListingsPlugin}
+import com.liferay.scalapress.plugin.listings.{ListingPackageDao}
 import com.liferay.scalapress.theme.MarkupDao
+import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 
 /** @author Stephen Samuel */
 @Controller

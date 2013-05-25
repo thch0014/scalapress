@@ -1,12 +1,12 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.ListingProcess
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.enums.AttributeType
 import xml.Unparsed
 import collection.Iterable
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.{AttributeValue, Attribute}
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 object ListingFieldsRenderer {

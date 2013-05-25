@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.liferay.scalapress.obj.Obj
 import com.sksamuel.scoot.rest.Logging
+import com.liferay.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
 @Component

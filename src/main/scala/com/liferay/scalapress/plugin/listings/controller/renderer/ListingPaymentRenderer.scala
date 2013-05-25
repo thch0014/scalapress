@@ -1,8 +1,9 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.{ListingProcessPaymentWrapper, ListingProcess}
+import com.liferay.scalapress.plugin.listings.ListingProcessPaymentWrapper
 import com.liferay.scalapress.ScalapressContext
 import xml.Elem
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 object ListingPaymentRenderer {

@@ -6,6 +6,7 @@ import org.joda.time.DateMidnight
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.media.Image
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 class ListingProcess2ObjectBuilder(context: ScalapressContext) extends Logging {

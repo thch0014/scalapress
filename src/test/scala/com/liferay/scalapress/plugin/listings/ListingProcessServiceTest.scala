@@ -8,6 +8,7 @@ import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 import org.mockito.Mockito
+import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {

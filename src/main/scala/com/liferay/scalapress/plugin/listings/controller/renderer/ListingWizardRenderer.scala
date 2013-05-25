@@ -1,8 +1,8 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.ListingPackage
 import collection.mutable.ListBuffer
 import com.liferay.scalapress.util.{WizardStep, WizardRenderer}
+import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 object ListingWizardRenderer {

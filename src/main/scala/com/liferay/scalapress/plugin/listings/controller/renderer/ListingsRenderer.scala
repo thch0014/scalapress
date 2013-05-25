@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator

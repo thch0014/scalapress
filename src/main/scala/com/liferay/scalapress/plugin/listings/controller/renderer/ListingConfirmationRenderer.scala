@@ -1,9 +1,9 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.ListingProcess
 import xml.Unparsed
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 class ListingConfirmationRenderer(context: ScalapressContext) {

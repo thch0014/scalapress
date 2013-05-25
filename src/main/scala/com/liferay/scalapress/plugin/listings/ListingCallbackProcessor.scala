@@ -1,6 +1,7 @@
 package com.liferay.scalapress.plugin.listings
 
 import com.liferay.scalapress.plugin.payments.Transaction
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 object ListingCallbackProcessor {

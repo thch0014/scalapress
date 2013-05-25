@@ -5,7 +5,6 @@ import java.util
 import javax.persistence._
 import org.hibernate.annotations._
 import com.liferay.scalapress.section.Section
-import com.liferay.scalapress.plugin.listings.ListingPackage
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.media.Image
 import org.joda.time.{DateTimeZone, DateTime}
@@ -14,6 +13,7 @@ import javax.persistence.Table
 import javax.persistence.CascadeType
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
+import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 @Entity

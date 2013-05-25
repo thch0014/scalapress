@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.domain
 
 import javax.persistence.{Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
 import collection.mutable.ArrayBuffer

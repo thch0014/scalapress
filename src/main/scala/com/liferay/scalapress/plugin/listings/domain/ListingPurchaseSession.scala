@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.domain
 
 import com.liferay.scalapress.plugin.payments.PurchaseSession
 import scala.beans.BeanProperty

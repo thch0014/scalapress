@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.domain
 
 import javax.persistence.{Column, OneToMany, CascadeType, FetchType, ManyToOne, Table, Entity, Id}
 import scala.Array

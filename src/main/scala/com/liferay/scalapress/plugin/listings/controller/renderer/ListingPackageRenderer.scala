@@ -1,7 +1,7 @@
-package com.liferay.scalapress.plugin.listings.controller.process.renderer
+package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import com.liferay.scalapress.plugin.listings.{ListingsPlugin, ListingPackage}
 import xml.Unparsed
+import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 
 /** @author Stephen Samuel */
 object ListingPackageRenderer {

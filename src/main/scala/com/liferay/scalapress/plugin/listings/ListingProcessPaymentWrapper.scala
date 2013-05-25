@@ -2,6 +2,7 @@ package com.liferay.scalapress.plugin.listings
 
 import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
+import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
 class ListingProcessPaymentWrapper(process: ListingProcess) extends Purchase {

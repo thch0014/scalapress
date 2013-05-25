@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.listings
+package com.liferay.scalapress.plugin.listings.controller.admin
 
 import com.liferay.scalapress.settings.lifecycle.MenuItem
 

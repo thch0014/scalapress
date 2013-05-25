@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcess, ListingProcessDao, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings.{ListingProcessDao, ListingPackageDao}
 import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
@@ -15,6 +15,9 @@ import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.controller.process.renderer._
+import com.liferay.scalapress.plugin.listings.domain.{ListingsPluginDao, ListingProcess}
+import com.liferay.scalapress.plugin.listings.controller.renderer._
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller

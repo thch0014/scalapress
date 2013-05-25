@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.obj.ObjectQuery
 import com.liferay.scalapress.theme.ThemeService
-import com.liferay.scalapress.plugin.listings.controller.process.renderer.ListingsRenderer
+import com.liferay.scalapress.plugin.listings.controller.renderer.ListingsRenderer
 
 /** @author Stephen Samuel */
 @Controller

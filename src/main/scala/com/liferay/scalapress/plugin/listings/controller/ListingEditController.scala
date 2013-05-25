@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, ResponseBody, RequestMapping}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import process.renderer.ListingFieldsRenderer
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.obj.Obj
@@ -12,6 +11,7 @@ import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.plugin.listings.controller.renderer.ListingFieldsRenderer
 
 /** @author Stephen Samuel */
 @Controller

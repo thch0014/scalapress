@@ -4,9 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.plugin.listings.{ListingPackage, ListingPackageDao}
+import com.liferay.scalapress.plugin.listings.{ListingPackageDao}
 import com.liferay.scalapress.obj.TypeDao
 import com.liferay.scalapress.util.ObjectTypePopulator
+import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 @Controller

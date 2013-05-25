@@ -1,6 +1,7 @@
 package com.liferay.scalapress.plugin.listings
 
 import org.scalatest.FunSuite
+import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 class ListingPackageTest extends FunSuite {

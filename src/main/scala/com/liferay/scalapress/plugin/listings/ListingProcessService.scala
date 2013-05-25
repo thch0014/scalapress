@@ -7,6 +7,7 @@ import com.liferay.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.payments.Transaction
 import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingProcess}
 
 /** @author Stephen Samuel */
 @Component

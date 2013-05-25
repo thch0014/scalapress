@@ -9,8 +9,7 @@ import org.apache.http.util.EntityUtils
 import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
 
 /** @author Stephen Samuel */
-class PaypalStandardProcessor(plugin: PaypalStandardPlugin)
-  extends PaymentProcessor with Logging {
+class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProcessor with Logging {
 
     private val Sandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr"
     private val Production = "https://www.paypal.com/cgi-bin/webscr"
