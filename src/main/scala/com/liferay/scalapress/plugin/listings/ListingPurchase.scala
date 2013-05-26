@@ -10,7 +10,7 @@ class ListingPurchase(listing: Obj, domain: String) extends Purchase {
 
     def accountName: String = listing.account.name
     def accountEmail: String = listing.account.email
-    def total: Double = listing.listingPackage.fee / 100d
+    def total: Double = listing.listingPackage.fee
 
     def successUrl: String = "http://" + domain + "/listing/completed"
     def failureUrl: String = "http://" + domain + "/listing/payment/failure"

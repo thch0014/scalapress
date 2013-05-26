@@ -46,6 +46,6 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
     }
 
     test("purchase total comes from listing package") {
-        assert(61.52 === purchase.total)
+        assert(6152 === purchase.total)
     }
 }

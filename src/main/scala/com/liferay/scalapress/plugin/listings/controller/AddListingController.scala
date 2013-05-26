@@ -46,7 +46,7 @@ class AddListingController {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        // page.body(ListingWizardRenderer.render(ListingWizardRenderer.ChoosePackage))
+
         page.body(ListingPackageRenderer.render(packages, listingsPluginDao.get))
         page
     }
@@ -88,9 +88,7 @@ class AddListingController {
                         val tree = context.folderDao.tree
                         val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
 
-                        page
-                          .body(ListingWizardRenderer
-                          .render(process.listingPackage, ListingWizardRenderer.STEP_SelectFolder))
+                        page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.STEP_SELECT_FOLDER))
                         page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
                         page
                 }

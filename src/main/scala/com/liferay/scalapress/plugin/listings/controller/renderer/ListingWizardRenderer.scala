@@ -7,18 +7,17 @@ import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 /** @author Stephen Samuel */
 object ListingWizardRenderer {
 
-    val STEP_ChoosePackage = 1
-    val STEP_SelectFolder = 2
+    val STEP_SELECT_FOLDER = 2
     val STEP_ListingFields = 3
     val STEP_UploadImages = 4
     val STEP_Confirmation = 5
     val STEP_PAYMENT = 6
     val STEP_COMPLETED = 7
 
-    def steps(lp: ListingPackage): Iterable[WizardStep] = {
+    def steps(lp: ListingPackage): Seq[WizardStep] = {
 
         val list = new ListBuffer[WizardStep]
-        //list.append(WizardStep("/listing/package", "Package"))
+        // list.append(WizardStep("/listing/package", "Package"))
         if (lp.maxFolders > 0)
             list.append(WizardStep("/listing/folder", "Sections"))
         list.append(WizardStep("/listing/field", "Details"))

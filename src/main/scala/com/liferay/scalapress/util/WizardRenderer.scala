@@ -1,25 +1,33 @@
 package com.liferay.scalapress.util
 
+import scala.xml.{Node, Unparsed}
+
 /** @author Stephen Samuel */
 object WizardRenderer {
 
-    def render(steps: Iterable[WizardStep], position: Int) = {
+    def render(steps: Seq[WizardStep], position: Int): Node = {
 
         var index = 0
-        val links = steps.map(step => {
+        val renderedSteps = steps.map(step => {
+
             index = index + 1
-            val classes = if (index == position) "current" else ""
+
+            val css = if (index == position) "active" else ""
             val href = if (position >= index) step.href else "#"
-            <a class={classes} href={href}>
-                {step.label}
-            </a>
+
+            <li class={css}>
+                <a href={href}>
+                    {step.label}
+                </a>
+            </li>
+
         })
 
-        <div class="wizard">
-            <ul class="steps">
-                {links}
-            </ul>
-        </div>
+        val rendered = renderedSteps.mkString(<span class="divider"> - </span>.toString())
+
+        <ul class="breadcrumb">
+            {Unparsed(rendered)}
+        </ul>
     }
 }
 
