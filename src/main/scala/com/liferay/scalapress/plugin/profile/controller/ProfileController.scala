@@ -11,7 +11,7 @@ import org.springframework.validation.Errors
 import com.liferay.scalapress.obj.{ObjectDao, TypeDao, Obj}
 import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 
 /** @author Stephen Samuel */
 @Controller
@@ -39,5 +39,5 @@ class ProfileController {
         page
     }
 
-    @ModelAttribute("account") def account(req: HttpServletRequest) = SecurityFuncs.getUser(req).get
+    @ModelAttribute("account") def account(req: HttpServletRequest) = SpringSecurityResolver.getUser(req).get
 }

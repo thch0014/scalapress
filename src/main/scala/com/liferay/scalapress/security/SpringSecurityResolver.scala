@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication
 import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
-object SecurityFuncs {
+object SpringSecurityResolver extends SecurityResolver {
 
     def getAuth(req: HttpServletRequest): Option[Authentication] =
         Option(SecurityContextHolder.getContext.getAuthentication)
@@ -27,5 +27,8 @@ object SecurityFuncs {
 
     def hasUserRole(req: HttpServletRequest): Boolean =
         getAuth(req).exists(_.getAuthorities.contains(UserAuthority))
+}
 
+trait SecurityResolver {
+    def getUser(req: HttpServletRequest): Option[Obj]
 }

@@ -7,7 +7,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.search.{ObjectRef, SavedSearch}
 import com.liferay.scalapress.enums.Sort
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
@@ -29,7 +29,7 @@ class DashboardController {
 
     @ModelAttribute("installation") def installation = context.installationDao.get
     @ModelAttribute("indexed") def indexed = context.searchService.count
-    @ModelAttribute("user") def indexed(req: HttpServletRequest) = SecurityFuncs.getAdminDetails(req).user
+    @ModelAttribute("user") def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
     @ModelAttribute("folderCount") def folderCount = context.folderDao.findAll().size
     @ModelAttribute("recentObjects") def recentObjects: java.util.List[ObjectRef] = {
         val search = new SavedSearch

@@ -10,7 +10,7 @@ import org.springframework.validation.Errors
 import java.net.URL
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
@@ -288,7 +288,7 @@ class AddListingController {
             case Some(p) => p
         }
 
-        process.accountId = SecurityFuncs.getUser(req).map(_.id.toString).orNull
+        process.accountId = SpringSecurityResolver.getUser(req).map(_.id.toString).orNull
         listingProcessDao.save(process)
         process
     }

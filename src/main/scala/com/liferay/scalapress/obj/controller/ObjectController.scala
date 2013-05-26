@@ -6,7 +6,7 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.section.SectionRenderer
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.mvc.{Toolbar, ScalapressPage, NotFoundException}
@@ -47,7 +47,7 @@ class ObjectController extends Logging {
         val theme = themeService.theme(obj)
         val page = ScalapressPage(theme, sreq)
 
-        if (SecurityFuncs.hasAdminRole(page.req.request)) {
+        if (SpringSecurityResolver.hasAdminRole(page.req.request)) {
             page.toolbar(Toolbar.render(context.installationDao.get, obj))
         }
 

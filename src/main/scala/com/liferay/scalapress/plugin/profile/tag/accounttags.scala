@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.profile.tag
 
 import com.liferay.scalapress.{Tag, ScalapressRequest}
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
 /** @author Stephen Samuel
@@ -12,7 +12,7 @@ import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 @Tag("account_username")
 class UsernameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        SecurityFuncs.getUserDetails(request.request).map(_.username)
+        SpringSecurityResolver.getUserDetails(request.request).map(_.username)
     }
 }
 
@@ -21,7 +21,7 @@ class UsernameTag extends ScalapressTag with TagBuilder {
 class AccountLinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         val label = params.get("label").orElse(params.get("text"))
-        val link = SecurityFuncs.hasUserRole(request.request) match {
+        val link = SpringSecurityResolver.hasUserRole(request.request) match {
             case true => super.buildLink("/account", label.getOrElse("Account"), params)
             case false => super.buildLink("/login", label.getOrElse("Login or Register"), params)
         }

@@ -10,7 +10,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.obj.attr.AttributeValue
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.SpringSecurityResolver
 import com.liferay.scalapress.plugin.listings.controller.renderer.ListingFieldsRenderer
 
 /** @author Stephen Samuel */
@@ -25,7 +25,7 @@ class ListingEditController {
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
 
-        val account = SecurityFuncs.getUser(req)
+        val account = SpringSecurityResolver.getUser(req)
         require(account.get.id == obj.account.id)
 
         val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")

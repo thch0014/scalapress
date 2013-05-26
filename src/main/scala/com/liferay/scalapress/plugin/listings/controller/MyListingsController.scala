@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.listings.controller
 
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.security.SecurityFuncs
+import com.liferay.scalapress.security.{SecurityResolver, SpringSecurityResolver}
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -18,12 +18,13 @@ class MyListingsController {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
+    var securityResolver: SecurityResolver = SpringSecurityResolver
 
     @ResponseBody
     @RequestMapping(produces = Array("text/html"))
     def list(req: HttpServletRequest): ScalapressPage = {
 
-        val account = SecurityFuncs.getUser(req)
+        val account = securityResolver.getUser(req)
         val query = new ObjectQuery().withAccountId(account.map(_.id))
         val objects = context.objectDao.search(query)
 
