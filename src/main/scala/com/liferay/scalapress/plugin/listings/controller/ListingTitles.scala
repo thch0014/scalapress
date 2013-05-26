@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.listings.controller
 
 /** @author Stephen Samuel */
 object ListingTitles {
-
+    val PAYMENT_ERROR = "Listing - Transaction Not Completed"
     val PAYMENT = "Listing - Payment"
     val DETAILS = "Listing - Details"
     val UPLOAD_IMAGES = "Listing - Upload Images"

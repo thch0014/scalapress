@@ -265,7 +265,7 @@ class AddListingController {
     @RequestMapping(value = Array("payment/failure"), produces = Array("text/html"))
     def paymentFailure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Listing - Transaction Not Completed")
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.PAYMENT_ERROR)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 

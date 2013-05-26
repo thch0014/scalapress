@@ -62,7 +62,7 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
         Mockito.verify(callback.context.transactionDao, Mockito.never).save(tx)
     }
 
-    test("if listing package is auto publish then change listing status") {
+    test("if listing package is auto publish then change listing status to live") {
         listing.listingPackage.autoPublish = true
         callback.callback(None, listing)
         assert(listing.status == Obj.STATUS_LIVE)
@@ -77,6 +77,18 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     test("order status is updated to paid") {
         val order = callback._order(listing)
         assert(Order.STATUS_PAID === order.status)
+    }
+
+    test("order uses internal ip") {
+        val order = callback._order(listing)
+        assert("127.0.0.1" === order.ipAddress)
+    }
+
+    test("order line is added from the listing details") {
+        val order = callback._order(listing)
+        val line = order.lines.get(0)
+        assert(line.description.contains("#" + listing.id))
+        assert(listing.listingPackage.fee === line.price)
     }
 
     test("emails are sent using the listing") {
