@@ -32,12 +32,13 @@ class ListingCustomerNotificationService extends Logging {
 
         val domain = context.installationDao.get.domain
         val url = "http://" + domain + FriendlyUrlGenerator.friendlyUrl(listing)
+        val accountUrl = "http://" + domain + "/account"
 
         val sb = new StringBuffer("Hello.\n\n")
         sb.append("Thank you for submitting a listing to our site.\n\n")
         sb.append("When your listing is approved then you will be able to use the following URL to view it: " +
-          url + "\n\nIn the meantime, hang tight.\n\n")
-        sb.append("Regards.")
+          url + "\n\nYou can also log into your account and update your listing using the following URL: " + accountUrl + "\n\n")
+        sb.append("Thanks for reading.")
         sb.toString
     }
 

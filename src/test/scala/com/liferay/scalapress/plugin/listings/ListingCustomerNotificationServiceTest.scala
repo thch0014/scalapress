@@ -35,11 +35,14 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
 
     obj.listingPackage = lp
 
-    test("test format of message") {
+    test("message body contains account link") {
         val msg = service._message(obj)
-        assert("Hello.\n\nThank you for submitting a listing to our site.\n\n" +
-          "When your listing is approved then you will be able to use the following URL to view it: " +
-          "http://coldplay.com/object-34-coldplay-tshirt\n\nIn the meantime, hang tight.\n\nRegards." === msg)
+        assert(msg.contains("http://coldplay.com/account"))
+    }
+
+    test("message body contains object link") {
+        val msg = service._message(obj)
+        assert(msg.contains("http://coldplay.com/object-34-coldplay-tshirt"))
     }
 
     test("email is sent to account email address") {

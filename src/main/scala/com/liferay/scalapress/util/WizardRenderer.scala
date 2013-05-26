@@ -7,6 +7,7 @@ object WizardRenderer {
 
     def render(steps: Seq[WizardStep], active: WizardStep): Node = {
 
+        // todo remove this css once h4s updated
         val css = "ul.wizard li { list-style-image: none !important; }"
 
         var index = 0
