@@ -72,24 +72,34 @@ class AddListingController {
             case Some(lp) =>
 
                 lp.maxFolders match {
-                    case 0 =>
-                        showFields(process, errors, req)
+                    case 0 => showFields(process, errors, req)
                     case _ =>
-                        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
-                        val theme = themeService.default
-                        val page = ScalapressPage(theme, sreq)
 
                         val folders = Option(process.listingPackage.folders)
-                          .filter(_.trim.length > 0)
-                          .map(_.split(","))
-                          .getOrElse(Array[String]())
+                          .filterNot(_.isEmpty)
+                          .map(_.split(",").map(_.toLong))
+                          .getOrElse(Array[Long]())
 
-                        val tree = context.folderDao.tree
-                        val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
+                        folders.size match {
 
-                        page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
-                        page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
-                        page
+                            case 1 =>
+                                process.folders = folders
+                                listingProcessDao.save(process)
+                                showFields(process, errors, req)
+
+                            case _ =>
+
+                                val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
+                                val theme = themeService.default
+                                val page = ScalapressPage(theme, sreq)
+
+                                val tree = context.folderDao.tree
+                                val filtered = if (folders.isEmpty) tree else tree.filter(f => folders.contains(f.id))
+
+                                page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
+                                page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
+                                page
+                        }
                 }
         }
     }
