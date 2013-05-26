@@ -18,7 +18,6 @@ import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.plugin.listings.controller.renderer._
 import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentCallbackService}
 import scala.Some
-import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 @Controller
@@ -244,29 +243,10 @@ class AddListingController {
             paymentCallbackService.callbacks(req)
         listingProcessService.cleanup(process)
 
-        val url = "http://" + context.installationDao.get.domain + FriendlyUrlGenerator.friendlyUrl(process.listing)
-
         val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.COMPLETED)
-        val message = <div id="listing-confirmation-text">
-            <p>
-                Thank you.
-            </p>
-            <p>
-                Your listing is now completed.
-            </p>
-            <p>
-                When the listing has been verified it will be visible using the following url:
-                <br/>
-                <a href={url}>
-                    {url}
-                </a>
-            </p>
-        </div>.toString()
-
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_COMPLETED))
-        page.body(message)
+        page.body(ListingCompleteRenderer.render(context, process.listing))
         page
     }
 

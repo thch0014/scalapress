@@ -12,7 +12,6 @@ object ListingWizardRenderer {
     val STEP_UploadImages = 4
     val STEP_Confirmation = 5
     val STEP_PAYMENT = 6
-    val STEP_COMPLETED = 7
 
     def steps(lp: ListingPackage): Seq[WizardStep] = {
 
@@ -24,7 +23,6 @@ object ListingWizardRenderer {
         list.append(WizardStep("/listing/image", "Images"))
         list.append(WizardStep("/listing/confirmation", "Confirm"))
         list.append(WizardStep("/listing/payment", "Payment"))
-        list.append(WizardStep("#", "Completed"))
         list.toList
     }
 

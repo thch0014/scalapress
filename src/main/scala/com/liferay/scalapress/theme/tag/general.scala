@@ -58,7 +58,6 @@ class CssTag extends ScalapressTag with TagBuilder {
         "/static/css/eventCalendar.css",
         "/static/css/galleriffic.css",
         "/static/css/fuelux.css",
-        "/static/css/wizard.css",
         "/static/css/colorbox.css")
 
     def render(request: ScalapressRequest, params: Map[String, String]) = {
