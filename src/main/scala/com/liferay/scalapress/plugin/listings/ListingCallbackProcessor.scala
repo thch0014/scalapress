@@ -1,6 +1,5 @@
 package com.liferay.scalapress.plugin.listings
 
-import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
 import com.liferay.scalapress.{ScalapressContext, Logging}
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.listings.email.{ListingCustomerNotificationService, ListingAdminNotificationService}
 import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
-import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
@@ -59,13 +57,13 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
         listingAdminNotificationService.notify(listing)
     }
 
-    // empty the listing process
-    def _cleanup(process: ListingProcess) {
-        process.attributeValues.asScala.foreach(_.listingProcess = null)
-        process.attributeValues.clear()
-        logger.info("Process completed - removing from database")
-        //   listingProcessDao.remove(process)
-    }
+    //    // empty the listing process
+    //    def _cleanup(process: ListingProcess) {
+    //        process.attributeValues.asScala.foreach(_.listingProcess = null)
+    //        process.attributeValues.clear()
+    //        logger.info("Process completed - removing from database")
+    //        //   listingProcessDao.remove(process)
+    //    }
 
     // build an order to hold the details of what the customer purchased
     def _order(listing: Obj) = {

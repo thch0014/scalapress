@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.listings
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
-import scala.sys.process
+import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -14,6 +14,9 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
     listing.account = new Obj
     listing.account.name = "sammy"
     listing.account.email = "s@s.com"
+
+    listing.listingPackage = new ListingPackage
+    listing.listingPackage.fee = 6152
 
     val purchase = new ListingPurchase(listing, "coldplay.com")
 
@@ -36,5 +39,13 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
 
     test("failure url") {
         assert("http://coldplay.com/listing/payment/failure" === purchase.failureUrl)
+    }
+
+    test("callbackClass returns ListingCallback") {
+        assert(classOf[ListingCallbackProcessor] === purchase.callbackClass)
+    }
+
+    test("purchase total comes from listing package") {
+        assert(61.52 === purchase.total)
     }
 }
