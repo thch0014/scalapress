@@ -26,6 +26,8 @@ class OrderBuilder extends Logging {
 
         val account = _account(basket)
         val order = _order(account, basket, req)
+        orderDao.save(order)
+
         _cleanup(basket)
         order
     }
@@ -70,8 +72,6 @@ class OrderBuilder extends Logging {
             orderLine.order = order
             order.lines.add(orderLine)
         }
-
-        orderDao.save(order)
 
         order
     }
