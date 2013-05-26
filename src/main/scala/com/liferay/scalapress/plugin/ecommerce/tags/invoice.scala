@@ -5,6 +5,7 @@ import org.joda.time.{DateTimeZone, DateTime}
 import com.liferay.scalapress.obj.tag.AttributeValueRenderer
 import com.liferay.scalapress.theme.MarkupRenderer
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Tag("invoice_account_number")
@@ -59,8 +60,6 @@ class InvoiceCustomerNoteTag extends ScalapressTag {
         request.order.flatMap(o => Option(o.customerNote))
     }
 }
-
-import scala.collection.JavaConverters._
 
 @Tag("invoice_attribute_value")
 class InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
