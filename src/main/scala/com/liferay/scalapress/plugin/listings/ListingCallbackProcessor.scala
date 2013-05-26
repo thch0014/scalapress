@@ -39,14 +39,14 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
 
         if (process.listingPackage.fee > 0) {
 
-            val account = context.objectDao.find(process.accountId.toLong)
-            val order = _order(account, process.listing, process)
+            val order = _order(process.listing, process)
 
-            tx.foreach(tx => {
-                context.transactionDao.save(tx)
-                order.payments.add(tx)
+            if (tx.isDefined) {
+                tx.get.order = order.id.toString
+                context.transactionDao.save(tx.get)
+                order.payments.add(tx.get)
                 orderDao.save(order)
-            })
+            }
         }
 
         _emails(process)
@@ -71,10 +71,11 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     }
 
     // build an order to hold the details of what the customer purchased
-    def _order(account: Obj, listing: Obj, process: ListingProcess) = {
+    def _order(listing: Obj, process: ListingProcess) = {
         logger.debug("Creating order for the listing")
 
-        val order = Order("127.0.0.1", account)
+        val order = Order("127.0.0.1", listing.account)
+        order.status = Order.STATUS_PAID
         orderDao.save(order)
 
         val orderLine = OrderLine(process.listingPackage.name + " Listing #" + listing.id, process.listingPackage.fee)
