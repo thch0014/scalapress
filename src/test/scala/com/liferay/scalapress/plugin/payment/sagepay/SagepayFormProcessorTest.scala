@@ -4,12 +4,19 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
+import com.liferay.scalapress.plugin.ecommerce.domain.Address
 
 /** @author Stephen Samuel */
 class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
 
     val plugin = new SagepayFormPlugin
     val processor = new SagepayFormProcessor(plugin)
+
+    val address = new Address
+    address.name = "sambo"
+    address.postcode = "SW10"
+    address.town = "London"
+    address.address1 = "100 redcliffe gardens"
 
     val purchase = new Purchase {
         def successUrl: String = "http://coldplay.com/successUrl.com"
@@ -20,6 +27,8 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
         def uniqueIdent: String = "616116"
         def callbackClass: Class[_] = classOf[java.lang.InstantiationError]
         def paymentDescription: String = "some payment"
+        override def billingAddress: Option[Address] = Some(address)
+        override def deliveryAddress: Option[Address] = Some(address)
     }
 
     test("given a parameter map with valid paypal fields then a transaction is created") {
@@ -74,6 +83,22 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
     test("processor sets success url from purchase") {
         val params = processor._cryptParams(purchase, "coldplay.com")
         assert("http://coldplay.com/successUrl.com" === params("SuccessURL"))
+    }
+
+    test("processor sets billing address fields from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("sambo" === params("BillingSurname"))
+        assert("100 redcliffe gardens" === params("BillingAddress1"))
+        assert("London" === params("BillingCity"))
+        assert("SW10" === params("BillingPostCode"))
+    }
+
+    test("processor sets delivery address fields from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("sambo" === params("DeliverySurname"))
+        assert("100 redcliffe gardens" === params("DeliveryAddress1"))
+        assert("London" === params("DeliveryCity"))
+        assert("SW10" === params("DeliveryPostCode"))
     }
 
     test("processor sets callback info into the VendorTxCode field") {
