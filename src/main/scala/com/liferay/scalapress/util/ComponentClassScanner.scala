@@ -50,10 +50,10 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 
 object ComponentClassScanner {
 
-    def menus: Seq[Class[MenuItem]] = new ComponentClassScanner().getSubtypes(classOf[MenuItem])
-    def paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
-    def sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
-    def plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])
-    def widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
-    def tags: Seq[Class[Tag]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Tag])
+    lazy val menus: Seq[Class[MenuItem]] = new ComponentClassScanner().getSubtypes(classOf[MenuItem])
+    lazy val paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
+    lazy val sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
+    lazy val plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])
+    lazy val widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
+    lazy val tags: Seq[Class[Tag]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Tag])
 }

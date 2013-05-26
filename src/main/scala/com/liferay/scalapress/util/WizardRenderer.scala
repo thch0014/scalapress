@@ -11,17 +11,14 @@ object WizardRenderer {
         val renderedSteps = steps.map(step => {
 
             index = index + 1
-/**/
             val css = if (index == position) "active" else ""
-            val href = if (position >= index) step.href else "#"
-
             <li class={css}>
                 {step.label}<span class="chevron"></span>
             </li>
 
         })
 
-        val rendered = renderedSteps.mkString(<span class="divider">-</span>.toString())
+        val rendered = renderedSteps.mkString
 
         <div class="wizard">
             <ul class="steps">
