@@ -44,6 +44,12 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     callback.listingCustomerNotificationService = mock[ListingCustomerNotificationService]
     callback.listingAdminNotificationService = mock[ListingAdminNotificationService]
 
+    test("invoking with a string looks up the listing by id") {
+        Mockito.when(callback.context.objectDao.find(123456)).thenReturn(listing)
+        callback.callback(tx, "123456")
+        Mockito.verify(callback.context.objectDao).find(123456)
+    }
+
     test("given a tx then it is added to order") {
         callback.callback(Some(tx), listing)
         val captor = ArgumentCaptor.forClass(classOf[Order])

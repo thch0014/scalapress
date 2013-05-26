@@ -7,13 +7,16 @@ import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPac
 object ListingPackageRenderer {
 
     def render(packages: Seq[ListingPackage], plugin: ListingsPlugin) = {
+
+        val text = Option(plugin.packagesPageText).getOrElse("")
         <div id="listing-process-packages">
-            {Unparsed(plugin.packagesPageText)}{_renderPackages(packages)}
+            {Unparsed(text)}{_renderPackages(packages)}
         </div>
     }
 
     private def _renderPackages(packages: Seq[ListingPackage]) = {
         packages.map(pck => {
+            val desc = Option(pck.description).getOrElse("")
             <div class="listing-package well">
 
                 <div class="name lead">
@@ -24,7 +27,7 @@ object ListingPackageRenderer {
 
                 <div class="desc">
                     <p>
-                        {Unparsed(pck.description)}
+                        {Unparsed(desc)}
                     </p>
                 </div>
 
