@@ -96,10 +96,10 @@ class BasketLineCountTag extends ScalapressTag with TagBuilder {
 @Tag("basket_line_qty")
 class BasketLineQtyTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        request
-          .line
-          .map(line => "<input type='text' class='input-mini' name='qty" +
-          line.id + "' value='" + line.qty + "'/>")
+        request.line.map(line => {
+            val name = "qty" + line.id
+                <input type="text" class="input-mini" name={name} value={line.qty.toString}/>.toString()
+        })
     }
 }
 
@@ -123,7 +123,7 @@ class BasketDeliveryDescTag extends ScalapressTag {
 }
 
 @Tag("basket_line_item")
-class BasketLineItemTag extends ScalapressTag {
+class BasketLineObjectTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         request.line.map(line => {
             params.contains("link") match {
