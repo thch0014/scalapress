@@ -8,7 +8,7 @@ import org.mockito.{ArgumentCaptor, Mockito}
 import com.liferay.scalapress.settings.{Installation, InstallationDao}
 import com.liferay.scalapress.plugin.payments.{TransactionDao, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
-import com.liferay.scalapress.plugin.listings.email.{ListingAdminNotificationService, ListingCustomerNotificationService}
+import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
 
@@ -42,7 +42,6 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     callback.context.objectDao = mock[ObjectDao]
     callback.orderDao = mock[OrderDao]
     callback.listingCustomerNotificationService = mock[ListingCustomerNotificationService]
-    callback.listingAdminNotificationService = mock[ListingAdminNotificationService]
 
     test("invoking with a string looks up the listing by id") {
         Mockito.when(callback.context.objectDao.find(123456)).thenReturn(listing)
