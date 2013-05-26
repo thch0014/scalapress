@@ -11,7 +11,7 @@ import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
-class ListingBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val req = mock[HttpServletRequest]
     val process = new ListingProcess

@@ -2,6 +2,8 @@ package com.liferay.scalapress.plugin.listings.controller
 
 /** @author Stephen Samuel */
 object ListingTitles {
+
+    val PAYMENT = "Listing - Payment"
     val DETAILS = "Listing - Details"
     val UPLOAD_IMAGES = "Listing - Upload Images"
     val CONFIRMATION = "Listing - Confirmation"

@@ -13,7 +13,6 @@ class OrderCallbackProcessor extends Logging {
     @Autowired var context: ScalapressContext = _
     @Autowired var shoppingPlugin: ShoppingPlugin = _
     @Autowired var orderDao: OrderDao = _
-    @Autowired var orderCustomerNotificationService: OrderCustomerNotificationService = _
 
     def _payment(tx: Transaction, order: Order) {
         logger.debug("Setting order [{}] as paid and associating tx [{}]", order.id, tx.id)
@@ -24,12 +23,5 @@ class OrderCallbackProcessor extends Logging {
 
     def callback(tx: Transaction, order: Order) {
         _payment(tx, order)
-        _email(order)
-    }
-
-    def _email(order: Order) {
-        val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
-        logger.debug("Sending order placed email [{}]", recipients)
-        orderCustomerNotificationService.orderPlaced(recipients, order, context.installationDao.get)
     }
 }

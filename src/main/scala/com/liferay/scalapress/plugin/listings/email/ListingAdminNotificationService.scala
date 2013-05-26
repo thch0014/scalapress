@@ -13,31 +13,31 @@ import com.liferay.scalapress.plugin.listings.domain.{ListingPackage, ListingPro
   *         Notifies admin users that a new listing has been added.
   *
   *
-  * */
+  **/
 @Component
 class ListingAdminNotificationService extends Logging {
 
     @Autowired var mailSender: MailSender = _
     @Autowired var installationDao: InstallationDao = _
 
-    def notify(obj: Obj, listingProcess: ListingProcess) {
+    def notify(listing: Obj, listingProcess: ListingProcess) {
         val msg = new SimpleMailMessage
         msg.setTo(installationDao.get.adminEmail)
         msg.setFrom("donotreply@" + installationDao.get.domain)
-        msg.setText(_message(obj, listingProcess.listingPackage))
-        msg.setSubject("Listing: " + obj.name)
+        msg.setText(_message(listing, listingProcess.listingPackage))
+        msg.setSubject("Listing: " + listing.name)
         mailSender.send(msg)
     }
 
-    def _message(obj: Obj, listingPackage: ListingPackage): String = {
+    def _message(listing: Obj, listingPackage: ListingPackage): String = {
         val sb = new StringBuffer("Hello Admin\n\n")
         sb.append("A new listing has been added to your site:\n")
-        sb.append(obj.name + "\n\n")
+        sb.append(listing.name + "\n\n")
 
-        sb.append("The status of this listing is: [" + obj.status + "]\n")
+        sb.append("The status of this listing is: [" + listing.status + "]\n")
         sb.append("The listing was added using: [" + listingPackage.name + "]\n\n")
         sb.append("You can edit the listing in the backoffice:\n")
-        sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + obj.id + "\n\n")
+        sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + listing.id + "\n\n")
 
         sb.append("Regards, Your Server")
         sb.toString

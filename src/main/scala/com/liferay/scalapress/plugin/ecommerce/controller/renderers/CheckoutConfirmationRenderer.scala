@@ -14,13 +14,13 @@ object CheckoutConfirmationRenderer {
         val wizard = CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage)
         val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
 
-        val payments = renderPaymentForms(basket, context, domain)
-
         val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket
           .deliveryAddress) + "<br/><br/></div>"
 
         val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
           .billingAddress) + "<br/><br/></div>"
+
+        val payments = renderPaymentForms(basket, context, domain)
 
         val terms = _terms(context.shoppingPluginDao.get.terms)
 

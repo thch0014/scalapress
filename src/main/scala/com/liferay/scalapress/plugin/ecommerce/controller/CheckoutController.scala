@@ -3,10 +3,10 @@ package com.liferay.scalapress.plugin.ecommerce.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
-import com.liferay.scalapress.plugin.ecommerce.{OrderBuilder, ShoppingPluginDao}
+import com.liferay.scalapress.{Logging, ScalapressRequest, ScalapressContext}
+import com.liferay.scalapress.plugin.ecommerce._
 import javax.servlet.http.HttpServletRequest
-import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Basket}
+import com.liferay.scalapress.plugin.ecommerce.domain.{Order, Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, AddressDao, BasketDao}
 import java.net.URL
@@ -15,11 +15,12 @@ import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.controller.renderers.{CheckoutWizardRenderer, CheckoutDeliveryOptionRenderer, CheckoutConfirmationRenderer, CheckoutAddressRenderer}
 import com.liferay.scalapress.plugin.payments.PaymentCallbackService
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("checkout"))
-class CheckoutController {
+class CheckoutController extends Logging {
 
     @Autowired var objectDao: ObjectDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
@@ -32,6 +33,7 @@ class CheckoutController {
     @Autowired var paymentCallbackService: PaymentCallbackService = _
     @Autowired var validator: Validator = _
     @Autowired var orderBuilder: OrderBuilder = _
+    @Autowired var shoppingPlugin: ShoppingPlugin = _
 
     @RequestMapping
     def start = "redirect:/checkout/address"
@@ -93,7 +95,7 @@ class CheckoutController {
             val delivery = deliveryOptions.head
             basket.deliveryOption = delivery
             basketDao.save(basket)
-            showConfirmation(req)
+            confirmation(req)
 
         } else {
 
@@ -120,13 +122,13 @@ class CheckoutController {
                 val delivery = deliveryOptionDao.find(id.toLong)
                 basket.deliveryOption = delivery
                 basketDao.save(basket)
-                showConfirmation(req)
+                confirmation(req)
         }
     }
 
     @ResponseBody
     @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showConfirmation(req: HttpServletRequest): ScalapressPage = {
+    def confirmation(req: HttpServletRequest): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Checkout - Transaction")
         val host = new URL(req.getRequestURL.toString).getHost
@@ -139,6 +141,13 @@ class CheckoutController {
         page
     }
 
+    @Autowired var orderCustomerNotificationService: OrderCustomerNotificationService = _
+    def _email(order: Order) {
+        val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
+        logger.debug("Sending order placed email [{}]", recipients)
+        orderCustomerNotificationService.orderPlaced(recipients, order, context.installationDao.get)
+    }
+
     @ResponseBody
     @RequestMapping(value = Array("payment/success"), method = Array(RequestMethod.GET), produces = Array("text/html"))
     def success(req: HttpServletRequest): ScalapressPage = {
@@ -148,15 +157,11 @@ class CheckoutController {
 
         val order = orderBuilder.build(sreq)
         paymentCallbackService.callbacks(req)
+        _email(order)
 
         val confText = Option(shoppingPlugin.checkoutConfirmationText).filter(_.trim.length > 0)
-          .map(text => text
-          .replace("[order_id]", order.id.toString)
-          .replace("[order_email]", order.account.email)
-          .replace("[order_name]", order.account.name)
-          .replace("[order_total]", order.total.toString))
+          .map(text => OrderMarkupService.resolve(order, text))
           .getOrElse("<p>Thank you for your order</p><p>Your order id is " + order.id + "</p>")
-
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)

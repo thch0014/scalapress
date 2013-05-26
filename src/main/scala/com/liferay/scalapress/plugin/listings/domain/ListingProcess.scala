@@ -6,6 +6,7 @@ import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import java.util
 import com.liferay.scalapress.obj.attr.AttributeValue
 import scala.beans.BeanProperty
+import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Entity
@@ -25,6 +26,9 @@ class ListingProcess {
 
     @ManyToOne
     @BeanProperty var listingPackage: ListingPackage = _
+
+    // the completed listing
+    @BeanProperty var listing: Obj = _
 
     @BeanProperty var folders: Array[Long] = Array()
 

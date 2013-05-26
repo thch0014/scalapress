@@ -8,16 +8,8 @@ import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 /** @author Stephen Samuel */
 class ListingConfirmationRenderer(context: ScalapressContext) {
 
-    def completeForm(process: ListingProcess) =
-        <div id="listing-process-nopaymentrequired">
-            <form method="POST" action="/listing/payment/success">
-                <button type="submit" class="btn btn-primary">
-                    Complete
-                </button>
-            </form>
-        </div>
+    def render(process: ListingProcess) = {
 
-    def render(process: ListingProcess) =
         <div id="listing-process-confirmation">
             <legend>
                 Listing Confirmation
@@ -52,20 +44,29 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
                     {_images(process)}
                 </td>
             </tr>
-            </table>
+            </table>{_complete(process)}
         </div>
+    }
 
-    private def _folders(process: ListingProcess) = {
+    def _complete(process: ListingProcess) = {
+        <form method="POST" action="/listing/confirmation">
+            <button type="submit" class="btn btn-primary">
+                Complete
+            </button>
+        </form>
+    }
+
+    def _folders(process: ListingProcess) = {
         val names = process.folders.map(f => context.folderDao.find(f).name)
         names.mkString(", ")
     }
 
-    private def _images(process: ListingProcess) = {
+    def _images(process: ListingProcess) = {
         val links = process.imageKeys.map(key => context.imageService.imageLink(key, 160, 120))
         links.map(link => <img src={link}/>)
     }
 
-    private def _attributes(process: ListingProcess) = {
+    def _attributes(process: ListingProcess) = {
         val values = process.attributeValues.asScala.toSeq
         val sorted = values.sortBy(_.attribute.position)
         sorted.map(av =>

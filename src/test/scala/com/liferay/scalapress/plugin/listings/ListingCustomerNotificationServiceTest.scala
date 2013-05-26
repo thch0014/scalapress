@@ -9,7 +9,7 @@ import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
 
 /** @author Stephen Samuel */
-class ListingAdminNotificationServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val service = new ListingAdminNotificationService
     service.installationDao = mock[InstallationDao]
