@@ -15,8 +15,6 @@ import com.liferay.scalapress.obj.Obj
 class ListingProcessService extends Logging {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var listingProcessDao: ListingProcessDao = _
-    @Autowired var listingsPluginDao: ListingsPluginDao = _
 
     def process(process: ListingProcess): Obj = {
         logger.info("Building listing for process [{}]", process)

@@ -228,7 +228,7 @@ class AddListingController {
         val port = new URL(req.getRequestURL.toString).getPort
         val domain = if (port == 8080) host + ":8080" else host
 
-        val purchase = new ListingProcessPurchase(process, domain)
+        val purchase = new ListingPurchase(process.listing, domain)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_PAYMENT))
         page.body(PaymentFormRenderer.renderPaymentForm(purchase, context, domain))
@@ -241,7 +241,7 @@ class AddListingController {
 
         // free listings will not have been shown the payment page and so no callback will ever be issued to cleanup
         if (process.listingPackage.fee == 0)
-            listingCallbackProcessor.callback(None, process)
+            listingCallbackProcessor.callback(None, process.listing)
         else
             paymentCallbackService.callbacks(req)
 

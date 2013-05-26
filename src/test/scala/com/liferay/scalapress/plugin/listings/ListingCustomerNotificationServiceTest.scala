@@ -26,8 +26,10 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
     val lp = new ListingPackage
     lp.name = "t-shirt sale"
 
+    obj.listingPackage = lp
+
     test("test format of message") {
-        val msg = service._message(obj, lp)
+        val msg = service._message(obj)
         assert(
             "Hello Admin\n\nA new listing has been added to your site:\ncoldplay tshirt\n\nThe status of this listing is: [Live]\nThe listing was added using: [t-shirt sale]\n\nYou can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/obj/34\n\nRegards, Your Server" === msg)
     }

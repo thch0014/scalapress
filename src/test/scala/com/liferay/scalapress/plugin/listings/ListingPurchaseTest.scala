@@ -2,23 +2,20 @@ package com.liferay.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.obj.Obj
+import scala.sys.process
 
 /** @author Stephen Samuel */
-class ListingProcessPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val listing = new Obj
+    listing.id = 47
+    listing.name = "coldplay t shirt"
     listing.account = new Obj
     listing.account.name = "sammy"
     listing.account.email = "s@s.com"
 
-    val process = new ListingProcess
-    process.listing = listing
-    process.sessionId = "123456"
-    process.title = "coldplay t shirt"
-
-    val purchase = new ListingProcessPurchase(process, "coldplay.com")
+    val purchase = new ListingPurchase(listing, "coldplay.com")
 
     test("that purchase uses account details") {
         assert(purchase.accountEmail === listing.account.email)
@@ -26,11 +23,11 @@ class ListingProcessPurchaseTest extends FunSuite with OneInstancePerTest with M
     }
 
     test("that paymentDescription uses the process title") {
-        assert(purchase.paymentDescription.contains(process.title))
+        assert(purchase.paymentDescription.contains(listing.name))
     }
 
     test("that uniqueIdent uses the listing process session id") {
-        assert("123456" === purchase.uniqueIdent)
+        assert("47" === purchase.uniqueIdent)
     }
 
     test("success url") {

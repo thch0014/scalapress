@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.listings.email.{ListingCustomerNotificationService, ListingAdminNotificationService}
 import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
@@ -17,29 +17,27 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var orderDao: OrderDao = _
-    @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
     @Autowired var listingCustomerNotificationService: ListingCustomerNotificationService = _
 
     override def callback(tx: Transaction, id: String) {
-        val process = listingProcessDao.find(id)
+        val process = context.objectDao.find(id.toLong)
         callback(Option(tx), process)
     }
 
-    def callback(tx: Option[Transaction], process: ListingProcess) {
-        val listing = process.listing
+    def callback(tx: Option[Transaction], listing: Obj) {
         logger.debug("Performing listing callback [{}-{}]", listing.id, listing.name)
 
-        if (process.listingPackage.autoPublish) {
+        if (listing.listingPackage.autoPublish) {
             logger.debug("Auto publising listing [{}-{}]", listing.id, listing.name)
             listing.status = Obj.STATUS_LIVE
             context.objectDao.save(listing)
         }
 
-        if (process.listingPackage.fee > 0) {
+        if (listing.listingPackage.fee > 0) {
 
-            val order = _order(process.listing, process)
+            val order = _order(listing)
 
             if (tx.isDefined) {
                 tx.get.order = order.id.toString
@@ -49,17 +47,16 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
             }
         }
 
-        _emails(process)
-        _cleanup(process)
+        _emails(listing)
     }
 
-    def _emails(process: ListingProcess) {
+    def _emails(listing: Obj) {
 
         logger.debug("Sending email to customer")
-        listingCustomerNotificationService.send(process.listing, context)
+        listingCustomerNotificationService.send(listing, context)
 
         logger.debug("Sending email to admin")
-        listingAdminNotificationService.notify(process.listing, process)
+        listingAdminNotificationService.notify(listing)
     }
 
     // empty the listing process
@@ -67,18 +64,18 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
         process.attributeValues.asScala.foreach(_.listingProcess = null)
         process.attributeValues.clear()
         logger.info("Process completed - removing from database")
-        listingProcessDao.remove(process)
+        //   listingProcessDao.remove(process)
     }
 
     // build an order to hold the details of what the customer purchased
-    def _order(listing: Obj, process: ListingProcess) = {
+    def _order(listing: Obj) = {
         logger.debug("Creating order for the listing")
 
         val order = Order("127.0.0.1", listing.account)
         order.status = Order.STATUS_PAID
         orderDao.save(order)
 
-        val orderLine = OrderLine(process.listingPackage.name + " Listing #" + listing.id, process.listingPackage.fee)
+        val orderLine = OrderLine(listing.listingPackage.name + " Listing #" + listing.id, listing.listingPackage.fee)
         orderLine.vatRate = listingsPluginDao.get.vatRate
         orderLine.order = order
         order.lines.add(orderLine)
