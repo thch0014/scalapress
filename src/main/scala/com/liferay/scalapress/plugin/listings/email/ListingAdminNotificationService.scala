@@ -12,7 +12,7 @@ import com.sksamuel.scoot.rest.Logging
   *         Notifies admin users that a new listing has been added.
   *
   *
-  **/
+  * */
 @Component
 class ListingAdminNotificationService extends Logging {
 

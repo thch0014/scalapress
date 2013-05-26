@@ -11,7 +11,6 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.plugin.listings.email.{ListingAdminNotificationService, ListingCustomerNotificationService}
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
-import scala.sys.process
 
 /** @author Stephen Samuel */
 class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -82,6 +81,6 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
 
     test("emails are sent using the listing") {
         callback.callback(Some(tx), listing)
-        Mockito.verify(callback.listingCustomerNotificationService).send(listing, callback.context)
+        Mockito.verify(callback.listingCustomerNotificationService).send(listing)
     }
 }

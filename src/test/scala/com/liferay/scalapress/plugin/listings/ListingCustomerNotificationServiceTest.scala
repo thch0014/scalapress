@@ -6,17 +6,19 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings.domain.ListingPackage
-import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
+import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
+import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val service = new ListingAdminNotificationService
-    service.installationDao = mock[InstallationDao]
+    val service = new ListingCustomerNotificationService
+    service.context = new ScalapressContext
+    service.context.installationDao = mock[InstallationDao]
 
     val installation = new Installation
     installation.domain = "coldplay.com"
-    Mockito.when(service.installationDao.get).thenReturn(installation)
+    Mockito.when(service.context.installationDao.get).thenReturn(installation)
 
     val obj = new Obj
     obj.id = 34
@@ -31,6 +33,8 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
     test("test format of message") {
         val msg = service._message(obj)
         assert(
-            "Hello Admin\n\nA new listing has been added to your site:\ncoldplay tshirt\n\nThe status of this listing is: [Live]\nThe listing was added using: [t-shirt sale]\n\nYou can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/obj/34\n\nRegards, Your Server" === msg)
+            "Hello.\n\nThank you for submitting a listing to our site.\n\n" +
+              "When your listing is approved then you will be able to use the following URL to view it: " +
+              "http://coldplay.com/object-34-coldplay-tshirt\n\nIn the meantime, hang tight.\n\nRegards." === msg)
     }
 }

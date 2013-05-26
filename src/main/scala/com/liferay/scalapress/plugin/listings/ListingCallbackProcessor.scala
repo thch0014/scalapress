@@ -53,7 +53,7 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     def _emails(listing: Obj) {
 
         logger.debug("Sending email to customer")
-        listingCustomerNotificationService.send(listing, context)
+        listingCustomerNotificationService.send(listing)
 
         logger.debug("Sending email to admin")
         listingAdminNotificationService.notify(listing)
