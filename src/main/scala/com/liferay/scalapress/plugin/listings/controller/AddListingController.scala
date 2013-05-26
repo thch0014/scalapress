@@ -248,15 +248,25 @@ class AddListingController {
         val url = FriendlyUrlGenerator.friendlyUrl(process.listing)
 
         val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.COMPLETED)
-        val message = <p>Thank you.</p> <p>Your listing is now completed.
-            <br/>
-            When the listing has been verified it will be visible using the following url:
-            <br/>{url}
-        </p>.toString()
+        val message = <div id="listing-confirmation-text">
+            <p>
+                Thank you.
+            </p>
+            <p>
+                Your listing is now completed.
+            </p>
+            <p>
+                When the listing has been verified it will be visible using the following url:
+                <br/>
+                <a href={url}>
+                    {url}
+                </a>
+            </p>
+        </div>.toString()
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_Completed))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_COMPLETED))
         page.body(message)
         page
     }

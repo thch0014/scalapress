@@ -17,9 +17,9 @@ object LoginRenderer {
                 </label>
                 <input name="j_password" type="password" placeholder="Password"/>
             </div>
-            <button type="submit" name="submit" class="btn btn-success">Login</button>
-            <a href="/register" class="btn btn-primary">Register</a>
-            <a href="/password" class="btn btn-info">Forgotten Password</a>
+            <button type="submit" name="submit" class="btn">Login</button>
+            <a href="/register" class="btn">Register</a>
+            <a href="/password" class="btn">Forgotten Password</a>
         </form>
 }
 

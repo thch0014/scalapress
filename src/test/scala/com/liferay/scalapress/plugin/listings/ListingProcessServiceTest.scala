@@ -18,6 +18,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     process.accountId = "214"
 
     val account = new Obj
+    account.id = 214
     account.name = "sammy"
 
     val service = new ListingProcessService
@@ -27,7 +28,12 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
 
     test("that the object is assigned the account from the process") {
         val listing = service.process(process)
-        listing.account.id = 214
+        assert(listing.account.id === 214)
+    }
+
+    test("that the object is assigned the listing package from the process") {
+        val listing = service.process(process)
+        assert(listing.listingPackage === process.listingPackage)
     }
 
     test("that the object is persisted") {

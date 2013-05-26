@@ -7,7 +7,7 @@ object ListingImagesRenderer {
     def render(process: ListingProcess, plugin: ListingsPlugin) =
         <div id="listing-process-images">
             {plugin.imagesPageText}<form method="POST" enctype="multipart/form-data">
-            {_upload}<button type="submit" class="btn btn-primary">Continue</button>
+            {_upload}<button type="submit" class="btn">Continue</button>
         </form>
         </div>
 

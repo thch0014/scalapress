@@ -41,6 +41,7 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
         obj.name = process.title
         logger.debug("Set new listing to use name [{}]", obj.name)
 
+        obj.listingPackage = process.listingPackage
         obj.content = process.content
         obj.status = Obj.STATUS_DISABLED
         obj.expiry = _expiry(process.listingPackage)

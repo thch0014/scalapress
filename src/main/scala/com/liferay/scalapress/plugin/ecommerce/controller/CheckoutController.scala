@@ -33,7 +33,6 @@ class CheckoutController extends Logging {
     @Autowired var paymentCallbackService: PaymentCallbackService = _
     @Autowired var validator: Validator = _
     @Autowired var orderBuilder: OrderBuilder = _
-    @Autowired var shoppingPlugin: ShoppingPlugin = _
 
     @RequestMapping
     def start = "redirect:/checkout/address"

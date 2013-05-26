@@ -24,7 +24,7 @@ object ListingFieldsRenderer {
                 <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
                 attributeValues)}{_sectionAttributes(
                 attributes, attributeValues)}<legend>Main Content</legend>{_content(
-                process.content)}<button type="submit" class="btn btn-primary">Continue</button>
+                process.content)}<button type="submit" class="btn">Continue</button>
             </form>
         </div>
     }

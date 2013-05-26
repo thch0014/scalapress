@@ -16,7 +16,7 @@ object ListingFoldersRenderer {
         <div id="listing-process-folders">
             {plugin.foldersPageText}
             <form method="POST">
-                {selects}<button type="submit" class="btn btn-primary">Continue</button>
+                {selects}<button type="submit" class="btn">Continue</button>
             </form>
         </div>
     }

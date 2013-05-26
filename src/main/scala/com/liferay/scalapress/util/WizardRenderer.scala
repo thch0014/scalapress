@@ -11,14 +11,14 @@ object WizardRenderer {
             val classes = if (index == position) "current" else ""
             val href = if (position >= index) step.href else "#"
             <a class={classes} href={href}>
-                <span class="badge">
-                    {index}
-                </span>{step.label}
+                {step.label}
             </a>
         })
 
         <div class="wizard">
-            {links}
+            <ul class="steps">
+                {links}
+            </ul>
         </div>
     }
 }
