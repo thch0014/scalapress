@@ -8,11 +8,13 @@ object CheckoutWizardRenderer {
     val AddressStage = 1
     val DeliveryStage = 2
     val ConfirmationStage = 3
-    val CompletedStage = 4
+    val STEP_PAYMENT = 4
+    val STEP_COMPLETED = 5
 
     def steps = List(WizardStep("/checkout/address", "Address"),
         WizardStep("/checkout/delivery", "Delivery"),
-        WizardStep("/checkout/payment", "Transaction"),
+        WizardStep("/checkout/confirmation", "Confirmation"),
+        WizardStep("/checkout/payment", "Payment"),
         WizardStep("#", "Completed"))
 
     def render(stage: Int) = WizardRenderer.render(steps, stage)

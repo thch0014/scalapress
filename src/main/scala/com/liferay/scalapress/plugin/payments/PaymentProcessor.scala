@@ -28,6 +28,7 @@ case class CallbackResult(tx: Transaction, sessionId: String)
 trait Purchase {
 
     def paymentDescription: String
+    def callbackClass: Class[_]
     def uniqueIdent: String
     def total: Double
     def billingAddress: Option[Address] = None

@@ -20,11 +20,9 @@ object CheckoutConfirmationRenderer {
         val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
           .billingAddress) + "<br/><br/></div>"
 
-        val payments = renderPaymentForms(basket, context, domain)
+        val termsModal = _termsModal(context.shoppingPluginDao.get.terms)
 
-        val terms = _terms(context.shoppingPluginDao.get.terms)
-
-        "<div id='checkout-confirmation'>" + wizard + totals + billing + delivery + payments + "</div>" + terms
+        "<div id='checkout-confirmation'>" + wizard + totals + billing + delivery + _complete + "</div>" + termsModal
     }
 
     private def renderBasketLines(lines: Seq[BasketLine]) = {
@@ -94,7 +92,30 @@ object CheckoutConfirmationRenderer {
         </tr>
     }
 
-    private def _terms(text: String) = {
+    def _complete = {
+
+        val termsError = ""
+        <form method="POST" action="/checkout/confirmation">
+            <legend>
+                Confirm and Pay
+            </legend>
+            <label class="checkbox">
+                <input type="checkbox" name="termsAccepted"/>
+                Accept
+                <a href="#termsModal" data-toggle="modal">
+                    Terms and Conditions
+                </a>
+            </label>{termsError}<label class="checkbox">
+            <input type="checkbox" name="newsletterOptin"/>
+            Please send me details of your special offers. You can opt out at any time.
+        </label>
+            <button type="submit" class="btn">
+                Complete
+            </button>
+        </form>
+    }
+
+    def _termsModal(text: String) = {
         val content = scala.xml.Unparsed(text)
         <div id="termsModal" class="modal fade hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -112,7 +133,7 @@ object CheckoutConfirmationRenderer {
         </div>
     }
 
-    private def _renderTotals(basket: Basket) = {
+    def _renderTotals(basket: Basket) = {
 
         val subtotal = xml.Unparsed(" &pound;%1.2f".format(basket.subtotal / 100.0))
         val vat = xml.Unparsed(" &pound;%1.2f".format(basket.vat / 100.0))
@@ -150,7 +171,7 @@ object CheckoutConfirmationRenderer {
           </tr>
     }
 
-    private def renderBasket(basket: Basket) = {
+    def renderBasket(basket: Basket) = {
 
         <table id="checkout-confirmation-basket" class="table table-striped table-condensed">
             <tr>
@@ -170,40 +191,4 @@ object CheckoutConfirmationRenderer {
         </table>
     }
 
-    def renderPaymentForms(basket: Basket, context: ScalapressContext, domain: String) = {
-
-        val purchase = new BasketPurchase(basket, context)
-        val processors = context.paymentPluginDao.enabled
-        val forms = processors.map(plugin => {
-
-            val buttonText = "Pay with " + plugin.name
-            val params = plugin.processor.params(domain, purchase)
-            val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
-
-            <form method="POST" action={plugin.processor.paymentUrl}>
-                {paramInputs}<button type="submit" class="btn btn-primary">
-                {buttonText}
-            </button>
-            </form>
-
-        })
-
-        val termsError = ""
-
-        <div id="payment-forms">
-            <legend>
-                Confirm and Pay
-            </legend>
-            <label class="checkbox">
-                <input type="checkbox" name="termsAccepted"/>
-                Accept
-                <a href="#termsModal" data-toggle="modal">
-                    Terms and Conditions
-                </a>
-            </label>{termsError}<label class="checkbox">
-            <input type="checkbox" name="newsletterOptin"/>
-            Please send me details of your special offers. You can opt out at any time.
-        </label>{forms}
-        </div>
-    }
 }

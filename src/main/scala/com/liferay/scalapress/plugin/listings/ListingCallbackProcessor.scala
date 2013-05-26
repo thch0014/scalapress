@@ -7,13 +7,13 @@ import com.liferay.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.listings.email.{ListingCustomerNotificationService, ListingAdminNotificationService}
-import com.liferay.scalapress.plugin.payments.Transaction
+import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 
 /** @author Stephen Samuel */
 @Component
-class ListingCallbackProcessor extends Logging {
+class ListingCallbackProcessor extends PaymentCallback with Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var orderDao: OrderDao = _
@@ -21,6 +21,11 @@ class ListingCallbackProcessor extends Logging {
     @Autowired var listingsPluginDao: ListingsPluginDao = _
     @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
     @Autowired var listingCustomerNotificationService: ListingCustomerNotificationService = _
+
+    override def callback(tx: Transaction, id: String) {
+        val process = listingProcessDao.find(id)
+        callback(Option(tx), process)
+    }
 
     def callback(tx: Option[Transaction], process: ListingProcess) {
         val listing = process.listing
@@ -85,4 +90,5 @@ class ListingCallbackProcessor extends Logging {
         orderDao.save(order)
         order
     }
+
 }

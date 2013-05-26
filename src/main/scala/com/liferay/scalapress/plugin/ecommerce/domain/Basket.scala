@@ -20,6 +20,9 @@ class Basket {
     @Id
     @BeanProperty var sessionId: String = _
 
+    // the completed order
+    @BeanProperty var order: Order = _
+
     @NotEmpty
     @BeanProperty var accountName: String = _
 

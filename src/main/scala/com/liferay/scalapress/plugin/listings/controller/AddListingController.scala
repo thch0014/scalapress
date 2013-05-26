@@ -16,7 +16,7 @@ import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.plugin.listings.controller.renderer._
-import com.liferay.scalapress.plugin.payments.PaymentCallbackService
+import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentCallbackService}
 import scala.Some
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
@@ -75,7 +75,6 @@ class AddListingController {
                 lp.maxFolders match {
                     case 0 =>
                         showFields(process, errors, req)
-
                     case _ =>
                         val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
                         val theme = themeService.default
@@ -229,8 +228,10 @@ class AddListingController {
         val port = new URL(req.getRequestURL.toString).getPort
         val domain = if (port == 8080) host + ":8080" else host
 
+        val purchase = new ListingProcessPurchase(process)
+
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_PAYMENT))
-        page.body(ListingPaymentRenderer.renderPaymentForms(process, context, domain))
+        page.body(PaymentFormRenderer.renderPaymentForm(purchase, context, domain))
         page
     }
 
