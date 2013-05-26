@@ -60,7 +60,7 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
         av2.attribute = av.attribute
         av2.value = av.value
         av2.obj = obj
-        av
+        av2
     }
 
     def _expiry(listingPackage: ListingPackage) = new DateMidnight(DateTimeZone.UTC).plusDays(listingPackage.duration).getMillis
