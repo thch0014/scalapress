@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{JoinColumn, ManyToOne, CascadeType, FetchType, OneToMany, Table, Entity, Id}
+import javax.persistence._
 import java.util
 import scala.collection.JavaConverters._
 import javax.validation.Valid
@@ -21,6 +21,7 @@ class Basket {
     @BeanProperty var sessionId: String = _
 
     // the completed order
+    @OneToOne(targetEntity = classOf[com.liferay.scalapress.plugin.ecommerce.domain.Order])
     @BeanProperty var order: com.liferay.scalapress.plugin.ecommerce.domain.Order = _
 
     @NotEmpty

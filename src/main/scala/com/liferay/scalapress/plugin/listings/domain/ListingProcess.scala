@@ -1,6 +1,6 @@
 package com.liferay.scalapress.plugin.listings.domain
 
-import javax.persistence.{Column, OneToMany, CascadeType, FetchType, ManyToOne, Table, Entity, Id}
+import javax.persistence._
 import scala.Array
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import java.util
@@ -28,6 +28,7 @@ class ListingProcess {
     @BeanProperty var listingPackage: ListingPackage = _
 
     // the completed listing
+    @OneToOne(targetEntity = classOf[com.liferay.scalapress.obj.Obj])
     @BeanProperty var listing: Obj = _
 
     @BeanProperty var folders: Array[Long] = Array()
