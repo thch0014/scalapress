@@ -1,31 +1,32 @@
 package com.liferay.scalapress.plugin.listings.controller.renderer
 
-import collection.mutable.ListBuffer
 import com.liferay.scalapress.util.{WizardStep, WizardRenderer}
 import com.liferay.scalapress.plugin.listings.domain.ListingPackage
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 object ListingWizardRenderer {
 
-    val STEP_SELECT_FOLDER = 2
-    val STEP_ListingFields = 3
-    val STEP_UploadImages = 4
-    val STEP_Confirmation = 5
-    val STEP_PAYMENT = 6
+    object FoldersStep extends WizardStep("/listing/folder", "Sections")
+    object DetailsStep extends WizardStep("/listing/field", "Details")
+    object ImagesStep extends WizardStep("/listing/image", "Images")
+    object ConfirmationStep extends WizardStep("/listing/confirmation", "Confirm")
+    object PaymentStep extends WizardStep("/listing/payment", "Payment")
 
-    def steps(lp: ListingPackage): Seq[WizardStep] = {
-
-        val list = new ListBuffer[WizardStep]
-        // list.append(WizardStep("/listing/package", "Package"))
+    def steps(lp: ListingPackage) = {
+        val buffer = new ListBuffer[WizardStep]
         if (lp.maxFolders > 0)
-            list.append(WizardStep("/listing/folder", "Sections"))
-        list.append(WizardStep("/listing/field", "Details"))
-        list.append(WizardStep("/listing/image", "Images"))
-        list.append(WizardStep("/listing/confirmation", "Confirm"))
-        list.append(WizardStep("/listing/payment", "Payment"))
-        list.toList
+            buffer.append(FoldersStep)
+        buffer.append(DetailsStep)
+        buffer.append(ImagesStep)
+        buffer.append(ConfirmationStep)
+        if (lp.fee > 0)
+            buffer.append(PaymentStep)
+        buffer.toList
     }
 
-    def render(lp: ListingPackage, stage: Int) = WizardRenderer.render(steps(lp), stage)
+    def render(lp: ListingPackage, active: WizardStep) = WizardRenderer.render(steps(lp), active)
 }
+
+
 

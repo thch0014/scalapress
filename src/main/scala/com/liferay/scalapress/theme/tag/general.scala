@@ -39,8 +39,7 @@ class ScriptTag extends ScalapressTag with TagBuilder {
         "/static/js/jquery.timers-1.2.js",
         "/static/js/jquery.eventCalendar.min.js",
         "/static/js/jquery.galleriffic.js",
-        "/static/js/jquery.opacityrollover.js",
-        "/static/js/loader.min.js")
+        "/static/js/jquery.opacityrollover.js")
 
     def render(request: ScalapressRequest, params: Map[String, String]) = {
         val string = sources.map(src => <script src={src} type="text/javascript"></script>).mkString("\n")
@@ -57,7 +56,6 @@ class CssTag extends ScalapressTag with TagBuilder {
         "/static/css/eventCalendar_theme_responsive.css",
         "/static/css/eventCalendar.css",
         "/static/css/galleriffic.css",
-        "/static/css/fuelux.css",
         "/static/css/colorbox.css")
 
     def render(request: ScalapressRequest, params: Map[String, String]) = {

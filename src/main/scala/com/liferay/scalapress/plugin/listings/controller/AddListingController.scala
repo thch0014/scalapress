@@ -87,7 +87,7 @@ class AddListingController {
                         val tree = context.folderDao.tree
                         val filtered = tree.filter(f => folders.isEmpty || folders.contains(f.id.toString))
 
-                        page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.STEP_SELECT_FOLDER))
+                        page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
                         page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
                         page
                 }
@@ -114,7 +114,7 @@ class AddListingController {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_ListingFields))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.DetailsStep))
         page.body(ListingFieldsRenderer.render(process))
         page
     }
@@ -156,7 +156,7 @@ class AddListingController {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_UploadImages))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep))
         page.body(ListingImagesRenderer.render(process, listingsPluginDao.get))
         page
     }
@@ -190,7 +190,7 @@ class AddListingController {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_Confirmation))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ConfirmationStep))
         page.body(confRenderer.render(process))
         page
     }
@@ -227,7 +227,7 @@ class AddListingController {
 
         val purchase = new ListingPurchase(process.listing, domain)
 
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_PAYMENT))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
         page.body(PaymentFormRenderer.renderPaymentForm(purchase, context, domain))
         page
     }
@@ -258,7 +258,7 @@ class AddListingController {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.STEP_Confirmation))
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ConfirmationStep))
         page.body(<p>There was an error with payment.</p>)
         page.body(<p>Please
             <a href='/listing/payment'>click here</a>

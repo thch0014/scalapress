@@ -45,6 +45,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.AddressStep))
         page.body(CheckoutAddressRenderer.renderDeliveryAddress(basket, errors))
         page
     }
@@ -96,6 +97,7 @@ class CheckoutController extends Logging {
                 page.body(<div class="alert alert-error">Please choose delivery method</div>)
             }
 
+            page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.DeliveryStep))
             page.body(CheckoutDeliveryOptionRenderer.renderDeliveryOptions(basket, deliveryOptions, errors))
             page
         }
@@ -128,7 +130,7 @@ class CheckoutController extends Logging {
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.STEP_CONFIRMATION))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStep))
         page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, sreq.context))
         page
     }
@@ -159,7 +161,7 @@ class CheckoutController extends Logging {
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.STEP_PAYMENT))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep))
         page.body(PaymentFormRenderer.renderPaymentForm(purchase, sreq.context, domain))
         page
     }
@@ -177,7 +179,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.STEP_COMPLETED))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep))
         page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
         page
     }

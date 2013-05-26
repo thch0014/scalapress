@@ -5,18 +5,12 @@ import com.liferay.scalapress.util.{WizardStep, WizardRenderer}
 /** @author Stephen Samuel */
 object CheckoutWizardRenderer {
 
-    val AddressStage = 1
-    val DeliveryStage = 2
-    val STEP_CONFIRMATION = 3
-    val STEP_PAYMENT = 4
-    val STEP_COMPLETED = 5
+    object AddressStep extends WizardStep("/checkout/address", "Address")
+    object DeliveryStep extends WizardStep("/checkout/delivery", "Delivery")
+    object ConfirmationStep extends WizardStep("/checkout/confirmation", "Confirmation")
+    object PaymentStep extends WizardStep("/checkout/payment", "Payment")
+    object CompletionStep extends WizardStep("#", "Completed")
 
-    def steps = List(WizardStep("/checkout/address", "Address"),
-        WizardStep("/checkout/delivery", "Delivery"),
-        WizardStep("/checkout/confirmation", "Confirmation"),
-        WizardStep("/checkout/payment", "Payment"),
-        WizardStep("#", "Completed"))
-
-    def render(stage: Int) = WizardRenderer.render(steps, stage)
-
+    lazy val steps = List(AddressStep, DeliveryStep, ConfirmationStep, PaymentStep, CompletionStep)
+    def render(active: WizardStep) = WizardRenderer.render(steps, active)
 }
