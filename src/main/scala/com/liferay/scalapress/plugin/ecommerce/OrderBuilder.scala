@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
   *
   *         Creates an order from the basket
   *
-  **/
+  * */
 @Component
 class OrderBuilder extends Logging {
 
@@ -26,7 +26,6 @@ class OrderBuilder extends Logging {
 
         val account = _account(basket)
         val order = _order(account, basket, req)
-        orderDao.save(order)
 
         _cleanup(basket)
         order
@@ -73,6 +72,7 @@ class OrderBuilder extends Logging {
             order.lines.add(orderLine)
         }
 
+        orderDao.save(order)
         order
     }
 }
