@@ -34,7 +34,7 @@ class Order {
     def datePlacedLondon(): DateTime = new DateTime(datePlaced, DateTimeZone.forID("Europe/London"))
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL))
-    @BeanProperty var payments: java.util.List[Transaction] = new java.util.ArrayList[Transaction]()
+    @BeanProperty var payments: java.util.Set[Transaction] = new java.util.HashSet[Transaction]()
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var lines: java.util.List[OrderLine] = new java.util.ArrayList[OrderLine]()

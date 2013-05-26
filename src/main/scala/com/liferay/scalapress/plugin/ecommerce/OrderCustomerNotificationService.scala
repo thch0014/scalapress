@@ -24,7 +24,7 @@ class OrderCustomerNotificationService extends Logging {
         val message = new SimpleMailMessage()
         message.setFrom("nodotreply@" + nowww)
         message.setTo(order.account.email)
-        if (bccRecipients.size > 0)
+        if (bccRecipients.length > 0)
             message.setBcc(bccRecipients)
         message.setSubject("Order #" + order.id)
         message.setText(body.mkString("\n"))

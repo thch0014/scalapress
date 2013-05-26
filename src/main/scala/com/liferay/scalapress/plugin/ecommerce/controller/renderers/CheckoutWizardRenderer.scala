@@ -7,7 +7,7 @@ object CheckoutWizardRenderer {
 
     val AddressStage = 1
     val DeliveryStage = 2
-    val ConfirmationStage = 3
+    val STEP_CONFIRMATION = 3
     val STEP_PAYMENT = 4
     val STEP_COMPLETED = 5
 

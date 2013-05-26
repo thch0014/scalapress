@@ -11,7 +11,7 @@ import com.liferay.scalapress.{Logging, ScalapressContext}
 class OrderCallbackProcessor extends PaymentCallback with Logging {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var shoppingPlugin: ShoppingPlugin = _
+    @Autowired var shoppingPluginDao: ShoppingPluginDao = _
     @Autowired var orderDao: OrderDao = _
     @Autowired var orderCustomerNotificationService: OrderCustomerNotificationService = _
 
@@ -27,13 +27,15 @@ class OrderCallbackProcessor extends PaymentCallback with Logging {
 
     def _assignTx(tx: Transaction, order: Order) {
         logger.debug("Setting order [{}] as paid and associating tx [{}]", order.id, tx.id)
-        order.status = Order.STATUS_PAID
+        if (order.status == Order.STATUS_NEW) {
+            order.status = Order.STATUS_PAID
+        }
         order.payments.add(tx)
         orderDao.save(order)
     }
 
     def _email(order: Order) {
-        val recipients = Option(shoppingPlugin.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
+        val recipients = Option(shoppingPluginDao.get.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
         logger.debug("Sending order placed email [{}]", recipients)
         orderCustomerNotificationService.orderPlaced(recipients, order, context.installationDao.get)
     }

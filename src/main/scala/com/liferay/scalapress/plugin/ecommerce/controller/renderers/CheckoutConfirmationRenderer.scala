@@ -11,7 +11,6 @@ object CheckoutConfirmationRenderer {
                                domain: String,
                                context: ScalapressContext): String = {
 
-        val wizard = CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStage)
         val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
 
         val delivery = "<div><legend>Delivery Address</legend>" + _renderAddress(basket
@@ -22,7 +21,7 @@ object CheckoutConfirmationRenderer {
 
         val termsModal = _termsModal(context.shoppingPluginDao.get.terms)
 
-        "<div id='checkout-confirmation'>" + wizard + totals + billing + delivery + _complete + "</div>" + termsModal
+        "<div id='checkout-confirmation'>" + totals + billing + delivery + _complete + "</div>" + termsModal
     }
 
     private def renderBasketLines(lines: Seq[BasketLine]) = {
@@ -97,7 +96,7 @@ object CheckoutConfirmationRenderer {
         val termsError = ""
         <form method="POST" action="/checkout/confirmation">
             <legend>
-                Confirm and Pay
+                Confirm Order Details
             </legend>
             <label class="checkbox">
                 <input type="checkbox" name="termsAccepted"/>
@@ -110,7 +109,7 @@ object CheckoutConfirmationRenderer {
             Please send me details of your special offers. You can opt out at any time.
         </label>
             <button type="submit" class="btn">
-                Complete
+                Confirm
             </button>
         </form>
     }
