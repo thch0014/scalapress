@@ -18,7 +18,6 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
 
     def params(domain: String, purchase: Purchase): Map[String, String] = {
 
-        val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
 
         params += ("cmd" -> "_xclick")
@@ -27,8 +26,8 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
         // Your PayPal ID or an email address associated with your PayPal account. Email addresses must be confirmed.
         params += ("business" -> plugin.accountEmail)
 
-        params += ("cancel_return" -> (url + purchase.failureUrl))
-        params += ("return" -> (url + purchase.successUrl))
+        params += ("cancel_return" -> purchase.failureUrl)
+        params += ("return" -> purchase.successUrl)
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Transaction Notification messages.
         // todo setup paypal callback url

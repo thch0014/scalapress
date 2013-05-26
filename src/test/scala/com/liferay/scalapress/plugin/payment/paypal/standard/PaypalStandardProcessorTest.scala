@@ -12,8 +12,8 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
     val processor = new PaypalStandardProcessor(plugin)
 
     val purchase = new Purchase {
-        def successUrl: String = "successUrl.com"
-        def failureUrl: String = "failureUrl.com"
+        def successUrl: String = "http://coldplay.com/successUrl.com"
+        def failureUrl: String = "http://coldplay.com/failureUrl.com"
         def accountName: String = "sammy"
         def accountEmail: String = "snape@hp.com"
         def total: Int = 58233
@@ -70,6 +70,21 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
     test("processor sets amount from purchase") {
         val params = processor.params("coldplay.com", purchase)
         assert("582.33" === params("amount"))
+    }
+
+    test("processor sets email from purchase") {
+        val params = processor.params("coldplay.com", purchase)
+        assert("snape@hp.com" === params("email"))
+    }
+
+    test("processor sets failure url from purchase") {
+        val params = processor.params("coldplay.com", purchase)
+        assert("http://coldplay.com/successUrl.com" === params("return"))
+    }
+
+    test("processor sets success url from purchase") {
+        val params = processor.params("coldplay.com", purchase)
+        assert("http://coldplay.com/failureUrl.com" === params("cancel_return"))
     }
 
     test("processor sets invoice to unique id") {

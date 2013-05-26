@@ -18,7 +18,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
 
     def paymentProcessorName = "SagePayForm"
 
-    private def xor(in: Array[Byte], key: String) = {
+    def xor(in: Array[Byte], key: String) = {
         val result = new Array[Byte](in.length)
         for ( k <- 0 until in.length ) {
             val b = in(k) ^ key.charAt(k % key.length)
@@ -27,7 +27,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         result
     }
 
-    private def decryptParams(base64: String): Map[String, String] = {
+    def decryptParams(base64: String): Map[String, String] = {
 
         val encrypted = Base64.decodeBase64(base64.getBytes)
         val x = xor(encrypted, plugin.sagePayEncryptionPassword)
@@ -36,7 +36,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         params
     }
 
-    private def encryptParams(params: Map[String, String]): String = {
+    def encryptParams(params: Map[String, String]): String = {
         val data = params.map(e => e._1 + "=" + e._2).mkString("&")
         val x = xor(data.getBytes, plugin.sagePayEncryptionPassword)
         val base64 = Base64.encodeBase64(x)
@@ -148,8 +148,8 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         params.put("CustomerEmail", purchase.accountEmail)
         params.put("Description", purchase.paymentDescription)
 
-        params.put("SuccessURL", "http://" + domain + purchase.successUrl)
-        params.put("FailureURL", "http://" + domain + purchase.failureUrl)
+        params.put("SuccessURL", purchase.successUrl)
+        params.put("FailureURL", purchase.failureUrl)
 
         purchase.deliveryAddress.foreach(address => {
 

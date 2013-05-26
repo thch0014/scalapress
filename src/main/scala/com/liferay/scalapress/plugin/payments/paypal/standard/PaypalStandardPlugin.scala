@@ -28,7 +28,6 @@ trait PaypalStandardPluginDao extends GenericDao[PaypalStandardPlugin, java.lang
 
 @Component
 @Transactional
-class PaypalStandardPluginDaoImpl
-  extends GenericDaoImpl[PaypalStandardPlugin, java.lang.Long] with PaypalStandardPluginDao {
+class PaypalStandardPluginDaoImpl extends GenericDaoImpl[PaypalStandardPlugin, java.lang.Long] with PaypalStandardPluginDao {
     def get = findAll.head
 }

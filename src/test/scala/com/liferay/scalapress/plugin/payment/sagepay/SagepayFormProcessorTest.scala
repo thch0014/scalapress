@@ -12,8 +12,8 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
     val processor = new SagepayFormProcessor(plugin)
 
     val purchase = new Purchase {
-        def successUrl: String = "successUrl.com"
-        def failureUrl: String = "failureUrl.com"
+        def successUrl: String = "http://coldplay.com/successUrl.com"
+        def failureUrl: String = "http://coldplay.com/failureUrl.com"
         def accountName: String = "sammy"
         def accountEmail: String = "snape@hp.com"
         def total: Int = 1567
@@ -56,9 +56,37 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
         assert("15.67" === params("Amount"))
     }
 
+    test("processor sets name from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("sammy" === params("CustomerName"))
+    }
+
+    test("processor sets email from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("snape@hp.com" === params("CustomerEmail"))
+    }
+
+    test("processor sets failure url from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("http://coldplay.com/failureUrl.com" === params("FailureURL"))
+    }
+
+    test("processor sets success url from purchase") {
+        val params = processor._cryptParams(purchase, "coldplay.com")
+        assert("http://coldplay.com/successUrl.com" === params("SuccessURL"))
+    }
+
     test("processor sets callback info into the VendorTxCode field") {
 
         val params = processor._cryptParams(purchase, "coldplay.com")
         assert(params("VendorTxCode") === "java.lang.InstantiationError:616116")
+    }
+
+    test("test encrypt and decrypt are invertible") {
+        plugin.sagePayEncryptionPassword = "superpass"
+        val encrypted = processor.encryptParams(Map("name" -> "sammy", "location" -> "chelsea"))
+        val decrypted = processor.decryptParams(encrypted)
+        assert(decrypted("name") === "sammy")
+        assert(decrypted("location") === "chelsea")
     }
 }
