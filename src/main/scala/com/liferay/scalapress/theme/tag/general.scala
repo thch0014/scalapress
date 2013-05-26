@@ -30,33 +30,39 @@ class TitleTag extends ScalapressTag with TagBuilder {
 
 @Tag("script")
 class ScriptTag extends ScalapressTag with TagBuilder {
+
+    val sources = Seq("//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js",
+        "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js",
+        "/static/js/jquery.colorbox-min.js",
+        "/static/js/jquery.easing.1.3.js",
+        "/static/js/jquery.galleryview-3.0-dev.js",
+        "/static/js/jquery.timers-1.2.js",
+        "/static/js/jquery.eventCalendar.min.js",
+        "/static/js/jquery.galleriffic.js",
+        "/static/js/jquery.opacityrollover.js")
+
     def render(request: ScalapressRequest, params: Map[String, String]) = {
-        val tag = """
-          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-          <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
-          <script src="/static/js/jquery.colorbox-min.js"></script>
-          <script src="/static/js/jquery.easing.1.3.js"></script>
-          <script src="/static/js/jquery.galleryview-3.0-dev.js"></script>
-          <script src="/static/js/jquery.timers-1.2.js"></script>
-          <script src="/static/js/jquery.eventCalendar.min.js" type="text/javascript"></script>
-          <script type="text/javascript" src="/static/js/jquery.galleriffic.js"></script>
-          <script type="text/javascript" src="/static/js/jquery.opacityrollover.js"></script>"""
-        Some(tag)
+        val string = sources.map(src => <script src={src} type="text/javascript"></script>).mkString("\n")
+        Some(string)
     }
 }
 
 @Tag("css")
 class CssTag extends ScalapressTag with TagBuilder {
+
+    val sources = Seq("/static/css/bootstrap-combined.min.css",
+        "/static/css/jquery.galleryview-3.0-dev.css",
+        "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700",
+        "/static/css/eventCalendar_theme_responsive.css",
+        "/static/css/eventCalendar.css",
+        "/static/css/galleriffic.css",
+        "/static/css/fuelux.css",
+        "/static/css/wizard.css",
+        "/static/css/colorbox.css")
+
     def render(request: ScalapressRequest, params: Map[String, String]) = {
-        val tag = """   <link href="/static/css/bootstrap-combined.min.css" rel="stylesheet">
-                        <link href="/static/css/jquery.galleryview-3.0-dev.css" rel="stylesheet"/>
-                        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
-                        <link rel="stylesheet" href="/static/css/colorbox.css"/>
-                        <link rel="stylesheet" href="/static/css/wizard.css"/>
-                        <link rel="stylesheet" href="/static/css/galleriffic.css"/>
-                        <link rel="stylesheet" href="/static/css/eventCalendar.css">
-                    	<link rel="stylesheet" href="/static/css/eventCalendar_theme_responsive.css">"""
-        Some(tag)
+        val string = sources.map(src => <link rel="stylesheet" type="text/css" href={src}/>).mkString("\n")
+        Some(string)
     }
 }
 
