@@ -40,11 +40,6 @@ class Folder {
 
     def sortedSubfolders: Array[Folder] = subfolders.asScala.toArray.filterNot(_.name == null).sortBy(_.name).sortBy(_.position)
 
-    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
-    //    @Fetch(FetchMode.SELECT)
-    //    @BatchSize(size = 20)
-    //    @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
-
     @ManyToOne(cascade = Array(CascadeType.ALL))
     @JoinColumn(name = "parent")
     @Fetch(FetchMode.JOIN)

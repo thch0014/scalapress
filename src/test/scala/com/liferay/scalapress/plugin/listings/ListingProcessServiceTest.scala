@@ -7,6 +7,7 @@ import com.liferay.scalapress.obj.{Obj, ObjectType, ObjectDao}
 import com.liferay.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
+import com.liferay.scalapress.obj.attr.AttributeValue
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -25,6 +26,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     val service = new ListingProcessService
     service.context = new ScalapressContext
     service.context.objectDao = mock[ObjectDao]
+    service.listingProcessDao = mock[ListingProcessDao]
     service.listingAdminNotificationService = mock[ListingAdminNotificationService]
     Mockito.when(service.context.objectDao.find(214)).thenReturn(account)
 
@@ -46,5 +48,19 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     test("that the object is persisted") {
         val listing = service.process(process)
         Mockito.verify(service.context.objectDao, Mockito.atLeastOnce).save(listing)
+    }
+
+    test("cleanup sets all attribute values to be orphaned") {
+        val av1 = new AttributeValue
+        av1.listingProcess = process
+        val av2 = new AttributeValue
+        av2.listingProcess = process
+        process.attributeValues.add(av1)
+        process.attributeValues.add(av2)
+        assert(2 === process.attributeValues.size)
+        service.cleanup(process)
+        assert(av1.listingProcess == null)
+        assert(av2.listingProcess == null)
+        assert(0 === process.attributeValues.size)
     }
 }
