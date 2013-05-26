@@ -7,12 +7,15 @@ import com.liferay.scalapress.plugin.listings.domain.{ListingProcess, ListingPac
 import org.joda.time.{DateMidnight, DateTimeZone}
 import com.liferay.scalapress.obj.{ObjectDao, ObjectType, Obj}
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
+import org.mockito.Mockito
+import com.liferay.scalapress.folder.{FolderDao, Folder}
 
 /** @author Stephen Samuel */
 class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val context = new ScalapressContext
     context.objectDao = mock[ObjectDao]
+    context.folderDao = mock[FolderDao]
     val builder = new ListingProcessObjectBuilder(context)
     val p = new ListingPackage
 
@@ -35,9 +38,24 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
         assert("horse for sale cheap" === obj.name)
     }
 
-    test("object content is taken from the process content") {
+    test("folders are added by id") {
+
+        val folder1 = new Folder
+        val folder2 = new Folder
+
+        Mockito.when(context.folderDao.find(5l)).thenReturn(folder1)
+        Mockito.when(context.folderDao.find(7l)).thenReturn(folder2)
+        process.folders = Array(5l, 7l)
         val obj = builder.build(process)
+        assert(obj.folders.size === 2)
+        assert(obj.folders.contains(folder1))
+        assert(obj.folders.contains(folder2))
+    }
+
+    test("object content is taken from the process content") {
         assert("what a lovely mare" === process.content)
+        val obj = builder.build(process)
+        assert("what a lovely mare" === obj.content)
     }
 
     test("object expiry is set to the future if duration > 0") {

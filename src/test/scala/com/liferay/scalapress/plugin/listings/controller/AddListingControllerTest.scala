@@ -147,4 +147,18 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         controller.showFolders(process, errors, req)
         assert(0 === process.folders.size)
     }
+
+    test("select folders uses the http parameter 'folderId'") {
+        Mockito.when(req.getParameterValues("folderId")).thenReturn(Array("6", "9", "1"))
+        assert(0 === process.folders.size)
+        controller.selectFolders(process, errors, req)
+        assert(3 === process.folders.size)
+        assert(Array(6l, 9l, 1l) === process.folders)
+    }
+
+    test("select folders persists process'") {
+        Mockito.when(req.getParameterValues("folderId")).thenReturn(Array("6", "9", "1"))
+        controller.selectFolders(process, errors, req)
+        Mockito.verify(controller.listingProcessDao).save(process)
+    }
 }
