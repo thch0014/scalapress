@@ -2,13 +2,12 @@ package com.liferay.scalapress.plugin.ecommerce
 
 import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Order}
-import com.liferay.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class OrderPurchase(order: Order, domain: String) extends Purchase {
 
-    def successUrl: String = "/checkout/completed"
-    def failureUrl: String = "/checkout/payment/failure"
+    def successUrl: String = "http://" + domain + "/checkout/completed"
+    def failureUrl: String = "http://" + domain + "/checkout/payment/failure"
 
     override def deliveryAddress: Option[Address] = Option(order.deliveryAddress)
     override def billingAddress: Option[Address] = Option(order.billingAddress)
