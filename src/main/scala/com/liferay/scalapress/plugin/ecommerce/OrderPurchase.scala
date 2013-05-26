@@ -14,7 +14,7 @@ class OrderPurchase(order: Order, domain: String) extends Purchase {
 
     def accountName: String = order.account.name
     def accountEmail: String = order.account.email
-    def total: Double = order.total
+    def total: Int = (order.total * 100).toInt
     def uniqueIdent: String = order.id.toString
     def callbackClass = classOf[OrderCallbackProcessor]
     def paymentDescription: String = s"Order #${order.id} - ${domain}"

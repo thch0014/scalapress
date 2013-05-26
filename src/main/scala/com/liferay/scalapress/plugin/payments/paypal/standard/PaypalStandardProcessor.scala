@@ -1,6 +1,5 @@
 package com.liferay.scalapress.plugin.payments.paypal.standard
 
-import java.util.UUID
 import com.liferay.scalapress.Logging
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
@@ -17,7 +16,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
     def paymentProcessorName = "PaypalStandard"
     def paymentUrl: String = if (plugin.production) Production else Sandbox
 
-    def params(domain: String, payable: Purchase): Map[String, String] = {
+    def params(domain: String, purchase: Purchase): Map[String, String] = {
 
         val url = "http://" + domain.toLowerCase.replace("http://", "")
         val params = scala.collection.mutable.Map[String, String]()
@@ -28,29 +27,29 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
         // Your PayPal ID or an email address associated with your PayPal account. Email addresses must be confirmed.
         params += ("business" -> plugin.accountEmail)
 
-        params += ("cancel_return" -> (url + payable.failureUrl))
-        params += ("return" -> (url + payable.successUrl))
+        params += ("cancel_return" -> (url + purchase.failureUrl))
+        params += ("return" -> (url + purchase.successUrl))
 
         //The URL to which PayPal posts information about the payment, in the form of Instant Transaction Notification messages.
         // todo setup paypal callback url
         //        params += ("notify_url" -> (url + payable.callbackUrl + "?paymentPluginClass=" + classOf[PaypalStandardPlugin]
         //        .getName))
 
-        params += ("item_name" -> ("Order at " + domain))
+        params += ("item_name" -> purchase.paymentDescription)
         params += ("quantity" -> "1")
 
-        params += ("invoice" -> UUID.randomUUID().toString)
-        params += ("custom" -> payable.uniqueIdent)
+        params += ("invoice" -> purchase.uniqueIdent)
+        params += ("custom" -> purchase.callbackInfo)
 
         params += ("no_note" -> "1")
 
         // The price or amount of the product, service, or contribution, not including shipping, handling, or tax.
         // If this variable is omitted from Buy Now or Donate buttons, buyers enter their own amount at the time of payment.
-        val amount = "%.2f".format(payable.total / 100.0)
+        val amount = "%.2f".format(purchase.total / 100.0)
         params += ("amount" -> amount)
 
-        if (payable.accountEmail != null)
-            params += ("email" -> payable.accountEmail)
+        if (purchase.accountEmail != null)
+            params += ("email" -> purchase.accountEmail)
 
         params.toMap
     }

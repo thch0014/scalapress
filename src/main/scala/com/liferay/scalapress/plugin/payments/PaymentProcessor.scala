@@ -34,7 +34,7 @@ trait Purchase {
     def callbackClass: Class[_]
     def uniqueIdent: String
     def callbackInfo = callbackClass.getName + ":" + uniqueIdent
-    def total: Double
+    def total: Int
     def billingAddress: Option[Address] = None
     def deliveryAddress: Option[Address] = None
     def accountEmail: String

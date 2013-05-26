@@ -3,7 +3,6 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
-import java.util.UUID
 import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
 import scala.collection.JavaConverters._
 
@@ -59,7 +58,6 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
 
     def _createTx(params: Map[String, String]) = {
 
-        val orderId = params.get("VendorTxCode").getOrElse("0")
         val transactionId = params.get("VPSTxId").orNull
         val authCode = params.get("TxAuthNo").orNull
         val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
@@ -67,7 +65,6 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         val payment = Transaction(transactionId, paymentProcessorName, amount)
         payment.transactionId = transactionId
         payment.authCode = authCode
-        payment.order = orderId
         payment
     }
 
@@ -138,7 +135,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     def _cryptParams(purchase: Purchase, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
-        params.put("VendorTxCode", UUID.randomUUID.toString)
+        params.put("VendorTxCode", purchase.callbackInfo)
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
         })
@@ -149,7 +146,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         params.put("Amount", amount)
         params.put("CustomerName", purchase.accountName)
         params.put("CustomerEmail", purchase.accountEmail)
-        params.put("Description", "Order at " + domain)
+        params.put("Description", purchase.paymentDescription)
 
         params.put("SuccessURL", "http://" + domain + purchase.successUrl)
         params.put("FailureURL", "http://" + domain + purchase.failureUrl)

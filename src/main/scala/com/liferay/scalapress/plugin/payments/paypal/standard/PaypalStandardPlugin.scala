@@ -19,7 +19,7 @@ class PaypalStandardPlugin extends PaymentPlugin {
     //  def backofffice = "backoffice/plugin/payment/paypal/standard"
     def name: String = "Paypal"
     def processor: PaymentProcessor = new PaypalStandardProcessor(this)
-    def enabled = Option(accountEmail).filter(_.trim.length > 0).isDefined
+    def enabled = Option(accountEmail).filterNot(_.isEmpty).isDefined
 }
 
 trait PaypalStandardPluginDao extends GenericDao[PaypalStandardPlugin, java.lang.Long] {
