@@ -29,6 +29,8 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     val service = new ListingCallbackProcessor()
     service.context = new ScalapressContext
     service.orderDao = mock[OrderDao]
+    service.listingsPluginDao = mock[ListingsPluginDao]
+    Mockito.when(service.listingsPluginDao.get).thenReturn(plugin)
 
     test("order uses vat rate from listing plugin") {
         val order = service._order(account, listing, process)
