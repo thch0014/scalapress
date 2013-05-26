@@ -15,7 +15,7 @@ object ListingWizardRenderer {
 
     def steps(lp: ListingPackage) = {
         val buffer = new ListBuffer[WizardStep]
-        if (lp.maxFolders > 0 && lp.folders.size > 1)
+        if (lp.maxFolders > 0 && lp.folders.split(",").size > 1)
             buffer.append(FoldersStep)
         buffer.append(DetailsStep)
         if (lp.maxImages > 0)
