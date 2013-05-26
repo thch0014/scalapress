@@ -11,6 +11,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.theme.ThemeService
 import org.springframework.validation.Errors
 import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.settings.{InstallationDao, Installation}
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -25,10 +26,16 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     controller.listingsPluginDao = mock[ListingsPluginDao]
     controller.listingProcessDao = mock[ListingProcessDao]
     controller.listingProcessService = mock[ListingProcessService]
+    controller.context.paymentPluginDao = mock[PaymentPluginDao]
 
     val plugin = new ListingsPlugin
     Mockito.when(controller.listingsPluginDao.get).thenReturn(plugin)
     Mockito.when(controller.context.paymentPluginDao.enabled).thenReturn(Nil)
+
+    controller.context.installationDao = mock[InstallationDao]
+    val installation = new Installation
+    installation.domain = "coldplay.com"
+    Mockito.when(controller.context.installationDao.get).thenReturn(installation)
 
     val errors = mock[Errors]
 
@@ -38,6 +45,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     process.listingPackage = new ListingPackage
     process.listingPackage.fee = 1000
     process.listing = new Obj
+    process.listing.id = 454
     process.listing.name = "horse4sale"
 
     val package1 = new ListingPackage
@@ -102,7 +110,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
 
     test("completed page contains a correct link to the object") {
         val page = controller.completed(process, req)
-        assert(page._body.filter(_.toString.contains("grandmaster flash loves listing packages")).size > 0)
+        assert(page._body.filter(_.toString.contains("coldplay.com/object-454-horse4sale")).size > 0)
     }
 
     test("selecting package sets package on process") {
