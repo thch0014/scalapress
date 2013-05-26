@@ -5,7 +5,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, 
 import com.liferay.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.plugin.listings.email.{ListingCustomerNotificationService, ListingAdminNotificationService}
+import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
 
@@ -16,7 +16,6 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     @Autowired var context: ScalapressContext = _
     @Autowired var orderDao: OrderDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
-    @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
     @Autowired var listingCustomerNotificationService: ListingCustomerNotificationService = _
 
     override def callback(tx: Transaction, id: String) {
@@ -49,12 +48,8 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     }
 
     def _emails(listing: Obj) {
-
         logger.debug("Sending email to customer")
         listingCustomerNotificationService.send(listing)
-
-        logger.debug("Sending email to admin")
-        listingAdminNotificationService.notify(listing)
     }
 
     // build an order to hold the details of what the customer purchased

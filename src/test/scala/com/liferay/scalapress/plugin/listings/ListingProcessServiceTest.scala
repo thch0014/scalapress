@@ -6,6 +6,7 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.obj.{Obj, ObjectType, ObjectDao}
 import com.liferay.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
+import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -24,6 +25,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     val service = new ListingProcessService
     service.context = new ScalapressContext
     service.context.objectDao = mock[ObjectDao]
+    service.listingAdminNotificationService = mock[ListingAdminNotificationService]
     Mockito.when(service.context.objectDao.find(214)).thenReturn(account)
 
     test("that the object is assigned the account from the process") {
@@ -34,6 +36,11 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
     test("that the object is assigned the listing package from the process") {
         val listing = service.process(process)
         assert(listing.listingPackage === process.listingPackage)
+    }
+
+    test("that an admin email is sent") {
+        val listing = service.process(process)
+        Mockito.verify(service.listingAdminNotificationService).notify(listing)
     }
 
     test("that the object is persisted") {

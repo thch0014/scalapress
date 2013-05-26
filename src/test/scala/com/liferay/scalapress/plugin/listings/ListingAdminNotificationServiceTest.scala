@@ -31,6 +31,21 @@ class ListingAdminNotificationServiceTest extends FunSuite with OneInstancePerTe
     test("test format of message") {
         val msg = service._message(obj)
         assert(
-            "Hello Admin\n\nA new listing has been added to your site:\ncoldplay tshirt\n\nThe status of this listing is: [Live]\nThe listing was added using: [t-shirt sale]\n\nYou can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/obj/34\n\nRegards, Your Server" === msg)
+            "Hello Admin\n\nA new listing has been added to your site:\ncoldplay tshirt\n\n" +
+              "The status of this listing is: [Live]\nThe listing was added using: [t-shirt sale]\n\n" +
+              "You can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/obj/34\n\n" +
+              "Regards, Scalapress" === msg)
+    }
+
+    test("a paid listing should show the paid warning") {
+        lp.fee = 100
+        val msg = service._message(obj)
+        assert(msg.contains("This is a paid listing"))
+    }
+
+    test("a free listing should not show the paid warning") {
+        lp.fee = 0
+        val msg = service._message(obj)
+        assert(!msg.contains("This is a paid listing"))
     }
 }

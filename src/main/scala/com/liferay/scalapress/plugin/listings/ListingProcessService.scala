@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.obj.Obj
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationService
 
 /** @author Stephen Samuel
   *
@@ -17,6 +18,7 @@ class ListingProcessService extends Logging {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var listingProcessDao: ListingProcessDao = _
+    @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
 
     def process(process: ListingProcess): Obj = {
         logger.info("Building listing for process [{}]", process)
@@ -24,6 +26,9 @@ class ListingProcessService extends Logging {
         val account = context.objectDao.find(process.accountId.toLong)
         val listing = _listing(account, process)
         logger.debug("Created listing [{}]", listing.id)
+
+        logger.debug("Sending email to admin")
+        listingAdminNotificationService.notify(listing)
 
         listing
     }

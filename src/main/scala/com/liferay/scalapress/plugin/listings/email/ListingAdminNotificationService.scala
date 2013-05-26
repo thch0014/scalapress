@@ -12,7 +12,7 @@ import com.sksamuel.scoot.rest.Logging
   *         Notifies admin users that a new listing has been added.
   *
   *
-  * */
+  **/
 @Component
 class ListingAdminNotificationService extends Logging {
 
@@ -33,12 +33,16 @@ class ListingAdminNotificationService extends Logging {
         sb.append("A new listing has been added to your site:\n")
         sb.append(listing.name + "\n\n")
 
+        if (listing.listingPackage.fee > 0) {
+            sb.append("** This is a paid listing. You should verify that a payment was been made for this listing **\n\n")
+        }
+
         sb.append("The status of this listing is: [" + listing.status + "]\n")
         sb.append("The listing was added using: [" + listing.listingPackage.name + "]\n\n")
         sb.append("You can edit the listing in the backoffice:\n")
         sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + listing.id + "\n\n")
 
-        sb.append("Regards, Your Server")
+        sb.append("Regards, Scalapress")
         sb.toString
     }
 }
