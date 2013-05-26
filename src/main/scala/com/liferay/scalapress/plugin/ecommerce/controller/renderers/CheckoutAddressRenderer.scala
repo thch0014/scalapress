@@ -2,7 +2,6 @@ package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
 import org.springframework.validation.Errors
-import xml.{Text, Attribute}
 import com.liferay.scalapress.util.{BootstrapHelpers, CountrySelectOptions}
 
 /** @author Stephen Samuel */
@@ -13,8 +12,7 @@ object CheckoutAddressRenderer {
         <div id="checkout-addresses">
             <form method="POST" class="form-horizontal">
 
-                {CheckoutWizardRenderer
-              .render(CheckoutWizardRenderer.AddressStage)}<legend>Your Details</legend>{BootstrapHelpers
+                <legend>Your Details</legend>{BootstrapHelpers
               .controlGroup("accountName", "Account Name", basket.accountName, errors)}{BootstrapHelpers
               .controlGroup("accountEmail",
                 "Account Email",
