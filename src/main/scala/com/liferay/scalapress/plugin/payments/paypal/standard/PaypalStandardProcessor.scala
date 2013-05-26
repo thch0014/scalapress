@@ -80,11 +80,11 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
         //       case true =>
         //            logger.info("IPN callback is valid")
         val tx = _createTx(params)
-        Some(CallbackResult(tx, _sessionId(params)))
+        Some(CallbackResult(tx, _custom(params)))
         //    }
     }
 
-    def _sessionId(params: Map[String, String]): String = params("custom")
+    def _custom(params: Map[String, String]): String = params("custom")
 
     def _isGenuineCallback(params: Map[String, String]): Boolean = {
 

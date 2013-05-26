@@ -10,9 +10,3 @@ trait TransactionDao extends GenericDao[Transaction, java.lang.Long]
 @Component
 @Transactional
 class TransactionDaoImpl extends GenericDaoImpl[Transaction, java.lang.Long] with TransactionDao
-
-trait PurchaseSessionDao extends GenericDao[PurchaseSession, java.lang.Long]
-
-@Component
-@Transactional
-class PurchaseSessionDaoImpl extends GenericDaoImpl[PurchaseSession, java.lang.Long] with PurchaseSessionDao

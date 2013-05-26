@@ -20,7 +20,10 @@ trait PaymentProcessor {
     def paymentProcessorName: String
 }
 
-case class CallbackResult(tx: Transaction, sessionId: String)
+case class CallbackResult(tx: Transaction, callbackInfo: String) {
+    def callbackClass: Class[PaymentCallback] = Class.forName(callbackInfo.split(":").head).asInstanceOf[Class[PaymentCallback]]
+    def uniqueId = callbackInfo.split(":").last
+}
 
 /**
  * A purchase models the data that a processor needs to create the parameters for a payment request.
@@ -30,6 +33,7 @@ trait Purchase {
     def paymentDescription: String
     def callbackClass: Class[_]
     def uniqueIdent: String
+    def callbackInfo = callbackClass.getName + ":" + uniqueIdent
     def total: Double
     def billingAddress: Option[Address] = None
     def deliveryAddress: Option[Address] = None

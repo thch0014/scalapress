@@ -11,7 +11,6 @@ import com.liferay.scalapress.ScalapressContext
 class PaymentCallbackService {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var purchaseSessionDao: PurchaseSessionDao = _
     @Autowired var txDao: TransactionDao = _
     @Autowired var paymentPluginDao: PaymentPluginDao = _
 
@@ -33,6 +32,6 @@ class PaymentCallbackService {
 
     def _processResult(result: CallbackResult) {
         txDao.save(result.tx)
-        purchaseSessionDao.find(result.sessionId.toLong).callback(result.tx, context)
+        context.bean(result.callbackClass).callback(result.tx, result.uniqueId)
     }
 }

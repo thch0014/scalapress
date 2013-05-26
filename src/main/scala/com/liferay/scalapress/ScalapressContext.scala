@@ -7,7 +7,7 @@ import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcessDao, ListingPackageDao}
-import com.liferay.scalapress.plugin.payments.{PurchaseSessionDao, TransactionDao, PaymentPluginDao}
+import com.liferay.scalapress.plugin.payments.{TransactionDao, PaymentPluginDao}
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
 import search.{SavedSearchDao, SearchFormDao, SearchService}
@@ -28,7 +28,6 @@ import com.liferay.scalapress.plugin.profile.AccountPluginDao
 class ScalapressContext extends ServletContextAware {
 
     @Autowired var transactionDao: TransactionDao = _
-    @Autowired var purchaseSessionDao: PurchaseSessionDao = _
 
     @Autowired var folderSettingsDao: FolderPluginDao = _
     @Autowired var sectionDao: SectionDao = _
@@ -90,10 +89,8 @@ class ScalapressContext extends ServletContextAware {
 
     @Autowired var attributeValueDao: AttributeValueDao = _
 
-    def bean[T](implicit m: Manifest[T]) =
-        WebApplicationContextUtils
-          .getRequiredWebApplicationContext(servletContext)
-          .getBean(m.erasure.asInstanceOf[Class[T]])
+    def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
+    def bean[T](implicit m: Manifest[T]): T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
 
     var servletContext: ServletContext = _
     def setServletContext(servletContext: ServletContext) {
