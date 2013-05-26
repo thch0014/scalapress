@@ -57,14 +57,6 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
         listingAdminNotificationService.notify(listing)
     }
 
-    //    // empty the listing process
-    //    def _cleanup(process: ListingProcess) {
-    //        process.attributeValues.asScala.foreach(_.listingProcess = null)
-    //        process.attributeValues.clear()
-    //        logger.info("Process completed - removing from database")
-    //        //   listingProcessDao.remove(process)
-    //    }
-
     // build an order to hold the details of what the customer purchased
     def _order(listing: Obj) = {
         logger.debug("Creating order for the listing")

@@ -10,7 +10,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
 
     def render(process: ListingProcess) = {
 
-        val content = Option(process.content).filterNot(_.isEmpty).getOrElse("No content - <a href='/listing/image'>Edit now</a>")
+        val content = Option(process.content).filterNot(_.isEmpty).getOrElse("No content - <a href='/listing/field'>Edit now</a>")
 
         <div id="listing-process-confirmation">
             <legend>

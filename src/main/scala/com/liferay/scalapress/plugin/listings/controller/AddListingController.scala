@@ -244,8 +244,9 @@ class AddListingController {
             listingCallbackProcessor.callback(None, process.listing)
         else
             paymentCallbackService.callbacks(req)
+        listingProcessService.cleanup(process)
 
-        val url = FriendlyUrlGenerator.friendlyUrl(process.listing)
+        val url = "http://" + context.installationDao.get.domain + FriendlyUrlGenerator.friendlyUrl(process.listing)
 
         val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.COMPLETED)
         val message = <div id="listing-confirmation-text">

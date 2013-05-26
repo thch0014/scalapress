@@ -20,6 +20,7 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
 
     val installation = new Installation
     installation.domain = "coldplay.com"
+    installation.name = "coldplay tshirts"
     Mockito.when(service.context.installationDao.get).thenReturn(installation)
 
     val obj = new Obj
@@ -55,5 +56,13 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert("Listing: coldplay tshirt" === msg.getSubject)
+    }
+
+    test("email uses site name and admin email as from address") {
+        service.send(obj)
+        val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+        Mockito.verify(service.mailSender).send(captor.capture)
+        val msg = captor.getValue
+        assert("coldplay tshirts <donotreply@coldplay.com>" === msg.getFrom)
     }
 }

@@ -22,7 +22,7 @@ class ListingCustomerNotificationService extends Logging {
         logger.info("Emailing new listing [{}]", obj)
         val msg = new SimpleMailMessage
         msg.setTo(obj.account.email)
-        msg.setFrom("donotreply@" + domain)
+        msg.setFrom(context.installationDao.get.name + " <donotreply@" + domain + ">")
         msg.setText(body)
         msg.setSubject("Listing: " + obj.name)
         mailSender.send(msg)

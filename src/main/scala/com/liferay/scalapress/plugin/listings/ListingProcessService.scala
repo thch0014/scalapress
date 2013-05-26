@@ -5,16 +5,18 @@ import com.liferay.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.obj.Obj
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel
   *
   *         This service will complete a listing process
   *
-  * */
+  **/
 @Component
 class ListingProcessService extends Logging {
 
     @Autowired var context: ScalapressContext = _
+    @Autowired var listingProcessDao: ListingProcessDao = _
 
     def process(process: ListingProcess): Obj = {
         logger.info("Building listing for process [{}]", process)
@@ -24,6 +26,14 @@ class ListingProcessService extends Logging {
         logger.debug("Created listing [{}]", listing.id)
 
         listing
+    }
+
+    // delete the listing process
+    def cleanup(process: ListingProcess) {
+        process.attributeValues.asScala.foreach(_.listingProcess = null)
+        process.attributeValues.clear()
+        logger.info("Process completed - removing from database")
+        listingProcessDao.remove(process)
     }
 
     // build the listing object

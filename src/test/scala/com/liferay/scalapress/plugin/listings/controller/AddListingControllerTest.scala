@@ -19,12 +19,12 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     controller.paymentCallbackService = mock[PaymentCallbackService]
     controller.listingCallbackProcessor = mock[ListingCallbackProcessor]
     controller.themeService = mock[ThemeService]
-    controller.listingProcessService = mock[ListingProcessService]
-    controller.listingProcessDao = mock[ListingProcessDao]
     controller.context = new ScalapressContext
     controller.context.paymentPluginDao = mock[PaymentPluginDao]
     controller.listingPackageDao = mock[ListingPackageDao]
     controller.listingsPluginDao = mock[ListingsPluginDao]
+    controller.listingProcessDao = mock[ListingProcessDao]
+    controller.listingProcessService = mock[ListingProcessService]
 
     val plugin = new ListingsPlugin
     Mockito.when(controller.listingsPluginDao.get).thenReturn(plugin)
@@ -83,6 +83,11 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         Mockito.verify(controller.listingCallbackProcessor).callback(None, process.listing)
     }
 
+    test("a completed listing cleans up the process session") {
+        controller.completed(process, req)
+        Mockito.verify(controller.listingProcessService).cleanup(process)
+    }
+
     test("packages page does not show deleted packages") {
         package2.deleted = true
         val page = controller.showPackages(process, errors, req)
@@ -92,6 +97,11 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     test("package page contains package text") {
         plugin.packagesPageText = "grandmaster flash loves listing packages"
         val page = controller.showPackages(process, errors, req)
+        assert(page._body.filter(_.toString.contains("grandmaster flash loves listing packages")).size > 0)
+    }
+
+    test("completed page contains a correct link to the object") {
+        val page = controller.completed(process, req)
         assert(page._body.filter(_.toString.contains("grandmaster flash loves listing packages")).size > 0)
     }
 
