@@ -4,17 +4,17 @@ import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */
-class ListingProcessPurchase(process: ListingProcess) extends Purchase {
+class ListingProcessPurchase(process: ListingProcess, domain: String) extends Purchase {
 
     def paymentDescription: String = "Payment for " + process.title
 
-    def accountName: String = ""
-    def accountEmail: String = ""
+    def accountName: String = process.listing.account.name
+    def accountEmail: String = process.listing.account.email
     def total: Double = process.listingPackage.fee
+
+    def successUrl: String = "http://" + domain + "/listing/completed"
+    def failureUrl: String = "http://" + domain + "/listing/payment/failure"
+
     def uniqueIdent: String = process.sessionId
-
-    def successUrl: String = "/listing/completed"
-    def failureUrl: String = "/listing/payment/failure"
-
     override def callbackClass = classOf[ListingCallbackProcessor]
 }
