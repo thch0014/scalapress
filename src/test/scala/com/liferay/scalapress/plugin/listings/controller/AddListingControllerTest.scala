@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 import org.mockito.Mockito
 import com.liferay.scalapress.plugin.listings._
-import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.obj.{ObjectType, Obj}
 import com.liferay.scalapress.theme.ThemeService
 import org.springframework.validation.Errors
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.settings.{InstallationDao, Installation}
+import com.liferay.scalapress.folder.{Folder, FolderDao}
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -27,10 +28,12 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     controller.listingProcessDao = mock[ListingProcessDao]
     controller.listingProcessService = mock[ListingProcessService]
     controller.context.paymentPluginDao = mock[PaymentPluginDao]
+    controller.context.folderDao = mock[FolderDao]
 
     val plugin = new ListingsPlugin
     Mockito.when(controller.listingsPluginDao.get).thenReturn(plugin)
     Mockito.when(controller.context.paymentPluginDao.enabled).thenReturn(Nil)
+    Mockito.when(controller.context.folderDao.tree).thenReturn(Array[Folder]())
 
     controller.context.installationDao = mock[InstallationDao]
     val installation = new Installation
@@ -124,5 +127,24 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         Mockito.when(controller.listingPackageDao.find(4)).thenReturn(package2)
         controller.selectPackage(process, errors, 4, req)
         Mockito.verify(controller.listingProcessDao).save(process)
+    }
+
+    test("folders are automatically set if choice is from 1") {
+        assert(0 === process.folders.size)
+        process.listingPackage.folders = "5"
+        process.listingPackage.maxFolders = 2
+        process.listingPackage.objectType = new ObjectType
+        controller.showFolders(process, errors, req)
+        assert(1 === process.folders.size)
+        assert(5l === process.folders(00))
+    }
+
+    test("folders are not automatically set if choice is from more than 1") {
+        assert(0 === process.folders.size)
+        process.listingPackage.folders = "5,6"
+        process.listingPackage.maxFolders = 2
+        process.listingPackage.objectType = new ObjectType
+        controller.showFolders(process, errors, req)
+        assert(0 === process.folders.size)
     }
 }
