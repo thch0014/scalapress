@@ -21,7 +21,7 @@ class Basket {
     @BeanProperty var sessionId: String = _
 
     // the completed order
-    @BeanProperty var order: Order = _
+    @BeanProperty var order: com.liferay.scalapress.plugin.ecommerce.domain.Order = _
 
     @NotEmpty
     @BeanProperty var accountName: String = _

@@ -94,4 +94,17 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         val page = controller.showPackages(process, errors, req)
         assert(page._body.filter(_.toString.contains("grandmaster flash loves listing packages")).size > 0)
     }
+
+    test("selecting package sets package on process") {
+        process.listingPackage = null
+        Mockito.when(controller.listingPackageDao.find(3)).thenReturn(package1)
+        controller.selectPackage(process, errors, 3, req)
+        assert(process.listingPackage === package1)
+    }
+
+    test("selecting package persists") {
+        Mockito.when(controller.listingPackageDao.find(4)).thenReturn(package2)
+        controller.selectPackage(process, errors, 4, req)
+        Mockito.verify(controller.listingProcessDao).save(process)
+    }
 }
