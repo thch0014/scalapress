@@ -18,7 +18,7 @@ class ListingProcessService extends Logging {
     @Autowired var listingProcessDao: ListingProcessDao = _
     @Autowired var listingsPluginDao: ListingsPluginDao = _
 
-    def build(process: ListingProcess): Obj = {
+    def process(process: ListingProcess): Obj = {
         logger.info("Building listing for process [{}]", process)
 
         val account = context.objectDao.find(process.accountId.toLong)

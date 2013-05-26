@@ -204,7 +204,7 @@ class AddListingController {
                 errors: Errors,
                 req: HttpServletRequest): ScalapressPage = {
 
-        val listing = listingProcessService.build(process)
+        val listing = listingProcessService.process(process)
         process.listing = listing
         listingProcessDao.save(process)
 

@@ -1,10 +1,11 @@
 package com.liferay.scalapress.plugin.listings
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import com.liferay.scalapress.plugin.listings.domain.ListingPackage
+import org.scalatest.mock.MockitoSugar
 
 /** @author Stephen Samuel */
-class ListingPackageTest extends FunSuite {
+class ListingPackageTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     test("that a free package is rendered properly") {
         val lp = new ListingPackage
