@@ -34,7 +34,7 @@ class FoldersWidget extends Widget with Logging {
 
     override def render(req: ScalapressRequest): Option[String] = {
         val buffer = new ArrayBuffer[String]
-        val root = Option(start).getOrElse(req.context.folderDao.root)
+        val root = Option(start).getOrElse(req.folderRoot)
         _renderFolderLevel(root, 1, buffer)
         Some(buffer.mkString("\n"))
     }

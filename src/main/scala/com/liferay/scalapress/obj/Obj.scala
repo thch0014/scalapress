@@ -47,15 +47,13 @@ class Obj extends SortedSections {
     @BeanProperty var listingPackage: ListingPackage = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "obj", fetch = FetchType.EAGER,
         cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
     def sortedAttributeValues: Seq[AttributeValue] = attributeValues
@@ -82,8 +80,7 @@ class Obj extends SortedSections {
     @BeanProperty var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 

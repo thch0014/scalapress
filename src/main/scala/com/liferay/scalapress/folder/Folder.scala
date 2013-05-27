@@ -26,8 +26,7 @@ class Folder extends SortedSections {
     @BeanProperty var id: Long = _
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.SELECT)
     @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
     @Index(name = "parent_index")
@@ -90,8 +89,7 @@ class Folder extends SortedSections {
     @BeanProperty var permaLink: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 20)
+    @Fetch(FetchMode.SELECT)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
 }
