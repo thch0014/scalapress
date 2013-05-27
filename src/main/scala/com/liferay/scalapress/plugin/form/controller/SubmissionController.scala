@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import org.springframework.web.multipart.MultipartFile
-import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.form.{RecaptchaClient, Form, FormService, FormDao, SubmissionDao}
 import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
 import com.liferay.scalapress.folder.controller.FolderController
 import com.liferay.scalapress.util.mvc.ScalapressPage
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -52,16 +52,10 @@ class SubmissionController extends Logging {
             }
             case false => {
 
-                val sub = formService.doSubmission(form, sreq, files.asScala)
-                val recipients = Option(form.recipients)
-                  .map(_.split("\n").map(_.trim).filter(_.length > 0))
-                  .getOrElse(Array[String]())
-                formService.adminEmail(recipients, sub, context.installationDao.get)
-                formService.submitterEmail(sub, form, context.installationDao.get)
-
+                val submission = formService.doSubmission(form, sreq, files.asScala)
                 val theme = themeService.default
                 val page = ScalapressPage(theme, sreq)
-                page.body(form.submissionText)
+                page.body(FormSubmissionTextRenderer.render(form.submissionText, submission))
                 page
             }
         }

@@ -32,7 +32,7 @@ class FormField {
     @BeanProperty var placeholder: String = _
 
     @Column(name = "submitterEmail", nullable = false)
-    @BeanProperty var submitterEmailField: Boolean = true
+    @BeanProperty var submitterEmailField: Boolean = false
 
     @Column(name = "options")
     @BeanProperty var options: String = _

@@ -1,18 +1,18 @@
 package com.liferay.scalapress.plugin.form
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
-class FormRendererTest extends FunSuite with MockitoSugar {
+class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val field = new FormField
     field.id = 124
     field.name = "my field"
 
-//    test("checkbox rendering happy path") {
+    //    test("checkbox rendering happy path") {
     //        assert(
     //            "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"124\"></input>my field</label></div></div>" === FormRenderer
     //              ._renderCheck(field).toString)

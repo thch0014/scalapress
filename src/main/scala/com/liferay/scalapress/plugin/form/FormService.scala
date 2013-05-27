@@ -1,14 +1,13 @@
 package com.liferay.scalapress.plugin.form
 
 import org.springframework.web.multipart.MultipartFile
-import com.liferay.scalapress.{Logging, ScalapressRequest}
+import com.liferay.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
 import org.apache.commons.lang.StringUtils
-import com.liferay.scalapress.settings.Installation
 import com.liferay.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ListBuffer
@@ -17,34 +16,44 @@ import scala.collection.mutable.ListBuffer
 @Component
 class FormService extends Logging {
 
+    @Autowired var context: ScalapressContext = _
     @Autowired var assetStore: AssetStore = _
     @Autowired var submissionDao: SubmissionDao = _
+    @Autowired var mailSender: MailSender = _
 
-    @Autowired
-    var mailSender: MailSender = _
+    def doSubmission(form: Form, sreq: ScalapressRequest, files: Iterable[MultipartFile]): Submission = {
 
-    def doSubmission(form: Form, req: ScalapressRequest, files: Seq[MultipartFile]) = {
+        val assets = _uploadMedia(files)
+        val submission = _createSubmission(form, assets, sreq)
+        _adminEmail(submission, form)
+        _submitterEmail(submission, form)
+        submission
+    }
 
-        // upload files first
+    def _uploadMedia(files: Iterable[MultipartFile]): Iterable[String] = {
         val assetKeys = files.map(file => assetStore.add(file.getOriginalFilename, file.getInputStream))
         logger.debug("Saved attachments [{}]", assetKeys)
+        assetKeys
+    }
+
+    def _createSubmission(form: Form, assets: Iterable[String], sreq: ScalapressRequest): Submission = {
 
         val submission = new Submission
-        submission.attachments = assetKeys.asJava
+        submission.attachments = assets.toSet.asJava
         submission.formName = form.name
         submission.date = new DateTime(DateTimeZone.UTC).getMillis
-        submission.ipAddress = req.request.getRemoteAddr
-        submission.folder = req.folder.orNull
-        submission.obj = req.obj.orNull
-        submission.data = form
-          .fields
-          .asScala
-          .filter(field => Option(req.request.getParameter(field.id.toString)).isDefined)
+
+        submission.ipAddress = sreq.request.getRemoteAddr
+        submission.folder = sreq.folder.orNull
+        submission.obj = sreq.obj.orNull
+
+        submission.data = form.fields.asScala
+          .filter(field => Option(sreq.request.getParameter(field.id.toString)).isDefined)
           .map(field => {
             val kv = new SubmissionKeyValue
             kv.submission = submission
             kv.key = field.name
-            kv.value = req.request.getParameterValues(field.id.toString).mkString(", ")
+            kv.value = sreq.request.getParameterValues(field.id.toString).mkString(", ")
             kv
         }).toList.asJava
 
@@ -52,28 +61,26 @@ class FormService extends Logging {
         submission
     }
 
-    def _domain(installation: Installation) =
-        Option(installation.domain) match {
+    def _domain =
+        Option(context.installationDao.get.domain) match {
             case Some(domain) if domain.startsWith("www") => domain.drop(4)
             case Some(domain) => domain
             case _ => "nodomain.com"
         }
 
-    def submitterEmail(submission: Submission,
-                       form: Form,
-                       installation: Installation) {
+    def _submitterEmail(submission: Submission, form: Form) {
 
         Option(form.submissionEmailBody) match {
             case Some(body) =>
                 form.submissionField match {
                     case Some(field) =>
-                        submission.data.asScala.find(_.key.equalsIgnoreCase(field.name)) match {
+                        submission.data.asScala.find(_.key == field.name) match {
                             case Some(kv) =>
 
                                 val subject = Option(form.submissionEmailSubject).getOrElse("Form submission received")
 
                                 val message = new SimpleMailMessage()
-                                message.setFrom("nodotreply@" + _domain(installation))
+                                message.setFrom("nodotreply@" + _domain)
                                 message.setTo(kv.value)
                                 message.setSubject(subject)
                                 message.setText(body)
@@ -91,25 +98,32 @@ class FormService extends Logging {
         }
     }
 
-    def adminEmail(recipients: Seq[String], submission: Submission, installation: Installation) {
+    def _adminEmail(submission: Submission, form: Form) {
 
-        val body = new ListBuffer[String]
-        body.append("Form name: " + submission.formName)
-        submission.page.foreach(page => body.append("Submitted on page: " + page.name))
-        for ( kv <- submission.data.asScala ) {
-            body.append(kv.key + ": " + kv.value)
-        }
+        val recipients = Option(form.recipients)
+          .map(_.split(Array(' ', '\n', ',')).map(_.trim).filter(_.length > 0))
+          .getOrElse(Array[String]())
 
-        val message = new SimpleMailMessage()
-        message.setFrom("nodotreply@" + _domain(installation))
-        message.setTo(recipients.toArray)
-        message.setSubject("Submission: " + submission.formName)
-        message.setText(body.mkString("\n"))
+        if (recipients.size > 0) {
 
-        try {
-            mailSender.send(message)
-        } catch {
-            case e: Exception => logger.warn(e.toString)
+            val body = new ListBuffer[String]
+            body.append("Form name: " + submission.formName)
+            submission.page.foreach(page => body.append("Submitted on page: " + page.name))
+            for ( kv <- submission.data.asScala ) {
+                body.append(kv.key + ": " + kv.value)
+            }
+
+            val message = new SimpleMailMessage()
+            message.setFrom("nodotreply@" + _domain)
+            message.setTo(recipients.toArray)
+            message.setSubject("Submission: " + submission.formName)
+            message.setText(body.mkString("\n"))
+
+            try {
+                mailSender.send(message)
+            } catch {
+                case e: Exception => logger.warn(e.toString)
+            }
         }
     }
 

@@ -45,5 +45,5 @@ class Submission {
     @BeanProperty var ipAddress: String = _
 
     @ElementCollection
-    @BeanProperty var attachments: java.util.List[String] = new java.util.ArrayList[String]
+    @BeanProperty var attachments: java.util.Set[String] = new java.util.HashSet[String]
 }
