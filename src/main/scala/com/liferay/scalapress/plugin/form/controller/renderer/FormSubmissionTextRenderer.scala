@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.form.controller
+package com.liferay.scalapress.plugin.form.controller.renderer
 
 import com.liferay.scalapress.plugin.form.Submission
 
@@ -9,6 +9,6 @@ object FormSubmissionTextRenderer {
 
     def render(custom: String, submission: Submission): String = {
         val text = Option(custom).getOrElse(DEFAULT)
-        text.toString()
+        text.toString
     }
 }

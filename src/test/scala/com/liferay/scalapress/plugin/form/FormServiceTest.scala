@@ -25,7 +25,6 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
     installation.name = "big man shop"
     installation.domain = "coldplay.com"
 
-
     Mockito.when(req.getRemoteAddr).thenReturn("56.78.45.3")
     Mockito.when(service.context.installationDao.get).thenReturn(installation)
 
@@ -118,5 +117,35 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
     test("submitting a form persists submission") {
         val sub = service.doSubmission(form, sreq, Nil)
         Mockito.verify(service.submissionDao).save(sub)
+    }
+
+    test("a field that matches a regex does not cause an error") {
+        field2.regExp = "\\d{4}" // need 4 digits
+        Mockito.when(req.getParameter("8")).thenReturn("1234")
+        Mockito.when(req.getParameterValues("8")).thenReturn(Array("1234"))
+
+        assert(!sreq.hasErrors)
+        service.checkErrors(form, sreq)
+        println(sreq.errors)
+        assert(!sreq.hasErrors)
+    }
+
+    test("a field that does not match a regex causes an error") {
+        field2.regExp = "\\d{4}" // need 4 digits
+        Mockito.when(req.getParameter("8")).thenReturn("12345")
+        Mockito.when(req.getParameterValues("8")).thenReturn(Array("12345"))
+
+        assert(!sreq.hasErrors)
+        service.checkErrors(form, sreq)
+        assert(sreq.hasErrors)
+    }
+
+    test("a required field that is missing causes an error") {
+        field2.required = true
+        Mockito.when(req.getParameter("8")).thenReturn(null)
+        Mockito.when(req.getParameterValues("8")).thenReturn(null)
+        assert(!sreq.hasErrors)
+        service.checkErrors(form, sreq)
+        assert(sreq.hasErrors)
     }
 }

@@ -11,6 +11,7 @@ import com.liferay.scalapress.theme.{ThemeService, ThemeDao}
 import com.liferay.scalapress.folder.controller.FolderController
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.plugin.form.controller.renderer.FormSubmissionTextRenderer
 
 /** @author Stephen Samuel */
 @Controller
@@ -33,7 +34,7 @@ class SubmissionController extends Logging {
                req: HttpServletRequest,
                resp: HttpServletResponse,
                @RequestParam(value = "file") files: java.util.List[MultipartFile],
-               @RequestParam(value = "folder", required = false) folderId: Long): ScalapressPage = {
+               @RequestParam(value = "folder", required = false, defaultValue = "0") folderId: Long): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
         formService.checkErrors(form, sreq)
@@ -48,13 +49,19 @@ class SubmissionController extends Logging {
         sreq.hasErrors match {
             case true => {
                 logger.debug("Form has errors {}, redirecting to folder {}", sreq.errors, folderId)
-                folderController.view(folderId, req)
+                if (folderId > 0)
+                    folderController.view(folderId, req)
+                else
+                    folderController.view(req)
             }
             case false => {
 
                 val submission = formService.doSubmission(form, sreq, files.asScala)
                 val theme = themeService.default
                 val page = ScalapressPage(theme, sreq)
+
+                if (form.submissionScript != null)
+                    page.body(form.submissionScript)
                 page.body(FormSubmissionTextRenderer.render(form.submissionText, submission))
                 page
             }

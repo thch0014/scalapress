@@ -1,9 +1,11 @@
-package com.liferay.scalapress.plugin.form
+package com.liferay.scalapress.plugin.form.renderer
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
+import com.liferay.scalapress.plugin.form.controller.renderer.FormRenderer
+import com.liferay.scalapress.plugin.form.FormField
 
 /** @author Stephen Samuel */
 class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

@@ -1,9 +1,10 @@
-package com.liferay.scalapress.plugin.form
+package com.liferay.scalapress.plugin.form.controller.renderer
 
 import scala.collection.JavaConverters._
 import xml.{Node, Unparsed}
 import com.liferay.scalapress.ScalapressRequest
 import com.liferay.scalapress.enums.{FieldSize, FormFieldType}
+import com.liferay.scalapress.plugin.form.{FormField, Form}
 
 /** @author Stephen Samuel */
 object FormRenderer {

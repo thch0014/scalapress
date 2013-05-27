@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.liferay.scalapress.enums.FormFieldType
-import org.apache.commons.lang.StringUtils
 import com.liferay.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ListBuffer
@@ -15,6 +14,8 @@ import scala.collection.mutable.ListBuffer
 /** @author Stephen Samuel */
 @Component
 class FormService extends Logging {
+
+    val EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
 
     @Autowired var context: ScalapressContext = _
     @Autowired var assetStore: AssetStore = _
@@ -128,23 +129,26 @@ class FormService extends Logging {
     }
 
     def checkErrors(form: Form, sreq: ScalapressRequest) {
+
         val checkedFields = form.fields.asScala
           .filterNot(_.fieldType == FormFieldType.Attachment)
           .filterNot(_.fieldType == FormFieldType.Header)
           .filterNot(_.fieldType == FormFieldType.TickBox)
           .filterNot(_.fieldType == FormFieldType.Description)
 
-        for ( field <- checkedFields if field.required || StringUtils.isNotBlank(field.regExp) ) {
+        for ( field <- checkedFields ) {
 
-            val regExp =
-                if (field.fieldType == FormFieldType.Email) "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-                else field.regExp
+            val default = if (field.fieldType == FormFieldType.Email) Some(EMAIL_REGEX) else None
+            val regex = Option(field.regExp).orElse(default)
 
-            val value = Option(sreq.request.getParameter(field.id.toString)).filter(_.trim.length > 0)
-            value match {
-                case Some(v) if regExp == null =>
-                case Some(v) if v.matches(regExp) =>
-                case _ => sreq.error(field.id.toString, "This is a required field")
+            Option(sreq.request.getParameter(field.id.toString)).filterNot(_.isEmpty) match {
+                case Some(value) =>
+                    regex match {
+                        case Some(r) if !value.matches(r) => sreq.error(field.id.toString, "Invalid entry")
+                        case _ =>
+                    }
+                case None if field.required => sreq.error(field.id.toString, "This is a required field")
+                case _ =>
             }
         }
     }
