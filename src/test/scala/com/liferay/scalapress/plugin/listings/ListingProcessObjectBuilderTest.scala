@@ -81,7 +81,7 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
         assert(2 === obj.attributeValues.size)
     }
 
-    test("expiry date") {
+    test("given a package with a duration then the expiry date") {
 
         val midnight = new DateMidnight(DateTimeZone.UTC)
         val expected = midnight.plusDays(100).getMillis
@@ -89,6 +89,12 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
         p.duration = 100
         val actual = builder._expiry(p)
         assert(expected === actual)
+    }
+
+    test("given a package with noduration then no expiry date is set") {
+        p.duration = 0
+        val actual = builder._expiry(p)
+        assert(0 === actual)
     }
 
     test("attribute values are cloned") {
