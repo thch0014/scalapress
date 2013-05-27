@@ -1,11 +1,11 @@
 package com.liferay.scalapress
 
 import com.liferay.scalapress.folder.{FolderPluginDao, FolderDao}
-import media.{AssetStore, ImageService, GalleryDao}
+import media.{AssetStore, ImageService}
 import obj.{ObjectDao, TypeDao}
 import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
-import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
+import plugin.form.FormFieldDao
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcessDao, ListingPackageDao}
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
@@ -77,15 +77,8 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var assetStore: AssetStore = _
     @Autowired var objectDao: ObjectDao = _
 
-    @deprecated
-    @Autowired var galleryDao: GalleryDao = _
     @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var markupDao: MarkupDao = _
-
-    @deprecated
-    @Autowired var submissionDao: SubmissionDao = _
-    @deprecated
-    @Autowired var formDao: FormDao = _
 
     @Autowired var attributeValueDao: AttributeValueDao = _
 

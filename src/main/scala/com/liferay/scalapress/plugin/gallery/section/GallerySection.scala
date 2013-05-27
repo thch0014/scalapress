@@ -5,6 +5,7 @@ import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.liferay.scalapress.plugin.gallery.{Gallery, GalleryRenderer}
 import com.liferay.scalapress.section.Section
 import scala.beans.BeanProperty
+import com.liferay.scalapress.media.GalleryDao
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,7 +20,7 @@ class GallerySection extends Section {
 
     def render(request: ScalapressRequest): Option[String] = {
         val render = Option(gallery) match {
-            case None => GalleryRenderer.renderCovers(request.context.galleryDao.findAll())
+            case None => GalleryRenderer.renderCovers(request.context.bean[GalleryDao].findAll())
             case Some(g) => GalleryRenderer.renderGallery(g, request.context.assetStore)
         }
         Option(render)

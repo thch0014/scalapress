@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
-import com.liferay.scalapress.plugin.form.{FormField, Form}
+import com.liferay.scalapress.plugin.form.{FormDao, SubmissionDao, FormField, Form}
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import com.liferay.scalapress.enums.FormFieldType
@@ -14,6 +14,8 @@ import com.liferay.scalapress.enums.FormFieldType
 @RequestMapping(Array("backoffice/form/{id}"))
 class FormEditController {
 
+    @Autowired var submissionDao: SubmissionDao = _
+    @Autowired var formDao: FormDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
@@ -21,7 +23,7 @@ class FormEditController {
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute form: Form) = {
-        context.formDao.save(form)
+        formDao.save(form)
         edit(form)
     }
 
@@ -43,7 +45,7 @@ class FormEditController {
             case Some(field) =>
                 form.fields.remove(field)
                 field.form = null
-                context.formDao.save(form)
+                formDao.save(form)
         }
         "redirect:/backoffice/form/" + form.id
     }
@@ -61,7 +63,7 @@ class FormEditController {
     }
 
     @ModelAttribute def folder(@PathVariable("id") id: Long, model: ModelMap) {
-        val form = context.formDao.find(id)
+        val form = formDao.find(id)
         model.put("form", form)
         model.put("fields", form.fields.asScala.sortBy(_.position).asJava)
     }

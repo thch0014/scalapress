@@ -2,15 +2,18 @@ package com.liferay.scalapress.plugin.form.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{ManyToOne, Entity, Table, JoinColumn}
-import com.liferay.scalapress.plugin.form.{Form}
+import com.liferay.scalapress.plugin.form.{FormDao, Form}
 import com.liferay.scalapress.section.Section
 import scala.beans.BeanProperty
 import com.liferay.scalapress.plugin.form.controller.renderer.FormRenderer
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "blocks_forms")
 class FormSection extends Section {
+
+    @Autowired var formDao: FormDao = _
 
     @ManyToOne
     @JoinColumn(name = "form")
@@ -24,6 +27,6 @@ class FormSection extends Section {
     }
 
     override def _init(context: ScalapressContext) {
-        form = context.formDao.findAll().head
+        form = formDao.findAll().head
     }
 }

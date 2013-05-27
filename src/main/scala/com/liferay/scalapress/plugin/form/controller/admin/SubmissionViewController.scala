@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.liferay.scalapress.ScalapressContext
 import java.util.zip.{ZipEntry, ZipOutputStream}
-import com.liferay.scalapress.plugin.form.Submission
+import com.liferay.scalapress.plugin.form.{SubmissionDao, Submission}
 import scala.collection.JavaConverters._
 import java.io.ByteArrayOutputStream
 import org.apache.commons.io.IOUtils
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse
 class SubmissionViewController {
 
     @Autowired var context: ScalapressContext = _
+    @Autowired var submissionDao: SubmissionDao = _
 
     @RequestMapping(produces = Array("text/html"))
     def view = "admin/plugin/form/submissions/view.vm"
@@ -46,5 +47,5 @@ class SubmissionViewController {
     }
 
     @ModelAttribute("assetStore") def assetStore = context.assetStore
-    @ModelAttribute("submission") def submission(@PathVariable("id") id: Long) = context.submissionDao.find(id)
+    @ModelAttribute("submission") def submission(@PathVariable("id") id: Long) = submissionDao.find(id)
 }
