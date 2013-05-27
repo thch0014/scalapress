@@ -30,16 +30,8 @@ class SectionEditController {
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def save(@ModelAttribute("section") section: Section, req: HttpServletRequest) = {
 
-        val content = req.getParameter("content")
         val visible = req.getParameter("visible")
-
         section.setVisible(visible != null)
-        section match {
-            case p: FolderContentSection => p.content = content
-            //         case o: ObjectListSection => p.markup = markup
-            case _ =>
-        }
-
         sectionDao.save(section)
         edit(section)
     }
