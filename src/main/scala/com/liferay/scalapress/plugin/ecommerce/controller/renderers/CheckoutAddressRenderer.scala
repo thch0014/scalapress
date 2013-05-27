@@ -88,7 +88,7 @@ object CheckoutAddressRenderer {
                 </div>
             </div>
 
-                <button type="submit" class="btn btn-primary">Continue</button>
+                <button type="submit" class="btn">Continue</button>
 
             </form>
         </div>

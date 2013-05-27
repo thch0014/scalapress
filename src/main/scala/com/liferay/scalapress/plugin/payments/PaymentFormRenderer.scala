@@ -21,7 +21,7 @@ class PaymentFormRenderer {
             val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>
-                {paramInputs}<button type="submit" class="btn btn-primary">
+                {paramInputs}<button type="submit" class="btn">
                 {buttonText}
             </button>
             </form>

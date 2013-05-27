@@ -31,7 +31,7 @@ object CheckoutDeliveryOptionRenderer {
 
         <div id="checkout-delivery">
             {error}<form method="POST" action="/checkout/delivery" class="form-horizontal">
-            <legend>Delivery Method</legend>{r}<br/> <button type="submit" class="btn btn-primary">Continue</button>
+            <legend>Delivery Method</legend>{r}<br/> <button type="submit" class="btn">Continue</button>
         </form>
         </div>
     }
