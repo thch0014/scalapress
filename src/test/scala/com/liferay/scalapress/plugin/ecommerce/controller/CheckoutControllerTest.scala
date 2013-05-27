@@ -125,4 +125,17 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
         controller.completed(req)
         Mockito.verify(controller.paymentCallbackService).callbacks(req)
     }
+
+    test("that failed payment page contains a link to payment") {
+        val page = controller.failure(req)
+        assert(page._body.filter(_.toString.contains("/checkout/payment")).size > 0)
+    }
+
+    test("that submitting a delivery uses param deliveryOptionId and persists") {
+        Mockito.when(req.getParameter("deliveryOptionId")).thenReturn("155")
+        Mockito.when(controller.deliveryOptionDao.find(155l)).thenReturn(del1)
+        controller.submitDelivery(basket, errors, req)
+        assert(del1 === basket.deliveryOption)
+        Mockito.verify(controller.basketDao).save(basket)
+    }
 }

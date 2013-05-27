@@ -108,7 +108,7 @@ class CheckoutController extends Logging {
     @RequestMapping(value = Array("delivery"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def submitDelivery(@ModelAttribute("basket") basket: Basket, errors: Errors, req: HttpServletRequest): ScalapressPage = {
 
-        Option(req.getParameter("deliveryOptionId")).filter(_.trim.length > 0) match {
+        Option(req.getParameter("deliveryOptionId")).filterNot(_.isEmpty) match {
             case None =>
                 errors.reject("deliveryOptionId", "Choose delivery option")
                 showDelivery(req, basket, errors)

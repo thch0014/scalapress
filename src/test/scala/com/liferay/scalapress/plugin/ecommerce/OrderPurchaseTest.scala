@@ -14,6 +14,8 @@ class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSug
     order.account.name = "sammy"
     order.account.email = "s@s.com"
 
+    order.deliveryCharge = 15678
+
     val purchase = new OrderPurchase(order, "coldplay.com")
 
     test("that purchase uses account details") {
@@ -23,6 +25,10 @@ class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSug
 
     test("that paymentDescription uses the order id") {
         assert(purchase.paymentDescription.contains("#12462"))
+    }
+
+    test("that total comes from the order") {
+        assert(15678 === purchase.total)
     }
 
     test("that uniqueIdent uses the order id") {
