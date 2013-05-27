@@ -12,11 +12,11 @@ class PaymentFormRendererTest extends FunSuite with MockitoSugar with OneInstanc
     val renderer = new PaymentFormRenderer
     renderer.context = new ScalapressContext
     renderer.context.paymentPluginDao = mock[PaymentPluginDao]
-
     renderer.context.installationDao = mock[InstallationDao]
 
     val installation = new Installation
     installation.name = "coldplay tees"
+
     Mockito.when(renderer.context.installationDao.get).thenReturn(installation)
 
     val purchase = new Purchase {

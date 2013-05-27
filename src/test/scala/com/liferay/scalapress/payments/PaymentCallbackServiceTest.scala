@@ -1,0 +1,70 @@
+package com.liferay.scalapress.payments
+
+import org.scalatest.{OneInstancePerTest, FunSuite}
+import org.scalatest.mock.MockitoSugar
+import com.liferay.scalapress.{Callback, ScalapressContext}
+import org.mockito.{Matchers, Mockito}
+
+/** @author Stephen Samuel */
+class PaymentCallbackServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+
+    val service = new PaymentCallbackService
+    service.context = mock[ScalapressContext]
+
+    val p = mock[PaymentPluginDao]
+    val t = mock[TransactionDao]
+    val callback = mock[PaymentCallback]
+
+    Mockito.when(service.context.paymentPluginDao).thenReturn(p)
+    Mockito.when(service.context.transactionDao).thenReturn(t)
+
+    val tx = new Transaction
+
+    val plugin1 = new MockPaymentPlugin("superpay", true, Map.empty)
+
+    test("given a payment plugin that returns a transaction then that transaction is persisted") {
+
+        val plugin2 = new PaymentPlugin {
+            def enabled: Boolean = true
+            def processor: PaymentProcessor = new PaymentProcessor {
+                def callback(params: Map[String, String]): Option[CallbackResult] = Some(CallbackResult(tx, "Order-14"))
+                def paymentUrl: String = "payment.com"
+                def paymentProcessorName: String = "megapay"
+                def params(domain: String, purchase: Purchase): Map[String, String] = Map.empty
+            }
+            def name: String = "megapay"
+        }
+
+        Mockito.when(p.enabled).thenReturn(Seq(plugin1, plugin2))
+        service.callbacks(Map.empty[String, String])
+        Mockito.verify(t).save(tx)
+        Mockito.verify(t, Mockito.only).save(Matchers.any[Transaction])
+    }
+
+    test("given a payment plugin that that returns a callback type then that type is lookup up and invoked") {
+
+        val plugin2 = new PaymentPlugin {
+            def enabled: Boolean = true
+            def processor: PaymentProcessor = new PaymentProcessor {
+                def callback(params: Map[String, String]): Option[CallbackResult] = Some(CallbackResult(tx, "Pizza-14"))
+                def paymentUrl: String = "payment.com"
+                def paymentProcessorName: String = "megapay"
+                def params(domain: String, purchase: Purchase): Map[String, String] = Map.empty
+            }
+            def name: String = "megapay"
+        }
+
+        val callback = mock[MockPaymentCallback]
+        Mockito.when(p.enabled).thenReturn(Seq(plugin1, plugin2))
+        Mockito.when(service.context.bean(classOf[MockPaymentCallback])).thenReturn(callback)
+
+        service.callbacks(Map.empty[String, String])
+        Mockito.verify(service.context).bean(classOf[MockPaymentCallback])
+        Mockito.verify(callback).callback(tx, "14")
+    }
+}
+
+@Callback("Pizza")
+class MockPaymentCallback extends PaymentCallback {
+    def callback(tx: Transaction, id: String) {}
+}

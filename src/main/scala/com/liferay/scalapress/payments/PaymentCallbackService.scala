@@ -4,16 +4,14 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.{Tag, ScalapressContext}
+import com.liferay.scalapress.{Logging, Callback, ScalapressContext}
 import com.liferay.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @Component
-class PaymentCallbackService {
+class PaymentCallbackService extends Logging {
 
     @Autowired var context: ScalapressContext = _
-    @Autowired var txDao: TransactionDao = _
-    @Autowired var paymentPluginDao: PaymentPluginDao = _
 
     def callbacks(req: HttpServletRequest) {
         val params: java.util.Map[String, Array[String]] = req.getParameterMap.asInstanceOf[java.util.Map[String, Array[String]]]
@@ -23,19 +21,26 @@ class PaymentCallbackService {
     }
 
     def callbacks(params: Map[String, String]) {
-        paymentPluginDao.enabled.foreach(plugin => {
+        context.paymentPluginDao.enabled.foreach(plugin => {
             plugin.processor.callback(params) match {
                 case Some(result) => _processResult(result)
-                case None =>
+                case _ =>
             }
         })
     }
 
     def _processResult(result: CallbackResult) {
-        txDao.save(result.tx)
-        val klass = ComponentClassScanner.callbacks
-          .find(_.getAnnotation(classOf[Tag]).value.toLowerCase == result.callback.toLowerCase)
-          .map(_.asInstanceOf[Class[PaymentCallback]]).get
-        context.bean(klass).callback(result.tx, result.uniqueId)
+        context.transactionDao.save(result.tx)
+        val callbackClass = ComponentClassScanner.callbacks
+          .find(_.getAnnotation(classOf[Callback]).value.toLowerCase == result.callback.toLowerCase)
+          .map(_.asInstanceOf[Class[PaymentCallback]])
+        callbackClass match {
+            case None => logger.warn("Callback specified type [{}] but could not resolve class", result.callback)
+            case Some(klass) =>
+                Option(context.bean(klass)) match {
+                    case None => logger.warn("No bean found [{}]", klass)
+                    case Some(callback) => callback.callback(result.tx, result.uniqueId)
+                }
+        }
     }
 }
