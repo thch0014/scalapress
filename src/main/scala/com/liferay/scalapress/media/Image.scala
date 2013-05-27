@@ -1,6 +1,6 @@
 package com.liferay.scalapress.media
 
-import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
+import javax.persistence._
 import com.liferay.scalapress.plugin.gallery.Gallery
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
@@ -11,6 +11,7 @@ import scala.beans.BeanProperty
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "images")
+@deprecated("Images should really just be stored as strings now")
 class Image {
 
     @Id
@@ -27,22 +28,22 @@ class Image {
 
     //@BeanProperty var contentType: String = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item", nullable = true)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gallery", nullable = true)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var gallery: Gallery = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = true)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var folder: Folder = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "imageBox", nullable = true)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var mediaWidget: MediaWidget = _

@@ -3,11 +3,14 @@ package com.liferay.scalapress.obj
 import attr.Attribute
 import javax.persistence._
 import java.util
-import org.hibernate.annotations.{CacheConcurrencyStrategy, BatchSize, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.liferay.scalapress.section.{SortedSections, Section}
 import com.liferay.scalapress.theme.Markup
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
+import javax.persistence.Table
+import javax.persistence.CascadeType
+import javax.persistence.Entity
 
 /** @author Stephen Samuel */
 @Entity
@@ -35,22 +38,23 @@ class ObjectType extends SortedSections {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
     @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
     def sortedAttributes = attributes.asScala.toSeq.sortBy(_.position)
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listitemmarkup", nullable = true)
-    @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectListMarkup: Markup = _
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "objectViewMarkup", nullable = true)
-    @Fetch(FetchMode.JOIN)
+    @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var objectViewMarkup: Markup = _
 
     def bootIcon = name.toLowerCase match {

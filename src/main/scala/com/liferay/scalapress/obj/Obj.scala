@@ -41,7 +41,7 @@ class Obj extends SortedSections {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var account: Obj = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listing_package")
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var listingPackage: ListingPackage = _

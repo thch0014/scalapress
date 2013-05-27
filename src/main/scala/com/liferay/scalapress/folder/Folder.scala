@@ -46,7 +46,7 @@ class Folder extends SortedSections {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var parent: Folder = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theme")
     @BeanProperty var theme: Theme = _
 
