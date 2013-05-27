@@ -1,8 +1,7 @@
-package com.liferay.scalapress.plugin.payment
+package com.liferay.scalapress.payments
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.payments.{PaymentCallbackService, PaymentCallbackController}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
 

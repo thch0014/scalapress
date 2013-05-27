@@ -10,8 +10,8 @@ import com.liferay.scalapress.plugin.ecommerce.domain._
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.theme.ThemeService
-import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, Purchase, PaymentPluginDao, PaymentCallbackService}
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.payments.{Purchase, PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
 
 /** @author Stephen Samuel */
 class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

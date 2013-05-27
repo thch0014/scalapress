@@ -9,9 +9,9 @@ import org.elasticsearch.plugins.Plugin
 import com.liferay.scalapress.widgets.Widget
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.{Callback, Tag}
-import com.liferay.scalapress.plugin.payments.PaymentPlugin
 import com.liferay.scalapress.settings.lifecycle.MenuItem
 import java.lang.annotation.Annotation
+import com.liferay.scalapress.payments.PaymentPlugin
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {

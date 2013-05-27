@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext

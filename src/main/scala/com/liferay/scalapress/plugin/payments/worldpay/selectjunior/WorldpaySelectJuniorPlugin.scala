@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.payments.worldpay.selectjunior
 
 import javax.persistence.{Table, Entity}
-import com.liferay.scalapress.plugin.payments.{PaymentProcessor, PaymentPlugin}
+import com.liferay.scalapress.payments.{PaymentProcessor, PaymentPlugin}
 
 /** @author Stephen Samuel */
 @Entity

@@ -5,7 +5,7 @@ import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.util.EntityUtils
-import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
+import com.liferay.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProcessor with Logging {

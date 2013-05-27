@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 import javax.persistence.{InheritanceType, Inheritance, Entity, GenerationType, GeneratedValue, Id}
 import org.springframework.stereotype.Component

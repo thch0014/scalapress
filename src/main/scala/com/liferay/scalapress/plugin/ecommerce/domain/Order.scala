@@ -2,9 +2,9 @@ package com.liferay.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.plugin.payments.Transaction
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
+import com.liferay.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 @Entity

@@ -7,7 +7,6 @@ import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
 import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import plugin.form.{FormFieldDao, SubmissionDao, FormDao}
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcessDao, ListingPackageDao}
-import com.liferay.scalapress.plugin.payments.{TransactionDao, PaymentPluginDao}
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
 import search.{SavedSearchDao, SearchFormDao, SearchService}
@@ -22,6 +21,7 @@ import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
 import com.liferay.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
 import com.liferay.scalapress.plugin.profile.AccountPluginDao
+import com.liferay.scalapress.payments.{PaymentPluginDao, TransactionDao}
 
 /** @author Stephen Samuel */
 @Component

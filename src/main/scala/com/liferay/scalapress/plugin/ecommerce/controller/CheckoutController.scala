@@ -14,7 +14,7 @@ import com.liferay.scalapress.obj.{ObjectDao, TypeDao}
 import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.controller.renderers._
-import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentCallbackService}
+import com.liferay.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
 
 /** @author Stephen Samuel */
 @Controller

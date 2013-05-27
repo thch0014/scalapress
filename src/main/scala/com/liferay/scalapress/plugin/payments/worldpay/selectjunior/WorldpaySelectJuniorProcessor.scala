@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.payments.worldpay.selectjunior
 
-import com.liferay.scalapress.plugin.payments.{CallbackResult, PaymentProcessor, Transaction, Purchase}
 import com.liferay.scalapress.Logging
+import com.liferay.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
 
 /** @author Stephen Samuel */
 class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends PaymentProcessor with Logging {

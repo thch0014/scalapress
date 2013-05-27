@@ -1,10 +1,10 @@
 package com.liferay.scalapress.plugin.ecommerce
 
-import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{Callback, Logging, ScalapressContext}
+import com.liferay.scalapress.payments.{Transaction, PaymentCallback}
 
 /** @author Stephen Samuel */
 @Component

@@ -2,7 +2,6 @@ package com.liferay.scalapress.plugin.listings.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentPluginDao, PaymentCallbackService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 import org.mockito.Mockito
@@ -13,6 +12,7 @@ import org.springframework.validation.Errors
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.settings.{InstallationDao, Installation}
 import com.liferay.scalapress.folder.{Folder, FolderDao}
+import com.liferay.scalapress.payments.{PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {

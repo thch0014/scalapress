@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.ecommerce
 
-import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Order}
+import com.liferay.scalapress.payments.Purchase
 
 /** @author Stephen Samuel */
 class OrderPurchase(val order: Order, val domain: String) extends Purchase {

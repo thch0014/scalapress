@@ -2,11 +2,11 @@ package com.liferay.scalapress.plugin.ecommerce
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.payments.Transaction
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
+import com.liferay.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 class OrderCallbackProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

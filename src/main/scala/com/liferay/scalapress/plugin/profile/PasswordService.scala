@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.liferay.scalapress.settings.InstallationDao
 import com.liferay.scalapress.obj.ObjectDao
-import scala.util.Random
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.sksamuel.scoot.rest.Logging
 import org.apache.commons.lang.RandomStringUtils

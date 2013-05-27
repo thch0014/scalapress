@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.listings
 
-import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.obj.Obj
+import com.liferay.scalapress.payments.Purchase
 
 /** @author Stephen Samuel */
 class ListingPurchase(listing: Obj, domain: String) extends Purchase {

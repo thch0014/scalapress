@@ -3,8 +3,8 @@ package com.liferay.scalapress.plugin.payments.sagepayform
 import org.apache.commons.codec.binary.Base64
 import com.liferay.scalapress.Logging
 import com.liferay.scalapress.plugin.ecommerce.domain.Basket
-import com.liferay.scalapress.plugin.payments.{CallbackResult, Transaction, Purchase, PaymentProcessor}
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
 
 /** @author Stephen Samuel */
 class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor with Logging {

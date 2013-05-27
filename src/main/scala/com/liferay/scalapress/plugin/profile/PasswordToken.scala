@@ -1,7 +1,7 @@
 package com.liferay.scalapress.plugin.profile
 
 import javax.persistence._
-import scala.reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

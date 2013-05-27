@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 /** @author Stephen Samuel */
 trait PaymentCallback {

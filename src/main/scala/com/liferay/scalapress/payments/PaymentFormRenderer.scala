@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 import com.liferay.scalapress.ScalapressContext
 import xml.Elem
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Component
-class PaymentFormRenderer {
+class PaymentFormRenderer  {
 
     @Autowired var context: ScalapressContext = _
 

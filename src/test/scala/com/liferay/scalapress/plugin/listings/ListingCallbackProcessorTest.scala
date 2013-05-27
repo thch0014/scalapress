@@ -6,11 +6,11 @@ import com.liferay.scalapress.ScalapressContext
 import com.liferay.scalapress.plugin.ecommerce._
 import org.mockito.{ArgumentCaptor, Mockito}
 import com.liferay.scalapress.settings.{Installation, InstallationDao}
-import com.liferay.scalapress.plugin.payments.{TransactionDao, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 import com.liferay.scalapress.obj.{ObjectDao, Obj}
+import com.liferay.scalapress.payments.{Transaction, TransactionDao}
 
 /** @author Stephen Samuel */
 class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with MockitoSugar {

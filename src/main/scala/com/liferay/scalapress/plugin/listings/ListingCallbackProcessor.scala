@@ -6,8 +6,8 @@ import com.liferay.scalapress.{Callback, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
-import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.OrderDao
+import com.liferay.scalapress.payments.{Transaction, PaymentCallback}
 
 /** @author Stephen Samuel */
 @Component

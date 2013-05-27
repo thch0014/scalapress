@@ -2,8 +2,8 @@ package com.liferay.scalapress.plugin.payment.worldpay.selectjunior
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.payments.worldpay.selectjunior.{WorldpaySelectJuniorPlugin, WorldpaySelectJuniorProcessor}
+import com.liferay.scalapress.payments.Purchase
 
 /** @author Stephen Samuel */
 class WorldpaySelectJuniorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

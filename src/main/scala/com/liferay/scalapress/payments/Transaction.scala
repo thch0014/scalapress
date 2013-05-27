@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 import javax.persistence.{JoinColumn, GenerationType, GeneratedValue, Id, Column, Table, Entity}
 import org.joda.time.{DateTimeZone, DateTime}

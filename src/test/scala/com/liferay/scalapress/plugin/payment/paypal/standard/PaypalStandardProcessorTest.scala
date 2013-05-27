@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.payment.paypal.standard
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardPlugin, PaypalStandardProcessor}
-import com.liferay.scalapress.plugin.payments.Purchase
+import com.liferay.scalapress.payments.Purchase
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

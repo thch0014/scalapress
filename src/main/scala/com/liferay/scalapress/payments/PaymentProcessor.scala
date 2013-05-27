@@ -1,4 +1,4 @@
-package com.liferay.scalapress.plugin.payments
+package com.liferay.scalapress.payments
 
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 
