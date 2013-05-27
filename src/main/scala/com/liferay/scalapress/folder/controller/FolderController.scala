@@ -7,8 +7,9 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.section.SectionRenderer
 import com.liferay.scalapress.folder.{FolderPluginDao, FolderDao, Folder}
-import com.liferay.scalapress.util.mvc.{ScalapressPage, RedirectException}
+import com.liferay.scalapress.util.mvc.{Toolbar, ScalapressPage, RedirectException}
 import com.liferay.scalapress.theme.ThemeService
+import com.liferay.scalapress.security.SpringSecurityResolver
 
 /**
  * @author sks 09-Feb-2006 13:48:13
@@ -56,6 +57,8 @@ class FolderController extends Logging {
         val theme = themeService.theme(folder)
         val page = ScalapressPage(theme, sreq)
 
+        if (SpringSecurityResolver.hasAdminRole(req))
+            page.toolbar(sreq)
         page.body(header)
         page.body(SectionRenderer.render(folder, sreq, context))
         page.body(footer)

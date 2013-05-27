@@ -8,10 +8,10 @@ import com.liferay.scalapress.theme.Theme
 class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {
 
     val _body = new ListBuffer[Any]()
-    var _toolbar: Option[String] = None
+    var _toolbar: Option[Toolbar] = None
 
-    def toolbar(toolbar: String) {
-        _toolbar = Option(toolbar)
+    def toolbar(sreq: ScalapressRequest) {
+        _toolbar = Option(Toolbar(sreq))
     }
 
     def body(any: Any) = {

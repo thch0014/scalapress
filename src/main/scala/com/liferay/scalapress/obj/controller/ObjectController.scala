@@ -10,6 +10,7 @@ import com.liferay.scalapress.obj.{ObjectDao, Obj}
 import com.liferay.scalapress.folder.FolderDao
 import com.liferay.scalapress.util.mvc.{ScalapressPage, NotFoundException}
 import com.liferay.scalapress.theme.{ThemeService, MarkupRenderer}
+import com.liferay.scalapress.security.SpringSecurityResolver
 
 /** @author Stephen Samuel */
 @Controller
@@ -45,6 +46,9 @@ class ObjectController extends Logging {
         val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
         val theme = themeService.theme(obj)
         val page = ScalapressPage(theme, sreq)
+
+        if (SpringSecurityResolver.hasAdminRole(req))
+            page.toolbar(sreq)
 
         Option(obj.objectType.objectViewMarkup) match {
             case None =>
