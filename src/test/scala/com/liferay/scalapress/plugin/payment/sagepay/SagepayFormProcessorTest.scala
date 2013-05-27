@@ -1,13 +1,13 @@
 package com.liferay.scalapress.plugin.payment.sagepay
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
 import com.liferay.scalapress.plugin.ecommerce.domain.Address
 
 /** @author Stephen Samuel */
-class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
+class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val plugin = new SagepayFormPlugin
     val processor = new SagepayFormProcessor(plugin)

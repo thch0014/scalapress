@@ -18,7 +18,7 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
 
         params.put("instId", plugin.installationId)
         params.put("accId1", plugin.accountId)
-        params.put("cartId", purchase.uniqueIdent)
+        params.put("cartId", purchase.callbackInfo)
         params.put("MC_callback", "todo")
 
         // 100: random 101: failure 102: success 0: production
@@ -35,10 +35,9 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
 
         params.put("authMode", plugin.authMode)
 
-        params.put("amount", purchase.toString)
+        val amount = "%1.2f".format(purchase.total / 100.0)
+        params.put("amount", amount)
         params.put("desc", purchase.paymentDescription)
-
-        // cart id which we will use for our session id
         params.toMap
     }
 
@@ -56,9 +55,9 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
         transactionStatus match {
             case Some(status) if status == "Y" =>
 
-                if (callbackPassword == plugin.callbackPassword) {
+                if (callbackPassword.orNull == plugin.callbackPassword) {
 
-                    val tx = Transaction(transactionId.getOrElse("unknown"), NAME, amount.toInt)
+                    val tx = Transaction(transactionId.getOrElse("unknown"), NAME, (amount.toDouble * 100).toInt)
                     tx.status = transactionStatus.orNull
                     tx.details = cardType.getOrElse("") + " " + name.getOrElse("")
                     tx.authCode = rawAuthCode.orNull
@@ -71,7 +70,7 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
                     None
                 }
 
-            case None => None
+            case _ => None
         }
 
     }

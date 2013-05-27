@@ -1,12 +1,12 @@
 package com.liferay.scalapress.plugin.payment.paypal.standard
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.plugin.payments.paypal.standard.{PaypalStandardPlugin, PaypalStandardProcessor}
 import com.liferay.scalapress.plugin.payments.Purchase
 
 /** @author Stephen Samuel */
-class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
+class PaypalStandardProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val plugin = new PaypalStandardPlugin
     val processor = new PaypalStandardProcessor(plugin)

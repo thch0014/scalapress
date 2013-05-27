@@ -14,7 +14,7 @@ class WorldpaySelectJuniorPlugin extends PaymentPlugin {
     var authMode: String = _
     var callbackPassword: String = _
 
-    def enabled: Boolean = live
+    def enabled: Boolean = accountId != null
     def processor: PaymentProcessor = new WorldpaySelectJuniorProcessor(this)
     def name: String = "Worldpay Select Junior"
 }
