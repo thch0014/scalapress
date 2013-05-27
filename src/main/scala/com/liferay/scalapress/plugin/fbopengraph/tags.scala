@@ -3,6 +3,7 @@ package com.liferay.scalapress.plugin.fbopengraph
 import com.liferay.scalapress.theme.tag.ScalapressTag
 import com.liferay.scalapress.{Tag, ScalapressRequest}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Tag("og_title")
@@ -34,7 +35,6 @@ class OpenGraphSiteTag extends ScalapressTag {
 class OpenGraphImageTag extends ScalapressTag {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        import scala.collection.JavaConverters._
         request.obj
           .filter(_.images.size > 0)
           .map(obj => {
