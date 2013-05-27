@@ -1,13 +1,13 @@
 package com.liferay.scalapress.obj.tag
 
-import org.scalatest.{FunSuite, BeforeAndAfter}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
-class ObjectSellPriceTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class ObjectSellPriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val obj = new Obj
     obj.sellPrice = 2000

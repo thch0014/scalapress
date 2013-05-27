@@ -1,12 +1,12 @@
 package com.liferay.scalapress.obj.tag
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.enums.AttributeType
 import com.liferay.scalapress.obj.attr.{Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
-class AttributeValueRendererTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class AttributeValueRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val av = new AttributeValue
     av.attribute = new Attribute

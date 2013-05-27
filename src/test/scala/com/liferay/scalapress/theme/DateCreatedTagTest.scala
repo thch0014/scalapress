@@ -1,7 +1,7 @@
 package com.liferay.scalapress.theme
 
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.{FunSuite, BeforeAndAfter}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import tag.DateCreatedTag
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
@@ -9,7 +9,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
-class DateCreatedTagTest extends FunSuite with BeforeAndAfter with MockitoSugar {
+class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val req = mock[HttpServletRequest]
     val context = mock[ScalapressContext]

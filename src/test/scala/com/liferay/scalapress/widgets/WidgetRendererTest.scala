@@ -1,6 +1,6 @@
 package com.liferay.scalapress.widgets
 
-import org.scalatest.{FunSuite, BeforeAndAfter}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
@@ -8,7 +8,7 @@ import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
-class WidgetRendererTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class WidgetRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val req = mock[HttpServletRequest]
     val context = mock[ScalapressContext]

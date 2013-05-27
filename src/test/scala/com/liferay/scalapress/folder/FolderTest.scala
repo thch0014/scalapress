@@ -1,11 +1,11 @@
 package com.liferay.scalapress.folder
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.folder.section.{FolderContentSection, ObjectListSection, SiblingSection, SubfolderSection}
 
 /** @author Stephen Samuel */
-class FolderTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class FolderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("given a folder then the full name includes the parents") {
 

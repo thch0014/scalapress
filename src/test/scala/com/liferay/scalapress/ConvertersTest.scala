@@ -2,7 +2,7 @@ package com.liferay.scalapress
 
 import folder.FolderDao
 import obj.TypeDao
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
@@ -12,7 +12,7 @@ import theme.{ThemeDao, MarkupDao}
 import com.liferay.scalapress.obj.attr.AttributeDao
 
 /** @author Stephen Samuel */
-class ConvertersTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("string to folder happy path") {
         val folderDao = mock[FolderDao]

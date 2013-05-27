@@ -1,6 +1,6 @@
 package com.liferay.scalapress.settings
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
@@ -8,7 +8,7 @@ import org.mockito.Mockito
 import tag._
 
 /** @author Stephen Samuel */
-class SiteTagsTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class SiteTagsTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext

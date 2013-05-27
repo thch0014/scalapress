@@ -1,6 +1,6 @@
 package com.liferay.scalapress.folder.tag
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.folder.{FolderDao, Folder}
 import javax.servlet.http.HttpServletRequest
@@ -8,7 +8,7 @@ import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
-class PrimaryFoldersTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class PrimaryFoldersTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val root = new Folder
     root.id = 1

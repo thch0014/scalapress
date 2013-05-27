@@ -1,11 +1,11 @@
 package com.liferay.scalapress.folder.section
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
-class SubfolderSectionTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class SubfolderSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("that hidden folders are not included") {
 

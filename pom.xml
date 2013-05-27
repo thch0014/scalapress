@@ -253,7 +253,7 @@
                             <configuration>
                                 <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                                 <junitxml>.</junitxml>
-                                <parallel>false</parallel>
+                                <parallel>true</parallel>
                                 <tagsToExclude>IntegrationTest</tagsToExclude>
                                 <filereports>ScalaTestSuite.txt</filereports>
                             </configuration>

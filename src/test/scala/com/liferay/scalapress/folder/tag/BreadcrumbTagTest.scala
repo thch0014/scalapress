@@ -1,13 +1,13 @@
 package com.liferay.scalapress.folder.tag
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.folder.Folder
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
-class BreadcrumbTagTest extends FunSuite with MockitoSugar with BeforeAndAfter {
+class BreadcrumbTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val parent = new Folder
     parent.id = 15
