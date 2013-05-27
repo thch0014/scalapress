@@ -12,7 +12,7 @@ import scala.beans.BeanProperty
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 @Cacheable
@@ -36,20 +36,19 @@ class SearchResultsWidget extends Widget {
         context.savedSearchDao.save(search)
     }
 
-    def render(req: ScalapressRequest): Option[String] = {
+    def render(request: ScalapressRequest): Option[String] = {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val result = req.context.searchService.search(search)
-                val objs = result.refs.map(arg => req.context.objectDao.find(arg.id))
-                  .filter(_.status.equalsIgnoreCase("live"))
+                val result = request.context.searchService.search(search)
+                val objs = request.context.objectDao.findBulk(result.refs.map(_.id)).filter(_.status.equalsIgnoreCase("live"))
                 objs.size match {
                     case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
                     case _ =>
                         Option(markup).orElse(Option(objs.head.objectType.objectListMarkup)) match {
                             case None => Some("<!-- search widget #" + id + ": no markup -->")
                             case Some(m) =>
-                                val rendered = MarkupRenderer.renderObjects(objs, m, req)
+                                val rendered = MarkupRenderer.renderObjects(objs, m, request)
                                 Some(rendered)
                         }
                 }

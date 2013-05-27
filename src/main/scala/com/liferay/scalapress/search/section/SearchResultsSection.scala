@@ -11,7 +11,7 @@ import scala.beans.BeanProperty
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {
@@ -34,7 +34,7 @@ class SearchResultsSection extends Section {
             case None => None
             case Some(s) =>
                 val result = request.context.searchService.search(search)
-                val objs = result.refs.map(arg => request.context.objectDao.find(arg.id))
+                val objs = request.context.objectDao.findBulk(result.refs.map(_.id)).filter(_.status.equalsIgnoreCase("live"))
                 objs.size match {
                     case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
                     case _ =>

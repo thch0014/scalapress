@@ -11,6 +11,7 @@ import com.liferay.scalapress.util.{GenericDaoImpl, GenericDao}
 /** @author Stephen Samuel */
 
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
+    def findBulk(longs: Seq[Long]): Seq[Obj]
     def search(query: ObjectQuery): Page[Obj]
     def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]]
     def findByType(id: Long): List[Obj]
@@ -20,6 +21,11 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
 @Component
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
+
+    def findBulk(longs: Seq[Long]): Seq[Obj] = {
+        val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
+        search(s)
+    }
 
     def search(q: ObjectQuery): Page[Obj] = {
         val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset).addSort("name", false)
