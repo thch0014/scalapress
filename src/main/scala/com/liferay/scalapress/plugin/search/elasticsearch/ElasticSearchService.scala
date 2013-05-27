@@ -141,6 +141,8 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
+    def _normalize(value: String) = value.replace("!", "").toLowerCase
+
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
         val src = source(obj)
@@ -215,7 +217,7 @@ class ElasticSearchService extends SearchService with Logging {
           .trim
           .split(" ")
           .filter(_.trim.length > 0)
-          .map(_.replace("!", "").toLowerCase)
+          .map(value => _normalize(value))
           .foreach(arg => buffer.append(s"name:$arg")))
 
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
@@ -234,7 +236,7 @@ class ElasticSearchService extends SearchService with Logging {
           .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
 
         search.attributeValues.asScala.filter(_.value.trim.length > 0).foreach(av => {
-            buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + av.value.replace(" ", "_"))
+            buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + _normalize(av.value.replace(" ", "_")))
         })
 
         Option(search.hasAttributes)
@@ -347,7 +349,7 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject()
           .field("objectid", obj.id)
           .field("objectType", obj.objectType.id.toString)
-          .field("name", obj.name.toLowerCase)
+          .field("name", _normalize(obj.name))
           .field("name_raw", obj.name)
           .field("status", obj.status)
 
@@ -366,7 +368,7 @@ class ElasticSearchService extends SearchService with Logging {
           .filterNot(_.value == null)
           .filterNot(_.value.isEmpty)
           .foreach(av => {
-            json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, av.value.replace(" ", "_"))
+            json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, _normalize(av.value.replace(" ", "_")))
             json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {
                 logger.debug("postcode=" + av.value)

@@ -319,10 +319,38 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(service.MAX_RESULTS_HARD_LIMIT === max)
     }
 
-    test("acceptable search max resutls is used") {
+    test("acceptable search max results is used") {
         val search = new SavedSearch
         search.maxResults = 34
         val max = service._maxResults(search)
         assert(34 === max)
+    }
+
+    test("search escapes invalid characters in attribute values") {
+
+        val av = new AttributeValue
+        av.attribute = new Attribute
+        av.attribute.id = 9184
+        av.attribute.name = "color"
+        av.attribute.attributeType = AttributeType.Text
+        av.id = 69945
+        av.value = "red!!"
+
+        val obj = new Obj
+        obj.id = 1529
+        obj.name = "jeans"
+        obj.objectType = new ObjectType
+        obj.objectType.id = 2234
+        obj.status = "live"
+        obj.attributeValues.add(av)
+
+        service.index(obj)
+        Thread.sleep(1200)
+
+        val q = new SavedSearch
+        q.attributeValues.add(av)
+        val results = service.search(q)
+        assert(1 === results.refs.size)
+        assert(1529 === results.refs(0).id)
     }
 }
