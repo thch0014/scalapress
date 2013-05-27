@@ -304,4 +304,25 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         assert(2 === result.refs.size)
     }
+
+    test("search max results of 0 changes to default") {
+        val search = new SavedSearch
+        search.maxResults = 0
+        val max = service._maxResults(search)
+        assert(service.DEFAULT_MAX_RESULTS === max)
+    }
+
+    test("search max results cannot exceed hard limit") {
+        val search = new SavedSearch
+        search.maxResults = service.MAX_RESULTS_HARD_LIMIT + 1
+        val max = service._maxResults(search)
+        assert(service.MAX_RESULTS_HARD_LIMIT === max)
+    }
+
+    test("acceptable search max resutls is used") {
+        val search = new SavedSearch
+        search.maxResults = 34
+        val max = service._maxResults(search)
+        assert(34 === max)
+    }
 }

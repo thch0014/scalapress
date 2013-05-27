@@ -35,7 +35,10 @@ import com.liferay.scalapress.search.SearchResult
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
+    val MAX_RESULTS_HARD_LIMIT = 1000
+    val DEFAULT_MAX_RESULTS = 200
     val FIELD_ATTRIBUTE = "attribute_"
+    val FIELD_ATTRIBUTE_SINGLE = "attribute_single_"
     val FIELD_TAGS = "tags"
     val TIMEOUT = 5000
     val INDEX = "scalapress"
@@ -196,6 +199,11 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
+    def _maxResults(search: SavedSearch) =
+        if (search.maxResults < 1) DEFAULT_MAX_RESULTS
+        else if (search.maxResults > MAX_RESULTS_HARD_LIMIT) MAX_RESULTS_HARD_LIMIT
+        else search.maxResults
+
     def _buildQueryString(search: SavedSearch): String = {
 
         val buffer = new ArrayBuffer[String]()
@@ -251,7 +259,7 @@ class ElasticSearchService extends SearchService with Logging {
               .distance(search.distance, DistanceUnit.MILES)
         })
 
-        val limit = if (search.maxResults < 1) 40 else search.maxResults
+        val limit = _maxResults(search)
         val query = _buildQuery(search)
         val sort = _sort(search)
 
