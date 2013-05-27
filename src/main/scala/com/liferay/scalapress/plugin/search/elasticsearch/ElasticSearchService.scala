@@ -316,7 +316,7 @@ class ElasticSearchService extends SearchService with Logging {
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
                   .map(arg => {
-                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount))
+                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm, entry.getCount))
                     Facet(arg.getName, terms)
                 })
         }
@@ -399,7 +399,6 @@ class ElasticSearchService extends SearchService with Logging {
             map.put("jvm.threads.peakCount", node.getJvm.threads.peakCount.toString)
             map.put("indices.docs.count", node.getIndices.getDocs.getCount.toString)
             map.put("indices.docs.deleted", node.getIndices.getDocs.getDeleted.toString)
-            map.put("indices.idcache.memorySize", node.getIndices.getIdCache.getMemorySize.toString)
             map.put("indices.store.size", node.getIndices.getStore.size.mb + "mb")
             map.put("indices.store.throttleTime", node.getIndices.getStore.throttleTime.toString)
             map.put("transport.txCount", node.getTransport.txCount.toString)
