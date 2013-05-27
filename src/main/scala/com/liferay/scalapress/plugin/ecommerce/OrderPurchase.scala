@@ -4,7 +4,7 @@ import com.liferay.scalapress.plugin.payments.Purchase
 import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Order}
 
 /** @author Stephen Samuel */
-class OrderPurchase(order: Order, domain: String) extends Purchase {
+class OrderPurchase(val order: Order, val domain: String) extends Purchase {
 
     def successUrl: String = "http://" + domain + "/checkout/completed"
     def failureUrl: String = "http://" + domain + "/checkout/payment/failure"

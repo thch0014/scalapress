@@ -2,14 +2,14 @@ package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 
 import com.liferay.scalapress.plugin.ecommerce.domain._
 import scala.collection.JavaConverters._
-import com.liferay.scalapress.ScalapressContext
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 
 /** @author Stephen Samuel */
 object CheckoutConfirmationRenderer {
 
     def renderConfirmationPage(basket: Basket,
                                domain: String,
-                               context: ScalapressContext): String = {
+                               shoppingPluginDao: ShoppingPluginDao): String = {
 
         val totals = "<legend>Basket Details</legend>" + renderBasket(basket)
 
@@ -19,7 +19,8 @@ object CheckoutConfirmationRenderer {
         val billing = "<div><legend>Billing Address</legend>" + _renderAddress(basket
           .billingAddress) + "<br/><br/></div>"
 
-        val termsModal = _termsModal(context.shoppingPluginDao.get.terms)
+        val terms = Option(shoppingPluginDao.get.terms).getOrElse("")
+        val termsModal = _termsModal(terms)
 
         "<div id='checkout-confirmation'>" + totals + billing + delivery + _complete + "</div>" + termsModal
     }

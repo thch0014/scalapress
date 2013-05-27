@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.listings.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.plugin.payments.{PaymentPluginDao, PaymentCallbackService}
+import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentPluginDao, PaymentCallbackService}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 import org.mockito.Mockito
@@ -29,6 +29,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     controller.listingProcessService = mock[ListingProcessService]
     controller.context.paymentPluginDao = mock[PaymentPluginDao]
     controller.context.folderDao = mock[FolderDao]
+    controller.paymentFormRenderer = mock[PaymentFormRenderer]
 
     val plugin = new ListingsPlugin
     Mockito.when(controller.listingsPluginDao.get).thenReturn(plugin)

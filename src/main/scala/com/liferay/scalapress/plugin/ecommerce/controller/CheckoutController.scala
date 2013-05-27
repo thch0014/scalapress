@@ -33,6 +33,7 @@ class CheckoutController extends Logging {
     @Autowired var paymentCallbackService: PaymentCallbackService = _
     @Autowired var validator: Validator = _
     @Autowired var orderBuilder: OrderBuilder = _
+    @Autowired var paymentFormRenderer: PaymentFormRenderer = _
 
     @RequestMapping
     def start = "redirect:/checkout/address"
@@ -83,7 +84,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
-        val deliveryOptions = deliveryOptionDao.findAll().sortBy(_.position)
+        val deliveryOptions = deliveryOptionDao.findAll().filter(_.deleted == 0).sortBy(_.position)
         if (deliveryOptions.size == 1) {
 
             val delivery = deliveryOptions.head
@@ -131,7 +132,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStep))
-        page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, sreq.context))
+        page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, shoppingPluginDao))
         page
     }
 
@@ -162,7 +163,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep))
-        page.body(PaymentFormRenderer.renderPaymentForm(purchase, sreq.context, domain))
+        page.body(paymentFormRenderer.renderPaymentForm(purchase))
         page
     }
 

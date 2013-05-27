@@ -32,6 +32,7 @@ class AddListingController {
     @Autowired var themeService: ThemeService = _
     @Autowired var paymentCallbackService: PaymentCallbackService = _
     @Autowired var listingCallbackProcessor: ListingCallbackProcessor = _
+    @Autowired var paymentFormRenderer: PaymentFormRenderer = _
 
     @ResponseBody
     @RequestMapping(value = Array("package"), produces = Array("text/html"))
@@ -238,7 +239,7 @@ class AddListingController {
         val purchase = new ListingPurchase(process.listing, domain)
 
         page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
-        page.body(PaymentFormRenderer.renderPaymentForm(purchase, context, domain))
+        page.body(paymentFormRenderer.renderPaymentForm(purchase))
         page
     }
 

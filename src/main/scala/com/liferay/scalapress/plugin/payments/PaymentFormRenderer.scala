@@ -2,17 +2,22 @@ package com.liferay.scalapress.plugin.payments
 
 import com.liferay.scalapress.ScalapressContext
 import xml.Elem
+import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
-object PaymentFormRenderer {
+@Component
+class PaymentFormRenderer {
 
-    def renderPaymentForm(purchase: Purchase, context: ScalapressContext, domain: String): Elem = {
+    @Autowired var context: ScalapressContext = _
+
+    def renderPaymentForm(purchase: Purchase): Elem = {
 
         val payments = context.paymentPluginDao.enabled
         val forms = payments.map(plugin => {
 
             val buttonText = "Pay with " + plugin.name
-            val params = plugin.processor.params(domain, purchase)
+            val params = plugin.processor.params(context.installationDao.get.domain, purchase)
             val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
             <form method="POST" action={plugin.processor.paymentUrl}>

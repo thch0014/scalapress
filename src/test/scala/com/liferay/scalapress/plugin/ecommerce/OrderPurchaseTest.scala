@@ -3,7 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.liferay.scalapress.obj.Obj
-import com.liferay.scalapress.plugin.ecommerce.domain.Order
+import com.liferay.scalapress.plugin.ecommerce.domain.{Address, Order}
 
 /** @author Stephen Samuel */
 class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -22,11 +22,37 @@ class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSug
     }
 
     test("that paymentDescription uses the order id") {
-        assert(purchase.paymentDescription.contains("12462"))
+        assert(purchase.paymentDescription.contains("#12462"))
     }
 
     test("that uniqueIdent uses the order id") {
         assert("12462" === purchase.uniqueIdent)
+    }
+
+    test("that billing address is taken from the order") {
+        val addy = new Address
+        order.billingAddress = addy
+        assert(purchase.billingAddress.get === addy)
+    }
+
+    test("that delivery address is taken from the order") {
+        val addy = new Address
+        order.deliveryAddress = addy
+        assert(purchase.deliveryAddress.get === addy)
+    }
+
+    test("that billing address is none if not set on Order") {
+        order.billingAddress = null
+        assert(purchase.billingAddress.isEmpty)
+    }
+
+    test("that delivery address is none if not set on Order") {
+        order.deliveryAddress = null
+        assert(purchase.deliveryAddress.isEmpty)
+    }
+
+    test("that callback info uses OrderCallbackProcessor and uniqueident") {
+        assert("com.liferay.scalapress.plugin.ecommerce.OrderCallbackProcessor:12462" === purchase.callbackInfo)
     }
 
     test("success url") {
