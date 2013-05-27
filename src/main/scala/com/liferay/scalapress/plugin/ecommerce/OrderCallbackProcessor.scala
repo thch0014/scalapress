@@ -35,8 +35,7 @@ class OrderCallbackProcessor extends PaymentCallback with Logging {
     }
 
     def _email(order: Order) {
-        val recipients = Option(shoppingPluginDao.get.orderConfirmationRecipients).getOrElse("").split(Array(',', '\n', ' '))
-        logger.debug("Sending order placed email [{}]", recipients)
-        orderCustomerNotificationService.orderPlaced(recipients, order, context.installationDao.get)
+        logger.debug("Sending order placed email")
+        orderCustomerNotificationService.orderPlaced(order)
     }
 }

@@ -4,28 +4,28 @@ import domain.Order
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.liferay.scalapress.Logging
+import com.liferay.scalapress.{ScalapressContext, Logging}
 import collection.mutable.ArrayBuffer
-import com.liferay.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 @Component
 class OrderCustomerNotificationService extends Logging {
 
     @Autowired var mailSender: MailSender = _
+    @Autowired var context: ScalapressContext = _
 
-    def orderPlaced(bccRecipients: Array[String], order: Order, installation: Installation) {
+    def orderPlaced(order: Order) {
 
-        val nowww = if (installation.domain.startsWith("www.")) installation.domain.drop(4) else installation.domain
+        val installation = context.installationDao.get
+        val domain = installation.domain
+        val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
         val body = new ArrayBuffer[String]
 
         body.append("Thank you for your order")
 
         val message = new SimpleMailMessage()
-        message.setFrom("nodotreply@" + nowww)
+        message.setFrom(installation.name + " <donotreply@" + nowww + ">")
         message.setTo(order.account.email)
-        if (bccRecipients.length > 0)
-            message.setBcc(bccRecipients)
         message.setSubject("Order #" + order.id)
         message.setText(body.mkString("\n"))
 
@@ -36,9 +36,10 @@ class OrderCustomerNotificationService extends Logging {
         }
     }
 
-    def orderCompleted(bccRecipients: Array[String], order: Order, installation: Installation) {
+    def orderCompleted(order: Order) {
 
-        val nowww = if (installation.domain.startsWith("www.")) installation.domain.drop(4) else installation.domain
+        val domain = context.installationDao.get.domain
+        val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
         val body = new ArrayBuffer[String]
 
         body.append("Thank you for your order")
@@ -46,8 +47,6 @@ class OrderCustomerNotificationService extends Logging {
         val message = new SimpleMailMessage()
         message.setFrom("nodotreply@" + nowww)
         message.setTo(order.account.email)
-        if (bccRecipients.size > 0)
-            message.setBcc(bccRecipients)
         message.setSubject("Order #" + order.id)
         message.setText(body.mkString("\n"))
 

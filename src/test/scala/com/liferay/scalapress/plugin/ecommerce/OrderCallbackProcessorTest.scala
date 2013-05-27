@@ -59,7 +59,6 @@ class OrderCallbackProcessorTest extends FunSuite with MockitoSugar with OneInst
 
     test("emails are sent using the recipients from shopping plugin") {
         callback.callback(tx, order)
-        Mockito.verify(callback.orderCustomerNotificationService)
-          .orderPlaced(Array("newton@oxford.com", "euler@bridges.com"), order, installation)
+        Mockito.verify(callback.orderCustomerNotificationService).orderPlaced(order)
     }
 }
