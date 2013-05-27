@@ -1,31 +1,11 @@
-package com.liferay.scalapress.folder
+package com.liferay.scalapress.obj
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.liferay.scalapress.folder.section.{FolderContentSection, ObjectListSection, SiblingSection, SubfolderSection}
+import com.liferay.scalapress.folder.section.{SubfolderSection, SiblingSection, ObjectListSection, FolderContentSection}
 
 /** @author Stephen Samuel */
-class FolderTest extends FunSuite with MockitoSugar with BeforeAndAfter {
-
-    test("given a folder then the full name includes the parents") {
-
-        val f1 = new Folder
-        f1.id = 2
-        f1.name = "grandad"
-
-        val f2 = new Folder
-        f2.id = 2
-        f2.name = "dad"
-        f2.parent = f1
-
-        val f3 = new Folder
-        f3.id = 2
-        f3.name = "son"
-        f3.parent = f2
-
-        val n = f3.fullName
-        assert("grandad > dad > son" === n)
-    }
+class ObjectTypeTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("sections sort is stable with respect to position") {
 
@@ -46,19 +26,19 @@ class FolderTest extends FunSuite with MockitoSugar with BeforeAndAfter {
         val section8 = new SubfolderSection
         section8.id = 5
 
-        val folder = new Folder
-        folder.sections.add(section1)
-        folder.sections.add(section2)
-        folder.sections.add(section3)
-        folder.sections.add(section4)
-        folder.sections.add(section5)
-        folder.sections.add(section6)
-        folder.sections.add(section7)
-        folder.sections.add(section8)
+        val objectType = new ObjectType
+        objectType.sections.add(section1)
+        objectType.sections.add(section2)
+        objectType.sections.add(section3)
+        objectType.sections.add(section4)
+        objectType.sections.add(section5)
+        objectType.sections.add(section6)
+        objectType.sections.add(section7)
+        objectType.sections.add(section8)
 
         for ( i <- 1 to 5 ) {
 
-            val sorted = folder.sortedSections
+            val sorted = objectType.sortedSections
             assert(8 === sorted.size)
             assert(section3 === sorted(0))
             assert(section2 === sorted(1))
@@ -77,7 +57,7 @@ class FolderTest extends FunSuite with MockitoSugar with BeforeAndAfter {
 
         for ( i <- 1 to 5 ) {
 
-            val sorted = folder.sortedSections
+            val sorted = objectType.sortedSections
             assert(8 === sorted.size)
             assert(section8 === sorted(0))
             assert(section3 === sorted(1))

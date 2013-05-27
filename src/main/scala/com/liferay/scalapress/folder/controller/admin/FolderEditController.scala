@@ -104,7 +104,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
 
     @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
         val folder = folderDao.find(id)
-        val sections = folder.sections.asScala.toSeq.sortBy(_.position).asJava
+        val sections = folder.sortedSections.asJava
         map.put("eyeball", UrlResolver.folderSiteView(folder))
         map.put("folder", folder)
         map.put("sections", sections)

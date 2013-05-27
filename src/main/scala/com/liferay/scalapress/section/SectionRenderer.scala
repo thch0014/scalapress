@@ -1,6 +1,5 @@
 package com.liferay.scalapress.section
 
-import scala.collection.JavaConverters._
 import collection.mutable.ArrayBuffer
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
 import com.liferay.scalapress.obj.Obj
@@ -23,8 +22,8 @@ object SectionRenderer {
     }
 
     def render(obj: Obj, req: ScalapressRequest, context: ScalapressContext): String =
-        _render(obj.sections.asScala.toSeq ++ obj.objectType.sections.asScala.toSeq, req)
+        _render(obj.objectType.sortedSections ++ obj.sortedSections, req)
 
     def render(folder: Folder, req: ScalapressRequest, context: ScalapressContext): String =
-        _render(folder.sections.asScala.toSeq, req)
+        _render(folder.sortedSections, req)
 }

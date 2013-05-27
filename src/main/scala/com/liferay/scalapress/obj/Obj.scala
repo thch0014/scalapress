@@ -4,7 +4,7 @@ import attr.AttributeValue
 import java.util
 import javax.persistence._
 import org.hibernate.annotations._
-import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.section.{SortedSections, Section}
 import com.liferay.scalapress.folder.Folder
 import com.liferay.scalapress.media.Image
 import org.joda.time.{DateTimeZone, DateTime}
@@ -18,7 +18,7 @@ import com.liferay.scalapress.plugin.listings.domain.ListingPackage
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items")
-class Obj {
+class Obj extends SortedSections {
 
     def available = stock > 0
 

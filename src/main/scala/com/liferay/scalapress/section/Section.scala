@@ -54,4 +54,5 @@ abstract class Section {
         context.sectionDao.save(this)
     }
     def _init(context: ScalapressContext) {}
+    override def toString: String = getClass.getSimpleName + s" [id=$id]"
 }

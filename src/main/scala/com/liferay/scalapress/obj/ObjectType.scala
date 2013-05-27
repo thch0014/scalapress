@@ -4,7 +4,7 @@ import attr.Attribute
 import javax.persistence._
 import java.util
 import org.hibernate.annotations.{CacheConcurrencyStrategy, BatchSize, FetchMode, Fetch}
-import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.section.{SortedSections, Section}
 import com.liferay.scalapress.theme.Markup
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
@@ -14,7 +14,7 @@ import scala.beans.BeanProperty
 @Table(name = "items_types")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-class ObjectType {
+class ObjectType extends SortedSections {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

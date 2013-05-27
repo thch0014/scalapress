@@ -4,7 +4,7 @@ import javax.persistence._
 import java.util
 import com.liferay.scalapress.enums.FolderOrdering
 import org.hibernate.annotations._
-import com.liferay.scalapress.section.Section
+import com.liferay.scalapress.section.{SortedSections, Section}
 import com.liferay.scalapress.obj.Obj
 import section.{FolderContentSection, SubfolderSection}
 import com.liferay.scalapress.theme.Theme
@@ -21,7 +21,7 @@ import org.hibernate.annotations.Index
 @Table(name = "categories")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-class Folder {
+class Folder extends SortedSections {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
