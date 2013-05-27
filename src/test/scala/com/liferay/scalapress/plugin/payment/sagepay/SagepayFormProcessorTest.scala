@@ -104,7 +104,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     test("processor sets callback info into the VendorTxCode field") {
 
         val params = processor._cryptParams(purchase, "coldplay.com")
-        assert(params("VendorTxCode") === "Donkey:616116")
+        assert(params("VendorTxCode") === "Donkey-616116")
     }
 
     test("test encrypt and decrypt are invertible") {

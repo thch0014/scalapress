@@ -42,7 +42,7 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
     }
 
     test("that callback info uses Listing and uniqueident") {
-        assert("Listing:47" === purchase.callbackInfo)
+        assert("Listing-47" === purchase.callbackInfo)
     }
 
     test("callback returns Listing") {

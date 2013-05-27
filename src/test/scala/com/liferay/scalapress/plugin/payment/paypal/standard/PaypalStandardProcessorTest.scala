@@ -59,7 +59,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar with OneIns
 
     test("processor sets callback info into the custom field") {
         val params = processor.params("coldplay.com", purchase)
-        assert(params("custom") === "Monkey:56789")
+        assert(params("custom") === "Monkey-56789")
     }
 
     test("processor sets description from purchase") {
@@ -94,7 +94,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar with OneIns
 
     test("callback result parses the custom value correctly") {
         val result = processor
-          .callback(Map("custom" -> "Order:567",
+          .callback(Map("custom" -> "Order-567",
             "txn_id" -> "6346aa",
             "payment_status" -> "Completed",
             "payer_status" -> "unverified",

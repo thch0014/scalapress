@@ -53,7 +53,7 @@ class WorldpaySelectJuniorTest extends FunSuite with MockitoSugar with OneInstan
 
     test("processor sets callback info into the cartId field") {
         val params = processor.params("coldplay.com", purchase)
-        assert(params("cartId") === "Monkey:56789")
+        assert(params("cartId") === "Monkey-56789")
     }
 
     test("processor sets description from purchase") {

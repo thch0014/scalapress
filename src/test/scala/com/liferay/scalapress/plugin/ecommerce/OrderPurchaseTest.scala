@@ -58,7 +58,7 @@ class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSug
     }
 
     test("that callback info uses Order and uniqueident") {
-        assert("Order:12462" === purchase.callbackInfo)
+        assert("Order-12462" === purchase.callbackInfo)
     }
 
     test("success url") {

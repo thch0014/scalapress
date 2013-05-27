@@ -21,19 +21,20 @@ trait PaymentProcessor {
 }
 
 case class CallbackResult(tx: Transaction, callbackInfo: String) {
-    def callback: String = callbackInfo.split(":").head
-    def uniqueId: String = callbackInfo.split(":").last
+    val SPLITTER = "-"
+    def callback: String = callbackInfo.split(SPLITTER).head
+    def uniqueId: String = callbackInfo.split(SPLITTER).last
 }
 
 /**
  * A purchase models the data that a processor needs to create the parameters for a payment request.
  */
 trait Purchase {
-
+    val SPLITTER = "-"
     def paymentDescription: String
     def callback: String
     def uniqueIdent: String
-    def callbackInfo = callback + ":" + uniqueIdent
+    def callbackInfo = callback + SPLITTER + uniqueIdent
     def total: Int
     def billingAddress: Option[Address] = None
     def deliveryAddress: Option[Address] = None
