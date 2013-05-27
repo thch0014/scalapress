@@ -76,7 +76,7 @@
         <jdom2.version>2.0.4</jdom2.version>
         <jodatime.version>1.4</jodatime.version>
         <javacsv.version>2.0</javacsv.version>
-        <jackson.version>2.2.1</jackson.version>
+        <jackson.version>2.1.5</jackson.version>
         <junit.version>4.11</junit.version>
         <jpa2.version>1.0.1.Final</jpa2.version>
 
