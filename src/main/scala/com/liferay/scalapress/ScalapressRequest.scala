@@ -44,6 +44,8 @@ case class ScalapressRequest(request: HttpServletRequest,
         }
     }
 
+    lazy val installation = context.installationDao.get
+
     def param(key: String): Option[String] = Option(request.getParameter(key))
 
     def error(key: String) = errors.get(key)

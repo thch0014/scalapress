@@ -36,7 +36,7 @@ class Obj extends SortedSections {
     @BeanProperty var labels: String = _
 
     @Index(name = "owner_index")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account")
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var account: Obj = _

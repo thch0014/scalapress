@@ -17,10 +17,7 @@ class MediaWidget extends Widget {
 
     @BeanProperty var url: String = _
 
-    @OneToMany(fetch = FetchType.EAGER,
-        mappedBy = "mediaWidget",
-        cascade = Array(CascadeType.ALL),
-        orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
