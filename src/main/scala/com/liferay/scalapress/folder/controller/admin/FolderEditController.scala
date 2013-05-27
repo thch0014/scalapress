@@ -1,7 +1,7 @@
 package com.liferay.scalapress.folder.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
@@ -15,17 +15,23 @@ import com.liferay.scalapress.theme.ThemeDao
 import com.liferay.scalapress.obj.controller.admin.ThemePopulator
 import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.media.AssetStore
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/{id}"))
-class FolderEditController extends EnumPopulator with ThemePopulator {
+class FolderEditController extends EnumPopulator with ThemePopulator with SectionSorting {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var folderDao: FolderDao = _
     @Autowired var themeDao: ThemeDao = _
     @Autowired var sectionDao: SectionDao = _
     @Autowired var context: ScalapressContext = _
+
+    @ResponseBody
+    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
+    def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String =
+        reorderSections(order, folder.sections.asScala)
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute folder: Folder) = "admin/folder/edit.vm"
@@ -64,18 +70,6 @@ class FolderEditController extends EnumPopulator with ThemePopulator {
     //        folderDao.save(folder)
     //        "redirect:" + UrlResolver.folderEdit(folder)
     //    }
-
-    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
-    def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String = {
-
-        val ids = order.split("-")
-        folder.sections.asScala.foreach(section => {
-            val pos = ids.indexOf(section.id.toString)
-            section.position = pos
-            sectionDao.save(section)
-        })
-        "ok"
-    }
 
     @RequestMapping(value = Array("section/{sectionId}/delete"))
     def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {

@@ -25,11 +25,12 @@ import scala.collection.mutable
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeZone
 import org.apache.commons.lang.WordUtils
+import com.liferay.scalapress.folder.controller.admin.SectionSorting
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
-class ObjectEditController extends FolderPopulator with AttributeValuesPopulator with EnumPopulator {
+class ObjectEditController extends FolderPopulator with AttributeValuesPopulator with EnumPopulator with SectionSorting {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var attributeValueDao: AttributeValueDao = _
@@ -129,16 +130,8 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
     }
 
     @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
-    def reorderSections(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String = {
-
-        val ids = order.split("-")
-        form.o.sections.asScala.foreach(section => {
-            val pos = ids.indexOf(section.id.toString)
-            section.position = pos
-            sectionDao.save(section)
-        })
-        "ok"
-    }
+    def reorderSections(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String =
+        reorderSections(order, form.o.sections.asScala)
 
     @RequestMapping(value = Array("association/{associationId}/delete"))
     def deleteAssociation(@ModelAttribute("form") form: EditForm,
