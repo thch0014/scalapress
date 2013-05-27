@@ -26,7 +26,7 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
     }
 
     test("that paymentDescription uses the process title") {
-        assert(purchase.paymentDescription.contains(listing.name))
+        assert("Listing: coldplay t shirt" === purchase.paymentDescription)
     }
 
     test("that uniqueIdent uses the listing process session id") {

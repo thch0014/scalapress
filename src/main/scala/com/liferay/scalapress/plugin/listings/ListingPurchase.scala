@@ -6,7 +6,7 @@ import com.liferay.scalapress.payments.Purchase
 /** @author Stephen Samuel */
 class ListingPurchase(listing: Obj, domain: String) extends Purchase {
 
-    def paymentDescription: String = "Payment for " + listing.name
+    def paymentDescription: String = "Listing: " + listing.name
 
     def accountName: String = listing.account.name
     def accountEmail: String = listing.account.email
