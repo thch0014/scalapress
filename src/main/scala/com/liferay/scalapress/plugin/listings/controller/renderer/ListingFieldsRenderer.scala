@@ -20,7 +20,7 @@ object ListingFieldsRenderer {
         val attributeValues = process.attributeValues.asScala
 
         <div id="listing-process-details">
-            <form method="POST">
+            <form method="POST" action="/listing/field">
                 <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
                 attributeValues)}{_sectionAttributes(
                 attributes, attributeValues)}<legend>Main Content</legend>{_content(

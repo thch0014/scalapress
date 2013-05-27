@@ -15,7 +15,7 @@ object ListingFoldersRenderer {
         val selects = (1 to max).map(arg => _select(sorted))
         <div id="listing-process-folders">
             {plugin.foldersPageText}
-            <form method="POST">
+            <form method="POST" action="/listing/folder">
                 {selects}<button type="submit" class="btn">Continue</button>
             </form>
         </div>

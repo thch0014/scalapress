@@ -130,15 +130,15 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         Mockito.verify(controller.listingProcessDao).save(process)
     }
 
-    //    test("folders are automatically set if choice is from 1") {
-    //        assert(0 === process.folders.size)
-    //        process.listingPackage.folders = "5"
-    //        process.listingPackage.maxFolders = 2
-    //        process.listingPackage.objectType = new ObjectType
-    //        controller.showFolders(process, errors, req)
-    //        assert(1 === process.folders.size)
-    //        assert(5l === process.folders(00))
-    //    }
+    test("folders are automatically set if choice is from 1") {
+        assert(0 === process.folders.size)
+        process.listingPackage.folders = "5"
+        process.listingPackage.maxFolders = 2
+        process.listingPackage.objectType = new ObjectType
+        controller.showFolders(process, errors, req)
+        assert(1 === process.folders.size)
+        assert(5l === process.folders(00))
+    }
 
     test("folders are not automatically set if choice is from more than 1") {
         assert(0 === process.folders.size)

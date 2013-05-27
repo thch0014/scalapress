@@ -6,7 +6,7 @@ import com.liferay.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPro
 object ListingImagesRenderer {
     def render(process: ListingProcess, plugin: ListingsPlugin) =
         <div id="listing-process-images">
-            {plugin.imagesPageText}<form method="POST" enctype="multipart/form-data">
+            {plugin.imagesPageText}<form method="POST" enctype="multipart/form-data" action="/listing/image">
             {_upload}<button type="submit" class="btn">Continue</button>
         </form>
         </div>
