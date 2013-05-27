@@ -19,8 +19,6 @@ import org.hibernate.annotations.Index
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "categories")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Folder extends SortedSections {
 
     @Id
