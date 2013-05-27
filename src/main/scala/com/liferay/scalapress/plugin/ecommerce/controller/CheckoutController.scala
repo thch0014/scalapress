@@ -174,16 +174,17 @@ class CheckoutController extends Logging {
         val sreq = ScalapressRequest(req, context).withTitle(CheckoutTitles.COMPLETED)
         val shoppingPlugin = shoppingPluginDao.get
 
-        _cleanup(sreq.basket)
-
         val order = sreq.basket.order
         paymentCallbackService.callbacks(req)
+
+        _cleanup(sreq.basket)
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep))
         page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
+
         page
     }
 

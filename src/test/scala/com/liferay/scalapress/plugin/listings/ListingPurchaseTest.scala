@@ -41,12 +41,12 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
         assert("http://coldplay.com/listing/payment/failure" === purchase.failureUrl)
     }
 
-    test("that callback info uses ListingCallback and uniqueident") {
-        assert("com.liferay.scalapress.plugin.listings.ListingCallbackProcessor:47" === purchase.callbackInfo)
+    test("that callback info uses Listing and uniqueident") {
+        assert("Listing:47" === purchase.callbackInfo)
     }
 
-    test("callbackClass returns ListingCallback") {
-        assert(classOf[ListingCallbackProcessor] === purchase.callbackClass)
+    test("callback returns Listing") {
+        assert("Listing" === purchase.callback)
     }
 
     test("purchase total comes from listing package") {

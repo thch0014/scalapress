@@ -21,8 +21,8 @@ trait PaymentProcessor {
 }
 
 case class CallbackResult(tx: Transaction, callbackInfo: String) {
-    def callbackClass: Class[PaymentCallback] = Class.forName(callbackInfo.split(":").head).asInstanceOf[Class[PaymentCallback]]
-    def uniqueId = callbackInfo.split(":").last
+    def callback: String = callbackInfo.split(":").head
+    def uniqueId: String = callbackInfo.split(":").last
 }
 
 /**
@@ -31,9 +31,9 @@ case class CallbackResult(tx: Transaction, callbackInfo: String) {
 trait Purchase {
 
     def paymentDescription: String
-    def callbackClass: Class[_]
+    def callback: String
     def uniqueIdent: String
-    def callbackInfo = callbackClass.getName + ":" + uniqueIdent
+    def callbackInfo = callback + ":" + uniqueIdent
     def total: Int
     def billingAddress: Option[Address] = None
     def deliveryAddress: Option[Address] = None

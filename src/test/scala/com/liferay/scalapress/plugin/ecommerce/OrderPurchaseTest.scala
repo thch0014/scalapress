@@ -57,8 +57,8 @@ class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSug
         assert(purchase.deliveryAddress.isEmpty)
     }
 
-    test("that callback info uses OrderCallbackProcessor and uniqueident") {
-        assert("com.liferay.scalapress.plugin.ecommerce.OrderCallbackProcessor:12462" === purchase.callbackInfo)
+    test("that callback info uses Order and uniqueident") {
+        assert("Order:12462" === purchase.callbackInfo)
     }
 
     test("success url") {

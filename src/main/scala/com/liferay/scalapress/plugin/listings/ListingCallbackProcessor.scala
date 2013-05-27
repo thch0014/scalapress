@@ -2,7 +2,7 @@ package com.liferay.scalapress.plugin.listings
 
 import com.liferay.scalapress.obj.Obj
 import com.liferay.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
-import com.liferay.scalapress.{ScalapressContext, Logging}
+import com.liferay.scalapress.{Callback, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.liferay.scalapress.plugin.listings.email.ListingCustomerNotificationService
@@ -11,6 +11,7 @@ import com.liferay.scalapress.plugin.ecommerce.OrderDao
 
 /** @author Stephen Samuel */
 @Component
+@Callback("Listing")
 class ListingCallbackProcessor extends PaymentCallback with Logging {
 
     @Autowired var context: ScalapressContext = _

@@ -25,7 +25,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
         def accountEmail: String = "snape@hp.com"
         def total: Int = 1567
         def uniqueIdent: String = "616116"
-        def callbackClass: Class[_] = classOf[java.lang.InstantiationError]
+        def callback = "Donkey"
         def paymentDescription: String = "some payment"
         override def billingAddress: Option[Address] = Some(address)
         override def deliveryAddress: Option[Address] = Some(address)
@@ -104,7 +104,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar {
     test("processor sets callback info into the VendorTxCode field") {
 
         val params = processor._cryptParams(purchase, "coldplay.com")
-        assert(params("VendorTxCode") === "java.lang.InstantiationError:616116")
+        assert(params("VendorTxCode") === "Donkey:616116")
     }
 
     test("test encrypt and decrypt are invertible") {

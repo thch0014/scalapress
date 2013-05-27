@@ -4,10 +4,11 @@ import com.liferay.scalapress.plugin.payments.{PaymentCallback, Transaction}
 import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import com.liferay.scalapress.{Logging, ScalapressContext}
+import com.liferay.scalapress.{Callback, Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component
+@Callback("Order")
 class OrderCallbackProcessor extends PaymentCallback with Logging {
 
     @Autowired var context: ScalapressContext = _

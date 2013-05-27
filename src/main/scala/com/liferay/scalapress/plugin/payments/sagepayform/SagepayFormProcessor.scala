@@ -135,6 +135,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     def _cryptParams(purchase: Purchase, domain: String): Map[String, String] = {
 
         val params = new scala.collection.mutable.HashMap[String, String]
+
+        // Max 40 characters
+        // This should be your own reference code to the transaction. Your
+        // site should provide a completely unique VendorTxCode for each transaction.
         params.put("VendorTxCode", purchase.callbackInfo)
         Option(plugin.sagePayVendorEmail).foreach(email => {
             params.put("VendorEmail", plugin.sagePayVendorEmail)
@@ -143,6 +147,8 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
         val amount = "%1.2f".format(purchase.total / 100.0)
 
         params.put("Currency", "GBP")
+
+        // Amount for the Transaction containing minor  digits formatted to 2 decimal places where appropriate
         params.put("Amount", amount)
         params.put("CustomerName", purchase.accountName)
         params.put("CustomerEmail", purchase.accountEmail)

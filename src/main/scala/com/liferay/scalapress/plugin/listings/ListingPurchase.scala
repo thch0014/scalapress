@@ -16,5 +16,5 @@ class ListingPurchase(listing: Obj, domain: String) extends Purchase {
     def failureUrl: String = "http://" + domain + "/listing/payment/failure"
 
     def uniqueIdent: String = listing.id.toString
-    override def callbackClass = classOf[ListingCallbackProcessor]
+    override def callback = "Listing"
 }

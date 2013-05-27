@@ -16,6 +16,6 @@ class OrderPurchase(val order: Order, val domain: String) extends Purchase {
     def accountEmail: String = order.account.email
     def total: Int = (order.total * 100).toInt
     def uniqueIdent: String = order.id.toString
-    def callbackClass = classOf[OrderCallbackProcessor]
+    def callback = "Order"
     def paymentDescription: String = s"Order #${order.id} - ${domain}"
 }

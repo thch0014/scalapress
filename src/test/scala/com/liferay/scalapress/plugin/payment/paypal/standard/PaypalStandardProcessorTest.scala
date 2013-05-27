@@ -18,7 +18,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
         def accountEmail: String = "snape@hp.com"
         def total: Int = 58233
         def uniqueIdent: String = "56789"
-        def callbackClass: Class[_] = classOf[ThreadDeath]
+        def callback = "Monkey"
         def paymentDescription: String = "some payment"
     }
 
@@ -59,7 +59,7 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
 
     test("processor sets callback info into the custom field") {
         val params = processor.params("coldplay.com", purchase)
-        assert(params("custom") === "java.lang.ThreadDeath:56789")
+        assert(params("custom") === "Monkey:56789")
     }
 
     test("processor sets description from purchase") {
@@ -94,13 +94,13 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar {
 
     test("callback result parses the custom value correctly") {
         val result = processor
-          .callback(Map("custom" -> "java.lang.String:567",
+          .callback(Map("custom" -> "Order:567",
             "txn_id" -> "6346aa",
             "payment_status" -> "Completed",
             "payer_status" -> "unverified",
             "mc_currency" -> "GBP",
             "payment_type" -> "instant"))
         assert(result.get.uniqueId === "567")
-        assert(result.get.callbackClass === Class.forName("java.lang.String"))
+        assert(result.get.callback === "Order")
     }
 }
