@@ -18,6 +18,7 @@ import com.liferay.scalapress.plugin.listings.domain.ListingProcess
 import com.liferay.scalapress.plugin.listings.controller.renderer._
 import scala.Some
 import com.liferay.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Controller
@@ -81,26 +82,17 @@ class AddListingController {
                           .map(_.split(",").map(_.toLong))
                           .getOrElse(Array[Long]())
 
-                        folders.size match {
+                        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
+                        val theme = themeService.default
+                        val page = ScalapressPage(theme, sreq)
 
-                            case 1 =>
-                                process.folders = folders
-                                listingProcessDao.save(process)
-                                showFields(process, errors, req)
+                        val tree = context.folderDao.tree
+                        val filtered = if (folders.isEmpty) Array[Folder]() else tree.filter(f => folders.contains(f.id))
 
-                            case _ =>
+                        page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
+                        page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
+                        page
 
-                                val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_FOLDERS)
-                                val theme = themeService.default
-                                val page = ScalapressPage(theme, sreq)
-
-                                val tree = context.folderDao.tree
-                                val filtered = if (folders.isEmpty) tree else tree.filter(f => folders.contains(f.id))
-
-                                page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
-                                page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
-                                page
-                        }
                 }
         }
     }
