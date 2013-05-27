@@ -132,7 +132,7 @@ class ElasticSearchService extends SearchService with Logging {
           .setSize(1)
           .execute()
           .actionGet()
-        resp.hits.totalHits() match {
+        resp.getHits.totalHits() match {
             case 1 => true
             case _ => false
         }
@@ -167,7 +167,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     override def count: Long = {
-        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(4000).count()
+        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(4000).getCount
     }
 
     def _count(search: SavedSearch): Int = {
@@ -176,7 +176,7 @@ class ElasticSearchService extends SearchService with Logging {
           .setQuery(query)
           .execute()
           .actionGet(4000)
-          .count().toInt
+          .getCount.toInt
     }
 
     override def search(search: SavedSearch): SearchResult = {
@@ -200,8 +200,6 @@ class ElasticSearchService extends SearchService with Logging {
 
         val buffer = new ArrayBuffer[String]()
 
-
-
         Option(search.name)
           .orElse(Option(search.keywords))
           .filter(_.trim.length > 0)
@@ -210,7 +208,7 @@ class ElasticSearchService extends SearchService with Logging {
           .split(" ")
           .filter(_.trim.length > 0)
           .map(_.replace("!", "").toLowerCase)
-          .foreach(arg => buffer.append(s"name:${arg}")))
+          .foreach(arg => buffer.append(s"name:$arg")))
 
         Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
 
@@ -302,7 +300,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     def _resp2facets(resp: SearchResponse): Seq[Facet] = {
-        Option(resp.facets()) match {
+        Option(resp.getFacets) match {
             case None => Nil
             case Some(facets) =>
                 facets.facets()
@@ -310,14 +308,14 @@ class ElasticSearchService extends SearchService with Logging {
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
                   .map(arg => {
-                    val terms = arg.entries().asScala.map(entry => FacetTerm(entry.term, entry.count))
-                    Facet(arg.name, terms)
+                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount))
+                    Facet(arg.getName, terms)
                 })
         }
     }
 
     def _resp2ref(resp: SearchResponse): Seq[ObjectRef] = {
-        resp.hits().asScala.map(arg => {
+        resp.getHits.asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
             val n = arg.getSource.get("name_raw").toString
@@ -382,48 +380,45 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     def stats: Map[String, String] = {
-        val nodes = client.admin().cluster().prepareNodesStats().all().execute().actionGet(TIMEOUT).nodes()
+        val nodes = client.admin().cluster().prepareNodesStats().all().execute().actionGet(TIMEOUT).getNodes
         val map = scala.collection.mutable.Map[String, String]()
         nodes.flatMap(node => {
-            map.put("jvm.mem.heapUsed", node.jvm.mem.heapUsed.mb + "mb")
-            map.put("jvm.mem.heapCommitted", node.jvm.mem.heapCommitted.mb + "mb")
-            map.put("jvm.mem.nonHeapCommitted", node.jvm.mem.nonHeapCommitted.mb + "mb")
-            map.put("jvm.mem.nonHeapUsed", node.jvm.mem.nonHeapUsed.mb + "mb")
-            map.put("jvm.threads.count", node.jvm.threads.count.toString)
-            map.put("jvm.threads.peakCount", node.jvm.threads.peakCount.toString)
-            map.put("indices.docs.count", node.indices.docs.count.toString)
-            map.put("indices.docs.deleted", node.indices.docs.deleted.toString)
-            map.put("indices.cache.bloomSize", node.indices.cache.bloomSize.toString)
-            map.put("indices.cache.fieldSize", node.indices.cache.fieldSize.toString)
-            map.put("indices.cache.filterSize", node.indices.cache.filterSize.toString)
-            map.put("indices.cache.filterEvictions", node.indices.cache.filterEvictions.toString)
-            map.put("indices.store.size", node.indices.store.size.mb + "mb")
-            map.put("indices.store.throttleTime", node.indices.store.throttleTime.toString)
-            map.put("transport.txCount", node.transport.txCount.toString)
-            map.put("transport.txSize", node.transport.txSize.toString)
-            map.put("transport.txSize", node.transport.txSize.toString)
+            map.put("jvm.mem.heapUsed", node.getJvm.mem.heapUsed.mb + "mb")
+            map.put("jvm.mem.heapCommitted", node.getJvm.mem.heapCommitted.mb + "mb")
+            map.put("jvm.mem.nonHeapCommitted", node.getJvm.mem.nonHeapCommitted.mb + "mb")
+            map.put("jvm.mem.nonHeapUsed", node.getJvm.mem.nonHeapUsed.mb + "mb")
+            map.put("jvm.threads.count", node.getJvm.threads.count.toString)
+            map.put("jvm.threads.peakCount", node.getJvm.threads.peakCount.toString)
+            map.put("indices.docs.count", node.getIndices.getDocs.getCount.toString)
+            map.put("indices.docs.deleted", node.getIndices.getDocs.getDeleted.toString)
+            map.put("indices.idcache.memorySize", node.getIndices.getIdCache.getMemorySize.toString)
+            map.put("indices.store.size", node.getIndices.getStore.size.mb + "mb")
+            map.put("indices.store.throttleTime", node.getIndices.getStore.throttleTime.toString)
+            map.put("transport.txCount", node.getTransport.txCount.toString)
+            map.put("transport.txSize", node.getTransport.txSize.toString)
+            map.put("transport.txSize", node.getTransport.txSize.toString)
 
-            node.threadPool().iterator().asScala.foreach(pool => {
-                map.put("threadpool." + pool.name + ".active", pool.active.toString)
-                map.put("threadpool." + pool.name + ".active", pool.completed.toString)
-                map.put("threadpool." + pool.name + ".active", pool.largest.toString)
-                map.put("threadpool." + pool.name + ".active", pool.queue.toString)
-                map.put("threadpool." + pool.name + ".active", pool.rejected.toString)
-                map.put("threadpool." + pool.name + ".active", pool.threads.toString)
+            node.getThreadPool.iterator().asScala.foreach(pool => {
+                map.put("threadpool." + pool.getName + ".active", pool.getActive.toString)
+                map.put("threadpool." + pool.getName + ".active", pool.getCompleted.toString)
+                map.put("threadpool." + pool.getName + ".active", pool.getLargest.toString)
+                map.put("threadpool." + pool.getName + ".active", pool.getQueue.toString)
+                map.put("threadpool." + pool.getName + ".active", pool.getRejected.toString)
+                map.put("threadpool." + pool.getName + ".active", pool.getThreads.toString)
             })
 
             var k = 1
-            node.fs.iterator().asScala.foreach(fs => {
-                map.put("threadpool.fs" + k + ".available", fs.available().toString)
-                map.put("threadpool.fs" + k + ".diskQueue", fs.diskQueue().toString)
-                map.put("threadpool.fs" + k + ".diskReads", fs.diskReads().toString)
-                map.put("threadpool.fs" + k + ".diskWrites", fs.diskWrites().toString)
-                map.put("threadpool.fs" + k + ".free", fs.free().toString)
-                map.put("threadpool.fs" + k + ".total", fs.total().toString)
+            node.getFs.iterator().asScala.foreach(fs => {
+                map.put("threadpool.fs" + k + ".available", fs.getAvailable.toString)
+                map.put("threadpool.fs" + k + ".diskQueue", fs.getDiskQueue.toString)
+                map.put("threadpool.fs" + k + ".diskReads", fs.getDiskReads.toString)
+                map.put("threadpool.fs" + k + ".diskWrites", fs.getDiskWrites.toString)
+                map.put("threadpool.fs" + k + ".free", fs.getFree.toString)
+                map.put("threadpool.fs" + k + ".total", fs.getTotal.toString)
                 k = k + 1
             })
 
-            map.map(arg => ("search." + node.hostname + "." + arg._1, arg._2))
+            map.map(arg => ("search." + node.getHostname + "." + arg._1, arg._2))
 
         }).toMap
     }

@@ -1,8 +1,8 @@
 package com.liferay.scalapress.plugin.sitemap
 
-import org.jdom.{Namespace, Element, Document}
-import org.jdom.output.{Format, XMLOutputter}
 import java.io.StringWriter
+import org.jdom2.{Element, Document, Namespace}
+import org.jdom2.output.{Format, XMLOutputter}
 
 /** @author Stephen Samuel */
 object SitemapWriter {

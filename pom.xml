@@ -25,10 +25,10 @@
 
 
         <maven.plugin.jar.version>2.4</maven.plugin.jar.version>
-        <maven.plugin.war.version>2.2</maven.plugin.war.version>
+        <maven.plugin.war.version>2.3</maven.plugin.war.version>
         <maven.plugin.resources.version>2.6</maven.plugin.resources.version>
-        <maven.plugin.compiler.version>3.0</maven.plugin.compiler.version>
-        <maven.plugin.surefire.version>2.12</maven.plugin.surefire.version>
+        <maven.plugin.compiler.version>3.1</maven.plugin.compiler.version>
+        <maven.plugin.surefire.version>2.14.1</maven.plugin.surefire.version>
         <maven.plugin.dependency.version>2.4</maven.plugin.dependency.version>
         <maven.plugin.cargo.version>1.2.2</maven.plugin.cargo.version>
         <maven.plugin.release.version>2.3.2</maven.plugin.release.version>
@@ -38,6 +38,8 @@
         <compiler.version.source>1.7</compiler.version.source>
         <compiler.version.target>1.7</compiler.version.target>
 
+        <aws.version>1.4.4.2</aws.version>
+
         <commons.httpcore.version>4.2.1</commons.httpcore.version>
         <commons.httpclient.version>4.2.1</commons.httpclient.version>
         <commons.lang.version>2.6</commons.lang.version>
@@ -46,32 +48,22 @@
         <commons.collections.version>3.2.1</commons.collections.version>
         <commons.logging.version>1.1.1</commons.logging.version>
         <commons.beanutils.version>1.8.3</commons.beanutils.version>
-        <commons.fileupload.version>1.2.2</commons.fileupload.version>
+        <commons.fileupload.version>1.3</commons.fileupload.version>
         <commons.sanselan.version>0.97-incubator</commons.sanselan.version>
+        <commons.validator.version>1.4.0</commons.validator.version>
 
+        <cglib.version>2.2.2</cglib.version>
 
-        <rome.version>1.0</rome.version>
-
-        <hibernate.core.version>3.6.10.Final</hibernate.core.version>
-        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-        <spring.version>3.1.4.RELEASE</spring.version>
-
-        <mysql.version>5.1.23</mysql.version>
-        <jdom.version>1.1.3</jdom.version>
-        <jdom2.version>2.0.4</jdom2.version>
-        <jodatime.version>1.4</jodatime.version>
-
-        <jackson.version>2.1.3</jackson.version>
+        <ehcache.version>2.6.6</ehcache.version>
+        <elasticsearch.version>0.90.0</elasticsearch.version>
 
         <google.guava.version>13.0.1</google.guava.version>
-        <junit.version>4.11</junit.version>
-        <xmlunit.version>1.3</xmlunit.version>
-        <mockito.version>1.9.5</mockito.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j.version>1.6.6</slf4j.version>
+        <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
 
-        <scala.test.version>1.9.1</scala.test.version>
-        <scala.version>2.10.1</scala.version>
+        <hibernate.core.version>3.6.10.Final</hibernate.core.version>
+        <hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
+
+        <itext.version>5.2.0</itext.version>
 
         <javax.servlet.version>2.5</javax.servlet.version>
         <javax.jsp.version>2.1</javax.jsp.version>
@@ -80,9 +72,30 @@
         <javax.validation.version>1.0.0.GA</javax.validation.version>
         <javax.jms.version>1.1</javax.jms.version>
 
+        <jdom.version>2.0.2</jdom.version>
+        <jdom2.version>2.0.4</jdom2.version>
+        <jodatime.version>1.4</jodatime.version>
         <javacsv.version>2.0</javacsv.version>
+        <jackson.version>2.2.1</jackson.version>
+        <junit.version>4.11</junit.version>
+        <jpa2.version>1.0.1.Final</jpa2.version>
 
-        <itext.version>5.2.0</itext.version>
+        <log4j.version>1.2.17</log4j.version>
+
+        <mysql.version>5.1.25</mysql.version>
+        <mockito.version>1.9.5</mockito.version>
+
+        <rome.version>1.0</rome.version>
+
+        <slf4j.version>1.6.6</slf4j.version>
+        <scala.test.version>1.9.1</scala.test.version>
+        <scala.version>2.10.1</scala.version>
+        <spring.version>3.1.4.RELEASE</spring.version>
+        <spring.security.version>3.1.4.RELEASE</spring.security.version>
+
+        <xmlunit.version>1.3</xmlunit.version>
+        <yuicompressor.version>2.4.7</yuicompressor.version>
+
     </properties>
 
     <!--
@@ -307,7 +320,7 @@
         <dependency>
             <groupId>com.googlecode.htmlcompressor</groupId>
             <artifactId>htmlcompressor</artifactId>
-            <version>1.5.2</version>
+            <version>${googlecode.htmlcompressor.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.javascript</groupId>
@@ -317,24 +330,24 @@
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
             <artifactId>yuicompressor</artifactId>
-            <version>2.4.6</version>
+            <version>${yuicompressor.version}</version>
         </dependency>
 
         <!-- JACKSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.1.3</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.1.3</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>2.1.3</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -344,7 +357,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-scala_2.10</artifactId>
-            <version>2.1.3</version>
+            <version>${jackson.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.scalatest</groupId>
@@ -381,7 +394,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>0.20.5</version>
+            <version>${elasticsearch.version}</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -502,7 +515,7 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
-            <version>2.6.2</version>
+            <version>${ehcache.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -512,7 +525,7 @@
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-            <version>1.1.4</version>
+            <version>${commons.validator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>
@@ -526,7 +539,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.8.3</version>
+            <version>${commons.beanutils.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -535,7 +548,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.4.4.1</version>
+            <version>${aws.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -545,7 +558,7 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
+            <version>${jpa2.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -561,7 +574,7 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
+            <version>${cglib.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -580,17 +593,17 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.1.3.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.1.3.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.1.3.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
     </dependencies>
 
