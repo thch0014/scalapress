@@ -13,6 +13,7 @@ import scala.beans.BeanProperty
 class Basket {
 
     def empty() {
+        lines.asScala.foreach(_.basket = null)
         lines.clear()
         deliveryOption = null
     }

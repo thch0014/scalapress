@@ -3,6 +3,7 @@ package com.liferay.scalapress.plugin.ecommerce.controller.renderers
 import com.liferay.scalapress.plugin.ecommerce.domain._
 import scala.collection.JavaConverters._
 import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
+import scala.xml.Unparsed
 
 /** @author Stephen Samuel */
 object CheckoutConfirmationRenderer {
@@ -76,7 +77,7 @@ object CheckoutConfirmationRenderer {
 
     private def renderDeliveryLine(basket: Basket) = {
 
-        val price = xml.Unparsed(" &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0))
+        val price = Unparsed(" &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0))
 
         <tr>
             <td>

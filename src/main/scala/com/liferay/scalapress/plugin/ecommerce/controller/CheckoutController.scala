@@ -174,6 +174,8 @@ class CheckoutController extends Logging {
         val sreq = ScalapressRequest(req, context).withTitle(CheckoutTitles.COMPLETED)
         val shoppingPlugin = shoppingPluginDao.get
 
+        _cleanup(sreq.basket)
+
         val order = sreq.basket.order
         paymentCallbackService.callbacks(req)
 
@@ -183,6 +185,12 @@ class CheckoutController extends Logging {
         page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep))
         page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
         page
+    }
+
+    def _cleanup(basket: Basket) {
+        basket.empty()
+        basket.order = null
+        basketDao.save(basket)
     }
 
     @ResponseBody

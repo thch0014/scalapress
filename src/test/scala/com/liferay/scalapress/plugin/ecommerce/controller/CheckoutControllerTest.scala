@@ -6,7 +6,7 @@ import com.liferay.scalapress.plugin.ecommerce.{OrderPurchase, ShoppingPlugin, S
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext, ScalapressConstants}
-import com.liferay.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, Order, Basket}
+import com.liferay.scalapress.plugin.ecommerce.domain._
 import org.springframework.validation.Errors
 import com.liferay.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
 import com.liferay.scalapress.theme.ThemeService
@@ -79,6 +79,32 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
         basket.order = order
         val page = controller.completed(req)
         assert(CheckoutTitles.COMPLETED === page.req.title.get)
+    }
+
+    test("that a completed order empties the basket") {
+        val line1 = new BasketLine
+        line1.basket = basket
+        basket.order = order
+        basket.lines.add(line1)
+        controller.completed(req)
+        assert(basket.order === null)
+        assert(basket.lines.size === 0)
+    }
+
+    test("that cleanup empties basket") {
+        val line1 = new BasketLine
+        line1.basket = basket
+        val line2 = new BasketLine
+        line2.basket = basket
+        basket.lines.add(line1)
+        basket.lines.add(line2)
+        basket.order = order
+        assert(basket.lines.size === 2)
+        controller._cleanup(basket)
+        assert(basket.lines.size === 0)
+        assert(basket.order === null)
+        assert(line1.basket === null)
+        assert(line2.basket === null)
     }
 
     test("that showPayments renders using a purchase backed by the basket order") {
