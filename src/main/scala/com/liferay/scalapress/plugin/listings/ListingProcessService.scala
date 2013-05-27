@@ -12,7 +12,7 @@ import com.liferay.scalapress.plugin.listings.email.ListingAdminNotificationServ
   *
   *         This service will complete a listing process
   *
-  **/
+  * */
 @Component
 class ListingProcessService extends Logging {
 
@@ -21,7 +21,7 @@ class ListingProcessService extends Logging {
     @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
 
     def process(process: ListingProcess): Obj = {
-        logger.info("Building listing for process [{}]", process)
+        logger.debug("Building listing for process [{}]", process)
 
         val account = context.objectDao.find(process.accountId.toLong)
         val listing = _listing(account, process)
@@ -37,7 +37,7 @@ class ListingProcessService extends Logging {
     def cleanup(process: ListingProcess) {
         process.attributeValues.asScala.foreach(_.listingProcess = null)
         process.attributeValues.clear()
-        logger.info("Process completed - removing from database")
+        logger.debug("Process completed - removing from database")
         listingProcessDao.remove(process)
     }
 

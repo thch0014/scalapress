@@ -7,7 +7,7 @@ import com.liferay.scalapress.plugin.ecommerce.domain.Order
 import com.liferay.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
-class CheckoutCompletedRenderer extends FunSuite with MockitoSugar with OneInstancePerTest {
+class CheckoutCompletedRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val order = new Order
     order.id = 15515

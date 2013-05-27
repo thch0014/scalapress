@@ -84,7 +84,6 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
 
         obj.sortedAttributeValues.foreach(_.attribute.position = 0)
         val actual = new AttributeTableTag().render(sreq, Map.empty).get
-        println(actual)
         for ( i <- 1 to 50 ) {
             assert("(?s).*bassist.*guitar.*singer.*name.*".r.findFirstIn(actual).isDefined)
         }

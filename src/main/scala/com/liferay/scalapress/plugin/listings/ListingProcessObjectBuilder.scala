@@ -12,7 +12,7 @@ import com.liferay.scalapress.plugin.listings.domain.{ListingPackage, ListingPro
 class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
 
     def build(process: ListingProcess): Obj = {
-        logger.info("Building listing for process [{}]", process)
+        logger.debug("Building listing for process [{}]", process)
 
         val obj = _obj(process)
 

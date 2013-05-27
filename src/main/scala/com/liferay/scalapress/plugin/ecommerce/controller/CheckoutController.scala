@@ -15,7 +15,6 @@ import com.liferay.scalapress.util.mvc.ScalapressPage
 import com.liferay.scalapress.theme.ThemeService
 import com.liferay.scalapress.plugin.ecommerce.controller.renderers._
 import com.liferay.scalapress.plugin.payments.{PaymentFormRenderer, PaymentCallbackService}
-import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
