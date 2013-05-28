@@ -17,7 +17,7 @@ class PluginInstantiator extends Logging with ApplicationContextAware {
     @PostConstruct
     def createPlugins() {
         logger.info("Instaniating plugins: {}", plugins)
-        plugins.foreach(plugin => {
+        plugins.filterNot(_ == "none").foreach(plugin => {
             val klass = Class.forName(plugin)
             val bean = applicationContext
               .getAutowireCapableBeanFactory
