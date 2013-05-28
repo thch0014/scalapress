@@ -32,11 +32,6 @@
                 <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop>
                 <prop key="javax.persistence.validation.mode">none</prop>
                 <prop key="hibernate.globally_quoted_identifiers">true</prop>
-                <prop key="hibernate.c3p0.min_size">5</prop>
-                <prop key="hibernate.c3p0.max_size">20</prop>
-                <prop key="hibernate.c3p0.timeout">300</prop>
-                <prop key="hibernate.c3p0.max_statements">50</prop>
-                <prop key="hibernate.c3p0.idle_test_period">3000</prop>
             </props>
         </property>
     </bean>
@@ -49,6 +44,12 @@
         <property name="password" value="${mysql.password}"/>
         <property name="validationQuery" value="SELECT 1"/>
         <property name="testOnBorrow" value="true"/>
+        <property name="maxWait" value="5000"/>
+        <property name="initialSize" value="2"/>
+        <property name="minIdle" value="2"/>
+        <property name="maxActive" value="20"/>
+        <property name="logAbandoned" value="true"/>
+        <property name="validationQueryTimeout" value="2000"/>
     </bean>
 
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
