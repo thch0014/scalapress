@@ -9,7 +9,7 @@
                    value="[%d{dd-MMM HH:mm:ss:SSS}] %-5p [%-40.40t] %c{1}.%M - %m%n"/>
         </layout>
     </appender>
-    <logger name="com.liferay">
+    <logger name="com.cloudray">
         <level value="debug"/>
     </logger>
     <logger name="org.hibernate">
