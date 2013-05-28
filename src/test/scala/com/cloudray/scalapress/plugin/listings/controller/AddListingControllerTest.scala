@@ -13,6 +13,9 @@ import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
+import org.springframework.web.multipart.MultipartFile
+import java.io.ByteArrayInputStream
+import com.cloudray.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -30,6 +33,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     controller.context.paymentPluginDao = mock[PaymentPluginDao]
     controller.context.folderDao = mock[FolderDao]
     controller.paymentFormRenderer = mock[PaymentFormRenderer]
+    controller.context.assetStore = mock[AssetStore]
 
     val plugin = new ListingsPlugin
     Mockito.when(controller.listingsPluginDao.get).thenReturn(plugin)
@@ -161,5 +165,28 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         Mockito.when(req.getParameterValues("folderId")).thenReturn(Array("6", "9", "1"))
         controller.selectFolders(process, errors, req)
         Mockito.verify(controller.listingProcessDao).save(process)
+    }
+
+    test("uploading images adds to existing images'") {
+
+        val bis1 = new ByteArrayInputStream(Array[Byte](1, 2))
+        val bis2 = new ByteArrayInputStream(Array[Byte](1, 2))
+
+        process.imageKeys = Array("1.png", "2.png")
+        val upload1 = mock[MultipartFile]
+        val upload2 = mock[MultipartFile]
+        Mockito.when(upload1.isEmpty).thenReturn(false)
+        Mockito.when(upload2.isEmpty).thenReturn(false)
+        Mockito.when(upload1.getOriginalFilename).thenReturn("3.png")
+        Mockito.when(upload2.getOriginalFilename).thenReturn("4.png")
+        Mockito.when(controller.context.assetStore.add("3.png", bis1)).thenReturn("333.png")
+        Mockito.when(controller.context.assetStore.add("4.png", bis2)).thenReturn("444.png")
+        Mockito.when(upload1.getInputStream).thenReturn(bis1)
+        Mockito.when(upload2.getInputStream).thenReturn(bis2)
+
+        assert(2 === process.imageKeys.size)
+        controller.uploadImages(process, errors, req, Array(upload1, upload2))
+        assert(4 === process.imageKeys.size)
+        assert(Array("1.png", "2.png", "333.png", "444.png") === process.imageKeys)
     }
 }

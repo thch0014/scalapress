@@ -178,11 +178,12 @@ class AddListingController {
                      req: HttpServletRequest,
                      @RequestParam(value = "upload", required = false) uploads: Array[MultipartFile]): String = {
 
-        if (uploads != null)
-            process.imageKeys = uploads.filterNot(arg => arg.isEmpty).map(arg => {
-                val key = context.assetStore.add(arg.getInputStream)
-                key
-            }).toArray
+        if (uploads != null) {
+            val uploadedKeys = uploads
+              .filterNot(arg => arg.isEmpty)
+              .map(arg => context.assetStore.add(arg.getOriginalFilename, arg.getInputStream))
+            process.imageKeys = process.imageKeys ++ uploadedKeys
+        }
 
         listingProcessDao.save(process)
 

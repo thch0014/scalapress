@@ -113,6 +113,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
     def put(key: String, in: InputStream) {
 
         val array: Array[Byte] = IOUtils.toByteArray(in)
+        IOUtils.closeQuietly(in)
 
         val md = new ObjectMetadata
         md.setContentLength(array.length)
