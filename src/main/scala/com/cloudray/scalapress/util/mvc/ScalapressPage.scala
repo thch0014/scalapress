@@ -18,6 +18,8 @@ class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {
         _body += any
         this
     }
+
+    def render = _body.map(_.toString).mkString("\n\n")
 }
 
 object ScalapressPage {

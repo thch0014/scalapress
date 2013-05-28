@@ -50,8 +50,8 @@ class FolderController extends Logging {
             case None =>
         }
 
-        val header = Option(folder.header).orElse(Some(folderPluginDao.head.header)).getOrElse("")
-        val footer = Option(folder.footer).orElse(Some(folderPluginDao.head.footer)).getOrElse("")
+        val header = Option(folder.header).orElse(Option(folderPluginDao.head.header)).getOrElse("")
+        val footer = Option(folder.footer).orElse(Option(folderPluginDao.head.footer)).getOrElse("")
 
         val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
         val theme = themeService.theme(folder)

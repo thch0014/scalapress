@@ -1,8 +1,7 @@
-package com.cloudray.scalapress.folder.controller
+package com.cloudray.scalapress.folder.controller.admin
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.folder.controller.admin.FolderEditController
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import com.cloudray.scalapress.folder.section.{SubfolderSection, SiblingSection}
 import org.mockito.Mockito
