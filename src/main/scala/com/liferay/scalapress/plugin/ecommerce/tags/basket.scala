@@ -7,6 +7,7 @@ import com.liferay.scalapress.util.mvc.UrlResolver
 import com.liferay.scalapress.theme.MarkupRenderer
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.liferay.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 
 /** @author Stephen Samuel */
 @Tag("basket")
@@ -57,7 +58,7 @@ class AddToBasketTag extends ScalapressTag with TagBuilder {
         request.obj match {
             case None => None
             case Some(obj) =>
-                obj.available || obj.backorders || request.context.shoppingPluginDao.get.stockMethod == StockMethod.Off match {
+                obj.available || obj.backorders || request.context.bean[ShoppingPluginDao].get.stockMethod == StockMethod.Off match {
                     case true =>
                         val text = params.get("text").getOrElse("Add to basket")
                         val href = UrlResolver.addToBasket(obj)
@@ -75,7 +76,7 @@ class BasketLinesTag extends ScalapressTag {
 
         // we need to be inside a basket context
         val lines = request.basket.lines
-        Option(request.context.shoppingPluginDao.get.basketLineMarkup) match {
+        Option(request.context.bean[ShoppingPluginDao].get.basketLineMarkup) match {
             case None => None
             case Some(m) =>
                 val render = MarkupRenderer.render(lines.asScala, m, request)

@@ -47,6 +47,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     lazy val installation = context.installationDao.get
     def folders = context.folderDao.findAll()
     lazy val folderRoot = context.folderDao.root
+    lazy val widgets = context.widgetDao.findAll()
 
     def param(key: String): Option[String] = Option(request.getParameter(key))
 

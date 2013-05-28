@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import com.liferay.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.liferay.scalapress.plugin.ecommerce.OrderDao
+import com.liferay.scalapress.plugin.ecommerce.{ShoppingPluginDao, OrderDao}
 import com.liferay.scalapress.theme.MarkupRenderer
 
 /** @author Stephen Samuel */
@@ -21,7 +21,7 @@ class InvoiceController {
     def invoice(@PathVariable("id") id: Long, req: HttpServletRequest, resp: HttpServletResponse): String = {
         val order = orderDao.find(id)
         resp.setCharacterEncoding("UTF-8")
-        Option(context.shoppingPluginDao.get.invoiceMarkup) match {
+        Option(context.bean[ShoppingPluginDao].get.invoiceMarkup) match {
             case None => "No invoice markup set"
             case Some(m) => MarkupRenderer.render(m, ScalapressRequest(req, context).withOrder(order))
         }

@@ -24,28 +24,24 @@ class AttributeValue {
     @Index(name = "attribute_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attribute", nullable = true)
-    @BatchSize(size = 50)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attribute: Attribute = _
 
     @Index(name = "object_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item", nullable = true)
-    @BatchSize(size = 20)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var obj: Obj = _
 
     @Index(name = "search_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "search", nullable = true)
-    @BatchSize(size = 20)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var savedSearch: SavedSearch = _
 
     @Index(name = "lp_index")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listing_process", nullable = true)
-    @BatchSize(size = 20)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var listingProcess: ListingProcess = _
 

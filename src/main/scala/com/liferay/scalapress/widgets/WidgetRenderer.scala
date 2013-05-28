@@ -12,7 +12,7 @@ object WidgetRenderer extends Logging {
                context: ScalapressContext): String = {
 
         logger.debug("Loading widgets for location={}...", location)
-        val widgets = context.widgetDao.findAll().filter(widget => location.equalsIgnoreCase(widget.location))
+        val widgets = request.widgets.filter(widget => location.equalsIgnoreCase(widget.location))
         logger.debug("... {} widgets loaded", widgets.size)
         val allowed = widgets.filter(_.visible) filter (checkWhere(_, request))
         logger.debug("...and {} are visible on this page", allowed.size)

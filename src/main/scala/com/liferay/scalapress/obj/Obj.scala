@@ -51,8 +51,7 @@ class Obj extends SortedSections {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
-    @OneToMany(mappedBy = "obj", fetch = FetchType.EAGER,
-        cascade = Array(CascadeType.ALL), orphanRemoval = true)
+    @OneToMany(mappedBy = "obj", fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()

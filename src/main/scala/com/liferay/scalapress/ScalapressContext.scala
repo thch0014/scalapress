@@ -3,8 +3,8 @@ package com.liferay.scalapress
 import com.liferay.scalapress.folder.{FolderPluginDao, FolderDao}
 import media.{AssetStore, ImageService}
 import obj.{ObjectDao, TypeDao}
-import plugin.ecommerce.dao.{BasketDao, DeliveryOptionDao}
-import plugin.ecommerce.{OrderDao, ShoppingPluginDao}
+import plugin.ecommerce.dao.BasketDao
+import plugin.ecommerce.OrderDao
 import plugin.form.FormFieldDao
 import com.liferay.scalapress.plugin.listings.{ListingsPluginDao, ListingProcessDao, ListingPackageDao}
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
@@ -27,12 +27,13 @@ import com.liferay.scalapress.payments.{PaymentPluginDao, TransactionDao}
 @Component
 class ScalapressContext extends ServletContextAware {
 
+    @Autowired var paymentPluginDao: PaymentPluginDao = _
     @Autowired var transactionDao: TransactionDao = _
 
+    @Autowired var folderDao: FolderDao = _
     @Autowired var folderSettingsDao: FolderPluginDao = _
-    @Autowired var sectionDao: SectionDao = _
 
-    @Autowired var paymentPluginDao: PaymentPluginDao = _
+    @Autowired var sectionDao: SectionDao = _
 
     @deprecated
     @Autowired var paypalStandardPluginDao: PaypalStandardPluginDao = _
@@ -58,8 +59,6 @@ class ScalapressContext extends ServletContextAware {
 
     @deprecated
     @Autowired var formFieldDao: FormFieldDao = _
-    @deprecated
-    @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @Autowired var imageService: ImageService = _
 
@@ -72,12 +71,11 @@ class ScalapressContext extends ServletContextAware {
 
     @Autowired var attributeDao: AttributeDao = _
     @Autowired var widgetDao: WidgetDao = _
-    @Autowired var folderDao: FolderDao = _
+
     @Autowired var typeDao: TypeDao = _
     @Autowired var assetStore: AssetStore = _
     @Autowired var objectDao: ObjectDao = _
 
-    @Autowired var deliveryOptionDao: DeliveryOptionDao = _
     @Autowired var markupDao: MarkupDao = _
 
     @Autowired var attributeValueDao: AttributeValueDao = _

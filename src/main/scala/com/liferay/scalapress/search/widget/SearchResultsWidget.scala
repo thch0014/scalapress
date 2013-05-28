@@ -12,7 +12,7 @@ import scala.beans.BeanProperty
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
 @Cacheable
@@ -24,9 +24,9 @@ class SearchResultsWidget extends Widget {
     @Fetch(FetchMode.JOIN)
     @BeanProperty var search: SavedSearch = _
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "markup")
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SELECT)
     @BeanProperty var markup: Markup = _
 
     override def backoffice = "/backoffice/search/widget/results/" + id

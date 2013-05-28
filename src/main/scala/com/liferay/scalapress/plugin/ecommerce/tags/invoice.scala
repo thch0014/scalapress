@@ -6,6 +6,7 @@ import com.liferay.scalapress.obj.tag.AttributeValueRenderer
 import com.liferay.scalapress.theme.MarkupRenderer
 import com.liferay.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import scala.collection.JavaConverters._
+import com.liferay.scalapress.plugin.ecommerce.ShoppingPluginDao
 
 /** @author Stephen Samuel */
 @Tag("invoice_account_number")
@@ -91,7 +92,7 @@ class InvoiceLinesTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         request.order.flatMap(order => {
-            Option(request.context.shoppingPluginDao.get.invoiceLineMarkup) match {
+            Option(request.context.bean[ShoppingPluginDao].get.invoiceLineMarkup) match {
                 case None => None
                 case Some(m) =>
                     val render = MarkupRenderer.renderOrderLines(order.lines.asScala, m, request)

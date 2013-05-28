@@ -12,11 +12,12 @@ import com.liferay.scalapress.enums.StockMethod
 /** @author Stephen Samuel */
 class StockTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val context = new ScalapressContext()
+    val context = mock[ScalapressContext]
     val req = mock[HttpServletRequest]
-    context.shoppingPluginDao = mock[ShoppingPluginDao]
     val plugin = new ShoppingPlugin
-    Mockito.when(context.shoppingPluginDao.get).thenReturn(plugin)
+    val dao = mock[ShoppingPluginDao]
+    Mockito.when(context.bean[ShoppingPluginDao]).thenReturn(dao)
+    Mockito.when(dao.get).thenReturn(plugin)
 
     val obj = new Obj
     obj.id = 12

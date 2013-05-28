@@ -1,4 +1,4 @@
-package com.liferay.scalapress.folder
+package com.liferay.scalapress.folder.widget
 
 import javax.persistence._
 import com.liferay.scalapress.{Logging, ScalapressRequest}
@@ -10,6 +10,7 @@ import javax.persistence.Table
 import scala.Some
 import javax.persistence.Entity
 import scala.beans.BeanProperty
+import com.liferay.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")

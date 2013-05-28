@@ -1,17 +1,18 @@
 package com.liferay.scalapress.search.section
 
 import com.liferay.scalapress.{ScalapressContext, ScalapressRequest}
-import javax.persistence.{OneToOne, ManyToOne, JoinColumn, Entity, Table}
+import javax.persistence._
 import com.liferay.scalapress.search.SavedSearch
 import com.liferay.scalapress.section.Section
 import com.liferay.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
+import scala.Some
 
 /** @author Stephen Samuel
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {
@@ -20,7 +21,7 @@ class SearchResultsSection extends Section {
     @JoinColumn(name = "search")
     @BeanProperty var search: SavedSearch = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "markup")
     @BeanProperty var markup: Markup = _
 
