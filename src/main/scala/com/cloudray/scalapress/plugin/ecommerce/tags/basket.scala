@@ -140,7 +140,7 @@ class BasketLinePriceTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         val text = if (params.contains("ex"))
-            request.line.map(_.obj.sellPrice)
+            request.line.map(_.obj.price)
         else if (params.contains("vat"))
             request.line.map(_.obj.vat)
         else

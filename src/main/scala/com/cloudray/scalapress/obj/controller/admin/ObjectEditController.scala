@@ -8,7 +8,6 @@ import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
-import reflect.BeanProperty
 import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.SearchService
@@ -26,6 +25,7 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeZone
 import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.folder.controller.admin.SectionSorting
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
@@ -43,7 +43,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute("form") form: EditForm) = {
-        form.sellPrice = form.o.sellPrice / 100.0
+        form.sellPrice = form.o.price / 100.0
         form.costPrice = form.o.costPrice / 100.0
         form.rrp = form.o.rrp / 100.0
         form.folderIds = form.o.folders.asScala.map(_.id).toArray :+ 0l
@@ -57,7 +57,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
             form.o.passwordHash = passwordEncoder.encodePassword(pass, null)
         })
 
-        form.o.sellPrice = (form.sellPrice * 100).toInt
+        form.o.price = (form.sellPrice * 100).toInt
         form.o.costPrice = (form.costPrice * 100).toInt
         form.o.rrp = (form.rrp * 100).toInt
 

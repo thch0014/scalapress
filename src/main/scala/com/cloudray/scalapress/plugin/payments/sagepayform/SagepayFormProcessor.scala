@@ -81,7 +81,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
             sb.append(":")
             sb.append(line.qty)
             sb.append(":")
-            sb.append(line.obj.sellPrice / 100.0)
+            sb.append(line.obj.price / 100.0)
             sb.append(":")
             sb.append(line.obj.vat / 100.0)
             sb.append(":")

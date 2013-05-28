@@ -63,7 +63,7 @@ object OrderLine {
     }
     def apply(obj: Obj): OrderLine = {
         val l = new OrderLine
-        l.price = obj.sellPrice
+        l.price = obj.price
         l.obj = obj.id
         l.qty = 1
         l.description = obj.name

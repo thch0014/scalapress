@@ -39,7 +39,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
     obj.content = "brand new cd for the mylo xyloto tour"
     obj.id = 123
     obj.images.add(image)
-    obj.sellPrice = 1999
+    obj.price = 1999
     obj.folders.add(folder)
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)

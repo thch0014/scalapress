@@ -62,8 +62,8 @@ class ObjectListSection extends Section {
             case Sort.AttributeDesc if sortAttribute != null =>
                 live.sortBy(obj => AttributeFuncs.attributeValue(obj, sortAttribute).getOrElse("")).reverse
 
-            case Sort.Price => live.sortBy(_.sellPrice)
-            case Sort.PriceHigh => live.sortBy(_.sellPrice).reverse
+            case Sort.Price => live.sortBy(_.price)
+            case Sort.PriceHigh => live.sortBy(_.price).reverse
             case Sort.Newest => live.sortBy(_.id).reverse
             case Sort.Oldest => live.sortBy(_.id)
             case Sort.Random => Random.shuffle(live)

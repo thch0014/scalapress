@@ -24,7 +24,7 @@ class BasketLine {
     @BeanProperty var obj: Obj = _
 
     // total value of the line excluding VAT
-    def subtotal: Double = qty * obj.sellPrice
+    def subtotal: Double = qty * obj.price
     def vat: Double = qty * obj.vat
     // total value of the line including VAT
     def total: Double = subtotal + vat

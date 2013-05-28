@@ -15,13 +15,13 @@ class BasketTotalTagTest extends FunSuite with MockitoSugar with OneInstancePerT
      val line1 = new BasketLine
      line1.obj = new Obj
      line1.qty = 2
-     line1.obj.sellPrice = 1000
+     line1.obj.price = 1000
      line1.obj.vatRate = 10.00
 
      val line2 = new BasketLine
      line2.obj = new Obj
      line2.qty = 1
-     line2.obj.sellPrice = 2000
+     line2.obj.price = 2000
      line2.obj.vatRate = 20.00
 
      val basket = new Basket

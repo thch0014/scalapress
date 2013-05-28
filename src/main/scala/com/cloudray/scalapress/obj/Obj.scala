@@ -118,11 +118,11 @@ class Obj extends SortedSections {
 
     @Index(name = "sellPrice_index")
     @Column(name = "genericSellPrice")
-    @BeanProperty var sellPrice: Int = _
+    @BeanProperty var price: Int = _
 
-    @BeanProperty def vat: Int = (sellPrice * vatRate / 100.0).toInt
-    @BeanProperty def sellPriceInc: Int = sellPrice + vat
-    @BeanProperty def sellPriceDecimal = "%.2f" format sellPrice / 100.0
+    @BeanProperty def vat: Int = (price * vatRate / 100.0).toInt
+    @BeanProperty def sellPriceInc: Int = price + vat
+    @BeanProperty def sellPriceDecimal = "%.2f" format price / 100.0
 
     @BeanProperty var vatRate: Double = _
 
@@ -162,7 +162,7 @@ class Obj extends SortedSections {
     def updateLastModified() {
         dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
     }
-
+    override def toString: String = s"Obj [id=$id, name=$name, status=$status]"
 }
 
 object Obj {

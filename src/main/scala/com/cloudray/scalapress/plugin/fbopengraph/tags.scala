@@ -26,8 +26,7 @@ class OpenGraphUrlTag extends ScalapressTag {
 class OpenGraphSiteTag extends ScalapressTag {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        val installation = request.context.installationDao.get
-        Some(<meta property="og:site_name" content={installation.name}/>.toString())
+        Some(<meta property="og:site_name" content={request.installation.name}/>.toString())
     }
 }
 

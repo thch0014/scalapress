@@ -10,7 +10,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 class ObjectSellPriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val obj = new Obj
-    obj.sellPrice = 2000
+    obj.price = 2000
     obj.vatRate = 20
 
     val req = mock[HttpServletRequest]

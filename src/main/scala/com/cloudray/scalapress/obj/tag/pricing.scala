@@ -40,7 +40,7 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
         request.obj.map(obj => {
             val text = if (params.contains("ex"))
-                obj.getSellPrice
+                obj.price
             else if (params.contains("vat"))
                 obj.vat
             else

@@ -14,7 +14,7 @@ class BasketLinePriceTagTest extends FunSuite with MockitoSugar with OneInstance
     val line1 = new BasketLine
     line1.obj = new Obj
     line1.qty = 2
-    line1.obj.sellPrice = 1000
+    line1.obj.price = 1000
     line1.obj.vatRate = 15.00
 
     val tag = new BasketLinePriceTag()

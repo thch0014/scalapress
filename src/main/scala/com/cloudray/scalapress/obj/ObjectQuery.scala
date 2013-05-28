@@ -10,6 +10,7 @@ class ObjectQuery extends PagedQuery {
     @BeanProperty var accountId: Option[Long] = None
     @BeanProperty var status: Option[String] = None
     @BeanProperty var name: Option[String] = None
+    @BeanProperty var exernalReference: Option[String] = None
 
     def withAccountId(a: Option[Long]) = {
         this.accountId = a
