@@ -75,20 +75,22 @@ object CheckoutConfirmationRenderer {
         </div>
     }
 
-    private def renderDeliveryLine(basket: Basket) = {
+    def renderDeliveryLine(basket: Basket) = {
 
-        val price = Unparsed(" &pound;%1.2f".format(basket.deliveryOption.chargeIncVat / 100.0))
+        val name = Option(basket.deliveryOption).map(_.name).orNull
+        val price = Option(basket.deliveryOption).map(_.chargeIncVat / 100.0).getOrElse(0.0)
+        val priceFormatted = Unparsed(" &pound;%1.2f".format(price))
 
         <tr>
             <td>
-                {basket.deliveryOption.name}
+                {name}
             </td>
             <td></td>
             <td>
-                {price}
+                {priceFormatted}
             </td>
             <td>
-                {price}
+                {priceFormatted}
             </td>
         </tr>
     }
