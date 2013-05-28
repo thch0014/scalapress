@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
-import org.mockito.Mockito
+import org.mockito.{ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.listings._
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
 import com.cloudray.scalapress.theme.ThemeService
@@ -12,7 +12,7 @@ import org.springframework.validation.Errors
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
-import com.cloudray.scalapress.payments.{PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
+import com.cloudray.scalapress.payments._
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayInputStream
 import com.cloudray.scalapress.media.AssetStore
@@ -188,5 +188,14 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
         controller.uploadImages(process, errors, req, Array(upload1, upload2))
         assert(4 === process.imageKeys.size)
         assert(Array("1.png", "2.png", "333.png", "444.png") === process.imageKeys)
+    }
+
+    test("payment page uses purchase with callback of http://domain.com:8080/listing/completed") {
+        val plugin1 = new MockPaymentPlugin("superpay", true, Map.empty)
+        Mockito.when(controller.context.paymentPluginDao.enabled).thenReturn(Seq(plugin1))
+        controller.showPayments(process, errors, req)
+        val captor = ArgumentCaptor.forClass(classOf[Purchase])
+        Mockito.verify(controller.paymentFormRenderer).renderPaymentForm(captor.capture)
+        assert("http://domain.com:8080/listing/completed" === captor.getValue.successUrl)
     }
 }
