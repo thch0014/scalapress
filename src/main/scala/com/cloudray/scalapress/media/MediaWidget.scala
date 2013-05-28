@@ -5,9 +5,10 @@ import com.cloudray.scalapress.ScalapressRequest
 import scala.Array
 import java.util
 import scala.collection.JavaConverters._
-import org.hibernate.annotations.{NotFound, NotFoundAction, FetchMode, Fetch}
+import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
 import scala.beans.BeanProperty
+import scala.Some
 
 /** @author Stephen Samuel */
 
@@ -18,7 +19,8 @@ class MediaWidget extends Widget {
     @BeanProperty var url: String = _
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 50)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
