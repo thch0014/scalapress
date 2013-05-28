@@ -16,11 +16,16 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     service.mailSender = mock[MailSender]
     service.context = new ScalapressContext
     service.context.installationDao = mock[InstallationDao]
+    service.shoppingPluginDao = mock[ShoppingPluginDao]
 
     val installation = new Installation
     installation.domain = "coldplay.com"
     installation.name = "big man tshirts"
+
+    val plugin = new ShoppingPlugin
+
     Mockito.when(service.context.installationDao.get).thenReturn(installation)
+    Mockito.when(service.shoppingPluginDao.get).thenReturn(plugin)
 
     val order = new Order
     order.id = 151
@@ -54,5 +59,23 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert(msg.getSubject.contains("#" + order.id))
+    }
+
+    test("that the message body uses default when none specified in plugin settings") {
+        val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+        service.orderPlaced(order)
+        Mockito.verify(service.mailSender).send(captor.capture)
+        val msg = captor.getValue
+        assert(service.DefaultMessageBody === msg.getText)
+    }
+
+    test("that the message body uses plugin settings when specified") {
+        val text = "lovely order that"
+        plugin.orderConfirmationMessageBody = text
+        val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+        service.orderPlaced(order)
+        Mockito.verify(service.mailSender).send(captor.capture)
+        val msg = captor.getValue
+        assert(text === msg.getText)
     }
 }

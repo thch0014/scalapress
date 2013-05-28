@@ -8,7 +8,7 @@ object OrderMarkupService {
     def resolve(order: Order, text: String) =
         text
           .replace("[order_id]", order.id.toString)
-          .replace("[order_email]", order.account.email)
-          .replace("[order_name]", order.account.name)
+          .replace("[order_email]", Option(order.account.email).getOrElse(""))
+          .replace("[order_name]", Option(order.account.name).getOrElse(""))
           .replace("[order_total]", order.total.toString)
 }
