@@ -55,9 +55,6 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var orderDao: OrderDao = _
 
     @deprecated
-    def siteDao = installationDao
-
-    @deprecated
     @Autowired var formFieldDao: FormFieldDao = _
 
     @Autowired var imageService: ImageService = _
