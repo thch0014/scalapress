@@ -1,17 +1,17 @@
 #parse("/admin/header.vm")
 
-<h3>Sales Report $datetool.format("MMMMM yyyy", $from) to $datetool.format("MMMMM yyyy", $to)</h3>
+<h3>Sales Report $from to $to</h3>
 
 <form>
     From <select name="from">
     #foreach ($entry in $months.entrySet())
-        <option value="$entry.key">$entry.value</option>
+        <option value="$entry.key" #if ($entry.key == $from) selected #end>$entry.value</option>
     #end
 </select>
 
     To <select name="to">
     #foreach ($entry in $months.entrySet())
-        <option value="$entry.key">$entry.value</option>
+        <option value="$entry.key" #if ($entry.key == $to) selected #end>$entry.value</option>
     #end
 </select>
 
@@ -59,7 +59,9 @@
 
         <tr>
             <td><a href="/backoffice/order/$line.orderId()">$line.orderId()</a></td>
-            <td>$datetool.format("dd-MMM-yyyy", $line.datePlaced())</td>
+            <td>
+                <a href="/backoffice/plugin/shopping/salesreport">$datetool.format("dd-MMM-yyyy", $line.datePlaced())</a>
+            </td>
             <td>$line.status()</td>
             <td>$number.currency($line.subtotal())</td>
             <td>$number.currency($line.vat())</td>

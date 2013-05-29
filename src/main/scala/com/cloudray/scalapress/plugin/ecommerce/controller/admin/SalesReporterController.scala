@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, Re
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.plugin.ecommerce.SalesReporter
 import com.cloudray.scalapress.ScalapressContext
-import org.joda.time.{DateTimeZone, DateMidnight}
+import org.joda.time.{DateTime, DateTimeZone, DateMidnight}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import scala.collection.mutable
+import org.joda.time.format.DateTimeFormat
 
 /** @author Stephen Samuel */
 @Controller
@@ -23,12 +24,21 @@ class SalesReporterController {
                 @RequestParam(value = "from", required = false) from: String,
                 @RequestParam(value = "to", required = false) to: String): String = {
 
-        val fromTimestamp = Option(from).map(_.toLong).getOrElse(System.currentTimeMillis)
-        val totimestamp = Option(to).map(_.toLong).getOrElse(System.currentTimeMillis)
-        val fromDate = new DateMidnight(fromTimestamp, DateTimeZone.UTC).withDayOfMonth(1)
-        val toDate = new DateMidnight(totimestamp, DateTimeZone.UTC).withDayOfMonth(1).plusMonths(1).minusDays(1)
+        val parser = DateTimeFormat.forPattern("MMMMM yyyy").withZone(DateTimeZone.UTC)
 
-        val lines = reporter.generate(fromDate, toDate)
+        val fromDate = Option(from)
+          .map(parser.parseDateTime(_))
+          .getOrElse(new DateTime(DateTimeZone.UTC))
+          .withDayOfMonth(1)
+          .withMillisOfDay(0)
+
+        val toDate = Option(to)
+          .map(parser.parseDateTime(_))
+          .getOrElse(new DateTime(DateTimeZone.UTC))
+          .dayOfMonth().withMaximumValue()
+          .millisOfDay.withMaximumValue
+
+        val lines = reporter.generate(fromDate.getMillis, toDate.getMillis)
         model.put("lines", lines.asJava)
 
         val total = lines.map(_.total).sum
@@ -41,8 +51,8 @@ class SalesReporterController {
         model.put("vat", vat.toString)
         model.put("total", total.toString)
 
-        model.addAttribute("from", fromDate.getMillis)
-        model.addAttribute("to", toDate.getMillis)
+        model.addAttribute("from", from)
+        model.addAttribute("to", to)
 
         "admin/plugin/shopping/salesreport.vm"
     }
@@ -51,7 +61,7 @@ class SalesReporterController {
         val map = mutable.LinkedHashMap[String, String]()
         val now = new DateMidnight(DateTimeZone.UTC).withDayOfMonth(1)
         for ( i <- 0 to 36 )
-            map.put(now.minusMonths(i).getMillis.toString, now.minusMonths(i).toString("MMMMM yyyy"))
+            map.put(now.minusMonths(i).toString("MMMMM yyyy"), now.minusMonths(i).toString("MMMMM yyyy"))
         map.asJava
     }
 }

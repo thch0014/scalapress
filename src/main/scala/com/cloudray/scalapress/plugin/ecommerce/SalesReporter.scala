@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.ecommerce
 
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import org.joda.time.DateMidnight
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 
 /** @author Stephen Samuel */
@@ -11,11 +10,11 @@ class SalesReporter {
 
     @Autowired var orderDao: OrderDao = _
 
-    def generate(start: DateMidnight, end: DateMidnight): Seq[ReportLine] = {
+    def generate(start: Long, end: Long): Seq[ReportLine] = {
 
         val q = new OrderQuery
-        q.from = Some(start.getMillis)
-        q.to = Some(end.plusDays(1).getMillis)
+        q.from = Some(start)
+        q.to = Some(end)
         q.pageSize = 10000000
         val orders = orderDao.search(q).results
 
