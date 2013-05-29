@@ -52,7 +52,7 @@ class SalesReporterController {
         model.put("total", total.toString)
 
         model.addAttribute("from", fromDate.toString("MMMMM yyyy"))
-        model.addAttribute("to", toDate.toString("MMMMM yyyy")
+        model.addAttribute("to", toDate.toString("MMMMM yyyy"))
 
         "admin/plugin/shopping/salesreport.vm"
     }

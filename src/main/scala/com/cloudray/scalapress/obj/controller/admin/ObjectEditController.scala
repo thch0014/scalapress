@@ -14,7 +14,7 @@ import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.util.{EnumPopulator, ComponentClassScanner}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Obj}
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValue}
 import com.cloudray.scalapress.media.{Asset, AssetStore, Image}
@@ -40,6 +40,13 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
     @Autowired var context: ScalapressContext = _
     @Autowired var searchService: SearchService = _
     @Autowired var passwordEncoder: PasswordEncoder = _
+
+    @RequestMapping(Array("clone"))
+    def clone(@ModelAttribute("form") form: EditForm) = {
+        val clone = new ObjectCloner().clone(form.o)
+        objectDao.save(clone)
+        "redirect:/backoffice/obj/" + clone.id
+    }
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute("form") form: EditForm) = {
