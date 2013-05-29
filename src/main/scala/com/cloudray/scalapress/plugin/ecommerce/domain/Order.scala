@@ -80,6 +80,8 @@ object Order {
 
     val STATUS_NEW = "New"
     val STATUS_PAID = "Paid"
+    val STATUS_COMPLETED = "Completed"
+    val STATUS_CANCELLED = "Cancelled"
 
     def apply(ipAddress: String, account: Obj) = {
         val order = new Order

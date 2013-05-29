@@ -44,7 +44,7 @@ class OrderSearchController extends OrderStatusPopulator {
                 val orders = orderDao.search(query)
                 model.put("orders", orders.java)
                 model.put("paging", Paging(req, orders))
-                "admin/order/list.vm"
+                "admin/plugin/shopping/order/list.vm"
         }
     }
 

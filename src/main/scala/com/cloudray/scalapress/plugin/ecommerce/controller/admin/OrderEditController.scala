@@ -29,7 +29,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute order: Order) = "admin/order/edit.vm"
+    def edit(@ModelAttribute order: Order) = "admin/plugin/shopping/order/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute order: Order,

@@ -9,6 +9,7 @@ import com.cloudray.scalapress.enums.{StockMethod, CheckoutMethod}
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.cloudray.scalapress.theme.Markup
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 
 /** @author Stephen Samuel */
 @Entity
@@ -26,7 +27,7 @@ class ShoppingPlugin {
     @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
 
     @Column(length = 10000)
-    @BeanProperty var statuses: String = "New\nCompleted\nCancelled"
+    @BeanProperty var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
 
     @Column(length = 100000)
     @BeanProperty var outOfStockMessage: String = _
@@ -65,6 +66,10 @@ class ShoppingPlugin {
 
     @Column(length = 10000)
     @BeanProperty var checkoutConfirmationText: String = _
+}
+
+object ShoppingPlugin {
+    def defaultStatuses: Seq[String] = Seq(Order.STATUS_NEW, Order.STATUS_PAID, Order.STATUS_COMPLETED, Order.STATUS_CANCELLED)
 }
 
 trait ShoppingPluginDao extends GenericDao[ShoppingPlugin, java.lang.Long] {

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import collection.immutable.TreeMap
-import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
@@ -56,8 +56,9 @@ trait OrderStatusPopulator {
 
         val map = mutable.LinkedHashMap("" -> "-Status-")
 
-        val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("")
-        statuses.split("\n").filter(_.trim.length > 0).foreach(status => {
+        val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("").split(Array(',', '\n')) ++ ShoppingPlugin.defaultStatuses
+        val sorted = statuses.toSet.toSeq.sorted
+        sorted.filterNot(_.isEmpty).foreach(status => {
             map.put(status.trim, status.trim)
         })
 
