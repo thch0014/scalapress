@@ -273,41 +273,53 @@
 </div>
 </form>
 
-<form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
-    <input type="hidden" id="add-line-id" name="objId"/>
-    <input type="text" class="input-xlarge" id="add-line-typeahead" value=""/>
-    <script>
-        autosep = ":";
-        $('#add-line-typeahead').typeahead({
-            source: function (query, process) {
-                return $.ajax({
-                    url: "/rest/obj?objectTypeName=Product",
-                    type: 'GET',
-                    data: {q: query},
-                    dataType: 'json',
-                    success: function (json) {
-                        var arr = [];
-                        for (var i in json) {
-                            arr.push(json[i][0] + autosep + json[i][1]);
-                        }
-                        process(arr);
+<div class="row">
+    <div class="span12">
+        <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
+            <input type="hidden" id="add-line-id" name="objId"/>
+            <input type="text" class="input-xxlarge" id="add-line-typeahead" value=""/>
+            <script>
+                autosep = ":";
+                $('#add-line-typeahead').typeahead({
+                    source: function (query, process) {
+                        return $.ajax({
+                            url: "/rest/obj?objectTypeName=Product",
+                            type: 'GET',
+                            data: {q: query},
+                            dataType: 'json',
+                            success: function (json) {
+                                var arr = [];
+                                for (var i in json) {
+                                    arr.push(json[i][0] + autosep + json[i][1]);
+                                }
+                                process(arr);
+                            }
+                        });
+                    }, highlighter: function (item) {
+                        var parts = item.split(autosep);
+                        parts.shift();
+                        return parts.join(autosep);
+                    }, updater: function (item) {
+                        var parts = item.split(autosep);
+                        var id = parts.shift();
+                        $('#add-line-id').val(id);
+                        return parts.join(autosep);
                     }
-                });
-            }, highlighter: function (item) {
-                var parts = item.split(autosep);
-                parts.shift();
-                return parts.join(autosep);
-            }, updater: function (item) {
-                var parts = item.split(autosep);
-                var id = parts.shift();
-                $('#add-line-id').val(id);
-                return parts.join(autosep);
-            }
-        })
-    </script>
-    <button type="submit" class="btn btn-small">Add To Order</button>
-</form>
-
+                })
+            </script>
+            <button type="submit" class="btn btn-inverse btn-small">Add Item</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
+            Description: <input type="text" id="desc" name="desc" value="" class="input-xlarge"/>
+            Price: <input type="text" id="price" name="price" value="0" class="input-small"/>
+            <button type="submit" class="btn btn-inverse btn-small">Add Line</button>
+        </form>
+    </div>
+</div>
 
 <legend>Payments</legend>
 <table class="table table-condensed table-hover">

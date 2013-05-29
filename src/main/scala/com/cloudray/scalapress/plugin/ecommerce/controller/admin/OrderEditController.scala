@@ -84,9 +84,9 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
     }
 
     @RequestMapping(value = Array("line/add"), params = Array("desc", "price"))
-    def addLine(@ModelAttribute order: Order, @RequestParam("desc") desc: String, @RequestParam("price") price: Int) = {
+    def addLine(@ModelAttribute order: Order, @RequestParam("desc") desc: String, @RequestParam("price") price: Double) = {
 
-        val line = OrderLine(desc, price)
+        val line = OrderLine(desc, (price * 100).toInt)
         line.order = order
         order.lines.add(line)
         orderDao.save(order)
