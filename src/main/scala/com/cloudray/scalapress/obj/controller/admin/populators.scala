@@ -9,7 +9,7 @@ import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionD
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.plugin.form.FormDao
-import collection.mutable
+import scala.collection.mutable
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
 
@@ -53,17 +53,23 @@ trait OrderStatusPopulator {
     var shoppingPluginDao: ShoppingPluginDao
 
     @ModelAttribute def orderStatusMap(model: ModelMap) {
+        val map = _statuses
+        model.put("statusMap", map.asJava)
+        model.put("orderStatusMap", map.asJava)
+    }
 
-        val map = mutable.LinkedHashMap("" -> "-Status-")
+    def _statuses: mutable.LinkedHashMap[String, String] = {
 
         val statuses = Option(shoppingPluginDao.get.statuses).getOrElse("").split(Array(',', '\n')) ++ ShoppingPlugin.defaultStatuses
-        val sorted = statuses.toSet.toSeq.sorted
+        val set = statuses.toSet[String]
+        val seq = set.toIndexedSeq
+        val sorted = seq.sortWith((a, b) => a.compareToIgnoreCase(b) < 0)
+
+        val map = mutable.LinkedHashMap("" -> "-Status-")
         sorted.filterNot(_.isEmpty).foreach(status => {
             map.put(status.trim, status.trim)
         })
-
-        model.put("statusMap", map.asJava)
-        model.put("orderStatusMap", map.asJava)
+        map
     }
 }
 
