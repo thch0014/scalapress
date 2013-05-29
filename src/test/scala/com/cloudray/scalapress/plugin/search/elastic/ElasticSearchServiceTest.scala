@@ -47,6 +47,20 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     av7.attribute.id = 62
     av7.value = "attribute with space"
 
+    val date1 = new AttributeValue
+    date1.attribute = new Attribute
+    date1.attribute.attributeType = AttributeType.Date
+    date1.attribute.id = 345
+    date1.value = "51454"
+
+    val date2 = new AttributeValue
+    date2.attribute = date1.attribute
+    date2.value = "3156777"
+
+    val date3 = new AttributeValue
+    date3.attribute = date1.attribute
+    date3.value = "2142353"
+
     val obj = new Obj
     obj.id = 2
     obj.name = "tony mowbray"
@@ -57,6 +71,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av4)
     obj.attributeValues.add(av7)
+    obj.attributeValues.add(date1)
     obj.labels = "coldplay,jethro tull"
 
     val obj2 = new Obj
@@ -67,6 +82,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj2.status = "Disabled"
     obj2.attributeValues.add(av2)
     obj2.attributeValues.add(av5)
+    obj2.attributeValues.add(date3)
     obj2.labels = "coldplay"
 
     val obj3 = new Obj
@@ -77,6 +93,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj3.status = "Live"
     obj3.attributeValues.add(av3)
     obj3.attributeValues.add(av6)
+    obj3.attributeValues.add(date2)
 
     val service = new ElasticSearchService
     service.context = new ScalapressContext
@@ -185,6 +202,19 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(results(2).id === 20)
     }
 
+    test("sorting by attribute value with numbers") {
+
+        val search = new SavedSearch
+        search.sortType = Sort.Attribute
+        search.sortAttribute = date1.attribute
+
+        val results = service.search(search).refs
+        assert(results.size === 3)
+        assert(results(0).id === 4)
+        assert(results(1).id === 20)
+        assert(results(2).id === 2)
+    }
+
     test("distance search happy path") {
 
         val search = new SavedSearch
@@ -207,7 +237,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(2 === results(0).id)
         assert("tony mowbray" === results(0).name)
         assert("Live" === results(0).status)
-        assert(3 === results(0).attributes.size)
+        assert(4 === results(0).attributes.size)
     }
 
     test("attribute search with spaces") {

@@ -360,17 +360,14 @@ class ElasticSearchService extends SearchService with Logging {
           .field(FIELD_NAME_NOT_ANALYSED, obj.name)
           .field(FIELD_STATUS, obj.status)
 
-        logger.trace("Adding tags [{}]", obj.labels)
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => json.field(FIELD_TAGS, tag)))
 
         val hasImage = obj.images.size > 0
         json.field("hasImage", hasImage.toString)
 
         val folderIds = obj.folders.asScala.map(_.id.toString)
-        logger.trace("Adding folders [{}]", folderIds)
         json.field(FIELD_FOLDERS, folderIds.toSeq: _*)
 
-        logger.trace("Processing attributes")
         obj.attributeValues.asScala
           .filterNot(_.value == null)
           .filterNot(_.value.isEmpty)
