@@ -3,16 +3,17 @@ package com.cloudray.scalapress.search.widget
 import javax.persistence._
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.search.SavedSearch
+import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
 import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 @Cacheable
@@ -40,18 +41,30 @@ class SearchResultsWidget extends Widget {
         Option(search) match {
             case None => None
             case Some(s) =>
-                val result = request.context.searchService.search(search)
-                val objs = request.context.objectDao.findBulk(result.refs.map(_.id)).filter(_.status.equalsIgnoreCase("live"))
-                objs.size match {
+                val objects = _objects(request)
+                objects.size match {
                     case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
                     case _ =>
-                        Option(markup).orElse(Option(objs.head.objectType.objectListMarkup)) match {
+                        Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
                             case None => Some("<!-- search widget #" + id + ": no markup -->")
                             case Some(m) =>
-                                val rendered = MarkupRenderer.renderObjects(objs, m, request)
+                                val rendered = MarkupRenderer.renderObjects(objects, m, request)
                                 Some(rendered)
                         }
                 }
         }
+    }
+
+    def _objects(request: ScalapressRequest): Seq[Obj] = {
+        val result = request.context.searchService.search(search)
+        val objs = request.context.objectDao
+          .findBulk(result.refs.map(_.id))
+          .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+        _reorder(result.refs, objs)
+    }
+
+    def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {
+        val ids = refs.map(_.id)
+        objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
     }
 }
