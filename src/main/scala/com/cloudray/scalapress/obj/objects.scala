@@ -42,6 +42,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
         q.name.filter(_.trim.length > 0).foreach(t => {
             s.addFilterLike("name", "%" + t + "%")
         })
+        s.addSortDesc("id")
         val result = searchAndCount(s)
         Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
     }
