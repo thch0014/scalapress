@@ -37,9 +37,16 @@ class ElasticSearchService extends SearchService with Logging {
 
     val MAX_RESULTS_HARD_LIMIT = 1000
     val DEFAULT_MAX_RESULTS = 200
+
     val FIELD_ATTRIBUTE = "attribute_"
     val FIELD_ATTRIBUTE_SINGLE = "attribute_single_"
     val FIELD_TAGS = "tags"
+    val FIELD_LOCATION = "location"
+    val FIELD_STATUS = "status"
+    val FIELD_NAME = "name"
+    val FIELD_NAME_NOT_ANALYSED = "name_raw"
+    val FIELD_FOLDERS = "folders"
+
     val TIMEOUT = 5000
     val INDEX = "scalapress"
     val TYPE = "obj"
@@ -84,8 +91,8 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject("properties")
           .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
           .startObject("objectid").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("name_raw").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("location").field("type", "geo_point").field("index", "not_analyzed").endObject()
+          .startObject(FIELD_NAME_NOT_ANALYSED).field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
+          .startObject(FIELD_LOCATION).field("type", "geo_point").field("index", "not_analyzed").endObject()
           .startObject(FIELD_TAGS).field("type", "string").field("index", "not_analyzed").endObject()
 
         context.attributeDao.findAll().foreach(attr => {
@@ -163,7 +170,7 @@ class ElasticSearchService extends SearchService with Logging {
     override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
         val resp = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
-          .setQuery(new PrefixQueryBuilder("name", q.toLowerCase))
+          .setQuery(new PrefixQueryBuilder(FIELD_NAME, q.toLowerCase))
           .setFrom(0)
           .setSize(limit)
           .execute()
@@ -233,7 +240,7 @@ class ElasticSearchService extends SearchService with Logging {
         Option(search.searchFolders)
           .filter(_.trim.length > 0)
           .map(_.replaceAll("\\D", ""))
-          .foreach(_.split(",").foreach(f => buffer.append("folders:" + f)))
+          .foreach(_.split(",").foreach(f => buffer.append(FIELD_FOLDERS + ":" + f)))
 
         search.attributeValues.asScala.filter(_.value.trim.length > 0).foreach(av => {
             buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + _normalize(av.value.replace(" ", "_")))
@@ -256,7 +263,7 @@ class ElasticSearchService extends SearchService with Logging {
         val filter = Option(search.location)
           .flatMap(Postcode.gps(_))
           .map(gps => {
-            new GeoDistanceFilterBuilder("location")
+            new GeoDistanceFilterBuilder(FIELD_LOCATION)
               .point(gps.lat, gps.lon)
               .distance(search.distance, DistanceUnit.MILES)
         })
@@ -304,7 +311,7 @@ class ElasticSearchService extends SearchService with Logging {
               .order(SortOrder.DESC)
               .ignoreUnmapped(true)
 
-        case Sort.Name => SortBuilders.fieldSort("name_raw").order(SortOrder.ASC)
+        case Sort.Name => SortBuilders.fieldSort(FIELD_NAME_NOT_ANALYSED).order(SortOrder.ASC)
         case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
         case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
     }
@@ -328,12 +335,12 @@ class ElasticSearchService extends SearchService with Logging {
         resp.getHits.asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
-            val n = arg.getSource.get("name_raw").toString
-            val status = arg.getSource.get("status").toString
+            val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
+            val status = arg.getSource.get(FIELD_STATUS).toString
             val attributes = arg.getSource.asScala
               .filter(_._2 != null)
               .filter(_._1.startsWith(FIELD_ATTRIBUTE)).map(field => {
-                val id = field._1.drop("attribute_".length).toLong
+                val id = field._1.drop(FIELD_ATTRIBUTE.length).toLong
                 val value = field._2.toString
                 (id, value)
             }).toMap
@@ -349,9 +356,9 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject()
           .field("objectid", obj.id)
           .field("objectType", obj.objectType.id.toString)
-          .field("name", _normalize(obj.name))
-          .field("name_raw", obj.name)
-          .field("status", obj.status)
+          .field(FIELD_NAME, _normalize(obj.name))
+          .field(FIELD_NAME_NOT_ANALYSED, obj.name)
+          .field(FIELD_STATUS, obj.status)
 
         logger.trace("Adding tags [{}]", obj.labels)
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => json.field(FIELD_TAGS, tag)))
@@ -361,7 +368,7 @@ class ElasticSearchService extends SearchService with Logging {
 
         val folderIds = obj.folders.asScala.map(_.id.toString)
         logger.trace("Adding folders [{}]", folderIds)
-        json.field("folders", folderIds.toSeq: _*)
+        json.field(FIELD_FOLDERS, folderIds.toSeq: _*)
 
         logger.trace("Processing attributes")
         obj.attributeValues.asScala
@@ -371,10 +378,8 @@ class ElasticSearchService extends SearchService with Logging {
             json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, _normalize(av.value.replace(" ", "_")))
             json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {
-                logger.debug("postcode=" + av.value)
                 Postcode.gps(av.value).foreach(gps => {
-                    json.field("location", gps.string())
-                    logger.debug("location=" + gps.string())
+                    json.field(FIELD_LOCATION, gps.string())
                 })
             }
         })
