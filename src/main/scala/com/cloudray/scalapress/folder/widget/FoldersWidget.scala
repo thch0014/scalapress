@@ -47,17 +47,9 @@ class FoldersWidget extends Widget with Logging {
         else
             buffer.append("<ul>")
 
-        val excluded = Option(exclusions)
-          .map(_.toLowerCase)
-          .map(_.split("\n").flatMap(_.split(",")))
-          .getOrElse(Array[String]()).map(_.trim)
 
-        val children = parent.sortedSubfolders
-          .filterNot(_.hidden)
-          .filterNot(f => excluded.contains(f.id.toString))
-          .filterNot(f => excluded.contains(f.name.toLowerCase.trim))
-          .filterNot(_.name == null)
-          .sortBy(_.name)
+
+        val children = _children(parent)
 
         for ( folder <- children ) {
             buffer.append("<li class=\"l" + level + "\" id=\"w" + id + "_f" + folder.id + "\">")
@@ -70,4 +62,17 @@ class FoldersWidget extends Widget with Logging {
         buffer.append("</ul>")
     }
 
+    def _children(parent: Folder) =
+        parent.sortedSubfolders
+          .filterNot(_.hidden)
+          .filterNot(f => _exclusions.contains(f.id.toString))
+          .filterNot(f => _exclusions.contains(f.name.toLowerCase.trim))
+          .filterNot(_.name == null)
+          .sortBy(_.name)
+
+    def _exclusions: Seq[String] =
+        Option(exclusions)
+          .map(_.toLowerCase)
+          .map(_.split(Array('\n', ',')).map(_.trim))
+          .getOrElse(Array[String]()).toSeq
 }
