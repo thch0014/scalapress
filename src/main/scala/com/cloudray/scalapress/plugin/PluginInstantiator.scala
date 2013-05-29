@@ -17,12 +17,17 @@ class PluginInstantiator extends Logging with ApplicationContextAware {
     @PostConstruct
     def createPlugins() {
         logger.info("Instaniating plugins: {}", plugins)
+
         plugins.filterNot(_ == "none").foreach(plugin => {
-            val klass = Class.forName(plugin)
-            val bean = applicationContext
-              .getAutowireCapableBeanFactory
-              .createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-            logger.debug("Created plugin [{}]", bean)
+            try {
+                val klass = Class.forName(plugin)
+                val bean = applicationContext
+                  .getAutowireCapableBeanFactory
+                  .createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+                logger.debug("Created plugin [{}]", bean)
+            } catch {
+                case e: Exception => logger.warn("{}", e)
+            }
         })
     }
 
