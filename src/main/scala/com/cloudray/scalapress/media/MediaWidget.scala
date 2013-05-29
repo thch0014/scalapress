@@ -8,7 +8,6 @@ import scala.collection.JavaConverters._
 import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
 import scala.beans.BeanProperty
-import scala.Some
 
 /** @author Stephen Samuel */
 
@@ -24,10 +23,12 @@ class MediaWidget extends Widget {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
 
+    def sortedImages = images.asScala.toSeq.sortBy(_.id)
+
     override def backoffice = "/backoffice/widget/media/" + id
 
     override def render(req: ScalapressRequest): Option[String] = {
-        images.asScala.headOption match {
+        sortedImages.headOption match {
             case None => None
             case Some(image) => {
                 val src = req.context.assetStore.link(image.filename)
