@@ -43,10 +43,10 @@ class ImageService extends Logging {
         assetStore.link(_thumbailFilename(filename, w, h))
     }
 
-    private def _thumbailFilename(filename: String, w: Int, h: Int): String =
+    def _thumbailFilename(filename: String, w: Int, h: Int): String =
         FilenameUtils.getBaseName(filename) + "___" + w + "x" + h + ".png"
 
-    private def _ensureThumbnailStored(filename: String, w: Int, h: Int) {
+    def _ensureThumbnailStored(filename: String, w: Int, h: Int) {
         val thumbnailFilename = _thumbailFilename(filename, w, h)
         if (!cache.contains(thumbnailFilename)) {
             if (!assetStore.exists(thumbnailFilename)) {
@@ -59,13 +59,13 @@ class ImageService extends Logging {
         }
     }
 
-    private def _storeImage(filename: String, image: BufferedImage) {
+    def _storeImage(filename: String, image: BufferedImage) {
         val bout = new ByteArrayOutputStream()
         ImageIO.write(image, "PNG", bout)
         assetStore.put(filename, new ByteArrayInputStream(bout.toByteArray))
     }
 
-    private def _readAssetAndCreateThumbnail(key: String, w: Int, h: Int): Option[BufferedImage] = {
+    def _readAssetAndCreateThumbnail(key: String, w: Int, h: Int): Option[BufferedImage] = {
         logger.debug("Creating thumbnail for {}", key)
         assetStore.get(key) match {
             case Some(in) =>
