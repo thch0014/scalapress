@@ -19,10 +19,13 @@ import com.cloudray.scalapress.obj.attr.{AttributeFuncs, Attribute}
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
+
+    def desc = "Show a paginated list of objects that are inside this folder"
+    override def backoffice: String = "/backoffice/section/objectlist/" + id
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "sortType")
@@ -126,8 +129,6 @@ class ObjectListSection extends Section {
         }
     }
 
-    def desc = "Show a paginated list of objects that are inside this folder"
-    override def backoffice: String = "/backoffice/section/objectlist/" + id
 }
 
 object ObjectListSection {
