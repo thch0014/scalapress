@@ -91,7 +91,7 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
 
     test("order line is added from the listing details") {
         val order = callback._order(listing)
-        val line = order.lines.get(0)
+        val line = order.sortedLines(0)
         assert(line.description.contains("#" + listing.id))
         assert(listing.listingPackage.fee === line.price)
     }

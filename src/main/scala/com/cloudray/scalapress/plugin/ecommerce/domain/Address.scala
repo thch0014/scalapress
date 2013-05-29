@@ -21,7 +21,7 @@ class Address {
     @Column(name = "companyName")
     @BeanProperty var company: String = _
 
-    @Column(name = "account", nullable = true)
+    @Column(name = "account")
     @BeanProperty var account: String = _
 
     @NotEmpty
@@ -46,9 +46,10 @@ class Address {
     @BeanProperty var date: Long = _
 
     @Column(name = "instructions", length = 1000)
-    @BeanProperty var instructions: String = null
+    @BeanProperty var instructions: String = _
 
-    @BeanProperty var state: String = null
+    @BeanProperty var state: String = _
+
     @BeanProperty var active: Boolean = _
 
     def label = {

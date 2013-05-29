@@ -21,9 +21,9 @@ class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstanc
         assert(order.lines.size === 0)
         controller.addLine(order, "specialbrew", 1250)
         assert(order.lines.size === 1)
-        assert(order.lines.get(0).qty === 1)
-        assert(order.lines.get(0).price === 1250)
-        assert(order.lines.get(0).description === "specialbrew")
+        assert(order.sortedLines(0).qty === 1)
+        assert(order.sortedLines(0).price === 1250)
+        assert(order.sortedLines(0).description === "specialbrew")
         Mockito.verify(controller.orderDao).save(order)
     }
 
@@ -38,10 +38,10 @@ class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstanc
         assert(order.lines.size === 0)
         controller.addLine(order, 15)
         assert(order.lines.size === 1)
-        assert(order.lines.get(0).obj === 15)
-        assert(order.lines.get(0).qty === 1)
-        assert(order.lines.get(0).price === 1999)
-        assert(order.lines.get(0).description === "fullers esb")
+        assert(order.sortedLines(0).obj === 15)
+        assert(order.sortedLines(0).qty === 1)
+        assert(order.sortedLines(0).price === 1999)
+        assert(order.sortedLines(0).description === "fullers esb")
         Mockito.verify(controller.orderDao).save(order)
     }
 

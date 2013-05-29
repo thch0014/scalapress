@@ -95,7 +95,7 @@ class InvoiceLinesTag extends ScalapressTag {
             Option(request.context.bean[ShoppingPluginDao].get.invoiceLineMarkup) match {
                 case None => None
                 case Some(m) =>
-                    val render = MarkupRenderer.renderOrderLines(order.lines.asScala, m, request)
+                    val render = MarkupRenderer.renderOrderLines(order.sortedLines, m, request)
                     Some(render)
             }
         })

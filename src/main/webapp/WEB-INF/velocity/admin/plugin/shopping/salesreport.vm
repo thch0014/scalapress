@@ -1,0 +1,74 @@
+#parse("/admin/header.vm")
+
+<h3>Sales Report $datetool.format("MMMMM yyyy", $from) to $datetool.format("MMMMM yyyy", $to)</h3>
+
+<form>
+    From <select name="from">
+    #foreach ($entry in $months.entrySet())
+        <option value="$entry.key">$entry.value</option>
+    #end
+</select>
+
+    To <select name="to">
+    #foreach ($entry in $months.entrySet())
+        <option value="$entry.key">$entry.value</option>
+    #end
+</select>
+
+    <button type="submit" class="btn btn-inverse btn-small">Run Report</button>
+</form>
+
+<table class="table table-condensed table-hover">
+
+    <tr>
+        <th>Total vatable sales</th>
+        <td>$number.currency($vatableSalesTotal)</td>
+    </tr>
+
+    <tr>
+        <th>Total vat free sales</th>
+        <td>$number.currency($vatFreeSalesTotal)</td>
+    </tr>
+
+    <tr>
+        <th>VAT</th>
+        <td>$number.currency($vat)</td>
+    </tr>
+
+    <tr>
+        <th>Total sales</th>
+        <td>$number.currency($total)</td>
+    </tr>
+
+
+</table>
+
+
+<table class="table table-condensed table-hover">
+
+    <tr>
+        <th>Id</th>
+        <th>Date Placed</th>
+        <th>Status</th>
+        <th>Subtotal</th>
+        <th>Vat</th>
+        <th>Total</th>
+    </tr>
+
+    #foreach ($line in $lines)
+
+        <tr>
+            <td><a href="/backoffice/order/$line.orderId()">$line.orderId()</a></td>
+            <td>$datetool.format("dd-MMM-yyyy", $line.datePlaced())</td>
+            <td>$line.status()</td>
+            <td>$number.currency($line.subtotal())</td>
+            <td>$number.currency($line.vat())</td>
+            <td>$number.currency($line.total())</td>
+        </tr>
+
+    #end
+
+</table>
+
+
+#parse("/admin/footer.vm")

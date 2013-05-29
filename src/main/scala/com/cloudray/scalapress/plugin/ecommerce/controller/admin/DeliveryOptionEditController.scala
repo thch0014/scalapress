@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.dao.DeliveryOptionDao
 import com.cloudray.scalapress.plugin.ecommerce.domain.DeliveryOption
-import reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller

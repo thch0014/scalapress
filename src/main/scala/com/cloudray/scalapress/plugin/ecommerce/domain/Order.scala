@@ -1,10 +1,15 @@
 package com.cloudray.scalapress.plugin.ecommerce.domain
 
-import javax.persistence.{CascadeType, OneToMany, ManyToOne, JoinColumn, Column, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import com.cloudray.scalapress.obj.Obj
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.payments.Transaction
+import scala.collection.JavaConverters._
+import org.hibernate.annotations._
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.CascadeType
 
 /** @author Stephen Samuel */
 @Entity
@@ -37,16 +42,20 @@ class Order {
     @BeanProperty var payments: java.util.Set[Transaction] = new java.util.HashSet[Transaction]()
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @BeanProperty var lines: java.util.List[OrderLine] = new java.util.ArrayList[OrderLine]()
+    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 40)
+    @BeanProperty var lines: java.util.Set[OrderLine] = new java.util.HashSet[OrderLine]()
+    def sortedLines: Seq[OrderLine] = lines.asScala.toSeq.sortBy(_.id)
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @BeanProperty var comments: java.util.List[OrderComment] = new java.util.ArrayList[OrderComment]()
+    @BeanProperty var comments: java.util.Set[OrderComment] = new java.util.HashSet[OrderComment]()
+    def sortedComments: Seq[OrderComment] = comments.asScala.toSeq.sortBy(_.id)
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deliveryAddress")
     @BeanProperty var deliveryAddress: Address = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "billingAddress")
     @BeanProperty var billingAddress: Address = _
 
@@ -58,14 +67,12 @@ class Order {
 
     @BeanProperty var reference: String = _
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account")
     @BeanProperty var account: Obj = _
 
     @Column(name = "salesPerson")
     @BeanProperty var createdBy: Long = _
-
-    import scala.collection.JavaConverters._
 
     def linesSubtotal: Double = lines.asScala.map(_.totalExVat).foldLeft(0.0)((a, b) => a + b)
     def linesVat: Double = if (vatable) lines.asScala.map(_.totalVat).foldLeft(0.0)((a, b) => a + b) else 0.0

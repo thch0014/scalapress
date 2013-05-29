@@ -227,7 +227,7 @@
         <th>Total</th>
         <th></th>
     </tr>
-    #foreach ($l in $order.lines)
+    #foreach ($l in $order.sortedLines())
         <tr>
             <td>$l.description</td>
             <td>
@@ -347,7 +347,7 @@
         <th>Date</th>
         <th>Comment</th>
     </tr>
-    #foreach ($c in $order.comments)
+    #foreach ($c in $order.sortedComments())
         <tr>
             <td>$c.author</td>
             <td>$datetool.format($c.date)</td>
