@@ -4,10 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, PathVariable, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import scala.Array
 import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, OrderLine, OrderComment, Order}
 import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
-import reflect.BeanProperty
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import javax.servlet.http.HttpServletRequest
@@ -16,6 +14,7 @@ import com.cloudray.scalapress.security.SpringSecurityResolver
 import com.cloudray.scalapress.obj.ObjectDao
 import com.cloudray.scalapress.obj.controller.admin.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
 import org.joda.time.{DateTimeZone, DateTime}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
@@ -72,9 +71,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
         "redirect:/backoffice/order/" + order.id
     }
 
-    import scala.collection.JavaConverters._
-
-    @RequestMapping(value = Array("line/add"))
+    @RequestMapping(value = Array("line/add"), params = Array("objId"))
     def addLine(@ModelAttribute order: Order, @RequestParam("objId") id: Long) = {
         val obj = objectDao.find(id)
         if (obj != null) {
@@ -83,6 +80,17 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
             order.lines.add(line)
             orderDao.save(order)
         }
+        "redirect:/backoffice/order/" + order.id
+    }
+
+    @RequestMapping(value = Array("line/add"), params = Array("desc", "price"))
+    def addLine(@ModelAttribute order: Order, @RequestParam("desc") desc: String, @RequestParam("price") price: Int) = {
+
+        val line = OrderLine(desc, price)
+        line.order = order
+        order.lines.add(line)
+        orderDao.save(order)
+
         "redirect:/backoffice/order/" + order.id
     }
 
