@@ -6,6 +6,7 @@ import com.cloudray.scalapress.obj.Obj
 trait SearchService {
 
     def index(obj: Obj)
+    def remove(id: String)
     def contains(id: String): Boolean
     def count: Long
     def search(search: SavedSearch): SearchResult

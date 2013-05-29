@@ -167,6 +167,10 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
+    override def remove(id: String) {
+        client.prepareDelete(INDEX, TYPE, id).execute().actionGet(TIMEOUT)
+    }
+
     override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
         val resp = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)

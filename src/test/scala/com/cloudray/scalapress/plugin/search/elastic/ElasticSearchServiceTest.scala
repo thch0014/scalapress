@@ -11,7 +11,6 @@ import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
-import scala.actors.Futures
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
@@ -96,6 +95,22 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj3.attributeValues.add(av6)
     obj3.attributeValues.add(date2)
 
+    val av = new AttributeValue
+    av.attribute = new Attribute
+    av.attribute.id = 9184
+    av.attribute.name = "color"
+    av.attribute.attributeType = AttributeType.Text
+    av.id = 69945
+    av.value = "red!!"
+
+    val obj4 = new Obj
+    obj4.id = 1529
+    obj4.name = "zola"
+    obj4.objectType = new ObjectType
+    obj4.objectType.id = 2234
+    obj4.status = "live"
+    obj4.attributeValues.add(av)
+
     val service = new ElasticSearchService
     service.context = new ScalapressContext
     service.context.attributeDao = mock[AttributeDao]
@@ -105,8 +120,9 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     service.index(obj2)
     service.index(obj3)
     service.index(obj)
+    service.index(obj4)
 
-    Thread.sleep(1200)
+    Thread.sleep(1500)
 
     test("indexing and retrieval by name happy path") {
 
@@ -149,10 +165,11 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val search = new SavedSearch
         search.sortType = Sort.Name
         val results = service.search(search).refs
-        assert(results.size === 3)
+        assert(results.size === 4)
         assert(results(0).id === 4)
         assert(results(1).id === 20)
         assert(results(2).id === 2)
+        assert(results(3).id === 1529)
     }
 
     test("sorting by Newest happy path") {
@@ -160,10 +177,12 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val search = new SavedSearch
         search.sortType = Sort.Newest
         val results = service.search(search).refs
-        assert(results.size === 3)
-        assert(results(0).id === 20)
-        assert(results(1).id === 4)
-        assert(results(2).id === 2)
+        assert(results.size === 4)
+
+        assert(results(0).id === 1529)
+        assert(results(1).id === 20)
+        assert(results(2).id === 4)
+        assert(results(3).id === 2)
     }
 
     test("sorting by Oldest happy path") {
@@ -171,23 +190,27 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val search = new SavedSearch
         search.sortType = Sort.Oldest
         val results = service.search(search).refs
-        assert(results.size === 3)
+        assert(results.size === 4)
+
         assert(results(0).id === 2)
         assert(results(1).id === 4)
         assert(results(2).id === 20)
+        assert(results(3).id === 1529)
     }
 
-    test("sorting by attribute value happy path") {
+    test("sorting by attribute value puts missing values at start") {
 
         val search = new SavedSearch
         search.sortType = Sort.Attribute
         search.sortAttribute = av1.attribute
 
         val results = service.search(search).refs
-        assert(results.size === 3)
-        assert(results(0).id === 20)
-        assert(results(1).id === 2)
-        assert(results(2).id === 4)
+        assert(results.size === 4)
+
+        assert(results(0).id === 1529)
+        assert(results(1).id === 20)
+        assert(results(2).id === 2)
+        assert(results(3).id === 4)
     }
 
     test("sorting by attribute desc value happy path") {
@@ -197,7 +220,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortAttribute = av1.attribute
 
         val results = service.search(search).refs
-        assert(results.size === 3)
+        assert(results.size === 4)
+
         assert(results(0).id === 4)
         assert(results(1).id === 2)
         assert(results(2).id === 20)
@@ -210,10 +234,12 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortAttribute = date1.attribute
 
         val results = service.search(search).refs
-        assert(results.size === 3)
-        assert(results(0).id === 4)
-        assert(results(1).id === 20)
-        assert(results(2).id === 2)
+        assert(results.size === 4)
+
+        assert(results(0).id === 1529)
+        assert(results(1).id === 4)
+        assert(results(2).id === 20)
+        assert(results(3).id === 2)
     }
 
     test("distance search happy path") {
@@ -262,7 +288,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
         val search = new SavedSearch
         val count = service.search(search).count
-        assert(3 === count)
+        assert(4 === count)
     }
 
     test("name search returns query based count") {
@@ -300,27 +326,45 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     test("that elastic does not err on null av inputs") {
 
-        Futures.future {
+        val av = new AttributeValue
+        av.attribute = new Attribute
+        av.attribute.id = 9184
 
-            val av = new AttributeValue
-            av.attribute = new Attribute
-            av.attribute.id = 9184
+        val obj = new Obj
+        obj.id = 199
+        obj.name = "null-av-object"
+        obj.objectType = new ObjectType
+        obj.objectType.id = 1
+        obj.status = "Live"
+        obj.attributeValues.add(av)
 
-            val obj = new Obj
-            obj.id = 199
-            obj.name = "null-av-object"
-            obj.objectType = new ObjectType
-            obj.objectType.id = 1
-            obj.status = "Live"
-            obj.attributeValues.add(av)
+        val before = service.count
+        service.index(obj)
+        Thread.sleep(1500)
 
-            val before = service.count
-            service.index(obj)
-            Thread.sleep(1500)
-            val after = service.count
-            assert(before + 1 === after)
+        val after = service.count
+        assert(before + 1 === after)
+    }
 
-        }
+    test("that remove operation removes the item from the index") {
+
+        val search = new SavedSearch
+        assert(5 === service.search(search).count)
+
+        val obj = new Obj
+        obj.id = 5465464
+        obj.name = "to be removed"
+        obj.objectType = new ObjectType
+        obj.objectType.id = 1
+        obj.status = "Live"
+
+        service.index(obj)
+        Thread.sleep(1500)
+        assert(6 === service.search(search).count)
+
+        service.remove(obj.id.toString)
+        Thread.sleep(200)
+        assert(5 === service.search(search).count)
     }
 
     test("label search works on labels with a space") {
@@ -363,33 +407,11 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     test("search escapes invalid characters in attribute values") {
 
-        Futures.future {
+        val q = new SavedSearch
+        q.attributeValues.add(av)
+        val results = service.search(q)
+        assert(1 === results.refs.size)
+        assert(1529 === results.refs(0).id)
 
-            val av = new AttributeValue
-            av.attribute = new Attribute
-            av.attribute.id = 9184
-            av.attribute.name = "color"
-            av.attribute.attributeType = AttributeType.Text
-            av.id = 69945
-            av.value = "red!!"
-
-            val obj = new Obj
-            obj.id = 1529
-            obj.name = "jeans"
-            obj.objectType = new ObjectType
-            obj.objectType.id = 2234
-            obj.status = "live"
-            obj.attributeValues.add(av)
-
-            service.index(obj)
-            Thread.sleep(1500)
-
-            val q = new SavedSearch
-            q.attributeValues.add(av)
-            val results = service.search(q)
-            assert(1 === results.refs.size)
-            assert(1529 === results.refs(0).id)
-
-        }
     }
 }
