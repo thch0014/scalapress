@@ -23,13 +23,13 @@ class OrderCustomerNotificationService extends Logging {
         val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
 
         val body = Option(shoppingPluginDao.get.orderConfirmationMessageBody).getOrElse(DefaultMessageBody)
-        OrderMarkupService.resolve(order, body)
+        val markedup = OrderMarkupService.resolve(order, body)
 
         val message = new SimpleMailMessage()
         message.setFrom(installation.name + " <donotreply@" + nowww + ">")
         message.setTo(order.account.email)
         message.setSubject("Order #" + order.id)
-        message.setText(body)
+        message.setText(markedup)
 
         try {
             mailSender.send(message)

@@ -78,4 +78,14 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
         val msg = captor.getValue
         assert(text === msg.getText)
     }
+
+    test("that the message body is marked-up before sendin") {
+        val text = "lovely order is #[order_id]"
+        plugin.orderConfirmationMessageBody = text
+        val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+        service.orderPlaced(order)
+        Mockito.verify(service.mailSender).send(captor.capture)
+        val msg = captor.getValue
+        assert("lovely order is #151" === msg.getText)
+    }
 }
