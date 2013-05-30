@@ -64,7 +64,7 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Order Confirmation Recipients</label>
+        <label class="control-label">Order Email Confirmation Recipients (Admin)</label>
 
         <div class="controls">
             #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
@@ -86,6 +86,17 @@
         </div>
     </div>
 
+    <legend>Email Notifications</legend>
+    <div class="control-group">
+        <label class="control-label">Order Email Confirmation Text (Customers)</label>
+
+        <div class="controls">
+            #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
+        </div>
+    </div>
+
+
+    <legend>Invoices</legend>
     <div class="control-group">
         <label class="control-label">Invoice Line Markup</label>
 
