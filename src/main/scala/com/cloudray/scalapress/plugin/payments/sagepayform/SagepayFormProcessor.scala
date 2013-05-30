@@ -106,11 +106,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     }
 
     def callback(params: Map[String, String]): Option[CallbackResult] = {
-        logger.debug("Callback params")
 
         val crypt = params.get("crypt").toString
         val p = decryptParams(crypt)
-        logger.debug("Sagepay params {}", p)
+        logger.info("Sagepay params decrypted {}", p)
 
         val status = p.get("Status").getOrElse("NoStatus")
 
@@ -120,11 +119,16 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
                 _isExistingTransaction(sageTxId) match {
                     case true => None
                     case false =>
+
                         val tx = _createTx(p)
+                        logger.info("Created transaction [{}]", tx)
+
                         val sessionId = _sessionId(p)
                         Some(CallbackResult(tx, sessionId))
                 }
-            case _ => None
+            case _ =>
+                logger.info("Invalid status [{}]", status)
+                None
         }
     }
 

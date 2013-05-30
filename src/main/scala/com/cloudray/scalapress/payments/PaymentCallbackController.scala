@@ -16,6 +16,7 @@ class PaymentCallbackController extends Logging {
     @ResponseBody
     @RequestMapping
     def callback(req: HttpServletRequest, resp: HttpServletResponse) {
+        logger.info("Callback received: {}", req.getParameterMap)
         paymentCallbackService.callbacks(req)
         resp.setStatus(200)
     }
