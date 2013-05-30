@@ -130,7 +130,7 @@ class CheckoutController extends Logging {
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStep))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.ConfirmationStep).toString())
         page.body(CheckoutConfirmationRenderer.renderConfirmationPage(sreq.basket, domain, shoppingPluginDao))
         page
     }
@@ -161,7 +161,7 @@ class CheckoutController extends Logging {
 
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep).toString())
         page.body(paymentFormRenderer.renderPaymentForm(purchase))
         page
     }
@@ -181,7 +181,7 @@ class CheckoutController extends Logging {
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
         page.body(shoppingPlugin.checkoutConfirmationScripts)
-        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep))
+        page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep).toString())
         page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
 
         page

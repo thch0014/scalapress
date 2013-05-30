@@ -10,16 +10,17 @@ class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {
     val _body = new ListBuffer[Any]()
     var _toolbar: Option[Toolbar] = None
 
-    def toolbar(sreq: ScalapressRequest) {
+    def toolbar(sreq: ScalapressRequest): ScalapressPage = {
         _toolbar = Option(Toolbar(sreq))
+        this
     }
 
-    def body(any: Any) = {
+    def body(any: Any): ScalapressPage = {
         _body += any
         this
     }
 
-    def render = _body.map(_.toString).mkString("\n\n")
+    def render = _body.filter(_ != null).map(_.toString).mkString("\n\n")
 }
 
 object ScalapressPage {
