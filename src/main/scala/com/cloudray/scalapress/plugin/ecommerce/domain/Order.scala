@@ -46,10 +46,12 @@ class Order {
     @BatchSize(size = 40)
     @BeanProperty var lines: java.util.Set[OrderLine] = new java.util.HashSet[OrderLine]()
     def sortedLines: Seq[OrderLine] = lines.asScala.toSeq.sortBy(_.id)
+    def sortedLinesJava = sortedLines.asJava
 
     @OneToMany(mappedBy = "order", cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @BeanProperty var comments: java.util.Set[OrderComment] = new java.util.HashSet[OrderComment]()
     def sortedComments: Seq[OrderComment] = comments.asScala.toSeq.sortBy(_.id)
+    def sortedCommentsJava = sortedComments.asJava
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deliveryAddress")
