@@ -41,6 +41,20 @@ class ObjTest extends FunSuite with MockitoSugar with OneInstancePerTest {
     obj.attributeValues.add(av4)
     obj.attributeValues.add(av5)
 
+    test("attribute values sort filters null attribute values") {
+
+        av2.value = null
+        av5.value = null
+
+        obj.sortedAttributeValues.foreach(_.attribute.position = 0)
+        val sorted = obj.sortedAttributeValues
+        assert(3 === sorted.size)
+        assert(av1 === sorted(0))
+        assert(av4 === sorted(1))
+        assert(av3 === sorted(2))
+    }
+
+
     test("attribute values sort is stable when positions are 0") {
         obj.sortedAttributeValues.foreach(_.attribute.position = 0)
         val sorted = obj.sortedAttributeValues

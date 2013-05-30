@@ -363,7 +363,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(6 === service.search(search).count)
 
         service.remove(obj.id.toString)
-        Thread.sleep(200)
+        Thread.sleep(1500)
         assert(5 === service.search(search).count)
     }
 

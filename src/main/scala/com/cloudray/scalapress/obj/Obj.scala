@@ -57,6 +57,8 @@ class Obj extends SortedSections {
     @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
     def sortedAttributeValues: Seq[AttributeValue] = attributeValues
       .asScala
+      .filterNot(_.value == null)
+      .filterNot(_.value.isEmpty)
       .toSeq
       .sortBy(_.value)
       .sortBy(_.attribute.name)
