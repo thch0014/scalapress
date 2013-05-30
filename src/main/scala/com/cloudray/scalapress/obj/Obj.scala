@@ -133,11 +133,6 @@ class Obj extends SortedSections {
     @Column(name = "rrp")
     @BeanProperty var rrp: Int = _
 
-    @BeanProperty var x: Int = 0
-    @BeanProperty var y: Int = 0
-
-    @BeanProperty var location: String = _
-
     @Index(name = "status_index")
     @BeanProperty var status: String = _
 
@@ -151,8 +146,7 @@ class Obj extends SortedSections {
     @Column(name = "brochure")
     @BeanProperty var orderable: Boolean = false
 
-    @BeanProperty var orderQtyMin: Int = _
-    @BeanProperty var orderQtyMax: Int = _
+
     @BeanProperty var backorders: Boolean = _
 
     // used by account types
