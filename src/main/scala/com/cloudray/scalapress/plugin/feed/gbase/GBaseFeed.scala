@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.feed.gbase
 
 import javax.persistence._
-import reflect.BeanProperty
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
