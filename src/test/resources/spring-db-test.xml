@@ -28,6 +28,7 @@
                 <prop key="hibernate.connection.autocommit">false</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.globally_quoted_identifiers">true</prop>
             </props>
         </property>
     </bean>
