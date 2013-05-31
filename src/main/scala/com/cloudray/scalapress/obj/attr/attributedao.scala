@@ -21,4 +21,4 @@ trait AttributeValueDao extends GenericDao[AttributeValue, java.lang.Long]
 
 @Component
 @Transactional
-class AttributeValueImpl extends GenericDaoImpl[AttributeValue, java.lang.Long] with AttributeValueDao
+class AttributeValueDaoImpl extends GenericDaoImpl[AttributeValue, java.lang.Long] with AttributeValueDao
