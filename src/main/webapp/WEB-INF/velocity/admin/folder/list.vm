@@ -3,7 +3,7 @@
 <h3>Folders</h3>
 
 <p>
-    <a href="/backoffice/folder/create" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create Folder</a>
+    <a href="/backoffice/folder/create" role="button" class="btn"> <i class="icon-plus-sign"></i> Create Folder</a>
 </p>
 
 <table class="table table-condensed table-hover">
@@ -26,5 +26,8 @@
     #end
 </table>
 
+<p>
+    <a href="/backoffice/folder/create" role="button" class="btn"> <i class="icon-plus-sign"></i> Create Folder</a>
+</p>
 
 #parse("/admin/footer.vm")

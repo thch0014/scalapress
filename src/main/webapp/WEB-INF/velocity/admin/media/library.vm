@@ -3,15 +3,10 @@
 
 <h3>Media Library</h3>
 
-<a href="#10e7a108-b33d-431b-9091-0e4cadb3b7de" role='button' class="btn btn-info" data-toggle="modal">Upload Media</a>
-
 <form class='form-horizontal' method='GET'>
-
-    <input type="text" class=" input-medium" placeholder="Search for media" name="q"/>
-
-    <button type="submit" class="btn btn-success">
-        Search
-    </button>
+    <input type="text" class=" input-xlarge" placeholder="Search for media" name="q"/>
+    <button type="submit" class="btn btn-primary"><i class="icon-search"></i> Search</button>
+    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal"> <i class="icon-upload"></i> Upload Media</a>
 </form>
 
 <style>
@@ -56,7 +51,7 @@ $pagination
 
 $pagination
 
-<div class="modal hide fade" role="dialog" id="10e7a108-b33d-431b-9091-0e4cadb3b7de">
+<div class="modal hide fade" role="dialog" id="upload-modal">
     <div class="modal-header">
         <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
         <h3>
