@@ -2,9 +2,9 @@ package com.cloudray.scalapress.settings.upgraders
 
 import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource
-import javax.annotation.PostConstruct
 import com.cloudray.scalapress.Logging
 import org.springframework.stereotype.Component
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 @Component
@@ -736,7 +736,6 @@ class ECDatabaseUpgrader extends Logging {
             "vouchers_items",
             "vouchers_users",
             "vouchers_uses",
-            "settings_category",
             "newsletters_subscription",
             "forms_submissions_lines_options",
             "forms_newslettersignup",

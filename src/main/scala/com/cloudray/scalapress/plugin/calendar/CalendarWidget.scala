@@ -32,7 +32,13 @@ class CalendarWidget extends Widget {
     def render(req: ScalapressRequest): Option[String] = {
         Some( """<div id="calendar_widget_""" + id + """"></div>
                  <script>
-                    $("#calendar_widget_""" + id + """").eventCalendar({  moveSpeed: 200, showDescription: true, eventsScrollable: true, eventsjson: '/plugin/calendar/event/widget/""" + id + """' });
+                    $("#calendar_widget_""" + id + """").eventCalendar({
+                        startWeekOnMonday: true,
+                        moveSpeed: 200,
+                        showDescription: true,
+                        eventsScrollable: false,
+                        eventsjson: '/plugin/calendar/event/widget/""" + id + """'
+                   });
                  </script> """)
     }
 
