@@ -14,8 +14,6 @@ import scala.beans.BeanProperty
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "searches")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SavedSearch {
 
     @Id

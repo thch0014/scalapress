@@ -10,8 +10,6 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "search_forms")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SearchForm {
 
     @Id

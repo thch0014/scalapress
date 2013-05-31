@@ -2,14 +2,11 @@ package com.cloudray.scalapress.plugin.form
 
 import scala.collection.JavaConverters._
 import javax.persistence._
-import org.hibernate.annotations.CacheConcurrencyStrategy
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "forms")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class Form {
 
     @Id

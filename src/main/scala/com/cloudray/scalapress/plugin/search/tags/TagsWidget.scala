@@ -2,16 +2,13 @@ package com.cloudray.scalapress.plugin.search.tags
 
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.ScalapressRequest
-import javax.persistence.{Cacheable, Entity, Table}
+import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.search.{SearchService, SavedSearch}
 import scala.xml.Utility
-import org.hibernate.annotations.CacheConcurrencyStrategy
 
 /** @author Stephen Samuel */
 @Table(name = "plugin_tagswidget")
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class TagsWidget extends Widget {
 
     def render(req: ScalapressRequest): Option[String] = {

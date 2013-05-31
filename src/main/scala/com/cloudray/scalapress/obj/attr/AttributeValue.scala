@@ -13,8 +13,6 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "attributes_values")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class AttributeValue {
 
     @Id

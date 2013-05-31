@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.section
 
 import javax.persistence._
-import org.hibernate.annotations.{NotFound, NotFoundAction, CacheConcurrencyStrategy, Index}
+import org.hibernate.annotations.{NotFound, NotFoundAction, Index}
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
 import com.cloudray.scalapress.folder.Folder
@@ -10,8 +10,6 @@ import scala.beans.BeanProperty
 /** @author Stephen Samuel */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 abstract class Section {
 
     @Id

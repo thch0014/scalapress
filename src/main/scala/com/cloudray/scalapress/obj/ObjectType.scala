@@ -15,8 +15,6 @@ import javax.persistence.Entity
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items_types")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class ObjectType extends SortedSections {
 
     @Id

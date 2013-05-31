@@ -7,14 +7,11 @@ import com.cloudray.scalapress.search.SavedSearch
 import com.cloudray.scalapress.obj.ObjectType
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.cloudray.scalapress.enums.Sort
-import org.hibernate.annotations.CacheConcurrencyStrategy
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "plugins_calendar_widget")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class CalendarWidget extends Widget {
 
     @ManyToOne

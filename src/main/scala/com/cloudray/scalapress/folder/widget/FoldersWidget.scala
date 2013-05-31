@@ -15,8 +15,6 @@ import com.cloudray.scalapress.folder.Folder
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class FoldersWidget extends Widget with Logging {
 
     @BeanProperty var depth: Int = _

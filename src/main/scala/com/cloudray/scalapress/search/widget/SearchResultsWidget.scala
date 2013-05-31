@@ -4,7 +4,7 @@ import javax.persistence._
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
-import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
+import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.obj.Obj
@@ -13,11 +13,9 @@ import com.cloudray.scalapress.obj.Obj
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class SearchResultsWidget extends Widget {
 
     @OneToOne(fetch = FetchType.EAGER)

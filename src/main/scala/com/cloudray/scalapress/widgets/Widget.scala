@@ -3,14 +3,11 @@ package com.cloudray.scalapress.widgets
 import javax.persistence._
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.enums.WidgetContainer
-import org.hibernate.annotations.CacheConcurrencyStrategy
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 abstract class Widget {
 
     final def init(context: ScalapressContext) {
