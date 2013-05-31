@@ -5,10 +5,8 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
 import com.cloudray.scalapress.media.Image
 import com.cloudray.scalapress.enums.{AttributeType, Sort}
-import com.cloudray.scalapress.obj.attr.{AttributeDao, AttributeValue, Attribute}
+import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.search.{SearchService, SavedSearch}
-import com.cloudray.scalapress.ScalapressContext
-import org.mockito.Mockito
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 
@@ -112,11 +110,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj4.attributeValues.add(av)
 
     val service = new ElasticSearchService
-    service.context = new ScalapressContext
-    service.context.attributeDao = mock[AttributeDao]
-    Mockito.when(service.context.attributeDao.findAll()).thenReturn(List(av1.attribute, av4.attribute, av7.attribute))
 
-    service.setupIndex()
+    service.setupIndex(List(av1.attribute, av4.attribute, av7.attribute))
     service.index(obj2)
     service.index(obj3)
     service.index(obj)

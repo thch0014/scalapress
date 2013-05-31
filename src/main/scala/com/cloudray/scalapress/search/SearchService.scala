@@ -12,8 +12,6 @@ trait SearchService {
     def search(search: SavedSearch): SearchResult
     def typeahead(q: String, limit: Int): Seq[ObjectRef]
     def stats: Map[String, String]
-
-    @deprecated def index()
 }
 
 object SearchService {

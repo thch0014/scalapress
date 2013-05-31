@@ -2,12 +2,9 @@ package com.cloudray.scalapress.plugin.search.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
 import org.elasticsearch.action.search.SearchType
-import com.cloudray.scalapress.{ScalapressContext, Logging}
+import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
-import org.springframework.beans.factory.annotation.{Value, Autowired}
-import com.googlecode.genericdao.search.Search
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
@@ -17,8 +14,7 @@ import collection.mutable.ArrayBuffer
 import scala.Option
 import com.cloudray.scalapress.enums.{AttributeType, Sort}
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
-import com.cloudray.scalapress.folder.FolderDao
+import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
@@ -29,6 +25,7 @@ import org.elasticsearch.search.facet.terms.{TermsFacet, TermsFacetBuilder}
 import scala.Some
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.search.SearchResult
+import com.cloudray.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel */
 
@@ -51,10 +48,6 @@ class ElasticSearchService extends SearchService with Logging {
     val INDEX = "scalapress"
     val TYPE = "obj"
 
-    @Value("${search.index.preload.size}") var preloadSize: Int = _
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var folderDao: FolderDao = _
-    @Autowired var context: ScalapressContext = _
     var setup = false
 
     val tempDir = File.createTempFile("anything", "tmp").getParent
@@ -80,7 +73,7 @@ class ElasticSearchService extends SearchService with Logging {
     val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
     val client = node.client()
 
-    def setupIndex() {
+    def setupIndex(attributes: Seq[Attribute]) {
 
         val source = XContentFactory
           .jsonBuilder()
@@ -95,7 +88,7 @@ class ElasticSearchService extends SearchService with Logging {
           .startObject(FIELD_LOCATION).field("type", "geo_point").field("index", "not_analyzed").endObject()
           .startObject(FIELD_TAGS).field("type", "string").field("index", "not_analyzed").endObject()
 
-        context.attributeDao.findAll().foreach(attr => {
+        attributes.foreach(attr => {
             source
               .startObject("attribute_" + attr.id)
               .field("type", "string")
@@ -109,28 +102,6 @@ class ElasticSearchService extends SearchService with Logging {
           .endObject()
 
         client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT)
-    }
-
-    @Transactional
-    def index() {
-
-        if (!setup) {
-            setupIndex()
-            setup = true
-        }
-
-        val objs = objectDao.search(new Search(classOf[Obj])
-          .addFilterLike("status", "live")
-          .addFilterNotEqual("objectType.name", "Account")
-          .addFilterNotEqual("objectType.name", "account")
-          .addFilterNotEqual("objectType.name", "Accounts")
-          .addFilterNotEqual("objectType.name", "accounts")
-          .setMaxResults(preloadSize))
-
-        logger.info("Indexing {} objects", objs.size)
-        objs.filterNot(_.name == null).filterNot(_.name.isEmpty).foreach(index(_))
-
-        logger.info("Indexing finished")
     }
 
     override def contains(id: String): Boolean = {

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
-import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search._
@@ -15,7 +14,6 @@ import com.cloudray.scalapress.obj.{ObjectDao, TypeDao}
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
-import scala.concurrent._
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.Some
 
@@ -139,13 +137,5 @@ class SearchController extends Logging {
         val savedSearch = savedSearchDao.find(id)
         val response = searchService.search(savedSearch)
         response.toString
-    }
-
-    @PostConstruct
-    def index() {
-        import ExecutionContext.Implicits.global
-        future {
-            searchService.index()
-        }
     }
 }
