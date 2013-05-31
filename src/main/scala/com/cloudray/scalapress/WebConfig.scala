@@ -65,8 +65,6 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     override def addInterceptors(registry: InterceptorRegistry) {
 
-        registry.addInterceptor(VaryEncodingInterceptor).addPathPatterns("/static/**", "/static")
-
         val webContentInterceptor = new WebContentInterceptor
         webContentInterceptor.setUseCacheControlHeader(true)
         webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
