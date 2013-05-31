@@ -10,6 +10,7 @@ import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel */
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
+    def recent(i: Int): Seq[Obj]
     def findBulk(longs: Seq[Long]): Seq[Obj]
     def search(query: ObjectQuery): Page[Obj]
     def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]]
@@ -20,6 +21,8 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
 @Component
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
+
+    def recent(i: Int): Seq[Obj] = search(new Search(classOf[Obj]).setMaxResults(i).addSort("id", true))
 
     def findBulk(longs: Seq[Long]): Seq[Obj] = {
         val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)

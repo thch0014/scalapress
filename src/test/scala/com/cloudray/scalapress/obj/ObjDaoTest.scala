@@ -51,4 +51,25 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         assert(objects.exists(_.id == obj2.id))
         assert(objects.exists("playcold" == _.name))
     }
+
+    test("recent returns X results in newest order") {
+
+        val obj1 = new Obj
+        obj1.name = "grandfather"
+
+        val obj2 = new Obj
+        obj2.name = "father"
+
+        val obj3 = new Obj
+        obj3.name = "son"
+
+        dao.save(obj1)
+        dao.save(obj2)
+        dao.save(obj3)
+
+        val objs = dao.recent(2)
+        assert(2 === objs.size)
+        assert(obj3.id === objs(0).id)
+        assert(obj2.id === objs(1).id)
+    }
 }
