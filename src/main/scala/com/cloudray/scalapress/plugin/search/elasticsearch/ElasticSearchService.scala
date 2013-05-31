@@ -405,10 +405,22 @@ class ElasticSearchService extends SearchService with Logging {
             map.put("jvm.mem.nonHeapUsed", node.getJvm.mem.nonHeapUsed.mb + "mb")
             map.put("jvm.threads.count", node.getJvm.threads.count.toString)
             map.put("jvm.threads.peakCount", node.getJvm.threads.peakCount.toString)
+
             map.put("indices.docs.count", node.getIndices.getDocs.getCount.toString)
             map.put("indices.docs.deleted", node.getIndices.getDocs.getDeleted.toString)
+
+            map.put("indices.cache.bloomSize", node.getIndices.getCache.getBloomSize.mb() + "mb")
+            map.put("indices.cache.filterSize", node.getIndices.getCache.getFilterSize.mb + "mb")
+
+            map.put("indices.indexing.delete", node.getIndices.getIndexing.total().getDeleteCount.toString)
+            map.put("indices.indexing.index", node.getIndices.getIndexing.total().getIndexCount.toString)
+
+            map.put("indices.get.time", node.getIndices.get().getTimeInMillis + "ms")
+            map.put("indices.get.count", node.getIndices.get().getCount.toString)
+
             map.put("indices.store.size", node.getIndices.getStore.size.mb + "mb")
             map.put("indices.store.throttleTime", node.getIndices.getStore.throttleTime.toString)
+
             map.put("transport.txCount", node.getTransport.txCount.toString)
             map.put("transport.txSize", node.getTransport.txSize.toString)
             map.put("transport.txSize", node.getTransport.txSize.toString)
