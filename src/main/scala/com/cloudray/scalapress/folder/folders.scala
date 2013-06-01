@@ -8,17 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.hibernate.criterion.Restrictions
+import com.googlecode.genericdao.search.ISearch
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
     def findTopLevel: Array[Folder]
     def root: Folder
     def tree: Array[Folder]
+    def exposeSearch[T](search: ISearch): Seq[T]
 }
 
 @Component
 @Transactional
 class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDao {
+
+    def exposeSearch[T](search: ISearch): Seq[T] = super._search(search).asInstanceOf[java.util.List[T]].asScala
 
     override def tree: Array[Folder] = {
         tree(root).toArray
