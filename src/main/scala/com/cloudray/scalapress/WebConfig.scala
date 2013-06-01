@@ -24,10 +24,10 @@ import com.cloudray.scalapress.util.mvc.interceptor._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module
 import org.springframework.web.servlet.mvc.WebContentInterceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -90,7 +90,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
         val mapper = new ObjectMapper
         mapper.registerModule(DefaultScalaModule)
-        mapper.registerModule(new Hibernate3Module)
+        mapper.registerModule(new Hibernate4Module)
 
         val convertor = new MappingJackson2HttpMessageConverter
         convertor.setObjectMapper(mapper)
