@@ -16,7 +16,7 @@ case class ScalapressRequest(request: HttpServletRequest,
                              order: Option[Order] = None,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
-                             r: Option[CorpusResult] = None,
+                             corpusResult: Option[CorpusResult] = None,
                              line: Option[BasketLine] = None,
                              location: Option[String] = None,
                              paging: Option[Paging] = None) {
@@ -71,7 +71,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     def withObject(o: Obj): ScalapressRequest = copy(obj = Option(o))
     def withOrder(o: Order): ScalapressRequest = copy(order = Option(o))
     def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
-    def withResult(r: CorpusResult): ScalapressRequest = copy(r = Option(r))
+    def withResult(r: CorpusResult): ScalapressRequest = copy(corpusResult = Option(r))
 }
 
 object ScalapressRequest {

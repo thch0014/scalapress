@@ -32,7 +32,13 @@ class CorpusSearchController {
         page.body("<!-- corpus search results: " + results.size + " results found -->")
 
         val markup = new Markup
-        markup.body = "result: <h1>[title]</h1> [item] [url]"
+        markup.body =
+          """<div class="corpus_result">
+                <div class="pagename">[corpus_pagename]</div>
+                <div class="url"><a href="[corpus_url]">[corpus_pageurl]</a></div>
+                <div class="snippet">[corpus_snippet]</div>
+             </div>"""
+
         if (markup == null) {
             page.body("<!-- search results: no corpus search markup found -->")
         } else {

@@ -4,7 +4,6 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
-import com.cloudray.scalapress.search.SearchFormDao
 
 /** @author Stephen Samuel */
 class SearchFormDaoTest extends FunSuite with MockitoSugar {
