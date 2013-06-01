@@ -5,6 +5,7 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 import tag.TagRenderer
+import com.cloudray.scalapress.search.CorpusResult
 
 /** @author Stephen Samuel */
 object MarkupRenderer {
@@ -24,8 +25,15 @@ object MarkupRenderer {
         start + body + end
     }
 
-    def render(f: Folder, m: Markup, request: ScalapressRequest): String = render(m, request.withFolder(f))
-    def render(o: Obj, m: Markup, request: ScalapressRequest): String = render(m, request.withObject(o))
+    def renderCorpusResults(results: Seq[CorpusResult], m: Markup, sreq: ScalapressRequest): String = {
+        val start = TagRenderer.render(m.start, sreq)
+        val body = results.map(r => TagRenderer.render(m.body, sreq.withResult(r))).mkString(TagRenderer.render(m.between, sreq))
+        val end = TagRenderer.render(m.end, sreq)
+        start + body + end
+    }
+
+    def render(f: Folder, m: Markup, sreq: ScalapressRequest): String = render(m, sreq.withFolder(f))
+    def render(o: Obj, m: Markup, sreq: ScalapressRequest): String = render(m, sreq.withObject(o))
 
     def renderOrderLines(objects: Seq[OrderLine], m: Markup, request: ScalapressRequest) = {
         val start = TagRenderer.render(m.start, request)

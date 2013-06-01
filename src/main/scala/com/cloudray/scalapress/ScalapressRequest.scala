@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest
 import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
+import com.cloudray.scalapress.search.CorpusResult
+import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
@@ -14,6 +16,7 @@ case class ScalapressRequest(request: HttpServletRequest,
                              order: Option[Order] = None,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
+                             r: Option[CorpusResult] = None,
                              line: Option[BasketLine] = None,
                              location: Option[String] = None,
                              paging: Option[Paging] = None) {
@@ -31,11 +34,11 @@ case class ScalapressRequest(request: HttpServletRequest,
             case Some(basket) => basket.asInstanceOf[Basket]
             case None =>
                 val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
-                val basket = Option(context.basketDao.find(sessionId)) match {
+                val basket = Option(context.bean[BasketDao].find(sessionId)) match {
                     case None =>
                         val b = new Basket
                         b.sessionId = sessionId
-                        context.basketDao.save(b)
+                        context.bean[BasketDao].save(b)
                         b
                     case Some(b) => b
                 }
@@ -68,6 +71,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     def withObject(o: Obj): ScalapressRequest = copy(obj = Option(o))
     def withOrder(o: Order): ScalapressRequest = copy(order = Option(o))
     def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
+    def withResult(r: CorpusResult): ScalapressRequest = copy(r = Option(r))
 }
 
 object ScalapressRequest {
