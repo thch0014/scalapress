@@ -40,15 +40,7 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
 
     override def root: Folder = {
         val c = getSession.createCriteria(classOf[Folder]).add(Restrictions.isNull("parent"))
-        c.setCacheable(true)
         c.list().asScala.head.asInstanceOf[Folder]
-    }
-
-    override def findAll: List[Folder] = {
-        val c = getSession.createCriteria(classOf[Folder])
-        c.setCacheable(true)
-        val results = c.list.asInstanceOf[java.util.List[Folder]]
-        results.asScala.sortWith((a, b) => a.name < b.name).toList
     }
 }
 

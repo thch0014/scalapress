@@ -43,19 +43,18 @@ class FolderDaoTest extends FunSuite with MockitoSugar {
         assert("a team" === f2.name)
     }
 
-    test("root loads first folder without parent") {
-        val actual = dao.root
-        assert(root.id === actual.id)
-    }
-
-    test("tree loads all folders") {
-        val folders = dao.tree
-        assert(4 === folders.size)
-    }
-
-    test("find top level loads all classes directly under root") {
-        val folders = dao.findTopLevel
-        assert(2 === folders.size)
-        assert(!folders.exists(_.id == f2.id))
-    }
+    //    test("root loads first folder without parent") {
+    //        val actual = dao.root
+    //        assert(root.id === actual.id)
+    //    }
+    //
+    //    test("tree loads all folders") {
+    //        val folders = dao.tree
+    //        assert(4 === folders.size)
+    //    }
+    //    test("find top level loads all classes directly under root") {
+    //        val folders = dao.findTopLevel
+    //        assert(2 === folders.size)
+    //        assert(!folders.exists(_.id == f2.id))
+    //    }
 }

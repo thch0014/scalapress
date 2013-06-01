@@ -53,7 +53,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         form.sellPrice = form.o.price / 100.0
         form.costPrice = form.o.costPrice / 100.0
         form.rrp = form.o.rrp / 100.0
-        form.folderIds = form.o.folders.asScala.map(_.id).toArray :+ 0l
+        form.folderIds = (form.o.folders.asScala.map(_.id) + 0l).toArray
         "admin/object/edit.vm"
     }
 
