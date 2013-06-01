@@ -120,4 +120,10 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
         val snippet = service._snippet(content, Seq("gemini", "fade"), 55555)
         assert("two pairs of eyes watching me, watching me fade away, who are you, a pair of eyes, or are you gemini?" === snippet)
     }
+
+    test("snippet removes all html tags") {
+        val content = "two pairs of eyes <b>watching me, <a href='somelink.html'>watching me</a> fade away, who are you, a pair of eyes, or are you gemini?"
+        val snippet = service._snippet(content, Seq("gemini", "fade"), 55555)
+        assert("two pairs of eyes watching me, watching me fade away, who are you, a pair of eyes, or are you gemini?" === snippet)
+    }
 }

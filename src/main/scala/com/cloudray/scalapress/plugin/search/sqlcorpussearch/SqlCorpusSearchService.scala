@@ -12,7 +12,7 @@ import com.cloudray.scalapress.util.Page
   *
   *         An implementation of CorpusSearchService that performs raw DB queries to search for data.
   *
-  **/
+  * */
 @Component
 class SqlCorpusSearchService extends CorpusSearchService {
 
@@ -35,21 +35,24 @@ class SqlCorpusSearchService extends CorpusSearchService {
     }
 
     def _snippet(content: String, terms: Seq[String], max: Int) = {
+
+        val stripped = content.replaceAll("<.*?>", "")
+
         // find first term and use that as the snippet offset
-        var start = content.indexOf(terms.head)
+        var start = stripped.indexOf(terms.head)
         var end = start + terms.length
 
-        while (end - start < max && (start > 0 || end < content.length)) {
+        while (end - start < max && (start > 0 || end < stripped.length)) {
             if (start > 0)
                 start = start - 1
-            if (end < content.length)
+            if (end < stripped.length)
                 end = end + 1
         }
 
-        var snippet = content.substring(start, end).trim
+        var snippet = stripped.substring(start, end).trim
         if (start > 0)
             snippet = "..." + snippet.dropWhile(_ != ' ').trim
-        if (end < content.length)
+        if (end < stripped.length)
             snippet = snippet.reverse.dropWhile(_ != ' ').reverse.trim + "..."
         snippet
     }
