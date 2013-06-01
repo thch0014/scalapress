@@ -4,7 +4,6 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
-import com.cloudray.scalapress.folder.{Folder, FolderDaoImpl, FolderDao}
 
 /** @author Stephen Samuel */
 class FolderDaoTest extends FunSuite with MockitoSugar {
@@ -20,51 +19,43 @@ class FolderDaoTest extends FunSuite with MockitoSugar {
     root.parent = null
     dao.save(root)
 
-    test("persisting a folder is assigned id") {
+    val f1 = new Folder
+    f1.parent = root
+    f1.name = "a team"
+    dao.save(f1)
 
-        val f = new Folder
-        f.parent = root
-        assert(f.id == 0)
-        dao.save(f)
-        assert(f.id > 0)
+    val f2 = new Folder
+    f2.parent = f1
+    f2.name = "hannibal"
+    dao.save(f2)
+
+    val f3 = new Folder
+    f3.parent = root
+    f3.name = "knight rider"
+    dao.save(f3)
+
+    test("persisting a folder is assigned id") {
+        assert(f1.id > 0)
     }
 
     test("persisting a folder can be retrieved by id") {
-
-        val f = new Folder
-        f.parent = root
-        f.name = "fold it up"
-        dao.save(f)
-
-        val f2 = dao.find(f.id)
-        assert("fold it up" === f2.name)
+        val f2 = dao.find(f1.id)
+        assert("a team" === f2.name)
     }
 
     test("root loads first folder without parent") {
-        // should be 3 at this point in the test run - dependant on order that tests run so be careful if moving shit about
         val actual = dao.root
         assert(root.id === actual.id)
     }
 
-    test("tree loads all folders starting with root") {
-        // should be 3 at this point in the test run - dependant on order that tests run so be careful if moving shit about
+    test("tree loads all folders") {
         val folders = dao.tree
-        assert(3 === folders.size)
+        assert(4 === folders.size)
     }
 
     test("find top level loads all classes directly under root") {
-
-        val toplevel3 = new Folder
-        toplevel3.parent = root
-        dao.save(toplevel3)
-
-        val nottoplevel = new Folder
-        nottoplevel.parent = toplevel3
-        dao.save(nottoplevel)
-
-        // should be 3 top level at this point - 2 from previous tests and 1 created here, nottoplevel as a non root parent
         val folders = dao.findTopLevel
-        assert(3 === folders.size)
-        assert(!folders.exists(_.id == nottoplevel.id))
+        assert(2 === folders.size)
+        assert(!folders.exists(_.id == f2.id))
     }
 }

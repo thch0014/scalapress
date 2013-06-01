@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.sqlcorpussearch
+package com.cloudray.scalapress.plugin.search.sqlcorpussearch
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
