@@ -12,7 +12,7 @@ import com.cloudray.scalapress.util.Page
   *
   *         An implementation of CorpusSearchService that performs raw DB queries to search for data.
   *
-  * */
+  **/
 @Component
 class SqlCorpusSearchService extends CorpusSearchService {
 
@@ -35,25 +35,30 @@ class SqlCorpusSearchService extends CorpusSearchService {
     }
 
     def _snippet(content: String, terms: Seq[String], max: Int) = {
+        require(!content.isEmpty)
 
-        val stripped = content.replaceAll("<.*?>", "")
+        val stripped = content.replaceAll("<.*?>", "").replaceAll("(?s)\\s{2,}", "").trim
 
         // find first term and use that as the snippet offset
         var start = stripped.indexOf(terms.head)
         var end = start + terms.length
 
-        while (end - start < max && (start > 0 || end < stripped.length)) {
-            if (start > 0)
-                start = start - 1
-            if (end < stripped.length)
-                end = end + 1
-        }
+        if (start == -1)
+            stripped.take(max).reverse.dropWhile(_ != ' ').reverse.trim + "..."
+        else {
+            while (end - start < max && (start > 0 || end < stripped.length)) {
+                if (start > 0)
+                    start = start - 1
+                if (end < stripped.length)
+                    end = end + 1
+            }
 
-        var snippet = stripped.substring(start, end).trim
-        if (start > 0)
-            snippet = "..." + snippet.dropWhile(_ != ' ').trim
-        if (end < stripped.length)
-            snippet = snippet.reverse.dropWhile(_ != ' ').reverse.trim + "..."
-        snippet
+            var snippet = stripped.substring(start, end).trim
+            if (start > 0)
+                snippet = "..." + snippet.dropWhile(_ != ' ').trim
+            if (end < stripped.length)
+                snippet = snippet.reverse.dropWhile(_ != ' ').reverse.trim + "..."
+            snippet
+        }
     }
 }

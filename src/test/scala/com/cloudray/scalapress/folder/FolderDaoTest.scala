@@ -4,6 +4,11 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
+import scala.collection.JavaConverters._
+import org.hibernate.{FlushMode, SessionFactory}
+import com.cloudray.scalapress.folder.section.{ObjectListSection, SubfolderSection, FolderContentSection}
+import org.springframework.transaction.support.TransactionSynchronizationManager
+import org.springframework.orm.hibernate4.SessionHolder
 
 /** @author Stephen Samuel */
 class FolderDaoTest extends FunSuite with MockitoSugar {
@@ -14,6 +19,8 @@ class FolderDaoTest extends FunSuite with MockitoSugar {
       .getAutowireCapableBeanFactory
       .createBean(classOf[FolderDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
       .asInstanceOf[FolderDao]
+
+    val sf = context.getBean(classOf[SessionFactory])
 
     val root = new Folder
     root.parent = null
@@ -41,6 +48,27 @@ class FolderDaoTest extends FunSuite with MockitoSugar {
     test("persisting a folder can be retrieved by id") {
         val f2 = dao.find(f1.id)
         assert("a team" === f2.name)
+    }
+
+    test("creating a new folder persists the new sections") {
+
+        val session = sf.openSession()
+        session.setFlushMode(FlushMode.MANUAL)
+        TransactionSynchronizationManager.bindResource(sf, new SessionHolder(session))
+
+        val f = Folder(root)
+        dao.save(f)
+
+        assert(f.sections.size == 3)
+        f.sections.asScala.foreach(section => assert(section.id > 0))
+
+        val f2 = dao.find(f.id)
+        assert(f2.sections.size == 3)
+        assert(f2.sections.asScala.find(_.isInstanceOf[FolderContentSection]).get.folder.id === f.id)
+        assert(f2.sections.asScala.find(_.isInstanceOf[SubfolderSection]).get.folder.id === f.id)
+        assert(f2.sections.asScala.find(_.isInstanceOf[ObjectListSection]).get.folder.id === f.id)
+
+        session.close()
     }
 
     //    test("root loads first folder without parent") {

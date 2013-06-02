@@ -6,7 +6,7 @@ import com.cloudray.scalapress.enums.FolderOrdering
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.obj.Obj
-import section.{FolderContentSection, SubfolderSection}
+import com.cloudray.scalapress.folder.section.{ObjectListSection, FolderContentSection, SubfolderSection}
 import com.cloudray.scalapress.theme.Theme
 import org.joda.time.{DateTime, DateTimeZone}
 import javax.persistence.Entity
@@ -101,13 +101,21 @@ object Folder {
         folder.name = "new folder"
         folder.parent = root
 
-        val section1 = new FolderContentSection
-        section1.name = "content"
-        val section2 = new SubfolderSection
-        section2.name = "subfolders"
+        val section1 = new SubfolderSection
+        section1.name = "subfolders"
+        section1.folder = folder
 
-        folder.sections.add(section2)
+        val section2 = new FolderContentSection
+        section2.name = "content"
+        section2.folder = folder
+
+        val section3 = new ObjectListSection
+        section3.name = "objects"
+        section3.folder = folder
+
         folder.sections.add(section1)
+        folder.sections.add(section2)
+        folder.sections.add(section3)
 
         folder.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
         folder.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
