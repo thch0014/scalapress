@@ -28,7 +28,7 @@
 
                 <a onClick="bootbox.confirm('Confirm delete', function(result) {
                         if (result) {
-                        window.location='/backoffice/submission/$s.id/delete';
+                            window.location='/backoffice/submission/$s.id/delete';
                         }})" role="button" class="btn btn-danger btn-mini">
                     <i class="icon-trash icon-white"></i></a>
             </td>
