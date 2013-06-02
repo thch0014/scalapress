@@ -4,8 +4,8 @@ import com.cloudray.scalapress.settings.{MenuLink, Menu, MenuItem, MenuItemProvi
 
 /** @author Stephen Samuel */
 class FormMenuProvider extends MenuItemProvider {
-    def items: Seq[MenuItem] = Seq(
+    def item: MenuItem =
         Menu("Forms", Some("icon-align-center"), Seq(
-            MenuLink("List Forms", Some("icon-align-center"), "/backoffice/form"),
-            MenuLink("Submission", Some("icon-pencil"), "/backoffice/submission"))))
+            MenuLink("Show Forms", Some("icon-align-center"), "/backoffice/form"),
+            MenuLink("Submissions", Some("icon-pencil"), "/backoffice/submission")))
 }

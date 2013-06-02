@@ -5,7 +5,7 @@ import com.cloudray.scalapress.settings.{Menu, MenuItemProvider, MenuLink, MenuI
 /** @author Stephen Samuel */
 class ListingPluginMenuProvider extends MenuItemProvider {
 
-    def items: Seq[MenuItem] = Seq(
+    def item: MenuItem =
         Menu("Listings", Some("icon-th-large"), Seq(
-            MenuLink("Listing Packages", Some("icon-th-large"), "/backoffice/plugin/listings"))))
+            MenuLink("Listing Packages", Some("icon-th-large"), "/backoffice/plugin/listings")))
 }

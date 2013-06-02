@@ -15,7 +15,7 @@ case object MenuDivider extends MenuItem {
 }
 
 abstract class MenuItemProvider {
-    def items: Seq[MenuItem]
+    def item: MenuItem
     def enabled(context: ScalapressContext): Boolean = true
 }
 

@@ -18,8 +18,8 @@ class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdap
                             handler: Any,
                             modelAndView: ModelAndView) {
         if (modelAndView != null) {
-            val items = providers.filter(_.enabled(context)).flatMap(_.items).sorted
-            modelAndView.getModelMap.put("pluginMenu", renderer.render(items))
+            val item = providers.filter(_.enabled(context)).map(_.item).sorted
+            modelAndView.getModelMap.put("pluginMenu", renderer.render(item))
         }
     }
 }
