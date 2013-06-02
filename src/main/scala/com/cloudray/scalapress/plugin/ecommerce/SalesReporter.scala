@@ -10,11 +10,12 @@ class SalesReporter {
 
     @Autowired var orderDao: OrderDao = _
 
-    def generate(start: Long, end: Long): Seq[ReportLine] = {
+    def generate(status: String, start: Long, end: Long): Seq[ReportLine] = {
 
         val q = new OrderQuery
         q.from = Some(start)
         q.to = Some(end)
+        q.status = Option(status)
         q.pageSize = 10000000
         val orders = orderDao.search(q).results
 
