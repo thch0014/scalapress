@@ -5,7 +5,7 @@ import collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("folders_nested")
@@ -32,7 +32,7 @@ class NestedFoldersTag extends ScalapressTag with TagBuilder {
         buffer.append("<ul class=\"nested-folder-level" + depth + "\">")
         sorted.foreach(child => {
             buffer.append("<li id=\"nested-folder-" + child.id + "\">")
-            buffer.append(FriendlyUrlGenerator.friendlyLink(child))
+            buffer.append(UrlGenerator.link(child))
             if (depth > 0)
                 _renderLevel(child, depth - 1, buffer, excluded)
             buffer.append("</li>")

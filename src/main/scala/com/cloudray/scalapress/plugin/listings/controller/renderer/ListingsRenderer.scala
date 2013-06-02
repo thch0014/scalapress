@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import org.joda.time.DateTime
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 object ListingsRenderer {
@@ -19,7 +19,7 @@ object ListingsRenderer {
 
             <tr>
                 <td>
-                    <a href={FriendlyUrlGenerator.friendlyUrl(obj)}>
+                    <a href={UrlGenerator.url(obj)}>
                         {obj.name}
                     </a>
                 </td>

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.friendlyurl
+package com.cloudray.scalapress.plugin.url.simpleurls
 
 import org.springframework.web.bind.annotation.{RequestMapping, PathVariable}
 import org.springframework.stereotype.Controller
@@ -6,14 +6,11 @@ import org.springframework.stereotype.Controller
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping
-class FriendlyUrlForwardController {
+class SimpleUrlForwardController {
 
-    @RequestMapping(Array("object-{id:\\d+}-{name}"))
+    @RequestMapping(Array("o{id:\\d+}-{name}"))
     def obj(@PathVariable("id") id: Int): String = "forward:/object/" + id
 
-    @RequestMapping(Array("obj-{id:\\d+}-{name}"))
-    def obj2(@PathVariable("id") id: Int): String = "forward:/object/" + id
-
-    @RequestMapping(Array("folder-{id:\\d+}-{name}"))
+    @RequestMapping(Array("f{id:\\d+}-{name}"))
     def folder(@PathVariable("id") id: Int): String = "forward:/folder/" + id
 }

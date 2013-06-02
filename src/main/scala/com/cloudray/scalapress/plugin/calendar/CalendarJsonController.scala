@@ -7,7 +7,7 @@ import com.cloudray.scalapress.search.SearchService
 import org.joda.time.{DateMidnight, DateTimeZone}
 import com.cloudray.scalapress.ScalapressContext
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Controller
@@ -36,7 +36,8 @@ class CalendarJsonController {
                     e.dateString = dateMidnight.toString("dd/MM/yyyy")
                     e.title = ref.name
                     e.description = ""
-                    e.url = FriendlyUrlGenerator.friendlyUrl(ref.id, ref.name)
+
+                    e.url = UrlGenerator.url(ref)
                     Some(e)
 
                 case _ => None

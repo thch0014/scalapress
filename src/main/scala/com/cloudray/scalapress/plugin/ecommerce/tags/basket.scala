@@ -6,8 +6,8 @@ import com.cloudray.scalapress.enums.StockMethod
 import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("basket")
@@ -129,7 +129,7 @@ class BasketLineObjectTag extends ScalapressTag {
         request.line.map(line => {
             params.contains("link") match {
                 case false => line.obj.name
-                case true => FriendlyUrlGenerator.friendlyUrl(line.obj)
+                case true => UrlGenerator.url(line.obj)
             }
         })
     }

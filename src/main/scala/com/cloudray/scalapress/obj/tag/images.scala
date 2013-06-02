@@ -4,7 +4,7 @@ import com.cloudray.scalapress._
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import scala.Some
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 
@@ -39,7 +39,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                             buildLink(request.context.assetStore.link(i.filename), html, params)
 
                         case Some(link) if link == "object" =>
-                            buildLink(FriendlyUrlGenerator.friendlyUrl(o), html, params)
+                            buildLink(UrlGenerator.url(o), html, params)
 
                         case _ => build(html, params)
                     }
@@ -74,7 +74,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
             var count = 0
             val images = obj.images.asScala.toSeq
             val sorted = images.sortBy(_.position)
-            val rendered = obj.images.asScala.map(image => {
+            val rendered = sorted.map(image => {
 
                 val original = request.context.assetStore.link(image.filename)
                 val thumb = request.context.imageService.imageLink(image.filename, width, height)

@@ -5,7 +5,7 @@ import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Component
@@ -31,7 +31,7 @@ class ListingCustomerNotificationService extends Logging {
     def _message(listing: Obj): String = {
 
         val domain = context.installationDao.get.domain
-        val url = "http://" + domain + FriendlyUrlGenerator.friendlyUrl(listing)
+        val url = "http://" + domain + UrlGenerator.url(listing)
         val accountUrl = "http://" + domain + "/account"
 
         val sb = new StringBuffer("Hello.\n\n")

@@ -3,7 +3,7 @@ package com.cloudray.scalapress.folder.tag
 import com.cloudray.scalapress.ScalapressRequest
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 
@@ -19,7 +19,7 @@ object FolderTag extends ScalapressTag with TagBuilder {
         folder.map(f => {
             val text = params.get("text").getOrElse(f.name)
             params.contains("link") match {
-                case true => FriendlyUrlGenerator.friendlyLink(f, text)
+                case true => UrlGenerator.link(f, text)
                 case false => text
             }
         })
@@ -28,7 +28,7 @@ object FolderTag extends ScalapressTag with TagBuilder {
 
 object SubfoldersTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
-        request.folder.map(_.sortedSubfolders.map(FriendlyUrlGenerator.friendlyLink(_)).mkString("\n"))
+        request.folder.map(_.sortedSubfolders.map(UrlGenerator.link(_)).mkString("\n"))
     }
 }
 
@@ -50,8 +50,7 @@ object BreadcrumbsTag extends ScalapressTag with TagBuilder {
 
                 var parent = folder.parent
                 while (parent != null) {
-                    buffer.prepend("<li>" + FriendlyUrlGenerator
-                      .friendlyLink(parent) + " <span class='divider'>" + sep + "</span></li>")
+                    buffer.prepend("<li>" + UrlGenerator.link(parent) + " <span class='divider'>" + sep + "</span></li>")
                     parent = parent.parent
                 }
                 buffer.append("<li class='active'>" + folder.name + "</li>")
@@ -86,7 +85,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
 
             val endTag = "</" + tag + ">"
 
-            val link = "<a href='" + FriendlyUrlGenerator.friendlyUrl(f) + "'>" + f.name + "</a>"
+            val link = "<a href='" + UrlGenerator.url(f) + "'>" + f.name + "</a>"
             startTag + link + endTag
 
         }).mkString(sep)

@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.navigation.rdfabreadcrumb
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.mutable.{ListBuffer, ArrayBuffer}
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Tag("rdfa_breadcrumb")
@@ -37,8 +37,8 @@ class RdfaBreacrumbTag extends ScalapressTag with TagBuilder {
                 for ( parent <- parents ) {
                     buffer.append("<span typeof='v:Breadcrumb'>")
                     buffer
-                      .append("<span class='parent'><a href='" + FriendlyUrlGenerator
-                      .friendlyUrl(parent) + "'  rel=\"v:url\" property=\"v:title\">" + parent.name + "</a></span>")
+                      .append("<span class='parent'><a href='" + UrlGenerator
+                      .url(parent) + "'  rel=\"v:url\" property=\"v:title\">" + parent.name + "</a></span>")
                     buffer.append("<span class='divider'>" + sep + "</span>")
                     buffer.append("<span rel='v:child'>")
                 }

@@ -6,7 +6,7 @@ import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.folder.section.FolderContentSection
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel
   *
@@ -33,7 +33,7 @@ class SqlCorpusSearchService extends CorpusSearchService {
 
         singlePerFolder.map(section => {
             val snippet = _snippet(section.content, terms, 200)
-            CorpusResult(section.folder.name, FriendlyUrlGenerator.url(section.folder), snippet)
+            CorpusResult(section.folder.name, UrlGenerator.url(section.folder), snippet)
 
         }).take(20)
     }

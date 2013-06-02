@@ -1,14 +1,14 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 object ListingCompleteRenderer {
 
     def render(context: ScalapressContext, listing: Obj) = {
-        val url = "http://" + context.installationDao.get.domain + FriendlyUrlGenerator.friendlyUrl(listing)
+        val url = "http://" + context.installationDao.get.domain + UrlGenerator.url(listing)
         <div id="listing-confirmation-text">
             <p>
                 Thank you.

@@ -2,43 +2,41 @@ package com.cloudray.scalapress.util
 
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.search.ObjectRef
 
 /** @author Stephen Samuel */
-trait UrlGenerator {
+object UrlGenerator {
 
-    def url(obj: Obj): String
-    def url(folder: Folder): String
-    def normalize(label: String) =
-        label
-          .replaceAll("[^a-zA-Z0-9\\s\\-]", "")
-          .replaceAll("\\s", "-")
-          .replaceAll("-{2,}", "-")
-          .replaceAll("-$", "")
-          .replaceAll("^-", "")
-          .toLowerCase
+    private[util] var strategy: UrlStrategy = DefaultUrlStrategy
+
+    def url(ref: ObjectRef): String = {
+        val o = new Obj
+        o.id = ref.id
+        o.name = ref.name
+        url(o)
+    }
+
+    def url(folder: Folder): String = strategy.url(folder)
+    def url(obj: Obj): String = strategy.url(obj)
 
     // creates a link that uses the object name as the label
-    def link(obj: Obj): String = friendlyLink(obj)
-    @deprecated
-    def friendlyLink(obj: Obj): String = friendlyLink(obj, obj.name)
+    def link(obj: Obj): String = link(obj, obj.name)
     // creates a link that uses the specified label
-    def link(obj: Obj, label: String): String = friendlyLink(obj, label)
-    @deprecated
-    def friendlyLink(obj: Obj, label: String): String =
+    def link(obj: Obj, label: String): String =
         <a href={url(obj)}>
             {label}
         </a>.toString()
 
     // creates a link that uses the folder name as the label
-    def link(folder: Folder): String = friendlyLink(folder)
-    @deprecated
-    def friendlyLink(folder: Folder): String = friendlyLink(folder, folder.name)
-
+    def link(folder: Folder): String = link(folder, folder.name)
     // creates a link that uses the specified label
-    def link(folder: Folder, label: String): String = friendlyLink(folder, label)
-    @deprecated
-    def friendlyLink(folder: Folder, label: String): String =
+    def link(folder: Folder, label: String): String =
         <a href={url(folder)}>
             {label}
         </a>.toString()
+}
+
+object DefaultUrlStrategy extends UrlStrategy {
+    def url(folder: Folder): String = "/folder/" + folder.id
+    def url(obj: Obj): String = "/object/" + obj.id
 }

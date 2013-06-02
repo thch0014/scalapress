@@ -6,7 +6,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.tag.CorpusResultUrlTag
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 class CorpusResultUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -18,10 +18,10 @@ class CorpusResultUrlTagTest extends FunSuite with OneInstancePerTest with Mocki
     folder.id = 124
     folder.name = "a team"
 
-    val r = new CorpusResult(folder.name, FriendlyUrlGenerator.url(folder), "...hannibal loves it when a plan comes together...")
+    val r = new CorpusResult(folder.name, UrlGenerator.url(folder), "...hannibal loves it when a plan comes together...")
 
     test("corpus result url tag uses url from corpus result page") {
         val actual = new CorpusResultUrlTag().render(ScalapressRequest(req, context).withResult(r))
-        assert(FriendlyUrlGenerator.url(folder) === actual.get)
+        assert(UrlGenerator.url(folder) === actual.get)
     }
 }

@@ -4,7 +4,7 @@ import collection.mutable.ListBuffer
 import com.cloudray.scalapress.ScalapressContext
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.obj.ObjectQuery
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 object UrlBuilder {
@@ -22,7 +22,7 @@ object UrlBuilder {
 
         val urls = new ListBuffer[Url]
         for ( obj <- objects ) {
-            val loc = domain + FriendlyUrlGenerator.url(obj)
+            val loc = domain + UrlGenerator.url(obj)
             val lastmod = new DateTime(obj.dateUpdated, DateTimeZone.UTC).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.8))
         }
@@ -35,7 +35,7 @@ object UrlBuilder {
 
         val urls = new ListBuffer[Url]
         for ( f <- folders ) {
-            val loc = domain + FriendlyUrlGenerator.url(f)
+            val loc = domain + UrlGenerator.url(f)
             val lastmod = new DateTime(f.dateUpdated, DateTimeZone.UTC).toString("yyyy-MM-dd")
             urls.append(Url(loc, lastmod, "weekly", 0.6))
         }

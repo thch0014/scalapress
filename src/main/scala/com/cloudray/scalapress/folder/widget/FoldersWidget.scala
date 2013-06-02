@@ -5,12 +5,12 @@ import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 import javax.persistence.Table
 import scala.Some
 import javax.persistence.Entity
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -51,7 +51,7 @@ class FoldersWidget extends Widget with Logging {
 
         for ( folder <- children ) {
             buffer.append("<li class=\"l" + level + "\" id=\"w" + id + "_f" + folder.id + "\">")
-            buffer.append(FriendlyUrlGenerator.friendlyLink(folder))
+            buffer.append(UrlGenerator.link(folder))
             if (level < depth)
                 _renderFolderLevel(folder, level + 1, buffer)
             buffer.append("</li>")

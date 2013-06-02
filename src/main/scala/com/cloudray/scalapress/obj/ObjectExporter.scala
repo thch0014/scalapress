@@ -9,7 +9,7 @@ import com.csvreader.CsvWriter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.settings.InstallationDao
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Component
@@ -58,7 +58,7 @@ class ObjectExporter {
         buffer.append(obj.id.toString)
         buffer.append(new DateTime(obj.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
         buffer.append(obj.name)
-        buffer.append("http://" + domain + FriendlyUrlGenerator.friendlyUrl(obj))
+        buffer.append("http://" + domain + UrlGenerator.url(obj))
         for ( attribute <- attributes ) {
             val value = AttributeFuncs.attributeValue(obj, attribute).orNull
             buffer.append(value)

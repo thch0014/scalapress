@@ -1,8 +1,8 @@
-package com.cloudray.scalapress.plugin.simpleurls
+package com.cloudray.scalapress.plugin.url.simpleurls
 
-import com.cloudray.scalapress.util.UrlGenerator
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.util.UrlStrategy
 
 /** @author Stephen Samuel
   *
@@ -12,7 +12,7 @@ import com.cloudray.scalapress.obj.Obj
   *         www.countryshowguide.co.uk/o58-caerphilly-castle
   *
   **/
-object SimpleUrlGenerator extends UrlGenerator {
+object SimpleUrlGeneratorStrategy extends UrlStrategy {
 
     def url(folder: Folder): String = "/f" + folder.id + "-" + normalize(folder.name)
     def url(obj: Obj): String = "/o" + obj.id + "-" + normalize(obj.name)

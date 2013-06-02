@@ -4,11 +4,11 @@ import java.io.{FileWriter, File}
 import com.csvreader.CsvWriter
 import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
-import com.cloudray.scalapress.{Logging}
+import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.obj.attr.AttributeFuncs
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {
@@ -79,7 +79,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
             content(obj.content),
             googleCategory,
             folder,
-            "http://" + domain + "/" + FriendlyUrlGenerator.friendlyUrl(obj),
+            "http://" + domain + "/" + UrlGenerator.url(obj),
             "http://" + domain + "/images/" + obj.images.asScala.head.filename,
             "new",
             formattedPrice + " GBP",

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.tag
 
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 object ObjectTag extends ScalapressTag with TagBuilder {
@@ -10,7 +10,7 @@ object ObjectTag extends ScalapressTag with TagBuilder {
         request.obj.map(obj => {
             val text = params.get("text").getOrElse(obj.name)
             params.contains("link") match {
-                case true => buildLink(FriendlyUrlGenerator.friendlyUrl(obj), text, params)
+                case true => buildLink(UrlGenerator.url(obj), text, params)
                 case false => build(text, params)
             }
         })
@@ -34,8 +34,8 @@ class SummaryTag extends ScalapressTag with TagBuilder {
 object LinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]) = {
 
-        val folderUrl = request.folder.map(FriendlyUrlGenerator.friendlyUrl(_))
-        val objectUrl = request.obj.map(FriendlyUrlGenerator.friendlyUrl(_))
+        val folderUrl = request.folder.map(UrlGenerator.url(_))
+        val objectUrl = request.obj.map(UrlGenerator.url(_))
         objectUrl.orElse(folderUrl)
     }
 }
