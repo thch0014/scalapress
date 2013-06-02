@@ -8,7 +8,6 @@ import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import scala.Array
 import com.cloudray.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Controller
@@ -36,14 +35,16 @@ class WidgetListController {
     }
 
     @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
-    def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String = {
+    def reorderWidgets(@RequestBody order: String): String = {
 
+        val widgets = widgetDao.findAll()
         val ids = order.split("-")
-        widgetDao.findAll().foreach(w => {
-            val pos = ids.indexOf(w.id.toString)
-            w.position = pos
-            widgetDao.save(w)
-        })
+        if (ids.size == widgets.size)
+            widgets.foreach(w => {
+                val pos = ids.indexOf(w.id.toString)
+                w.position = pos
+                widgetDao.save(w)
+            })
         "ok"
     }
 

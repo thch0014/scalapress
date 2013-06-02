@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.plugin.form.{FormDao, SubmissionDao, FormField, Form}
+import com.cloudray.scalapress.plugin.form._
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.enums.FormFieldType
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
@@ -57,7 +58,7 @@ class FormEditController {
         form.fields.asScala.foreach(field => {
             val pos = ids.indexOf(field.id.toString)
             field.position = pos
-            context.formFieldDao.save(field)
+            context.bean[FormFieldDao].save(field)
         })
         "ok"
     }

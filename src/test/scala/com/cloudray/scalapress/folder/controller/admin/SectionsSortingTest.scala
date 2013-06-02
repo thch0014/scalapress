@@ -26,7 +26,15 @@ class SectionsSortingTest extends FunSuite with MockitoSugar with OneInstancePer
         assert("ok" === result)
     }
 
-    test("only resize if the number of ids is the same as the number of sections") {
+    test("sections are reordered if cardinality of ids is equiv to cardinality of sections") {
+        val result = sorter.reorderSections("15-4-6", sections)
+        assert("ok" === result)
+        assert(2 === section1.position)
+        assert(1 === section2.position)
+        assert(0 === section3.position)
+    }
+
+    test("sections are not reordered if cardinality of ids is different to cardinality of sections") {
         sorter.reorderSections("", sections)
         assert(0 === section2.position)
         assert(0 === section3.position)

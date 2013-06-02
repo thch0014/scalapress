@@ -28,7 +28,7 @@ class AccountController {
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
     def show(req: HttpServletRequest, @ModelAttribute("account") account: Obj): ScalapressPage = {
 
-        val plugin = context.accountPluginDao.get
+        val plugin = context.bean[AccountPluginDao].get
         val links = new ComponentClassScanner().getSubtypes(classOf[AccountLink])
 
         val sreq = ScalapressRequest(req, context).withTitle("Your Account")
