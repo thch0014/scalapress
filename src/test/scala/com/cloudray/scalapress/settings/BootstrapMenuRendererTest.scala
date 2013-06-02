@@ -17,6 +17,7 @@ class BootstrapMenuRendererTest extends FunSuite with MockitoSugar with OneInsta
 
         val actual = BootstrapMenuRenderer.render(items)
         assert(
-            "<ul class=\"dropdown-menu\" role=\"menu\"><li><a tabindex=\"-1\" href=\"coldplay.com\">a</a></li><li class=\"divider\"/><li class=\"dropdown-submenu\"><a tabindex=\"-1\" href=\"#\">b</a><li><a tabindex=\"-1\" href=\"keane.com\">c</a></li><li><a tabindex=\"-1\" href=\"jethrotull.com\">d</a></li></li></ul>" === actual)
+            "<ul class=\"dropdown-menu\" role=\"menu\"><li><a tabindex=\"-1\" href=\"coldplay.com\">a</a></li><li class=\"divider\"/><li class=\"dropdown-submenu\"><a tabindex=\"-1\" href=\"#\">b</a><ul class=\"dropdown-menu\" role=\"menu\"><li><a tabindex=\"-1\" href=\"keane.com\">c</a></li><li><a tabindex=\"-1\" href=\"jethrotull.com\">d</a></li></ul></li></ul>" === actual
+              .toString())
     }
 }
