@@ -52,15 +52,9 @@ class SearchController extends Logging {
 
         val objects = if (id > 0) {
 
-            if (searchService.contains(id.toString)) {
-
-                Option(objectDao.find(id)) match {
-                    case Some(obj) if obj.status.equalsIgnoreCase("live") => List(obj)
-                    case _ => Nil
-                }
-
-            } else {
-                Nil
+            Option(objectDao.find(id)) match {
+                case Some(obj) if obj.status.equalsIgnoreCase("live") => List(obj)
+                case _ => Nil
             }
 
         } else {
@@ -87,8 +81,8 @@ class SearchController extends Logging {
             search.sortType = sort
 
             val result = searchService.search(search)
-            val refs = result.refs.map(ref => objectDao.find(ref.id)).toList
-            val live = refs.filter(ref => Obj.STATUS_LIVE.equalsIgnoreCase(ref.status))
+            val objs = result.refs.map(ref => objectDao.find(ref.id)).toList
+            val live = objs.filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
 
             live
         }
