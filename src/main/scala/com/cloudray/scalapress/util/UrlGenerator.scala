@@ -3,11 +3,12 @@ package com.cloudray.scalapress.util
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.ObjectRef
+import com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlStrategy
 
 /** @author Stephen Samuel */
 object UrlGenerator {
 
-    private[util] var strategy: UrlStrategy = DefaultUrlStrategy
+    private[util] var strategy: UrlStrategy = FriendlyUrlStrategy
 
     def url(ref: ObjectRef): String = {
         val o = new Obj
