@@ -123,9 +123,11 @@ class SearchController extends Logging {
             if (markup == null) {
                 page.body("<!-- search results: no object list markup found -->")
             } else {
-                page.body(PagingRenderer.render(paging))
+                if (paging.totalPages > 1)
+                    page.body(PagingRenderer.render(paging))
                 page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
-                page.body(PagingRenderer.render(paging))
+                if (paging.totalPages > 1)
+                    page.body(PagingRenderer.render(paging))
             }
         }
         page
