@@ -65,7 +65,7 @@ class SalesReporterController extends OrderStatusPopulator {
     }
 
     @ResponseBody
-    @RequestMapping(Array("csv"))
+    @RequestMapping(params = Array("csv"))
     def csv(@RequestParam(value = "from", required = true) from: String,
             @RequestParam(value = "to", required = true) to: String,
             @RequestParam(value = "status", required = false) status: String,
@@ -76,7 +76,7 @@ class SalesReporterController extends OrderStatusPopulator {
         val fromDate = parser.parseDateTime(from).withDayOfMonth(1).withMillisOfDay(0)
         val toDate = parser.parseDateTime(to).dayOfMonth().withMaximumValue().millisOfDay.withMaximumValue
 
-        val lines = reporter.generate(status, fromDate.getMillis, toDate.getMillis).
+        val lines = reporter.generate(status, fromDate.getMillis, toDate.getMillis)
         val csv = SalesReportCsvWriter.export(lines)
 
         resp.setContentType("application/vnd.ms-excel")

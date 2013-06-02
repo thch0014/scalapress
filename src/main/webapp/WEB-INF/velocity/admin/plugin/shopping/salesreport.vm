@@ -42,6 +42,7 @@
 
     <div class="controls">
         <button type="submit" class="btn btn-inverse">Run Report</button>
+        <button type="submit" class="btn btn-info" name="csv" value="csv">Download CSV</button>
     </div>
 
 </form>
@@ -99,7 +100,5 @@
     #end
 
 </table>
-
-<a class="btn btn-info" href="/backoffice/plugin/shopping/salesreport/csv?from=$from&to=$to&status=$status">Download CSV</a>
 
 #parse("/admin/footer.vm")
