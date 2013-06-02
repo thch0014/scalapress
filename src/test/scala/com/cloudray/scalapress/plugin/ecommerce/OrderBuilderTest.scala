@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.ecommerce
 
-import domain.{Address, DeliveryOption, Basket}
+import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Address, DeliveryOption, Basket}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.Obj
@@ -40,5 +40,30 @@ class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTes
         Mockito.when(req.getRemoteAddr).thenReturn("1.2.3.4")
         val order = builder._order(account, basket, req)
         assert("1.2.3.4" === order.ipAddress)
+    }
+
+    test("creating an order sets lines from basket") {
+
+        val bl1 = new BasketLine
+        bl1.qty = 4
+        bl1.obj = new Obj
+        bl1.obj.id = 523
+        bl1.obj.price = 4500
+
+        val bl2 = new BasketLine
+        bl2.qty = 1
+        bl2.obj = new Obj
+        bl2.obj.id = 98
+        bl2.obj.price = 1999
+
+        basket.lines.add(bl1)
+        basket.lines.add(bl2)
+
+        val order = builder._order(account, basket, req)
+        assert(2 === order.lines.size)
+        assert(4 === order.sortedLines.find(_.obj == bl1.obj.id).get.qty)
+        assert(4500 === order.sortedLines.find(_.obj == bl1.obj.id).get.price)
+        assert(1 === order.sortedLines.find(_.obj == bl2.obj.id).get.qty)
+        assert(1999 === order.sortedLines.find(_.obj == bl2.obj.id).get.price)
     }
 }
