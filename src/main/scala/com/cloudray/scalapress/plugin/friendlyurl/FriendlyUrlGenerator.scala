@@ -12,31 +12,20 @@ import com.cloudray.scalapress.util.UrlGenerator
   *
   *         object-51-large-coldplay-tshirt
   *
-  **/
+  * */
 object FriendlyUrlGenerator extends UrlGenerator {
 
     def url(obj: Obj): String = friendlyUrl(obj)
     def url(folder: Folder): String = friendlyUrl(folder)
 
     @deprecated
-    def friendlyUrl(id: Long, name: String) =
-        "/object-" + id + "-" + name.replaceAll("[^a-zA-Z0-9\\s\\-]", "")
-          .replaceAll("\\s", "-")
-          .replaceAll("-{2,}", "-")
-          .replaceAll("-$", "")
-          .replaceAll("^-", "")
-          .toLowerCase
+    def friendlyUrl(id: Long, name: String) = "/object-" + id + "-" + normalize(name)
 
     @deprecated
     def friendlyUrl(obj: Obj): String = friendlyUrl(obj.id, obj.name)
 
     @deprecated
     def friendlyUrl(folder: Folder): String = {
-        "/folder-" + folder.id + "-" + Option(folder.name).getOrElse("").replaceAll("[^a-zA-Z0-9\\s\\-]", "")
-          .replaceAll("\\s", "-")
-          .replaceAll("-{2,}", "-")
-          .replaceAll("-$", "")
-          .replaceAll("^-", "")
-          .toLowerCase
+        "/folder-" + folder.id + "-" + normalize(Option(folder.name).getOrElse(""))
     }
 }

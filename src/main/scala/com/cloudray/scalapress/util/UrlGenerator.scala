@@ -8,6 +8,14 @@ trait UrlGenerator {
 
     def url(obj: Obj): String
     def url(folder: Folder): String
+    def normalize(label: String) =
+        label
+          .replaceAll("[^a-zA-Z0-9\\s\\-]", "")
+          .replaceAll("\\s", "-")
+          .replaceAll("-{2,}", "-")
+          .replaceAll("-$", "")
+          .replaceAll("^-", "")
+          .toLowerCase
 
     // creates a link that uses the object name as the label
     def link(obj: Obj): String = friendlyLink(obj)
