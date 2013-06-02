@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
+import com.cloudray.scalapress.widgets.Widget
 import scala.Array
 import com.cloudray.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
@@ -14,7 +14,6 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/widget"))
 class WidgetListController {
 
-    @Autowired var widgetDao: WidgetDao = _
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping
@@ -24,26 +23,25 @@ class WidgetListController {
     def create(@RequestParam("class") klass: String) = {
         val widget = Class.forName(klass).newInstance().asInstanceOf[Widget]
         widget.init(context)
-        widgetDao.save(widget)
         "redirect:/backoffice/widget"
     }
 
     @RequestMapping(value = Array("{id}/delete"))
     def delete(@PathVariable("id") id: Long) = {
-        widgetDao.removeById(id)
+        context.widgetDao.removeById(id)
         "redirect:/backoffice/widget"
     }
 
     @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
     def reorderWidgets(@RequestBody order: String): String = {
 
-        val widgets = widgetDao.findAll()
+        val widgets = context.widgetDao.findAll()
         val ids = order.split("-")
         if (ids.size == widgets.size)
             widgets.foreach(w => {
                 val pos = ids.indexOf(w.id.toString)
                 w.position = pos
-                widgetDao.save(w)
+                context.widgetDao.save(w)
             })
         "ok"
     }
@@ -51,12 +49,8 @@ class WidgetListController {
     @ModelAttribute("widgets") def widgets = {
         val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
           .position))
-        widgetDao.findAll().sorted(ordering).toArray
+        context.widgetDao.findAll().sorted(ordering).toArray
     }
 
-    @ModelAttribute("classes") def classes = ComponentClassScanner
-      .widgets
-      .map(c => (c.getName, c.getSimpleName))
-      .toMap
-      .asJava
+    @ModelAttribute("classes") def classes = ComponentClassScanner.widgets.map(c => (c.getName, c.getSimpleName)).toMap.asJava
 }

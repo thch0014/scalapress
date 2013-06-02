@@ -2,14 +2,16 @@ package com.cloudray.scalapress.widgets.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.widgets.{HtmlWidget, WidgetDao}
-import org.mockito.Mockito
+import com.cloudray.scalapress.widgets.{Widget, HtmlWidget, WidgetDao}
+import org.mockito.{Matchers, Mockito}
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val controller = new WidgetListController
-    controller.widgetDao = mock[WidgetDao]
+    controller.context = new ScalapressContext
+    controller.context.widgetDao = mock[WidgetDao]
 
     val w1 = new HtmlWidget
     w1.id = 6
@@ -19,7 +21,7 @@ class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstan
     w3.id = 15
 
     val widgets = List(w1, w2, w3)
-    Mockito.when(controller.widgetDao.findAll()).thenReturn(widgets)
+    Mockito.when(controller.context.widgetDao.findAll()).thenReturn(widgets)
 
     test("widgets re-ordering returns ok") {
         val result = controller.reorderWidgets("1,2,3")
@@ -48,5 +50,10 @@ class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstan
         assert(0 === w1.position)
         assert(0 === w2.position)
         assert(0 === w3.position)
+    }
+
+    test("a created widget is persisted") {
+        controller.create(classOf[HtmlWidget].getName)
+        Mockito.verify(controller.context.widgetDao).save(Matchers.any[Widget])
     }
 }
