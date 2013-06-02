@@ -15,7 +15,7 @@ class AdminUserDetailsServiceTest extends FunSuite with MockitoSugar {
     test("that an admin user is never expired or locked") {
         assert(new AdminUserDetails(user, context).isAccountNonExpired)
         assert(new AdminUserDetails(user, context).isAccountNonLocked)
-        assert(new AdminUserDetails(user, context).isAccountNonLocked)
+        assert(new AdminUserDetails(user, context).isCredentialsNonExpired)
     }
 
     test("that an admin user is only enabled if active") {
