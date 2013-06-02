@@ -17,6 +17,14 @@ class ImageController extends Logging {
     @Autowired
     var imageProvider: AssetStore = _
 
+    @RequestMapping(value = Array("{w:\\d+}/{h:\\d+}/{filename}"), produces = Array("image/png"))
+    def imageResized3(@PathVariable("filename") filename: String,
+                      @PathVariable("w") width: Int,
+                      @PathVariable("h") height: Int,
+                      resp: HttpServletResponse) {
+        imageResized(filename, width, height, resp)
+    }
+
     @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("w", "h"))
     def imageResized2(@PathVariable("filename") filename: String,
                       @RequestParam("w") width: Int,

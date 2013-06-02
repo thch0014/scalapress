@@ -9,7 +9,7 @@ import com.cloudray.scalapress.Logging
 @Component
 class UrlGeneratorBootstrap extends Logging {
 
-    @Value("${url.strategy:com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlGenerator}") var strategy: String = _
+    @Value("${url.strategy:None}") var strategy: String = _
 
     @PostConstruct
     def setup() {
