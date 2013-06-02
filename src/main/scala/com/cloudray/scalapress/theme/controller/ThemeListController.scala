@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.{ThemeDao, Theme}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,8 +26,6 @@ class ThemeListController {
         themeDao.save(theme)
         "redirect:/backoffice/theme"
     }
-
-    import scala.collection.JavaConverters._
 
     @ModelAttribute("themes") def themes = themeDao.findAll().asJava
 }

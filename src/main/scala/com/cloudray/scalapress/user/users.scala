@@ -27,12 +27,17 @@ class UserDaoInit {
 
     @PostConstruct def ensureAUser() {
         if (userDao.findAll().size == 0) {
-            val user = new User
-            user.username = "admin"
-            user.name = "admin"
-            user.passwordHash = "09b792e75d96dbcb3d49f5af313e9fa1"
-            user.active = true
+            val user = defaultUser
             userDao.save(user)
         }
+    }
+
+    def defaultUser = {
+        val user = new User
+        user.username = "admin"
+        user.name = "admin"
+        user.passwordHash = "09b792e75d96dbcb3d49f5af313e9fa1"
+        user.active = true
+        user
     }
 }

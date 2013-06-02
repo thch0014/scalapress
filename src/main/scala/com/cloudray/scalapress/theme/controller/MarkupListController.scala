@@ -3,8 +3,8 @@ package com.cloudray.scalapress.theme.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import scala.Array
 import com.cloudray.scalapress.theme.{Markup, MarkupDao}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -24,7 +24,7 @@ class MarkupListController {
         "redirect:/backoffice/markup/" + markup.id
     }
 
-    import scala.collection.JavaConverters._
+
 
     @ModelAttribute("markups") def markups = markupDao.findAll().asJava
 }

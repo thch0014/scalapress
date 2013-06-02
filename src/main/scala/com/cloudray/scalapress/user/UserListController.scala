@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -25,8 +26,6 @@ class UserListController {
         userDao.save(u)
         list
     }
-
-    import scala.collection.JavaConverters._
 
     @ModelAttribute("users") def users = userDao.findAll().asJava
 }

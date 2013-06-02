@@ -25,9 +25,6 @@ class User extends java.io.Serializable {
     @Column(name = "passwordHash")
     @BeanProperty var passwordHash: String = _
 
-    @Column(name = "email")
-    @BeanProperty var email: String = _
-
     @Transient
     @BeanProperty var changePassword: String = _
 }
