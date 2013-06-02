@@ -1,3 +1,7 @@
 .uneditable-input {
     color: #666;
 }
+
+.modal-backdrop {
+    background: none;
+}
