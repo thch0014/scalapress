@@ -7,6 +7,7 @@ import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.search.CorpusResult
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
+import java.util.UUID
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
@@ -61,7 +62,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     def hasErrors = !errors.isEmpty
     def hasError(key: String) = errors.contains(key)
 
-    def sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).toString
+    def sessionId = Option(request.getAttribute(ScalapressConstants.SessionIdKey)).getOrElse(UUID.randomUUID).toString
 
     def withPaging(paging: Paging): ScalapressRequest = copy(paging = Option(paging))
     def withLocation(location: String): ScalapressRequest = copy(location = Option(location))

@@ -12,7 +12,7 @@ import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.util.{EnumPopulator, ComponentClassScanner}
+import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClassScanner}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Obj}
 import com.cloudray.scalapress.folder.FolderDao
@@ -205,7 +205,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
         model.put("attributesWithValues",
             attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
         model.put("form", form)
-        model.put("eyeball", UrlResolver.objectSiteView(obj))
+        model.put("eyeball", UrlGenerator.url(obj))
 
         val sections = obj.sections.asScala.toSeq.sortBy(_.position).asJava
         model.put("sections", sections)

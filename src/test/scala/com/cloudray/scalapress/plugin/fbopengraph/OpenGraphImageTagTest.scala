@@ -19,6 +19,7 @@ class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstanceP
     context.assetStore = mock[AssetStore]
 
     val installation = new Installation
+    installation.domain = "coldplay.com"
     installation.name = "coldplay tees"
     Mockito.when(context.installationDao.get).thenReturn(installation)
 
@@ -34,6 +35,6 @@ class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstanceP
 
     test("tag uses site name from installation") {
         val output = new OpenGraphImageTag().render(sreq.withObject(o), Map.empty)
-        assert("<meta property=\"og:image\" content=\"http://coldplay.com/coldplay.png\"/>" === output.get)
+        assert("<meta property=\"og:image\" content=\"http://coldplay.com/images/300/300/coldplay.png\"/>" === output.get)
     }
 }

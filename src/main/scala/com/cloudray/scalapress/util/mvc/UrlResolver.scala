@@ -74,11 +74,16 @@ object UrlResolver {
     def folderEdit(folder: Folder) = "/backoffice/folder/" + folder.id
     val folders = "/backoffice/folder"
     def folderImageUpload(folder: Folder): String = folderEdit(folder) + "/upload"
+
+    @deprecated
     def folderSiteView(f: Folder): String = "/folder/" + f.id
     def folderCreate = "/backoffice/folder/create"
 
+    @deprecated
     def objectSiteView(id: Long): String = "/object/" + id
+    @deprecated
     def objectSiteView(o: Obj): String = "/object/" + o.id
+
     def objectCreate(t: ObjectType): String = "/backoffice/obj/create?typeId=" + t.id
     def objectEdit(o: Obj): String = "/backoffice/obj/" + Option(o).map(_.id).getOrElse("")
     def objectEdit(id: Long): String = "/backoffice/obj/" + id

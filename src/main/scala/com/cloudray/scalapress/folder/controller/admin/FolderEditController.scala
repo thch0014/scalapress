@@ -7,7 +7,7 @@ import com.cloudray.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.enums.FolderOrdering
-import com.cloudray.scalapress.util.{EnumPopulator, ComponentClassScanner}
+import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClassScanner}
 import collection.mutable
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
@@ -99,7 +99,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator with Sectio
     @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
         val folder = folderDao.find(id)
         val sections = folder.sortedSections.asJava
-        map.put("eyeball", UrlResolver.folderSiteView(folder))
+        map.put("eyeball", UrlGenerator.url(folder))
         map.put("folder", folder)
         map.put("sections", sections)
     }
