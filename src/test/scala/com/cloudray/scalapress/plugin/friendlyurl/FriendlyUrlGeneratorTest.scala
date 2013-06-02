@@ -12,13 +12,13 @@ class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstan
         val obj = new Obj
         obj.id = 1234
         obj.name = "boro for the champo"
-        assert("/object-1234-boro-for-the-champo" === FriendlyUrlGenerator.friendlyUrl(obj))
+        assert("/object-1234-boro-for-the-champo" === FriendlyUrlGenerator.url(obj))
     }
 
     test("folder friendly url happy path") {
         val f = new Folder
         f.id = 55
         f.name = "uefa cup final 2006"
-        assert("/folder-55-uefa-cup-final-2006" === FriendlyUrlGenerator.friendlyUrl(f))
+        assert("/folder-55-uefa-cup-final-2006" === FriendlyUrlGenerator.url(f))
     }
 }

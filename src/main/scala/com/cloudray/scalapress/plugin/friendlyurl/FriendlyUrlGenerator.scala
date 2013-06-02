@@ -2,23 +2,23 @@ package com.cloudray.scalapress.plugin.friendlyurl
 
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.util.UrlGenerator
 
-/** @author Stephen Samuel */
-object FriendlyUrlGenerator {
+/** @author Stephen Samuel
+  *
+  *         An implementation of url generator that provides single level friendly URLs in the format pagetype-id-pagename
+  *
+  *         Eg,
+  *
+  *         object-51-large-coldplay-tshirt
+  *
+  **/
+object FriendlyUrlGenerator extends UrlGenerator {
 
-    def friendlyLink(obj: Obj): String = friendlyLink(obj, obj.name)
-    def friendlyLink(obj: Obj, label: String): String =
-        <a href={friendlyUrl(obj)}>
-            {label}
-        </a>.toString()
+    def url(obj: Obj): String = friendlyUrl(obj)
+    def url(folder: Folder): String = friendlyUrl(folder)
 
-    def friendlyLink(folder: Folder): String = friendlyLink(folder, folder.name)
-    def friendlyLink(folder: Folder,
-                     label: String): String =
-        <a href={friendlyUrl(folder)}>
-            {label}
-        </a>.toString()
-
+    @deprecated
     def friendlyUrl(id: Long, name: String) =
         "/object-" + id + "-" + name.replaceAll("[^a-zA-Z0-9\\s\\-]", "")
           .replaceAll("\\s", "-")
@@ -27,8 +27,10 @@ object FriendlyUrlGenerator {
           .replaceAll("^-", "")
           .toLowerCase
 
+    @deprecated
     def friendlyUrl(obj: Obj): String = friendlyUrl(obj.id, obj.name)
 
+    @deprecated
     def friendlyUrl(folder: Folder): String = {
         "/folder-" + folder.id + "-" + Option(folder.name).getOrElse("").replaceAll("[^a-zA-Z0-9\\s\\-]", "")
           .replaceAll("\\s", "-")

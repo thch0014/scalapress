@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.search.sqlcorpussearch
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.search.sqlcorpussearch.SqlCorpusSearchService
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import com.cloudray.scalapress.folder.{Folder, FolderDaoImpl, FolderDao}
@@ -63,7 +62,7 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
     section4.folder = folder2
     section4.visible = true
     section4
-      .content = "ba will be driving his van fool more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba"
+      .content = "ba will be driving his van fool more about ba more about ba more about ba more about ba more about ba more about ba more about ba more about ba  more about ba more about ba more about ba more about ba more about ba more about ba"
     sectionDao.save(section4)
 
     val section5 = new FolderContentSection
@@ -94,7 +93,7 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
         assert(1 === results.size)
         assert(folder2.id === results(0).page.id)
         assert(
-            "ba will be driving his van fool more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more about ba  more about ba more..." === results(
+            "ba will be driving his van fool more about ba more about ba more about ba more about ba more about ba more about ba more about ba more about bamore about ba more about ba more about ba more about ba..." === results(
                 0).snippet)
     }
 
