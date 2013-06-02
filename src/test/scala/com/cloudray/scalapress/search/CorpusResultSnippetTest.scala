@@ -4,10 +4,9 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.search.CorpusResult
-import com.cloudray.scalapress.util.Page
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.tag.CorpusResultSnippetTag
+import com.cloudray.scalapress.plugin.friendlyurl.FriendlyUrlGenerator
 
 /** @author Stephen Samuel */
 class CorpusResultSnippetTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -19,7 +18,7 @@ class CorpusResultSnippetTest extends FunSuite with OneInstancePerTest with Mock
     folder.id = 124
     folder.name = "a team"
 
-    val r = new CorpusResult(Page(folder), "...hannibal loves it when a plan comes together...")
+    val r = new CorpusResult(folder.name, FriendlyUrlGenerator.url(folder), "...hannibal loves it when a plan comes together...")
 
     test("corpus result snippet tag uses snippet from corpus result") {
         val actual = new CorpusResultSnippetTag().render(ScalapressRequest(req, context).withResult(r))

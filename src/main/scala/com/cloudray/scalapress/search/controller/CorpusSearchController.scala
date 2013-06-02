@@ -15,6 +15,12 @@ import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 @RequestMapping(Array("corpus"))
 class CorpusSearchController {
 
+    val DefaultMarkup =
+        """<div class="corpus_result">
+                <div class="title"><h3><a href="[corpus_url]">[corpus_title]</a></h3></div>
+                <p>[corpus_snippet]</p>
+             </div>"""
+
     @Autowired var context: ScalapressContext = _
     @Autowired var themeService: ThemeService = _
     @Autowired var service: CorpusSearchService = _
@@ -32,13 +38,7 @@ class CorpusSearchController {
         page.body("<!-- corpus search results: " + results.size + " results found -->")
 
         val markup = new Markup
-        markup.body =
-          """<div class="corpus_result">
-                <div class="pagename">[corpus_pagename]</div>
-                <div class="url"><a href="[corpus_url]">[corpus_url]</a></div>
-                <div class="snippet">[corpus_snippet]</div>
-             </div>"""
-
+        markup.body = DefaultMarkup
         if (markup == null) {
             page.body("<!-- search results: no corpus search markup found -->")
         } else {

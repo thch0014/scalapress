@@ -40,6 +40,11 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
     folder3.name = "music"
     folderDao.save(folder3)
 
+    val folder4 = new Folder
+    folder4.name = "coldplay events"
+    folder4.hidden = true
+    folderDao.save(folder4)
+
     val section1 = new FolderContentSection
     section1.folder = folder1
     section1.visible = true
@@ -71,10 +76,16 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
     section5.content = "chris martin gives his children silly names"
     sectionDao.save(section5)
 
+    val section6 = new FolderContentSection
+    section6.folder = folder4
+    section6.visible = true
+    section6.content = "coldplay live in paris"
+    sectionDao.save(section6)
+
     test("search brings back a single snippet per folder") {
         val results = service.search("title")
         assert(1 === results.size)
-        assert(folder1.id === results(0).page.id)
+        assert(folder1.name === results(0).title)
     }
 
     test("search works across multiple folders") {
@@ -82,16 +93,22 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
         assert(2 === results.size)
     }
 
+    test("search result uses correct URL") {
+        val results = service.search("will")
+        assert(2 === results.size)
+        assert(results.exists(_.url == "/folder-1-footie"))
+        assert(results.exists(_.url == "/folder-2-the-a-team"))
+    }
+
     test("search works for multiple search terms") {
         val results = service.search("corvette driving")
         assert(1 === results.size)
-        assert(folder2.id === results(0).page.id)
+        assert(folder2.name === results(0).title)
     }
 
     test("search brings back truncated snippet") {
         val results = service.search("fool")
         assert(1 === results.size)
-        assert(folder2.id === results(0).page.id)
         assert(
             "ba will be driving his van fool more about ba more about ba more about ba more about ba more about ba more about ba more about ba more about bamore about ba more about ba more about ba more about ba..." === results(
                 0).snippet)
@@ -99,6 +116,11 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
 
     test("search only finds visible content") {
         val results = service.search("martin")
+        assert(0 === results.size)
+    }
+
+    test("search only finds only content from visible folders") {
+        val results = service.search("coldplay")
         assert(0 === results.size)
     }
 
