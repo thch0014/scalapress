@@ -74,7 +74,7 @@ class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(UrlResolverInterceptor)
         registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
         registry.addInterceptor(new SiteInterceptor(siteDao))
-        registry.addInterceptor(MenuInterceptor)
+        registry.addInterceptor(new MenuInterceptor(context))
     }
 
     override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {

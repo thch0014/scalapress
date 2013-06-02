@@ -4,19 +4,22 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.servlet.ModelAndView
 import com.cloudray.scalapress.util.ComponentClassScanner
-import scala.collection.JavaConverters._
+import com.cloudray.scalapress.settings.BootstrapMenuRenderer
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
-object MenuInterceptor extends HandlerInterceptorAdapter {
+class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {
 
-    val menus = ComponentClassScanner.menus.map(klass => klass.newInstance()).sortBy(_.name)
+    val providers = ComponentClassScanner.menus.map(_.newInstance())
+    val renderer = BootstrapMenuRenderer
 
     override def postHandle(request: HttpServletRequest,
                             response: HttpServletResponse,
                             handler: Any,
                             modelAndView: ModelAndView) {
         if (modelAndView != null) {
-            modelAndView.getModelMap.put("menus", menus.asJava)
+            val items = providers.filter(_.enabled(context)).flatMap(_.items).sorted
+            modelAndView.getModelMap.put("pluginMenu", renderer.render(items))
         }
     }
 }

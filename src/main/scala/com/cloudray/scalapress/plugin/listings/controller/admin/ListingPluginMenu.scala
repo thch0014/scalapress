@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.listings.controller.admin
 
-import com.cloudray.scalapress.settings.lifecycle.MenuItem
+import com.cloudray.scalapress.settings.{Menu, MenuItemProvider, MenuLink, MenuItem}
 
 /** @author Stephen Samuel */
-class ListingPluginMenu extends MenuItem {
+class ListingPluginMenu extends MenuItemProvider {
 
-    def link: Option[String] = Some("/backoffice/plugin/listings")
-    def icon: Option[String] = Some("icon-th-large")
-    def name: String = "Listings"
+    def items: Seq[MenuItem] = Seq(
+        Menu("Listings", Some("icon-th-large"), Seq(
+            MenuLink("Listing Packages", Some("icon-th-large"), "/backoffice/plugin/listings"))))
 }

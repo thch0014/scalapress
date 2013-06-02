@@ -6,7 +6,7 @@ import obj.{ObjectDao, TypeDao}
 import plugin.ecommerce.dao.BasketDao
 import plugin.ecommerce.OrderDao
 import plugin.form.FormFieldDao
-import com.cloudray.scalapress.plugin.listings.{ListingsPluginDao, ListingProcessDao, ListingPackageDao}
+import com.cloudray.scalapress.plugin.listings.{ListingProcessDao, ListingPackageDao}
 import plugin.payments.paypal.standard.PaypalStandardPluginDao
 import plugin.payments.sagepayform.SagepayFormPluginDao
 import search.{SavedSearchDao, SearchFormDao, SearchService}
@@ -46,8 +46,6 @@ class ScalapressContext extends ServletContextAware {
     @Autowired var listingPackageDao: ListingPackageDao = _
     @deprecated
     @Autowired var listingProcessDao: ListingProcessDao = _
-    @deprecated
-    @Autowired var listingsPluginDao: ListingsPluginDao = _
 
     @Autowired var installationDao: InstallationDao = _
 
