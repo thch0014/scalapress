@@ -49,28 +49,28 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
     Mockito.when(context.folderSettingsDao.head).thenReturn(settings)
 
     test("only live object are included") {
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(0 === objects.count(_.status != "live"))
         assert(2 === objects.size)
     }
 
     test("name sort happy path") {
         section.sort = Sort.Name
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(objects(0) === obj1)
         assert(objects(1) === obj3)
     }
 
     test("newest sort happy path") {
         section.sort = Sort.Newest
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(objects(0) === obj1)
         assert(objects(1) === obj3)
     }
 
     test("oldest sort happy path") {
         section.sort = Sort.Oldest
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(objects(0) === obj3)
         assert(objects(1) === obj1)
     }
@@ -141,7 +141,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
         av3.attribute = section.sortAttribute
         obj3.attributeValues.add(av3)
 
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(objects(0) === obj3)
         assert(objects(1) === obj2)
         assert(objects(2) === obj1)
@@ -166,7 +166,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
         av3.attribute = section.sortAttribute
         obj3.attributeValues.add(av3)
 
-        val objects = section._objects(context)
+        val objects = section._objects(sreq)
         assert(objects(0) === obj1)
         assert(objects(1) === obj2)
         assert(objects(2) === obj3)

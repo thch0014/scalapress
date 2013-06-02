@@ -50,6 +50,7 @@ class Obj extends SortedSections {
     @Fetch(FetchMode.SELECT)
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
+    def sortedImages: Seq[Image] = images.asScala.toSeq.sortBy(_.id).sortBy(_.position)
 
     @OneToMany(mappedBy = "obj", fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL), orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
@@ -145,7 +146,6 @@ class Obj extends SortedSections {
 
     @Column(name = "brochure")
     @BeanProperty var orderable: Boolean = false
-
 
     @BeanProperty var backorders: Boolean = _
 

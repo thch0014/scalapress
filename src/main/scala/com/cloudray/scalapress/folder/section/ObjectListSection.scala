@@ -8,18 +8,17 @@ import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
-import scala.util.Random
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.search.PagingRenderer
-import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.obj.attr.{AttributeFuncs, Attribute}
+import com.cloudray.scalapress.obj.{ObjectSorter, Obj}
+import com.cloudray.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -47,7 +46,7 @@ class ObjectListSection extends Section {
     @NotFound(action = NotFoundAction.IGNORE)
     @BeanProperty var markup: Markup = _
 
-    def _objects(context: ScalapressContext): Seq[Obj] = {
+    def _objects(sreq: ScalapressRequest): Seq[Obj] = {
 
         val objects = try {
             folder.objects.asScala.toSeq
@@ -56,36 +55,19 @@ class ObjectListSection extends Section {
         }
 
         val live = objects.filter(_.status.toLowerCase == "live")
-
-        val sorted = _sort(context) match {
-
-            case Sort.Attribute if sortAttribute != null =>
-                live.sortBy(obj => AttributeFuncs.attributeValue(obj, sortAttribute).getOrElse(""))
-
-            case Sort.AttributeDesc if sortAttribute != null =>
-                live.sortBy(obj => AttributeFuncs.attributeValue(obj, sortAttribute).getOrElse("")).reverse
-
-            case Sort.Price => live.sortBy(_.price)
-            case Sort.PriceHigh => live.sortBy(_.price).reverse
-            case Sort.Newest => live.sortBy(_.id).reverse
-            case Sort.Oldest => live.sortBy(_.id)
-            case Sort.Random => Random.shuffle(live)
-            case _ => live.sortBy(_.name)
-        }
-
+        val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
         sorted
     }
 
-    def render(request: ScalapressRequest): Option[String] = {
+    def render(sreq: ScalapressRequest): Option[String] = {
 
-        val pageNumber = request.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+        val objects = _objects(sreq)
 
-        val objects = _objects(request.context)
-
-        val safePageSize = _pageSize(request.context)
+        val safePageSize = _pageSize(sreq.context)
         val usePaging = objects.size > safePageSize
         val page = _paginate(objects, pageNumber, safePageSize)
-        val paging = Paging(request.request, page)
+        val paging = Paging(sreq.request, page)
 
         val renderedObjects = page.results.size match {
             case 0 => "<!-- No objects in folder -->"
@@ -93,7 +75,7 @@ class ObjectListSection extends Section {
                 val first = page.results.head
                 Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
                     case None => "<!-- No markup found for folder -->"
-                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, request.withPaging(paging))
+                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
                 }
             }
         }
