@@ -116,9 +116,7 @@ class BasketDeliveryChargeTag extends ScalapressTag with TagBuilder {
 
 @Tag("basket_delivery_desc")
 class BasketDeliveryDescTag extends ScalapressTag {
-    def render(request: ScalapressRequest,
-
-               params: Map[String, String]): Option[String] = {
+    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
         Option(request.basket.deliveryOption).map(_.name)
     }
 }
