@@ -21,10 +21,10 @@ class ObjectSearchController extends ObjectStatusPopulator {
 
     @RequestMapping
     def search(@ModelAttribute("form") form: SearchForm,
-             @RequestParam(value = "typeId") typeId: Long,
-             @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-             model: ModelMap,
-             req: HttpServletRequest) = {
+               @RequestParam(value = "typeId") typeId: Long,
+               @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
+               model: ModelMap,
+               req: HttpServletRequest) = {
 
         val query = new ObjectQuery
         query.pageNumber = pageNumber
@@ -40,11 +40,22 @@ class ObjectSearchController extends ObjectStatusPopulator {
         "admin/object/list.vm"
     }
 
-    @RequestMapping(value = Array("create"))
+    @RequestMapping(value = Array("create"), params = Array("typeId"))
     def create(@RequestParam("typeId") typeId: java.lang.Long): String = {
 
         val t = typeDao.find(typeId)
         val obj = Obj(t)
+        objectDao.save(obj)
+
+        "redirect:/backoffice/obj/" + obj.id
+    }
+
+    @RequestMapping(value = Array("create"), params = Array("typeId", "name"))
+    def create(@RequestParam("typeId") typeId: java.lang.Long, @RequestParam("name") name: String): String = {
+
+        val t = typeDao.find(typeId)
+        val obj = Obj(t)
+        obj.name = name
         objectDao.save(obj)
 
         "redirect:/backoffice/obj/" + obj.id

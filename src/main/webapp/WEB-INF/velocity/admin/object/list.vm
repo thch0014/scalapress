@@ -1,5 +1,32 @@
 #parse("/admin/header.vm")
 
+<div id="create-object-modal" class="modal hide">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create $type.name</h3>
+    </div>
+    <form method="GET" action="/backoffice/obj/create" class="form-horizontal">
+        <input type="hidden" name="typeId" value="$type.id"/>
+
+        <div class="modal-body">
+
+            <div class="control-group">
+                <label class="control-label" for="new-object-name">Name</label>
+
+                <div class="controls">
+                    <input type="text" id="new-object-name" name="name" placeholder="New $type.name Name">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </form>
+</div>
+
 
 <h3>$type.name</h3>
 
@@ -24,7 +51,8 @@
     </div>
 
     <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
-    <a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
+    <a href="#create-object-modal" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i> Create  $type.name</a>
+
 
 </form>
 
@@ -58,7 +86,7 @@
 #paging($paging)
 
 
-<a href="$urlResolver.objectCreate($type)" role="button" class="btn"> <i class="icon-plus"></i> Create $type.name</a>
+<a href="#create-object-modal" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i> Create  $type.name</a>
 <a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-inverse"> <i class="icon-download"></i> Export
     as CSV</a>
 
