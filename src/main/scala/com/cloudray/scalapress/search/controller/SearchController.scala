@@ -10,7 +10,7 @@ import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.search.section.SearchFormSection
 import com.cloudray.scalapress.enums.Sort
-import com.cloudray.scalapress.obj.{ObjectDao, TypeDao}
+import com.cloudray.scalapress.obj.{Obj, ObjectDao, TypeDao}
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
@@ -88,7 +88,7 @@ class SearchController extends Logging {
 
             val result = searchService.search(search)
             val refs = result.refs.map(ref => objectDao.find(ref.id)).toList
-            val live = refs.filter(_.status.equalsIgnoreCase("live"))
+            val live = refs.filter(ref => Obj.STATUS_LIVE.equalsIgnoreCase(ref.status))
 
             live
         }

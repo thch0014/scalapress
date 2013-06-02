@@ -17,7 +17,7 @@ class CorpusSearchController {
 
     val DefaultMarkup =
         """<div class="corpus_result">
-                <div class="title"><h3><a href="[corpus_url]">[corpus_title]</a></h3></div>
+                <div class="title"><h4><a href="[corpus_url]">[corpus_title]</a></h4></div>
                 <p>[corpus_snippet]</p>
              </div>"""
 
