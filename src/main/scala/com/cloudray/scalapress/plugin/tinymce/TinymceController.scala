@@ -14,19 +14,19 @@ class TinymceController {
 
     @ResponseBody
     @RequestMapping(value = Array("image"), produces = Array("text/javascript"))
-    def imagelist: String = {
+    def images: String = {
         val sb = new StringBuffer("var tinyMCEImageList = new Array(")
 
-        val images = assetStore
+        val assets = assetStore
           .list(10000)
-          .filter(asset => asset.filename.endsWith("jpg") ||
-          asset.filename.endsWith("jpeg") ||
-          asset.filename.endsWith("png") ||
-          asset.filename.endsWith("gif"))
+          .filter(
+            asset => asset.filename.endsWith("jpg") ||
+              asset.filename.endsWith("jpeg") ||
+              asset.filename.endsWith("png") ||
+              asset.filename.endsWith("gif"))
 
-        sb
-          .append(images
-          .map(img => "[\"" + img.filename.replace("\"", "\\\"") + "\",\"" + img.url.replace("\"", "\\\"") + "\"]")
+        sb.append(assets
+          .map(asset => "[\"" + asset.filename.replace("\"", "\\\"") + "\",\"" + asset.url.replace("\"", "\\\"") + "\"]")
           .mkString(", "))
 
         sb.append(");")
