@@ -20,56 +20,49 @@ class WriteoutCacheFilter extends Filter with Logging {
 
     def init(filterConfig: FilterConfig) {
         context = filterConfig.getServletContext
-
-        properties = WebApplicationContextUtils
-          .getWebApplicationContext(context)
-          .getBean(classOf[WriteoutCacheProperties])
-
+        properties = WebApplicationContextUtils.getWebApplicationContext(context).getBean(classOf[WriteoutCacheProperties])
         if (properties.enabled) {
-            val file = new File(context.getRealPath(properties.directory))
-            logger.info("Using cache directory [{}]", properties.directory)
-            if (!file.exists()) {
-                logger.debug("Creating cache directory [{}]", properties.directory)
-                file.mkdir()
-            }
+            _ensureCacheDirectoryCreated(_cacheDirectory)
+        }
+    }
+
+    def _cacheHit(file: File) = file.exists && file.lastModified > System.currentTimeMillis - properties.timeout * 1000l
+    def _cacheDirectory = new File(context.getRealPath(properties.directory))
+    def _cacheFile(req: HttpServletRequest): File = {
+        val uri = req.getRequestURI
+        val filename = uri.replace("-", "_").replace("/", "_")
+        val path = context.getRealPath(properties.directory) + "/" + filename
+        new File(path)
+    }
+
+    def _ensureCacheDirectoryCreated(dir: File) {
+        logger.info("Using cache directory [{}]", dir)
+        if (!dir.exists()) {
+            logger.debug("Creating cache directory [{}]", dir)
+            dir.mkdir()
         }
     }
 
     def doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
 
-        val uri = request.asInstanceOf[HttpServletRequest].getRequestURI
-        val ext = FilenameUtils.getExtension(uri)
+        val req = request.asInstanceOf[HttpServletRequest]
 
         // we only want to cache non-resource files, easist way is to look for files without an extension
         // as they will be proper spring controllers, and only ones without query param
-        if (!properties.enabled
-          || uri.startsWith("/backoffice")
-          || uri.startsWith("/login")
-          || ext.length > 0
-          || request.asInstanceOf[HttpServletRequest].getQueryString != null) {
+        if (properties.enabled && _isCacheable(request.asInstanceOf[HttpServletRequest])) {
 
-            chain.doFilter(request, response)
-
-        } else {
-
-            val filename = uri.replace("-", "_").replace("/", "_")
-            val path = context.getRealPath(properties.directory + "/" + filename)
-            logger.debug("Cache check [{}]", path)
-            val file = new File(path)
-            if (file.exists && file.lastModified > System.currentTimeMillis - properties
-              .timeout * 1000l) {
-
-                logger.debug("Cache hit [{}]", path)
+            val file = _cacheFile(req)
+            logger.debug("Cache file [{}]", file)
+            if (_cacheHit(file)) {
+                logger.debug("Cache hit [{}]", file)
                 val input = FileUtils.openInputStream(file)
                 IOUtils.copy(input, response.getOutputStream)
 
             } else {
 
                 val branch = new ByteArrayOutputStream
-                val tee = new
-                    TeeServletOutputStream(new TeeOutputStream(response.getOutputStream, branch))
-                val wrapper = new
-                    HttpServletResponseWrapper(response.asInstanceOf[HttpServletResponse]) {
+                val tee = new TeeServletOutputStream(new TeeOutputStream(response.getOutputStream, branch))
+                val wrapper = new HttpServletResponseWrapper(response.asInstanceOf[HttpServletResponse]) {
                     override def getOutputStream: ServletOutputStream = tee
                 }
                 chain.doFilter(request, wrapper)
@@ -79,7 +72,19 @@ class WriteoutCacheFilter extends Filter with Logging {
                 if (output.length > MIN_CACHE_SIZE)
                     FileUtils.write(file, output)
             }
+
         }
+        else {
+
+            chain.doFilter(request, response)
+        }
+    }
+
+    def _isCacheable(request: HttpServletRequest) = {
+        val uri = request.getRequestURI
+        val ext = FilenameUtils.getExtension(uri)
+        if (uri.startsWith("/backoffice") || uri.startsWith("/login") || ext.length > 0 || request.getQueryString != null) false
+        else true
     }
 }
 
