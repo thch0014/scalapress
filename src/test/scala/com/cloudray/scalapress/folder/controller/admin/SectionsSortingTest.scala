@@ -3,7 +3,7 @@ package com.cloudray.scalapress.folder.controller.admin
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.section.SectionDao
-import com.cloudray.scalapress.folder.section.{SubfolderSection, SiblingSection}
+import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSection}
 
 /** @author Stephen Samuel */
 class SectionsSortingTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -12,11 +12,11 @@ class SectionsSortingTest extends FunSuite with MockitoSugar with OneInstancePer
         var sectionDao: SectionDao = mock[SectionDao]
     }
 
-    val section1 = new SiblingSection
+    val section1 = new FolderContentSection
     section1.id = 6
     val section2 = new SubfolderSection
     section2.id = 4
-    val section3 = new SiblingSection
+    val section3 = new FolderContentSection
     section3.id = 15
 
     val sections = Seq(section1, section2, section3)

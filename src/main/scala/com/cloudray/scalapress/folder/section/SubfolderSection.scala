@@ -32,7 +32,6 @@ class SubfolderSection extends Section {
     }
 
     def _folders = folder.sortedSubfolders.filterNot(_.hidden)
-
     def desc = "Show a clickable list of the sub folders of this folder"
 
 }
