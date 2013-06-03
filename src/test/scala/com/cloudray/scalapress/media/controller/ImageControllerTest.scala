@@ -3,7 +3,7 @@ package com.cloudray.scalapress.media.controller
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.media.{AssetStore, ImageController}
-import org.mockito.{Matchers, Mockito}
+import org.mockito.Mockito
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.ServletOutputStream
 import java.io.ByteArrayInputStream
@@ -31,14 +31,19 @@ class ImageControllerTest extends FunSuite with MockitoSugar with OneInstancePer
         Mockito.verify(resp).setContentType("image/png")
     }
 
-    test("requesting a null asset returns 404") {
+    test("requesting to resize a null asset returns 404") {
         controller.imageResized3("coldp3lay.jpg3", 100, 200, resp)
         Mockito.verify(resp).setStatus(404)
     }
 
-    test("requesting an empty asset returns 404") {
+    test("requesting to resize an empty asset returns 404") {
         Mockito.when(controller.assetStore.get("keane.tiff")).thenReturn(Some(new ByteArrayInputStream(Array[Byte]())))
         controller.imageResized3("keane.tiff", 100, 200, resp)
+        Mockito.verify(resp).setStatus(404)
+    }
+
+    test("requesting a null asset returns 404") {
+        controller.image("eltonjohn.png", resp)
         Mockito.verify(resp).setStatus(404)
     }
 

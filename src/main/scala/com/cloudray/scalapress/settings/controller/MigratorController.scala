@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.media.admin.ECImageMigrator
+import com.cloudray.migration.ecreator.ECImageMigrator
 
 /** @author Stephen Samuel */
 @Controller

@@ -27,4 +27,11 @@ class RrpTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
         val output = RrpDiscountTag.render(sreq, Map.empty)
         assert("&pound;3.66" === output.get)
     }
+
+    test("rrp discount tag does not output when discount is 0") {
+        obj.price = 1000
+        obj.rrp = 1000
+        val output = RrpDiscountTag.render(sreq, Map.empty)
+        assert(output.isEmpty)
+    }
 }

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search
 
 import section.SearchFormSection
-import xml.{Node, Unparsed, Elem}
+import scala.xml.{Utility, Node, Unparsed, Elem}
 import com.cloudray.scalapress.enums.{Sort, SearchFieldType, AttributeType}
 import scala.collection.JavaConverters._
 
@@ -107,9 +107,9 @@ object SearchFormRenderer {
         _renderSelection(name, field.name, renderedOptions)
     }
 
-    def _renderSelection(name: String, label: String, options: Iterable[Node]) = {
+    def _renderSelection(name: String, label: String, options: Iterable[Node]): Node = {
         val any = ""
-        scala.xml.Utility.trim(<div>
+        val xml = <div>
             <label>
                 {Unparsed(label)}
             </label>
@@ -118,7 +118,8 @@ object SearchFormRenderer {
                     Any
                 </option>{options}
             </select>
-        </div>)
+        </div>
+        Utility.trim(xml)
     }
 
     def _renderTextAttribute(field: SearchFormField): Node = {

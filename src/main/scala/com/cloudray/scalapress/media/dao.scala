@@ -32,9 +32,3 @@ class ImageDaoImpl extends GenericDaoImpl[Image, java.lang.Long] with ImageDao {
           .toArray
     }
 }
-
-trait GalleryDao extends GenericDao[Gallery, java.lang.Long]
-
-@Component
-@Transactional
-class GalleryDaoImpl extends GenericDaoImpl[Gallery, java.lang.Long] with GalleryDao

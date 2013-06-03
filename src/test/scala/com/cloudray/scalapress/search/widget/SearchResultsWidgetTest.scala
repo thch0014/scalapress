@@ -17,4 +17,9 @@ class SearchResultsWidgetTest extends FunSuite with OneInstancePerTest with Mock
         widget._init(context)
         Mockito.verify(context.savedSearchDao).save(widget.search)
     }
+
+    test("backoffice url is absolute") {
+        val widget = new SearchResultsWidget
+        assert(widget.backoffice.startsWith("/backoffice/"))
+    }
 }

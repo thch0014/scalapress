@@ -4,6 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.obj.{ObjectType, Obj}
 
 /** @author Stephen Samuel */
 class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -15,6 +16,7 @@ class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePer
     val section1 = new StringSection("kirk")
     section1.visible = true
     section1.position = 99
+
     val section2 = new StringSection("kaaaan")
     section2.visible = true
     section2.position = 14
@@ -24,6 +26,18 @@ class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePer
         val rendered = SectionRenderer._render(Seq(section1, section2), sreq)
         assert(rendered.contains("kirk"))
         assert(!rendered.contains("kaaaan"))
+    }
+
+    test("rendered for objects includes sections from item type") {
+        val obj = new Obj
+        obj.sections.add(section1)
+
+        obj.objectType = new ObjectType
+        obj.objectType.sections.add(section2)
+
+        val output = SectionRenderer.render(obj, sreq, context)
+        assert(output.contains("kirk"))
+        assert(output.contains("kaaaan"))
     }
 
     test("renderer sorts by section position") {

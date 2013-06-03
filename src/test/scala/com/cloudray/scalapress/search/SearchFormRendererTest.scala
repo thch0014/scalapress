@@ -24,13 +24,10 @@ class SearchFormRendererTest extends FunSuite with MockitoSugar {
     field.attribute.options.add(option2)
 
     test("selection render happy path") {
-        val rendered = SearchFormRenderer
-          ._renderSelection("selfield", "my sel field", SearchFormRenderer._renderOptions(field))
-        assert(scala.xml.Utility.trim(<div>
-            <label>my sel field</label> <select name="selfield">
-                <option value="">Any</option> <option value="coldplay">coldplay</option> <option value="keane">keane</option>
-            </select>
-        </div>) === rendered)
+        val rendered = SearchFormRenderer._renderSelection("selfield", "my sel field", SearchFormRenderer._renderOptions(field))
+        assert(
+            "<div><label>my sel field</label><select name=\"selfield\"><option value=\"\">Any</option><option value=\"coldplay\">coldplay</option><option value=\"keane\">keane</option></select></div>" === rendered
+              .toString())
     }
 
     test("selection options render happy path") {
@@ -89,5 +86,10 @@ class SearchFormRendererTest extends FunSuite with MockitoSugar {
                 <option value="100">100 miles</option>
             </select>
         </div>) === rendered)
+    }
+
+    test("preset attribute field happy path") {
+        val output = SearchFormRenderer._renderPresetAttributeField(field)
+        assert("<input type=\"hidden\" name=\"attr_2\"/>" === output.toString())
     }
 }

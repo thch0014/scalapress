@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.settings.upgraders
+package com.cloudray.migration.ecreator
 
 import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource
