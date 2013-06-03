@@ -22,6 +22,10 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
     obj.name = "coldplay tickets"
     obj.id = 123
     obj.dateCreated = 1365722181000l
+    obj.price = 599
+    obj.costPrice = 450
+    obj.stock = 5
+    obj.rrp = 1999
 
     val av1 = new AttributeValue
     av1.attribute = attr1
@@ -37,7 +41,7 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
     test("header happy path") {
 
         val header = new ObjectExporter()._header(attributes)
-        assert(Array("id", "date", "name", "url", "brand", "code") === header)
+        assert(Array("id", "date", "name", "url", "price", "cost", "rrp", "stock", "brand", "code") === header)
     }
 
     test("row happy path") {
@@ -46,7 +50,23 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
         assert(Array("123",
             "11-04-2013",
             "coldplay tickets",
-            "http://mysite.com/object-123-coldplay-tickets",
+            "http://mysite.com/object-123-coldplay-tickets", "5.99", "4.50", "19.99", "5",
+            "Samsung",
+            "GalaxyS") === header)
+    }
+
+    test("row handles zeros for pricing") {
+
+        obj.price = 0
+        obj.costPrice = 0
+        obj.stock = 0
+        obj.rrp = 0
+
+        val header = new ObjectExporter()._row(obj, attributes, "mysite.com")
+        assert(Array("123",
+            "11-04-2013",
+            "coldplay tickets",
+            "http://mysite.com/object-123-coldplay-tickets", "0.00", "0.00", "0.00", "0",
             "Samsung",
             "GalaxyS") === header)
     }

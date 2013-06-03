@@ -28,6 +28,7 @@ class SearchFormSection extends Section {
             val rendered = SearchFormRenderer.render(form, this)
             Some(rendered)
     }
+
     override def _init(context: ScalapressContext) {
         searchForm = new SearchForm
         context.searchFormDao.save(searchForm)

@@ -72,16 +72,17 @@ class ObjectStockTag extends ScalapressTag with TagBuilder {
 class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-        request.obj.map(obj => {
+        request.obj.flatMap(obj => {
             val plugin = request.context.bean[ShoppingPluginDao].get
-            val msg = Option(obj.outStockMsg).filter(_.trim.length > 0).getOrElse(plugin.outOfStockMessage)
             plugin.stockMethod match {
-                case StockMethod.Off => ""
+                case StockMethod.Off => None
                 case _ =>
-                    if (obj.stock > 0)
-                        build("In Stock", params)
-                    else
-                        build(msg, params)
+                    if (obj.stock > 0) {
+                        Some(build("In Stock", params))
+                    } else {
+                        val outMessage = Option(obj.outStockMsg).filterNot(_.isEmpty).getOrElse(plugin.outOfStockMessage)
+                        Some(build(outMessage, params))
+                    }
             }
         })
     }

@@ -47,6 +47,10 @@ class ObjectExporter {
         buffer.append("date")
         buffer.append("name")
         buffer.append("url")
+        buffer.append("price")
+        buffer.append("cost")
+        buffer.append("rrp")
+        buffer.append("stock")
         for ( attribute <- attributes ) {
             buffer.append(attribute.name)
         }
@@ -54,11 +58,23 @@ class ObjectExporter {
     }
 
     def _row(obj: Obj, attributes: Seq[Attribute], domain: String): Array[String] = {
+
         val buffer = new ArrayBuffer[String]
+
         buffer.append(obj.id.toString)
         buffer.append(new DateTime(obj.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
         buffer.append(obj.name)
         buffer.append("http://" + domain + UrlGenerator.url(obj))
+
+        val price = "%1.2f".format(obj.price / 100.0)
+        val cost = "%1.2f".format(obj.costPrice / 100.0)
+        val rrp = "%1.2f".format(obj.rrp / 100.0)
+
+        buffer.append(price)
+        buffer.append(cost)
+        buffer.append(rrp)
+        buffer.append(obj.stock.toString)
+
         for ( attribute <- attributes ) {
             val value = AttributeFuncs.attributeValue(obj, attribute).orNull
             buffer.append(value)
