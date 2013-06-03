@@ -4,10 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.SearchService
-import org.joda.time.{DateMidnight, DateTimeZone}
 import com.cloudray.scalapress.ScalapressContext
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,38 +18,10 @@ class CalendarJsonController {
     @RequestMapping(produces = Array("application/json"), value = Array("widget/{id}"))
     @ResponseBody
     def json(@PathVariable("id") id: Long): Array[Event] = {
-
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
-        val result = searchService.search(widget.search)
-        result.refs.flatMap(ref => {
-
-            ref.attributes.get(widget.startDateAttribute.id) match {
-
-                case Some(date) if date.forall(_.isDigit) =>
-
-                    val dateMidnight = new DateMidnight(date.toLong, DateTimeZone.UTC)
-
-                    val e = new Event
-                    e.date = dateMidnight.getMillis.toString
-                    e.dateString = dateMidnight.toString("dd/MM/yyyy")
-                    e.title = ref.name
-                    e.description = ""
-
-                    e.url = UrlGenerator.url(ref)
-                    Some(e)
-
-                case _ => None
-            }
-
-        }).toArray
+        val calendar = new CalendarService(searchService)
+        val events = calendar.events(widget.search, widget.startDateAttribute, Option(widget.endDateAttribute))
+        events.toArray
     }
 }
 
-class Event {
-    @BeanProperty var date: String = _
-    @BeanProperty var dateString: String = _
-    @BeanProperty var `type`: String = "meeting"
-    @BeanProperty var title: String = _
-    @BeanProperty var description: String = _
-    @BeanProperty var url: String = _
-}
