@@ -7,7 +7,6 @@ import com.cloudray.scalapress.obj.Obj
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.obj.attr.Attribute
 import org.mockito.Mockito
-import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 class CalendarServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

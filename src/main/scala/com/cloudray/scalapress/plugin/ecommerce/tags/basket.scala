@@ -176,7 +176,7 @@ class BasketLineTotalTag extends ScalapressTag {
 @Tag("basket_line_stock")
 class BasketLineStockTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        request.line.map(line => build(line.obj.stock.toString, params))
+        request.line.flatMap(line => Option(line.obj)).map(obj => build(obj.stock.toString, params))
     }
 }
 
