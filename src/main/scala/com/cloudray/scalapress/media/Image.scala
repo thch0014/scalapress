@@ -1,12 +1,12 @@
 package com.cloudray.scalapress.media
 
 import javax.persistence._
-import com.cloudray.scalapress.plugin.gallery.Gallery
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 import org.joda.time.{DateTimeZone, DateTime}
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.plugin.gallery.galleryview.Gallery
 
 /** @author Stephen Samuel */
 @Entity

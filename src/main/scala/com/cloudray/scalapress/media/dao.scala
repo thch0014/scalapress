@@ -3,8 +3,8 @@ package com.cloudray.scalapress.media
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
-import com.cloudray.scalapress.plugin.gallery.Gallery
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
+import com.cloudray.scalapress.plugin.gallery.galleryview.Gallery
 
 /** @author Stephen Samuel */
 trait ImageDao extends GenericDao[Image, java.lang.Long] {

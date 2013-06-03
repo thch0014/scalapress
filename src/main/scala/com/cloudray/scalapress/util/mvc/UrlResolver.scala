@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.util.mvc
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.plugin.gallery.Gallery
 import com.cloudray.scalapress.plugin.form.{Submission, Form}
 import com.cloudray.scalapress.plugin.ecommerce.domain.DeliveryOption
 import com.cloudray.scalapress.search.{SearchFormField, SearchForm}
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.cloudray.scalapress.user.User
 import com.cloudray.scalapress.theme.{Theme, Markup}
+import com.cloudray.scalapress.plugin.gallery.galleryview.Gallery
 
 /** @author Stephen Samuel */
 

@@ -1,7 +1,6 @@
-package com.cloudray.scalapress.plugin.gallery
+package com.cloudray.scalapress.plugin.gallery.galleryview
 
 import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
-import scala.Array
 import java.util
 import com.cloudray.scalapress.media.Image
 import scala.beans.BeanProperty

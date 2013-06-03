@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, 
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
-import com.cloudray.scalapress.plugin.gallery.{GalleryDao, GalleryRenderer}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 import com.cloudray.scalapress.theme.ThemeService
+import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryRenderer, GalleryDao}
 
 /** @author Stephen Samuel
   *

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gallery
+package com.cloudray.scalapress.plugin.gallery.galleryview
 
 import collection.mutable.ArrayBuffer
 import xml.Elem

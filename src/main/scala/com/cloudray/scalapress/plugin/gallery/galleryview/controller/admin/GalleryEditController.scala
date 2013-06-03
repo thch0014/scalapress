@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Pat
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.plugin.gallery.{GalleryDao, Gallery}
 import com.cloudray.scalapress.media.Image
 import org.joda.time.{DateTimeZone, DateTime}
+import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryDao, Gallery}
 
 /** @author Stephen Samuel */
 @Controller
