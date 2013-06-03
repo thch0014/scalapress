@@ -94,7 +94,13 @@
             #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
         </div>
     </div>
+    <div class="control-group">
+        <label class="control-label">Order Email Completion Text (Customers)</label>
 
+        <div class="controls">
+            #springFormTextarea("plugin.orderCompletionMessageBody", "class='input-block-level' rows='6'")
+        </div>
+    </div>
 
     <legend>Invoices</legend>
     <div class="control-group">

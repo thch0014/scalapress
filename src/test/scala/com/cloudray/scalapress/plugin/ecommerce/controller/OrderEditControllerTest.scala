@@ -3,10 +3,11 @@ package com.cloudray.scalapress.plugin.ecommerce.controller
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
-import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderEditController
+import com.cloudray.scalapress.plugin.ecommerce.controller.admin.{OrderEditForm, OrderEditController}
 import org.mockito.Mockito
 import com.cloudray.scalapress.obj.{Obj, ObjectDao}
-import com.cloudray.scalapress.plugin.ecommerce.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.{OrderCustomerNotificationService, OrderDao}
+import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -14,7 +15,23 @@ class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstanc
     val controller = new OrderEditController
     controller.objectDao = mock[ObjectDao]
     controller.orderDao = mock[OrderDao]
+    controller.notificationService = mock[OrderCustomerNotificationService]
     val order = new Order
+
+    val form = new OrderEditForm
+    val req = mock[HttpServletRequest]
+
+    test("saving an order sends completed email if status is completed") {
+        order.status = Order.STATUS_COMPLETED
+        controller.save(order, form, req)
+        Mockito.verify(controller.notificationService).orderCompleted(order)
+    }
+
+    test("saving an order does not send completed email if status is other than completed") {
+        order.status = Order.STATUS_PAID
+        controller.save(order, form, req)
+        Mockito.verify(controller.notificationService, Mockito.never).orderCompleted(order)
+    }
 
     test("adding a desc and price creates a non object line and pesists it") {
 

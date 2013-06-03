@@ -33,13 +33,13 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     order.account.email = "kirk@enterprise.com"
 
     test("that a message is sent via mail sender") {
-        service.orderPlaced(order)
+        service.orderCompleted(order)
         Mockito.verify(service.mailSender).send(Matchers.any[SimpleMailMessage])
     }
 
     test("that the message uses the account email as recipient") {
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service._send(order, "body")
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert(msg.getTo === Array("kirk@enterprise.com"))
@@ -47,7 +47,7 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
 
     test("that the message uses the installation as the sender details") {
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service._send(order, "body")
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert(msg.getFrom === "big man tshirts <donotreply@coldplay.com>")
@@ -55,35 +55,34 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
 
     test("that the message subject contains the order id") {
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service._send(order, "body")
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert(msg.getSubject.contains("#" + order.id))
     }
 
-    test("that the message body uses default when none specified in plugin settings") {
+    test("that a confirmation email uses the specified body") {
+        plugin.orderConfirmationMessageBody = "lovely order that"
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service.orderConfirmation(order)
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
-        assert(service.DefaultMessageBody === msg.getText)
+        assert("lovely order that" === msg.getText)
     }
 
-    test("that the message body uses plugin settings when specified") {
-        val text = "lovely order that"
-        plugin.orderConfirmationMessageBody = text
+    test("that a completed email uses the specified body") {
+        plugin.orderConfirmationMessageBody = "all done and dusted"
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service.orderCompleted(order)
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
-        assert(text === msg.getText)
+        assert("all done and dusted" === msg.getText)
     }
 
-    test("that the message body is marked-up before sendin") {
-        val text = "lovely order is #[order_id]"
-        plugin.orderConfirmationMessageBody = text
+    test("that the message body is marked-up before sending") {
+        plugin.orderConfirmationMessageBody = "lovely order is #[order_id]"
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
-        service.orderPlaced(order)
+        service.orderConfirmation(order)
         Mockito.verify(service.mailSender).send(captor.capture)
         val msg = captor.getValue
         assert("lovely order is #151" === msg.getText)

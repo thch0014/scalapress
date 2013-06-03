@@ -38,6 +38,9 @@ class ShoppingPlugin {
     @Column(length = 100000)
     @BeanProperty var orderConfirmationMessageBody: String = _
 
+    @Column(length = 100000)
+    @BeanProperty var orderCompletionMessageBody: String = _
+
     @Enumerated(EnumType.STRING)
     @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
 

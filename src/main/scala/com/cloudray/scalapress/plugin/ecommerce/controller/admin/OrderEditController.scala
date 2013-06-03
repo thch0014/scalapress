@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, Pa
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, OrderLine, OrderComment, Order}
-import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
+import com.cloudray.scalapress.plugin.ecommerce.{OrderCustomerNotificationService, OrderDao, ShoppingPluginDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import javax.servlet.http.HttpServletRequest
@@ -27,6 +27,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
     @Autowired var objectDao: ObjectDao = _
     @Autowired var context: ScalapressContext = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
+    @Autowired var notificationService: OrderCustomerNotificationService = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
     def edit(@ModelAttribute order: Order) = "admin/plugin/shopping/order/edit.vm"
@@ -36,35 +37,38 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
              @ModelAttribute("form") form: OrderEditForm,
              req: HttpServletRequest) = {
 
-        if (order.status.toLowerCase != "completed") {
+        order.status match {
+            case Order.STATUS_COMPLETED =>
+                notificationService.orderCompleted(order)
+            case _ =>
 
-            if (form.changeDeliveryCharge > 0) {
-                order.deliveryCharge = (form.changeDeliveryCharge * 100.0).toInt
-            }
+                if (form.changeDeliveryCharge > 0) {
+                    order.deliveryCharge = (form.changeDeliveryCharge * 100.0).toInt
+                }
 
-            if (form.changeDeliveryOption != null) {
-                order.deliveryCharge = form.changeDeliveryOption.charge
-                order.deliveryVatRate = form.changeDeliveryOption.vatRate
-                order.deliveryDetails = form.changeDeliveryOption.name
-            }
+                if (form.changeDeliveryOption != null) {
+                    order.deliveryCharge = form.changeDeliveryOption.charge
+                    order.deliveryVatRate = form.changeDeliveryOption.vatRate
+                    order.deliveryDetails = form.changeDeliveryOption.name
+                }
 
-            if (form.changeBillingAddress != null) {
-                order.billingAddress = form.changeBillingAddress
-            }
+                if (form.changeBillingAddress != null) {
+                    order.billingAddress = form.changeBillingAddress
+                }
 
-            if (form.changeDeliveryAddress != null) {
-                order.deliveryAddress = form.changeDeliveryAddress
-            }
+                if (form.changeDeliveryAddress != null) {
+                    order.deliveryAddress = form.changeDeliveryAddress
+                }
 
-            order.lines.asScala.foreach(line => {
-                val qty = req.getParameter("lineQty" + line.id).toInt
-                line.qty = if (qty < 1) 1 else qty
-            })
+                order.lines.asScala.foreach(line => {
+                    val qty = req.getParameter("lineQty" + line.id).toInt
+                    line.qty = if (qty < 1) 1 else qty
+                })
 
-            order.lines.asScala.foreach(line => {
-                val p = (req.getParameter("linePrice" + line.id).toDouble * 100.0).toInt
-                line.price = p
-            })
+                order.lines.asScala.foreach(line => {
+                    val p = (req.getParameter("linePrice" + line.id).toDouble * 100.0).toInt
+                    line.price = p
+                })
         }
 
         orderDao.save(order)

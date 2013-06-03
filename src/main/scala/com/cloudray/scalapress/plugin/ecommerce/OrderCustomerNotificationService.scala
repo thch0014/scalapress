@@ -10,26 +10,39 @@ import com.cloudray.scalapress.{ScalapressContext, Logging}
 @Component
 class OrderCustomerNotificationService extends Logging {
 
-    val DefaultMessageBody = "Thank you for your order"
-
     @Autowired var mailSender: MailSender = _
     @Autowired var context: ScalapressContext = _
     @Autowired var shoppingPluginDao: ShoppingPluginDao = _
 
-    def orderPlaced(order: Order) {
+    def orderConfirmation(order: Order) {
+        Option(shoppingPluginDao.get.orderConfirmationMessageBody) match {
+            case None =>
+            case Some(body) =>
+                val markedup = OrderMarkupService.resolve(order, body)
+                _send(order, markedup)
+        }
+    }
+
+    def orderCompleted(order: Order) {
+        Option(shoppingPluginDao.get.orderCompletionMessageBody) match {
+            case None =>
+            case Some(body) =>
+                val markedup = OrderMarkupService.resolve(order, body)
+                _send(order, markedup)
+        }
+    }
+
+    def _send(order: Order, body: String) {
 
         val installation = context.installationDao.get
         val domain = installation.domain
         val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
 
-        val body = Option(shoppingPluginDao.get.orderConfirmationMessageBody).getOrElse(DefaultMessageBody)
-        val markedup = OrderMarkupService.resolve(order, body)
-
         val message = new SimpleMailMessage()
         message.setFrom(installation.name + " <donotreply@" + nowww + ">")
         message.setTo(order.account.email)
         message.setSubject("Order #" + order.id)
-        message.setText(markedup)
+        message.setText(body)
 
         try {
             mailSender.send(message)

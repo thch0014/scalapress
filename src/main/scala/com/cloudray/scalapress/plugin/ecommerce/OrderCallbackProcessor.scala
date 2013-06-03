@@ -37,6 +37,6 @@ class OrderCallbackProcessor extends PaymentCallback with Logging {
 
     def _email(order: Order) {
         logger.debug("Sending order placed email")
-        orderCustomerNotificationService.orderPlaced(order)
+        orderCustomerNotificationService.orderConfirmation(order)
     }
 }
