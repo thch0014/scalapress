@@ -33,6 +33,7 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     order.account.email = "kirk@enterprise.com"
 
     test("that a message is sent via mail sender") {
+        plugin.orderCompletionMessageBody = "go go go"
         service.orderCompleted(order)
         Mockito.verify(service.mailSender).send(Matchers.any[SimpleMailMessage])
     }
@@ -71,7 +72,7 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     }
 
     test("that a completed email uses the specified body") {
-        plugin.orderConfirmationMessageBody = "all done and dusted"
+        plugin.orderCompletionMessageBody = "all done and dusted"
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
         service.orderCompleted(order)
         Mockito.verify(service.mailSender).send(captor.capture)
