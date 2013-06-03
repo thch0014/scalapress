@@ -15,9 +15,10 @@ import java.io.ByteArrayInputStream
 class ImageController extends Logging {
 
     @Autowired
-    var imageProvider: AssetStore = _
+    var assetStore: AssetStore = _
 
-    @RequestMapping(value = Array("{w:\\d+}/{h:\\d+}/{filename}"), produces = Array("image/png"))
+    @ResponseBody
+    @RequestMapping(value = Array("{w:\\d+}/{h:\\d+}/{filename}"))
     def imageResized3(@PathVariable("filename") filename: String,
                       @PathVariable("w") width: Int,
                       @PathVariable("h") height: Int,
@@ -25,7 +26,8 @@ class ImageController extends Logging {
         imageResized(filename, width, height, resp)
     }
 
-    @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("w", "h"))
+    @ResponseBody
+    @RequestMapping(value = Array("{filename}"), params = Array("w", "h"))
     def imageResized2(@PathVariable("filename") filename: String,
                       @RequestParam("w") width: Int,
                       @RequestParam("h") height: Int,
@@ -33,16 +35,14 @@ class ImageController extends Logging {
         imageResized(filename, width, height, resp)
     }
 
-    @RequestMapping(value = Array("{filename}"), produces = Array("image/png"), params = Array("width", "height"))
+    @ResponseBody
+    @RequestMapping(value = Array("{filename}"), params = Array("width", "height"))
     def imageResized(@PathVariable("filename") filename: String,
                      @RequestParam("width") width: Int,
                      @RequestParam("height") height: Int,
                      resp: HttpServletResponse) {
 
-        imageProvider.get(filename) match {
-            case None =>
-                logger.debug("Could not find file {}", filename)
-                resp.setStatus(404)
+        assetStore.get(filename) match {
             case Some(in) =>
 
                 val bytes = IOUtils.toByteArray(in)
@@ -59,28 +59,33 @@ class ImageController extends Logging {
                                 logger.debug("Image could not be decoded by ImageIO [{}]", filename)
                                 resp.setStatus(404)
                             case Some(i) =>
+                                logger.debug("Sizing image {}", filename)
                                 val thumbnail = ImageTools.fit(image, (width, height))
                                 resp.setContentType("image/png")
                                 ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
                         }
                 }
+            case _ =>
+                logger.debug("Could not find file {}", filename)
+                resp.setStatus(404)
         }
     }
 
     @RequestMapping
     @ResponseBody
-    def list: Array[Asset] = imageProvider.list(1000)
+    def list: Array[Asset] = assetStore.list(1000)
 
     @RequestMapping(value = Array("{filename}"))
+    @ResponseBody
     def image(@PathVariable("filename") filename: String, resp: HttpServletResponse) {
         resp.setContentType(URLConnection.guessContentTypeFromName(filename))
-        imageProvider.get(filename) match {
-            case None =>
-                logger.debug("Could not find file {}", filename)
-                resp.setStatus(404)
+        assetStore.get(filename) match {
             case Some(in) =>
                 IOUtils.copy(in, resp.getOutputStream)
                 IOUtils.closeQuietly(in)
+            case _ =>
+                logger.debug("Could not find file {}", filename)
+                resp.setStatus(404)
         }
     }
 }
