@@ -2,7 +2,6 @@ package com.cloudray.scalapress.folder.widget
 
 import javax.persistence._
 import com.cloudray.scalapress.{Logging, ScalapressRequest}
-import collection.mutable.ArrayBuffer
 import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence.Table
@@ -10,6 +9,7 @@ import javax.persistence.Entity
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.util.UrlGenerator
+import scala.xml.{Unparsed, Utility, Node}
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -31,30 +31,33 @@ class FoldersWidget extends Widget with Logging {
     override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
     override def render(req: ScalapressRequest): Option[String] = {
-        val buffer = new ArrayBuffer[String]
         val root = Option(start).getOrElse(req.folderRoot)
-        _renderFolderLevel(root, 1, buffer)
-        Some(buffer.mkString("\n"))
+        val xml = _renderFolderLevel(root, 1)
+        Some(Utility.trim(xml).toString())
     }
 
-    def _renderFolderLevel(parent: Folder, level: Int, buffer: ArrayBuffer[String]) {
+    def _renderFolderLevel(parent: Folder, level: Int): Node = {
 
-        if (level == 1)
-            buffer.append("<ul class=\"widget-folder-plugin\">")
-        else
-            buffer.append("<ul>")
+        val css = if (level == 1) "widget-folder-plugin" else null
+        val children = _children(parent).map(child => _renderFolder(child, level))
 
-        val children = _children(parent)
+        <ul class={css}>
+            {children}
+        </ul>
+    }
 
-        for ( folder <- children ) {
-            buffer.append("<li class=\"l" + level + "\" id=\"w" + id + "_f" + folder.id + "\">")
-            buffer.append(UrlGenerator.link(folder))
-            if (level < depth)
-                _renderFolderLevel(folder, level + 1, buffer)
-            buffer.append("</li>")
-        }
+    def _renderFolder(folder: Folder, level: Int): Node = {
 
-        buffer.append("</ul>")
+        val css = "l" + level
+        val id = "w" + this.id + "_f" + folder.id
+        val a = Unparsed(UrlGenerator.link(folder))
+
+        val xml = <li class={css} id={id}>
+            {a}{if (level < depth)
+                _renderFolderLevel(folder, level + 1)}
+        </li>
+
+        Utility.trim(xml)
     }
 
     def _children(parent: Folder) =

@@ -4,6 +4,7 @@ import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlStrategy
+import scala.xml.Utility
 
 /** @author Stephen Samuel */
 object UrlGenerator {
@@ -24,17 +25,17 @@ object UrlGenerator {
     def link(obj: Obj): String = link(obj, obj.name)
     // creates a link that uses the specified label
     def link(obj: Obj, label: String): String =
-        <a href={url(obj)}>
+        Utility.trim(<a href={url(obj)}>
             {label}
-        </a>.toString()
+        </a>).toString()
 
     // creates a link that uses the folder name as the label
     def link(folder: Folder): String = link(folder, folder.name)
     // creates a link that uses the specified label
     def link(folder: Folder, label: String): String =
-        <a href={url(folder)}>
+        Utility.trim(<a href={url(folder)}>
             {label}
-        </a>.toString()
+        </a>).toString()
 }
 
 object DefaultUrlStrategy extends UrlStrategy {

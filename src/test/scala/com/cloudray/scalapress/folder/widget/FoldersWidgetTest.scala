@@ -3,14 +3,18 @@ package com.cloudray.scalapress.folder.widget
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.Folder
+import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val widget = new FoldersWidget
+    widget.id = 15
 
     val child1 = new Folder
     child1.name = "captured"
+    child1.id = 1
     val child2 = new Folder
     child2.name = "plans"
     val child3 = new Folder
@@ -23,6 +27,11 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
     parent.subfolders.add(child2)
     parent.subfolders.add(child3)
     parent.subfolders.add(child4)
+
+    widget.start = parent
+
+    val req = mock[HttpServletRequest]
+    val context = new ScalapressContext
 
     test("backoffice url is absolute") {
         assert(widget.backoffice.startsWith("/backoffice"))
@@ -82,4 +91,15 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
         assert(4 === widget._children(parent).size)
     }
 
+    test("folder rendering of li uses correct class and id") {
+        val actual = widget._renderFolder(child1, 4)
+        assert("<li class=\"l4\" id=\"w15_f1\"><a href=\"/folder-1-captured\">captured</a></li>" === actual.toString())
+    }
+
+    test("folder rendering happy path") {
+        val actual = widget.render(ScalapressRequest(req, context))
+        assert(
+            "<ul class=\"widget-folder-plugin\"><li class=\"l1\" id=\"w15_f1\"><a href=\"/folder-1-captured\">captured</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-escaped\">escaped</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-plans\">plans</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-z-love-spaces-me\">z love           spaces me</a></li></ul>" === actual
+              .get)
+    }
 }
