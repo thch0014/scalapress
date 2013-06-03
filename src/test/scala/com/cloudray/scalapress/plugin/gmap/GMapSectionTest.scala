@@ -29,4 +29,8 @@ class GMapSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest
         val render = section.render(sreq).get
         assert(render.contains("SW109NJ"))
     }
+
+    test("backoffice url is absolute") {
+        assert(section.backoffice.startsWith("/backoffice"))
+    }
 }
