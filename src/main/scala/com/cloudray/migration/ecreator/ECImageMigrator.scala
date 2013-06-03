@@ -1,10 +1,8 @@
 package com.cloudray.migration.ecreator
 
 import com.cloudray.scalapress.Logging
-import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
-@Component
 class ECImageMigrator extends Logging {
 
     //    @Autowired var folderDao: FolderDao = _
