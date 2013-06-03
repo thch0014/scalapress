@@ -6,7 +6,6 @@ import collection.mutable.ArrayBuffer
 import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence.Table
-import scala.Some
 import javax.persistence.Entity
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
@@ -45,8 +44,6 @@ class FoldersWidget extends Widget with Logging {
         else
             buffer.append("<ul>")
 
-
-
         val children = _children(parent)
 
         for ( folder <- children ) {
@@ -63,14 +60,14 @@ class FoldersWidget extends Widget with Logging {
     def _children(parent: Folder) =
         parent.sortedSubfolders
           .filterNot(_.hidden)
-          .filterNot(f => _exclusions.contains(f.id.toString))
-          .filterNot(f => _exclusions.contains(f.name.toLowerCase.trim))
           .filterNot(_.name == null)
+          .filterNot(f => _exclusions.contains(f.id.toString))
+          .filterNot(f => _exclusions.contains(f.name.toLowerCase.replaceAll("\\s{2,}", " ").trim))
           .sortBy(_.name)
 
     def _exclusions: Seq[String] =
         Option(exclusions)
           .map(_.toLowerCase)
-          .map(_.split(Array('\n', ',')).map(_.trim))
+          .map(_.split(Array('\n', ',')).map(_.toLowerCase.replaceAll("\\s{2,}", " ").trim))
           .getOrElse(Array[String]()).toSeq
 }
