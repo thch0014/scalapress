@@ -5,15 +5,14 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, 
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
-import com.cloudray.scalapress.plugin.gallery.GalleryRenderer
-import com.cloudray.scalapress.media.GalleryDao
+import com.cloudray.scalapress.plugin.gallery.{GalleryDao, GalleryRenderer}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 import com.cloudray.scalapress.theme.ThemeService
 
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  **/
+  * */
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {

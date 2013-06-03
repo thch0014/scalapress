@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.plugin.gallery.Gallery
+import com.cloudray.scalapress.plugin.gallery.{GalleryDao, Gallery}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.GalleryDao
 
 /** @author Stephen Samuel */
 @Controller
