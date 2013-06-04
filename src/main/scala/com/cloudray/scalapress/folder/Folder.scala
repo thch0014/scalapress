@@ -54,13 +54,15 @@ class Folder extends SortedSections {
     @Enumerated(EnumType.STRING)
     @BeanProperty var folderOrdering: FolderOrdering = FolderOrdering.Alphabetical
 
-    def fullName(folder: Folder, count: Int): String = Option(folder.parent) match {
-        case None => folder.name
-        case Some(p) => count match {
-            case 0 => folder.name
-            case _ => fullName(p, count - 1) + " > " + folder.name
+    def fullName(folder: Folder, count: Int): String =
+        Option(folder.parent) match {
+            case None => folder.name
+            case Some(p) => count match {
+                case 0 => folder.name
+                case _ => fullName(p, count - 1) + " > " + folder.name
+            }
         }
-    }
+
     def fullName: String = fullName(this, 10)
 
     @BeanProperty var dateCreated: java.lang.Long = _

@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.controller.admin
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
-import collection.immutable.TreeMap
+import scala.collection.immutable.{ListMap, TreeMap}
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
@@ -12,6 +12,7 @@ import com.cloudray.scalapress.plugin.form.FormDao
 import scala.collection.mutable
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
@@ -19,11 +20,11 @@ trait MarkupPopulator {
     var markupDao: MarkupDao
 
     @ModelAttribute def markups(model: ModelMap) {
-        val markups = markupDao.findAll()
+        val markups = markupDao.findAll().sortBy(_.id)
 
-        var map = TreeMap(0l -> "-None-")
+        val map = mutable.LinkedHashMap(0l -> "-None-")
         markups.map(markup => {
-            map = map + (markup.id -> ("#" + markup.id + " " + markup.name))
+            map += (markup.id -> ("#" + markup.id + " " + markup.name))
         })
 
         model.put("markups", markups.asJava)
@@ -77,7 +78,10 @@ trait ObjectStatusPopulator {
 
     @ModelAttribute def objectStatusMap(model: ModelMap) {
         val map = mutable
-          .LinkedHashMap("" -> "-Status-", "Live" -> "Live", "Disabled" -> "Hidden", "Deleted" -> "Deleted")
+          .LinkedHashMap("" -> "-Status-",
+            Obj.STATUS_LIVE -> Obj.STATUS_LIVE,
+            Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED,
+            Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED)
         model.put("objectStatusMap", map.asJava)
     }
 }
@@ -87,11 +91,11 @@ trait ThemePopulator {
     var themeDao: ThemeDao
 
     @ModelAttribute def themes(model: ModelMap) {
-        val themes = themeDao.findAll()
+        val themes = themeDao.findAll().sortBy(_.id)
 
-        var map = TreeMap(0l -> "-None-")
+        val map = mutable.LinkedHashMap(0l -> "-None-")
         themes.map(theme => {
-            map = map + (theme.id -> ("#" + theme.id + " " + theme.name))
+            map += (theme.id -> ("#" + theme.id + " " + theme.name))
         })
 
         model.put("themes", themes.asJava)
@@ -104,16 +108,19 @@ trait FolderPopulator {
     var folderDao: FolderDao
 
     @ModelAttribute def folders(model: ModelMap) {
-        val folders = folderDao.findAll()
+        val folders = folderDao.findAll().sortBy(_.id)
 
-        val map = mutable.LinkedHashMap.empty[Long, String]
-        map.put(0l, "-Default-")
+        val map = mutable.Map(0l -> "-Default-")
         folders.map(f => {
-            map.put(f.id, "#" + f.id + " " + f.fullName)
+            map += (f.id -> f.fullName)
         })
 
+        val ordered = ListMap(map.toList.sortBy {
+            _._2
+        }: _*)
+
         model.put("folders", folders.asJava)
-        model.put("foldersMap", map.asJava)
+        model.put("foldersMap", ordered.asJava)
     }
 }
 
@@ -124,10 +131,10 @@ trait DeliveryOptionPopulator {
     @ModelAttribute def deliveryOptions(model: ModelMap) {
         val opts = deliveryOptionDao.findAll().sortBy(d => Option(d.name).getOrElse(""))
 
-        var map = TreeMap(0l -> "-Select Delivery-")
+        val map = mutable.LinkedHashMap(0l -> "-Select Delivery-")
         opts.map(o => {
-            val price = "&pound;%1.2f".format(o.charge / 100.0)
-            map = map + (o.id -> (o.name + " " + price))
+            val price = "&pound;%1.2f".format(o.chargeIncVat / 100.0)
+            map += (o.id -> (o.name + " " + price))
         })
 
         model.put("deliveryOptions", opts.asJava)
@@ -140,6 +147,7 @@ trait AddressPopulator {
     var addressDao: AddressDao
 
     def addressOptions(accountId: Long, model: ModelMap) {
+
         val opts = addressDao.search(new Search(classOf[Address])
           .addFilterEqual("account", accountId)
           .addFilterEqual("active", true))

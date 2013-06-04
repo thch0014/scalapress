@@ -191,7 +191,7 @@ class ObjectEditController extends FolderPopulator with AttributeValuesPopulator
     @ModelAttribute("booleanMap") def booleanMap = Map("Yes" -> "Yes", "No" -> "No").asJava
 
     @ModelAttribute("statuses") def statuses =
-        Map("Live" -> "Live", "Disabled" -> "Disabled", "Deleted" -> "Deleted").asJava
+        Map(Obj.STATUS_LIVE -> Obj.STATUS_LIVE, Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED, Obj.STATUS_DELETED -> Obj.STATUS_DELETED).asJava
 
     @ModelAttribute def f(@PathVariable("id") id: Long, model: ModelMap) {
         val obj = objectDao.find(id)

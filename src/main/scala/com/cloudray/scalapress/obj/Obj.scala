@@ -162,7 +162,7 @@ class Obj extends SortedSections {
 }
 
 object Obj {
-
+    val STATUS_DELETED = "Deleted"
     val STATUS_LIVE = "Live"
     val STATUS_DISABLED = "Disabled"
 
