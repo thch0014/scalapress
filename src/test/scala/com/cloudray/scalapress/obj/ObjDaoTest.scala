@@ -52,16 +52,19 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         assert(objects.exists("playcold" == _.name))
     }
 
-    test("recent returns X results in newest order") {
+    test("recent returns X results in newest id order") {
 
         val obj1 = new Obj
         obj1.name = "grandfather"
+        obj1.status = Obj.STATUS_LIVE
 
         val obj2 = new Obj
         obj2.name = "father"
+        obj2.status = Obj.STATUS_LIVE
 
         val obj3 = new Obj
         obj3.name = "son"
+        obj3.status = Obj.STATUS_LIVE
 
         dao.save(obj1)
         dao.save(obj2)
@@ -71,5 +74,29 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         assert(2 === objs.size)
         assert(obj3.id === objs(0).id)
         assert(obj2.id === objs(1).id)
+    }
+
+
+    test("recent only includes live objects") {
+
+        val obj1 = new Obj
+        obj1.name = "grandfather"
+        obj1.status = Obj.STATUS_DELETED
+
+        val obj2 = new Obj
+        obj2.name = "father"
+        obj2.status = Obj.STATUS_DISABLED
+
+        val obj3 = new Obj
+        obj3.name = "son"
+        obj3.status = Obj.STATUS_LIVE
+
+        dao.save(obj1)
+        dao.save(obj2)
+        dao.save(obj3)
+
+        val objs = dao.recent(5)
+        assert(4 === objs.size)
+        assert(obj3.id === objs(0).id)
     }
 }

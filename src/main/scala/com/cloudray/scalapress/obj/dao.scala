@@ -22,7 +22,11 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
 
-    def recent(i: Int): Seq[Obj] = search(new Search(classOf[Obj]).setMaxResults(i).addSort("id", true))
+    def recent(i: Int): Seq[Obj] =
+        search(new Search(classOf[Obj])
+          .addFilterEqual("status", Obj.STATUS_LIVE)
+          .setMaxResults(i)
+          .addSort("id", true))
 
     def findBulk(longs: Seq[Long]): Seq[Obj] = {
         val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
