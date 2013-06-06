@@ -1,11 +1,10 @@
 package com.cloudray.scalapress.plugin.feed.gbase
 
-import com.googlecode.genericdao.search.Search
 import java.io.File
 import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectQuery, ObjectDao, Obj}
 import com.cloudray.scalapress.settings.Installation
 import com.cloudray.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
@@ -20,11 +19,7 @@ object GoogleBaseService extends Logging {
             assetStore: AssetStore) = {
         logger.debug("Running GBASE feed")
 
-        val objs = objectDao
-          .search(new Search(classOf[Obj])
-          .addFilterLike("status", "Live")
-          .addFilterGreaterThan("sellPrice", 0))
-        logger.debug("Retrieved {} objects", objs.size)
+        val objs = _objects(objectDao)
 
         val file = new GoogleBaseBuilder(installation.domain, feed.productCategory, assetStore).csv(objs, feed)
         logger.debug("Gbase file generated [{}]", file)
@@ -34,6 +29,17 @@ object GoogleBaseService extends Logging {
 
         feed.lastRuntime = new DateTime(DateTimeZone.UTC).getMillis
         gfeedDao.save(feed)
+    }
+
+    def _objects(objectDao: ObjectDao): Seq[Obj] = {
+        val q = new ObjectQuery
+        q.pageSize = 100000
+        q.status = Some(Obj.STATUS_LIVE)
+        q.minPrice = Some(1)
+
+        val objs = objectDao.search(q).results
+        logger.debug("Retrieved {} objects", objs.size)
+        objs
     }
 
     def upload(file: File, feed: GBaseFeed) {

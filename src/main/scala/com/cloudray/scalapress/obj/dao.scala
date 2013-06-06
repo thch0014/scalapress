@@ -34,20 +34,15 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     }
 
     def search(q: ObjectQuery): Page[Obj] = {
-        val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset).addSort("name", false)
+        val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset)
         q.typeId.foreach(t => {
             s.addFetch("objectType")
             s.addFilterEqual("objectType.id", t)
         })
-        q.accountId.foreach(t => {
-            s.addFilterEqual("account.id", t)
-        })
-        q.status.filter(_.trim.length > 0).foreach(t => {
-            s.addFilterEqual("status", t)
-        })
-        q.name.filter(_.trim.length > 0).foreach(t => {
-            s.addFilterLike("name", "%" + t + "%")
-        })
+        q.accountId.foreach(t => s.addFilterEqual("account.id", t))
+        q.status.filterNot(_.isEmpty).foreach(s.addFilterEqual("status", _))
+        q.name.filterNot(_.isEmpty).foreach(t => s.addFilterLike("name", "%" + t + "%"))
+        q.minPrice.filter(_ > 0).foreach(s.addFilterGreaterOrEqual("price", _))
         s.addSortDesc("id")
         val result = searchAndCount(s)
         Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
