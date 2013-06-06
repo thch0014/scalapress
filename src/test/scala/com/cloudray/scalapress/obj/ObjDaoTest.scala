@@ -71,7 +71,6 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         dao.save(obj3)
 
         val objs = dao.recent(2)
-        assert(2 === objs.size)
         assert(obj3.id === objs(0).id)
         assert(obj2.id === objs(1).id)
     }
@@ -96,6 +95,6 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         dao.save(obj3)
 
         val objs = dao.recent(5)
-        assert(objs.exists(_.status != Obj.STATUS_LIVE))
+        assert(!objs.exists(_.status != Obj.STATUS_LIVE))
     }
 }
