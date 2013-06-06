@@ -38,6 +38,15 @@ class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with 
         Mockito.verify(service.mailSender).send(Matchers.any[SimpleMailMessage])
     }
 
+    test("that receipients for the message are taken from the shopping settings") {
+        plugin.orderConfirmationRecipients = "admin@sammy.com,gareth@southgate.com"
+        val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+        service.orderConfirmed(order)
+        Mockito.verify(service.mailSender).send(captor.capture)
+        val msg = captor.getValue
+        assert(msg.getTo === Array("admin@sammy.com", "gareth@southgate.com"))
+    }
+
     test("that the email sender uses the recipients") {
         val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
         service._send(Array("admin@sammy.com", "elvis@graceland.com"), order)
