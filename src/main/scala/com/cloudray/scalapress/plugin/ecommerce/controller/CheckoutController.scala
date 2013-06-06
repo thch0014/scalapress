@@ -135,6 +135,8 @@ class CheckoutController extends Logging {
         page
     }
 
+    @Autowired var orderAdminNotificationService: OrderAdminNotificationService = _
+
     @ResponseBody
     @RequestMapping(value = Array("confirmation"), method = Array(RequestMethod.POST), produces = Array("text/html"))
     def confirmed(req: HttpServletRequest): ScalapressPage = {
@@ -144,6 +146,8 @@ class CheckoutController extends Logging {
         sreq.basket.order = order
         basketDao.save(sreq.basket)
         logger.debug("Order created and set on basket")
+
+        orderAdminNotificationService.orderConfirmed(order)
 
         showPayments(req)
     }

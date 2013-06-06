@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.{OrderPurchase, ShoppingPlugin, ShoppingPluginDao, OrderBuilder}
+import com.cloudray.scalapress.plugin.ecommerce._
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, ScalapressConstants}
@@ -36,6 +36,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
 
     val controller = new CheckoutController
     controller.orderBuilder = mock[OrderBuilder]
+    controller.orderAdminNotificationService = mock[OrderAdminNotificationService]
     controller.basketDao = mock[BasketDao]
     controller.shoppingPluginDao = mock[ShoppingPluginDao]
     controller.themeService = mock[ThemeService]
@@ -144,6 +145,13 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
         val page = controller.showDelivery(req, basket, errors)
         assert(page._body.filter(_.toString.contains("quick delivery")).size > 0)
         assert(page._body.filter(_.toString.contains("slow delivery")).size == 0)
+    }
+
+    test("when an order is confirmed then an email is sent to the admin recipients") {
+        assert(basket.order == null)
+        Mockito.when(controller.orderBuilder.build(Matchers.any[ScalapressRequest])).thenReturn(order)
+        controller.confirmed(req)
+        Mockito.verify(controller.orderAdminNotificationService).orderConfirmed(order)
     }
 
     test("a completed order invokes payment callbacks") {
