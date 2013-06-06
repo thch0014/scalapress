@@ -17,7 +17,7 @@ class GBaseCron extends CronTask with Logging {
     @Autowired var objectDao: ObjectDao = _
     @Autowired var installationDao: InstallationDao = _
 
-    @Scheduled(cron = "0 ) 12,18 * * *")
+    @Scheduled(cron = "0 0 12,18 * * *")
     @Transactional
     def run() {
         logger.info("Running Google base cron...")
