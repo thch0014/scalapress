@@ -11,7 +11,7 @@
 
     <div class="controls">
         <span class="input-xlarge uneditable-input">$order.account.name</span>
-        <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$order.account.email</a>
+        <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$!order.account.email</a>
     </div>
 </div>
 
