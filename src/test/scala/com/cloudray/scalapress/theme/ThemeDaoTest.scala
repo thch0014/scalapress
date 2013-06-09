@@ -1,24 +1,11 @@
 package com.cloudray.scalapress.theme
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import org.springframework.context.support.ClassPathXmlApplicationContext
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
+import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
-class ThemeDaoTest extends FunSuite with MockitoSugar {
-
-    val context = new ClassPathXmlApplicationContext("/spring-db-test.xml")
-
-    val themeDao = context
-      .getAutowireCapableBeanFactory
-      .createBean(classOf[ThemeDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-      .asInstanceOf[ThemeDao]
-
-    val markupDao = context
-      .getAutowireCapableBeanFactory
-      .createBean(classOf[MarkupDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-      .asInstanceOf[MarkupDao]
+class ThemeDaoTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     test("persisting a theme sets id and fields") {
 
@@ -26,10 +13,10 @@ class ThemeDaoTest extends FunSuite with MockitoSugar {
         t.name = "western"
 
         assert(t.id === 0)
-        themeDao.save(t)
+        TestDatabaseContext.themeDao.save(t)
         assert(t.id > 0)
 
-        val t2 = themeDao.find(t.id)
+        val t2 = TestDatabaseContext.themeDao.find(t.id)
         assert("western" === t2.name)
     }
 
@@ -43,10 +30,10 @@ class ThemeDaoTest extends FunSuite with MockitoSugar {
         m.body = "arnold swarz"
 
         assert(m.id === 0)
-        markupDao.save(m)
+        TestDatabaseContext.markupDao.save(m)
         assert(m.id > 0)
 
-        val m2 = markupDao.find(m.id)
+        val m2 = TestDatabaseContext.markupDao.find(m.id)
         assert("western" === m2.name)
         assert("between" === m2.between)
         assert("ready steady go" === m2.start)
@@ -63,10 +50,10 @@ class ThemeDaoTest extends FunSuite with MockitoSugar {
         m.end = "usain bolt won again"
         m.body = "arnold swarz"
 
-        markupDao.save(m)
+        TestDatabaseContext.markupDao.save(m)
         assert(m.id > 0)
 
-        val m2 = markupDao.byName("find me again")
+        val m2 = TestDatabaseContext.markupDao.byName("find me again")
         assert(m.id === m2.id)
     }
 }

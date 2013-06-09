@@ -2,18 +2,10 @@ package com.cloudray.scalapress.payments
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import org.springframework.context.support.ClassPathXmlApplicationContext
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
+import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
 class TxDaoTest extends FunSuite with MockitoSugar {
-
-    val context = new ClassPathXmlApplicationContext("/spring-db-test.xml")
-
-    val dao = context
-      .getAutowireCapableBeanFactory
-      .createBean(classOf[TransactionDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-      .asInstanceOf[TransactionDao]
 
     test("persisting an tx can be retrieved by id and sets fields") {
 
@@ -24,13 +16,13 @@ class TxDaoTest extends FunSuite with MockitoSugar {
         tx.date = 112256783566l
 
         assert(tx.id == 0)
-        dao.save(tx)
+        TestDatabaseContext.txDao.save(tx)
         assert(tx.id > 0)
 
-        val t2 = dao.find(tx.id)
-        assert("tx56NBV" === tx.transactionId)
-        assert("completed" === tx.status)
-        assert("super payment by visa" === tx.details)
-        assert(112256783566l === tx.date)
+        val t2 = TestDatabaseContext.txDao.find(tx.id)
+        assert("tx56NBV" === t2.transactionId)
+        assert("completed" === t2.status)
+        assert("super payment by visa" === t2.details)
+        assert(112256783566l === t2.date)
     }
 }

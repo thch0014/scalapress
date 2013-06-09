@@ -2,24 +2,16 @@ package com.cloudray.scalapress.obj
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import org.springframework.context.support.ClassPathXmlApplicationContext
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
+import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
 class ObjDaoTest extends FunSuite with MockitoSugar {
-
-    val context = new ClassPathXmlApplicationContext("/spring-db-test.xml")
-
-    val dao = context
-      .getAutowireCapableBeanFactory
-      .createBean(classOf[ObjectDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-      .asInstanceOf[ObjectDao]
 
     test("persisting an obj is assigned id") {
 
         val obj = new Obj
         assert(obj.id == 0)
-        dao.save(obj)
+        TestDatabaseContext.objectDao.save(obj)
         assert(obj.id > 0)
     }
 
@@ -28,9 +20,9 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         val obj = new Obj
         obj.name = "super obj"
         assert(obj.id == 0)
-        dao.save(obj)
+        TestDatabaseContext.objectDao.save(obj)
         assert(obj.id > 0)
-        val obj2 = dao.find(obj.id)
+        val obj2 = TestDatabaseContext.objectDao.find(obj.id)
         assert("super obj" === obj2.name)
     }
 
@@ -42,10 +34,10 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         val obj2 = new Obj
         obj2.name = "playcold"
 
-        dao.save(obj1)
-        dao.save(obj2)
+        TestDatabaseContext.objectDao.save(obj1)
+        TestDatabaseContext.objectDao.save(obj2)
 
-        val objects = dao.findBulk(Seq(obj1.id, obj2.id))
+        val objects = TestDatabaseContext.objectDao.findBulk(Seq(obj1.id, obj2.id))
         assert(objects.exists(_.id == obj1.id))
         assert(objects.exists("coldplay" == _.name))
         assert(objects.exists(_.id == obj2.id))
@@ -66,11 +58,11 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         obj3.name = "son"
         obj3.status = Obj.STATUS_LIVE
 
-        dao.save(obj1)
-        dao.save(obj2)
-        dao.save(obj3)
+        TestDatabaseContext.objectDao.save(obj1)
+        TestDatabaseContext.objectDao.save(obj2)
+        TestDatabaseContext.objectDao.save(obj3)
 
-        val objs = dao.recent(2)
+        val objs = TestDatabaseContext.objectDao.recent(2)
         assert(obj3.id === objs(0).id)
         assert(obj2.id === objs(1).id)
     }
@@ -90,11 +82,11 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
         obj3.name = "son"
         obj3.status = Obj.STATUS_LIVE
 
-        dao.save(obj1)
-        dao.save(obj2)
-        dao.save(obj3)
+        TestDatabaseContext.objectDao.save(obj1)
+        TestDatabaseContext.objectDao.save(obj2)
+        TestDatabaseContext.objectDao.save(obj3)
 
-        val objs = dao.recent(5)
+        val objs = TestDatabaseContext.objectDao.recent(5)
         assert(!objs.exists(_.status != Obj.STATUS_LIVE))
     }
 }
