@@ -76,9 +76,9 @@ class Order {
     @Column(name = "salesPerson")
     @BeanProperty var createdBy: Long = _
 
-    def linesSubtotal: Double = lines.asScala.map(_.totalExVat).foldLeft(0.0)((a, b) => a + b)
-    def linesVat: Double = if (vatable) lines.asScala.map(_.totalVat).foldLeft(0.0)((a, b) => a + b) else 0.0
-    def linesTotal: Double = lines.asScala.map(_.totalIncVat).foldLeft(0.0)((a, b) => a + b)
+    def linesSubtotal: Double = lines.asScala.toSeq.map(_.totalExVat).foldLeft(0.0)((a, b) => a + b)
+    def linesVat: Double = if (vatable) lines.asScala.toSeq.map(_.totalVat).foldLeft(0.0)((a, b) => a + b) else 0.0
+    def linesTotal: Double = lines.asScala.toSeq.map(_.totalIncVat).foldLeft(0.0)((a, b) => a + b)
 
     def vat: Double = if (vatable) linesVat + deliveryVat else 0.0
     def subtotal: Double = linesSubtotal + deliveryEx

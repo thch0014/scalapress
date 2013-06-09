@@ -45,4 +45,23 @@ class OrderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
         assert(22.00 === order.total)
     }
+
+    test("order totals are calculated correctly with multiple equal value lines") {
+
+        order.lines.clear()
+
+        for ( i <- 1 to 10 ) {
+            val line = new OrderLine
+            line.qty = 1
+            line.price = 1000
+            line.vatRate = 10.00
+            line.order = order
+            order.lines.add(line)
+        }
+
+        assert(10 === order.lines.size)
+        assert(100.00 === order.linesSubtotal)
+        assert(10.00 === order.linesVat)
+        assert(110.00 === order.linesTotal)
+    }
 }

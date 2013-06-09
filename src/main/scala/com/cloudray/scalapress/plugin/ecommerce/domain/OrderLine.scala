@@ -37,12 +37,12 @@ class OrderLine {
 
     @BeanProperty var vatRate: Double = _
 
-    def priceVat: Double = if (order.vatable) price / 100.0 * vatRate / 100.0 else 0
     def priceExVat: Double = price / 100.0
+    def priceVat: Double = if (order.vatable) priceVat * vatRate / 100.0 else 0
     def priceIncVat: Double = priceExVat + priceVat
 
-    def totalVat: Double = if (order.vatable) qty * price / 100.0 * vatRate / 100.0 else 0
     def totalExVat: Double = qty * price / 100.0
+    def totalVat: Double = if (order.vatable) totalExVat * vatRate / 100.0 else 0
     def totalIncVat: Double = totalExVat + totalVat
 }
 
