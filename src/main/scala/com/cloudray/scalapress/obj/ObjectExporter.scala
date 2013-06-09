@@ -46,10 +46,14 @@ class ObjectExporter {
         buffer.append("id")
         buffer.append("date")
         buffer.append("name")
+        buffer.append("status")
         buffer.append("url")
         buffer.append("price")
-        buffer.append("cost")
+        buffer.append("vat rate")
+        buffer.append("price inc")
         buffer.append("rrp")
+        buffer.append("cost")
+        buffer.append("profit")
         buffer.append("stock")
         for ( attribute <- attributes ) {
             buffer.append(attribute.name)
@@ -64,15 +68,21 @@ class ObjectExporter {
         buffer.append(obj.id.toString)
         buffer.append(new DateTime(obj.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
         buffer.append(obj.name)
+        buffer.append(obj.status)
         buffer.append("http://" + domain + UrlGenerator.url(obj))
 
         val price = "%1.2f".format(obj.price / 100.0)
+        val priceInc = "%1.2f".format(obj.sellPriceInc / 100.0)
         val cost = "%1.2f".format(obj.costPrice / 100.0)
         val rrp = "%1.2f".format(obj.rrp / 100.0)
+        val profit = "%1.2f".format(obj.profit / 100.0)
 
         buffer.append(price)
-        buffer.append(cost)
+        buffer.append(obj.vatRate.toString)
+        buffer.append(priceInc)
         buffer.append(rrp)
+        buffer.append(cost)
+        buffer.append(profit)
         buffer.append(obj.stock.toString)
 
         for ( attribute <- attributes ) {

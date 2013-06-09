@@ -126,6 +126,7 @@ class Obj extends SortedSections {
     @BeanProperty def vat: Int = (price * vatRate / 100.0).toInt
     @BeanProperty def sellPriceInc: Int = price + vat
     @BeanProperty def sellPriceDecimal = "%.2f" format price / 100.0
+    def profit = price - costPrice
 
     @BeanProperty var vatRate: Double = _
 

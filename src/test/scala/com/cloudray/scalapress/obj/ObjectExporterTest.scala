@@ -24,8 +24,10 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
     obj.dateCreated = 1365722181000l
     obj.price = 599
     obj.costPrice = 450
+    obj.status = "super status"
     obj.stock = 5
     obj.rrp = 1999
+    obj.vatRate = 10.00
 
     val av1 = new AttributeValue
     av1.attribute = attr1
@@ -41,18 +43,32 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
     test("header happy path") {
 
         val header = new ObjectExporter()._header(attributes)
-        assert(Array("id", "date", "name", "url", "price", "cost", "rrp", "stock", "brand", "code") === header)
+        assert(Array("id",
+            "date",
+            "name",
+            "status",
+            "url",
+            "price",
+            "vat rate",
+            "price inc",
+            "rrp",
+            "cost",
+            "profit",
+            "stock",
+            "brand",
+            "code") === header)
     }
 
     test("row happy path") {
 
-        val header = new ObjectExporter()._row(obj, attributes, "mysite.com")
-        assert(Array("123",
+        val row = new ObjectExporter()._row(obj, attributes, "mysite.com")
+        assert(Array[String]("123",
             "11-04-2013",
             "coldplay tickets",
-            "http://mysite.com/object-123-coldplay-tickets", "5.99", "4.50", "19.99", "5",
+            "super status",
+            "http://mysite.com/object-123-coldplay-tickets", "5.99", "10.0", "6.58", "19.99", "4.50", "1.49", "5",
             "Samsung",
-            "GalaxyS") === header)
+            "GalaxyS") === row)
     }
 
     test("row handles zeros for pricing") {
@@ -63,10 +79,10 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
         obj.rrp = 0
 
         val header = new ObjectExporter()._row(obj, attributes, "mysite.com")
-        assert(Array("123",
+        assert(Array[String]("123",
             "11-04-2013",
-            "coldplay tickets",
-            "http://mysite.com/object-123-coldplay-tickets", "0.00", "0.00", "0.00", "0",
+            "coldplay tickets", "super status",
+            "http://mysite.com/object-123-coldplay-tickets", "0.00", "10.0", "0.00", "0.00", "0.00", "0.00", "0",
             "Samsung",
             "GalaxyS") === header)
     }
