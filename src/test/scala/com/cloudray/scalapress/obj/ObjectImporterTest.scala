@@ -80,4 +80,35 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
         assert(12 === obj.id)
         assert("samsung" === AttributeFuncs.attributeValue(obj, "brand").get)
     }
+
+    test("importer persists objects") {
+        val obj = new Obj
+        obj.id = 12
+        Mockito.when(objectDao.find(12)).thenReturn(obj)
+        val string = "id,name,status,price\n12,coldplay tickets,live,29.99"
+        importer.doImport(string)
+        Mockito.verify(objectDao).save(obj)
+    }
+
+    test("importer does not change objects not included in the file") {
+
+        val obj = new Obj
+        obj.id = 12
+        Mockito.when(objectDao.find(12)).thenReturn(obj)
+
+        val obj2 = new Obj
+        obj2.id = 55
+        obj2.status = "boo"
+        obj2.name = "super name"
+        Mockito.when(objectDao.find(55)).thenReturn(obj2)
+
+        val string = "id,name,status,price\n12,coldplay tickets,live,29.99"
+        importer.doImport(string)
+
+        assert(55 === obj2.id)
+        assert("super name" === obj2.name)
+        assert("boo" === obj2.status)
+
+        Mockito.verify(objectDao, Mockito.never).save(obj2)
+    }
 }

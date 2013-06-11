@@ -7,8 +7,9 @@ import com.cloudray.scalapress.ScalapressContext
 import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectQuery, ObjectDao, TypeDao, Obj}
+import com.cloudray.scalapress.obj._
 import scala.beans.BeanProperty
+import org.springframework.web.multipart.MultipartFile
 
 /** @author Stephen Samuel */
 @Controller
@@ -59,6 +60,17 @@ class ObjectSearchController extends ObjectStatusPopulator {
         objectDao.save(obj)
 
         "redirect:/backoffice/obj/" + obj.id
+    }
+
+    @RequestMapping(value = Array("import"), params = Array("typeId"))
+    def imp(@RequestParam("typeId") typeId: java.lang.Long,
+            @RequestParam("upload") upload: MultipartFile): String = {
+
+        val t = typeDao.find(typeId)
+        val importer = new ObjectImporter(objectDao, t)
+        importer.doImport(upload.getInputStream)
+
+        "redirect:/backoffice/obj?typeId=" + typeId
     }
 
     @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)

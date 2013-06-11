@@ -54,9 +54,7 @@ $pagination
 <div class="modal hide fade" role="dialog" id="upload-modal">
     <div class="modal-header">
         <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-        <h3>
-
-        </h3>
+        <h3>Upload Media</h3>
     </div>
     <div class="modal-body">
         <form enctype="multipart/form-data" method="POST" class="form-horizontal"><p>

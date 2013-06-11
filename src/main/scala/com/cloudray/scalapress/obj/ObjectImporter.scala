@@ -1,12 +1,16 @@
 package com.cloudray.scalapress.obj
 
-import java.io.{StringReader, File}
+import java.io.{InputStream, StringReader, File}
 import com.csvreader.CsvReader
-import org.apache.commons.io.FileUtils
+import org.apache.commons.io.{IOUtils, FileUtils}
 import com.cloudray.scalapress.obj.attr.AttributeFuncs
 
 /** @author Stephen Samuel */
 class ObjectImporter(objectDao: ObjectDao, objectType: ObjectType) {
+
+    def doImport(in: InputStream) {
+        doImport(IOUtils.toString(in, "UTF8"))
+    }
 
     def doImport(file: File) {
         doImport(FileUtils.readFileToString(file, "UTF8"))
@@ -25,7 +29,9 @@ class ObjectImporter(objectDao: ObjectDao, objectType: ObjectType) {
             val id = csv.get("id").toLong
             Option(objectDao.find(id)) match {
                 case None =>
-                case Some(obj) => setValues(obj, csv)
+                case Some(obj) =>
+                    setValues(obj, csv)
+                    objectDao.save(obj)
             }
         } catch {
             case e: Exception =>
