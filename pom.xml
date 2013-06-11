@@ -5,7 +5,7 @@
 
     <groupId>com.cloudray.scalapress</groupId>
     <artifactId>scalapress</artifactId>
-    <version>0.31-SNAPSHOT</version>
+    <version>0.32-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <prerequisites>
@@ -253,7 +253,8 @@
                             <configuration>
                                 <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                                 <junitxml>.</junitxml>
-                                <parallel>true</parallel>
+				<forkMode>never</forkMode>
+                                <parallel>false</parallel>
                                 <tagsToExclude>IntegrationTest</tagsToExclude>
                                 <filereports>ScalaTestSuite.txt</filereports>
                             </configuration>

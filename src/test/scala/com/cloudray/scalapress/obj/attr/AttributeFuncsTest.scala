@@ -84,4 +84,29 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
 
         assert(AttributeFuncs.attributeValue(obj, "car").isEmpty)
     }
+
+    test("that setting an attribute removes old attribute values and sets new") {
+
+        val a = new Attribute
+        a.name = "tea"
+
+        val av1 = new AttributeValue
+        av1.value = "assam"
+        av1.attribute = a
+
+        val av2 = new AttributeValue
+        av2.value = "earl grey"
+        av2.attribute = a
+
+        val obj = new Obj
+        obj.attributeValues.add(av1)
+        obj.attributeValues.add(av2)
+
+        assert(obj.attributeValues.size == 2)
+        AttributeFuncs.setAttributeValue(obj, a, "new value")
+        assert(obj.attributeValues.size == 1)
+        assert(obj.sortedAttributeValues(0).value === "new value")
+        assert(obj.sortedAttributeValues(0).attribute === a)
+        assert(obj.sortedAttributeValues(0).obj === obj)
+    }
 }

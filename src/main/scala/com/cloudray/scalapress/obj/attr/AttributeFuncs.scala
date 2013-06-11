@@ -41,4 +41,13 @@ object AttributeFuncs {
           .toLowerCase
           .trim).map(_.value)
     }
+
+    def setAttributeValue(obj: Obj, attribute: Attribute, value: String) {
+        obj.attributeValues = obj.attributeValues.asScala.filterNot(_.attribute == attribute).asJava
+        val av = new AttributeValue
+        av.value = value
+        av.attribute = attribute
+        av.obj = obj
+        obj.attributeValues.add(av)
+    }
 }
