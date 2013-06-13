@@ -49,6 +49,7 @@ abstract class Section {
 
     final def init(context: ScalapressContext) {
         _init(context)
+        visible = true
         context.sectionDao.save(this)
     }
     def _init(context: ScalapressContext) {}

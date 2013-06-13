@@ -13,4 +13,11 @@ class SectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
             def desc: String = "new section"
         }.backoffice.startsWith("/backoffice"))
     }
+
+    test("new section is visible by default") {
+        assert(new Section {
+            def render(req: ScalapressRequest): Option[String] = None
+            def desc: String = "new section"
+        }.visible === true)
+    }
 }
