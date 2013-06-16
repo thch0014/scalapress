@@ -53,6 +53,13 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
               actual(0).toString())
     }
 
+    test("table includes css from class param") {
+        av1.value = "http://mysite.com"
+        av1.attribute.attributeType = AttributeType.Link
+        val actual = AttributeTableRenderer.render(Seq(av1), Map("class" -> "supertable"))
+        assert(actual.startsWith( """<table class="attributes attributes-table supertable" cellspacing="0" cellpadding="0">"""))
+    }
+
     test("ordering is stable") {
 
         val av3 = new AttributeValue

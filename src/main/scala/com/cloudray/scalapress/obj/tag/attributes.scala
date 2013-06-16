@@ -83,13 +83,13 @@ class AttributeTableTag extends ScalapressTag with TagBuilder {
         request.obj match {
             case None => None
             case Some(obj) => {
-                val objects = obj.sortedAttributeValues
+                val avs = obj.sortedAttributeValues
                   .filter(_.attribute.public)
                   .filterNot(av => excludes.contains(av.attribute.id.toString))
                   .filter(av => includes.isEmpty || includes.contains(av.attribute.id.toString))
-                objects.size match {
+                avs.size match {
                     case 0 => None
-                    case _ => Some(AttributeTableRenderer.render(objects).toString)
+                    case _ => Some(AttributeTableRenderer.render(avs, params).toString)
                 }
             }
         }

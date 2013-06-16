@@ -1,16 +1,16 @@
 package com.cloudray.scalapress.obj.attr
 
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import scala.xml.{Utility, Unparsed, Node}
 import scala.collection.immutable.TreeMap
 
 /** @author Stephen Samuel */
 object AttributeTableRenderer {
 
-    def render(attributeValues: Seq[AttributeValue]): String = {
+    def render(attributeValues: Seq[AttributeValue], params: Map[String, String]): String = {
+        val css = "attributes attributes-table " + params.get("class").getOrElse("")
         try {
             val r = _rows(attributeValues)
-            <table class="attributes attributes-table" cellspacing="0" cellpadding="0">
+            <table class={css} cellspacing="0" cellpadding="0">
                 {r}
             </table>.toString()
         } catch {
