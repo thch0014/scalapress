@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.enums.AttributeType
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.obj.attr.{AttributeValueRenderer, Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
 class AttributeValueRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -30,6 +30,22 @@ class AttributeValueRendererTest extends FunSuite with MockitoSugar with OneInst
         av.value = "sam@sam.com"
         val rendered = AttributeValueRenderer.renderValue(av)
         assert("<a href=\"mailto:sam@sam.com\">Email Here</a>" === rendered)
+    }
+
+    test("email attribute includes bcc when set") {
+        av.attribute.attributeType = AttributeType.Email
+        av.value = "sam@sam.com"
+        av.attribute.bcc = "bcc@blind.com"
+        val rendered = AttributeValueRenderer.renderValue(av)
+        assert("<a href=\"mailto:sam@sam.com?bcc=bcc@blind.com\">Email Here</a>" === rendered)
+    }
+
+    test("email attribute includes cc when set") {
+        av.attribute.attributeType = AttributeType.Email
+        av.value = "sam@sam.com"
+        av.attribute.cc = "copy@cc.com"
+        val rendered = AttributeValueRenderer.renderValue(av)
+        assert("<a href=\"mailto:sam@sam.com?cc=copy@cc.com\">Email Here</a>" === rendered)
     }
 
     test("date attribute happy path") {

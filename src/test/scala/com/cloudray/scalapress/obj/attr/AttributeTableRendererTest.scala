@@ -3,7 +3,6 @@ package com.cloudray.scalapress.obj.attr
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.obj.tag.AttributeTableRenderer
 import com.cloudray.scalapress.enums.AttributeType
 import scala.util.Random
 
@@ -38,9 +37,10 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
     test("email values are rendered without enclosing quotes") {
         av1.value = "sam@sam.com"
         av1.attribute.attributeType = AttributeType.Email
+        av1.attribute.bcc = "bcc@admin.com"
         val actual = AttributeTableRenderer._rows(Seq(av1))
         assert(
-            """<tr><td class="attribute-label">band</td><td class="attribute-value"><a href="mailto:sam@sam.com">Email Here</a></td></tr>""" === actual(
+            """<tr><td class="attribute-label">band</td><td class="attribute-value"><a href="mailto:sam@sam.com?bcc=bcc@admin.com">Email Here</a></td></tr>""" === actual(
                 0).toString())
     }
 
@@ -90,7 +90,7 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
         av5.attribute.position = 12
         av6.attribute.position = 19
 
-        for (i <- 1 to 10) {
+        for ( i <- 1 to 10 ) {
             val seq = Seq(av1, av2, av3, av4, av5, av6)
             val shuffled = Random.shuffle(seq)
             val actual = AttributeTableRenderer._rows(shuffled)

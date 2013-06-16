@@ -66,6 +66,9 @@ class Attribute {
 
     @BeanProperty var placeholder: String = _
 
+    @BeanProperty var cc: String = _
+    @BeanProperty var bcc: String = _
+
     @Column(name = "editable")
     @BeanProperty var userEditable: Boolean = _
 

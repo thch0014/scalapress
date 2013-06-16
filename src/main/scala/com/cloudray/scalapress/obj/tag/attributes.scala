@@ -3,6 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.cloudray.scalapress.obj.attr.{AttributeValueRenderer, AttributeTableRenderer}
 
 /** @author Stephen Samuel */
 @Tag("attribute_value")

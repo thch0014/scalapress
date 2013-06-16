@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.obj.tag
+package com.cloudray.scalapress.obj.attr
 
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import scala.xml.{Utility, Unparsed, Node}
