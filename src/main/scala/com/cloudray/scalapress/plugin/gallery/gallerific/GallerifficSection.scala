@@ -23,13 +23,13 @@ class GallerifficSection extends Section {
         rows.size match {
             case 0 => None
             case _ =>
-                val controls = <div id="gallery" class="content">
-                    <div id="loading" class="loader"></div>
-                    <div id="slideshow" class="slideshow"></div>
-                    <div id="caption" class="embox"></div>
+                val controls = <div id="gallery" class="galleriffic-content">
+                    <div id="loading" class="galleriffic-loader"></div>
+                    <div id="slideshow" class="galleriffic-slideshow"></div>
+                    <div id="caption" class="galleriffic-embox"></div>
                 </div>
-                val thumbs = <div id="thumbs" class="navigation">
-                    <ul class="thumbs noscript">
+                val thumbs = <div id="thumbs" class="galleriffic-navigation">
+                    <ul class="galleriffic-thumbs noscript">
                         {rows}
                     </ul>
                 </div>
@@ -41,7 +41,7 @@ class GallerifficSection extends Section {
         val fullsize = "/images/" + filename + "?width=800&height=600"
         val thumbnail = "/images/" + filename + "?width=100&height=100"
         <li>
-            <a class="thumb" href={fullsize}>
+            <a class="galleriffic-thumb" href={fullsize}>
                 <img src={thumbnail}/>
             </a>
         </li>
@@ -55,12 +55,12 @@ class GallerifficSection extends Section {
     def _script = {
         """<script>
             // We only want these styles applied when javascript is enabled
-			$('div.navigation').css({'width' : '610px'});
-			$('div.content').css('display', 'block');
+			$('div.galleriffic-navigation').css({'width' : '610px'});
+			$('div.galleriffic-content').css('display', 'block');
 
             // Initially set opacity on thumbs and add additional styling for hover effect on thumbs
             var onMouseOutOpacity = 0.67;
-            $('#thumbs ul.thumbs li').css('opacity', onMouseOutOpacity).hover(function () {
+            $('#thumbs ul.galleriffic-thumbs li').css('opacity', onMouseOutOpacity).hover(function () {
                    $(this).not('.selected').fadeTo('fast', 1.0);
                }, function () {
                    $(this).not('.selected').fadeTo('fast', onMouseOutOpacity);
@@ -91,11 +91,11 @@ class GallerifficSection extends Section {
                 autoStart: false, // Specifies whether the slideshow should be playing or paused when the page first loads
                 syncTransitions: false, // Specifies whether the out and in transitions occur simultaneously or distinctly
                 defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
-                onChange: function(prevIndex, nextIndex) { $('#thumbs ul.thumbs').children() .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end() .eq(nextIndex).fadeTo('fast', 1.0); },
+                onChange: function(prevIndex, nextIndex) { $('#thumbs ul.galleriffic-thumbs').children() .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end() .eq(nextIndex).fadeTo('fast', 1.0); },
                 onTransitionOut: function(callback) { $('#caption').fadeOut('fast'); $('#slideshow').fadeOut('fast', callback); }                ,
                 onTransitionIn: function() { $('#slideshow, #caption').fadeIn('fast'); },
-                onPageTransitionOut: function(callback) { $('#thumbs ul.thumbs').fadeOut('fast', callback); },
-                onPageTransitionIn: function() { $('#thumbs ul.thumbs').fadeIn('fast'); }
+                onPageTransitionOut: function(callback) { $('#thumbs ul.galleriffic-thumbs').fadeOut('fast', callback); },
+                onPageTransitionIn: function() { $('#thumbs ul.galleriffic-thumbs').fadeIn('fast'); }
             });
         });
         </script>"""

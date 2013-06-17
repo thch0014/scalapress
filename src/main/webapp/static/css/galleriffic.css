@@ -1,6 +1,6 @@
 /* markup: Gallery list markup #11 */
 
-div.content {
+div.galleriffic-content {
     /* The display of content is enabled by a javascript generated style on the page.
        This is so that the slideshow content won't display unless javascript is enabled. */
     display: none;
@@ -10,54 +10,54 @@ div.content {
     position: relative;
 }
 
-div.caption  { margin: 0; padding: 0; color: #ffffff; }
-div.content a, div.navigation a {
+div.galleriffic-caption  { margin: 0; padding: 0; color: #ffffff; }
+div.galleriffic-content a, div.galleriffic-navigation a {
     text-decoration: none;
     color: #777;
 }
-div.content  a:focus, div.content  a:hover, div.content  a:active {
+div.galleriffic-content a:focus, div.galleriffic-content a:hover, div.galleriffic-content a:active {
     text-decoration: underline;
 }
-div.controls {
+div.galleriffic-controls {
     margin-top: 5px;
     height: 23px;
 }
-div.controls a {
+div.galleriffic-controls a {
     padding: 5px;
 }
-div.ss-controls {
+div.galleriffic-ss-controls {
     float: left;
 }
-div.nav-controls {
+div.galleriffic-nav-controls {
     float: right;
 }
 
-div.loader {
+div.galleriffic-loader {
     background-image: url(loader.gif);
     background-repeat: no-repeat;
     background-position: center;
     width: 615px;
     height: 250px
 }
-div.slideshow {
+div.galleriffic-slideshow {
     clear: both;
 }
-div.slideshow span.image-wrapper {
+div.galleriffic-slideshow span.image-wrapper {
     float: left;
 }
-div.slideshow a.advance-link {
+div.galleriffic-slideshow a.advance-link {
     padding: 0;
     display: block;
 }
-div.slideshow img {
+div.galleriffic-slideshow img {
     border: none;
     display: block;
     height: 250px;
 }
-div.download {
+div.galleriffic-download {
     float: right;
 }
-div.embox {
+div.galleriffic-embox {
     clear: both; font-family: "Segoe UI", Arial, Helvetica, sans-serif; font-size: 14px;
     padding: 4px;
     font-weight: bold;
@@ -71,76 +71,76 @@ div.embox {
     width: 607px;
 }
 
-div.embox a:link, div.embox a:visited {
+div.galleriffic-embox a:link, div.galleriffic-embox a:visited {
     color: yellow;
     text-decoration: underline;
 }
 
-div.embox a:hover {
+div.galleriffic-embox a:hover {
     text-decoration: none;
 }
 
-div.image-title {
+div.galleriffic-image-title {
     font-weight: bold;
     font-size: 1.4em;
 }
 
-div.image-desc {
+div.galleriffic-image-desc {
     line-height: 1.3em;
     padding-top: 12px;
 }
-div.navigation {
+div.galleriffic-navigation {
     /* The navigation style is set by a javascript generated style on the page.
        This is so that the javascript specific styles won't be applied unless javascript is enabled. */
 }
-ul.thumbs {
+ul.galleriffic-thumbs {
     clear: both;
     margin: -40px auto 0 auto;
     padding: 0; text-align: center;
 }
-ul.thumbs li {
+ul.galleriffic-thumbs li {
     display: inline-block; background: white;
     padding: 0;
     margin: 5px 10px 5px 0;
     list-style: none;
 }
-a.thumb {
+a.galleriffic-thumb {
     padding: 2px;
     display: block; width: 100px;
     border: 1px solid #ccc;
 }
-ul.thumbs li.selected a.thumb {
+ul.galleriffic-thumbs li.selected a.galleriffic-thumb {
     background: #000;
 }
-a.thumb:focus {
+a.galleriffic-thumb:focus {
     outline: none;
 }
-ul.thumbs img {
+ul.galleriffic-thumbs img {
     border: none;
     display: block;
 }
-div.pagination {
+div.galleriffic-pagination {
     clear: both;
 }
-div.navigation div.top {
+div.galleriffic-navigation div.galleriffic-top {
     /*margin-bottom: 12px;
     height: 11px;*/
 }
-div.navigation div.bottom {
+div.galleriffic-navigation div.galleriffic-bottom {
     margin-top: 12px;
 }
-div.pagination a, div.pagination span.current {
+div.galleriffic-pagination a, div.galleriffic-pagination span.current {
     display: block;
     float: left;
     margin-right: 2px;
     padding: 4px 7px 2px 7px;
     border: 1px solid #ccc;
 }
-div.pagination a:hover {
+div.galleriffic-pagination a:hover {
     background-color: #eee;
     text-decoration: none;
 }
-div.pagination span.current {
+div.galleriffic-pagination span.current {
     font-weight: bold;
     background-color: #000;
     border-color: #000;
@@ -148,20 +148,20 @@ div.pagination span.current {
 }
 
 /* Minimal Gallery Styles */
-#thumbs-min ul.thumbs li {
+#galleriffic-thumbs-min ul.galleriffic-thumbs li {
     float: none;
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-#thumbs-min a.thumb {
+#galleriffic-thumbs-min a.galleriffic-thumb {
     padding: 0px;
     display: inline;
     border: none;
 }
 
-#thumbs-min ul.thumbs li.selected a.thumb {
+#galleriffic-thumbs-min ul.galleriffic-thumbs li.selected a.galleriffic-thumb {
     background: inherit;
     color: #000;
     font-weight: bold;
