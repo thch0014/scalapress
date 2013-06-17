@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.asset.maxsize
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, InputStream}
-import javax.imageio.ImageIO
-import com.cloudray.scalapress.media.{AssetLifecycleListener, ImageTools}
+import com.cloudray.scalapress.media.AssetLifecycleListener
 import org.springframework.stereotype.Component
 import scala.beans.BeanProperty
 import org.springframework.beans.factory.annotation.Value
+import com.sksamuel.scrimage.Image
 
 /** @author Stephen Samuel */
 @Component
@@ -24,11 +24,12 @@ class ImageMaxSizePlugin extends AssetLifecycleListener {
 
         if (enabled && key.toLowerCase.endsWith(".png")) {
 
-            val image = ImageIO.read(input)
-            val resized = ImageTools.fit(image, (maxWidth, maxHeight))
-            val out = new ByteArrayOutputStream()
-            ImageIO.write(resized, "png", out)
-            (key, new ByteArrayInputStream(out.toByteArray))
+            val image = Image(input)
+            val resized = image.fit(maxWidth, maxHeight)
+
+            val baos = new ByteArrayOutputStream() // todo remove once scrimage 1.2.3 is released
+            image.write(baos)
+            (key, new ByteArrayInputStream(baos.toByteArray))
 
         } else {
             (key, input)

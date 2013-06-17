@@ -9,7 +9,11 @@ import com.cloudray.scalapress.media.Image
 /** @author Stephen Samuel */
 class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
+    val objectType = new ObjectType
+    objectType.id = 15
+
     val obj = new Obj
+    obj.objectType = objectType
     obj.name = "battleship"
     obj.price = 135
     obj.content = "super content"
@@ -82,6 +86,10 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
 
     test("object clone includes exernalReference") {
         assert("ext-124" === cloner.clone(obj).exernalReference)
+    }
+    test("object clone copies object type reference") {
+        assert(obj.objectType.id > 0)
+        assert(obj.objectType.id === cloner.clone(obj).objectType.id)
     }
 
     test("object clone includes email") {

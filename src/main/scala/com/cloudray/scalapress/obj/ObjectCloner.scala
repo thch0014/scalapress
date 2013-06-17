@@ -10,6 +10,7 @@ class ObjectCloner {
     def clone(obj: Obj): Obj = {
         val clone = new Obj
         clone.name = obj.name + " (Copy)"
+        clone.objectType = obj.objectType
         clone.price = obj.price
         clone.id = 0
         clone.vatRate = obj.vatRate

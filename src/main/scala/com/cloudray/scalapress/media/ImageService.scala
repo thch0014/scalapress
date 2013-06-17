@@ -71,8 +71,8 @@ class ImageService extends Logging {
             case Some(in) =>
                 val bytes = IOUtils.toByteArray(in)
                 try {
-                    val source = ImageIO.read(new ByteArrayInputStream(bytes))
-                    Option(ImageTools.fit(source, (w, h)))
+                    val source = com.sksamuel.scrimage.Image(bytes)
+                    Option(source.fit(w, h).awt)
                 } catch {
                     case e: Exception =>
                         logger.warn("{}", e)

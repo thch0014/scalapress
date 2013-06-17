@@ -2,13 +2,12 @@ package com.cloudray.scalapress.media
 
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import javax.imageio.ImageIO
 import org.springframework.stereotype.Controller
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
-import java.io.ByteArrayInputStream
+import com.sksamuel.scrimage.Format
 
 @Controller
 @RequestMapping(Array("images"))
@@ -53,16 +52,16 @@ class ImageController extends Logging {
                         logger.debug("Image asset has 0 bytes [{}]", filename)
                         resp.setStatus(404)
                     case _ =>
-                        val image = ImageIO.read(new ByteArrayInputStream(bytes))
+                        val image = com.sksamuel.scrimage.Image(bytes)
                         Option(image) match {
                             case None =>
                                 logger.debug("Image could not be decoded by ImageIO [{}]", filename)
                                 resp.setStatus(404)
                             case Some(i) =>
                                 logger.debug("Sizing image {}", filename)
-                                val thumbnail = ImageTools.fit(image, (width, height))
+                                val thumbnail = image.fit(width, height)
                                 resp.setContentType("image/png")
-                                ImageIO.write(thumbnail, "PNG", resp.getOutputStream)
+                                thumbnail.write(resp.getOutputStream, Format.PNG)
                         }
                 }
             case _ =>
