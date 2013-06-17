@@ -184,9 +184,9 @@
 				this.data = [];
 				var gallery = this;
 
-				this.$thumbsContainer.find('ul.thumbs > li').each(function(i) {
+				this.$thumbsContainer.find('ul.galleriffic-thumbs > li').each(function(i) {
 					var $li = $(this);
-					var $aThumb = $li.find('a.thumb');
+					var $aThumb = $li.find('a.galleriffic-thumb');
 					var hash = gallery.offset+i;
 
 					gallery.data.push({
@@ -310,7 +310,7 @@
 
 					if (this.$controlsContainer) {
 						this.$controlsContainer
-							.find('div.ss-controls a').removeClass().addClass('play')
+							.find('div.galleriffic-ss-controls a').removeClass().addClass('play')
 							.attr('title', this.settings.playLinkText)
 							.attr('href', '#play')
 							.html(this.settings.playLinkText);
@@ -325,7 +325,7 @@
 
 					if (this.$controlsContainer) {
 						this.$controlsContainer
-							.find('div.ss-controls a').removeClass().addClass('pause')
+							.find('div.galleriffic-ss-controls a').removeClass().addClass('pause')
 							.attr('title', this.settings.pauseLinkText)
 							.attr('href', '#pause')
 							.html(this.settings.pauseLinkText);
@@ -382,8 +382,8 @@
 					// Update Controls
 					if (gallery.$controlsContainer) {
 						gallery.$controlsContainer
-							.find('div.nav-controls a.prev').attr('href', '#'+gallery.data[gallery.getPrevIndex(gallery.currentIndex)].hash).end()
-							.find('div.nav-controls a.next').attr('href', '#'+gallery.data[gallery.getNextIndex(gallery.currentIndex)].hash);
+							.find('div.galleriffic-nav-controls a.prev').attr('href', '#'+gallery.data[gallery.getPrevIndex(gallery.currentIndex)].hash).end()
+							.find('div.galleriffic-nav-controls a.next').attr('href', '#'+gallery.data[gallery.getNextIndex(gallery.currentIndex)].hash);
 					}
 
 					var imageData = gallery.data[gallery.currentIndex];
@@ -474,7 +474,7 @@
 					}
 
 					// Remove existing selected class and add selected class to new thumb
-					var $thumbs = this.$thumbsContainer.find('ul.thumbs').children();
+					var $thumbs = this.$thumbsContainer.find('ul.galleriffic-thumbs').children();
 					$thumbs.filter('.selected').removeClass('selected');
 					$thumbs.eq(this.currentIndex).addClass('selected');
 				}
@@ -513,9 +513,9 @@
 				var needsPagination = this.data.length > this.settings.numThumbs;
 
 				// Rebuild top pager
-				var $topPager = this.$thumbsContainer.find('div.top');
+				var $topPager = this.$thumbsContainer.find('div.galleriffic-top');
 				if ($topPager.length == 0)
-					$topPager = this.$thumbsContainer.prepend('<div class="top pagination"></div>').find('div.top');
+					$topPager = this.$thumbsContainer.prepend('<div class="galleriffic-top pagination"></div>').find('div.top');
 
 				if (needsPagination && this.settings.enableTopPager) {
 					$topPager.empty();
@@ -524,9 +524,9 @@
 
 				// Rebuild bottom pager
 				if (needsPagination && this.settings.enableBottomPager) {
-					var $bottomPager = this.$thumbsContainer.find('div.bottom');
+					var $bottomPager = this.$thumbsContainer.find('div.galleriffic-bottom');
 					if ($bottomPager.length == 0)
-						$bottomPager = this.$thumbsContainer.append('<div class="bottom pagination"></div>').find('div.bottom');
+						$bottomPager = this.$thumbsContainer.append('<div class="galleriffic-bottom pagination"></div>').find('div.bottom');
 					else
 						$bottomPager.empty();
 
@@ -539,7 +539,7 @@
 					stopIndex = this.data.length-1;
 
 				// Show/Hide thumbs
-				var $thumbsUl = this.$thumbsContainer.find('ul.thumbs');
+				var $thumbsUl = this.$thumbsContainer.find('ul.galleriffic-thumbs');
 				$thumbsUl.find('li').each(function(i) {
 					var $li = $(this);
 					if (i >= startIndex && i <= stopIndex) {
@@ -636,13 +636,13 @@
 			if (this.settings.renderSSControls) {
 				if (this.settings.autoStart) {
 					this.$controlsContainer
-						.append('<div class="ss-controls"><a href="#pause" class="pause" title="'+this.settings.pauseLinkText+'">'+this.settings.pauseLinkText+'</a></div>');
+						.append('<div class="galleriffic-ss-controls"><a href="#pause" class="pause" title="'+this.settings.pauseLinkText+'">'+this.settings.pauseLinkText+'</a></div>');
 				} else {
 					this.$controlsContainer
-						.append('<div class="ss-controls"><a href="#play" class="play" title="'+this.settings.playLinkText+'">'+this.settings.playLinkText+'</a></div>');
+						.append('<div class="galleriffic-ss-controls"><a href="#play" class="play" title="'+this.settings.playLinkText+'">'+this.settings.playLinkText+'</a></div>');
 				}
 
-				this.$controlsContainer.find('div.ss-controls a')
+				this.$controlsContainer.find('div.galleriffic-ss-controls a')
 					.click(function(e) {
 						gallery.toggleSlideshow();
 						e.preventDefault();
@@ -652,7 +652,7 @@
 
 			if (this.settings.renderNavControls) {
 				var $navControls = this.$controlsContainer
-					.append('<div class="nav-controls"><a class="prev" rel="history" title="'+this.settings.prevLinkText+'">'+this.settings.prevLinkText+'</a><a class="next" rel="history" title="'+this.settings.nextLinkText+'">'+this.settings.nextLinkText+'</a></div>')
+					.append('<div class="galleriffic-nav-controls"><a class="prev" rel="history" title="'+this.settings.prevLinkText+'">'+this.settings.prevLinkText+'</a><a class="next" rel="history" title="'+this.settings.nextLinkText+'">'+this.settings.nextLinkText+'</a></div>')
 					.find('div.nav-controls a')
 					.click(function(e) {
 						clickHandler(e, gallery, this);
