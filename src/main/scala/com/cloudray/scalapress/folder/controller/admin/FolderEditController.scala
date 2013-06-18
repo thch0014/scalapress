@@ -16,6 +16,7 @@ import com.cloudray.scalapress.obj.controller.admin.ThemePopulator
 import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.media.AssetStore
 import scala.Some
+import scala.collection.immutable.ListMap
 
 /** @author Stephen Samuel */
 @Controller
@@ -83,15 +84,20 @@ class FolderEditController extends EnumPopulator with ThemePopulator with Sectio
         "forward:" + UrlResolver.folderEdit(folder)
     }
 
-    @ModelAttribute("parents") def folder = {
+    @ModelAttribute("parents") def parents = {
 
-        val folders = folderDao.tree
+        val folders = folderDao.findAll().sortBy(_.id)
 
-        val map = new mutable.LinkedHashMap[Long, String]
-        map.put(0, "-None-")
-        for ( folder <- folders )
-            map.put(folder.id, folder.fullName)
-        map.asJava
+        val map = mutable.Map(0l -> "-Default-")
+        folders.map(f => {
+            map += (f.id -> f.fullName)
+        })
+
+        val ordered = ListMap(map.toList.sortBy {
+            _._2
+        }: _*)
+
+        ordered.asJava
     }
 
     @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)
