@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.obj.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.obj.{TypeDao, ObjectType}
 import scala.collection.JavaConverters._
@@ -17,7 +17,7 @@ class TypeListController {
     def list = "admin/object/type/list.vm"
 
     @RequestMapping(produces = Array("text/html"), value = Array("{typeId}/delete"))
-    def delete(@RequestParam("typeId") typeId: Long) = {
+    def delete(@PathVariable("typeId") typeId: Long) = {
         val _type = typeDao.find(typeId)
         _type.deleted = true
         typeDao.save(_type)
