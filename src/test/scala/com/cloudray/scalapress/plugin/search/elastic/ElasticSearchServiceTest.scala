@@ -407,6 +407,13 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(q)
         assert(1 === results.refs.size)
         assert(1529 === results.refs(0).id)
+    }
 
+    test("contains returns true when the id exists") {
+        assert(service.contains("4"))
+    }
+
+    test("contains returns false when the id does not exist") {
+        assert(!service.contains("44"))
     }
 }
