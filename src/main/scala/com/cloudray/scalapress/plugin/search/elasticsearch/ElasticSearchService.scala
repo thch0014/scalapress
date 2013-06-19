@@ -101,7 +101,7 @@ class ElasticSearchService extends SearchService with Logging {
           .endObject()
           .endObject()
 
-        client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT)
+        client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
     }
 
     override def contains(id: String): Boolean = {
@@ -154,7 +154,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
 
     override def count: Long = {
-        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(4000).getCount
+        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(TIMEOUT, TimeUnit.MILLISECONDS).getCount
     }
 
     def _count(search: SavedSearch): Int = {
@@ -162,7 +162,7 @@ class ElasticSearchService extends SearchService with Logging {
         client.prepareCount(INDEX)
           .setQuery(query)
           .execute()
-          .actionGet(4000)
+          .actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
           .getCount.toInt
     }
 
@@ -250,7 +250,7 @@ class ElasticSearchService extends SearchService with Logging {
         val req = client.prepareSearch(INDEX)
           .setSearchType(SearchType.QUERY_AND_FETCH)
           .setTypes(TYPE)
-          .setFrom(0)
+          .setFrom((search.pageNumber - 1) * limit)
           .setSize(limit)
           .addSort(sort)
 
@@ -300,7 +300,7 @@ class ElasticSearchService extends SearchService with Logging {
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
                   .map(arg => {
-                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm, entry.getCount))
+                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount))
                     Facet(arg.getName, terms)
                 })
         }
@@ -379,15 +379,6 @@ class ElasticSearchService extends SearchService with Logging {
 
             map.put("indices.docs.count", node.getIndices.getDocs.getCount.toString)
             map.put("indices.docs.deleted", node.getIndices.getDocs.getDeleted.toString)
-
-            map.put("indices.cache.bloomSize", node.getIndices.getCache.getBloomSize.mb() + "mb")
-            map.put("indices.cache.filterSize", node.getIndices.getCache.getFilterSize.mb + "mb")
-
-            map.put("indices.indexing.delete", node.getIndices.getIndexing.total().getDeleteCount.toString)
-            map.put("indices.indexing.index", node.getIndices.getIndexing.total().getIndexCount.toString)
-
-            map.put("indices.get.time", node.getIndices.get().getTimeInMillis + "ms")
-            map.put("indices.get.count", node.getIndices.get().getCount.toString)
 
             map.put("indices.store.size", node.getIndices.getStore.size.mb + "mb")
             map.put("indices.store.throttleTime", node.getIndices.getStore.throttleTime.toString)

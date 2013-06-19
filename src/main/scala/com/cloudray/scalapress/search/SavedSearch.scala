@@ -85,4 +85,5 @@ class SavedSearch {
     @BeanProperty var newerThanTimestamp: Long = _
 
     @Transient var facets: Seq[String] = Nil
+    @Transient var pageNumber: Int = 1
 }

@@ -23,7 +23,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-
         <maven.plugin.jar.version>2.4</maven.plugin.jar.version>
         <maven.plugin.war.version>2.3</maven.plugin.war.version>
         <maven.plugin.resources.version>2.6</maven.plugin.resources.version>
@@ -55,15 +54,13 @@
         <cglib.version>2.2.2</cglib.version>
 
         <ehcache.version>2.6.6</ehcache.version>
-        <elasticsearch.version>0.20.6</elasticsearch.version>
+        <elasticsearch.version>0.90.0</elasticsearch.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
 
         <hibernate.core.version>4.2.2.Final</hibernate.core.version>
         <hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
-
-        <itext.version>5.2.0</itext.version>
 
         <javax.servlet.version>2.5</javax.servlet.version>
         <javax.jsp.version>2.1</javax.jsp.version>
@@ -98,23 +95,6 @@
 
     </properties>
 
-    <!--
-        <repositories>
-            <repository>
-                <id>maven2-repository.dev.java.net</id>
-                <url>http://download.java.net/maven/2/</url>
-            </repository>
-            <repository>
-                <id>jboss</id>
-                <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-                <releases>
-                    <enabled>true</enabled>
-                    <updatePolicy>daily</updatePolicy>
-                    <checksumPolicy>warn</checksumPolicy>
-                </releases>
-            </repository>
-        </repositories>
-    -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -185,7 +165,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -277,7 +256,6 @@
                             <configuration>
                                 <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                                 <junitxml>.</junitxml>
-                                <forkMode>never</forkMode>
                                 <parallel>false</parallel>
                                 <tagsToExclude>IntegrationTest</tagsToExclude>
                                 <filereports>ScalaTestSuite.txt</filereports>
@@ -325,7 +303,6 @@
             </plugin>
         </plugins>
     </build>
-
 
     <dependencies>
         <dependency>
@@ -621,6 +598,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
 </project>
