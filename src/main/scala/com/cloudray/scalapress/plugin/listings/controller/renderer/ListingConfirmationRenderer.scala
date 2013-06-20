@@ -78,6 +78,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
             case _ =>
                 val links = process.imageKeys.map(key => context.imageService.imageLink(key, 160, 120))
                 links.map(link => <img src={link}/>)
+                Seq(Unparsed("<div><strong><a href='/listing/image'>Add additional image</a></strong></div>"))
         }
 
     }

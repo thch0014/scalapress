@@ -75,7 +75,7 @@ class RegistrationController {
                                errors: Errors): ScalapressPage = {
 
         if (objectDao.byEmail(form.email).isDefined)
-            errors.rejectValue("email", "email", "Email address already in use")
+            errors.rejectValue("email", "email", "Email address already in use, please register another&lt;p&gt;If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
 
         errors.hasErrors match {
             case true =>
