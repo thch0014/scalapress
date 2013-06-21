@@ -597,7 +597,7 @@
         </dependency>
         <dependency>
             <groupId>org.fusesource.scalate</groupId>
-            <artifactId>scalate-web_2.10</artifactId>
+            <artifactId>scalate-core_2.10</artifactId>
             <version>1.6.1</version>
         </dependency>
         <dependency>
