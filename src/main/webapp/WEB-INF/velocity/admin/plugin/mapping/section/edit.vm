@@ -8,10 +8,10 @@
     #parse("/admin/section/common.vm")
 
     <div class="control-group">
-        <label class="control-label">Shortcode</label>
+        <label class="control-label">Postcode</label>
 
         <div class="controls">
-            #springFormInput("section.shortcode", "")
+            #springFormInput("section.postcode", "class='input-small'")
         </div>
     </div>
 
