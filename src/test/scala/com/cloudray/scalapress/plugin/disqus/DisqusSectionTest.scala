@@ -6,6 +6,7 @@ import com.cloudray.scalapress.ScalapressRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -21,6 +22,9 @@ class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTe
     folder.name = "live events"
 
     val req = mock[ScalapressRequest]
+    val installation = mock[Installation]
+    Mockito.when(req.installation).thenReturn(installation)
+    Mockito.when(installation.domain).thenReturn("buffet.com")
 
     test("disqus render includes shortname") {
         Mockito.when(req.obj).thenReturn(None)
@@ -37,13 +41,13 @@ class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTe
     test("given an object request then the page title is the name of the object") {
         Mockito.when(req.obj).thenReturn(Option(obj))
         Mockito.when(req.folder).thenReturn(None)
-        section.render(req).get.contains("var disqus_title = 'coldplay tickets';")
+        section.render(req).get.contains("var disqus_title = 'http://buffet.com/coldplay-tickets';")
     }
 
     test("given a folder request then the page title is the name of the folder") {
         Mockito.when(req.obj).thenReturn(None)
         Mockito.when(req.folder).thenReturn(Option(folder))
-        section.render(req).get.contains("var disqus_title = 'live events';")
+        section.render(req).get.contains("var disqus_title = 'http://buffet.com/live-events';")
     }
 
     test("given an object request then the page url is the url of the object") {
