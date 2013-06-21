@@ -71,8 +71,7 @@ class SearchController extends Logging {
         search.sortType = sort
 
         val result = searchService.search(search)
-        val _objects = result.refs.map(ref => objectDao.find(ref.id)).toList
-        val live = _objects.filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+        val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
 
         val sreq = ScalapressRequest(req, context).withTitle("Search Results").withLocation(location)
         val theme = themeService.default
@@ -80,7 +79,7 @@ class SearchController extends Logging {
 
         val plugin = searchPluginDao.get
 
-        if (live.size == 0) {
+        if (objects.size == 0) {
 
             val noResults = Option(sectionId).map(_.toLong)
               .flatMap(id => Option(pluginDao.find(id)))
@@ -93,18 +92,18 @@ class SearchController extends Logging {
 
         } else {
 
-            page.body("<!-- search results: " + live.size + " objects found -->")
+            page.body("<!-- search results: " + objects.size + " objects found -->")
 
-            val p = Page(live, pageNumber, pageSize, result.count)
+            val p = Page(objects, pageNumber, pageSize, result.count)
             val paging = Paging(req, p)
 
-            val markup = live.head.objectType.objectListMarkup
+            val markup = objects.head.objectType.objectListMarkup
             if (markup == null) {
                 page.body("<!-- search results: no object list markup found -->")
             } else {
                 if (paging.totalPages > 1)
                     page.body(PagingRenderer.render(paging))
-                page.body(MarkupRenderer.renderObjects(live, markup, sreq))
+                page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
                 if (paging.totalPages > 1)
                     page.body(PagingRenderer.render(paging))
             }

@@ -262,6 +262,10 @@
                             </configuration>
                         </execution>
                     </executions>
+                    <configuration>
+                        <forkMode>once</forkMode>
+                        <argLine>-XX:MaxPermSize=512m -Xmx1024m</argLine>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
