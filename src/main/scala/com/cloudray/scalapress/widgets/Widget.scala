@@ -61,15 +61,6 @@ abstract class Widget {
     @Column(name = "displayOnOthers", nullable = false)
     @BeanProperty var displayOnOthers: Boolean = _
 
-    @Column(name = "displayOnSearchResults", nullable = false)
-    @BeanProperty var displayOnSearchResults: Boolean = _
-
-    @Column(name = "displayOnBasket")
-    @BeanProperty var displayOnBasket: Boolean = _
-
-    @Column(name = "displayOnCheckout")
-    @BeanProperty var displayOnCheckout: Boolean = _
-
     @Column(name = "restricted", nullable = false)
     @BeanProperty var restricted: Boolean = _
 

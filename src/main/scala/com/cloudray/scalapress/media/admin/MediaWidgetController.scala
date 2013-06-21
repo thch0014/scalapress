@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.widgets.controller
+package com.cloudray.scalapress.media.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMethod, RequestMapping}
@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.media.{Asset, AssetStore, MediaWidget, Image}
+import com.cloudray.scalapress.widgets.controller.WidgetEditController
 
 /** @author Stephen Samuel */
 @Controller

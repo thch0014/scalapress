@@ -111,12 +111,4 @@
         #springFormCheckbox("widget.displayOnOthers")
     </div>
 </div>
-
-<div class="control-group">
-    <label class="control-label">Display On Search Results</label>
-
-    <div class="controls">
-        #springFormCheckbox("widget.displayOnSearchResults")
-    </div>
-</div>
 #end
