@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, 
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
-import reflect.BeanProperty
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
@@ -18,6 +17,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.obj.{ObjectDao, TypeDao, Obj}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller

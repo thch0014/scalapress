@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence.{JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Entity, Table}
-import reflect.BeanProperty
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.cloudray.scalapress.theme.Markup
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity

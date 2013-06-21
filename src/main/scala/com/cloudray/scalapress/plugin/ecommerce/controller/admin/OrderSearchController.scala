@@ -8,10 +8,10 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.Paging
-import reflect.BeanProperty
 import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
 import com.cloudray.scalapress.obj.Obj
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
