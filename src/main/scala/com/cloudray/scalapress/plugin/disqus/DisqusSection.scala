@@ -4,6 +4,7 @@ import com.cloudray.scalapress.section.Section
 import javax.persistence.{Table, Entity}
 import com.cloudray.scalapress.ScalapressRequest
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,11 +18,17 @@ class DisqusSection extends Section {
 
     def render(request: ScalapressRequest): Option[String] = {
 
+        val title = request.obj.map(_.name).orElse(request.folder.map(_.name)).getOrElse("")
+        val url = request.obj.map(arg => UrlGenerator.url(arg)).orElse(request.folder.map(arg => UrlGenerator.url(arg))).getOrElse("")
+
         Option(shortname).map(arg => {
             s"""<div id="disqus_thread"></div>
                 <script type="text/javascript">
                     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
                     var disqus_shortname = '$shortname';
+                    var disqus_identifier = '$id';
+                    var disqus_title = '$title';
+                    var disqus_url = '$url';
                     /* * * DON'T EDIT BELOW THIS LINE * * */
                     (function() {
                         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
