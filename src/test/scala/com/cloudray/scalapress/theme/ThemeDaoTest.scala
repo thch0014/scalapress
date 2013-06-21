@@ -56,4 +56,20 @@ class ThemeDaoTest extends FunSuite with MockitoSugar with OneInstancePerTest {
         val m2 = TestDatabaseContext.markupDao.byName("find me again")
         assert(m.id === m2.id)
     }
+
+    test("findDefault returns the correct default") {
+
+        val t1 = new Theme
+        t1.name = "picasso"
+        TestDatabaseContext.themeDao.save(t1)
+
+        val t2 = new Theme
+        t2.default = true
+        t2.name = "rembrant"
+        TestDatabaseContext.themeDao.save(t2)
+
+        val default = TestDatabaseContext.themeDao.findDefault
+        assert(t2.id > 0)
+        assert(t2.id === default.id)
+    }
 }

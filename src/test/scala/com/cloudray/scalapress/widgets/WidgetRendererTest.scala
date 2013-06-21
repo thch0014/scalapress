@@ -59,4 +59,20 @@ class WidgetRendererTest extends FunSuite with MockitoSugar with OneInstancePerT
         widget.excludeFolders = "1,2,3,4"
         assert(!WidgetRenderer.checkWhere(widget, sreq))
     }
+
+    test("given a non folder/object page and displayOnOthers then the widget is visible") {
+        val sreq = new ScalapressRequest(req, context)
+        val widget = new HtmlWidget
+        widget.restricted = true
+        widget.displayOnOthers = true
+        assert(WidgetRenderer.checkWhere(widget, sreq))
+    }
+
+    test("given a non folder/object page and not displayOnOthers then the widget is not visible") {
+        val sreq = new ScalapressRequest(req, context)
+        val widget = new HtmlWidget
+        widget.restricted = true
+        widget.displayOnOthers = false
+        assert(!WidgetRenderer.checkWhere(widget, sreq))
+    }
 }

@@ -31,9 +31,6 @@ class WidgetEditController extends WidgetContainerMapPopulator {
 }
 
 trait WidgetContainerMapPopulator {
-    @ModelAttribute("widgetContainerMap") def widgetContainerMap: java.util.Map[String, String] = WidgetContainer
-      .values()
-      .map(wc => (wc.name, wc.name))
-      .toMap
-      .asJava
+    @ModelAttribute("widgetContainerMap") def widgetContainerMap: java.util.Map[String, String] =
+        WidgetContainer.values().map(wc => (wc.name, wc.name)).toMap.asJava
 }

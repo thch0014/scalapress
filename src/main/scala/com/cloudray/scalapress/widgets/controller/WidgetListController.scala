@@ -47,8 +47,7 @@ class WidgetListController {
     }
 
     @ModelAttribute("widgets") def widgets = {
-        val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
-          .position))
+        val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x.position))
         context.widgetDao.findAll().sorted(ordering).toArray
     }
 

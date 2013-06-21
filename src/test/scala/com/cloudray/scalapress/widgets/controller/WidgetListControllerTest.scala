@@ -56,4 +56,9 @@ class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstan
         controller.create(classOf[HtmlWidget].getName)
         Mockito.verify(controller.context.widgetDao).save(Matchers.any[Widget])
     }
+
+    test("delete happy path") {
+        controller.delete(3343)
+        Mockito.verify(controller.context.widgetDao).removeById(3343)
+    }
 }
