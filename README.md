@@ -15,7 +15,11 @@ scala based publishing platform
 ##### 0.33 
 * Added deletion for object types.
 * Fixed cloning for objects.
-
+* Added bulk object loading to search results for speed
+* Added disqus plugin
+* Fixed folder ordering
+* User friendly links added to listing/registration processes
+* Added pagination into search controller
 
 ##### 0.32
 * Added class param to attribute tables
