@@ -14,7 +14,8 @@ class UrlGeneratorBootstrap extends Logging {
     @PostConstruct
     def setup() {
         try {
-            UrlGenerator.strategy = Class.forName(strategy).newInstance().asInstanceOf[UrlStrategy]
+            if (strategy != "None")
+                UrlGenerator.strategy = Class.forName(strategy).newInstance().asInstanceOf[UrlStrategy]
         } catch {
             case e: Exception => logger.warn("{}", e)
         }
