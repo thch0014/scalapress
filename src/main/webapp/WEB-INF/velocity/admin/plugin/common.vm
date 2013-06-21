@@ -1,0 +1,23 @@
+<div class="control-group">
+    <label class="control-label">Name</label>
+
+    <div class="controls">
+        #springFormInput("section.name", "class='input-xlarge'")
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Visible</label>
+
+    <div class="controls">
+        #springFormCheckbox("section.visible")
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label">Postcode</label>
+
+    <div class="controls">
+        #springFormInput("section.postcode", "class='input-small'")
+    </div>
+</div>

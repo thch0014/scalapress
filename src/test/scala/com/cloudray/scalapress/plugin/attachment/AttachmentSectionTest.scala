@@ -1,12 +1,12 @@
 package com.cloudray.scalapress.plugin.attachment
 
-import org.scalatest.FunSuite
+import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.media.AssetStore
 import org.mockito.{Mockito, Matchers}
 
 /** @author Stephen Samuel */
-class AttachmentSectionTest extends FunSuite with MockitoSugar {
+class AttachmentSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val attachment = new Attachment
     attachment.name = "coldplay live video"
@@ -19,6 +19,10 @@ class AttachmentSectionTest extends FunSuite with MockitoSugar {
         val attachments = List(attachment)
         val rendered = new AttachmentSection()._renderAttachments(attachments, assetStore)
         assert(
-            List(<div class="attachment-row"><div class="attachment-name">coldplay live video</div><div class="attachment-name"></div><div class="attachment-link"><a href="http://mock.domain.com/file.pdf">Download file</a></div></div>) === rendered)
+            List(<div class="attachment-row">
+                <div class="attachment-name">coldplay live video</div> <div class="attachment-name"></div> <div class="attachment-link">
+                    <a href="http://mock.domain.com/file.pdf">Download file</a>
+                </div>
+            </div>) === rendered)
     }
 }

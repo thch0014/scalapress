@@ -1,0 +1,10 @@
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+
+    #if ($section.folder)
+        <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+    #end
+    #if ($section.obj)
+        <a href="/backoffice/obj/$section.obj.id" class="btn">Return</a>
+    #end
+</div>
