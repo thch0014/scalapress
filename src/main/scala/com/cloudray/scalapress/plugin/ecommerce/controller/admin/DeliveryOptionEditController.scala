@@ -17,7 +17,7 @@ class DeliveryOptionEditController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("form") form: Form) = "admin/delivery/edit.vm"
+    def edit(@ModelAttribute("form") form: Form) = "admin/plugin/shopping/delivery/edit.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST))
     def save(@ModelAttribute("form") form: Form) = {

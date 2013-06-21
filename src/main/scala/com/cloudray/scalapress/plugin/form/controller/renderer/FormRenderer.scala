@@ -5,19 +5,23 @@ import xml.{Node, Unparsed}
 import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.enums.{FieldSize, FormFieldType}
 import com.cloudray.scalapress.plugin.form.{FormField, Form}
+import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object FormRenderer {
 
-    private def action(form: Form, folderId: Any) = "/form/" + form.id + "?folder=" + folderId
+    def action(form: Form, folderId: Long, objectId: Long) = s"/form/${form.id}?folderId=$folderId&objId=$objectId"
+    def action(form: Form, folder: Option[Folder], obj: Option[Obj]): String =
+        action(form, folder.map(_.id).getOrElse(0l), obj.map(_.id).getOrElse(0l))
+    def action(form: Form, req: ScalapressRequest): String = action(form, req.folder, req.obj)
 
     def render(form: Form, req: ScalapressRequest): String = {
         val fields = form.fields.asScala.sortBy(_.position)
         val renderedFields = fields.map(renderField(_, req))
-        val folderId = req.folder.map(_.id.toString).getOrElse("0")
         val captchaError = req.hasError("captcha.error")
 
-        <form method="POST" enctype="multipart/form-data" action={action(form, folderId)} class="form-horizontal">
+        <form method="POST" enctype="multipart/form-data" action={action(form, req)} class="form-horizontal">
             {if (captchaError) <div class='alert alert-error'>Please try the captcha again</div> else null}{renderedFields}{if (form
           .captcha) _captcha()
         else ""}{button(form)}

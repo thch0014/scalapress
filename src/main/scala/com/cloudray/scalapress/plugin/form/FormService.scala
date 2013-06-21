@@ -37,7 +37,9 @@ class FormService extends Logging {
         assetKeys
     }
 
-    def _createSubmission(form: Form, assets: Iterable[String], sreq: ScalapressRequest): Submission = {
+    def _createSubmission(form: Form,
+                          assets: Iterable[String],
+                          sreq: ScalapressRequest): Submission = {
 
         val submission = new Submission
         submission.attachments = assets.toSet.asJava
@@ -45,8 +47,6 @@ class FormService extends Logging {
         submission.date = new DateTime(DateTimeZone.UTC).getMillis
 
         submission.ipAddress = sreq.request.getRemoteAddr
-        submission.folder = sreq.folder.orNull
-        submission.obj = sreq.obj.orNull
 
         submission.data = form.fields.asScala
           .filter(field => Option(sreq.request.getParameter(field.id.toString)).isDefined)

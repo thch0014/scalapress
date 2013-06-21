@@ -148,4 +148,5 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
         service.checkErrors(form, sreq)
         assert(sreq.hasErrors)
     }
+
 }

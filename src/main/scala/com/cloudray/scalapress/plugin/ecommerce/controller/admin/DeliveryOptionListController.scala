@@ -18,7 +18,7 @@ class DeliveryOptionListController {
     @Autowired var context: ScalapressContext = _
 
     @RequestMapping
-    def list = "admin/delivery/list.vm"
+    def list = "admin/plugin/shopping/delivery/list.vm"
 
     @RequestMapping(value = Array("create"))
     def create = {

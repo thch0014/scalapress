@@ -34,7 +34,8 @@ class SubmissionController extends Logging {
                req: HttpServletRequest,
                resp: HttpServletResponse,
                @RequestParam(value = "file") files: java.util.List[MultipartFile],
-               @RequestParam(value = "folder", required = false, defaultValue = "0") folderId: Long): ScalapressPage = {
+               @RequestParam(value = "folderId", required = false, defaultValue = "0") folderId: Long,
+               @RequestParam(value = "objId", required = false, defaultValue = "0") objId: Long): ScalapressPage = {
 
         val sreq = ScalapressRequest(req, context).withTitle("Form Submitted")
         formService.checkErrors(form, sreq)
@@ -56,7 +57,7 @@ class SubmissionController extends Logging {
             }
             case false => {
 
-                val submission = formService.doSubmission(form, sreq, files.asScala)
+                val submission = createSubmission(form, sreq, files.asScala, folderId, objId)
                 val theme = themeService.default
                 val page = ScalapressPage(theme, sreq)
 
@@ -66,6 +67,15 @@ class SubmissionController extends Logging {
                 page
             }
         }
+    }
+
+    def createSubmission(form: Form, sreq: ScalapressRequest, files: Seq[MultipartFile], folderId: Long, objId: Long) = {
+        val submission = formService.doSubmission(form, sreq, files)
+        if (folderId > 0)
+            submission.folder = context.folderDao.find(folderId)
+        if (objId > 0)
+            submission.obj = context.objectDao.find(objId)
+        submission
     }
 
 }

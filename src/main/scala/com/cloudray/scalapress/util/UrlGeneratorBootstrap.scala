@@ -9,15 +9,14 @@ import com.cloudray.scalapress.Logging
 @Component
 class UrlGeneratorBootstrap extends Logging {
 
-    @Value("${url.strategy:None}") var strategy: String = _
+    @Value("${url.strategy:None}") var strategyClassName: String = _
 
     @PostConstruct
     def setup() {
         try {
-            if (strategy != "None")
-                UrlGenerator.strategy = Class.forName(strategy).newInstance().asInstanceOf[UrlStrategy]
+            UrlGenerator.strategy = Class.forName(strategyClassName).newInstance().asInstanceOf[UrlStrategy]
         } catch {
-            case e: Exception => logger.warn("{}", e)
+            case e: Exception => logger.debug("Could not load url generator class {}", strategyClassName)
         }
     }
 }

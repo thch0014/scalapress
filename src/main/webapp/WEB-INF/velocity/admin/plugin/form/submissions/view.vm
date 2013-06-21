@@ -3,8 +3,8 @@
 
 <h3>Submission: #$submission.id</h3>
 
-<p>Submitted at $datetool.format($submission.date)</p>
-<p>From form $submission.formName $!submission.folder.name</p>
+<p>Submitted: $datetool.format($submission.date)</p>
+<p>From: $submission.formName $submission.page().name()</p>
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
