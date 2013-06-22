@@ -18,20 +18,19 @@ class SubfolderSection extends Section {
     @BeanProperty var markup: Markup = _
 
     def render(request: ScalapressRequest): Option[String] = {
-
-        val default = new Markup
-        default.start = "<ul>"
-        default.body = "<li>[category?link=1]</li>"
-        default.end = "</ul>"
-
-        val m = Option(markup)
-          .orElse(Option(request.context.markupDao.byName("Default subcategories markup")))
-          .getOrElse(default)
-        val render = MarkupRenderer.renderFolders(_folders, default, request)
+        val m = Option(markup).getOrElse(SubfolderSection.DefaultMarkup)
+        val render = MarkupRenderer.renderFolders(_folders, m, request)
         Option(render)
     }
 
     def _folders = folder.sortedSubfolders.filterNot(_.hidden)
     def desc = "Show a clickable list of the sub folders of this folder"
 
+}
+
+object SubfolderSection {
+    val DefaultMarkup = new Markup
+    DefaultMarkup.start = "<ul>"
+    DefaultMarkup.body = "<li>[folder?link=1]</li>"
+    DefaultMarkup.end = "</ul>"
 }
