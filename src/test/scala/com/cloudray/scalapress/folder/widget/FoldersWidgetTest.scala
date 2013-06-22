@@ -17,16 +17,19 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
     child1.id = 1
     val child2 = new Folder
     child2.name = "plans"
+    child2.id = 34
     val child3 = new Folder
+    child3.id = 55
     child3.name = "escaped"
     val child4 = new Folder
+    child4.id = 91
     child4.name = "z love           spaces me"
 
     val parent = new Folder
     parent.subfolders.add(child1)
     parent.subfolders.add(child2)
-    parent.subfolders.add(child3)
     parent.subfolders.add(child4)
+    child2.subfolders.add(child3)
 
     widget.start = parent
 
@@ -55,10 +58,9 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
     test("children excludes hidden") {
         child2.hidden = true
         val actual = widget._children(parent)
-        assert(3 === actual.size)
+        assert(2 === actual.size)
         assert(child1 === actual(0))
-        assert(child3 === actual(1))
-        assert(child4 === actual(2))
+        assert(child4 === actual(1))
     }
 
     test("folder exclusions ignores repeated whitespace") {
@@ -82,13 +84,13 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
 
     test("folder widget excludes null names") {
 
-        assert(4 === widget._children(parent).size)
+        assert(3 === widget._children(parent).size)
 
         val child5 = new Folder
         child5.name = null
         parent.subfolders.add(child5)
 
-        assert(4 === widget._children(parent).size)
+        assert(3 === widget._children(parent).size)
     }
 
     test("folder rendering of li uses correct class and id") {
@@ -97,9 +99,8 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
     }
 
     test("folder rendering happy path") {
+        widget.depth = 4
         val actual = widget.render(ScalapressRequest(req, context))
-        assert(
-            "<ul class=\"widget-folder-plugin\"><li class=\"l1\" id=\"w15_f1\"><a href=\"/folder-1-captured\">captured</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-escaped\">escaped</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-plans\">plans</a></li><li class=\"l1\" id=\"w15_f0\"><a href=\"/folder-0-z-love-spaces-me\">z love           spaces me</a></li></ul>" === actual
-              .get)
+        assert("" === actual.get)
     }
 }

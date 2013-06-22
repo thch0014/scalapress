@@ -10,6 +10,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.util.UrlGenerator
 import scala.xml.{Unparsed, Utility, Node}
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")
@@ -32,17 +33,29 @@ class FoldersWidget extends Widget with Logging {
 
     override def render(req: ScalapressRequest): Option[String] = {
         val root = Option(start).getOrElse(req.folderRoot)
-        val xml = _renderFolderLevel(root, 1)
+        val xml = _renderChildren(root, 1)
         Some(Utility.trim(xml).toString())
     }
 
-    def _renderFolderLevel(parent: Folder, level: Int): Node = {
+    def _renderChildren(parent: Folder, level: Int): Node = {
+        _children(parent) match {
+            case list if list.isEmpty => null
+            case list => _renderChildren(list, level)
+        }
+    }
 
+    def _renderChildren(children: Seq[Folder], level: Int): Node = {
         val css = if (level == 1) "widget-folder-plugin" else null
-        val children = _children(parent).map(child => _renderFolder(child, level))
+
+        val nodes = new ListBuffer[Node]
+        for ( child <- children ) {
+            nodes.append(_renderFolder(child, level))
+            if (depth > level)
+                nodes.append(_renderChildren(child, level + 1))
+        }
 
         <ul class={css}>
-            {children}
+            {nodes}
         </ul>
     }
 
@@ -50,11 +63,10 @@ class FoldersWidget extends Widget with Logging {
 
         val css = "l" + level
         val id = "w" + this.id + "_f" + folder.id
-        val a = Unparsed(UrlGenerator.link(folder))
+        val link = Unparsed(UrlGenerator.link(folder))
 
         val xml = <li class={css} id={id}>
-            {a}{if (level < depth)
-                _renderFolderLevel(folder, level + 1)}
+            {link}
         </li>
 
         Utility.trim(xml)
