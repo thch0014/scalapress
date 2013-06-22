@@ -10,13 +10,12 @@ import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.obj.ObjectDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.folder.section.{ObjectListSection, FolderContentSection}
-import scala.collection.JavaConverters._
+import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/section/{id}"))
-class SectionEditController {
+class SectionEditController extends MarkupPopulator {
 
     @Autowired var assetStore: AssetStore = _
     @Autowired var objectDao: ObjectDao = _
@@ -29,22 +28,13 @@ class SectionEditController {
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
     def save(@ModelAttribute("section") section: Section, req: HttpServletRequest) = {
-
-        val visible = req.getParameter("visible")
-        section.setVisible(visible != null)
+        section.setVisible(req.getParameter("visible") != null)
         sectionDao.save(section)
         edit(section)
     }
 
-    @ModelAttribute def populate(@PathVariable("id") id: Long, model: ModelMap) {
+    @ModelAttribute def populateSection(@PathVariable("id") id: Long, model: ModelMap) {
         val section = sectionDao.find(id)
-        model.put("contentable", section.isInstanceOf[FolderContentSection].toString)
-        model.put("markupable", section.isInstanceOf[ObjectListSection].toString)
         model.put("section", section)
-
-        val markups = markupDao.findAll()
-        val map = markups.map(m => (m.id, m.name)).toMap + ((0, "-None-"))
-        model.put("markups", markups.asJava)
-        model.put("markupMap", map.asJava)
     }
 }

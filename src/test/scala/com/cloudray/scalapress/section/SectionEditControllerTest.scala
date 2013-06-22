@@ -13,7 +13,6 @@ class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInsta
     val controller = new SectionEditController
     controller.sectionDao = mock[SectionDao]
     controller.markupDao = mock[MarkupDao]
-    val model = new ModelMap
 
     val section = new StringSection("coldplay")
     Mockito.when(controller.sectionDao.find(123l)).thenReturn(section)
@@ -22,13 +21,15 @@ class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInsta
     val markup2 = new Markup
     Mockito.when(controller.markupDao.findAll()).thenReturn(List(markup1, markup2))
 
+    val model = new ModelMap
+
     test("controller loads section into model") {
-        controller.populate(123l, model)
+        controller.populateSection(123l, model)
         assert(section === model.get("section"))
     }
 
     test("controller loads markups into model as java list") {
-        controller.populate(123l, model)
+        controller.markups(model)
         assert(List(markup1, markup2).asJava === model.get("markups"))
     }
 }

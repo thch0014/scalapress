@@ -27,7 +27,7 @@ class ObjectListSectionController extends MarkupPopulator with SortPopulator wit
         val objects = section._objects(ScalapressRequest(req, context))
         if (objects.size > 0)
             model.put("attributesMap", attributesMap(objects.head.objectType.sortedAttributes))
-        "admin/section/objectlist/edit.vm"
+        "admin/folder/section/objectlist.vm"
     }
 
     @RequestMapping(method = Array(RequestMethod.POST))
