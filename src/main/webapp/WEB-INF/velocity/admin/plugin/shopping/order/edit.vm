@@ -331,7 +331,7 @@
     </tr>
     #foreach ($payment in $order.payments)
         <tr>
-            <td>$payment.paymentType</td>
+            <td>!$payment.paymentType</td>
             <td>$payment.transactionId</td>
             <td>$datetool.format($payment.date)</td>
             <td>$number.number($payment.amountDecimal())</td>
