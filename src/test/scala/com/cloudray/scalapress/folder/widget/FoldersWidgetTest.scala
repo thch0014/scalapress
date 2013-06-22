@@ -101,6 +101,8 @@ class FoldersWidgetTest extends FunSuite with MockitoSugar with OneInstancePerTe
     test("folder rendering happy path") {
         widget.depth = 4
         val actual = widget.render(ScalapressRequest(req, context))
-        assert("" === actual.get)
+        assert(
+            """<ul class="widget-folder-plugin"><li class="l1" id="w15_f1"><a href="/folder-1-captured">captured</a></li><li class="l1" id="w15_f34"><a href="/folder-34-plans">plans</a></li><ul><li class="l2" id="w15_f55"><a href="/folder-55-escaped">escaped</a></li></ul><li class="l1" id="w15_f91"><a href="/folder-91-z-love-spaces-me">z love           spaces me</a></li></ul>""" === actual
+              .get)
     }
 }
