@@ -47,7 +47,6 @@ class AdminUserDetails(val user: User, context: ScalapressContext) extends Scala
 
             case Some(obj) => obj
         }
-
     }
 }
 

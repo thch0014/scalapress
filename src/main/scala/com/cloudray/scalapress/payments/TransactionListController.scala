@@ -18,8 +18,7 @@ class TransactionListController {
 
     @RequestMapping
     def search(@RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-               model: ModelMap,
-               req: HttpServletRequest): String = {
+               model: ModelMap, req: HttpServletRequest): String = {
 
         val search = new Search(classOf[Transaction])
         search.setMaxResults(50)

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.util.geo
+package com.cloudray.migration
 
 import java.io.{FileWriter, FileReader, File}
 import org.apache.commons.io.IOUtils
