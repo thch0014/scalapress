@@ -17,8 +17,6 @@ class DisqusSection extends Section {
     override def backoffice: String = "/backoffice/plugin/disqus/section/" + id
     def desc: String = "Disqus commenting system"
 
-    @Transient val engine = new TemplateEngine
-
     def render(request: ScalapressRequest): Option[String] = {
 
         val title = request.obj.map(_.name).orElse(request.folder.map(_.name)).getOrElse("")

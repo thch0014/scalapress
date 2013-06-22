@@ -29,7 +29,5 @@ class SubfolderSectionController extends EnumPopulator {
     }
 
     @ModelAttribute("section") def section(@PathVariable("id") id: Long): SubfolderSection =
-        sectionDao
-          .find(id)
-          .asInstanceOf[SubfolderSection]
+        sectionDao.find(id).asInstanceOf[SubfolderSection]
 }
