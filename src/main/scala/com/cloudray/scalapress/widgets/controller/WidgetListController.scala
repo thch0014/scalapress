@@ -8,6 +8,7 @@ import com.cloudray.scalapress.widgets.Widget
 import scala.Array
 import com.cloudray.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 
 /** @author Stephen Samuel */
 @Controller
@@ -51,5 +52,11 @@ class WidgetListController {
         context.widgetDao.findAll().sorted(ordering).toArray
     }
 
-    @ModelAttribute("classes") def classes = ComponentClassScanner.widgets.map(c => (c.getName, c.getSimpleName)).toMap.asJava
+    @ModelAttribute("classes") def classes = {
+        val map = new mutable.LinkedHashMap[String, String]
+        for ( c <- ComponentClassScanner.widgets.sortBy(_.getSimpleName) ) {
+            map += c.getName -> c.getSimpleName
+        }
+        map.asJava
+    }
 }

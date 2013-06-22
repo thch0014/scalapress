@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.widgets.{Widget, HtmlWidget, WidgetDao}
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.ScalapressContext
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -60,5 +61,15 @@ class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstan
     test("delete happy path") {
         controller.delete(3343)
         Mockito.verify(controller.context.widgetDao).removeById(3343)
+    }
+
+    import scala.collection.JavaConverters._
+
+    test("widget classes are ordered lexicographically") {
+        val map = controller.classes
+        val buffer = new ListBuffer[String]
+        for ( entry <- map.asScala )
+            buffer.append(entry._2)
+        assert(buffer.toSeq === buffer.toSeq.sorted)
     }
 }
