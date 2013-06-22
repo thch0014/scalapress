@@ -23,10 +23,8 @@ class AdsenseSection extends Section {
             Option(googleAdClient).filterNot(_.isEmpty).map(arg => {
                 engine
                   .layout("/com/cloudray/scalapress/plugin/adsense/adsense.ssp",
-                    Map("client" -> googleAdClient,
-                        "slot" -> googleAdSlot,
-                        "width" -> googleAdWidth.toInt,
-                        "height" -> googleAdHeight.toInt))
+                    Map("client" -> googleAdClient, "slot" -> googleAdSlot,
+                        "width" -> googleAdWidth.toInt, "height" -> googleAdHeight.toInt))
             })
         } catch {
             case e: Exception => None

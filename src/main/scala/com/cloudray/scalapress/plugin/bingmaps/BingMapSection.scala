@@ -14,6 +14,7 @@ class BingMapSection extends Section {
     @BeanProperty var postcode: String = _
 
     override def backoffice: String = "/backoffice/plugin/bingmap/section/" + id
+    def desc: String = "Bing maps embedded iframe"
 
     def render(request: ScalapressRequest): Option[String] = {
 
@@ -23,10 +24,10 @@ class BingMapSection extends Section {
           .map(arg => {
 
             val pc = arg.replaceAll("\\s", "")
-
             val iframeSrc = "http://www.bing.com/maps/?v=2&cp=l=16&where1=" + pc
             val hrefSrc = "http://www.bing.com/maps/?v=2&cp=l=16&where1=" + pc
             val sectionId = "section-" + id
+
             val html =
                 <div class="gmap-section" id={sectionId}>
                     <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src={iframeSrc}></iframe>
@@ -40,5 +41,4 @@ class BingMapSection extends Section {
         })
     }
 
-    def desc: String = "Bing maps embedded iframe"
 }
