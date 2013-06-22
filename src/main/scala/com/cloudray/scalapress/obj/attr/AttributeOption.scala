@@ -2,8 +2,8 @@ package com.cloudray.scalapress.obj.attr
 
 import scala.Predef.String
 import javax.persistence.{JoinColumn, FetchType, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import com.cloudray.scalapress.NaturalOrderComparator
 import scala.beans.BeanProperty
+import com.cloudray.thirdparty.NaturalOrderComparator
 
 /** @author Stephen Samuel */
 @Entity

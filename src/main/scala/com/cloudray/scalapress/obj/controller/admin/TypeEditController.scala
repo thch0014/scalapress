@@ -97,8 +97,6 @@ class TypeEditController extends MarkupPopulator {
 
     @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
-        import scala.collection.JavaConverters._
-
         val t = typeDao.find(id)
         val sortedAttributes = t.attributes.asScala.toSeq.sortBy(_.position).asJava
 
@@ -110,8 +108,5 @@ class TypeEditController extends MarkupPopulator {
     }
 
     @ModelAttribute("classes") def classes = ComponentClassScanner
-      .sections
-      .map(c => (c.getName, c.getSimpleName))
-      .toMap
-      .asJava
+      .sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
 }

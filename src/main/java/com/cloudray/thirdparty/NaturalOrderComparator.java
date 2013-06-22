@@ -1,4 +1,4 @@
-package com.cloudray.scalapress;
+package com.cloudray.thirdparty;
 
 import java.util.Comparator;
 
