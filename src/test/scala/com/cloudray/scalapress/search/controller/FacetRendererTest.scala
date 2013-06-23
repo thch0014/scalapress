@@ -18,20 +18,21 @@ class FacetRendererTest extends FunSuite with OneInstancePerTest with MockitoSug
 
     test("term rendering includes URI") {
         val output = FacetRenderer.renderTerm(facet1, term1, uri)
-        assert( """""" === output.toString())
+        assert( """<div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_15=Chelsea">Chelsea</a>&nbsp;(4)</div>""" === output
+          .toString())
     }
 
     test("facet rendering sorts by count") {
         val output = FacetRenderer.renderFacet(facet1, uri)
         assert(
-            """""" === output
+            """<div class="search-facet"><div class="facet-name">area</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_15=Knightsbridge">Knightsbridge</a>&nbsp;(9)</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_15=Chelsea">Chelsea</a>&nbsp;(4)</div></div>""" === output
               .toString())
     }
 
     test("renderer happy path") {
         val output = FacetRenderer.render(Seq(facet1, facet2), uri)
         assert(
-            """""" === output
+            """<div id="facets"><div class="search-facet"><div class="facet-name">area</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_15=Knightsbridge">Knightsbridge</a>&nbsp;(9)</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_15=Chelsea">Chelsea</a>&nbsp;(4)</div></div><div class="search-facet"><div class="facet-name">bedrooms</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_18=2">2</a>&nbsp;(8)</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_18=1">1</a>&nbsp;(4)</div><div class="facet-term"><a href="http://domain.com/search?q=houses&amp;attr_18=3">3</a>&nbsp;(2)</div></div></div>""" === output
               .toString())
     }
 }
