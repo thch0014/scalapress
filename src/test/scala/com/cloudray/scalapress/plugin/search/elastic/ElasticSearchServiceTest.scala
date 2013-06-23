@@ -431,4 +431,16 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(2 === results.facets(0).terms.size)
         assert("2" === results.facets(0).field) // should be id of the attribute
     }
+
+    test("facets should not include specified fields") {
+        val av1 = new AttributeValue
+        av1.attribute = av4.attribute
+        av1.value = "SW10"
+
+        val q = new SavedSearch
+        q.attributeValues = Set(av1).asJava
+        q.facets = Seq(av4.attribute.id.toString)
+        val results = service.search(q)
+        assert(0 === results.facets.size)
+    }
 }
