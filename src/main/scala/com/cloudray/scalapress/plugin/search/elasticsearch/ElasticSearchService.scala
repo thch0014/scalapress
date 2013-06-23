@@ -169,7 +169,7 @@ class ElasticSearchService extends SearchService with Logging {
     override def search(search: SavedSearch): SearchResult = {
         val resp = _search(search)
         val refs = _resp2ref(resp)
-        val facets = _resp2facets(resp)
+        val facets = _resp2facets(resp, Option(search.objectType).map(_.attributes.asScala).getOrElse(Nil))
         val count = _count(search)
         logger.debug("Search returned {} refs", refs.size)
         SearchResult(refs, facets, count)
@@ -292,16 +292,20 @@ class ElasticSearchService extends SearchService with Logging {
         case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
     }
 
-    def _resp2facets(resp: SearchResponse): Seq[Facet] = {
+    def _resp2facets(resp: SearchResponse, attributes: Iterable[Attribute]): Seq[Facet] = {
         Option(resp.getFacets) match {
             case None => Nil
             case Some(facets) =>
                 facets.facets().asScala
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
-                  .map(arg => {
-                    val terms = arg.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount))
-                    Facet(arg.getName, terms)
+                  .map(facet => {
+                    val terms = facet.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount)).toSeq
+                    val name = facet.getName match {
+                        case id if id.forall(_.isDigit) => attributes.find(_.id.toString == id).map(_.name).getOrElse("error")
+                        case n => n
+                    }
+                    Facet(name, facet.getName, terms)
                 })
         }
     }

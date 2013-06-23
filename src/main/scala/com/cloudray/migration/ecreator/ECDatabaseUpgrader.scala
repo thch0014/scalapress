@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.sql.DataSource
 import com.cloudray.scalapress.Logging
 import javax.annotation.PostConstruct
-import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
-@Component
+//@Component
 class ECDatabaseUpgrader extends Logging {
 
     @Autowired var dataSource: DataSource = _

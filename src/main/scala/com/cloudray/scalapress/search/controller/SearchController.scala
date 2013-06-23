@@ -73,11 +73,13 @@ class SearchController extends Logging {
             case None =>
             case Some(objectType) =>
                 search.objectType = objectType
-                search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString)
+                search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
         }
 
         val result = searchService.search(search)
+        logger.debug("Search Result {}", result)
         val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+        logger.debug("Loaded {} objects", objects.size)
 
         val sreq = ScalapressRequest(req, context).withTitle("Search Results").withLocation(location)
         val theme = themeService.default
@@ -103,15 +105,24 @@ class SearchController extends Logging {
             val p = Page(objects, pageNumber, pageSize, result.count)
             val paging = Paging(req, p)
 
-            val markup = objects.head.objectType.objectListMarkup
-            if (markup == null) {
-                page.body("<!-- search results: no object list markup found -->")
-            } else {
-                if (paging.totalPages > 1)
-                    page.body(PagingRenderer.render(paging))
-                page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
-                if (paging.totalPages > 1)
-                    page.body(PagingRenderer.render(paging))
+            Option(objects.head.objectType.objectListMarkup) match {
+                case None =>
+                    logger.debug("No markup available")
+                    page.body("<!-- search results: no object list markup found -->")
+
+                case Some(markup) =>
+                    logger.debug("Using markup {}", markup)
+
+                    if (result.facets.size > 0)
+                        page.body(FacetRenderer.render(result.facets))
+
+                    if (paging.totalPages > 1)
+                        page.body(PagingRenderer.render(paging))
+
+                    page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
+
+                    if (paging.totalPages > 1)
+                        page.body(PagingRenderer.render(paging))
             }
         }
         page

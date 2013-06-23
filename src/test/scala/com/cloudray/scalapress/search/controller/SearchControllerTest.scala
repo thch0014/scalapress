@@ -1,12 +1,14 @@
-package com.cloudray.scalapress.search
+package com.cloudray.scalapress.search.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.search.controller.SearchController
 import javax.servlet.http.HttpServletRequest
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.obj.{ObjectType, Obj, ObjectDao}
 import com.cloudray.scalapress.theme.{Markup, ThemeService}
+import com.cloudray.scalapress.search._
+import com.cloudray.scalapress.search.SearchResult
+import com.cloudray.scalapress.search.ObjectRef
 
 /** @author Stephen Samuel */
 class SearchControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {

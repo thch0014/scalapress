@@ -23,3 +23,13 @@ trait SavedSearchDao extends GenericDao[SavedSearch, java.lang.Long]
 @Component
 @Transactional
 class SavedSearchDaoImpl extends GenericDaoImpl[SavedSearch, java.lang.Long] with SavedSearchDao
+
+trait SearchSettingsDao extends GenericDao[SearchSettings, java.lang.Long] {
+    def get: SearchSettings
+}
+
+@Component
+@Transactional
+class FolderPluginDaoImpl extends GenericDaoImpl[SearchSettings, java.lang.Long] with SearchSettingsDao {
+    def get: SearchSettings = findAll.head
+}

@@ -420,7 +420,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     test("facets returned happy path") {
         val q = new SavedSearch
-        q.facets = Set(av4.attribute.id.toString)
+        q.facets = Seq(av4.attribute.id.toString)
         val results = service.search(q)
         assert(1 === results.facets.size)
         assert(2 === results.facets(0).terms.size)
