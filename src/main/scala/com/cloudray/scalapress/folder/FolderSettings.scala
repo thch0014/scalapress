@@ -1,8 +1,10 @@
 package com.cloudray.scalapress.folder
 
-import javax.persistence.{GenerationType, GeneratedValue, Id, Entity, Table}
+import javax.persistence._
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.enums.Sort
+import org.hibernate.annotations.{NotFoundAction, NotFound}
+import com.cloudray.scalapress.theme.Markup
 
 /** @author Stephen Samuel */
 @Entity
@@ -18,4 +20,9 @@ class FolderSettings {
     @BeanProperty var pageSize: Int = _
     @BeanProperty var header: String = _
     @BeanProperty var footer: String = _
+
+    @ManyToOne
+    @JoinColumn(name = "subfolderMarkup", nullable = true)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @BeanProperty var subfolderMarkup: Markup = _
 }

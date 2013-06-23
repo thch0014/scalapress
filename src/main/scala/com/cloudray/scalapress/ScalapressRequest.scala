@@ -49,6 +49,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     }
 
     lazy val installation = context.installationDao.get
+    lazy val folderSettings = context.folderSettingsDao.head
     def folders = context.folderDao.findAll()
     lazy val folderRoot = context.folderDao.root
     lazy val widgets = context.widgetDao.findAll()

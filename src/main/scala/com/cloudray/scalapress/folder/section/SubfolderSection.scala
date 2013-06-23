@@ -18,7 +18,7 @@ class SubfolderSection extends Section {
     @BeanProperty var markup: Markup = _
 
     def render(request: ScalapressRequest): Option[String] = {
-        val m = Option(markup).getOrElse(SubfolderSection.DefaultMarkup)
+        val m = Option(markup).orElse(Option(request.folderSettings.subfolderMarkup)).getOrElse(SubfolderSection.DefaultMarkup)
         val render = MarkupRenderer.renderFolders(_folders, m, request)
         Option(render)
     }
