@@ -8,6 +8,14 @@
 
     #parse("/admin/widget/common.vm")
 
+    <div class="control-group">
+        <label class="control-label">Simple Editor</label>
+
+        <div class="controls">
+            #springFormCheckbox("widget.simpleEditor")
+        </div>
+    </div>
+
     #if ($widget.simpleEditor)
         <div class="control-group">
             <label class="control-label">Content</label>
