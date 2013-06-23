@@ -15,6 +15,7 @@ import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.sksamuel.scoot.soa.{Paging, Page}
+import java.net.URLDecoder
 
 /** @author Stephen Samuel */
 @Controller
@@ -114,7 +115,13 @@ class SearchController extends Logging {
 
                     if (result.facets.size > 0) {
                         import com.github.theon.uri.Uri._
-                        val uri = parseUri(req.getRequestURL.append("?").append(Option(req.getQueryString).getOrElse("")).toString)
+
+                        var uri = parseUri(req.getRequestURL.toString)
+                        Option(req.getQueryString).foreach(_.split("&").foreach(param => {
+                            val kv = URLDecoder.decode(param).split("=")
+                            uri = uri.param(kv(0) -> kv(1))
+                        }))
+
                         page.body(FacetRenderer.render(result.facets, uri))
                     }
 
