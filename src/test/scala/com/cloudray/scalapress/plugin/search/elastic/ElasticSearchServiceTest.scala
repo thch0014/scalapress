@@ -429,6 +429,6 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert("sw10" === results.facets(0).terms(0).term)
         assert("ts19" === results.facets(0).terms(1).term)
         assert(2 === results.facets(0).terms.size)
-        assert("2" === results.facets(0).name) // should be id of the attribute
+        assert("2" === results.facets(0).field) // should be id of the attribute
     }
 }

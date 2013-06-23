@@ -16,4 +16,5 @@ class SearchSettings {
     @BeanProperty var pageSize: Int = _
     @BeanProperty var header: String = _
     @BeanProperty var footer: String = _
+
 }

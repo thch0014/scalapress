@@ -2,10 +2,11 @@ package com.cloudray.scalapress.folder.section
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder}
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.Markup
+import org.mockito.Mockito
 
 /** @author Stephen Samuel */
 class SubfolderSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -28,7 +29,9 @@ class SubfolderSectionTest extends FunSuite with MockitoSugar with OneInstancePe
     section.folder = root
 
     val context = new ScalapressContext
+    context.folderSettingsDao = mock[FolderPluginDao]
     val req = ScalapressRequest(mock[HttpServletRequest], context)
+    Mockito.when(context.folderSettingsDao.head).thenReturn(new FolderSettings)
 
     test("render uses supplied markup when set") {
         section.markup = new Markup

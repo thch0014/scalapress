@@ -113,8 +113,11 @@ class SearchController extends Logging {
                 case Some(markup) =>
                     logger.debug("Using markup {}", markup)
 
-                    if (result.facets.size > 0)
-                        page.body(FacetRenderer.render(result.facets))
+                    if (result.facets.size > 0) {
+                        import com.github.theon.uri.Uri._
+                        val uri = parseUri(req.getRequestURL.append("?").append(Option(req.getQueryString).getOrElse("")).toString)
+                        page.body(FacetRenderer.render(result.facets, uri))
+                    }
 
                     if (paging.totalPages > 1)
                         page.body(PagingRenderer.render(paging))

@@ -30,6 +30,6 @@ trait SearchSettingsDao extends GenericDao[SearchSettings, java.lang.Long] {
 
 @Component
 @Transactional
-class FolderPluginDaoImpl extends GenericDaoImpl[SearchSettings, java.lang.Long] with SearchSettingsDao {
+class SearchSettingsDaoImpl extends GenericDaoImpl[SearchSettings, java.lang.Long] with SearchSettingsDao {
     def get: SearchSettings = findAll.head
 }

@@ -2,20 +2,21 @@ package com.cloudray.scalapress.search.controller
 
 import com.cloudray.scalapress.search.{FacetTerm, Facet}
 import scala.xml.{Node, Utility}
+import com.github.theon.uri.Uri
 
 /** @author Stephen Samuel */
 object FacetRenderer {
 
-    def render(facets: Seq[Facet]): Node = {
-        val renderedFacets = facets.map(facet => renderFacet(facet))
+    def render(facets: Seq[Facet], uri: Uri): Node = {
+        val renderedFacets = facets.map(facet => renderFacet(facet, uri))
         val xml = <div id="facets">
             {renderedFacets}
         </div>
         Utility.trim(xml)
     }
 
-    def renderFacet(facet: Facet): Node = {
-        val terms = facet.terms.sortBy(_.count).reverse.map(term => renderTerm(facet, term))
+    def renderFacet(facet: Facet, uri: Uri): Node = {
+        val terms = facet.terms.sortBy(_.count).reverse.map(term => renderTerm(facet, term, uri))
         val xml = <div class="search-facet">
             <div class="facet-name">
                 {facet.name}
@@ -24,12 +25,12 @@ object FacetRenderer {
         Utility.trim(xml)
     }
 
-    def renderTerm(facet: Facet, term: FacetTerm): Node = {
+    def renderTerm(facet: Facet, term: FacetTerm, uri: Uri): Node = {
         val field = facet.field match {
             case id if id.forall(_.isDigit) => "attr_" + id
             case name => name
         }
-        val url = s"/search?$field=${term.term}"
+        val url = uri.param(field -> term.term).toString()
         val link = <a href={url}>
             {term.term}
         </a>
