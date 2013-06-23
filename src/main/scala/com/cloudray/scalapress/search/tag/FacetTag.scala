@@ -19,7 +19,8 @@ class FacetTag extends ScalapressTag {
                 var uri = parseUri(request.request.getRequestURL.toString)
                 Option(request.request.getQueryString).foreach(_.split("&").foreach(param => {
                     val kv = URLDecoder.decode(param).split("=")
-                    uri = uri.param(kv(0) -> kv(1))
+                    if (kv.size == 2)
+                        uri = uri.param(kv(0) -> kv(1))
                 }))
 
                 val node = FacetRenderer.render(result.facets, uri)
