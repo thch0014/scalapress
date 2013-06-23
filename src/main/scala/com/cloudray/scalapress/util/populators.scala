@@ -5,6 +5,7 @@ import org.springframework.ui.ModelMap
 import java.util
 import com.cloudray.scalapress.obj.TypeDao
 import com.cloudray.scalapress.obj.attr.Attribute
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 
@@ -33,6 +34,22 @@ trait AttributePopulator {
         attributes.map(t => {
             map.put(t.id, "#" + t.id + " " + t.name)
         })
+        map
+    }
+}
+
+trait AllAttributesPopulator {
+
+    var objectTypeDao: TypeDao
+
+    @ModelAttribute("attributesMap") def allAttributesMap: java.util.Map[Long, String] = {
+
+        val map = new util.LinkedHashMap[Long, String]
+        map.put(0l, "-None-")
+
+        for ( objectType <- objectTypeDao.findAll() )
+            for ( attribute <- objectType.attributes.asScala )
+                map.put(attribute.id, "#" + attribute.id + " " + attribute.name)
         map
     }
 }

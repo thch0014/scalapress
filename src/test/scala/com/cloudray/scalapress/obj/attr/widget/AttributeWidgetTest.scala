@@ -37,4 +37,9 @@ class AttributeWidgetTest extends FlatSpec with MockitoSugar with OneInstancePer
         assert(rendered.contains("/search?type=9&attr_3=coldplay"))
         assert(rendered.contains("/search?type=9&attr_3=keane"))
     }
+
+    it should "render with a classname of attribute-widget" in {
+        val rendered = widget.render(req).get
+        assert(rendered.startsWith("<ul class='attribute-widget'>"))
+    }
 }

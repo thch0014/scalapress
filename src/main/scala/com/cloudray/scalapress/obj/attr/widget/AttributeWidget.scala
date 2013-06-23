@@ -25,7 +25,7 @@ class AttributeWidget extends Widget {
                     val link = s"/search?type=${option.attribute.objectType.id}&attr_${option.attribute.id}=${option.value}"
                     s"<li>$link</li>"
                 })
-                Some("<ul>" + values.mkString + "</ul>")
+                Some("<ul class='attribute-widget'>" + values.mkString + "</ul>")
         }
     }
 }

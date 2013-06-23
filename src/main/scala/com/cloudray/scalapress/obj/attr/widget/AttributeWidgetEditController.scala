@@ -4,23 +4,26 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.widgets.{HtmlWidget, WidgetDao}
+import com.cloudray.scalapress.widgets.WidgetDao
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.widgets.controller.WidgetContainerMapPopulator
+import com.cloudray.scalapress.util.AllAttributesPopulator
+import com.cloudray.scalapress.obj.TypeDao
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/widget/attribute/{id}"))
-class AttributeWidgetEditController extends WidgetContainerMapPopulator {
+class AttributeWidgetEditController extends WidgetContainerMapPopulator with AllAttributesPopulator {
 
     @Autowired var widgetDao: WidgetDao = _
     @Autowired var context: ScalapressContext = _
+    @Autowired var objectTypeDao: TypeDao = _
 
     @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = "admin/widget/attribute.vm"
+    def edit(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = "admin/widget/attribute.vm"
 
     @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = {
+    def save(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = {
         widgetDao.save(w)
         edit(w, model)
     }
