@@ -58,9 +58,6 @@ class Attribute {
 
     @BeanProperty var section: String = _
 
-    @Column(name = "facet", nullable = false)
-    @BeanProperty var facet: Boolean = _
-
     @Column(name = "displayable", nullable = false)
     @BeanProperty var public: Boolean = _
 
@@ -80,7 +77,11 @@ class Attribute {
     @BeanProperty var position: Int = _
 
     @BeanProperty var prefix: String = _
-
     @BeanProperty var suffix: String = _
 
+    @Column(name = "facet", nullable = false)
+    @BeanProperty var facet: Boolean = _
+
+    @Column(name = "facetSize", nullable = false)
+    @BeanProperty var facetSize: Int = _
 }

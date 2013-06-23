@@ -17,7 +17,6 @@ import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.sksamuel.scoot.soa.{Paging, Page}
 
 /** @author Stephen Samuel */
-
 @Controller
 @RequestMapping(Array("search"))
 class SearchController extends Logging {

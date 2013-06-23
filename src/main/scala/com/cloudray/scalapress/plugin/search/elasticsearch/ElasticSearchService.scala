@@ -262,7 +262,7 @@ class ElasticSearchService extends SearchService with Logging {
         val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
         val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
         filteredFacets.map(_ match {
-            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id))
+            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id).size(20))
             case name => req.addFacet(new TermsFacetBuilder(name).field(name))
         })
 
