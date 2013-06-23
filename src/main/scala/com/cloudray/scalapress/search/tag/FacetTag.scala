@@ -26,7 +26,7 @@ class FacetTag extends ScalapressTag {
                 val node = FacetRenderer.render(result.facets, uri)
                 Some(node.toString())
 
-            case None => None
+            case _ => None
         }
     }
 }
