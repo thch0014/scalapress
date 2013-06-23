@@ -21,8 +21,11 @@ class AttributeWidget extends Widget {
         Option(attribute) match {
             case None => None
             case Some(c) =>
-                val values = attribute.options.asScala.map(_.value).map(value => "<li>" + value + "</li>")
-                Some("<ul>" + values.mkString("\n") + "</ul>")
+                val values = attribute.options.asScala.map(option => {
+                    val link = s"/search?attr_${option.attribute.id}=${option.value}"
+                    s"<li>$link</li>"
+                })
+                Some("<ul>" + values.mkString + "</ul>")
         }
     }
 }
