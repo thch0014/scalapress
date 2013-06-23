@@ -81,7 +81,7 @@ class SearchController extends Logging {
         val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
         logger.debug("Loaded {} objects", objects.size)
 
-        val sreq = ScalapressRequest(req, context).withTitle("Search Results").withLocation(location)
+        val sreq = ScalapressRequest(req, context).withTitle("Search Results").withLocation(location).withSearchResult(result)
         val theme = themeService.default
         val page = ScalapressPage(theme, sreq)
 
