@@ -5,7 +5,6 @@ import com.cloudray.scalapress.ScalapressRequest
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
-
 @Entity
 @Table(name = "boxes_custom")
 class HtmlWidget extends Widget {
