@@ -89,19 +89,4 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
         val page = controller.search(req, null, null, "coldplay", null, null, 0, null, 20, 1)
         assert(!page.render.contains("Parachutes"))
     }
-
-    test("facets decode URL parameters before encoding links") {
-        Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://cloudray.co.uk/search"))
-        Mockito.when(req.getQueryString).thenReturn("sort=Name&attr_8=car_%26_hire")
-        val facet = Facet("facety", field = "facety", terms = Seq(FacetTerm("chelsea", 4), FacetTerm("kensington", 2)))
-        val result = SearchResult(Seq(ref), Seq(facet))
-        Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
-        Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
-
-        val page = controller.search(req, null, null, "coldplay", null, null, 0, null, 20, 1)
-        println(page.render)
-        assert(page.render.contains("attr_8=car_%26_hire"))
-        assert(page.render.contains("facety=chelsea"))
-        assert(page.render.contains("facety=kensington"))
-    }
 }

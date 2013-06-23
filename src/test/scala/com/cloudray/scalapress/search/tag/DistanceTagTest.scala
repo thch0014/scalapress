@@ -1,8 +1,7 @@
-package com.cloudray.scalapress.search
+package com.cloudray.scalapress.search.tag
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import tag.{LocationTag, DistanceTag}
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.obj.Obj
