@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest
 import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
-import com.cloudray.scalapress.search.CorpusResult
+import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import java.util.UUID
 
@@ -17,6 +17,7 @@ case class ScalapressRequest(request: HttpServletRequest,
                              order: Option[Order] = None,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
+                             searchResult: Option[SearchResult] = None,
                              corpusResult: Option[CorpusResult] = None,
                              line: Option[BasketLine] = None,
                              location: Option[String] = None,
@@ -74,6 +75,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     def withOrder(o: Order): ScalapressRequest = copy(order = Option(o))
     def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
     def withResult(r: CorpusResult): ScalapressRequest = copy(corpusResult = Option(r))
+    def withSearchResult(r: SearchResult): ScalapressRequest = copy(searchResult = Option(r))
 }
 
 object ScalapressRequest {

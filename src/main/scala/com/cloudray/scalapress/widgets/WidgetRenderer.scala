@@ -47,9 +47,11 @@ object WidgetRenderer extends Logging {
             case true if widget.displayOnAllObjects &&
               request.obj.isDefined => true
 
+            case true if widget.displayOnSearchResults && request.searchResult.isDefined => true
+
             case true if widget.displayOnOthers &&
               request.folder.isEmpty &&
-              request.obj.isEmpty => true
+              request.obj.isEmpty && request.searchResult.isEmpty => true
 
             case _ => false
         }

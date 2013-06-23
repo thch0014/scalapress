@@ -6,6 +6,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 class WidgetRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -73,6 +74,24 @@ class WidgetRendererTest extends FunSuite with MockitoSugar with OneInstancePerT
         val widget = new HtmlWidget
         widget.restricted = true
         widget.displayOnOthers = false
+        assert(!WidgetRenderer.checkWhere(widget, sreq))
+    }
+
+    test("given a search results page and show on search results then the widget is visible") {
+        val r = SearchResult()
+        val sreq = new ScalapressRequest(req, context).withSearchResult(r)
+        val widget = new HtmlWidget
+        widget.restricted = true
+        widget.displayOnSearchResults = true
+        assert(WidgetRenderer.checkWhere(widget, sreq))
+    }
+
+    test("given a non search results page and not show on search results then the widget is not visible") {
+        val r = SearchResult()
+        val sreq = new ScalapressRequest(req, context).withSearchResult(r)
+        val widget = new HtmlWidget
+        widget.restricted = true
+        widget.displayOnSearchResults = false
         assert(!WidgetRenderer.checkWhere(widget, sreq))
     }
 }
