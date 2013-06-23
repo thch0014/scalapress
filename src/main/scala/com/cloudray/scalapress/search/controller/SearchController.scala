@@ -67,8 +67,14 @@ class SearchController extends Logging {
         search.location = location
         search.maxResults = pageSize
         search.pageNumber = pageNumber
-        search.objectType = Option(t).orElse(Option(objectTypeId)).map(t => typeDao.find(t.toLong)).orNull
         search.sortType = sort
+
+        Option(t).orElse(Option(objectTypeId)).map(arg => typeDao.find(arg.toLong)) match {
+            case None =>
+            case Some(objectType) =>
+                search.objectType = objectType
+                search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString)
+        }
 
         val result = searchService.search(search)
         val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))

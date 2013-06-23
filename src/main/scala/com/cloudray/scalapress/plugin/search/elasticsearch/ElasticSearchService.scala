@@ -259,8 +259,9 @@ class ElasticSearchService extends SearchService with Logging {
             case Some(f) => req.setQuery(new FilteredQueryBuilder(query, f))
         }
 
-        search.facets.map(facet => {
-            req.addFacet(new TermsFacetBuilder(facet).field(facet))
+        search.facets.map(_ match {
+            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id))
+            case name => req.addFacet(new TermsFacetBuilder(name).field(name))
         })
 
         logger.debug("Search: " + req)
@@ -295,8 +296,7 @@ class ElasticSearchService extends SearchService with Logging {
         Option(resp.getFacets) match {
             case None => Nil
             case Some(facets) =>
-                facets.facets()
-                  .asScala
+                facets.facets().asScala
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
                   .map(arg => {

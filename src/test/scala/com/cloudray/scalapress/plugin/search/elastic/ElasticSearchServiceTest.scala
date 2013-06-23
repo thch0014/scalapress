@@ -28,13 +28,14 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     val av4 = new AttributeValue
     av4.attribute = new Attribute
+    av4.attribute.name = "postcode"
     av4.attribute.id = 2
     av4.attribute.attributeType = AttributeType.Postcode
     av4.value = "SW10"
 
     val av5 = new AttributeValue
     av5.attribute = av4.attribute
-    av5.value = "SW6"
+    av5.value = "SW10"
 
     val av6 = new AttributeValue
     av6.attribute = av4.attribute
@@ -415,5 +416,19 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     test("contains returns false when the id does not exist") {
         assert(!service.contains("44"))
+    }
+
+    test("facets returned happy path") {
+        val q = new SavedSearch
+        q.facets = Set(av4.attribute.id.toString)
+        val results = service.search(q)
+        assert(1 === results.facets.size)
+        assert(2 === results.facets(0).terms.size)
+        assert(2 === results.facets(0).terms(0).count)
+        assert(1 === results.facets(0).terms(1).count)
+        assert("sw10" === results.facets(0).terms(0).term)
+        assert("ts19" === results.facets(0).terms(1).term)
+        assert(2 === results.facets(0).terms.size)
+        assert("2" === results.facets(0).name) // should be id of the attribute
     }
 }
