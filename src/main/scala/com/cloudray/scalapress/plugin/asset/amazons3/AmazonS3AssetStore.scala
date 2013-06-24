@@ -9,7 +9,7 @@ import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, List
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.media.{ImageTools, Asset, AssetStore}
+import com.cloudray.scalapress.media.{MimeTools, Asset, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
 import com.sksamuel.scoot.soa.PagedQuery
 import scala.collection.mutable.ListBuffer
@@ -117,7 +117,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
         val md = new ObjectMetadata
         md.setContentLength(array.length)
-        md.setContentType(ImageTools.contentType(key))
+        md.setContentType(MimeTools.contentType(key))
         md.setCacheControl("max-age=604800001")
 
         val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
@@ -161,7 +161,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
                     try {
 
                         val md = new ObjectMetadata
-                        md.setContentType(ImageTools.contentType(arg.getKey))
+                        md.setContentType(MimeTools.contentType(arg.getKey))
                         md.setCacheControl("max-age=2592000")
 
                         val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
