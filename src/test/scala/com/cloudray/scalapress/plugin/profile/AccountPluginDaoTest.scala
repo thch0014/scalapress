@@ -16,7 +16,7 @@ class AccountPluginDaoTest extends FunSuite with MockitoSugar {
 
         TestDatabaseContext.accountPluginDao.save(plugin)
 
-        val plugin2 = TestDatabaseContext.accountPluginDao.find(100)
+        val plugin2 = TestDatabaseContext.accountPluginDao.get
         assert("header" === plugin2.accountPageHeader)
         assert("footer" === plugin2.accountPageFooter)
     }

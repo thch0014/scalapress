@@ -14,7 +14,7 @@ import com.cloudray.scalapress.folder.{FolderDao, FolderDaoImpl}
 import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
-import com.cloudray.scalapress.plugin.profile.AccountPluginDaoImpl
+import com.cloudray.scalapress.plugin.profile.{AccountPluginDao, AccountPluginDaoImpl}
 
 /** @author Stephen Samuel */
 object TestDatabaseContext {
@@ -111,5 +111,5 @@ object TestDatabaseContext {
     val accountPluginDao = context
       .getAutowireCapableBeanFactory
       .createBean(classOf[AccountPluginDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-      .asInstanceOf[AccountPluginDaoImpl]
+      .asInstanceOf[AccountPluginDao]
 }
