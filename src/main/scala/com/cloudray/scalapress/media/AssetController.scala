@@ -24,7 +24,7 @@ class AssetController {
         assetStore.get(key) match {
             case None => throw new RuntimeException
             case Some(input) =>
-                resp.setHeader("Content-Type", MimeTools.contentType(key))
+                resp.setContentType(MimeTools.contentType(key))
                 IOUtils.copy(input, resp.getOutputStream)
                 IOUtils.closeQuietly(input)
         }
