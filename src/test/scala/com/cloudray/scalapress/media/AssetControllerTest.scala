@@ -22,11 +22,11 @@ class AssetControllerTest extends FunSuite with MockitoSugar with OneInstancePer
 
     test("content type is set for png") {
         controller.asset("myimage.png", resp)
-        Mockito.verify(resp).setHeader("Content-Type", "image/png")
+        Mockito.verify(resp).setContentType("image/png")
     }
 
     test("content type is set for css") {
         controller.asset("mystylesheet.css", resp)
-        Mockito.verify(resp).setHeader("Content-Type", "text/css")
+        Mockito.verify(resp).setContentType("text/css")
     }
 }
