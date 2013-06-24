@@ -5,7 +5,7 @@ import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 object AccountRenderer {
-    def links(links: Seq[Class[AccountLink]], context: ScalapressContext): String = {
+    def links(links: Seq[Class[_ <: AccountLink]], context: ScalapressContext): String = {
 
         links.map(klass => klass.newInstance)
           .sortBy(_.accountLinkPriority)

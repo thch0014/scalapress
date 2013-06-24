@@ -2,6 +2,7 @@ package com.cloudray.scalapress.plugin.profile
 
 import javax.persistence._
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.theme.Markup
 
 /** @author Stephen Samuel */
 @Entity
@@ -12,9 +13,12 @@ class AccountPlugin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
+    @BeanProperty var accountPageMarkup: Markup = _
+
     @ElementCollection
     @BeanProperty var accounts: java.util.List[java.lang.Long] = new java.util.ArrayList[java.lang.Long]()
 
     @BeanProperty var accountPageHeader: String = _
     @BeanProperty var accountPageFooter: String = _
+
 }

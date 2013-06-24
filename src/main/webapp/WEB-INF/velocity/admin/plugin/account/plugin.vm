@@ -4,8 +4,10 @@
 
 <form class="form-horizontal" method="POST">
 
+    <legend>Account Page</legend>
+
     <div class="control-group">
-        <label class="control-label">Account Page Header</label>
+        <label class="control-label">Header</label>
 
         <div class="controls">
             #springFormTextarea("plugin.accountPageHeader")
@@ -13,10 +15,26 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label">Account Page Footer</label>
+        <label class="control-label">Footer</label>
 
         <div class="controls">
             #springFormTextarea("plugin.accountPageFooter")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Markup</label>
+
+        <div class="controls">
+            <select id="accountPageMarkup" name="accountPageMarkup">
+                #foreach($option in $markupMap.keySet())
+                    <option value="${option}"
+                        #if("$!plugin.accountPageMarkup.id" == "$option")
+                            selected="selected"
+                        #end>
+                        $!{markupMap.get($option)}</option>
+                #end
+            </select>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.profile.controller
+package com.cloudray.scalapress.plugin.profile.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -8,11 +8,12 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.profile.{AccountPlugin, AccountPluginDao}
 import com.cloudray.scalapress.theme.MarkupDao
+import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/account"))
-class AccountPluginController {
+class AccountPluginController extends MarkupPopulator {
 
     @Autowired var context: ScalapressContext = _
     @Autowired var markupDao: MarkupDao = _
