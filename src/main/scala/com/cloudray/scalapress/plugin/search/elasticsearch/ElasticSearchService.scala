@@ -119,11 +119,13 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
-    def _normalize(value: String) = value.replace("!", "").toLowerCase
+    def _attributeNormalize(value: String): String = value.replace("!", "").replace(" ", "_")
+    def _normalize(value: String): String = value.replace("!", "").toLowerCase
+    def _attributeRestore(value: String): String = value.replace("_", " ")
 
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
-        val src = source(obj)
+        val src = _source(obj)
 
         try {
 
@@ -218,7 +220,7 @@ class ElasticSearchService extends SearchService with Logging {
           .foreach(_.split(",").foreach(f => buffer.append(FIELD_FOLDERS + ":" + f)))
 
         search.attributeValues.asScala.filter(_.value.trim.length > 0).foreach(av => {
-            buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + _normalize(av.value.replace(" ", "_")))
+            buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + _attributeNormalize(av.value))
         })
 
         Option(search.hasAttributes)
@@ -302,7 +304,11 @@ class ElasticSearchService extends SearchService with Logging {
                   .filter(_.isInstanceOf[TermsFacet])
                   .map(_.asInstanceOf[TermsFacet])
                   .map(facet => {
-                    val terms = facet.getEntries.asScala.map(entry => FacetTerm(entry.getTerm.string(), entry.getCount)).toSeq
+                    val terms = facet
+                      .getEntries
+                      .asScala
+                      .map(entry => FacetTerm(_attributeRestore(entry.getTerm.string()), entry.getCount))
+                      .toSeq
                     val name = facet.getName match {
                         case id if id.forall(_.isDigit) => attributes.find(_.id.toString == id).map(_.name).getOrElse("error")
                         case n => n
@@ -322,14 +328,14 @@ class ElasticSearchService extends SearchService with Logging {
               .filter(_._2 != null)
               .filter(_._1.startsWith(FIELD_ATTRIBUTE)).map(field => {
                 val id = field._1.drop(FIELD_ATTRIBUTE.length).toLong
-                val value = field._2.toString
+                val value = _attributeRestore(field._2.toString)
                 (id, value)
             }).toMap
             new ObjectRef(id, objectType, n, status, attributes, Nil)
         }).toSeq
     }
 
-    private def source(obj: Obj) = {
+    def _source(obj: Obj) = {
         require(obj.id > 0)
 
         val json = XContentFactory
@@ -353,7 +359,7 @@ class ElasticSearchService extends SearchService with Logging {
           .filterNot(_.value == null)
           .filterNot(_.value.isEmpty)
           .foreach(av => {
-            json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, _normalize(av.value.replace(" ", "_")))
+            json.field(FIELD_ATTRIBUTE + av.attribute.id.toString, _attributeNormalize(av.value))
             json.field("has_attribute_" + av.attribute.id.toString, "1")
             if (av.attribute.attributeType == AttributeType.Postcode) {
                 Postcode.gps(av.value).foreach(gps => {

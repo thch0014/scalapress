@@ -426,8 +426,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(2 === results.facets(0).terms.size)
         assert(2 === results.facets(0).terms(0).count)
         assert(1 === results.facets(0).terms(1).count)
-        assert("sw10" === results.facets(0).terms(0).term)
-        assert("ts19" === results.facets(0).terms(1).term)
+        assert("SW10" === results.facets(0).terms(0).term)
+        assert("TS19" === results.facets(0).terms(1).term)
         assert(2 === results.facets(0).terms.size)
         assert("2" === results.facets(0).field) // should be id of the attribute
     }
@@ -442,5 +442,16 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         q.facets = Seq(av4.attribute.id.toString)
         val results = service.search(q)
         assert(0 === results.facets.size)
+    }
+
+    test("facets should be restored with spaces") {
+        val av1 = new AttributeValue
+        av1.attribute = av7.attribute
+        av1.value = "attribute with space"
+
+        val q = new SavedSearch
+        q.facets = Seq(av7.attribute.id.toString)
+        val results = service.search(q)
+        assert("attribute with space" === results.facets(0).terms(0).term)
     }
 }
