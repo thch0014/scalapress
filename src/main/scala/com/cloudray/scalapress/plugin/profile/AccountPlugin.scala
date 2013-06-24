@@ -13,6 +13,8 @@ class AccountPlugin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @BeanProperty var id: Long = _
 
+    @ManyToOne
+    @JoinColumn(name = "accountPageMarkup")
     @BeanProperty var accountPageMarkup: Markup = _
 
     @ElementCollection
