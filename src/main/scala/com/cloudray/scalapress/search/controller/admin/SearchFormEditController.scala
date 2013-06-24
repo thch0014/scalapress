@@ -45,9 +45,5 @@ class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator 
     }
 
     @ModelAttribute("form") def form(@PathVariable("id") id: Long) = searchFormDao.find(id)
-
-    import scala.collection.JavaConverters._
-
-    @ModelAttribute("fields") def fields(@PathVariable("id") id: Long) =
-        searchFormDao.find(id).fields.asScala.toSeq.sortBy(_.position).asJava
+    @ModelAttribute("fields") def fields(@PathVariable("id") id: Long) = searchFormDao.find(id).sortedFields
 }
