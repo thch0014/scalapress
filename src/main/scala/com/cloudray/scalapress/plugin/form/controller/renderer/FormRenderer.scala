@@ -91,7 +91,7 @@ object FormRenderer {
             <label class="control-label">
                 {Unparsed(field.name)}{star}
             </label>
-            <div class="controls">
+            <div class="controls" style="height: auto">
                 <textarea name={field.id.toString}>
                     {value}
                 </textarea>
