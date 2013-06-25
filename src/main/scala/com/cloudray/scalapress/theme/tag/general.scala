@@ -31,8 +31,8 @@ class TitleTag extends ScalapressTag with TagBuilder {
 @Tag("script")
 class ScriptTag extends ScalapressTag with TagBuilder {
 
-    val sources = Seq("//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js",
-        "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js",
+    val sources = Seq("//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js",
+        "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js",
         "/static/js/jquery.colorbox-min.js",
         "/static/js/jquery.easing.1.3.js",
         "/static/js/jquery.galleryview-3.0-dev.js",
