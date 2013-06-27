@@ -15,6 +15,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
         val h = params.get("h").orElse(params.get("height")).getOrElse("0").toInt
         val w = params.get("w").orElse(params.get("width")).getOrElse("0").toInt
         val limit = params.get("limit").getOrElse("100").toInt
+	val cssImgClass = params.get("imgclass").getOrElse("")
 
         val obj = request.obj.orElse(request.line.map(_.obj))
         obj match {
@@ -29,9 +30,9 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
                         request.context.imageService.imageLink(i.filename, w, h)
 
                     val html = if (w == 0 || h == 0)
-                            <img src={src}/>.toString()
+                            <img src={src} class={cssImgClass}/>.toString()
                     else
-                            <img src={src} height={h.toString} width={w.toString}/>.toString()
+                            <img src={src} height={h.toString} width={w.toString} class={cssImgClass}/>.toString()
 
                     params.get("link") match {
 
