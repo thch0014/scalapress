@@ -27,5 +27,6 @@ object SpringSecurityResolver extends SecurityResolver {
 }
 
 trait SecurityResolver {
+    def hasUserRole(req: HttpServletRequest): Boolean
     def getUser(req: HttpServletRequest): Option[Obj]
 }
