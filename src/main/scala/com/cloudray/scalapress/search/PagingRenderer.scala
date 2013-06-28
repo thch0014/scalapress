@@ -9,7 +9,8 @@ object PagingRenderer {
     def _renderPages(paging: Paging, range: Int) = {
         paging.range(range).map(p => {
             val url = paging.url(p)
-            <li>
+            val css = if (p == paging.pageNumber) "active" else ""
+            <li class={css}>
                 <a href={url}>
                     {p}
                 </a>
@@ -24,8 +25,10 @@ object PagingRenderer {
         val pages = _renderPages(paging, range)
         val xml = <div class="pagination">
             <ul>
-            	<li class="disabled"><i class="icon-search"></i> Viewing results on page </li>
-                {pages}
+                <li class="disabled">
+                    <i class="icon-search"></i>
+                    Viewing results
+                </li>{pages}
             </ul>
         </div>
         val trimmed = Utility.trim(xml)
