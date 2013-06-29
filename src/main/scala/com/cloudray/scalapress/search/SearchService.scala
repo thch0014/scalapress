@@ -18,7 +18,7 @@ object SearchService {
     val FACET_TAGS = "tags"
 }
 
-case class SearchResult(refs: Seq[ObjectRef] = Nil, facets: Seq[Facet] = Nil, count: Int = 0)
+case class SearchResult(refs: Seq[ObjectRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
 case class Facet(name: String, field: String, terms: Seq[FacetTerm])
 case class FacetTerm(term: String, count: Int)
 case class ObjectRef(id: Long,

@@ -102,7 +102,7 @@ class SearchController extends Logging {
 
             page.body("<!-- search results: " + objects.size + " objects found -->")
 
-            val p = Page(objects, pageNumber, pageSize, result.count)
+            val p = Page(objects, pageNumber, pageSize, result.count.toInt)
             val paging = Paging(req, p)
 
             Option(objects.head.objectType.objectListMarkup) match {

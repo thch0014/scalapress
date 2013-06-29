@@ -1,16 +1,15 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
 import org.elasticsearch.common.xcontent.XContentFactory
-import org.elasticsearch.action.search.SearchType
+import org.elasticsearch.action.search.SearchResponse
 import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.springframework.stereotype.Component
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
-import org.elasticsearch.node.NodeBuilder
 import org.elasticsearch.index.query._
-import collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ListBuffer, ArrayBuffer}
 import scala.Option
 import com.cloudray.scalapress.enums.{AttributeType, Sort}
 import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
@@ -18,14 +17,16 @@ import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
 import javax.annotation.PreDestroy
-import java.util.concurrent.TimeUnit
 import com.cloudray.scalapress.search._
-import org.elasticsearch.action.search.SearchResponse
-import org.elasticsearch.search.facet.terms.{TermsFacet, TermsFacetBuilder}
+import org.elasticsearch.search.facet.terms.TermsFacet
 import scala.Some
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
+import com.sksamuel.elastic4s.{ElasticDsl, ElasticClient}
+import ElasticDsl._
+import com.sksamuel.elastic4s.FieldType.{StringType, GeoPointType, IntegerType}
+import com.sksamuel.elastic4s.SearchType.QueryAndFetch
 
 /** @author Stephen Samuel */
 
@@ -50,7 +51,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     var setup = false
 
-    val tempDir = File.createTempFile("anything", "tmp").getParent
+    val tempDir = File.createTempFile("findingfemp", "tmp").getParent
     val dataDir = new File(tempDir + "/" + UUID.randomUUID().toString)
     dataDir.mkdir()
     dataDir.deleteOnExit()
@@ -69,54 +70,34 @@ class ElasticSearchService extends SearchService with Logging {
       .put("indices.memory.min_shard_index_buffer_size", "1mb")
       .put("indices.memory.index_buffer_size", "10%")
       .put("min_index_buffer_size", "4mb")
+      .build
 
-    val node = NodeBuilder.nodeBuilder().local(true).data(true).settings(settings).node()
-    val client = node.client()
+    val client = ElasticClient.local(settings)
 
     def setupIndex(attributes: Seq[Attribute]) {
 
-        val source = XContentFactory
-          .jsonBuilder()
-          .startObject()
-          .startObject("mappings")
-          .startObject(TYPE)
-          //   .startObject("_source").field("enabled", false).endObject()
-          .startObject("properties")
-          .startObject("_id").field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject("objectid").field("type", "integer").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject(FIELD_NAME_NOT_ANALYSED).field("type", "string").field("index", "not_analyzed").field("store", "yes").endObject()
-          .startObject(FIELD_LOCATION).field("type", "geo_point").field("index", "not_analyzed").endObject()
-          .startObject(FIELD_TAGS).field("type", "string").field("index", "not_analyzed").endObject()
+        val fields = id typed StringType index "not_analyzed" store true and
+          "objectid" typed IntegerType index "not_analyzed" store true and
+          "objectType" typed IntegerType index "not_analyzed" store true and
+          FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true and
+          FIELD_TAGS typed StringType index "not_analyzed" and
+          "location" typed GeoPointType
+        val attributeFields = attributes.map(attr => FIELD_ATTRIBUTE + attr.id fieldType StringType index "not_analyzed")
 
-        attributes.foreach(attr => {
-            source
-              .startObject("attribute_" + attr.id)
-              .field("type", "string")
-              .field("index", "not_analyzed")
-              .endObject()
-        })
-
-        source.endObject()
-          .endObject()
-          .endObject()
-          .endObject()
-
-        client.admin().indices().prepareCreate(INDEX).setSource(source).execute().actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
+        client.execute {
+            create index INDEX mappings {
+                TYPE source true as {
+                    fields
+                }
+            }
+        }
     }
 
-    override def contains(id: String): Boolean = {
-        val resp = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.QUERY_AND_FETCH)
-          .setTypes(TYPE)
-          .setQuery(new TermQueryBuilder("_id", id))
-          .setFrom(0)
-          .setSize(1)
-          .execute()
-          .actionGet()
-        resp.getHits.totalHits() match {
-            case 1 => true
-            case _ => false
+    override def contains(_id: String): Boolean = {
+        val resp = client.sync.execute {
+            get id _id from INDEX -> TYPE
         }
+        resp.isExists
     }
 
     def _attributeNormalize(value: String): String = value.replace("!", "").replace(" ", "_")
@@ -125,47 +106,63 @@ class ElasticSearchService extends SearchService with Logging {
 
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
-        val src = _source(obj)
 
-        try {
+        val _fields = ListBuffer[(String, Any)]("objectid" -> obj.id,
+            "objectType" -> obj.objectType.id.toString,
+            FIELD_NAME -> _normalize(obj.name),
+            FIELD_NAME_NOT_ANALYSED -> obj.name,
+            FIELD_STATUS -> obj.status)
 
-            // client.prepareDelete(INDEX, obj.objectType.id.toString, obj.id.toString).execute().actionGet(TIMEOUT)
-            client.prepareIndex(INDEX, TYPE, obj.id.toString)
-              .setSource(src)
-              .execute()
-              .actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
+        Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields append FIELD_TAGS -> tag))
 
-        } catch {
-            case e: Exception => logger.warn(e.getMessage)
+        val hasImage = obj.images.size > 0
+        _fields.append("hasImage" -> hasImage.toString)
+
+        obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.toString))
+
+        obj.attributeValues.asScala
+          .filterNot(_.value == null)
+          .filterNot(_.value.isEmpty)
+          .foreach(av => {
+            _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
+            _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
+            if (av.attribute.attributeType == AttributeType.Postcode) {
+                Postcode.gps(av.value).foreach(gps => {
+                    _fields.append(FIELD_LOCATION -> gps.string())
+                })
+            }
+        })
+
+        client execute {
+            insert into INDEX -> TYPE id obj.id.toString fields _fields
         }
     }
 
-    override def remove(id: String) {
-        client.prepareDelete(INDEX, TYPE, id).execute().actionGet(TIMEOUT)
+    override def remove(_id: String) {
+        client.execute {
+            delete id _id from INDEX -> TYPE
+        }
     }
 
     override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
-        val resp = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.QUERY_AND_FETCH)
-          .setQuery(new PrefixQueryBuilder(FIELD_NAME, q.toLowerCase))
-          .setFrom(0)
-          .setSize(limit)
-          .execute()
-          .actionGet()
+        val resp = client.sync.execute {
+            select in INDEX -> TYPE prefix FIELD_NAME -> q.toLowerCase size limit searchType QueryAndFetch
+        }
         _resp2ref(resp)
     }
 
     override def count: Long = {
-        client.prepareCount(INDEX).setQuery(new QueryStringQueryBuilder("*:*")).execute().actionGet(TIMEOUT, TimeUnit.MILLISECONDS).getCount
+        client.sync.execute {
+            countall from INDEX
+        }.getCount
     }
 
-    def _count(search: SavedSearch): Int = {
-        val query = _buildQuery(search)
-        client.prepareCount(INDEX)
-          .setQuery(query)
-          .execute()
-          .actionGet(TIMEOUT, TimeUnit.MILLISECONDS)
-          .getCount.toInt
+    def _count(search: SavedSearch): Long = {
+        client.sync.execute {
+            countall from INDEX query2 {
+                _buildQuery(search)
+            }
+        }.getCount
     }
 
     override def search(search: SavedSearch): SearchResult = {
@@ -245,31 +242,28 @@ class ElasticSearchService extends SearchService with Logging {
               .distance(search.distance, DistanceUnit.MILES)
         })
 
-        val limit = _maxResults(search)
-        val query = _buildQuery(search)
-        val sort = _sort(search)
-
-        val req = client.prepareSearch(INDEX)
-          .setSearchType(SearchType.QUERY_AND_FETCH)
-          .setTypes(TYPE)
-          .setFrom((search.pageNumber - 1) * limit)
-          .setSize(limit)
-          .addSort(sort)
-
-        filter match {
-            case None => req.setQuery(query)
-            case Some(f) => req.setQuery(new FilteredQueryBuilder(query, f))
+        val query = filter match {
+            case None => _buildQuery(search)
+            case Some(f) => new FilteredQueryBuilder(_buildQuery(search), f)
         }
 
-        val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
-        val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
-        filteredFacets.map(_ match {
-            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id).size(20))
-            case name => req.addFacet(new TermsFacetBuilder(name).field(name))
-        })
+        val limit = _maxResults(search)
 
-        logger.debug("Search: " + req)
-        req.execute().actionGet()
+        client.sync.execute {
+            select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort2 {
+                _sort(search)
+            } query2 {
+                query
+            }
+        }
+
+        //        val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
+        //        val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
+        //        filteredFacets.map(_ match {
+        //            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id).size(20))
+        //            case name => req.addFacet(new TermsFacetBuilder(name).field(name))
+        //        })
+
     }
 
     def _sort(search: SavedSearch) = search.sortType match {
@@ -296,7 +290,7 @@ class ElasticSearchService extends SearchService with Logging {
         case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
     }
 
-    def _resp2facets(resp: SearchResponse, attributes: Iterable[Attribute]): Seq[Facet] = {
+    def _resp2facets(resp: SearchResponse, attributes: Iterable[Attribute]): Seq[com.cloudray.scalapress.search.Facet] = {
         Option(resp.getFacets) match {
             case None => Nil
             case Some(facets) =>
@@ -374,12 +368,11 @@ class ElasticSearchService extends SearchService with Logging {
     @PreDestroy
     def shutdown() {
         client.close()
-        node.close()
         dataDir.delete()
     }
 
     def stats: Map[String, String] = {
-        val nodes = client.admin().cluster().prepareNodesStats().all().execute().actionGet(TIMEOUT).getNodes
+        val nodes = client.admin.cluster().prepareNodesStats().all().execute().actionGet(TIMEOUT).getNodes
         val map = scala.collection.mutable.Map[String, String]()
         nodes.flatMap(node => {
             map.put("jvm.mem.heapUsed", node.getJvm.mem.heapUsed.mb + "mb")

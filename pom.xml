@@ -54,7 +54,8 @@
         <cglib.version>2.2.2</cglib.version>
 
         <ehcache.version>2.6.6</ehcache.version>
-        <elasticsearch.version>0.90.0</elasticsearch.version>
+        <elasticsearch.version>0.90.2</elasticsearch.version>
+        <elastic4s.version>0.90.2.1</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
@@ -386,6 +387,11 @@
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sksamuel.elastic4s</groupId>
+            <artifactId>elastic4s</artifactId>
+            <version>${elastic4s.version}</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
