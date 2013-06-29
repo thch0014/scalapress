@@ -134,7 +134,7 @@ class ElasticSearchService extends SearchService with Logging {
         })
 
         client execute {
-            insert into INDEX -> TYPE id obj.id.toString fields _fields
+            insert into INDEX -> TYPE id obj.id fields _fields
         }
     }
 
@@ -249,21 +249,23 @@ class ElasticSearchService extends SearchService with Logging {
 
         val limit = _maxResults(search)
 
+        val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
+        val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
+
+        val facets = filteredFacets.map(_ match {
+            case id if id.forall(_.isDigit) => facet terms id fields FIELD_ATTRIBUTE + id size 20
+            case name => facet terms name fields name
+        })
+
         client.sync.execute {
             select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort2 {
                 _sort(search)
             } query2 {
                 query
+            } facets {
+                facets
             }
         }
-
-        //        val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
-        //        val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
-        //        filteredFacets.map(_ match {
-        //            case id if id.forall(_.isDigit) => req.addFacet(new TermsFacetBuilder(id).field(FIELD_ATTRIBUTE + id).size(20))
-        //            case name => req.addFacet(new TermsFacetBuilder(name).field(name))
-        //        })
-
     }
 
     def _sort(search: SavedSearch) = search.sortType match {
