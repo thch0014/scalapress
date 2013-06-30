@@ -76,19 +76,18 @@ class ElasticSearchService extends SearchService with Logging {
 
     def setupIndex(attributes: Seq[Attribute]) {
 
-        val fields = id typed StringType index "not_analyzed" store true and
-          "objectid" typed IntegerType index "not_analyzed" store true and
-          "objectType" typed IntegerType index "not_analyzed" store true and
-          FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true and
-          FIELD_TAGS typed StringType index "not_analyzed" and
-          "location" typed GeoPointType
-        val attributeFields = attributes.map(attr => FIELD_ATTRIBUTE + attr.id fieldType StringType index "not_analyzed")
+        val fields = new ListBuffer[FieldDefinition]
+        fields.append(id typed StringType index "not_analyzed" store true)
+        fields.append("objectid" typed IntegerType index "not_analyzed" store true)
+        fields.append("objectType" typed IntegerType index "not_analyzed" store true)
+        fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
+        fields.append(FIELD_TAGS typed StringType index "not_analyzed")
+        fields.append("location" typed GeoPointType)
+        attributes.foreach(attr => fields.append(FIELD_ATTRIBUTE + attr.id fieldType StringType index "not_analyzed"))
 
         client.execute {
             create index INDEX mappings {
-                TYPE source true as {
-                    fields
-                }
+                TYPE source true as (fields.toList: _*)
             }
         }
     }
