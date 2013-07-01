@@ -8,7 +8,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.{ObjectDao, Obj}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.security.{SecurityResolver, SpringSecurityResolver}
@@ -21,6 +21,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 @RequestMapping(Array("profile"))
 class ProfileController {
 
+    @Autowired var objectDao: ObjectDao = _
     @Autowired var themeDao: ThemeDao = _
     @Autowired var themeService: ThemeService = _
     @Autowired var accountPluginDao: AccountPluginDao = _
@@ -50,6 +51,7 @@ class ProfileController {
                 if (StringUtils.isNotBlank(profile.password)) {
                     account.passwordHash = passwordEncoder.encodePassword(profile.password, null)
                 }
+                objectDao.save(account)
             }
         "redirect:profile"
     }
@@ -58,7 +60,6 @@ class ProfileController {
 }
 
 class Profile {
-    var id: Long = _
     var name: String = _
     var email: String = _
     var password: String = _
@@ -67,7 +68,6 @@ class Profile {
 object Profile {
     def apply(obj: Obj): Profile = {
         val profile = new Profile
-        profile.id = obj.id
         profile.name = obj.name
         profile.email = obj.email
         profile

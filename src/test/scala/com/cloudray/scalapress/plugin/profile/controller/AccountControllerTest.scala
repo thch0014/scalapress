@@ -1,14 +1,14 @@
-package com.cloudray.scalapress.plugin.profile
+package com.cloudray.scalapress.plugin.profile.controller
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, OneInstancePerTest}
-import com.cloudray.scalapress.plugin.profile.controller.AccountController
 import org.mockito.Mockito
 import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.{ThemeService, Markup}
 import java.util.UUID
 import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.plugin.profile.{AccountLink, AccountPluginDao, AccountPlugin}
 
 /** @author Stephen Samuel */
 class AccountControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
