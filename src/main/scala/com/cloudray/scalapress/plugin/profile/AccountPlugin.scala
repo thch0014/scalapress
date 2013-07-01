@@ -23,4 +23,6 @@ class AccountPlugin {
     @BeanProperty var accountPageHeader: String = _
     @BeanProperty var accountPageFooter: String = _
 
+    @BeanProperty var loginRedirect: String = _
+
 }
