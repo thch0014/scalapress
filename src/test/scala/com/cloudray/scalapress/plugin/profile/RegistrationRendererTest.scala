@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.profile.controller.RegistrationForm
 import org.springframework.validation.{FieldError, Errors}
 import org.mockito.Mockito
+import com.cloudray.scalapress.plugin.profile.controller.renderer.RegistrationRenderer
 
 /** @author Stephen Samuel */
 class RegistrationRendererTest extends FunSuite with OneInstancePerTest with MockitoSugar {

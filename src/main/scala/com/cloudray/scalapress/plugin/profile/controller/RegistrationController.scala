@@ -9,7 +9,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.plugin.profile.{RegistrationRenderer, AccountPluginDao}
+import com.cloudray.scalapress.plugin.profile.AccountPluginDao
 import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder
@@ -18,6 +18,7 @@ import com.cloudray.scalapress.obj.{ObjectDao, TypeDao, Obj}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.plugin.profile.controller.renderer.RegistrationRenderer
 
 /** @author Stephen Samuel */
 @Controller
@@ -75,7 +76,10 @@ class RegistrationController {
                                errors: Errors): ScalapressPage = {
 
         if (objectDao.byEmail(form.email).isDefined)
-            errors.rejectValue("email", "email", "Email address already in use, please register another&lt;p&gt;If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
+            errors
+              .rejectValue("email",
+                "email",
+                "Email address already in use, please register another&lt;p&gt;If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
 
         errors.hasErrors match {
             case true =>

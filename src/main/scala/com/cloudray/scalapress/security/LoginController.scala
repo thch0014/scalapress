@@ -3,13 +3,13 @@ package com.cloudray.scalapress.security
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.profile.LoginRenderer
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
+import com.cloudray.scalapress.plugin.profile.controller.renderer.LoginRenderer
 
 /** @author Stephen Samuel */
 @Controller

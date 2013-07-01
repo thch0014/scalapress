@@ -14,6 +14,7 @@ import javax.persistence.CascadeType
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
+import org.hibernate.validator.constraints.{NotEmpty, Email}
 
 /** @author Stephen Samuel */
 @Entity

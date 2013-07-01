@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.profile
+package com.cloudray.scalapress.plugin.profile.controller.renderer
 
 /** @author Stephen Samuel */
 object LoginRenderer {

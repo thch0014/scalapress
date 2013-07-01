@@ -1,19 +1,24 @@
-package com.cloudray.scalapress.plugin.profile
+package com.cloudray.scalapress.plugin.profile.controller.renderer
 
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.plugin.profile.AccountPlugin
+import com.cloudray.scalapress.plugin.profile.controller.RegistrationForm
 
 /** @author Stephen Samuel */
-object ProfileRenderer {
+object RegistrationRenderer {
 
-    def renderProfilePage(account: Obj, plugin: AccountPlugin, errors: Errors) = {
+    def renderChooseAccountType(plugin: AccountPlugin) =
+        <div class="container-fluid">Choose Account Type
+        </div>
+
+    def renderRegistrationPage(form: RegistrationForm, plugin: AccountPlugin, errors: Errors) = {
         <div class="registration">
             <form class="form-horizontal registration" method="POST">
                 <div class="control-group">
                     <label for="name">
                         Your name
                     </label>
-                    <input name="name" type="text" placeholder="Your real name" value={account.name}/>
+                    <input name="name" type="text" placeholder="Your name" value={form.name}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -22,7 +27,7 @@ object ProfileRenderer {
                     <label for="email">
                         Email
                     </label>
-                    <input name="email" type="email" placeholder="Email Address" value={account.email}/>
+                    <input name="email" type="email" placeholder="Email Address" value={form.email}/>
                     <span class="help-inline">
                         {Option(errors.getFieldError("email")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
@@ -36,7 +41,7 @@ object ProfileRenderer {
                         {Option(errors.getFieldError("password")).map(_.getDefaultMessage).getOrElse("")}
                     </span>
                 </div>
-                <button type="submit" class="btn">Update Account</button>
+                <button type="submit" class="btn">Register</button>
             </form>
         </div>
     }
