@@ -248,13 +248,6 @@
                             <goals>
                                 <goal>test</goal>
                             </goals>
-                            <configuration>
-                                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                                <junitxml>.</junitxml>
-                                <parallel>false</parallel>
-                                <tagsToExclude>IntegrationTest</tagsToExclude>
-                                <filereports>ScalaTestSuite.txt</filereports>
-                            </configuration>
                         </execution>
                     </executions>
                     <configuration>
@@ -299,6 +292,10 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
