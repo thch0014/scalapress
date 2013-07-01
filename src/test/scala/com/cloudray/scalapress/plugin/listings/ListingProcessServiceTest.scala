@@ -40,6 +40,8 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
         assert(listing.listingPackage === process.listingPackage)
     }
 
+
+
     test("that an admin email is sent") {
         val listing = service.process(process)
         Mockito.verify(service.listingAdminNotificationService).notify(listing)

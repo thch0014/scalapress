@@ -27,8 +27,13 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
     process.listingPackage.objectType = new ObjectType
     process.title = "horse for sale cheap"
 
-    test("object status is initially set to disabled") {
+    test("that the object is assigned labels from the package") {
+        process.listingPackage.labels = "featured,highlighted"
+        val listing = builder.build(process)
+        assert(listing.labels === process.listingPackage.labels)
+    }
 
+    test("object status is initially set to disabled") {
         val obj = builder.build(process)
         assert(Obj.STATUS_DISABLED === obj.status)
     }
