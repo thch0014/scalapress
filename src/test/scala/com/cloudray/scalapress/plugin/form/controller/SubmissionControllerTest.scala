@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.form.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.form.{Submission, Form, FormService}
+import com.cloudray.scalapress.plugin.form.{SubmissionDao, Submission, Form, FormService}
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
 import java.util.Collections
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormSubmissionTextRenderer
@@ -22,6 +22,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
     controller.formService = mock[FormService]
     controller.themeService = mock[ThemeService]
     controller.folderController = mock[FolderController]
+    controller.submissionDao = mock[SubmissionDao]
 
     controller.context = new ScalapressContext
     controller.context.folderDao = mock[FolderDao]
