@@ -178,7 +178,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save changes</button>
-        <a href="backoffice/folder" class="btn btn-info"><i class="icon-arrow-left"></i> Return to list</a>
+        <a href="/backoffice/folder" class="btn btn-info"><i class="icon-arrow-left"></i> Return to list</a>
     </div>
 
 </form>
