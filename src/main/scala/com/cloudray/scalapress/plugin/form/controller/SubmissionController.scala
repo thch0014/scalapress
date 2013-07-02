@@ -75,6 +75,7 @@ class SubmissionController extends Logging {
             submission.folder = context.folderDao.find(folderId)
         if (objId > 0)
             submission.obj = context.objectDao.find(objId)
+        submissionDao.save(submission)
         submission
     }
 
