@@ -26,7 +26,7 @@ object PagingRenderer {
         val xml = <div class="pagination">
             <ul>
                 <li class="disabled">
-                    <i class="icon-search"></i>
+                    <i class="icon-search">&nbsp;</i>
                     Viewing results
                 </li>{pages}
             </ul>
