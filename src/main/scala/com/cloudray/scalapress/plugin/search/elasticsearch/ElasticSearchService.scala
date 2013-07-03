@@ -12,7 +12,7 @@ import org.elasticsearch.index.query._
 import scala.collection.mutable.{ListBuffer, ArrayBuffer}
 import scala.Option
 import com.cloudray.scalapress.enums.{AttributeType, Sort}
-import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
+import org.elasticsearch.search.sort.SortOrder
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import org.elasticsearch.common.unit.DistanceUnit
@@ -44,6 +44,8 @@ class ElasticSearchService extends SearchService with Logging {
     val FIELD_NAME = "name"
     val FIELD_NAME_NOT_ANALYSED = "name_raw"
     val FIELD_FOLDERS = "folders"
+    val FIELD_OBJECT_ID = "objectid"
+    val FIELD_PRIORITIZED = "prioritized"
 
     val TIMEOUT = 5000
     val INDEX = "scalapress"
@@ -78,12 +80,18 @@ class ElasticSearchService extends SearchService with Logging {
 
         val fields = new ListBuffer[FieldDefinition]
         fields.append(id typed StringType index "not_analyzed" store true)
-        fields.append("objectid" typed IntegerType index "not_analyzed" store true)
+        fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
         fields.append("objectType" typed IntegerType index "not_analyzed" store true)
         fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
         fields.append(FIELD_TAGS typed StringType index "not_analyzed")
         fields.append("location" typed GeoPointType)
-        attributes.foreach(attr => fields.append(FIELD_ATTRIBUTE + attr.id fieldType StringType index "not_analyzed"))
+        attributes.foreach(attr => {
+            val t = attr.attributeType match {
+                case AttributeType.Numerical | AttributeType.Date | AttributeType.DateTime => IntegerType
+                case _ => StringType
+            }
+            fields.append(FIELD_ATTRIBUTE + attr.id typed t index "not_analyzed")
+        })
 
         client.execute {
             create index INDEX mappings {
@@ -106,11 +114,12 @@ class ElasticSearchService extends SearchService with Logging {
     override def index(obj: Obj) {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
 
-        val _fields = ListBuffer[(String, Any)]("objectid" -> obj.id,
+        val _fields = ListBuffer[(String, Any)](FIELD_OBJECT_ID -> obj.id,
             "objectType" -> obj.objectType.id.toString,
             FIELD_NAME -> _normalize(obj.name),
             FIELD_NAME_NOT_ANALYSED -> obj.name,
-            FIELD_STATUS -> obj.status)
+            FIELD_STATUS -> obj.status,
+            FIELD_PRIORITIZED -> obj.prioritized.toString)
 
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields append FIELD_TAGS -> tag))
 
@@ -256,10 +265,14 @@ class ElasticSearchService extends SearchService with Logging {
             case name => facet terms name fields name
         })
 
+        val prioritized = by field FIELD_PRIORITIZED order SortOrder.DESC
+        val sort = _sort(search)
+
         client.sync.execute {
-            select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort2 {
-                _sort(search)
-            } query2 {
+            select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort (
+              prioritized,
+              sort
+              ) query2 {
                 query
             } facets {
                 facets
@@ -267,28 +280,18 @@ class ElasticSearchService extends SearchService with Logging {
         }
     }
 
+    def _attrField(obj: Any) = FIELD_ATTRIBUTE + obj.toString
+
     def _sort(search: SavedSearch) = search.sortType match {
 
-        case Sort.Random =>
-            SortBuilders
-              .scriptSort("Math.random()", "number")
-              .order(SortOrder.ASC)
-
+        case Sort.Random => by script "Math.random" as "number" order SortOrder.ASC
         case Sort.Attribute if search.sortAttribute != null =>
-            SortBuilders
-              .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
-              .order(SortOrder.ASC)
-              .ignoreUnmapped(true)
-
+            by field _attrField(search.sortAttribute.id) order SortOrder.ASC missing "_last"
         case Sort.AttributeDesc if search.sortAttribute != null =>
-            SortBuilders
-              .fieldSort(FIELD_ATTRIBUTE + search.sortAttribute.id)
-              .order(SortOrder.DESC)
-              .ignoreUnmapped(true)
-
-        case Sort.Name => SortBuilders.fieldSort(FIELD_NAME_NOT_ANALYSED).order(SortOrder.ASC)
-        case Sort.Oldest => SortBuilders.fieldSort("objectid").order(SortOrder.ASC)
-        case _ => SortBuilders.fieldSort("objectid").order(SortOrder.DESC)
+            by field _attrField(search.sortAttribute.id) order SortOrder.DESC missing "_last"
+        case Sort.Name => by field FIELD_NAME_NOT_ANALYSED order SortOrder.ASC
+        case Sort.Oldest => by field FIELD_OBJECT_ID order SortOrder.ASC
+        case _ => by field FIELD_OBJECT_ID order SortOrder.DESC
     }
 
     def _resp2facets(resp: SearchResponse, attributes: Iterable[Attribute]): Seq[com.cloudray.scalapress.search.Facet] = {
@@ -317,6 +320,7 @@ class ElasticSearchService extends SearchService with Logging {
         resp.getHits.asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
+            val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == "true"
             val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
             val status = arg.getSource.get(FIELD_STATUS).toString
             val attributes = arg.getSource.asScala
@@ -326,7 +330,7 @@ class ElasticSearchService extends SearchService with Logging {
                 val value = _attributeRestore(field._2.toString)
                 (id, value)
             }).toMap
-            new ObjectRef(id, objectType, n, status, attributes, Nil)
+            new ObjectRef(id, objectType, n, status, attributes, Nil, prioritized)
         }).toSeq
     }
 
@@ -336,7 +340,7 @@ class ElasticSearchService extends SearchService with Logging {
         val json = XContentFactory
           .jsonBuilder()
           .startObject()
-          .field("objectid", obj.id)
+          .field(FIELD_OBJECT_ID, obj.id)
           .field("objectType", obj.objectType.id.toString)
           .field(FIELD_NAME, _normalize(obj.name))
           .field(FIELD_NAME_NOT_ANALYSED, obj.name)

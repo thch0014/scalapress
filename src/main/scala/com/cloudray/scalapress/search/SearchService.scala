@@ -26,4 +26,5 @@ case class ObjectRef(id: Long,
                      name: String,
                      status: String,
                      attributes: Map[Long, String],
-                     folders: Seq[Long])
+                     folders: Seq[Long],
+                     prioritized: Boolean = false)

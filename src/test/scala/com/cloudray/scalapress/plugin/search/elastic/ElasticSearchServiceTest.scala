@@ -15,6 +15,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     val av1 = new AttributeValue
     av1.attribute = new Attribute
+    av1.attribute.name = "team"
     av1.attribute.id = 1
     av1.value = "mackams"
 
@@ -90,6 +91,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj3.objectType = new ObjectType
     obj3.objectType.id = 3
     obj3.status = "Live"
+    obj3.prioritized = true
     obj3.attributeValues.add(av3)
     obj3.attributeValues.add(av6)
     obj3.attributeValues.add(date2)
@@ -112,7 +114,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     val service = new ElasticSearchService
 
-    service.setupIndex(List(av1.attribute, av4.attribute, av7.attribute))
+    service.setupIndex(List(av1.attribute, av4.attribute, av7.attribute, date1.attribute))
     service.index(obj2)
     service.index(obj3)
     service.index(obj)
@@ -162,8 +164,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         search.sortType = Sort.Name
         val results = service.search(search).refs
         assert(results.size === 4)
-        assert(results(0).id === 4)
-        assert(results(1).id === 20)
+        assert(results(0).id === 20)
+        assert(results(1).id === 4)
         assert(results(2).id === 2)
         assert(results(3).id === 1529)
     }
@@ -175,8 +177,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search).refs
         assert(results.size === 4)
 
-        assert(results(0).id === 1529)
-        assert(results(1).id === 20)
+        assert(results(0).id === 20)
+        assert(results(1).id === 1529)
         assert(results(2).id === 4)
         assert(results(3).id === 2)
     }
@@ -188,9 +190,9 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search).refs
         assert(results.size === 4)
 
-        assert(results(0).id === 2)
-        assert(results(1).id === 4)
-        assert(results(2).id === 20)
+        assert(results(0).id === 20)
+        assert(results(1).id === 2)
+        assert(results(2).id === 4)
         assert(results(3).id === 1529)
     }
 
@@ -203,8 +205,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search).refs
         assert(results.size === 4)
 
-        assert(results(0).id === 1529)
-        assert(results(1).id === 20)
+        assert(results(0).id === 20)
+        assert(results(1).id === 1529)
         assert(results(2).id === 2)
         assert(results(3).id === 4)
     }
@@ -218,9 +220,9 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search).refs
         assert(results.size === 4)
 
-        assert(results(0).id === 4)
-        assert(results(1).id === 2)
-        assert(results(2).id === 20)
+        assert(results(0).id === 20) // steve mac is prioritized
+        assert(results(1).id === 4) // middles
+        assert(results(2).id === 2) // mackams
     }
 
     test("sorting by attribute value with numbers") {
@@ -232,10 +234,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         val results = service.search(search).refs
         assert(results.size === 4)
 
-        assert(results(0).id === 1529)
-        assert(results(1).id === 4)
-        assert(results(2).id === 20)
-        assert(results(3).id === 2)
+        assert(20 === results(0).id) // steve mac is prioritized
+        assert(2 === results(1).id) // obj id 2 has value 51454
+        assert(4 === results(2).id) // obj id 4 has value 2142353
+        assert(1529=== results(3).id) // obj id 1529 has no value for this attribute so will be last
     }
 
     test("distance search happy path") {
@@ -261,6 +263,24 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert("tony mowbray" === results(0).name)
         assert("Live" === results(0).status)
         assert(4 === results(0).attributes.size)
+    }
+
+    test("ref includes prioritized") {
+        val search = new SavedSearch
+        search.keywords = "steve"
+
+        val results = service.search(search).refs
+        assert(results.size === 1)
+        assert(20 === results(0).id)
+        assert(results(0).prioritized)
+
+        val search2 = new SavedSearch
+        search2.keywords = "mowbray"
+
+        val results2 = service.search(search2).refs
+        assert(results2.size === 1)
+        assert(2 === results2(0).id)
+        assert(!results2(0).prioritized)
     }
 
     test("attribute search with spaces") {
