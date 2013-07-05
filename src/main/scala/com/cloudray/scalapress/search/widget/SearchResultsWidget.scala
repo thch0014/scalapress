@@ -32,6 +32,7 @@ class SearchResultsWidget extends Widget {
 
     override def _init(context: ScalapressContext) {
         search = new SavedSearch
+        search.maxResults = 20
         context.savedSearchDao.save(search)
     }
 

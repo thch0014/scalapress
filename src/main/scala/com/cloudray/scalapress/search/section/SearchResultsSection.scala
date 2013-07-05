@@ -32,6 +32,7 @@ class SearchResultsSection extends Section {
 
     override def _init(context: ScalapressContext) {
         search = new SavedSearch
+        search.maxResults = 20
         context.savedSearchDao.save(search)
     }
 
