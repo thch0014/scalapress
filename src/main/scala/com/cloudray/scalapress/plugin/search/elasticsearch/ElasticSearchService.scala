@@ -130,7 +130,7 @@ class ElasticSearchService extends SearchService with Logging {
         _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
         if (obj.folders.size > 0)
-            _fields append FIELD_FOLDERS -> obj.folders.asScala.map(_.id)
+            _fields append FIELD_FOLDERS -> obj.folders.asScala.map(_.id).asJava
 
         obj.attributeValues.asScala
           .filterNot(_.value == null)

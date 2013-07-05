@@ -9,9 +9,18 @@ import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.search.{SearchService, SavedSearch}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
+
+    val folder1 = new Folder
+    folder1.name = "tickets"
+    folder1.id = 4
+
+    val folder2 = new Folder
+    folder2.name = "events"
+    folder2.id = 19
 
     val av1 = new AttributeValue
     av1.attribute = new Attribute
@@ -84,6 +93,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj2.attributeValues.add(av5)
     obj2.attributeValues.add(date3)
     obj2.labels = "coldplay"
+    obj2.folders.add(folder1)
 
     val obj3 = new Obj
     obj3.id = 20
@@ -95,6 +105,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj3.attributeValues.add(av3)
     obj3.attributeValues.add(av6)
     obj3.attributeValues.add(date2)
+    obj3.folders.add(folder1)
+    obj3.folders.add(folder2)
 
     val av = new AttributeValue
     av.attribute = new Attribute
@@ -237,7 +249,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         assert(20 === results(0).id) // steve mac is prioritized
         assert(2 === results(1).id) // obj id 2 has value 51454
         assert(4 === results(2).id) // obj id 4 has value 2142353
-        assert(1529=== results(3).id) // obj id 1529 has no value for this attribute so will be last
+        assert(1529 === results(3).id) // obj id 1529 has no value for this attribute so will be last
     }
 
     test("distance search happy path") {
@@ -473,5 +485,19 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         q.facets = Seq(av7.attribute.id.toString)
         val results = service.search(q)
         assert("attribute with space" === results.facets(0).terms(0).term)
+    }
+
+    test("a service for folders should match objects with multiple folders") {
+        val q = new SavedSearch
+        q.searchFolders = "4"
+        val results = service.search(q)
+        assert(results.refs.map(_.id).contains(4))
+    }
+
+    test("a service for folders should match objects with single folders") {
+        val q = new SavedSearch
+        q.searchFolders = "4"
+        val results = service.search(q)
+        assert(results.refs.map(_.id).contains(20))
     }
 }
