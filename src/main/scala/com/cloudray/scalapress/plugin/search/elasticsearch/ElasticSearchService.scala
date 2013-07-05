@@ -321,7 +321,7 @@ class ElasticSearchService extends SearchService with Logging {
         resp.getHits.asScala.map(arg => {
             val id = arg.id.toLong
             val objectType = arg.getSource.get("objectType").toString.toLong
-            val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == "true"
+            val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == 1 || arg.getSource.get(FIELD_PRIORITIZED) == "1"
             val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
             val status = arg.getSource.get(FIELD_STATUS).toString
             val attributes = arg.getSource.asScala
