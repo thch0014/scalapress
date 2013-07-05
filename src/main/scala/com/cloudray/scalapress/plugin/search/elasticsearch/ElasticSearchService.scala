@@ -84,6 +84,7 @@ class ElasticSearchService extends SearchService with Logging {
         fields.append("objectType" typed IntegerType index "not_analyzed" store true)
         fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
         fields.append(FIELD_TAGS typed StringType index "not_analyzed")
+        fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
         fields.append("location" typed GeoPointType)
         attributes.foreach(attr => {
             val t = attr.attributeType match {
@@ -119,7 +120,7 @@ class ElasticSearchService extends SearchService with Logging {
             FIELD_NAME -> _normalize(obj.name),
             FIELD_NAME_NOT_ANALYSED -> obj.name,
             FIELD_STATUS -> obj.status,
-            FIELD_PRIORITIZED -> obj.prioritized.toString)
+            FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0))
 
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields append FIELD_TAGS -> tag))
 
