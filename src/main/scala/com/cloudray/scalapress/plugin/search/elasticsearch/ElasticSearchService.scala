@@ -45,7 +45,9 @@ class ElasticSearchService extends SearchService with Logging {
     val FIELD_NAME_NOT_ANALYSED = "name_raw"
     val FIELD_FOLDERS = "folders"
     val FIELD_OBJECT_ID = "objectid"
+    val FIELD_OBJECT_TYPE = "objectType"
     val FIELD_PRIORITIZED = "prioritized"
+    val FIELD_HAS_IMAGE = "hasImage"
 
     val TIMEOUT = 5000
     val INDEX = "scalapress"
@@ -81,7 +83,7 @@ class ElasticSearchService extends SearchService with Logging {
         val fields = new ListBuffer[FieldDefinition]
         fields.append(id typed StringType index "not_analyzed" store true)
         fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
-        fields.append("objectType" typed IntegerType index "not_analyzed" store true)
+        fields.append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
         fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
         fields.append(FIELD_TAGS typed StringType index "not_analyzed")
         fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
@@ -116,7 +118,7 @@ class ElasticSearchService extends SearchService with Logging {
         logger.debug("Indexing [{}, {}]", obj.id, obj.name)
 
         val _fields = ListBuffer[(String, Any)](FIELD_OBJECT_ID -> obj.id,
-            "objectType" -> obj.objectType.id.toString,
+            FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
             FIELD_NAME -> _normalize(obj.name),
             FIELD_NAME_NOT_ANALYSED -> obj.name,
             FIELD_STATUS -> obj.status,
@@ -125,9 +127,10 @@ class ElasticSearchService extends SearchService with Logging {
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields append FIELD_TAGS -> tag))
 
         val hasImage = obj.images.size > 0
-        _fields.append("hasImage" -> hasImage.toString)
+        _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-        obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.toString))
+        if (obj.folders.size > 0)
+            _fields append FIELD_FOLDERS -> obj.folders.asScala.map(_.id)
 
         obj.attributeValues.asScala
           .filterNot(_.value == null)
@@ -210,7 +213,7 @@ class ElasticSearchService extends SearchService with Logging {
           .map(value => _normalize(value))
           .foreach(arg => buffer.append(s"name:$arg")))
 
-        Option(search.objectType).foreach(arg => buffer.append("objectType:" + arg.id.toString))
+        Option(search.objectType).foreach(arg => buffer.append(FIELD_OBJECT_TYPE + ":" + arg.id.toString))
 
         Option(search.labels) match {
             case Some(labels) =>
@@ -236,7 +239,7 @@ class ElasticSearchService extends SearchService with Logging {
         })
 
         if (search.imageOnly)
-            buffer.append("hasImage:true")
+            buffer.append(FIELD_HAS_IMAGE + ":true")
 
         buffer.mkString(" ")
     }
@@ -320,7 +323,7 @@ class ElasticSearchService extends SearchService with Logging {
     def _resp2ref(resp: SearchResponse): Seq[ObjectRef] = {
         resp.getHits.asScala.map(arg => {
             val id = arg.id.toLong
-            val objectType = arg.getSource.get("objectType").toString.toLong
+            val objectType = arg.getSource.get(FIELD_OBJECT_TYPE).toString.toLong
             val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == 1 || arg.getSource.get(FIELD_PRIORITIZED) == "1"
             val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
             val status = arg.getSource.get(FIELD_STATUS).toString
@@ -342,7 +345,7 @@ class ElasticSearchService extends SearchService with Logging {
           .jsonBuilder()
           .startObject()
           .field(FIELD_OBJECT_ID, obj.id)
-          .field("objectType", obj.objectType.id.toString)
+          .field(FIELD_OBJECT_TYPE, obj.objectType.id.toString)
           .field(FIELD_NAME, _normalize(obj.name))
           .field(FIELD_NAME_NOT_ANALYSED, obj.name)
           .field(FIELD_STATUS, obj.status)
@@ -350,7 +353,7 @@ class ElasticSearchService extends SearchService with Logging {
         Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => json.field(FIELD_TAGS, tag)))
 
         val hasImage = obj.images.size > 0
-        json.field("hasImage", hasImage.toString)
+        json.field(FIELD_HAS_IMAGE, hasImage.toString)
 
         val folderIds = obj.folders.asScala.map(_.id.toString)
         json.field(FIELD_FOLDERS, folderIds.toSeq: _*)

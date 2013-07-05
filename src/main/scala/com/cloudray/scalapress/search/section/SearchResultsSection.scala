@@ -14,7 +14,7 @@ import com.cloudray.scalapress.obj.Obj
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {
@@ -38,7 +38,7 @@ class SearchResultsSection extends Section {
 
     def render(request: ScalapressRequest): Option[String] = {
         Option(search) match {
-            case None => None
+            case None => Some("<!-- no search object set (section #" + id + ") -->")
             case Some(s) =>
                 val objects = _objects(request)
                 objects.size match {

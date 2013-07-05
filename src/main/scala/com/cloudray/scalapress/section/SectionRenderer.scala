@@ -1,12 +1,12 @@
 package com.cloudray.scalapress.section
 
 import collection.mutable.ArrayBuffer
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
+import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
-object SectionRenderer {
+object SectionRenderer extends Logging {
 
     def _render(sections: Seq[Section], req: ScalapressRequest): String = {
         val buffer = new ArrayBuffer[String]
@@ -14,7 +14,11 @@ object SectionRenderer {
         val visible = sorted.filter(_.visible)
         for ( section <- visible ) {
             buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
-            section.render(req).foreach(buffer += _)
+            try {
+                section.render(req).foreach(buffer += _)
+            } catch {
+                case e: Exception => logger.warn("{}", e)
+            }
             buffer += "\n<!-- end section -->\n\n"
         }
 
