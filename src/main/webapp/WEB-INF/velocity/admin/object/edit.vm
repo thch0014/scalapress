@@ -74,7 +74,7 @@
         <label class="control-label">Prioritized</label>
 
         <div class="controls">
-            #springFormCheckbox("form.prioritized", "")
+            #springFormCheckbox("form.o.prioritized", "")
         </div>
     </div>
 
