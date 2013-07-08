@@ -2,9 +2,9 @@
 
 
 <h3>Submission: #$submission.id</h3>
-
-<p>Submitted: $datetool.format($submission.date)</p>
-<p>From: $submission.formName $submission.page().name()</p>
+<h5>Form name: $submission.formName</h5>
+<h5>Date: $datetool.format("HH:mm EEEE dd MMMM yyyy", $submission.date)</h5>
+<h5>Page: !$submission.page().get().name()</h5>
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
