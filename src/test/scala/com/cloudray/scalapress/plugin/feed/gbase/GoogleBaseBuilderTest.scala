@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.feed.gbase
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
-import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.media.{Image, AssetStore}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import org.scalatest.mock.MockitoSugar
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -110,6 +110,36 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
         val row = builder.row(feed, obj)
         assert(
             "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:4.95 GBP" ===
+              row.mkString(","))
+    }
+
+    test("condition method should use condition attribute for value") {
+
+        val av = new AttributeValue
+        av.attribute = new Attribute
+        av.attribute.name = "CONDition"
+        obj.attributeValues.add(av)
+
+        av.value = "Used"
+        assert(builder.CONDITION_USED === builder._condition(obj))
+
+        av.value = "nEW"
+        assert(builder.CONDITION_NEW === builder._condition(obj))
+
+        av.value = "refurbished"
+        assert(builder.CONDITION_REFURBISHED === builder._condition(obj))
+    }
+
+    test("a builder should use attribute condition if present") {
+
+        val av = new AttributeValue
+        av.attribute = new Attribute
+        av.attribute.name = "CONDition"
+        av.value = "Used"
+        obj.attributeValues.add(av)
+        val row = builder.row(feed, obj)
+        assert(
+            "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,used,19.99 GBP,out of stock,Sony,BB66,GB::Courier:4.95 GBP" ===
               row.mkString(","))
     }
 }

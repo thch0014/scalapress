@@ -13,6 +13,10 @@ import com.cloudray.scalapress.util.UrlGenerator
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {
 
+    val CONDITION_NEW = "new"
+    val CONDITION_USED = "used"
+    val CONDITION_REFURBISHED = "refurbished"
+
     val ShippingCost = "4.95"
     val ShippingDesc = "Courier"
 
@@ -81,7 +85,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
             folder,
             "http://" + domain + "/" + UrlGenerator.url(obj),
             "http://" + domain + "/images/" + obj.images.asScala.head.filename,
-            "new",
+            _condition(obj),
             formattedPrice + " GBP",
             availability,
             brand,
@@ -97,6 +101,15 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
       .replace("\r", "")
 
     def shipping: String = "GB::" + ShippingDesc + ":" + ShippingCost + " GBP"
+
+    def _condition(obj: Obj) = {
+        AttributeFuncs.attributeValue(obj, "condition") match {
+            case None => CONDITION_NEW
+            case Some(value) if value.toLowerCase == CONDITION_USED => CONDITION_USED
+            case Some(value) if value.toLowerCase == CONDITION_REFURBISHED => CONDITION_REFURBISHED
+            case Some(value) => CONDITION_NEW
+        }
+    }
 }
 
 /**
