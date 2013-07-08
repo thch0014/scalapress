@@ -273,7 +273,7 @@ class ElasticSearchService extends SearchService with Logging {
         val sort = _sort(search)
 
         client.sync.execute {
-            select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort (
+            select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort(
               prioritized,
               sort
               ) query2 {
@@ -288,7 +288,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     def _sort(search: SavedSearch) = search.sortType match {
 
-        case Sort.Random => by script "Math.random" as "number" order SortOrder.ASC
+        case Sort.Random => by script "Math.random()" as "number" order SortOrder.ASC
         case Sort.Attribute if search.sortAttribute != null =>
             by field _attrField(search.sortAttribute.id) order SortOrder.ASC missing "_last"
         case Sort.AttributeDesc if search.sortAttribute != null =>

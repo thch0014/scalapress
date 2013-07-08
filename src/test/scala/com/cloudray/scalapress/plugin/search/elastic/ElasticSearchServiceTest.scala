@@ -10,6 +10,7 @@ import com.cloudray.scalapress.search.{SearchService, SavedSearch}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
+import scala.collection.mutable
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
@@ -499,5 +500,13 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
         q.searchFolders = "4"
         val results = service.search(q)
         assert(results.refs.map(_.id).contains(20))
+    }
+
+    test("a random sort is sufficiently random") {
+        val q = new SavedSearch
+        q.sortType = Sort.Random
+        // all first refs will be id 20 so check that 2nd refs are random
+        val refs = for ( k <- 1 to 20 ) yield service.search(q).refs(1)
+        assert(refs.toSet.size > 1)
     }
 }

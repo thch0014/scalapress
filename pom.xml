@@ -57,7 +57,7 @@
 
         <ehcache.version>2.6.6</ehcache.version>
         <elasticsearch.version>0.90.2</elasticsearch.version>
-        <elastic4s.version>0.90.2.3</elastic4s.version>
+        <elastic4s.version>0.90.2.4</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
@@ -310,27 +310,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.6.3.201306030806</version>
-                    <executions>
-                        <execution>
-                            <id>jacoco-initialize</id>
-                            <phase>initialize</phase>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>jacoco-report</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -341,10 +320,6 @@
             <plugin>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -594,7 +569,7 @@
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_2.10</artifactId>
-            <version>${scala.test.version}</version>
+            <version>2.0.M6-SNAP26</version>
             <scope>test</scope>
         </dependency>
         <dependency>
