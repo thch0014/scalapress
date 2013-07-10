@@ -20,7 +20,7 @@ object ListingPackageRenderer {
             <div class="listing-package well">
 
                 <div class="name lead">
-                    <a href={"/listing/package/" + pck.id.toString}>
+                    <a href={"/listing/package/" + pck.id.toString}><i class="icon-edit"></i> 
                         {pck.name}
                     </a>
                 </div>
@@ -32,7 +32,7 @@ object ListingPackageRenderer {
                 </div>
 
                 <div class="cost">
-                    <span class="badge badge-info">
+                    <span class="badge">
                         {pck.priceText}
                     </span>
                 </div>
