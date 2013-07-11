@@ -23,96 +23,96 @@ import com.cloudray.scalapress.obj.attr.Attribute
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
 
-    def desc = "Show a paginated list of objects that are inside this folder"
-    override def backoffice: String = "/backoffice/section/objectlist/" + id
+  def desc = "Show a paginated list of objects that are inside this folder"
+  override def backoffice: String = "/backoffice/section/objectlist/" + id
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "sortType")
-    @BeanProperty var sort: Sort = _
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "sortType")
+  @BeanProperty var sort: Sort = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sortAttribute")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var sortAttribute: Attribute = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "sortAttribute")
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var sortAttribute: Attribute = _
 
-    @Column(name = "itemsPerPage")
-    @BeanProperty var pageSize: Int = ObjectListSection.PAGE_SIZE_DEFAULT
+  @Column(name = "itemsPerPage")
+  @BeanProperty var pageSize: Int = ObjectListSection.PAGE_SIZE_DEFAULT
 
-    @Column(name = "includeSubcategoryItems")
-    @BeanProperty var includeSubfolderObjects: Boolean = false
+  @Column(name = "includeSubcategoryItems")
+  @BeanProperty var includeSubfolderObjects: Boolean = false
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "listMarkup", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var markup: Markup = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "listMarkup", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var markup: Markup = _
 
-    def _objects(sreq: ScalapressRequest): Seq[Obj] = {
+  def _objects(sreq: ScalapressRequest): Seq[Obj] = {
 
-        val objects = try {
-            folder.objects.asScala.toSeq
-        } catch {
-            case e: Exception => Nil
-        }
-
-        val live = objects.filter(_.status.toLowerCase == "live")
-        val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
-        sorted
+    val objects = try {
+      folder.objects.asScala.toSeq
+    } catch {
+      case e: Exception => Nil
     }
 
-    def render(sreq: ScalapressRequest): Option[String] = {
+    val live = objects.filter(_.status.toLowerCase == "live")
+    val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
+    sorted
+  }
 
-        val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
-        val objects = _objects(sreq)
+  def render(sreq: ScalapressRequest): Option[String] = {
 
-        val safePageSize = _pageSize(sreq.context)
-        val usePaging = objects.size > safePageSize
-        val page = _paginate(objects, pageNumber, safePageSize)
-        val paging = Paging(sreq.request, page)
+    val pageNumber = sreq.param("pageNumber").filter(_.forall(_.isDigit)).getOrElse("1").toInt
+    val objects = _objects(sreq)
 
-        val renderedObjects = page.results.size match {
-            case 0 => "<!-- No objects in folder -->"
-            case _ => {
-                val first = page.results.head
-                Option(markup).orElse(Option(first.objectType.objectListMarkup)) match {
-                    case None => "<!-- No markup found for folder -->"
-                    case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
-                }
-            }
+    val safePageSize = _pageSize(sreq.context)
+    val usePaging = objects.size > safePageSize
+    val page = _paginate(objects, pageNumber, safePageSize)
+    val paging = Paging(sreq.request, page)
+
+    val renderedObjects = page.results.size match {
+      case 0 => "<!-- No objects in folder -->"
+      case _ => {
+        val first = page.results.find(_.objectType != null)
+        Option(markup).orElse(first.map(_.objectType.objectListMarkup)) match {
+          case None => "<!-- No markup found for folder -->"
+          case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
         }
-
-        val buffer = new ListBuffer[String]
-        buffer.append(renderedObjects)
-        if (usePaging) {
-            buffer.prepend(PagingRenderer.render(paging))
-            buffer.append(PagingRenderer.render(paging))
-        }
-
-        Some(buffer.mkString("\n"))
+      }
     }
 
-    def _paginate[T](results: Iterable[T], pageNumber: Int, pageSize: Int): Page[T] = {
-        require(pageNumber > 0)
-        require(pageSize > 0)
-        val total = results.size
-        val pagedResults = results.drop((pageNumber - 1) * pageSize).take(pageSize)
-        Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
+    val buffer = new ListBuffer[String]
+    buffer.append(renderedObjects)
+    if (usePaging) {
+      buffer.prepend(PagingRenderer.render(paging))
+      buffer.append(PagingRenderer.render(paging))
     }
 
-    def _sort(context: ScalapressContext): Sort = Option(sort).getOrElse(context.folderSettingsDao.head.sort)
-    def _pageSize(context: ScalapressContext): Int = {
-        if (pageSize > 0)
-            pageSize
-        else {
-            val settingsPageSize = context.folderSettingsDao.head.pageSize
-            if (settingsPageSize > 0)
-                settingsPageSize
-            else
-                ObjectListSection.PAGE_SIZE_DEFAULT
-        }
+    Some(buffer.mkString("\n"))
+  }
+
+  def _paginate[T](results: Iterable[T], pageNumber: Int, pageSize: Int): Page[T] = {
+    require(pageNumber > 0)
+    require(pageSize > 0)
+    val total = results.size
+    val pagedResults = results.drop((pageNumber - 1) * pageSize).take(pageSize)
+    Page(pagedResults, pageNumber = pageNumber, pageSize = pageSize, totalResults = total)
+  }
+
+  def _sort(context: ScalapressContext): Sort = Option(sort).getOrElse(context.folderSettingsDao.head.sort)
+  def _pageSize(context: ScalapressContext): Int = {
+    if (pageSize > 0)
+      pageSize
+    else {
+      val settingsPageSize = context.folderSettingsDao.head.pageSize
+      if (settingsPageSize > 0)
+        settingsPageSize
+      else
+        ObjectListSection.PAGE_SIZE_DEFAULT
     }
+  }
 
 }
 
 object ObjectListSection {
-    val PAGE_SIZE_DEFAULT = 50
+  val PAGE_SIZE_DEFAULT = 50
 }
