@@ -25,7 +25,7 @@ import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.sksamuel.elastic4s.{ElasticDsl, ElasticClient}
 import ElasticDsl._
-import com.sksamuel.elastic4s.FieldType.{StringType, GeoPointType, IntegerType}
+import com.sksamuel.elastic4s.FieldType.{LongType, StringType, GeoPointType, IntegerType}
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
 
 /** @author Stephen Samuel */
@@ -82,19 +82,15 @@ class ElasticSearchService extends SearchService with Logging {
 
     val fields = new ListBuffer[FieldDefinition]
     fields.append(id typed StringType index "not_analyzed" store true)
-    fields
-      .append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
-    fields
-      .append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
-    fields
-      .append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
+    fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
+    fields.append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
+    fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
     fields.append(FIELD_TAGS typed StringType index "not_analyzed")
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
     fields.append("location" typed GeoPointType)
     attributes.foreach(attr => {
       val t = attr.attributeType match {
-        case AttributeType.Numerical | AttributeType.Date | AttributeType
-          .DateTime => IntegerType
+        case AttributeType.Numerical | AttributeType.Date | AttributeType.DateTime => LongType
         case _ => StringType
       }
       fields.append(FIELD_ATTRIBUTE + attr.id typed t index "not_analyzed")
@@ -152,7 +148,7 @@ class ElasticSearchService extends SearchService with Logging {
       }
     })
 
-    client execute {
+    client.sync.execute {
       insert into INDEX -> TYPE id obj.id fields _fields
     }
   }
