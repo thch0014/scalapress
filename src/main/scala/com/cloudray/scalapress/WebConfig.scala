@@ -23,11 +23,11 @@ import util.mvc._
 import com.cloudray.scalapress.util.mvc.interceptor._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import org.springframework.web.servlet.mvc.WebContentInterceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -35,89 +35,89 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 @Configuration
 class WebConfig extends WebMvcConfigurationSupport {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var folderDao: FolderDao = _
-    @Autowired var typeDao: TypeDao = _
-    @Autowired var basketDao: BasketDao = _
-    @Autowired var markupDao: MarkupDao = _
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var addressDao: AddressDao = _
-    @Autowired var searchFormDao: SearchFormDao = _
-    @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-    @Autowired var siteDao: InstallationDao = _
-    @Autowired var formDao: FormDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var folderDao: FolderDao = _
+  @Autowired var typeDao: TypeDao = _
+  @Autowired var basketDao: BasketDao = _
+  @Autowired var markupDao: MarkupDao = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var addressDao: AddressDao = _
+  @Autowired var searchFormDao: SearchFormDao = _
+  @Autowired var deliveryOptionDao: DeliveryOptionDao = _
+  @Autowired var siteDao: InstallationDao = _
+  @Autowired var formDao: FormDao = _
 
-    override def addFormatters(registry: FormatterRegistry) {
-        registry.addConverter(new StringFolderConverter(folderDao))
-        registry.addConverter(new StringObjectTypeConverter(typeDao))
-        registry.addConverter(new StringMarkupConverter(markupDao))
-        registry.addConverter(new StringSearchFormConverter(searchFormDao))
-        registry.addConverter(new StringDeliveryOptionConverter(deliveryOptionDao))
-        registry.addConverter(new StringToThemeConverter(themeDao))
-        registry.addConverter(new StringToAddressConverter(addressDao))
-        registry.addConverter(new StringFormConverter(formDao))
-        registry.addConverter(new StringToAttributeConvertor(context.attributeDao))
-    }
+  override def addFormatters(registry: FormatterRegistry) {
+    registry.addConverter(new StringFolderConverter(folderDao))
+    registry.addConverter(new StringObjectTypeConverter(typeDao))
+    registry.addConverter(new StringMarkupConverter(markupDao))
+    registry.addConverter(new StringSearchFormConverter(searchFormDao))
+    registry.addConverter(new StringDeliveryOptionConverter(deliveryOptionDao))
+    registry.addConverter(new StringToThemeConverter(themeDao))
+    registry.addConverter(new StringToAddressConverter(addressDao))
+    registry.addConverter(new StringFormConverter(formDao))
+    registry.addConverter(new StringToAttributeConvertor(context.attributeDao))
+  }
 
-    override def addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/**").setCachePeriod(60 * 60 * 24 * 30)
-    }
+  override def addResourceHandlers(registry: ResourceHandlerRegistry) {
+    registry.addResourceHandler("/static/**").addResourceLocations("/static/**").setCachePeriod(60 * 60 * 24 * 30)
+  }
 
-    override def addInterceptors(registry: InterceptorRegistry) {
+  override def addInterceptors(registry: InterceptorRegistry) {
 
-        val webContentInterceptor = new WebContentInterceptor
-        webContentInterceptor.setUseCacheControlHeader(true)
-        webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
-        registry.addInterceptor(webContentInterceptor).addPathPatterns("/asset/**", "/asset/")
+    val webContentInterceptor = new WebContentInterceptor
+    webContentInterceptor.setUseCacheControlHeader(true)
+    webContentInterceptor.setCacheSeconds(60 * 60 * 24 * 30)
+    registry.addInterceptor(webContentInterceptor).addPathPatterns("/asset/**", "/asset/")
 
-        registry.addInterceptor(SessionInterceptor)
-        registry.addInterceptor(UrlResolverInterceptor)
-        registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
-        registry.addInterceptor(new SiteInterceptor(siteDao))
-        registry.addInterceptor(new MenuInterceptor(context))
-    }
+    registry.addInterceptor(SessionInterceptor)
+    registry.addInterceptor(UrlResolverInterceptor)
+    registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
+    registry.addInterceptor(new SiteInterceptor(siteDao))
+    registry.addInterceptor(new MenuInterceptor(context))
+  }
 
-    override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
+  override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
 
-        converters.add(new ScalaPressPageMessageConverter(new ScalapressPageRenderer(context)))
-        converters.add(new ByteArrayHttpMessageConverter)
-        val stringConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"))
-        stringConverter.setWriteAcceptCharset(false)
-        converters.add(stringConverter)
-        converters.add(new ResourceHttpMessageConverter)
-        converters.add(new SourceHttpMessageConverter[Source])
-        converters.add(new XmlAwareFormHttpMessageConverter)
+    converters.add(new ScalaPressPageMessageConverter(new ScalapressPageRenderer(context)))
+    converters.add(new ByteArrayHttpMessageConverter)
+    val stringConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"))
+    stringConverter.setWriteAcceptCharset(false)
+    converters.add(stringConverter)
+    converters.add(new ResourceHttpMessageConverter)
+    converters.add(new SourceHttpMessageConverter[Source])
+    converters.add(new XmlAwareFormHttpMessageConverter)
 
-        val mapper = new ObjectMapper
-        mapper.registerModule(DefaultScalaModule)
-        mapper.registerModule(new Hibernate4Module)
+    val mapper = new ObjectMapper
+    mapper.registerModule(DefaultScalaModule)
+    mapper.registerModule(new Hibernate4Module)
 
-        val convertor = new MappingJackson2HttpMessageConverter
-        convertor.setObjectMapper(mapper)
-        converters.add(convertor)
-    }
+    val convertor = new MappingJackson2HttpMessageConverter
+    convertor.setObjectMapper(mapper)
+    converters.add(convertor)
+  }
 
-    override def requestMappingHandlerAdapter: RequestMappingHandlerAdapter = {
-        val adapter = super.requestMappingHandlerAdapter
-        adapter.setIgnoreDefaultModelOnRedirect(true)
-        adapter
-    }
+  override def requestMappingHandlerAdapter: RequestMappingHandlerAdapter = {
+    val adapter = super.requestMappingHandlerAdapter
+    adapter.setIgnoreDefaultModelOnRedirect(true)
+    adapter
+  }
 
-    override def requestMappingHandlerMapping: RequestMappingHandlerMapping = {
-        val rm = super.requestMappingHandlerMapping
-        rm.setUseSuffixPatternMatch(false)
-        rm.setUseTrailingSlashMatch(true)
-        rm
-    }
+  override def requestMappingHandlerMapping: RequestMappingHandlerMapping = {
+    val rm = super.requestMappingHandlerMapping
+    rm.setUseSuffixPatternMatch(false)
+    rm.setUseTrailingSlashMatch(true)
+    rm
+  }
 
 }
 
 object VaryEncodingInterceptor extends HandlerInterceptorAdapter {
-    override def afterCompletion(request: HttpServletRequest,
-                                 response: HttpServletResponse,
-                                 handler: Any,
-                                 ex: Exception) {
-        response.setHeader("Vary", "Accept-Encoding")
-    }
+  override def afterCompletion(request: HttpServletRequest,
+                               response: HttpServletResponse,
+                               handler: Any,
+                               ex: Exception) {
+    response.setHeader("Vary", "Accept-Encoding")
+  }
 }
 

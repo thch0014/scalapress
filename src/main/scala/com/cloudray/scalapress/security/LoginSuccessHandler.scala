@@ -13,17 +13,28 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 @Component
 class LoginSuccessHandler extends AuthenticationSuccessHandler {
 
-    @Autowired
-    var context: ScalapressContext = _
+  @Autowired
+  var context: ScalapressContext = _
 
-    def onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
-        val savedRequest = new HttpSessionRequestCache().getRequest(request, response)
-        if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest.getRedirectUrl.contains("backoffice")) {
-            response.sendRedirect(savedRequest.getRedirectUrl)
-        } else {
-            val plugin = context.bean[AccountPluginDao].get
-            val redirect = Option(plugin.loginRedirect).getOrElse("/")
-            response.sendRedirect(redirect)
-        }
+  def onAuthenticationSuccess(request: HttpServletRequest,
+                              response: HttpServletResponse,
+                              authentication: Authentication) {
+    val savedRequest = new HttpSessionRequestCache().getRequest(request, response)
+    if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest
+      .getRedirectUrl
+      .contains("backoffice")) {
+      response.sendRedirect(savedRequest.getRedirectUrl)
+    } else {
+      val plugin = context.bean[AccountPluginDao].get
+      Option(plugin.loginRedirect) match {
+        case Some(redirect) => response.sendRedirect(redirect)
+        case None =>
+          Option(new HttpSessionRequestCache().getRequest(request, response))
+            .flatMap(arg => Option(arg.getRedirectUrl)) match {
+            case None => response.sendRedirect("/")
+            case Some(redirect) => response.sendRedirect(redirect)
+          }
+      }
     }
+  }
 }
