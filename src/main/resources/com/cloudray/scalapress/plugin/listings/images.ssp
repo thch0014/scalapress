@@ -1,0 +1,50 @@
+<%@ val plugin: com.cloudray.scalapress.plugin.listings.domain.ListingsPlugin %>
+<%@ val process: com.cloudray.scalapress.plugin.listings.domain.ListingProcess %>
+
+<div class="modal hide" role="dialog" id="listing-image-upload-modal">
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
+        <h3>Upload Media</h3>
+    </div>
+    <div class="modal-body">
+        <form enctype="multipart/form-data" method="POST" class="form-horizontal"><p>
+            Select file(s)) to upload
+        </p>
+
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+            <input type="file" name="upload"/>
+
+            <button class="btn btn-success" type="submit">
+                Upload Now
+            </button>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" aria-hidden="true" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+<div id="listing-process-images">
+  ${plugin.imagesPageText}
+    <form method="POST" enctype="multipart/form-data" action="/">
+
+        <table>
+          #for (key <- process.imageKeys)
+            <tr>
+                <td><img src="/images/${key}?w=220&h=180"></td>
+                <td><a href="/listing/image/remove?key=${key}" role="button" class="btn btn-small btn-danger">Remove</a>
+                </td>
+            </tr>
+        #end
+        </table>
+
+        <br/><br/>
+
+        <a href="#listing-image-upload-modal" role='button' class="btn btn-inverse" data-toggle="modal">
+            <i class="icon-upload"></i> Upload Images</a>
+        <a href="/listing/confirmation" role="button" class="btn">Finished with Images</a>
+    </form>
+</div>

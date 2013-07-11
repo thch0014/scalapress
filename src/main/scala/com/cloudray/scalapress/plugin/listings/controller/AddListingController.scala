@@ -18,11 +18,15 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 import com.cloudray.scalapress.plugin.listings.controller.renderer._
 import scala.Some
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
+import javax.persistence.Transient
+import org.fusesource.scalate.TemplateEngine
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("listing"))
 class AddListingController {
+
+  @Transient val engine = new TemplateEngine
 
   @Autowired var listingProcessService: ListingProcessService = _
   @Autowired var listingProcessDao: ListingProcessDao = _
@@ -159,23 +163,32 @@ class AddListingController {
 
   @ResponseBody
   @RequestMapping(value = Array("image"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-  def showImageForm(@ModelAttribute("process") process: ListingProcess,
-                    errors: Errors,
-                    req: HttpServletRequest): ScalapressPage = {
+  def showImages(@ModelAttribute("process") process: ListingProcess,
+                 errors: Errors,
+                 req: HttpServletRequest): ScalapressPage = {
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.UPLOAD_IMAGES)
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep))
-    page.body(ListingImagesRenderer.render(process, listingsPluginDao.get))
+    val form = engine.layout("/com/cloudray/scalapress/plugin/listings/images.ssp",
+      Map("plugin" -> listingsPluginDao.get, "process" -> process))
+    page.body(form)
     page
+  }
+
+  @RequestMapping(value = Array("image/remove"))
+  def removeImage(@ModelAttribute("process") process: ListingProcess,
+                   @RequestParam(value = "key", required = true) key: String): String = {
+
+    process.imageKeys = process.imageKeys.filterNot(_ == key)
+    listingProcessDao.save(process)
+    "redirect:/listing/image"
   }
 
   @RequestMapping(value = Array("image"), method = Array(RequestMethod.POST))
   def uploadImages(@ModelAttribute("process") process: ListingProcess,
-                   errors: Errors,
-                   req: HttpServletRequest,
                    @RequestParam(value = "upload", required = false) uploads: Array[MultipartFile]): String = {
 
     if (uploads != null) {
@@ -187,7 +200,8 @@ class AddListingController {
 
     listingProcessDao.save(process)
 
-    "redirect:/listing/confirmation"
+    // redirect back to the image page. The use will manually move on from there.
+    "redirect:/listing/image"
   }
 
   @ResponseBody
