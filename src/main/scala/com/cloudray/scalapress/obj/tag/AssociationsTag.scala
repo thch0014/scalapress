@@ -4,6 +4,7 @@ import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.ScalapressTag
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 @Tag("associations")
@@ -11,7 +12,7 @@ class AssociationsTag extends ScalapressTag {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
         request.obj.flatMap(obj => {
-            val associations = obj.associations.asScala.toSeq
+            val associations = obj.associations.asScala.toSeq.filter(_.status == Obj.STATUS_LIVE)
             associations.size match {
                 case 0 => None
                 case _ =>
