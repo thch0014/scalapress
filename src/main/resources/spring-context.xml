@@ -44,16 +44,7 @@
         </property>
     </bean>
 
-    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter">
-        <property name="autodetect" value="true"/>
-        <property name="assembler" ref="assembler"/>
-    </bean>
-
-    <bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
-        <property name="attributeSource">
-            <bean class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
-        </property>
-    </bean>
+    <context:mbean-export/>
 
     <task:scheduler id="taskScheduler"/>
     <task:executor id="taskExecutor" pool-size="10"/>

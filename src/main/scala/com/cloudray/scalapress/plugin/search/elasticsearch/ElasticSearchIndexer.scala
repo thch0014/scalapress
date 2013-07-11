@@ -49,7 +49,13 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
       logger.info("Indexing from offset [{}]", offset)
       val objs = _load(offset).filterNot(_.name == null).filterNot(_.name.isEmpty)
       if (!objs.isEmpty) {
-        objs.foreach(service.index)
+        objs.foreach(obj => {
+          try {
+            service.index(obj)
+          } catch {
+            case e: Exception => logger.warn("{}", e)
+          }
+        })
         _index(offset + pageSize)
       }
     }
