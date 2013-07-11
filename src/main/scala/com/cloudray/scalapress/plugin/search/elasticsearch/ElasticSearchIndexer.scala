@@ -7,52 +7,55 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
+import org.springframework.jmx.export.annotation.{ManagedOperation, ManagedResource}
 
 /** @author Stephen Samuel */
 trait ElasticSearchIndexer {
-    def index()
+  def index()
 }
 
 @Component
+@ManagedResource(description = "Elasticsearch reindexer")
 class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
-    @Autowired var service: ElasticSearchService = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var service: ElasticSearchService = _
+  @Autowired var context: ScalapressContext = _
 
-    @PostConstruct
-    def setupIndexes() {
-        val attributes = context.attributeDao.findAll()
-        service.setupIndex(attributes)
+  @PostConstruct
+  def setupIndexes() {
+    val attributes = context.attributeDao.findAll()
+    service.setupIndex(attributes)
+  }
+
+  @Transactional
+  @ManagedOperation(description = "perform a reindex")
+  def index() {
+
+    val pageSize = 100
+
+    def _load(offset: Int) = {
+      logger.debug("Loading {} results from offset {}", pageSize, offset)
+      context.objectDao.search(new Search(classOf[Obj])
+        .setFirstResult(offset)
+        .setMaxResults(pageSize)
+        .addFilterLike("status", "live")
+        .addFilterNotEqual("objectType.name", "Account")
+        .addFilterNotEqual("objectType.name", "account")
+        .addFilterNotEqual("objectType.name", "Accounts")
+        .addFilterNotEqual("objectType.name", "accounts"))
     }
 
-    @Transactional
-    def index() {
-
-        val pageSize = 100
-
-        def _load(offset: Int) = {
-            logger.debug("Loading {} results from offset {}", pageSize, offset)
-            context.objectDao.search(new Search(classOf[Obj])
-              .setFirstResult(offset)
-              .setMaxResults(pageSize)
-              .addFilterLike("status", "live")
-              .addFilterNotEqual("objectType.name", "Account")
-              .addFilterNotEqual("objectType.name", "account")
-              .addFilterNotEqual("objectType.name", "Accounts")
-              .addFilterNotEqual("objectType.name", "accounts"))
-        }
-
-        def _index(offset: Int) {
-            logger.info("Indexing from offset [{}]", offset)
-            val objs = _load(offset).filterNot(_.name == null).filterNot(_.name.isEmpty)
-            if (!objs.isEmpty) {
-                objs.foreach(service.index(_))
-                _index(offset + pageSize)
-            }
-        }
-
-        _index(0)
-
-        logger.info("Indexing finished")
+    def _index(offset: Int) {
+      logger.info("Indexing from offset [{}]", offset)
+      val objs = _load(offset).filterNot(_.name == null).filterNot(_.name.isEmpty)
+      if (!objs.isEmpty) {
+        objs.foreach(service.index)
+        _index(offset + pageSize)
+      }
     }
+
+    _index(0)
+
+    logger.info("Indexing finished")
+  }
 }
