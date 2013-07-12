@@ -12,25 +12,27 @@ import org.hibernate.annotations.{NotFound, NotFoundAction}
 @Table(name = "blocks_subcategories")
 class SubfolderSection extends Section {
 
-    @ManyToOne
-    @JoinColumn(name = "markup", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var markup: Markup = _
+  @ManyToOne
+  @JoinColumn(name = "markup", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var markup: Markup = _
 
-    def render(request: ScalapressRequest): Option[String] = {
-        val m = Option(markup).orElse(Option(request.folderSettings.subfolderMarkup)).getOrElse(SubfolderSection.DefaultMarkup)
-        val render = MarkupRenderer.renderFolders(_folders, m, request)
-        Option(render)
-    }
+  def render(request: ScalapressRequest): Option[String] = {
+    val m = Option(markup)
+      .orElse(Option(request.folderSettings.subfolderMarkup))
+      .getOrElse(SubfolderSection.DefaultMarkup)
+    val render = MarkupRenderer.renderFolders(_folders, m, request)
+    Option(render)
+  }
 
-    def _folders = folder.sortedSubfolders.filterNot(_.hidden)
-    def desc = "Show a clickable list of the sub folders of this folder"
+  def _folders = folder.sortedSubfolders.filterNot(_.hidden)
+  def desc = "Show a clickable list of the sub folders of this folder"
 
 }
 
 object SubfolderSection {
-    val DefaultMarkup = new Markup
-    DefaultMarkup.start = "<ul>"
-    DefaultMarkup.body = "<li>[folder?link=1]</li>"
-    DefaultMarkup.end = "</ul>"
+  val DefaultMarkup = new Markup
+  DefaultMarkup.start = "<ul>"
+  DefaultMarkup.body = "<li>[folder?link=1]</li>"
+  DefaultMarkup.end = "</ul>"
 }
