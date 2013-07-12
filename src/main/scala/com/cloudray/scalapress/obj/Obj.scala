@@ -54,8 +54,8 @@ class Obj extends SortedSections {
   @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
   def sortedImages: Seq[Image] = images.asScala.toSeq.sortBy(_.id).sortBy(_.position)
 
-  @OneToMany(mappedBy = "obj", fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL), orphanRemoval = true)
-  @Fetch(FetchMode.JOIN)
+  @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
+  @BatchSize(size = 20)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
   def sortedAttributeValues: Seq[AttributeValue] = attributeValues
