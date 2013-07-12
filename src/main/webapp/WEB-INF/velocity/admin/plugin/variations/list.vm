@@ -1,0 +1,39 @@
+#parse("/admin/header.vm")
+
+<h3>Variations</h3>
+
+<legend>Existing Variations</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+  #foreach ($v in $variations)
+      <tr>
+          <td>$v.id</td>
+          <td>$v.name</td>
+      </tr>
+  #end
+</table>
+
+<form class="form-horizontal" method="POST">
+    <legend>Add Variations</legend>
+    <table class="table table-condensed table-hover">
+      #foreach ($d in $dimensions)
+          <tr>
+              <td>$d.name</td>
+              <td><input type="text" name="dimension_$d.id"/></td>
+          </tr>
+      #end
+    </table>
+
+
+</form>
+
+<div class="form-actions">
+    <a href="/backoffice/obj/$obj.id" class="btn">Return to $obj.name</a>
+</div>
+
+
+#parse("/admin/footer.vm")

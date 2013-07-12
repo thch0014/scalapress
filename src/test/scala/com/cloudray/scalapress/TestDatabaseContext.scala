@@ -15,7 +15,7 @@ import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
 import com.cloudray.scalapress.plugin.profile.{AccountPluginDao, AccountPluginDaoImpl}
-import com.cloudray.scalapress.plugin.variations.{DimensionDao, VariationDao}
+import com.cloudray.scalapress.plugin.variations.{DimensionDaoImpl, VariationDaoImpl, DimensionDao, VariationDao}
 
 /** @author Stephen Samuel */
 object TestDatabaseContext {
@@ -116,11 +116,11 @@ object TestDatabaseContext {
 
   val variationDao = context
     .getAutowireCapableBeanFactory
-    .createBean(classOf[VariationDao], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+    .createBean(classOf[VariationDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[VariationDao]
 
   val dimensionDao = context
     .getAutowireCapableBeanFactory
-    .createBean(classOf[DimensionDao], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+    .createBean(classOf[DimensionDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[DimensionDao]
 }

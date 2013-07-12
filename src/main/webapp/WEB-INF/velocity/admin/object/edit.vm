@@ -23,7 +23,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("form.o.name", "class='input-xxlarge'")
+          #springFormInput("form.o.name", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -31,33 +31,33 @@
         <label class="control-label">Status</label>
 
         <div class="controls">
-            #springFormSingleSelect("form.o.status", $statuses)
+          #springFormSingleSelect("form.o.status", $statuses)
         </div>
     </div>
 
-    #foreach ($folderId in $form.folderIds)
-        <div class="control-group">
-            <label class="control-label">Folder</label>
+  #foreach ($folderId in $form.folderIds)
+      <div class="control-group">
+          <label class="control-label">Folder</label>
 
-            <div class="controls">
-                <select id="folderIds" name="folderIds" class="input-xxlarge">
-                    #foreach($option in $foldersMap.keySet())
-                        <option value="${option}"
-                            #if("$folderId" == "$option")
-                                selected="selected"
-                            #end>
-                            ${foldersMap.get($option)}</option>
-                    #end
-                </select>
-            </div>
-        </div>
-    #end
+          <div class="controls">
+              <select id="folderIds" name="folderIds" class="input-xxlarge">
+                #foreach($option in $foldersMap.keySet())
+                    <option value="${option}"
+                      #if("$folderId" == "$option")
+                            selected="selected"
+                      #end>
+                      ${foldersMap.get($option)}</option>
+                #end
+              </select>
+          </div>
+      </div>
+  #end
 
     <div class="control-group">
         <label class="control-label">Reference</label>
 
         <div class="controls">
-            #springFormInput("form.o.exernalReference", "class='input-xlarge'")
+          #springFormInput("form.o.exernalReference", "class='input-xlarge'")
         </div>
     </div>
 
@@ -65,7 +65,7 @@
         <label class="control-label">Tags</label>
 
         <div class="controls">
-            #springFormInput("form.o.labels", "data-provide='tag'")
+          #springFormInput("form.o.labels", "data-provide='tag'")
         </div>
     </div>
 
@@ -74,62 +74,62 @@
         <label class="control-label">Prioritized</label>
 
         <div class="controls">
-            #springFormCheckbox("form.o.prioritized", "")
+          #springFormCheckbox("form.o.prioritized", "")
         </div>
     </div>
 
-    #if ($form.o.objectType.prices)
+  #if ($form.o.objectType.prices)
+
+      <div class="control-group">
+          <label class="control-label">Price</label>
+
+          <div class="controls">
+            #springFormInput("form.sellPrice", "class='input-small'")
+          </div>
+      </div>
+
+      <div class="control-group">
+          <label class="control-label">Cost Price</label>
+
+          <div class="controls">
+            #springFormInput("form.costPrice", "class='input-small'")
+          </div>
+      </div>
+
+    #if ($installation.vatEnabled())
 
         <div class="control-group">
-            <label class="control-label">Price</label>
+            <label class="control-label">Vat Rate</label>
 
             <div class="controls">
-                #springFormInput("form.sellPrice", "class='input-small'")
+              #springFormInput("form.o.vatRate", "class='input-small'")
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="control-label">Cost Price</label>
-
-            <div class="controls">
-                #springFormInput("form.costPrice", "class='input-small'")
-            </div>
-        </div>
-
-        #if ($installation.vatEnabled())
-
-            <div class="control-group">
-                <label class="control-label">Vat Rate</label>
-
-                <div class="controls">
-                    #springFormInput("form.o.vatRate", "class='input-small'")
-                </div>
-            </div>
-
-        #end
-
-        <div class="control-group">
-            <label class="control-label">RRP</label>
-
-            <div class="controls">
-                #springFormInput("form.rrp", "class='input-small'")
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Stock Level</label>
-
-            <div class="controls">
-                #springFormInput("form.o.stock", "class='input-small'")
-            </div>
-        </div>
     #end
+
+      <div class="control-group">
+          <label class="control-label">RRP</label>
+
+          <div class="controls">
+            #springFormInput("form.rrp", "class='input-small'")
+          </div>
+      </div>
+
+      <div class="control-group">
+          <label class="control-label">Stock Level</label>
+
+          <div class="controls">
+            #springFormInput("form.o.stock", "class='input-small'")
+          </div>
+      </div>
+  #end
 
     <div class="control-group">
         <label class="control-label">Change Password</label>
 
         <div class="controls">
-            #springFormInput("form.changePassword")
+          #springFormInput("form.changePassword")
         </div>
     </div>
 
@@ -141,7 +141,7 @@
         <label class="control-label">Title Tag</label>
 
         <div class="controls">
-            #springFormInput("form.o.titleTag", "class='input-xxlarge'")
+          #springFormInput("form.o.titleTag", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -149,7 +149,7 @@
         <label class="control-label">Description Tag</label>
 
         <div class="controls">
-            #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
+          #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -157,7 +157,7 @@
         <label class="control-label">Keywords Tag</label>
 
         <div class="controls">
-            #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+          #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
         </div>
     </div>
 
@@ -165,98 +165,98 @@
 <div class="tab-pane" id="tab3">
 
 
-    #foreach ($attributeWithValues in $attributesWithValues)
+  #foreach ($attributeWithValues in $attributesWithValues)
 
-        #set($a = $attributeWithValues.productElement(0))
-        #set($values = $attributeWithValues.productElement(1))
+    #set($a = $attributeWithValues.productElement(0))
+    #set($values = $attributeWithValues.productElement(1))
 
-        <div class="control-group">
-            <label class="control-label">$a.name ($a.id)
-                <a href="/backoffice/attribute/$a.id" class="btn btn-mini">
-                    <i class="icon-pencil"></i></a>
-            </label>
+      <div class="control-group">
+          <label class="control-label">$a.name ($a.id)
+              <a href="/backoffice/attribute/$a.id" class="btn btn-mini">
+                  <i class="icon-pencil"></i></a>
+          </label>
 
-            <div class="controls">
+          <div class="controls">
 
-                #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
+            #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
 
-                    #foreach ($value in $values)
-                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="input-xxlarge"/><br/>
-                    #end
+              #foreach ($value in $values)
+                  <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="input-xxlarge"/><br/>
+              #end
 
-                #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
-                    #foreach ($value in $values)
-                        <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
-                               class="input-small"/><br/>
-                    #end
+            #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
+              #foreach ($value in $values)
+                  <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
+                         class="input-small"/><br/>
+              #end
 
-                #elseif ($a.attributeType == "TextArea")
+            #elseif ($a.attributeType == "TextArea")
 
-                    #foreach ($value in $values)
-                        <textarea name="attributeValues$a.id"
-                                  class="input-block-level">$esc.html($value)</textarea><br/>
-                    #end
+              #foreach ($value in $values)
+                  <textarea name="attributeValues$a.id"
+                            class="input-block-level">$esc.html($value)</textarea><br/>
+              #end
 
-                #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
-                    #foreach ($value in $values)
-                        <div class="input-append date datepicker"
-                             value="$!datetool.format("dd-MM-yyyy", $value)"
-                             data-date-format="dd-mm-yyyy">
-                            <input size="16" type="text" name="attributeValues$a.id"
-                                   value="$!datetool.format("dd-MM-yyyy", $value)"/>
-                            <span class="add-on"><i class="icon-th"></i></span>
-                        </div>
-                    #end
+            #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
+              #foreach ($value in $values)
+                  <div class="input-append date datepicker"
+                       value="$!datetool.format("dd-MM-yyyy", $value)"
+                       data-date-format="dd-mm-yyyy">
+                      <input size="16" type="text" name="attributeValues$a.id"
+                             value="$!datetool.format("dd-MM-yyyy", $value)"/>
+                      <span class="add-on"><i class="icon-th"></i></span>
+                  </div>
+              #end
 
-                #elseif ($a.attributeType == "Selection")
+            #elseif ($a.attributeType == "Selection")
 
-                    #if ($a.multipleValues)
+              #if ($a.multipleValues)
 
-                        #foreach ($option in $a.orderedOptions())
-                            #if($values.contains($option.value))
-                                #set ($checked = "checked='true'")
-                            #else
-                                #set ($checked="")
-                            #end
+                #foreach ($option in $a.orderedOptions())
+                  #if($values.contains($option.value))
+                    #set ($checked = "checked='true'")
+                  #else
+                    #set ($checked="")
+                  #end
 
-                            <label class="checkbox inline">
-                                <input type="checkbox" name="attributeValues$a.id"
-                                       value="$esc.html($option.value)" $!checked/>
-                                $option.value
-                            </label>
-                        #end
-
-                    #else
-
-                        <select name="attributeValues$a.id" class="input-xlarge">
-                            #if ($a.optional)
-                                <option value="">-None-</option>#end
-                            #foreach ($option in $a.orderedOptions())
-                                #if($values.contains($option.value))
-                                    #set ($selected = "selected='true'")
-                                #else
-                                    #set ($selected="")
-                                #end
-                                <option $selected>$esc.html($option.value)</option>
-                            #end
-                        </select>
-
-                    #end
-
-                #elseif ($a.attributeType == "Boolean")
-                    <select name="attributeValues$a.id" class="input-medium">
-                        <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
-                        <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
-                    </select>
+                    <label class="checkbox inline">
+                        <input type="checkbox" name="attributeValues$a.id"
+                               value="$esc.html($option.value)" $!checked/>
+                      $option.value
+                    </label>
                 #end
 
-            </div>
-        </div>
-    #end
+              #else
+
+                  <select name="attributeValues$a.id" class="input-xlarge">
+                    #if ($a.optional)
+                        <option value="">-None-</option>#end
+                    #foreach ($option in $a.orderedOptions())
+                      #if($values.contains($option.value))
+                        #set ($selected = "selected='true'")
+                      #else
+                        #set ($selected="")
+                      #end
+                        <option $selected>$esc.html($option.value)</option>
+                    #end
+                  </select>
+
+              #end
+
+            #elseif ($a.attributeType == "Boolean")
+                <select name="attributeValues$a.id" class="input-medium">
+                    <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
+                    <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
+                </select>
+            #end
+
+          </div>
+      </div>
+  #end
 
 </div>
 <div class="tab-pane" id="tab4">
-    #springFormTextarea("form.o.content", "rows='48' class='input-block-level tinymce'")
+  #springFormTextarea("form.o.content", "rows='48' class='input-block-level tinymce'")
 </div>
 <div class="tab-pane" id="tab5">
 
@@ -269,24 +269,24 @@
             <th></th>
         </tr>
 
-        #foreach ($a in $assets)
-            <tr>
-                <td>
-                    <ul class="thumbnails">
-                        <li class="span6">
-                            <div class="thumbnail"><img
-                                    src="/images/$a.filename()?width=128&height=128"/></div>
-                        </li>
-                    </ul>
-                </td>
-                <td>$a.filename()</td>
-                <td>$a.contentType()</td>
-                <td>
-                    <a href="/backoffice/object/$form.o.id/image/$a.filename()/remove"
-                       class="btn btn-danger">
-                        <i class="icon-trash icon-white"></i></a></td>
-            </tr>
-        #end
+      #foreach ($a in $assets)
+          <tr>
+              <td>
+                  <ul class="thumbnails">
+                      <li class="span6">
+                          <div class="thumbnail"><img
+                                  src="/images/$a.filename()?width=128&height=128"/></div>
+                      </li>
+                  </ul>
+              </td>
+              <td>$a.filename()</td>
+              <td>$a.contentType()</td>
+              <td>
+                  <a href="/backoffice/object/$form.o.id/image/$a.filename()/remove"
+                     class="btn btn-danger">
+                      <i class="icon-trash icon-white"></i></a></td>
+          </tr>
+      #end
     </table>
 
 
@@ -305,20 +305,20 @@
             <th>Description</th>
             <th></th>
         </tr>
-        #foreach ($s in $sections)
-            <tr data-section-id="$s.id" class="section-row">
-                <td>$!s.name()</td>
-                <td>$s.desc()</td>
-                <td>
-                    <a href="$s.backoffice()" role="button" class="btn btn-mini">
-                        <i class="icon-pencil"></i></a>
+      #foreach ($s in $sections)
+          <tr data-section-id="$s.id" class="section-row">
+              <td>$!s.name()</td>
+              <td>$s.desc()</td>
+              <td>
+                  <a href="$s.backoffice()" role="button" class="btn btn-mini">
+                      <i class="icon-pencil"></i></a>
 
-                    <a href="/backoffice/obj/$form.o.id/section/$s.id/delete" role="button"
-                       class="btn btn-mini btn-danger">
-                        <i class="icon-trash icon-white"></i></a>
-                </td>
-            </tr>
-        #end
+                  <a href="/backoffice/obj/$form.o.id/section/$s.id/delete" role="button"
+                     class="btn btn-mini btn-danger">
+                      <i class="icon-trash icon-white"></i></a>
+              </td>
+          </tr>
+      #end
     </table>
 
 
@@ -335,17 +335,17 @@
             <th>Title</th>
             <th></th>
         </tr>
-        #foreach ($a in $form.o.associations)
-            <tr data-section-id="$a.id" class="section-row">
-                <td>$a.id</td>
-                <td>$a.objectType.name</td>
-                <td><a href="/backoffice/obj/$a.id">$a.name</a></td>
-                <td><a href="/backoffice/obj/$form.o.id/association/$a.id/delete" role="button"
-                       class="btn btn-mini btn-danger">
-                    <i class="icon-trash icon-white"></i></a>
-                </td>
-            </tr>
-        #end
+      #foreach ($a in $form.o.associations)
+          <tr data-section-id="$a.id" class="section-row">
+              <td>$a.id</td>
+              <td>$a.objectType.name</td>
+              <td><a href="/backoffice/obj/$a.id">$a.name</a></td>
+              <td><a href="/backoffice/obj/$form.o.id/association/$a.id/delete" role="button"
+                     class="btn btn-mini btn-danger">
+                  <i class="icon-trash icon-white"></i></a>
+              </td>
+          </tr>
+      #end
 
     </table>
 
@@ -390,7 +390,8 @@
 <div class="form-actions">
     <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save changes</button>
     &nbsp;
-    <a href="/backoffice/obj?typeId=$form.o.objectType.id" class="btn btn-info"><i class="icon-arrow-left"></i> Return to list</a>
+    <a href="/backoffice/obj?typeId=$form.o.objectType.id" class="btn btn-info"><i class="icon-arrow-left"></i> Return
+        to list</a>
     &nbsp;
     <a href="/backoffice/obj/$form.o.id/clone" class="btn btn-inverse"><i class="icon-copy"></i> Copy Object</a>
 </div>
@@ -401,9 +402,9 @@
 <form method="POST" action="/backoffice/obj/$form.o.id/section/create" class="form-inline">
     <label>Add Section:</label>
     <select name="class">
-        #foreach($class in $classes.keySet())
-            <option value="${class}">${classes.get($class)}</option>
-        #end
+      #foreach($class in $classes.keySet())
+          <option value="${class}">${classes.get($class)}</option>
+      #end
     </select>
     <button class="btn btn-success" type="submit"><i class="icon-white icon-plus-sign"></i> Add</button>
 </form>
@@ -422,6 +423,9 @@
     })
 
 </script>
+
+
+<a href="/backoffice/plugin/variations?objectId=$form.o.id" class="btn btn-info">Variations</a>
 
 
 #parse("/admin/footer.vm")
