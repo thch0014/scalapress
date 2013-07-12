@@ -58,10 +58,16 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   val dao = mock[VariationDao]
 
   Mockito.when(context.bean[VariationDao]).thenReturn(dao)
-  Mockito.when(dao.findByObjectId(4)).thenReturn(List(v1, v2))
 
   "a variation select tag" should "render all variations as options" in {
+    Mockito.when(dao.findByObjectId(4)).thenReturn(List(v1, v2))
     val render = tag.render(sreq, Map.empty).get
     assert( """<select name="variation"><option>red small</option><option>large green</option></select>""" === render)
+  }
+
+  it should "render all none when no variations" in {
+    Mockito.when(dao.findByObjectId(4)).thenReturn(Nil)
+    val render = tag.render(sreq, Map.empty)
+    assert(render.isEmpty)
   }
 }

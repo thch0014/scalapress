@@ -9,18 +9,24 @@ import scala.xml.Utility
 @Tag("variations_select")
 class VariationsSelectTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.map(obj => {
+    request.obj.flatMap(obj => {
 
-      val options = request.context.bean[VariationDao].findByObjectId(obj.id).map(v =>
-        <option>
-          {v.name}
-        </option>)
+      val variations = request.context.bean[VariationDao].findByObjectId(obj.id)
+      variations.size match {
+        case 0 => None
+        case _ =>
 
-      val xml = <select name="variation">
-        {options}
-      </select>
+          val options = variations.map(v =>
+            <option>
+              {v.name}
+            </option>)
 
-      Utility.trim(xml).toString()
+          val xml = <select name="variation">
+            {options}
+          </select>
+
+          Some(Utility.trim(xml).toString())
+      }
     })
   }
 }
