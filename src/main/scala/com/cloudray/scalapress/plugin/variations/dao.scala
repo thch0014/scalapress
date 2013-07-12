@@ -23,3 +23,15 @@ class VariationDaoImpl extends GenericDaoImpl[Variation, java.lang.Long] with Va
     search(new Search(classOf[Variation]).addFilterEqual("obj.id", l))
   }
 }
+
+trait DimensionValueDao extends GenericDao[DimensionValue, java.lang.Long] {
+  def findByDimension(id: Long): Seq[DimensionValue]
+}
+
+@Component
+@Transactional
+class DimensionValueDaoImpl extends GenericDaoImpl[DimensionValue, java.lang.Long] with DimensionValueDao {
+  def findByDimension(id: Long): Seq[DimensionValue] = {
+    search(new Search(classOf[DimensionValue]).addFilterEqual("dimension.id", id))
+  }
+}

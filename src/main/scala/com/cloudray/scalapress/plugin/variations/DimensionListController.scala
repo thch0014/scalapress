@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.variations
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
@@ -15,6 +15,7 @@ class DimensionListController {
   @Autowired var dimensionDao: DimensionDao = _
   @Autowired var objectTypeDao: TypeDao = _
   @Autowired var context: ScalapressContext = _
+  @Autowired var dimensionValueDao: DimensionValueDao = _
 
   @RequestMapping
   def list = "admin/plugin/variations/dimensions/list.vm"
@@ -29,7 +30,15 @@ class DimensionListController {
     dimension.objectType = `type`
 
     dimensionDao.save(dimension)
-    "redirect:/backoffice/plugin/variations/dimensions"
+    "redirect:/backoffice/plugin/variations/dimensions?objectTypeId=" + objectTypeId
+  }
+
+  @RequestMapping(Array("{id}/delete"))
+  def delete(@PathVariable("id") id: Long) = {
+    val dimension = dimensionDao.find(id)
+    //    val values = dimensionValueDao.findByDimension(dimension.id)
+    //    values.foreach(dimensionValueDao remove)
+    dimensionDao.remove(dimension)
   }
 
   @ModelAttribute("objectTypeId") def objectTypeId(@RequestParam("objectTypeId") objectTypeId: Long) = objectTypeId

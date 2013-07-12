@@ -16,4 +16,9 @@ class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneIns
     controller.create(45)
     Mockito.verify(controller.dimensionDao).save(Matchers.any[Dimension])
   }
+
+  "a dimension list controller" should "return a forward when creating" in {
+    val redirect = controller.create(124)
+    assert("redirect:/backoffice/plugin/variations/dimensions?objectTypeId=124" === redirect)
+  }
 }
