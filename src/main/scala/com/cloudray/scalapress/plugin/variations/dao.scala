@@ -10,3 +10,9 @@ trait DimensionDao extends GenericDao[Dimension, java.lang.Long]
 @Component
 @Transactional
 class DimensionDaoImpl extends GenericDaoImpl[Dimension, java.lang.Long] with DimensionDao
+
+trait VariationDao extends GenericDao[Variation, java.lang.Long]
+
+@Component
+@Transactional
+class VariationDaoImpl extends GenericDaoImpl[Variation, java.lang.Long] with VariationDao
