@@ -25,9 +25,13 @@ case class ScalapressRequest(request: HttpServletRequest,
                              paging: Option[Paging] = None) {
 
   val cacheKey = "scalapress.cache"
-  if (request.getAttribute(cacheKey) == null)
-    request.setAttribute(cacheKey, new Cache(context))
-  private val cache = request.getAttribute(cacheKey).asInstanceOf[Cache]
+  private val cache = if (request.getAttribute(cacheKey) == null) {
+    val cache = new Cache(context)
+    request.setAttribute(cacheKey, cache)
+    cache
+  } else {
+    request.getAttribute(cacheKey).asInstanceOf[Cache]
+  }
 
   def shoppingPlugin = cache.shoppingPlugin
   def installation = cache.installation
