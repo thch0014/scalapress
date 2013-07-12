@@ -36,9 +36,11 @@ class DimensionListController {
   @RequestMapping(Array("{id}/delete"))
   def delete(@PathVariable("id") id: Long) = {
     val dimension = dimensionDao.find(id)
+    val objectTypeId = dimension.objectType.id
     //    val values = dimensionValueDao.findByDimension(dimension.id)
     //    values.foreach(dimensionValueDao remove)
     dimensionDao.remove(dimension)
+    "redirect:/backoffice/plugin/variations/dimensions?objectTypeId=" + objectTypeId
   }
 
   @ModelAttribute("objectTypeId") def objectTypeId(@RequestParam("objectTypeId") objectTypeId: Long) = objectTypeId
