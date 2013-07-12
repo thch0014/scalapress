@@ -34,18 +34,17 @@ class VariationsController {
 
   @RequestMapping(method = Array(RequestMethod.POST), params = Array("objectId"))
   def save(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {
-    val obj = objectDao.find(id)
     val variations = variationDao.findByObjectId(id)
     for ( variation <- variations ) {
       variation.stock = Option(req.getParameter("stock_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt
       variation.price = Option(req.getParameter("price_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt
       variationDao.save(variation)
     }
-    "redirect:/backoffice/plugin/variations?objectId=" + obj.objectType.id
+    "redirect:/backoffice/plugin/variations?objectId=" + id
   }
 
   @RequestMapping(value = Array("{id}/delete"))
-  def delete(@RequestParam("id") id: Long) = {
+  def delete(@PathVariable("id") id: Long) = {
     val variation = variationDao.find(id)
     val objectTypeId = variation.obj.objectType.id
     variationDao.remove(variation)
