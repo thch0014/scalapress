@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.obj.{Obj, ObjectDao}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
@@ -32,7 +32,40 @@ class VariationsController {
     "admin/plugin/variations/list.vm"
   }
 
+  @RequestMapping(method = Array(RequestMethod.POST), params = Array("objectId"))
+  def save(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {
+    val obj = objectDao.find(id)
+    val variations = variationDao.findByObjectId(id)
+    for ( variation <- variations ) {
+      variation.stock = Option(req.getParameter("stock_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt
+      variation.price = Option(req.getParameter("price_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt
+      variationDao.save(variation)
+    }
+    "redirect:/backoffice/plugin/variations?objectId=" + obj.objectType.id
+  }
+
+  @RequestMapping(value = Array("{id}/delete"))
+  def delete(@RequestParam("id") id: Long) = {
+    val variation = variationDao.find(id)
+    val objectTypeId = variation.obj.objectType.id
+    variationDao.remove(variation)
+    "redirect:/backoffice/plugin/variations?objectId=" + objectTypeId
+  }
+
+  def _dimensions(obj: Obj): Iterable[Dimension] = _dimensions(obj.objectType.id)
+  def _dimensions(id: Long): Iterable[Dimension] = dimensionDao.findAll().filter(_.objectType.id == id)
+
+  @RequestMapping(value = Array("add"), method = Array(RequestMethod.POST), params = Array("objectId"))
   def add(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {
+
+    val obj = objectDao.find(id)
+    val values =
+      for ( dimension <- _dimensions(obj) )
+      yield (dimension, req.getParameter("dimension_" + dimension.id).split(",").map(_.trim).toList)
+    val map = values.toMap
+    val variations = new VariationCreationService(variationDao).create(obj, map)
+
+    variations.foreach(v => variationDao.save(v))
 
     "redirect:/backoffice/plugin/variations?objectId=" + id
   }

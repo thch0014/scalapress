@@ -7,14 +7,18 @@
 <form class="form-horizontal" method="POST" action="/backoffice/plugin/variations?objectId=$obj.id">
     <table class="table table-condensed table-hover">
         <tr>
-            <th>Id</th>
             <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
             <th></th>
         </tr>
       #foreach ($v in $variations)
           <tr>
-              <td>$v.id</td>
-              <td>$v.name</td>
+              <td>$v.name()</td>
+              <td><input type="text" name="price_$v.id" class="input-small"></td>
+              <td><input type="text" name="stock_$v.id" class="input-small"></td>
+              <td><a href="/backoffice/plugin/variations/$v.id/delete" class="btn btn-small btn-danger">
+                  <i class="icon-trash"></i></a></td>
           </tr>
       #end
     </table>
@@ -25,7 +29,7 @@
 </form>
 
 <legend>Add Variations</legend>
-<form class="form-horizontal" method="POST" action="/backoffice/plugin/variations?objectId=$obj.id">
+<form class="form-horizontal" method="POST" action="/backoffice/plugin/variations/add?objectId=$obj.id">
     <table class="table table-condensed table-hover">
       #foreach ($d in $dimensions)
           <tr>
