@@ -22,11 +22,13 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   val dv1 = new Dimension
 
   val d1 = new Dimension
+  d1.id = 2
   d1.name = "color"
   d1.objectType = new ObjectType
   d1.objectType.id = 54
 
   val d2 = new Dimension
+  d2.id = 6
   d2.name = "size"
   d2.objectType = d1.objectType
 
@@ -39,11 +41,11 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   dv12.value = "green"
 
   val dv21 = new DimensionValue
-  dv21.dimension = d1
+  dv21.dimension = d2
   dv21.value = "small"
 
   val dv22 = new DimensionValue
-  dv22.dimension = d1
+  dv22.dimension = d2
   dv22.value = "large"
 
   val v1 = new Variation
@@ -62,7 +64,7 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   "a variation select tag" should "render all variations as options" in {
     Mockito.when(dao.findByObjectId(4)).thenReturn(List(v1, v2))
     val render = tag.render(sreq, Map.empty).get
-    assert( """<select name="variation"><option>red small</option><option>large green</option></select>""" === render)
+    assert( """<select name="variation"><option>red small</option><option>green large</option></select>""" === render)
   }
 
   it should "render all none when no variations" in {
