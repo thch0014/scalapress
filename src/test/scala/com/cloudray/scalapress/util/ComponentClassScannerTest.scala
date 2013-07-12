@@ -8,6 +8,6 @@ class ComponentClassScannerTest extends FunSuite with MockitoSugar with OneInsta
 
     test("scanner picks up all tags") {
         val tags = ComponentClassScanner.tags
-        assert(96 === tags.size)
+        assert(95 === tags.size)
     }
 }

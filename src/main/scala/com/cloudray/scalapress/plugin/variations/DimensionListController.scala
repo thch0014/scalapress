@@ -35,8 +35,5 @@ class DimensionListController {
   @ModelAttribute("objectTypeId") def objectTypeId(@RequestParam("objectTypeId") objectTypeId: Long) = objectTypeId
 
   @ModelAttribute("dimensions") def dimensions(@RequestParam("objectTypeId") objectTypeId: Long) =
-    dimensionDao
-      .findAll()
-      .filterNot(_.objectType == null)
-      .filter(_.objectType.id == objectTypeId).asJava
+    dimensionDao.findAll().filterNot(_.objectType == null).filter(_.objectType.id == objectTypeId).asJava
 }
