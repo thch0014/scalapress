@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.obj.ObjectDao
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
+import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
@@ -29,5 +30,10 @@ class VariationsController {
     model.put("dimensions", dimensions.asJava)
 
     "admin/plugin/variations/list.vm"
+  }
+
+  def add(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {
+
+    "redirect:/backoffice/plugin/variations?objectId=" + id
   }
 }

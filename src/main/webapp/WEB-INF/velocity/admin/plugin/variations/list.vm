@@ -2,32 +2,42 @@
 
 <h3>Variations</h3>
 
-<legend>Existing Variations</legend>
-<table class="table table-condensed table-hover">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th></th>
-    </tr>
-  #foreach ($v in $variations)
-      <tr>
-          <td>$v.id</td>
-          <td>$v.name</td>
-      </tr>
-  #end
-</table>
 
-<form class="form-horizontal" method="POST">
-    <legend>Add Variations</legend>
+<legend>Existing Variations</legend>
+<form class="form-horizontal" method="POST" action="/backoffice/plugin/variations?objectId=$obj.id">
     <table class="table table-condensed table-hover">
-      #foreach ($d in $dimensions)
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+      #foreach ($v in $variations)
           <tr>
-              <td>$d.name</td>
-              <td><input type="text" name="dimension_$d.id"/></td>
+              <td>$v.id</td>
+              <td>$v.name</td>
           </tr>
       #end
     </table>
 
+    <div class="form-actions">
+        <button type="submit" class="btn btn-inverse">Update variations</button>
+    </div>
+</form>
+
+<legend>Add Variations</legend>
+<form class="form-horizontal" method="POST" action="/backoffice/plugin/variations?objectId=$obj.id">
+    <table class="table table-condensed table-hover">
+      #foreach ($d in $dimensions)
+          <tr>
+              <td>$d.name</td>
+              <td><input type="text" name="dimension_$d.id" class="input-xxlarge"/></td>
+          </tr>
+      #end
+    </table>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-inverse">Add Variations</button>
+    </div>
 
 </form>
 

@@ -55,6 +55,12 @@ class DimensionValue {
 
   @BeanProperty var value: String = _
 
+  def copy = {
+    val dv = new DimensionValue
+    dv.dimension = dimension
+    dv.value = value
+    dv
+  }
 }
 
 // a collection of dimension values associated with a given object, with stock and price
