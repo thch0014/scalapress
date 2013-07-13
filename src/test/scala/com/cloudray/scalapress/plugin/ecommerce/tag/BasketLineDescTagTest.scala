@@ -19,9 +19,11 @@ class BasketLineDescTagTest extends FlatSpec with MockitoSugar with OneInstanceP
 
   val dv1 = new DimensionValue
   dv1.dimension = new Dimension
+  dv1.dimension.id = 4
   dv1.value = "green"
   val dv2 = new DimensionValue
   dv2.dimension = new Dimension
+  dv2.dimension.id = 7
   dv2.value = "latern"
 
   val tag = new BasketLineDescTag()
