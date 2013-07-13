@@ -90,7 +90,17 @@ class BasketLineCountTag extends ScalapressTag with TagBuilder {
     val text = request.basket.lines.size().toString
     Some(build(text, params))
   }
+}
 
+@Tag("basket_line_desc")
+class BasketLineDescTag extends ScalapressTag with TagBuilder {
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = request.line.map(_.description)
+}
+
+@Tag("basket_line_variation")
+class BasketLineVariationTag extends ScalapressTag with TagBuilder {
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] =
+    request.line.flatMap(line => Option(line.variation)).map(_.name)
 }
 
 @Tag("basket_line_qty")
