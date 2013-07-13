@@ -60,7 +60,7 @@ class AddToBasketTag extends ScalapressTag with TagBuilder {
         obj.available || obj.backorders || request.shoppingPlugin.stockMethod == StockMethod.Off match {
           case true =>
             val text = params.get("text").getOrElse("Add to basket")
-            val href = UrlResolver.addToBasket(obj)
+            val href = "/basket/add/" + obj.id
             val link = buildLink(href, text, params)
             Some(link)
           case false => None
@@ -206,5 +206,13 @@ class CheckoutTag extends ScalapressTag with TagBuilder {
     val link = UrlResolver.checkout
     val text = params.get("text").getOrElse("Checkout")
     Some(buildLink(link, text, params))
+  }
+}
+
+@Tag("basket_form")
+class BasketFormTag extends ScalapressTag with TagBuilder {
+
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+    request.obj.map(obj => s"<form method='GET' action='/basket/add/${obj.id}'>")
   }
 }
