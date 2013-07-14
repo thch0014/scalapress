@@ -68,7 +68,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   val date3 = new AttributeValue
   date3.attribute = date1.attribute
-  date3.value = "2142353"
+  date3.value = "999999999999999"
 
   val obj = new Obj
   obj.id = 2
@@ -547,5 +547,12 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     q.name = "with / slash"
     val results = service.search(q)
     assert(results.refs.isEmpty)
+  }
+
+  test("ignore past should ignore documents prior to the date") {
+    val q = new SavedSearch
+    q.ignorePast = date1.attribute
+    val results = service.search(q)
+    //  assert(1 === results.refs.size)
   }
 }

@@ -94,6 +94,7 @@ class Obj extends SortedSections {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var objectType: ObjectType = _
 
+  @Column(length = 10000)
   @BeanProperty var content: String = _
   def content(limit: Int): String = content.take(limit)
 

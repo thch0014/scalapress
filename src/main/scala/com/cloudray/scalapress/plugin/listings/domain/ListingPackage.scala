@@ -31,7 +31,7 @@ class ListingPackage {
 
   @BeanProperty var autoPublish: Boolean = _
 
-  @Column(name = "description", length = 3000)
+  @Column(name = "labels", length = 3000)
   @BeanProperty var labels: String = _
 
   @Column(length = 3000)

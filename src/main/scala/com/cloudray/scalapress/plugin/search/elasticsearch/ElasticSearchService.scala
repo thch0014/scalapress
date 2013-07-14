@@ -1,32 +1,30 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
-import org.elasticsearch.common.xcontent.XContentFactory
-import org.elasticsearch.action.search.SearchResponse
 import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.springframework.stereotype.Component
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
-import org.elasticsearch.index.query._
-import scala.collection.mutable.{ListBuffer, ArrayBuffer}
-import scala.Option
-import com.cloudray.scalapress.enums.{AttributeType, Sort}
-import org.elasticsearch.search.sort.SortOrder
+import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.enums.{Sort, AttributeType}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
-import org.elasticsearch.common.unit.DistanceUnit
-import javax.annotation.PreDestroy
 import com.cloudray.scalapress.search._
-import org.elasticsearch.search.facet.terms.TermsFacet
-import scala.Some
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
-import com.sksamuel.elastic4s.{ElasticDsl, ElasticClient}
+import com.sksamuel.elastic4s.{QueryDefinition, ElasticDsl, ElasticClient}
 import ElasticDsl._
 import com.sksamuel.elastic4s.FieldType.{LongType, StringType, GeoPointType, IntegerType}
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
+import org.elasticsearch.action.search.SearchResponse
+import org.elasticsearch.common.unit.DistanceUnit
+import org.elasticsearch.search.sort.SortOrder
+import org.elasticsearch.search.facet.terms.TermsFacet
+import org.elasticsearch.common.xcontent.XContentFactory
+import javax.annotation.PreDestroy
+import com.sksamuel.elastic4s.Analyzer.KeywordAnalyzer
 
 /** @author Stephen Samuel */
 
@@ -85,7 +83,7 @@ class ElasticSearchService extends SearchService with Logging {
     fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
-    fields.append(FIELD_TAGS typed StringType index "not_analyzed")
+    fields.append(FIELD_TAGS typed StringType analyzer KeywordAnalyzer)
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
     fields.append("location" typed GeoPointType)
     attributes.foreach(attr => {
@@ -124,10 +122,7 @@ class ElasticSearchService extends SearchService with Logging {
       FIELD_STATUS -> obj.status,
       FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0))
 
-    Option(obj.labels)
-      .foreach(tags => tags
-      .split(",")
-      .foreach(tag => _fields append FIELD_TAGS -> tag))
+    Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
 
     val hasImage = obj.images.size > 0
     _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
@@ -175,8 +170,8 @@ class ElasticSearchService extends SearchService with Logging {
 
   def _count(search: SavedSearch): Long = {
     client.sync.execute {
-      countall from INDEX query2 {
-        _buildQuery(search)
+      countall from INDEX query {
+        _query(search)
       }
     }.getCount
   }
@@ -184,20 +179,10 @@ class ElasticSearchService extends SearchService with Logging {
   override def search(search: SavedSearch): SearchResult = {
     val resp = _search(search)
     val refs = _resp2ref(resp)
-    val facets = _resp2facets(resp,
-      Option(search.objectType).map(_.attributes.asScala).getOrElse(Nil))
+    val facets = _resp2facets(resp, Option(search.objectType).map(_.attributes.asScala).getOrElse(Nil))
     val count = _count(search)
     logger.debug("Search returned {} refs", refs.size)
     SearchResult(refs, facets, count)
-  }
-
-  def _buildQuery(search: SavedSearch): QueryStringQueryBuilder = {
-    val queryString = _buildQueryString(search)
-    queryString.length match {
-      case 0 => new QueryStringQueryBuilder("*:*")
-      case _ => new QueryStringQueryBuilder(queryString)
-        .defaultOperator(QueryStringQueryBuilder.Operator.AND)
-    }
   }
 
   def _maxResults(search: SavedSearch) =
@@ -205,92 +190,68 @@ class ElasticSearchService extends SearchService with Logging {
     else if (search.maxResults > MAX_RESULTS_HARD_LIMIT) MAX_RESULTS_HARD_LIMIT
     else search.maxResults
 
-  def _buildQueryString(search: SavedSearch): String = {
+  def _query(search: SavedSearch): QueryDefinition = {
 
-    val buffer = new ArrayBuffer[String]()
+    val queries = new ListBuffer[QueryDefinition]
 
-    Option(search.name)
-      .orElse(Option(search.keywords))
+    Option(search.name).orElse(Option(search.keywords))
+      .map(_.trim)
+      .filter(_.length > 0)
+      .foreach(_
+      .split(" ")
       .filter(_.trim.length > 0)
-      .foreach(
-      name => name
-        .trim
-        .split(" ")
-        .filter(_.trim.length > 0)
-        .map(value => _normalize(value))
-        .foreach(arg => buffer.append(s"name:$arg"))
+      .map(value => _normalize(value))
+      .foreach(value => queries.append(field("name", value)))
     )
 
-    Option(search.objectType)
-      .foreach(arg => buffer.append(FIELD_OBJECT_TYPE + ":" + arg.id.toString))
+    Option(search.objectType).map(_.id.toString).foreach(id => queries.append(term(FIELD_OBJECT_TYPE, id)))
 
-    Option(search.labels) match {
-      case Some(labels) =>
-        labels
-          .split(",")
-          .filterNot(_.isEmpty)
-          .filterNot(_.toLowerCase == "random")
-          .filterNot(_.toLowerCase == "latest")
-          .foreach(tag => buffer.append(FIELD_TAGS + ":\"" + tag + "\""))
-      case _ =>
-    }
+    Option(search.labels).map(labels =>
+      labels.split(",")
+        .filterNot(_.isEmpty)
+        .filterNot(_.toLowerCase == "random")
+        .filterNot(_.toLowerCase == "latest")
+        .foreach(tag => queries.append(term(FIELD_TAGS, tag))))
 
     Option(search.searchFolders)
       .filter(_.trim.length > 0)
       .map(_.replaceAll("\\D", ""))
-      .foreach(_
-      .split(",")
-      .foreach(f => buffer.append(FIELD_FOLDERS + ":" + f)))
+      .foreach(_.split(",").foreach(f => queries.append(term(FIELD_FOLDERS, f))))
 
-    search
-      .attributeValues
-      .asScala
+    search.attributeValues.asScala
       .filter(_.value.trim.length > 0)
-      .foreach(av => {
-      buffer.append(FIELD_ATTRIBUTE + av.attribute.id + ":" + _attributeNormalize(av.value))
-    })
+      .foreach(av => queries.append(field(_attrField(av.attribute.id), _attributeNormalize(av.value))))
 
     Option(search.hasAttributes)
       .filter(_.trim.length > 0)
-      .foreach(arg => {
-      buffer.append("has_attribute_" + arg + ":1")
-    })
+      .foreach(arg => queries.append(field("has_attribute_" + arg, "1")))
 
-    if (search.imageOnly)
-      buffer.append(FIELD_HAS_IMAGE + ":true")
+    if (search.imageOnly) queries.append(field(FIELD_HAS_IMAGE, "true"))
 
-    buffer.mkString(" ")
+    queries.size match {
+      case 0 => "*:*"
+      case _ => bool(should(queries: _*))
+    }
   }
 
   def _search(search: SavedSearch): SearchResponse = {
 
-    val filter = Option(search.location)
-      .flatMap(Postcode.gps)
-      .map(gps => {
-      new GeoDistanceFilterBuilder(FIELD_LOCATION)
-        .point(gps.lat, gps.lon)
-        .distance(search.distance, DistanceUnit.MILES)
+    val filter = Option(search.location).flatMap(Postcode.gps).map(gps => {
+      geoDistance(FIELD_LOCATION).point(gps.lat, gps.lon).distance(search.distance, DistanceUnit.MILES)
     })
 
     val query = filter match {
-      case None => _buildQuery(search)
-      case Some(f) => new FilteredQueryBuilder(_buildQuery(search), f)
+      case None => _query(search)
+      case Some(f) => filterQuery.query(_query(search)).filter(f)
     }
 
     val limit = _maxResults(search)
 
-    val triggeredFacets = search
-      .attributeValues
-      .asScala
-      .map(_.attribute.id.toString)
-      .toSeq
-    val filteredFacets = search
-      .facets
-      .filterNot(facet => triggeredFacets.contains(facet))
+    val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
+    val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
 
     val facets = filteredFacets.map(_ match {
-      case id if id
-        .forall(_.isDigit) => facet terms id fields FIELD_ATTRIBUTE + id size 20
+      case id if id.forall(_.isDigit) => facet terms id fields FIELD_ATTRIBUTE + id size 20
       case name => facet terms name fields name
     })
 
@@ -298,15 +259,10 @@ class ElasticSearchService extends SearchService with Logging {
     val sort = _sort(search)
 
     client.sync.execute {
-      select in INDEX -> TYPE searchType QueryAndFetch from (search
-        .pageNumber - 1) * limit size limit sort(
+      select in INDEX -> TYPE searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort(
         prioritized,
         sort
-        ) query2 {
-        query
-      } facets {
-        facets
-      }
+        ) query query facets facets
     }
   }
 
@@ -314,14 +270,11 @@ class ElasticSearchService extends SearchService with Logging {
 
   def _sort(search: SavedSearch) = search.sortType match {
 
-    case Sort.Random => by script "Math.random()" as "number" order SortOrder
-      .ASC
+    case Sort.Random => by script "Math.random()" as "number" order SortOrder.ASC
     case Sort.Attribute if search.sortAttribute != null =>
-      by field _attrField(search.sortAttribute.id) order SortOrder
-        .ASC missing "_last"
+      by field _attrField(search.sortAttribute.id) order SortOrder.ASC missing "_last"
     case Sort.AttributeDesc if search.sortAttribute != null =>
-      by field _attrField(search.sortAttribute.id) order SortOrder
-        .DESC missing "_last"
+      by field _attrField(search.sortAttribute.id) order SortOrder.DESC missing "_last"
     case Sort.Name => by field FIELD_NAME_NOT_ANALYSED order SortOrder.ASC
     case Sort.Oldest => by field FIELD_OBJECT_ID order SortOrder.ASC
     case _ => by field FIELD_OBJECT_ID order SortOrder.DESC
@@ -336,17 +289,10 @@ class ElasticSearchService extends SearchService with Logging {
           .filter(_.isInstanceOf[TermsFacet])
           .map(_.asInstanceOf[TermsFacet])
           .map(facet => {
-          val terms = facet
-            .getEntries
-            .asScala
-            .map(entry => FacetTerm(_attributeRestore(entry.getTerm.string()),
-            entry.getCount))
-            .toSeq
+          val terms = facet.getEntries.asScala
+            .map(entry => FacetTerm(_attributeRestore(entry.getTerm.string()), entry.getCount)).toSeq
           val name = facet.getName match {
-            case id if id.forall(_.isDigit) => attributes
-              .find(_.id.toString == id)
-              .map(_.name)
-              .getOrElse("error")
+            case id if id.forall(_.isDigit) => attributes.find(_.id.toString == id).map(_.name).getOrElse("error")
             case n => n
           }
           Facet(name, facet.getName, terms)
@@ -358,14 +304,10 @@ class ElasticSearchService extends SearchService with Logging {
     resp.getHits.asScala.map(arg => {
       val id = arg.id.toLong
       val objectType = arg.getSource.get(FIELD_OBJECT_TYPE).toString.toLong
-      val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == 1 || arg
-        .getSource
-        .get(FIELD_PRIORITIZED) == "1"
+      val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == 1 || arg.getSource.get(FIELD_PRIORITIZED) == "1"
       val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
       val status = arg.getSource.get(FIELD_STATUS).toString
-      val attributes = arg.getSource.asScala
-        .filter(_._2 != null)
-        .filter(_._1.startsWith(FIELD_ATTRIBUTE))
+      val attributes = arg.getSource.asScala.filter(_._2 != null).filter(_._1.startsWith(FIELD_ATTRIBUTE))
         .map(field => {
         val id = field._1.drop(FIELD_ATTRIBUTE.length).toLong
         val value = _attributeRestore(field._2.toString)

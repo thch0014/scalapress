@@ -19,52 +19,52 @@ import com.cloudray.scalapress.obj.Obj
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section {
 
-    @OneToOne
-    @JoinColumn(name = "search")
-    @BeanProperty var search: SavedSearch = _
+  @OneToOne
+  @JoinColumn(name = "search")
+  @BeanProperty var search: SavedSearch = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "markup")
-    @BeanProperty var markup: Markup = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "markup")
+  @BeanProperty var markup: Markup = _
 
-    def desc: String = "Shows results of a predefined search"
-    override def backoffice: String = "/backoffice/search/section/savedsearch/" + id
+  def desc: String = "Shows results of a predefined search"
+  override def backoffice: String = "/backoffice/search/section/savedsearch/" + id
 
-    override def _init(context: ScalapressContext) {
-        search = new SavedSearch
-        search.maxResults = 20
-        context.savedSearchDao.save(search)
-    }
+  override def _init(context: ScalapressContext) {
+    search = new SavedSearch
+    search.maxResults = 20
+    context.savedSearchDao.save(search)
+  }
 
-    def render(request: ScalapressRequest): Option[String] = {
-        Option(search) match {
-            case None => Some("<!-- no search object set (section #" + id + ") -->")
-            case Some(s) =>
-                val objects = _objects(request)
-                objects.size match {
-                    case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
-                    case _ =>
-                        Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
-                            case None => Some("<!-- no search results markup -->")
-                            case Some(m) =>
-                                val rendered = MarkupRenderer.renderObjects(objects, m, request)
-                                Some(rendered)
-                        }
-                }
+  def render(request: ScalapressRequest): Option[String] = {
+    Option(search) match {
+      case None => Some("<!-- no search object set (section #" + id + ") -->")
+      case Some(s) =>
+        val objects = _objects(request)
+        objects.size match {
+          case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
+          case _ =>
+            Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
+              case None => Some("<!-- no search results markup -->")
+              case Some(m) =>
+                val rendered = MarkupRenderer.renderObjects(objects, m, request)
+                Some(rendered)
+            }
         }
     }
+  }
 
-    def _objects(request: ScalapressRequest): Seq[Obj] = {
-        val result = request.context.searchService.search(search)
-        val objs = request.context.objectDao
-          .findBulk(result.refs.map(_.id))
-          .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
-        _reorder(result.refs, objs)
-    }
+  def _objects(request: ScalapressRequest): Seq[Obj] = {
+    val result = request.context.searchService.search(search)
+    val objs = request.context.objectDao
+      .findBulk(result.refs.map(_.id))
+      .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+    _reorder(result.refs, objs)
+  }
 
-    def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {
-        val ids = refs.map(_.id)
-        objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
-    }
+  def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {
+    val ids = refs.map(_.id)
+    objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
+  }
 
 }
