@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.obj.attr.{AttributeValueRenderer, AttributeTableRenderer}
+import com.cloudray.scalapress.obj.attr.{AttributeValue, AttributeFuncs, AttributeValueRenderer, AttributeTableRenderer}
 
 /** @author Stephen Samuel */
 @Tag("attribute_value")
@@ -83,6 +83,22 @@ class AttributeTableTag extends ScalapressTag with TagBuilder {
     request.obj match {
       case None => None
       case Some(obj) => {
+
+        // add in default values
+        for ( attr <- obj.objectType.attributes.asScala ) {
+          Option(attr.default).foreach(default => {
+            val qqq = AttributeFuncs.attributeValue(obj, attr)
+
+            if (qqq.isEmpty) {
+              val av = new AttributeValue
+              av.attribute = attr
+              av.obj = obj
+              av.value = default
+              obj.attributeValues.add(av)
+            }
+          })
+        }
+
         val avs = obj.sortedAttributeValues
           .filter(_.attribute.public)
           .filterNot(av => excludes.contains(av.attribute.id.toString))
