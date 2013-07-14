@@ -12,18 +12,18 @@ import org.apache.commons.io.{IOUtils, FileUtils}
 @RequestMapping(Array("/backoffice/type/{id}/export"))
 class ObjectExportController {
 
-    def filename(id: Any) = s"export_objects_$id.csv"
+  def filename(id: Any) = s"export_objects_$id.csv"
 
-    @Autowired var exporter: ObjectExporter = _
+  @Autowired var exporter: ObjectExporter = _
 
-    @ResponseBody
-    @RequestMapping(produces = Array("text/html"), value = Array("csv"))
-    def export(@PathVariable("id") id: Long, resp: HttpServletResponse) {
-        resp.setContentType("application/vnd.ms-excel")
-        resp.setHeader("Content-Disposition", "attachment; filename=" + filename(id))
-        val file = exporter.export(id)
-        val input = FileUtils.openInputStream(file)
-        IOUtils.copy(input, resp.getOutputStream)
-        IOUtils.closeQuietly(input)
-    }
+  @ResponseBody
+  @RequestMapping(produces = Array("text/html"), value = Array("csv"))
+  def export(@PathVariable("id") id: Long, resp: HttpServletResponse) {
+    resp.setContentType("application/vnd.ms-excel")
+    resp.setHeader("Content-Disposition", "attachment; filename=" + filename(id))
+    val file = exporter.export(id)
+    val input = FileUtils.openInputStream(file)
+    IOUtils.copy(input, resp.getOutputStream)
+    IOUtils.closeQuietly(input)
+  }
 }
