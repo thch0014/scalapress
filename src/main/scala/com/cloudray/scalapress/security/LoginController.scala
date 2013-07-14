@@ -9,36 +9,52 @@ import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import com.cloudray.scalapress.plugin.profile.controller.renderer.LoginRenderer
+import javax.persistence.Transient
+import org.fusesource.scalate.TemplateEngine
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping
 class LoginController {
 
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var themeService: ThemeService = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var themeService: ThemeService = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(value = Array("login"), produces = Array("text/html"))
-    def loginredirect(req: HttpServletRequest, resp: HttpServletResponse): String = {
-        val savedRequest = new HttpSessionRequestCache().getRequest(req, resp)
-        if (savedRequest != null && savedRequest.getRedirectUrl != null && savedRequest.getRedirectUrl.contains("backoffice")) {
-            "forward:/backoffice-login"
-        } else {
-            "forward:/weblogin"
-        }
+  @Transient val engine = new TemplateEngine
+
+  @RequestMapping(value = Array("login"), produces = Array("text/html"))
+  def loginredirect(req: HttpServletRequest, resp: HttpServletResponse): String = {
+    val savedRequest = new HttpSessionRequestCache().getRequest(req, resp)
+    if (savedRequest != null && savedRequest.getRedirectUrl != null &&
+      savedRequest.getRedirectUrl.contains("backoffice")) {
+      "forward:/backoffice-login"
+    } else {
+      "forward:/weblogin"
     }
+  }
 
-    @ResponseBody
-    @RequestMapping(value = Array("weblogin"), produces = Array("text/html"))
-    def weblogin(req: HttpServletRequest): ScalapressPage = {
+  @ResponseBody
+  @RequestMapping(value = Array("weblogin"), produces = Array("text/html"))
+  def weblogin(req: HttpServletRequest): ScalapressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Login")
-        val theme = themeService.default
+    val (error, errorMessage) =
+      if (req.getParameter("login_error") == "1")
+        (1, Some(LoginController.CREDENTIALS_ERROR_MSG))
+      else
+        (0, None)
 
-        val page = ScalapressPage(theme, sreq)
-        page.body(LoginRenderer.renderLogin)
-        page
-    }
+    val sreq = ScalapressRequest(req, context).withTitle("Login")
+    val theme = themeService.default
+    val body = engine.layout("/com/cloudray/scalapress/security/login.ssp",
+      Map("error" -> error, "errorMessage" -> errorMessage))
+
+    val page = ScalapressPage(theme, sreq)
+    page.body(body)
+    page
+  }
+}
+
+object LoginController {
+  val CREDENTIALS_ERROR_MSG = "Your details were not correct. Please check and try again."
 }

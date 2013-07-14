@@ -1,0 +1,27 @@
+<%@ val error: Integer %>
+<%@ val errorMessage: Option[String] %>
+
+<form action='/j_spring_security_check' method='POST' class="form-horizontal">
+
+  #if (error == 1)
+      <div class="alert alert-error">${errorMessage}</div>
+  #end
+
+    <div class="control-group">
+        <label for="email">
+            Email
+        </label>
+        <input name="j_username" type="email" placeholder="Email Address"/>
+    </div>
+    <div class="control-group">
+        <label for="password">
+            Password
+        </label>
+        <input name="j_password" type="password" placeholder="Password"/>
+    </div>
+    <button type="submit" name="submit" class="btn">Login</button>
+
+    <a href="/register" class="btn">Register</a>
+    <a href="/password" class="btn">Forgotten Password</a>
+
+</form>

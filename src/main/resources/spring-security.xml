@@ -14,7 +14,8 @@
         <security:intercept-url pattern="/listing/package" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
         <security:intercept-url pattern="/listing/**" access="ROLE_USER,ROLE_ADMIN"/>
         <security:intercept-url pattern="/favicon.ico" access="ROLE_ANONYMOUS,ROLE_USER,ROLE_ADMIN"/>
-        <security:form-login login-page="/login" authentication-success-handler-ref="loginSuccessHandler"/>
+        <security:form-login login-page="/login" authentication-success-handler-ref="loginSuccessHandler"
+                             authentication-failure-url="/login?login_error=1"/>
     </security:http>
 
     <security:authentication-manager alias="authman">
