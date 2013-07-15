@@ -4,6 +4,7 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.obj.{ObjectType, TypeDao}
+import com.cloudray.scalapress.plugin.variations.controller.DimensionListController
 
 /** @author Stephen Samuel */
 class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

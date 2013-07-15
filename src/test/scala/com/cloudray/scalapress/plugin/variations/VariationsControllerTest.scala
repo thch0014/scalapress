@@ -6,6 +6,7 @@ import com.cloudray.scalapress.obj.{Obj, ObjectType, ObjectDao}
 import org.springframework.ui.ModelMap
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.plugin.variations.controller.VariationsController
 
 /** @author Stephen Samuel */
 class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

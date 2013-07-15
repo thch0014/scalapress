@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.variations.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValueDao, DimensionDao}
 
 /** @author Stephen Samuel */
 @Controller
@@ -46,5 +47,5 @@ class DimensionListController {
   @ModelAttribute("objectTypeId") def objectTypeId(@RequestParam("objectTypeId") objectTypeId: Long) = objectTypeId
 
   @ModelAttribute("dimensions") def dimensions(@RequestParam("objectTypeId") objectTypeId: Long) =
-    dimensionDao.findAll().filterNot(_.objectType == null).filter(_.objectType.id == objectTypeId).asJava
+    dimensionDao.findByObjectType(objectTypeId).asJava
 }

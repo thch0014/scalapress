@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.variations.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
@@ -7,6 +7,7 @@ import com.cloudray.scalapress.obj.{Obj, ObjectDao}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.plugin.variations.{VariationCreationService, Dimension, VariationDao, DimensionDao}
 
 /** @author Stephen Samuel */
 @Controller
