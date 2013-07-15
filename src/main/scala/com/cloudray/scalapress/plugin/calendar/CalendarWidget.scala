@@ -14,41 +14,33 @@ import scala.beans.BeanProperty
 @Table(name = "plugins_calendar_widget")
 class CalendarWidget extends Widget {
 
-    @ManyToOne
-    @JoinColumn(name = "objectType")
-    @BeanProperty var objectType: ObjectType = _
+  @ManyToOne
+  @JoinColumn(name = "objectType")
+  @BeanProperty var objectType: ObjectType = _
 
-    @ManyToOne
-    @JoinColumn(name = "startDateAttribute")
-    @BeanProperty var startDateAttribute: Attribute = _
+  @ManyToOne
+  @JoinColumn(name = "startDateAttribute")
+  @BeanProperty var startDateAttribute: Attribute = _
 
-    @ManyToOne
-    @JoinColumn(name = "endDateAttribute")
-    @BeanProperty var endDateAttribute: Attribute = _
+  @ManyToOne
+  @JoinColumn(name = "endDateAttribute")
+  @BeanProperty var endDateAttribute: Attribute = _
 
-    def render(req: ScalapressRequest): Option[String] = {
-        Some( """<div id="calendar_widget_""" + id + """"></div>
-                 <script>
-                    $("#calendar_widget_""" + id + """").eventCalendar({
-                        startWeekOnMonday: true,
-                        moveSpeed: 200,
-                        showDescription: true,
-                        eventsScrollable: false,
-                        eventsjson: '/plugin/calendar/event/widget/""" + id + """'
-                   });
-                 </script> """)
-    }
+  def render(req: ScalapressRequest): Option[String] = {
+    val output = engine.layout("/com/cloudray/scalapress/plugin/calendar/widget.ssp", Map("id" -> id.toString))
+    Some(output)
+  }
 
-    def search = {
-        val search = new SavedSearch
-        search.objectType = objectType
-        search.status = "Live"
-        search.maxResults = 1000
-        search.sortType = Sort.AttributeDesc
-        search.sortAttribute = startDateAttribute
-        search.hasAttributes = startDateAttribute.id.toString
-        search
-    }
+  def search = {
+    val search = new SavedSearch
+    search.objectType = objectType
+    search.status = "Live"
+    search.maxResults = 1000
+    search.sortType = Sort.AttributeDesc
+    search.sortAttribute = startDateAttribute
+    search.hasAttributes = startDateAttribute.id.toString
+    search
+  }
 
-    override def backoffice = "/backoffice/plugin/calendar/widget/" + id
+  override def backoffice = "/backoffice/plugin/calendar/widget/" + id
 }
