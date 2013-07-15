@@ -1,7 +1,7 @@
 package com.cloudray.scalapress
 
 import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao}
-import com.cloudray.scalapress.media.{ImageService, AssetStore}
+import com.cloudray.scalapress.media.{ThumbnailService, AssetStore}
 import obj.{ObjectDao, TypeDao}
 import search.{SavedSearchDao, SearchFormDao, SearchService}
 import section.SectionDao
@@ -20,37 +20,37 @@ import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 @Component
 class ScalapressContext extends ServletContextAware {
 
-    @Autowired var assetStore: AssetStore = _
-    @Autowired var imageService: ImageService = _
+  @Autowired var assetStore: AssetStore = _
+  @Autowired var thumbnailService: ThumbnailService = _
 
-    @Autowired var installationDao: InstallationDao = _
+  @Autowired var installationDao: InstallationDao = _
 
-    @Autowired var paymentPluginDao: PaymentPluginDao = _
-    @Autowired var transactionDao: TransactionDao = _
+  @Autowired var paymentPluginDao: PaymentPluginDao = _
+  @Autowired var transactionDao: TransactionDao = _
 
-    @Autowired var folderDao: FolderDao = _
-    @Autowired var folderSettingsDao: FolderPluginDao = _
+  @Autowired var folderDao: FolderDao = _
+  @Autowired var folderSettingsDao: FolderPluginDao = _
 
-    @Autowired var searchService: SearchService = _
-    @Autowired var searchFormDao: SearchFormDao = _
-    @Autowired var savedSearchDao: SavedSearchDao = _
+  @Autowired var searchService: SearchService = _
+  @Autowired var searchFormDao: SearchFormDao = _
+  @Autowired var savedSearchDao: SavedSearchDao = _
 
-    @Autowired var attributeValueDao: AttributeValueDao = _
-    @Autowired var attributeDao: AttributeDao = _
+  @Autowired var attributeValueDao: AttributeValueDao = _
+  @Autowired var attributeDao: AttributeDao = _
 
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var typeDao: TypeDao = _
+  @Autowired var objectDao: ObjectDao = _
+  @Autowired var typeDao: TypeDao = _
 
-    @Autowired var markupDao: MarkupDao = _
+  @Autowired var markupDao: MarkupDao = _
 
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var widgetDao: WidgetDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var widgetDao: WidgetDao = _
 
-    def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
-    def bean[T: Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
+  def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
+  def bean[T: Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
 
-    var servletContext: ServletContext = _
-    def setServletContext(servletContext: ServletContext) {
-        this.servletContext = servletContext
-    }
+  var servletContext: ServletContext = _
+  def setServletContext(servletContext: ServletContext) {
+    this.servletContext = servletContext
+  }
 }

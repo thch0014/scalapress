@@ -24,14 +24,13 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
       val links = sorted.map(image => {
 
         val original = request.context.assetStore.link(image.filename)
-        val thumb = request.context.imageService.imageLink(image.filename, width, height)
+        val thumb = request.context.thumbnailService.link(image.filename, width, height)
         val style = if (count == 0) "" else "display: none"
         count = count + 1
 
         engine.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/image.ssp",
           Map("original" -> original, "thumb" -> thumb, "style" -> style, "title" -> obj.name,
             "width" -> width, "height" -> height, "text" -> text))
-
       })
 
       val script = engine.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/script.ssp")

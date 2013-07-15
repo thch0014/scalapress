@@ -8,7 +8,7 @@ object TagRenderer extends Logging {
 
     lazy val mappings = ComponentClassScanner.tags
       .map(tag => tag.getAnnotation(classOf[Tag]).value() -> tag.newInstance.asInstanceOf[ScalapressTag])
-      .toMap ++ TagMappings.mappings
+      .toMap ++ EcreatorCompatibleTagMappings.mappings
 
     def parseQueryString(string: String) =
         string.split("&")

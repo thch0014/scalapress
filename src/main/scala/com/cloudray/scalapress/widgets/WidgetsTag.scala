@@ -4,7 +4,7 @@ import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 
 /** @author Stephen Samuel */
-@Tag("widgets")
+@Tag("widget")
 class WidgetsTag extends ScalapressTag with Logging {
 
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
