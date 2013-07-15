@@ -74,25 +74,50 @@
                         Recently created
                     </h4>
 
-                    #foreach ($recent in $recentObjects)
-                        <p>
-                            <span class="label" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">$recent.id()</span>
-                            &nbsp; <a
-                                href="/backoffice/object/$recent.id()">$recent.name()</a>
-                        </p>
-                    #end
+                  #foreach ($recent in $recentObjects)
+                      <p>
+                          <span class="label"
+                                style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">$recent.id()</span>
+                          &nbsp; <a
+                              href="/backoffice/object/$recent.id()">$recent.name()</a>
+                      </p>
+                  #end
                 </div>
             </div>
         </div>
-        <!--/row-->
-        <div class="row-fluid">
-            <!--/span-->
-            <!--/span-->
-            <!--/span-->
-        </div>
-        <!--/row-->
     </div>
-    <!--/span-->
 </div>
+
+##<div id="dailySales">
+##
+##</div>
+##
+##<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+##<script>
+##    function drawVisualization() {
+##
+##        var data = google.visualization.arrayToDataTable([
+##            ['Date', 'Total']
+##          #foreach ($sales in $dailySales.entrySet())
+##              ,
+##              ['$sales.key', $sales.value]
+##          #end
+##        ]);
+##
+##        new google.visualization.ColumnChart(document.getElementById('dailySales')).
+##                draw(data,
+##                {title: "Past 7 Days Sales",
+##                    legend: {
+##                        position: "none"
+##                    },
+##                    width: 1024, height: 400,
+##                    hAxis: {title: "Date"}}
+##        );
+##    }
+##</script>
+##<script type="text/javascript">
+##    google.load('visualization', '1.0', {'packages': ['corechart']});
+##    google.setOnLoadCallback(drawVisualization);
+##</script>
 
 #parse("/admin/footer.vm")
