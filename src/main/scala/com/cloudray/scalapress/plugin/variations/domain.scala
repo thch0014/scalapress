@@ -23,7 +23,7 @@ class Dimension {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @BeanProperty var id: Long = _
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "object_type")
   @BeanProperty var objectType: ObjectType = _
 
@@ -79,10 +79,9 @@ class Variation {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var obj: Obj = _
 
-  @OneToMany(mappedBy = "variation", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
-  @Fetch(FetchMode.SUBSELECT)
-  @BatchSize(size = 20)
-  @NotFound(action = NotFoundAction.IGNORE)
+  @OneToMany(mappedBy = "variation", fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL), orphanRemoval = true)
+  @BatchSize(size = 200)
+  @Fetch(value = FetchMode.JOIN)
   @BeanProperty var dimensionValues: java.util.Set[DimensionValue] = new util.HashSet[DimensionValue]()
 
   @BeanProperty var price: Int = _

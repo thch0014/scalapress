@@ -8,7 +8,7 @@ import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.obj.{Obj, ObjectDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.variations.{VariationDao, Variation}
+import com.cloudray.scalapress.plugin.variations.{DimensionValue, Dimension, VariationDao, Variation}
 
 /** @author Stephen Samuel */
 class BasketControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -22,30 +22,77 @@ class BasketControllerTest extends FunSuite with MockitoSugar with OneInstancePe
   val basket = new Basket
   val req = mock[HttpServletRequest]
 
-  val v = new Variation
-  v.id = 4
-  v.price = 1234
-  Mockito.when(controller.variationDao.find(4l)).thenReturn(v)
-
   val obj = new Obj
   obj.name = "best of the beatles"
-  obj.id = 643
+  obj.id = 15
   Mockito.when(controller.objectDao.find(15l)).thenReturn(obj)
+
+  val d1 = new Dimension
+  d1.id = 1
+  val d2 = new Dimension
+  d2.id = 2
+
+  val dv11 = new DimensionValue
+  dv11.dimension = d1
+  dv11.value = "red"
+
+  val dv12 = new DimensionValue
+  dv12.dimension = d1
+  dv12.value = "green"
+
+  val dv21 = new DimensionValue
+  dv21.dimension = d2
+  dv21.value = "small"
+
+  val dv22 = new DimensionValue
+  dv22.dimension = d2
+  dv22.value = "large"
+
+  val v1 = new Variation
+  v1.id = 4
+  v1.price = 1234
+  v1.dimensionValues.add(dv11)
+  v1.dimensionValues.add(dv22)
+  Mockito.when(controller.variationDao.find(4l)).thenReturn(v1)
+
+  val v2 = new Variation
+  v2.id = 7
+  v2.price = 1234
+  v2.dimensionValues.add(dv12)
+  v2.dimensionValues.add(dv21)
+  Mockito.when(controller.variationDao.find(7l)).thenReturn(v2)
+
+  Mockito.when(controller.variationDao.findByObjectId(15)).thenReturn(Seq(v1, v2))
 
   test("adding object to a basket persists basket with basketline") {
     assert(basket.lines.isEmpty)
-    controller.add(basket, 15, 0)
+    controller.add(basket, 15, req)
     assert(1 === basket.lines.size)
     assert(1 === basket.lines.get(0).qty)
     assert(obj === basket.lines.get(0).obj)
     Mockito.verify(controller.basketDao).save(basket)
   }
 
-  test("adding object with variation id to basket persists the line with the variation set") {
-    controller.add(basket, 15, 4)
+  test("adding object with dimensions persists variation when a variation is found") {
+
+    Mockito.when(req.getParameter("dimension_1")).thenReturn("red")
+    Mockito.when(req.getParameter("dimension_2")).thenReturn("large")
+
+    controller.add(basket, 15, req)
     assert(1 === basket.lines.size)
-    assert(v === basket.lines.get(0).variation)
+    assert(v1 === basket.lines.get(0).variation)
   }
+
+  test("adding object with dimensions persists no variation when dimensions no not match a variation") {
+
+    Mockito.when(req.getParameter("dimension_1")).thenReturn("red")
+    Mockito.when(req.getParameter("dimension_2")).thenReturn("small")
+
+    controller.add(basket, 15, req)
+    assert(1 === basket.lines.size)
+    assert(null == basket.lines.get(0).variation)
+  }
+
 
   test("updating basket qty's uses qty params from req") {
 

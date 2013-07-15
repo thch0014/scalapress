@@ -16,6 +16,7 @@ class VariationsSelectTag extends ScalapressTag with TagBuilder {
       .flatMap(_.dimensionValues.asScala)
       .filter(_.dimension.id == dimension.id)
       .map(_.value)
+      .filterNot(_.isEmpty)
       .toSet.toSeq.sorted
   }
 

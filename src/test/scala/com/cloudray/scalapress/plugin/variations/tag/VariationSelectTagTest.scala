@@ -80,7 +80,23 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
     assert(render.contains("<select name=\"dimension_6\">"))
   }
 
+  "a variation select tag" should "not render a select tag for an empty dimension" in {
+    Mockito.when(variationDao.findByObjectId(4)).thenReturn(List(v1, v2))
+    Mockito.when(dimensionDao.findByObjectType(19)).thenReturn(Seq(d1, d2))
+    dv12.value = ""
+    dv11.value = ""
+    val render = tag.render(sreq, Map.empty).get
+    assert(!render.contains("<select name=\"dimension_2\">"))
+    assert(render.contains("<select name=\"dimension_6\">"))
+  }
+
   it should "find unique values for a given dimension" in {
+    dv12.value = ""
+    val values = tag.uniqueValuesForDimension(d1, List(v1, v2, v3, v4))
+    assert(Seq("red") === values)
+  }
+
+  it should "filter empty values for a given dimension" in {
     val values = tag.uniqueValuesForDimension(d1, List(v1, v2, v3, v4))
     assert(Seq("green", "red") === values)
   }

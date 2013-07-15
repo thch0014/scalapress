@@ -62,14 +62,22 @@ class BasketController {
   @RequestMapping(value = Array("add/{id}"), produces = Array("text/html"))
   def add(@ModelAttribute basket: Basket,
           @PathVariable("id") id: Long,
-          @RequestParam(value = "variation", defaultValue = "0", required = false) variationId: Long) = {
+          req: HttpServletRequest) = {
 
     val obj = objectDao.find(id)
     val line = new BasketLine
     line.obj = obj
     line.qty = 1
     line.basket = basket
-    line.variation = variationDao.find(variationId)
+
+    line.variation =
+      variationDao
+        .findByObjectId(id)
+        .find(_.dimensionValues.asScala
+        .filterNot(_.value == null)
+        .filterNot(_.value.isEmpty)
+        .forall(dv => dv.value == req.getParameter(s"dimension_${dv.dimension.id}")))
+        .orNull
 
     basket.lines.add(line)
     basketDao.save(basket)
