@@ -13,6 +13,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
 
   override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
+    val t = params.get("type").getOrElse("")
     val height = params.get("height").getOrElse("120").toInt
     val width = params.get("width").getOrElse("160").toInt
     val text = params.get("text").getOrElse("")
@@ -24,7 +25,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
       val links = sorted.map(image => {
 
         val original = request.context.assetStore.link(image.filename)
-        val thumb = request.context.thumbnailService.link(image.filename, width, height)
+        val thumb = request.context.thumbnailService.link(image.filename, width, height, t)
         val style = if (count == 0) "" else "display: none"
         count = count + 1
 

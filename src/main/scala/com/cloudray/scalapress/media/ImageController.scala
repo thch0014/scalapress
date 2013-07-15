@@ -22,7 +22,7 @@ class ImageController extends Logging {
                     @PathVariable("w") width: Int,
                     @PathVariable("h") height: Int,
                     resp: HttpServletResponse) {
-    imageResized(filename, width, height, resp)
+    imageResized(filename, width, height, "fit", resp)
   }
 
   @ResponseBody
@@ -30,8 +30,9 @@ class ImageController extends Logging {
   def imageResized2(@PathVariable("filename") filename: String,
                     @RequestParam("w") width: Int,
                     @RequestParam("h") height: Int,
+                    @RequestParam(value = "type", required = false) `type`: String,
                     resp: HttpServletResponse) {
-    imageResized(filename, width, height, resp)
+    imageResized(filename, width, height, `type`, resp)
   }
 
   @ResponseBody
@@ -39,9 +40,10 @@ class ImageController extends Logging {
   def imageResized(@PathVariable("filename") filename: String,
                    @RequestParam("width") width: Int,
                    @RequestParam("height") height: Int,
+                   @RequestParam(value = "type", required = false) `type`: String,
                    resp: HttpServletResponse) {
 
-    thumbnailService.thumbnail(filename, width, height) match {
+    thumbnailService.thumbnail(filename, width, height, `type`) match {
       case Some(thumb) =>
         resp.setContentType("image/png")
         thumb.write(resp.getOutputStream, Format.PNG)

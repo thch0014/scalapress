@@ -11,20 +11,23 @@ class ThumbnailService {
 
   @Autowired var assetStore: AssetStore = _
 
-  def link(key: String, w: Int, h: Int) = s"/images/$key?w=$w&h=$h"
+  def link(key: String, w: Int, h: Int, t: String): String = s"/images/$key?w=$w&h=$h&type=$t"
 
   def _filename(filename: String, w: Int, h: Int): String = FilenameUtils.getBaseName(filename) + s"___${w}x$h.png"
   def _store(filename: String, image: Scrimage) {
     assetStore.put(filename, new ByteArrayInputStream(image.write(Format.PNG)))
   }
 
-  def thumbnail(key: String, w: Int, h: Int): Option[Scrimage] = {
+  def thumbnail(key: String, w: Int, h: Int, `type`: String): Option[Scrimage] = {
     assetStore.get(_filename(key, w, h)) match {
       case Some(thumb) => Some(Scrimage(thumb))
       case _ =>
         assetStore.get(key) match {
           case Some(original) =>
-            val thumb = Scrimage(original).bound(w, h)
+            val thumb =
+              if (`type` == "bound") Scrimage(original).bound(w, h)
+              else if (`type` == "cover") Scrimage(original).cover(w, h)
+              else Scrimage(original).fit(w, h)
             _store(_filename(key, w, h), thumb)
             Some(thumb)
           case _ => None

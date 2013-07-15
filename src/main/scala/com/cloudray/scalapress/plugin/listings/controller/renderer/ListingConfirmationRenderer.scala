@@ -78,7 +78,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
     process.imageKeys.size match {
       case 0 => Seq(Unparsed("None uploaded - <a href='/listing/image'>Upload image</a>"))
       case _ =>
-        val links = process.imageKeys.map(key => context.thumbnailService.link(key, 160, 120))
+        val links = process.imageKeys.map(key => context.thumbnailService.link(key, 160, 120, "fit"))
         links.map(link => <img src={link}/>)
         Seq(Unparsed("<div><strong><a href='/listing/image'>Add additional image</a></strong></div>"))
     }

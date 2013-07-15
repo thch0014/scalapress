@@ -4,52 +4,52 @@ import com.cloudray.scalapress.ScalapressRequest
 
 /** @author Stephen Samuel */
 trait ScalapressTag {
-    def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
-    def render(request: ScalapressRequest): Option[String] = render(request, Map.empty)
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
+  def render(request: ScalapressRequest): Option[String] = render(request, Map.empty)
 }
 
 trait TagBuilder {
 
-    def buildLink(href: String, label: String, params: Map[String, String]): String = {
-        val cssClass = params.get("class").getOrElse("")
-        val id = params.get("id").getOrElse("")
-        val prefix = params.get("prefix").getOrElse("")
-        val suffix = params.get("suffix").getOrElse("")
-        val rel = params.get("rel").getOrElse("")
+  def buildLink(href: String, label: Any, params: Map[String, String]): String = {
+    val cssClass = params.get("class").getOrElse("")
+    val id = params.get("id").getOrElse("")
+    val prefix = params.get("prefix").getOrElse("")
+    val suffix = params.get("suffix").getOrElse("")
+    val rel = params.get("rel").getOrElse("")
 
-        val sb = new StringBuilder()
-        sb.append(prefix)
-        sb.append(label)
-        sb.append(suffix)
+    val sb = new StringBuilder()
+    sb.append(prefix)
+    sb.append(label)
+    sb.append(suffix)
 
-        "<a href='" + href + "' class='" + cssClass + "' id='" + id + "' rel='" + rel + "'>" + sb + "</a>"
+    "<a href='" + href + "' class='" + cssClass + "' id='" + id + "' rel='" + rel + "'>" + sb + "</a>"
+  }
+
+  def build(body: Option[String], params: Map[String, String]): Option[String] = body.map(build(_, params))
+  def build(body: Any, params: Map[String, String]): String = {
+
+    val tag = params.get("tag")
+    val cssClass = params.get("class")
+    val prefix = params.get("prefix").getOrElse("")
+    val suffix = params.get("suffix").getOrElse("")
+
+    val sb = new StringBuilder()
+    if (tag.isDefined) {
+      sb.append("<" + tag.get)
+      if (cssClass.isDefined) {
+        sb.append(" class='" + cssClass.get + "'")
+      }
+      sb.append(">")
     }
 
-    def build(body: Option[String], params: Map[String, String]): Option[String] = body.map(build(_, params))
-    def build(body: Any, params: Map[String, String]): String = {
 
-        val tag = params.get("tag")
-        val cssClass = params.get("class")
-        val prefix = params.get("prefix").getOrElse("")
-        val suffix = params.get("suffix").getOrElse("")
+    sb.append(prefix)
+    sb.append(body)
+    sb.append(suffix)
 
-        val sb = new StringBuilder()
-        if (tag.isDefined) {
-            sb.append("<" + tag.get)
-            if (cssClass.isDefined) {
-                sb.append(" class='" + cssClass.get + "'")
-            }
-            sb.append(">")
-        }
+    if (tag.isDefined)
+      sb.append("</" + tag.get + ">")
 
-
-        sb.append(prefix)
-        sb.append(body)
-        sb.append(suffix)
-
-        if (tag.isDefined)
-            sb.append("</" + tag.get + ">")
-
-        sb.mkString
-    }
+    sb.mkString
+  }
 }
