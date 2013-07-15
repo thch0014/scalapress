@@ -212,7 +212,7 @@ class ElasticSearchService extends SearchService with Logging {
         .filterNot(_.isEmpty)
         .filterNot(_.toLowerCase == "random")
         .filterNot(_.toLowerCase == "latest")
-        .foreach(tag => queries.append(term(FIELD_TAGS, tag))))
+        .foreach(tag => filters.append(termFilter(FIELD_TAGS, tag))))
 
     Option(search.searchFolders)
       .filter(_.trim.length > 0)
@@ -230,7 +230,7 @@ class ElasticSearchService extends SearchService with Logging {
     Option(search.ignorePast)
       .foreach(attr => filters.append(numericRangeFilter(_attrField(attr.id)).gte(System.currentTimeMillis())))
 
-    if (search.imageOnly) queries.append(field(FIELD_HAS_IMAGE, "true"))
+    if (search.imageOnly) filters.append(termFilter(FIELD_HAS_IMAGE, "true"))
 
     val q = queries.size match {
       case 0 => query("*:*")
