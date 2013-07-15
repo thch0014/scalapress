@@ -24,7 +24,7 @@ class ThumbnailService {
       case _ =>
         assetStore.get(key) match {
           case Some(original) =>
-            val thumb = Scrimage(original).fit(w, h)
+            val thumb = Scrimage(original).bound(w, h)
             _store(_filename(key, w, h), thumb)
             Some(thumb)
           case _ => None
