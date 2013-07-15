@@ -1,28 +1,9 @@
 package com.cloudray.scalapress.plugin.ecommerce.controller.renderers
 
+import org.fusesource.scalate.TemplateEngine
+
 /** @author Stephen Samuel */
 object OrderStatusRenderer {
-
-    def form =
-        <form class="form-horizontal" method="POST">
-            <div class="control-group">
-                <label class="control-label" for="orderId">Order Id</label>
-                <div class="controls">
-                    <input type="text" name="orderId" placeholder="Enter order id"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="email">Email</label>
-                <div class="controls">
-                    <input type="text" name="email" placeholder="Enter the order email"/>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <button type="submit" class="btn">Check Status</button>
-                </div>
-            </div>
-        </form>
-          .toString()
-
+  val engine = new TemplateEngine
+  def form = engine.layout("/com/cloudray/scalapress/plugin/ecommerce/order_status.ssp")
 }
