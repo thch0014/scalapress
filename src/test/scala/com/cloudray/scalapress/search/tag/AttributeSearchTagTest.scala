@@ -31,7 +31,7 @@ class AttributeSearchTagTest extends FlatSpec with MockitoSugar with OneInstance
 
     val actual = tag.render(sreq, Map("id" -> "9"))
     assert(
-      """<form method="GET" action="/search"><select name="attr_9" action="/search"><option>coldplay</option></select><button>Go</button></form>""" === actual
+      """<form method="GET" action="/search"><select name="attr_9" action="/search"><option>coldplay</option></select><button type="submit">Go</button></form>""" === actual
         .get)
   }
 
