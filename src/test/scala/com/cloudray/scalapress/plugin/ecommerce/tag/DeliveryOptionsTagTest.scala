@@ -39,7 +39,7 @@ class DeliveryOptionsTagTest extends FunSuite with MockitoSugar with OneInstance
     test("delivery option tag happy path") {
         val actual = tag.render(sreq, Map.empty)
         assert(
-            "<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"25\"/>speedy shit delivery&amp;pound;45.00</label>\n<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"435\"/>slow as donkeys delivery&amp;pound;4.99</label>" === actual
+            "<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"25\"/>speedy shit delivery&pound;45.00</label>\n<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"435\"/>slow as donkeys delivery&pound;4.99</label>" === actual
               .get)
     }
 
@@ -47,7 +47,7 @@ class DeliveryOptionsTagTest extends FunSuite with MockitoSugar with OneInstance
         basket.deliveryOption = option2
         val actual = tag.render(sreq, Map.empty)
         assert(
-            "<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"25\"/>speedy shit delivery&amp;pound;45.00</label>\n<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"435\" selected=\"true\"/>slow as donkeys delivery&amp;pound;4.99</label>" === actual
+            "<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"25\"/>speedy shit delivery&pound;45.00</label>\n<label class=\"radio\"><input onclick=\"this.form.submit()\" type=\"radio\" name=\"deliveryOption\" value=\"435\" selected=\"true\"/>slow as donkeys delivery&pound;4.99</label>" === actual
               .get)
     }
 }

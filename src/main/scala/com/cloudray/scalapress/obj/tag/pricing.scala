@@ -3,6 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.enums.StockMethod
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.cloudray.scalapress.plugin.variations.VariationDao
 
 /** @author Stephen Samuel */
 object RrpTag extends ScalapressTag with TagBuilder {
@@ -75,13 +76,17 @@ class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
       request.shoppingPlugin.stockMethod match {
         case StockMethod.Off => None
         case _ =>
-          if (obj.stock > 0) {
-            Some(build("In Stock", params))
-          } else {
-            val outMessage = Option(obj.outStockMsg)
-              .filterNot(_.isEmpty)
-              .getOrElse(request.shoppingPlugin.outOfStockMessage)
-            Some(build(outMessage, params))
+          request.context.bean[VariationDao].findByObjectId(obj.id).size match {
+            case 0 =>
+              if (obj.stock > 0) {
+                Some(build("In Stock", params))
+              } else {
+                val outMessage = Option(obj.outStockMsg)
+                  .filterNot(_.isEmpty)
+                  .getOrElse(request.shoppingPlugin.outOfStockMessage)
+                Some(build(outMessage, params))
+              }
+            case _ => None
           }
       }
     })
