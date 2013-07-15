@@ -14,7 +14,7 @@ import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
-import com.sksamuel.elastic4s.{QueryDefinition, ElasticDsl, ElasticClient}
+import com.sksamuel.elastic4s.{FilterDefinition, QueryDefinition, ElasticDsl, ElasticClient}
 import ElasticDsl._
 import com.sksamuel.elastic4s.FieldType.{LongType, StringType, GeoPointType, IntegerType}
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
@@ -149,8 +149,8 @@ class ElasticSearchService extends SearchService with Logging {
   }
 
   override def remove(_id: String) {
-    client.execute {
-      delete id _id from INDEX -> TYPE
+    client.sync.delete {
+      s"$INDEX/$TYPE" -> _id
     }
   }
 
@@ -193,6 +193,7 @@ class ElasticSearchService extends SearchService with Logging {
   def _query(search: SavedSearch): QueryDefinition = {
 
     val queries = new ListBuffer[QueryDefinition]
+    val filters = new ListBuffer[FilterDefinition]
 
     Option(search.name).orElse(Option(search.keywords))
       .map(_.trim)
@@ -204,7 +205,7 @@ class ElasticSearchService extends SearchService with Logging {
       .foreach(value => queries.append(field("name", value)))
     )
 
-    Option(search.objectType).map(_.id.toString).foreach(id => queries.append(term(FIELD_OBJECT_TYPE, id)))
+    Option(search.objectType).map(_.id.toString).foreach(id => filters.append(termFilter(FIELD_OBJECT_TYPE, id)))
 
     Option(search.labels).map(labels =>
       labels.split(",")
@@ -216,7 +217,7 @@ class ElasticSearchService extends SearchService with Logging {
     Option(search.searchFolders)
       .filter(_.trim.length > 0)
       .map(_.replaceAll("\\D", ""))
-      .foreach(_.split(",").foreach(f => queries.append(term(FIELD_FOLDERS, f))))
+      .foreach(_.split(",").foreach(f => filters.append(termFilter(FIELD_FOLDERS, f))))
 
     search.attributeValues.asScala
       .filter(_.value.trim.length > 0)
@@ -224,14 +225,23 @@ class ElasticSearchService extends SearchService with Logging {
 
     Option(search.hasAttributes)
       .filter(_.trim.length > 0)
-      .foreach(arg => queries.append(field("has_attribute_" + arg, "1")))
+      .foreach(arg => filters.append(termFilter("has_attribute_" + arg, "1")))
+
+    Option(search.ignorePast)
+      .foreach(attr => filters.append(numericRangeFilter(_attrField(attr.id)).gte(System.currentTimeMillis())))
 
     if (search.imageOnly) queries.append(field(FIELD_HAS_IMAGE, "true"))
 
-    queries.size match {
-      case 0 => "*:*"
+    val q = queries.size match {
+      case 0 => query("*:*")
       case _ => bool(should(queries: _*))
     }
+    val filter = filters.size match {
+      case 0 => matchAllFilter
+      case _ => bool(should(filters: _*))
+    }
+
+    filterQuery.filter(filter).query(q)
   }
 
   def _search(search: SavedSearch): SearchResponse = {

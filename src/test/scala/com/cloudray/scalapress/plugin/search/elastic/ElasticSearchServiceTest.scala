@@ -553,6 +553,6 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val q = new SavedSearch
     q.ignorePast = date1.attribute
     val results = service.search(q)
-    //  assert(1 === results.refs.size)
+    assert(1 === results.refs.size)
   }
 }

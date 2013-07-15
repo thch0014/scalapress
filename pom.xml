@@ -57,7 +57,7 @@
 
         <ehcache.version>2.6.6</ehcache.version>
         <elasticsearch.version>0.90.2</elasticsearch.version>
-        <elastic4s.version>0.90.2.7</elastic4s.version>
+        <elastic4s.version>0.90.2.8</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
