@@ -92,9 +92,6 @@ class Folder extends SortedSections {
   @Column(name = "keywords")
   @BeanProperty var keywordsTag: String = _
 
-  @Column(name = "friendlyUrl")
-  @BeanProperty var permaLink: String = _
-
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
   @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()

@@ -46,7 +46,7 @@ class AttributeSearchTag extends ScalapressTag {
                   <select name={name} action="/search">
                     {options(attr.options.asScala)}
                   </select>
-                  <button>Go</button>
+                  <button type="submit">Go</button>
                 </form>
               Some(Utility.trim(xml).toString())
             case _ => None
