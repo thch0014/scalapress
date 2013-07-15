@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.profile.controller
+package com.cloudray.scalapress.plugin.profile.controller.renderer
 
 import org.fusesource.scalate.TemplateEngine
 

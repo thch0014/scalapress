@@ -1,0 +1,12 @@
+<%@ val iframeSrc: String %>
+<%@ val hrefSrc: String %>
+<%@ val sectionId: String %>
+
+<div class="gmap-section" id=${sectionId}>
+    <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+            src="${iframeSrc}"></iframe>
+    <br/>
+    <small>
+        <a href="${hrefSrc}" style="color:#0000FF;text-align:left">View Larger Map</a>
+    </small>
+</div>
