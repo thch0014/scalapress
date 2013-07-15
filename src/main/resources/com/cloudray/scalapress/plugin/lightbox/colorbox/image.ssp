@@ -1,0 +1,12 @@
+<%@ val original: String %>
+<%@ val thumb: String %>
+<%@ val text: String %>
+<%@ val title: String %>
+<%@ val style: String %>
+<%@ val height: Int %>
+<%@ val width: Int %>
+
+<a class="colorboxgroup" href="${original}" title="${title}" style="${style}">
+    <img src="${thumb}" width="${width}" height="${height}"/>
+    <span>${text}</span>
+</a>
