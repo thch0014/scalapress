@@ -42,10 +42,10 @@ class ImageController extends Logging {
                    resp: HttpServletResponse) {
 
     thumbnailService.thumbnail(filename, width, height) match {
-      case None => resp.setStatus(404)
       case Some(thumb) =>
         resp.setContentType("image/png")
         thumb.write(resp.getOutputStream, Format.PNG)
+      case _ => resp.setStatus(404)
     }
   }
 
