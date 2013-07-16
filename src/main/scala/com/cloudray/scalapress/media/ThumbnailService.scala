@@ -14,7 +14,7 @@ class ThumbnailService {
   def link(key: String, w: Int, h: Int, t: String): String = s"/images/$key?w=$w&h=$h&type=$t"
 
   def _filename(filename: String, w: Int, h: Int): String =
-    "thumbnails/" + FilenameUtils.getBaseName(filename) + s"___${w}x$h.png"
+    "_thumbnails/" + FilenameUtils.getBaseName(filename) + s"___${w}x$h.png"
 
   def _store(filename: String, image: Scrimage): Unit =
     assetStore.put(filename, new ByteArrayInputStream(image.write(Format.PNG)))

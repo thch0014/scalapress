@@ -17,7 +17,7 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
 
   "a thumbnail service" should "use the dimensions in the generated filename" in {
     val filename = service._filename("coldplay_large.png", 50, 60)
-    assert("thumbnails/coldplay_large___50x60.png" === filename)
+    assert("_thumbnails/coldplay_large___50x60.png" === filename)
   }
 
   it should "generate a link using the images controller" in {
@@ -38,11 +38,11 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
   it should "store a thumb when the thumbnail does not already exist" in {
     Mockito.when(service.assetStore.get("coldplay.png")).thenReturn(Some(input))
     service.thumbnail("coldplay.png", 100, 200, null)
-    Mockito.verify(service.assetStore).put(Matchers.eq("thumbnails/coldplay___100x200.png"), Matchers.any[InputStream])
+    Mockito.verify(service.assetStore).put(Matchers.eq("_thumbnails/coldplay___100x200.png"), Matchers.any[InputStream])
   }
 
   it should "not store a thumb when the thumbnail exists" in {
-    Mockito.when(service.assetStore.get("thumbnails/coldplay___100x200.png")).thenReturn(Some(input))
+    Mockito.when(service.assetStore.get("_thumbnails/coldplay___100x200.png")).thenReturn(Some(input))
     service.thumbnail("coldplay.png", 100, 200, null)
     Mockito.verify(service.assetStore, Mockito.never()).put(Matchers.anyString, Matchers.any[InputStream])
   }
