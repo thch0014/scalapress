@@ -15,22 +15,22 @@ trait GeneralSettingsDao extends GenericDao[GeneralSettings, java.lang.Long]
 class GeneralSettingsDaoImpl extends GenericDaoImpl[GeneralSettings, java.lang.Long] with GeneralSettingsDao
 
 trait InstallationDao extends GenericDao[Installation, java.lang.Long] {
-    def get: Installation
+  def get: Installation
 }
 
 @Component
 @Transactional
 class InstallationDaoImpl extends GenericDaoImpl[Installation, java.lang.Long] with InstallationDao {
-    override def get = findAll.head
+  override def get = findAll.head
 }
 
 @Component
 class InstallationDaoImplValidator {
-    @Autowired var dao: InstallationDao = _
-    @PostConstruct def ensureOne() {
-        if (dao.findAll().size == 0) {
-            val i = new Installation
-            dao.save(i)
-        }
+  @Autowired var dao: InstallationDao = _
+  @PostConstruct def ensureOne() {
+    if (dao.findAll().size == 0) {
+      val i = new Installation
+      dao.save(i)
     }
+  }
 }

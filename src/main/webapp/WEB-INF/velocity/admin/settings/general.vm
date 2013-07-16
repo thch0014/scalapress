@@ -8,7 +8,7 @@
         <label class="control-label">Offline Message</label>
 
         <div class="controls">
-            #springFormInput("site.offlineMessage")
+          #springFormInput("setings.offlineMessage")
         </div>
     </div>
 
@@ -16,39 +16,23 @@
         <label class="control-label">Offline</label>
 
         <div class="controls">
-            #springFormCheckbox("site.offline")
+          #springFormCheckbox("setings.offline")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">Name</label>
+        <label class="control-label">Max image width</label>
 
         <div class="controls">
-            #springFormInput("site.name")
+          #springFormInput("setings.maxImageWidth")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">Postcode</label>
+        <label class="control-label">Max image height</label>
 
         <div class="controls">
-            #springFormInput("site.postcode")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Country</label>
-
-        <div class="controls">
-            #springFormInput("site.country")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Address</label>
-
-        <div class="controls">
-            #springFormInput("site.address")
+          #springFormInput("setings.maxImageHeight")
         </div>
     </div>
 

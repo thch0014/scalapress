@@ -14,16 +14,16 @@ import scala.collection.immutable.TreeMap
 @RequestMapping(Array("backoffice/debug"))
 class DebugController {
 
-    @Autowired var searchService: SearchService = _
+  @Autowired var searchService: SearchService = _
 
-    @RequestMapping
-    def debug(request: HttpServletRequest) = "admin/settings/debug.vm"
+  @RequestMapping
+  def debug(request: HttpServletRequest) = "admin/settings/debug.vm"
 
-    @ModelAttribute("properties") def properties(request: HttpServletRequest): java.util.Map[String, String] = {
-        val properties = Debug.map ++ searchService.stats ++ System.getProperties.asScala ++ System.getenv().asScala
-        val http = Map("request.http.cookies" -> request.getCookies.mkString(","),
-            "request.http.headers" -> request.getHeaderNames.toString)
-        val sorted = TreeMap[String, String]() ++ properties ++ http
-        sorted.asJava
-    }
+  @ModelAttribute("properties") def properties(request: HttpServletRequest): java.util.Map[String, String] = {
+    val properties = Debug.map ++ searchService.stats ++ System.getProperties.asScala ++ System.getenv().asScala
+    val http = Map("request.http.cookies" -> request.getCookies.mkString(","),
+      "request.http.headers" -> request.getHeaderNames.toString)
+    val sorted = TreeMap[String, String]() ++ properties ++ http
+    sorted.asJava
+  }
 }

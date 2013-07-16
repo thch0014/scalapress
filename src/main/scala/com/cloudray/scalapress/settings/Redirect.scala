@@ -8,10 +8,10 @@ import scala.beans.BeanProperty
 @Table(name = "redirects")
 class Redirect {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @BeanProperty var source: String = _
-    @BeanProperty var target: String = _
+  @BeanProperty var source: String = _
+  @BeanProperty var target: String = _
 }

@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired
 @RequestMapping(Array("migration"))
 class MigratorController extends Logging {
 
-    @Autowired var context: ScalapressContext = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(Array("images/{domain}"))
-    @ResponseBody
-    def images(@PathVariable("domain") domain: String): String = {
-        logger.info("Invoking image migration [{}]", domain)
-        val migrator = new ECImageMigrator
-        migrator.migrate(domain)
-        "Migration will commence post haste"
-    }
+  @RequestMapping(Array("images/{domain}"))
+  @ResponseBody
+  def images(@PathVariable("domain") domain: String): String = {
+    logger.info("Invoking image migration [{}]", domain)
+    val migrator = new ECImageMigrator
+    migrator.migrate(domain)
+    "Migration will commence post haste"
+  }
 }
