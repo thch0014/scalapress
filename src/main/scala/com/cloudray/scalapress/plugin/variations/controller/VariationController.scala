@@ -23,7 +23,7 @@ class VariationController {
   def variation(@PathVariable("id") id: Long, req: HttpServletRequest, resp: HttpServletResponse): Variation = {
     variationDao
       .findByObjectId(id)
-      .find(v => v.dimensionValues.asScala.forall(dv => dv.value == req.getParameter(s"dv_${dv.id}"))) match {
+      .find(v => v.dimensionValues.asScala.forall(dv => dv.value == req.getParameter(s"dimension_${dv.id}"))) match {
       case None =>
         resp.sendError(404)
         null
