@@ -108,7 +108,7 @@ class BasketLineQtyTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.line.map(line => {
       val name = "qty" + line.id
-        <input type="text" class="input-mini" name={name} value={line.qty.toString}/>.toString()
+        <input type="number" min="1" max="100" step="1" class="input-mini" name={name} value={line.qty.toString}/>.toString()
     })
   }
 }
