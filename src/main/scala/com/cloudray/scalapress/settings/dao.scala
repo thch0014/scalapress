@@ -8,11 +8,15 @@ import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
 
-trait GeneralSettingsDao extends GenericDao[GeneralSettings, java.lang.Long]
+trait GeneralSettingsDao extends GenericDao[GeneralSettings, java.lang.Long] {
+  def get: GeneralSettings
+}
 
 @Component
 @Transactional
-class GeneralSettingsDaoImpl extends GenericDaoImpl[GeneralSettings, java.lang.Long] with GeneralSettingsDao
+class GeneralSettingsDaoImpl extends GenericDaoImpl[GeneralSettings, java.lang.Long] with GeneralSettingsDao {
+  override def get: GeneralSettings = findAll.head
+}
 
 trait InstallationDao extends GenericDao[Installation, java.lang.Long] {
   def get: Installation

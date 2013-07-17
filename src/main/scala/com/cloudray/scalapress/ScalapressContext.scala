@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.context.ServletContextAware
 import javax.servlet.ServletContext
-import settings.InstallationDao
+import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
 import theme.MarkupDao
 import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
@@ -24,6 +24,7 @@ class ScalapressContext extends ServletContextAware {
   @Autowired var thumbnailService: ThumbnailService = _
 
   @Autowired var installationDao: InstallationDao = _
+  @Autowired var generalSettingsDao: GeneralSettingsDao = _
 
   @Autowired var paymentPluginDao: PaymentPluginDao = _
   @Autowired var transactionDao: TransactionDao = _

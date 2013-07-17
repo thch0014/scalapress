@@ -1,38 +1,42 @@
 package com.cloudray.scalapress.plugin.asset.maxsize
 
-import java.io.{ByteArrayInputStream, ByteArrayOutputStream, InputStream}
+import java.io.{ByteArrayInputStream, InputStream}
 import com.cloudray.scalapress.media.AssetLifecycleListener
 import org.springframework.stereotype.Component
-import scala.beans.BeanProperty
-import org.springframework.beans.factory.annotation.Value
 import com.sksamuel.scrimage.Image
+import com.cloudray.scalapress.ScalapressContext
+import org.springframework.beans.factory.annotation.Autowired
+import org.apache.commons.io.FilenameUtils
 
 /** @author Stephen Samuel */
 @Component
 class ImageMaxSizePlugin extends AssetLifecycleListener {
 
-    @Value("${plugin.media.maxsize.enabled:false}")
-    @BeanProperty var enabled: Boolean = _
+  val DEFAULT_MAX_WIDTH = 2048
+  val DEFAULT_MAX_HEIGHT = 2048
 
-    @Value("${plugin.media.maxsize.width:0}")
-    @BeanProperty var maxWidth: Int = _
+  @Autowired var context: ScalapressContext = _
 
-    @Value("${plugin.media.maxsize.height:0}")
-    @BeanProperty var maxHeight: Int = _
+  def onStore(key: String, input: InputStream): (String, InputStream) = {
 
-    def onStore(key: String, input: InputStream): (String, InputStream) = {
+    val settings = context.generalSettingsDao.get
+    val width = if (settings.maxImageWidth <= 0) DEFAULT_MAX_WIDTH else settings.maxImageWidth
+    val height = if (settings.maxImageHeight <= 0) DEFAULT_MAX_HEIGHT else settings.maxImageHeight
 
-        if (enabled && key.toLowerCase.endsWith(".png")) {
+    val extension = FilenameUtils.getExtension(key).toLowerCase
+    if (extension == "png" || extension == "jpg" || extension == "gif") {
 
-            val image = Image(input)
-            val resized = image.fit(maxWidth, maxHeight)
+      val image = Image(input)
+      val resized = if (image.width > width || image.height > height) {
+        image.bound(width, height)
+      } else {
+        image
+      }
 
-            val baos = new ByteArrayOutputStream() // todo remove once scrimage 1.2.3 is released
-            image.write(baos)
-            (key, new ByteArrayInputStream(baos.toByteArray))
+      (key, new ByteArrayInputStream(resized.write))
 
-        } else {
-            (key, input)
-        }
+    } else {
+      (key, input)
     }
+  }
 }
