@@ -34,7 +34,19 @@ class MaxsizePluginTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     assert(100 === resized.height)
   }
 
+  "the plugin" should "resize using the default max sizes if not specified" in {
+    val image = Image.empty(1000, 2000)
+    val input = new ByteArrayInputStream(image.write)
+    val q = plugin.onStore("coldplay.png", input)
+    assert(q._1 === "coldplay.png")
+    val resized = Image(q._2)
+    assert(800 === resized.width)
+    assert(1600 === resized.height)
+  }
+
   "the plugin" should "not resize an image that is smaller than max sizes" in {
+    settings.maxImageWidth = 300
+    settings.maxImageHeight = 300
     val q = plugin.onStore("coldplay.png", input)
     assert(q._1 === "coldplay.png")
   }

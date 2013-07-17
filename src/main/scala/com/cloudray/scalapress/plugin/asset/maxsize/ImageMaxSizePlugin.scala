@@ -12,8 +12,8 @@ import org.apache.commons.io.FilenameUtils
 @Component
 class ImageMaxSizePlugin extends AssetLifecycleListener {
 
-  val DEFAULT_MAX_WIDTH = 2048
-  val DEFAULT_MAX_HEIGHT = 2048
+  val DEFAULT_MAX_WIDTH = 1600
+  val DEFAULT_MAX_HEIGHT = 1600
 
   @Autowired var context: ScalapressContext = _
 
