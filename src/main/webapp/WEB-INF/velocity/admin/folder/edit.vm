@@ -78,14 +78,6 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">Permalink</label>
-
-                    <div class="controls">
-                        #springFormInput("folder.permaLink", "class='input-xxlarge'")
-                    </div>
-                </div>
-
-                <div class="control-group">
                     <label class="control-label">Redirect</label>
 
                     <div class="controls">
