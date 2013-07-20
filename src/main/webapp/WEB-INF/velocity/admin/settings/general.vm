@@ -5,18 +5,18 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
-        <label class="control-label">Offline Message</label>
+        <label class="control-label">Offline</label>
 
         <div class="controls">
-          #springFormInput("setings.offlineMessage")
+          #springFormCheckbox("settings.offline")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">Offline</label>
+        <label class="control-label">Offline Message</label>
 
         <div class="controls">
-          #springFormCheckbox("setings.offline")
+          #springFormInput("settings.offlineMessage")
         </div>
     </div>
 
@@ -24,7 +24,7 @@
         <label class="control-label">Max image width</label>
 
         <div class="controls">
-          #springFormInput("setings.maxImageWidth")
+          #springFormInput("settings.maxImageWidth")
         </div>
     </div>
 
@@ -32,7 +32,7 @@
         <label class="control-label">Max image height</label>
 
         <div class="controls">
-          #springFormInput("setings.maxImageHeight")
+          #springFormInput("settings.maxImageHeight")
         </div>
     </div>
 
