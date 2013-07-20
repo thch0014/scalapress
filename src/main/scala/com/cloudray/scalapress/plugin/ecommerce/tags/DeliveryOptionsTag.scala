@@ -43,7 +43,7 @@ class DeliverySelectTag extends ScalapressTag {
     val selected = if (delivery.id == currentDeliveryId) "true" else null
     val price = Unparsed("&pound;%1.2f".format(delivery.chargeIncVat / 100.0))
     <option selected={selected} value={delivery.id.toString}>
-      {price}
+      {delivery.name}&nbsp;{price}
     </option>
   }
 

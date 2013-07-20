@@ -53,7 +53,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
     delivery.charge = 1234
     delivery.name = "city link"
     delivery.id = 14
-    assert( """<option value="14">&pound;12.34</option>""" ===
+    assert( """<option value="14">city link&nbsp;&pound;12.34</option>""" ===
       Utility.trim(tag.delivery2option(delivery, 0)).toString())
   }
 
@@ -62,7 +62,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
     delivery.charge = 1234
     delivery.name = "city link"
     delivery.id = 51
-    assert( """<option selected="true" value="51">&pound;12.34</option>""" ===
+    assert( """<option selected="true" value="51">city link&nbsp;&pound;12.34</option>""" ===
       Utility.trim(tag.delivery2option(delivery, 51)).toString())
   }
 
@@ -71,7 +71,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
     delivery.charge = 1234
     delivery.name = "city link"
     delivery.id = 51
-    assert( """<option value="51">&pound;12.34</option>""" ===
+    assert( """<option value="51">city link&nbsp;&pound;12.34</option>""" ===
       Utility.trim(tag.delivery2option(delivery, 61)).toString())
   }
 
@@ -88,7 +88,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
   it should "render happy path" in {
     val output = tag.render(sreq, Map.empty)
     assert(
-      """<select onclick="this.form.submit()" name="deliveryOption"><option value="25">&pound;45.00</option><option value="435">&pound;4.99</option></select>""" ===
-        output.get)
+      """<select onclick="this.form.submit()" name="deliveryOption"><option value="25">speedy shit delivery&nbsp;&pound;45.00</option><option value="435">slow as donkeys delivery&nbsp;&pound;4.99</option></select>""" === output
+        .get)
   }
 }
