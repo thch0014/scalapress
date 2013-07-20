@@ -10,7 +10,7 @@
         <label class="control-label">Header</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.accountPageHeader")
+          #springFormTextarea("plugin.accountPageHeader")
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <label class="control-label">Footer</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.accountPageFooter")
+          #springFormTextarea("plugin.accountPageFooter")
         </div>
     </div>
 
@@ -27,22 +27,58 @@
 
         <div class="controls">
             <select id="accountPageMarkup" name="accountPageMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!plugin.accountPageMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        $!{markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!plugin.accountPageMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    $!{markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
+
+    <legend>Login Page</legend>
 
     <div class="control-group">
         <label class="control-label">Login Redirect</label>
 
         <div class="controls">
-            #springFormInput("plugin.loginRedirect")
+          #springFormInput("plugin.loginRedirect")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Header</label>
+
+        <div class="controls">
+          #springFormTextarea("plugin.loginPageHeader")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Footer</label>
+
+        <div class="controls">
+          #springFormTextarea("plugin.loginPageFooter")
+        </div>
+    </div>
+
+    <legend>Registration Page</legend>
+
+    <div class="control-group">
+        <label class="control-label">Header</label>
+
+        <div class="controls">
+          #springFormTextarea("plugin.registrationPageHeader")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Footer</label>
+
+        <div class="controls">
+          #springFormTextarea("plugin.registrationPageFooter")
         </div>
     </div>
 

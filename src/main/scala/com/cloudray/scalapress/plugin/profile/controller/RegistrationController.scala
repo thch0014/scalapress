@@ -25,112 +25,114 @@ import com.cloudray.scalapress.plugin.profile.controller.renderer.RegistrationRe
 @RequestMapping(Array("register"))
 class RegistrationController {
 
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var themeService: ThemeService = _
-    @Autowired var accountPluginDao: AccountPluginDao = _
-    @Autowired var typeDao: TypeDao = _
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var passwordEncoder: PasswordEncoder = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var themeService: ThemeService = _
+  @Autowired var accountPluginDao: AccountPluginDao = _
+  @Autowired var typeDao: TypeDao = _
+  @Autowired var objectDao: ObjectDao = _
+  @Autowired var passwordEncoder: PasswordEncoder = _
+  @Autowired var context: ScalapressContext = _
 
-    @ExceptionHandler
-    @ResponseBody
-    def redirect(e: RedirectException, resp: HttpServletResponse) {
-        resp.sendRedirect(e.url)
-    }
+  @ExceptionHandler
+  @ResponseBody
+  def redirect(e: RedirectException, resp: HttpServletResponse) {
+    resp.sendRedirect(e.url)
+  }
 
-    //
-    // @ResponseBody
-    // @RequestMapping(Array("type"))
-    //    def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalapressPage = {
-    //
-    //        val plugin = accountPluginDao.get
-    //        val sreq = ScalapressRequest(req).withTitle("Registration")
-    //        val theme = themeService.default
-    //        val page = ScalapressPage(theme, sreq)
-    //
-    //        page.body("<h1>Choose Account Type</h1>")
-    //        page.body(RegistrationRenderer.renderChooseAccountType(plugin))
-    //        page
-    //    }
+  //
+  // @ResponseBody
+  // @RequestMapping(Array("type"))
+  //    def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalapressPage = {
+  //
+  //        val plugin = accountPluginDao.get
+  //        val sreq = ScalapressRequest(req).withTitle("Registration")
+  //        val theme = themeService.default
+  //        val page = ScalapressPage(theme, sreq)
+  //
+  //        page.body("<h1>Choose Account Type</h1>")
+  //        page.body(RegistrationRenderer.renderChooseAccountType(plugin))
+  //        page
+  //    }
 
-    @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def showRegistrationPage(req: HttpServletRequest,
-                             @ModelAttribute("form") form: RegistrationForm,
+  @ResponseBody
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def showRegistrationPage(req: HttpServletRequest,
+                           @ModelAttribute("form") form: RegistrationForm,
+                           errors: Errors): ScalapressPage = {
+
+    val plugin = accountPluginDao.get
+    val sreq = ScalapressRequest(req, context).withTitle("Registration")
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    Option(plugin.registrationPageHeader).foreach(arg => page body arg)
+    page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
+    Option(plugin.registrationPageFooter).foreach(arg => page body arg)
+    page
+  }
+
+  @ResponseBody
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def submitRegistrationPage(req: HttpServletRequest,
+                             resp: HttpServletResponse,
+                             @Valid @ModelAttribute("form") form: RegistrationForm,
                              errors: Errors): ScalapressPage = {
 
-        val plugin = accountPluginDao.get
-        val sreq = ScalapressRequest(req, context).withTitle("Registration")
-        val theme = themeService.default
-        val page = ScalapressPage(theme, sreq)
-        page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
-        page
-    }
+    if (objectDao.byEmail(form.email).isDefined)
+      errors
+        .rejectValue("email",
+        "email",
+        "Email address already in use, please register another&lt;p&gt;If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
 
-    @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def submitRegistrationPage(req: HttpServletRequest,
-                               resp: HttpServletResponse,
-                               @Valid @ModelAttribute("form") form: RegistrationForm,
-                               errors: Errors): ScalapressPage = {
+    errors.hasErrors match {
+      case true =>
+        showRegistrationPage(req, form, errors)
+      case false =>
 
-        if (objectDao.byEmail(form.email).isDefined)
-            errors
-              .rejectValue("email",
-                "email",
-                "Email address already in use, please register another&lt;p&gt;If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
+        val accountType = typeDao
+          .findAll()
+          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
 
-        errors.hasErrors match {
-            case true =>
-                showRegistrationPage(req, form, errors)
-            case false =>
+        val user = Obj(accountType)
+        user.name = form.name
+        user.email = form.email
+        user.passwordHash = passwordEncoder.encodePassword(form.password, null)
+        objectDao.save(user)
 
-                val accountType = typeDao
-                  .findAll()
-                  .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
+        autologin(req, form.email, form.password)
 
-                val user = Obj(accountType)
-                user.name = form.name
-                user.email = form.email
-                user.passwordHash = passwordEncoder.encodePassword(form.password, null)
-                objectDao.save(user)
-
-                autologin(req, form.email, form.password)
-
-                Option(new HttpSessionRequestCache().getRequest(req, resp))
-                  .flatMap(arg => Option(arg.getRedirectUrl)) match {
-                    case None =>
-                        val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
-                        val theme = themeService.default
-                        val page = ScalapressPage(theme, sreq)
-                        page.body("<p>Thank you for registering.</p>")
-                        page
-                    case Some(redirect) =>
-                        throw new RedirectException(redirect)
-                }
+        Option(new HttpSessionRequestCache().getRequest(req, resp))
+          .flatMap(arg => Option(arg.getRedirectUrl)) match {
+          case None =>
+            val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
+            val theme = themeService.default
+            val page = ScalapressPage(theme, sreq)
+            page.body("<p>Thank you for registering.</p>")
+            page
+          case Some(redirect) =>
+            throw new RedirectException(redirect)
         }
     }
+  }
 
-    @ModelAttribute("form") def form = new RegistrationForm
+  @ModelAttribute("form") def form = new RegistrationForm
 
-    @Qualifier("authman")
-    @Autowired var authenticationManager: AuthenticationManager = _
+  @Qualifier("authman")
+  @Autowired var authenticationManager: AuthenticationManager = _
 
-    def autologin(req: HttpServletRequest, email: String, password: String) {
-        val token = new UsernamePasswordAuthenticationToken(email, password)
-        req.getSession(true)
-        token.setDetails(new WebAuthenticationDetails(req))
-        val authenticatedUser = authenticationManager.authenticate(token)
-        SecurityContextHolder.getContext.setAuthentication(authenticatedUser)
-    }
+  def autologin(req: HttpServletRequest, email: String, password: String) {
+    val token = new UsernamePasswordAuthenticationToken(email, password)
+    req.getSession(true)
+    token.setDetails(new WebAuthenticationDetails(req))
+    val authenticatedUser = authenticationManager.authenticate(token)
+    SecurityContextHolder.getContext.setAuthentication(authenticatedUser)
+  }
 }
 
 class RegistrationForm {
-    @NotEmpty
-    @BeanProperty var name: String = _
-    @NotEmpty
-    @BeanProperty var email: String = _
-    @NotEmpty
-    @BeanProperty var password: String = _
+  @NotEmpty
+  @BeanProperty var name: String = _
+  @NotEmpty
+  @BeanProperty var email: String = _
+  @NotEmpty
+  @BeanProperty var password: String = _
 }

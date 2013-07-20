@@ -11,6 +11,7 @@ import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import javax.persistence.Transient
 import org.fusesource.scalate.TemplateEngine
+import com.cloudray.scalapress.plugin.profile.AccountPluginDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -20,6 +21,7 @@ class LoginController {
   @Autowired var themeDao: ThemeDao = _
   @Autowired var themeService: ThemeService = _
   @Autowired var context: ScalapressContext = _
+  @Autowired var accountPluginDao: AccountPluginDao = _
 
   @Transient val engine = new TemplateEngine
 
@@ -38,6 +40,8 @@ class LoginController {
   @RequestMapping(value = Array("weblogin"), produces = Array("text/html"))
   def weblogin(req: HttpServletRequest): ScalapressPage = {
 
+    val plugin = accountPluginDao.get
+
     val (error, errorMessage) =
       if (req.getParameter("login_error") == "1")
         (1, Some(LoginController.CREDENTIALS_ERROR_MSG))
@@ -50,7 +54,9 @@ class LoginController {
       Map("error" -> error, "errorMessage" -> errorMessage))
 
     val page = ScalapressPage(theme, sreq)
+    Option(plugin.loginPageHeader).foreach(arg => page body arg)
     page.body(body)
+    Option(plugin.loginPageFooter).foreach(arg => page body arg)
     page
   }
 }
