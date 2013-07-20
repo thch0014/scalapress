@@ -17,24 +17,24 @@ import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 @RequestMapping(Array("backoffice/section/{id}"))
 class SectionEditController extends MarkupPopulator {
 
-    @Autowired var assetStore: AssetStore = _
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
-    @Autowired var markupDao: MarkupDao = _
+  @Autowired var assetStore: AssetStore = _
+  @Autowired var objectDao: ObjectDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var markupDao: MarkupDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("section") section: Section) = "admin/section/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute("section") section: Section) = "admin/section/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute("section") section: Section, req: HttpServletRequest) = {
-        section.setVisible(req.getParameter("visible") != null)
-        sectionDao.save(section)
-        edit(section)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute("section") section: Section, req: HttpServletRequest) = {
+    section.setVisible(req.getParameter("visible") != null)
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @ModelAttribute def populateSection(@PathVariable("id") id: Long, model: ModelMap) {
-        val section = sectionDao.find(id)
-        model.put("section", section)
-    }
+  @ModelAttribute def populateSection(@PathVariable("id") id: Long, model: ModelMap) {
+    val section = sectionDao.find(id)
+    model.put("section", section)
+  }
 }

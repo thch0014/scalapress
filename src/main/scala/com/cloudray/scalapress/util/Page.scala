@@ -7,7 +7,7 @@ import com.cloudray.scalapress.folder.Folder
 case class Page(id: Long, name: String, url: String)
 
 object Page {
-    def apply(obj: Obj) = new Page(obj.id, obj.name, UrlGenerator.url(obj))
-    def apply(f: Folder) = new Page(f.id, f.name, UrlGenerator.url(f))
+  def apply(obj: Obj) = new Page(obj.id, obj.name, UrlGenerator.url(obj))
+  def apply(f: Folder) = new Page(f.id, f.name, UrlGenerator.url(f))
 }
 

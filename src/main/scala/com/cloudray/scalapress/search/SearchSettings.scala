@@ -9,13 +9,13 @@ import com.cloudray.scalapress.enums.Sort
 @Table(name = "settings_search")
 class SearchSettings {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @BeanProperty var sort: Sort = Sort.Name
-    @BeanProperty var pageSize: Int = _
+  @BeanProperty var sort: Sort = Sort.Name
+  @BeanProperty var pageSize: Int = _
 
-    @BeanProperty var header: String = _
-    @BeanProperty var footer: String = _
+  @BeanProperty var header: String = _
+  @BeanProperty var footer: String = _
 }

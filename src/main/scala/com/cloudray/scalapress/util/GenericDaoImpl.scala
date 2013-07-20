@@ -17,62 +17,62 @@ import org.hibernate.SessionFactory
 @Transactional
 class GenericDaoImpl[T, ID <: java.io.Serializable] extends HibernateBaseDAO with GenericDao[T, ID] {
 
-    @Autowired
-    override def setSessionFactory(sessionFactory: SessionFactory) {
-        super.setSessionFactory(sessionFactory)
+  @Autowired
+  override def setSessionFactory(sessionFactory: SessionFactory) {
+    super.setSessionFactory(sessionFactory)
+  }
+
+  protected var persistentClass: Class[T] = DAOUtil
+    .getTypeArguments(classOf[GenericDaoImpl[_, _]], this.getClass)
+    .get(0)
+    .asInstanceOf[Class[T]]
+
+  def count: Int = _count(persistentClass, new Search)
+
+  def count(search: ISearch): Int = {
+    _count(persistentClass, search)
+  }
+
+  def find(id: ID): T = {
+    _get(persistentClass, id)
+  }
+
+  def findAll: List[T] = {
+    _all(persistentClass).asScala.toList
+  }
+
+  def findAll(limit: Int): List[T] = {
+    search(new Search(persistentClass).setMaxResults(limit))
+  }
+
+  def remove(entity: T): Boolean = {
+    _deleteEntity(entity)
+  }
+
+  def removeById(id: ID): Boolean = {
+    _deleteById(persistentClass, id)
+  }
+
+  def save(entity: T): Boolean = {
+    _saveOrUpdateIsNew(entity)
+  }
+
+  def search(search: ISearch): List[T] = {
+    _search(persistentClass, search).asScala.toList.asInstanceOf[List[T]]
+  }
+
+  def searchAndCount(search: ISearch): SearchResult[T] = {
+    if (search == null) {
+      val result: SearchResult[T] = new SearchResult[T]
+      result.setResult(findAll.asInstanceOf[java.util.List[T]])
+      result.setTotalCount(result.getResult.size)
+      return result
     }
+    _searchAndCount(persistentClass, search).asInstanceOf[SearchResult[T]]
+  }
 
-    protected var persistentClass: Class[T] = DAOUtil
-      .getTypeArguments(classOf[GenericDaoImpl[_, _]], this.getClass)
-      .get(0)
-      .asInstanceOf[Class[T]]
-
-    def count: Int = _count(persistentClass, new Search)
-
-    def count(search: ISearch): Int = {
-        _count(persistentClass, search)
-    }
-
-    def find(id: ID): T = {
-        _get(persistentClass, id)
-    }
-
-    def findAll: List[T] = {
-        _all(persistentClass).asScala.toList
-    }
-
-    def findAll(limit: Int): List[T] = {
-        search(new Search(persistentClass).setMaxResults(limit))
-    }
-
-    def remove(entity: T): Boolean = {
-        _deleteEntity(entity)
-    }
-
-    def removeById(id: ID): Boolean = {
-        _deleteById(persistentClass, id)
-    }
-
-    def save(entity: T): Boolean = {
-        _saveOrUpdateIsNew(entity)
-    }
-
-    def search(search: ISearch): List[T] = {
-        _search(persistentClass, search).asScala.toList.asInstanceOf[List[T]]
-    }
-
-    def searchAndCount(search: ISearch): SearchResult[T] = {
-        if (search == null) {
-            val result: SearchResult[T] = new SearchResult[T]
-            result.setResult(findAll.asInstanceOf[java.util.List[T]])
-            result.setTotalCount(result.getResult.size)
-            return result
-        }
-        _searchAndCount(persistentClass, search).asInstanceOf[SearchResult[T]]
-    }
-
-    def searchUnique(search: ISearch): T = {
-        _searchUnique(persistentClass, search).asInstanceOf[T]
-    }
+  def searchUnique(search: ISearch): T = {
+    _searchUnique(persistentClass, search).asInstanceOf[T]
+  }
 
 }

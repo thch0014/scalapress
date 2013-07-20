@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence._
-import org.hibernate.annotations.{CacheConcurrencyStrategy, Fetch, FetchMode}
+import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.enums.Sort
 import com.cloudray.scalapress.obj.ObjectType
 import scala.beans.BeanProperty
@@ -12,28 +12,28 @@ import scala.collection.JavaConverters._
 @Table(name = "search_forms")
 class SearchForm {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: java.lang.Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: java.lang.Long = _
 
-    @BeanProperty var name: String = _
+  @BeanProperty var name: String = _
 
-    @ManyToOne
-    @JoinColumn(name = "itemtype", nullable = true)
-    @BeanProperty var objectType: ObjectType = _
+  @ManyToOne
+  @JoinColumn(name = "itemtype", nullable = true)
+  @BeanProperty var objectType: ObjectType = _
 
-    @Column(name = "resultsperpage")
-    @BeanProperty var pageSize: Int = _
+  @Column(name = "resultsperpage")
+  @BeanProperty var pageSize: Int = _
 
-    @Enumerated(EnumType.STRING)
-    @BeanProperty var sort: Sort = _
+  @Enumerated(EnumType.STRING)
+  @BeanProperty var sort: Sort = _
 
-    @BeanProperty var submitLabel: String = _
+  @BeanProperty var submitLabel: String = _
 
-    @OneToMany(mappedBy = "searchForm", cascade = Array(CascadeType.ALL))
-    @Fetch(FetchMode.JOIN)
-    @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
+  @OneToMany(mappedBy = "searchForm", cascade = Array(CascadeType.ALL))
+  @Fetch(FetchMode.JOIN)
+  @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
 
-    def sortedFields = fields.asScala.toSeq.sortBy(_.name).sortBy(_.position)
+  def sortedFields = fields.asScala.toSeq.sortBy(_.name).sortBy(_.position)
 
 }

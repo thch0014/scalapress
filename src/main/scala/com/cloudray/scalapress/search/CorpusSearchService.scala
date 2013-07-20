@@ -8,7 +8,7 @@ package com.cloudray.scalapress.search
   *
   **/
 trait CorpusSearchService {
-    def search(query: String): Seq[CorpusResult]
+  def search(query: String): Seq[CorpusResult]
 }
 
 case class CorpusResult(title: String, url: String, snippet: String)
