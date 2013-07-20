@@ -32,8 +32,8 @@ class SearchFormEditControllerTest extends FlatSpec with OneInstancePerTest with
     "A search controller" should "use sorted fields in the model" in {
         val fields = controller.fields(4)
         assert(3 === fields.size)
-        assert(field2 === fields(0))
-        assert(field1 === fields(1))
-        assert(field3 === fields(2))
+        assert(field2 === fields.get(0))
+        assert(field1 === fields.get(1))
+        assert(field3 === fields.get(2))
     }
 }

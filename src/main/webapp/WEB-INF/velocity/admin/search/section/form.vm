@@ -1,7 +1,7 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Search Results Section</h3>
+<h3>Edit Search Form Section</h3>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +9,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("section.name", "class='input-xlarge'")
+          #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
@@ -17,7 +17,7 @@
         <label class="control-label">Visible</label>
 
         <div class="controls">
-            #springFormCheckbox("section.visible")
+          #springFormCheckbox("section.visible", "")
         </div>
     </div>
 
@@ -34,7 +34,7 @@
         <label class="control-label">No results text</label>
 
         <div class="controls">
-            #springFormTextarea("section.noResultsText", "class='input-xlarge'")
+          #springFormTextarea("section.noResultsText", "class='input-xlarge'")
         </div>
     </div>
 

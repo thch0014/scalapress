@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence._
-import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.enums.Sort
 import com.cloudray.scalapress.obj.ObjectType
 import scala.beans.BeanProperty
@@ -31,7 +30,6 @@ class SearchForm {
   @BeanProperty var submitLabel: String = _
 
   @OneToMany(mappedBy = "searchForm", cascade = Array(CascadeType.ALL))
-  @Fetch(FetchMode.JOIN)
   @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
 
   def sortedFields = fields.asScala.toSeq.sortBy(_.name).sortBy(_.position)
