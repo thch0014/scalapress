@@ -14,7 +14,7 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel
   *
   *         Eg, color or size
-  * */
+  **/
 @Entity
 @Table(name = "plugin_variations_dimensions")
 class Dimension {
@@ -85,6 +85,8 @@ class Variation {
   @BeanProperty var dimensionValues: java.util.Set[DimensionValue] = new util.HashSet[DimensionValue]()
 
   @BeanProperty var price: Int = _
+  @BeanProperty def vat: Int = (price * obj.vatRate / 100.0).toInt
+  @BeanProperty def priceInc: Int = price + vat
   @BeanProperty var stock: Int = _
 
   def name = dimensionValues.asScala.toSeq.sortBy(_.dimension.id).map(_.value).mkString(" ")

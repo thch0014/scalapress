@@ -108,7 +108,8 @@ class BasketLineQtyTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.line.map(line => {
       val name = "qty" + line.id
-        <input type="number" min="1" max="100" step="1" class="input-mini" name={name} value={line.qty.toString}/>.toString()
+        <input type="number" min="1" max="100" step="1" class="input-mini" name={name} value={line.qty.toString}/>
+        .toString()
     })
   }
 }
@@ -146,19 +147,17 @@ class BasketLineObjectTag extends ScalapressTag {
 class BasketLinePriceTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    val text = if (params.contains("ex"))
-      request.line.map(_.obj.price)
-    else if (params.contains("vat"))
-      request.line.map(_.obj.vat)
-    else
-      request.line.map(_.obj.sellPriceInc)
+    request.line.map(line => {
 
-    text match {
-      case None => None
-      case Some(price) =>
-        val textFormatted = "&pound;%1.2f".format(price / 100.0)
-        Some(textFormatted)
-    }
+      val price = if (params.contains("ex"))
+        Option(line.variation).map(_.price).getOrElse(line.obj.price)
+      else if (params.contains("vat"))
+        Option(line.variation).map(_.vat).getOrElse(line.obj.vat)
+      else
+        Option(line.variation).map(_.priceInc).getOrElse(line.obj.sellPriceInc)
+
+      "&pound;%1.2f".format(price / 100.0)
+    })
   }
 }
 

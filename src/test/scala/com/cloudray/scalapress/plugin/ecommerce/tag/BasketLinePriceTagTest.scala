@@ -7,34 +7,56 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
 import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.variations.Variation
 
 /** @author Stephen Samuel */
 class BasketLinePriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val line1 = new BasketLine
-    line1.obj = new Obj
-    line1.qty = 2
-    line1.obj.price = 1000
-    line1.obj.vatRate = 15.00
+  val line1 = new BasketLine
+  line1.obj = new Obj
+  line1.obj.price = 1000
+  line1.obj.vatRate = 15.00
 
-    val tag = new BasketLinePriceTag()
+  val v = new Variation
+  v.price = 599
+  v.obj = line1.obj
 
-    val req = mock[HttpServletRequest]
-    val context = mock[ScalapressContext]
-    val sreq = new ScalapressRequest(req, context).withLine(line1)
+  val tag = new BasketLinePriceTag()
 
-    test("given param of ex then price is ex vat") {
-        val actual = tag.render(sreq, Map("ex" -> "1"))
-        assert("&pound;10.00" === actual.get)
-    }
+  val req = mock[HttpServletRequest]
+  val context = mock[ScalapressContext]
+  val sreq = new ScalapressRequest(req, context).withLine(line1)
 
-    test("given param of vat then shows the vat") {
-        val actual = tag.render(sreq, Map("vat" -> "1"))
-        assert("&pound;1.50" === actual.get)
-    }
+  test("given param of ex then price is ex vat") {
+    val actual = tag.render(sreq, Map("ex" -> "1"))
+    assert("&pound;10.00" === actual.get)
+  }
 
-    test("by default the tag shows inc vat price") {
-        val actual = tag.render(sreq, Map.empty)
-        assert("&pound;11.50" === actual.get)
-    }
+  test("given param of vat then shows the vat") {
+    val actual = tag.render(sreq, Map("vat" -> "1"))
+    assert("&pound;1.50" === actual.get)
+  }
+
+  test("by default the tag shows inc vat price") {
+    val actual = tag.render(sreq, Map.empty)
+    assert("&pound;11.50" === actual.get)
+  }
+
+  test("ex vat price uses variation when present") {
+    line1.variation = v
+    val actual = tag.render(sreq, Map("ex" -> "1"))
+    assert("&pound;5.99" === actual.get)
+  }
+
+  test("vat price uses variation when present") {
+    line1.variation = v
+    val actual = tag.render(sreq, Map("vat" -> "1"))
+    assert("&pound;0.89" === actual.get)
+  }
+
+  test("inc vat price uses variation when present") {
+    line1.variation = v
+    val actual = tag.render(sreq, Map.empty)
+    assert("&pound;6.88" === actual.get)
+  }
 }

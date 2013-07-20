@@ -31,8 +31,7 @@ class SavedSearch {
   @BeanProperty var prefix: String = _
 
   // search inside this folder
-  @Column(name = "searchCategory"
-    , nullable = true)
+  @Column(name = "searchCategory", nullable = true)
   @BeanProperty var searchFolders: String = _
 
   @OneToMany(mappedBy = "savedSearch", cascade = Array(CascadeType.ALL), orphanRemoval = true)
