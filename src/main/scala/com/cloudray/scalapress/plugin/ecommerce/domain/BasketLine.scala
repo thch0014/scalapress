@@ -32,18 +32,15 @@ class BasketLine {
 
   def description = obj.name + Option(variation).map(" " + _.name).getOrElse("")
 
-  // total value of the line excluding VAT
-  def subtotal: Double = {
-    val price = Option(variation) match {
-      case None => obj.price
-      case Some(v) => v.price
-    }
-    price * qty
+  def price: Int = Option(variation).map(_.price).getOrElse(0) match {
+    case 0 => obj.price
+    case x: Int => x
   }
+  def priceVat: Int = (price * obj.vatRate / 100.0).toInt
+  def priceInc: Int = price + priceVat
 
-  def vat: Double = qty * obj.vat
-
-  // total value of the line including VAT
-  def total: Double = subtotal + vat
+  def subtotal: Int = price * qty
+  def vat: Int = priceVat * obj.vat
+  def total: Int = subtotal + vat
 }
 

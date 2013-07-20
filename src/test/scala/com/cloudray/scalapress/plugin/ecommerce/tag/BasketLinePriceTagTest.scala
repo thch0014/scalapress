@@ -59,4 +59,25 @@ class BasketLinePriceTagTest extends FunSuite with MockitoSugar with OneInstance
     val actual = tag.render(sreq, Map.empty)
     assert("&pound;6.88" === actual.get)
   }
+
+  test("ex vat price uses product price when variation present but has no price") {
+    line1.variation = v
+    v.price = 0
+    val actual = tag.render(sreq, Map("ex" -> "1"))
+    assert("&pound;10.00" === actual.get)
+  }
+
+  test("vat price uses product price when variation present but has no price") {
+    line1.variation = v
+    v.price = 0
+    val actual = tag.render(sreq, Map("vat" -> "1"))
+    assert("&pound;1.50" === actual.get)
+  }
+
+  test("inc vat price uses product price when variation present but has no price") {
+    line1.variation = v
+    v.price = 0
+    val actual = tag.render(sreq, Map.empty)
+    assert("&pound;11.50" === actual.get)
+  }
 }

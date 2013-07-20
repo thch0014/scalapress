@@ -148,14 +148,10 @@ class BasketLinePriceTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
     request.line.map(line => {
-
-      val price = if (params.contains("ex"))
-        Option(line.variation).map(_.price).getOrElse(line.obj.price)
-      else if (params.contains("vat"))
-        Option(line.variation).map(_.vat).getOrElse(line.obj.vat)
-      else
-        Option(line.variation).map(_.priceInc).getOrElse(line.obj.sellPriceInc)
-
+      val price =
+        if (params.contains("ex")) line.price
+        else if (params.contains("vat")) line.priceVat
+        else line.priceInc
       "&pound;%1.2f".format(price / 100.0)
     })
   }
@@ -165,19 +161,13 @@ class BasketLinePriceTag extends ScalapressTag {
 class BasketLineTotalTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    val total = if (params.contains("ex"))
-      request.line.map(_.subtotal)
-    else if (params.contains("vat"))
-      request.line.map(_.vat)
-    else
-      request.line.map(_.total)
-
-    total match {
-      case None => None
-      case Some(price) =>
-        val textFormatted = "&pound;%1.2f".format(price / 100.0)
-        Some(textFormatted)
-    }
+    request.line.map(line => {
+      val total =
+        if (params.contains("ex")) line.subtotal
+        else if (params.contains("vat")) line.vat
+        else line.total
+      "&pound;%1.2f".format(total / 100.0)
+    })
   }
 }
 

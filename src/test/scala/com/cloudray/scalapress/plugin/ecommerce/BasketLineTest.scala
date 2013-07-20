@@ -24,7 +24,13 @@ class BasketLineTest extends FlatSpec with MockitoSugar with OneInstancePerTest 
     assert(599 === line.subtotal)
   }
 
-  "a basket line" should "calculate price using object when no variation is set" in {
+  it should "calculate price using product price when variation has price 0" in {
+    line.variation = v
+    v.price = 0
+    assert(1999 === line.subtotal)
+  }
+
+  it should "calculate price using object when no variation is set" in {
     assert(1999 === line.subtotal)
   }
 }
