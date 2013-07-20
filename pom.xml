@@ -39,7 +39,7 @@
         <compiler.version.source>1.6</compiler.version.source>
         <compiler.version.target>1.6</compiler.version.target>
 
-        <aws.version>1.4.7</aws.version>
+        <aws.version>1.5.1</aws.version>
 
         <commons.httpcore.version>4.2.1</commons.httpcore.version>
         <commons.httpclient.version>4.2.1</commons.httpclient.version>
