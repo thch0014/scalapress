@@ -40,7 +40,7 @@ class BasketLine {
   def priceInc: Int = price + priceVat
 
   def subtotal: Int = price * qty
-  def vat: Int = priceVat * obj.vat
+  def vat: Int = priceVat * qty
   def total: Int = subtotal + vat
 }
 
