@@ -4,7 +4,7 @@ import com.cloudray.scalapress.section.Section
 import javax.persistence.{Table, Entity}
 import com.cloudray.scalapress.ScalapressRequest
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
 
 /** @author Stephen Samuel */
 @Entity
@@ -27,7 +27,7 @@ class DisqusSection extends Section {
     val normalizedTitle = title.replace("\"", "'")
 
     Option(shortname)
-      .map(arg => engine.layout("/com/cloudray/scalapress/plugin/disqus/disqus.ssp",
+      .map(arg => Scalate.layout("/com/cloudray/scalapress/plugin/disqus/disqus.ssp",
       Map("shortname" -> shortname, "title" -> normalizedTitle, "id" -> id, "url" -> url, "id" -> this.id.toString)))
   }
 }
