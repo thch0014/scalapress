@@ -15,6 +15,7 @@ import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
@@ -47,6 +48,11 @@ class ScalapressContext extends ServletContextAware {
   @Autowired var sectionDao: SectionDao = _
   @Autowired var widgetDao: WidgetDao = _
 
+  def beans[T: Manifest]: Iterable[T] =
+    WebApplicationContextUtils
+      .getRequiredWebApplicationContext(servletContext)
+      .getBeansOfType(manifest.runtimeClass.asInstanceOf[Class[T]])
+      .values.asScala
   def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
   def bean[T: Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
 

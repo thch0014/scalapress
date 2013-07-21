@@ -9,7 +9,6 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.media.{AssetLifecycleListener, AssetStore}
 import java.io._
-import org.springframework.context.ApplicationContext
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.{Paging, Page}
 import javax.servlet.http.HttpServletRequest
@@ -20,44 +19,42 @@ import com.cloudray.scalapress.search.PagingRenderer
 @RequestMapping(Array("backoffice/medialib"))
 class MediaLibraryController {
 
-    val PAGE_SIZE = 36
+  val PAGE_SIZE = 36
 
-    @Autowired var assetStore: AssetStore = _
-    @Autowired var context: ScalapressContext = _
-    @Autowired var appContext: ApplicationContext = _
+  @Autowired var assetStore: AssetStore = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
-    def list = "admin/media/library.vm"
+  @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
+  def list = "admin/media/library.vm"
 
-    @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def upload(@RequestParam(value = "minify", defaultValue = "false") minify: Boolean,
-               @RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
+  @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
+  def upload(@RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
 
-        val listeners = appContext.getBeansOfType(classOf[AssetLifecycleListener]).values().asScala
-        for ( upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty) ) {
-            val key = upload.getOriginalFilename
-            val in = upload.getInputStream
-            val start = (key, in)
-            val op = (a: (String, InputStream), b: AssetLifecycleListener) => b.onStore(a._1, a._2)
-            val result = listeners.foldLeft(start)(op)
-            assetStore.put(result._1, result._2)
-        }
-        "redirect:" + UrlResolver.medialib
+    val listeners = context.beans[AssetLifecycleListener]
+    for ( upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty) ) {
+      val key = upload.getOriginalFilename
+      val in = upload.getInputStream
+      val start = (key, in)
+      val op = (a: (String, InputStream), b: AssetLifecycleListener) => b.onStore(a._1, a._2)
+      val result = listeners.foldLeft(start)(op)
+      assetStore.put(result._1, result._2)
     }
+    "redirect:" + UrlResolver.medialib
+  }
 
-    @ModelAttribute def assets(@RequestParam(value = "q", required = false) q: String,
-                               @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
-                               req: HttpServletRequest,
-                               model: ModelMap) {
+  @ModelAttribute def assets(@RequestParam(value = "q", required = false) q: String,
+                             @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
+                             req: HttpServletRequest,
+                             model: ModelMap) {
 
-        val assets = assetStore.search(q, pageNumber, PAGE_SIZE).toList
-        model.put("assets", assets.asJava)
+    val assets = assetStore.search(q, pageNumber, PAGE_SIZE).toList
+    model.put("assets", assets.asJava)
 
-        val page = Page(assets, pageNumber, PAGE_SIZE, assetStore.count)
-        val paging = Paging(req, page)
-        model.put("paging", paging)
+    val page = Page(assets, pageNumber, PAGE_SIZE, assetStore.count)
+    val paging = Paging(req, page)
+    model.put("paging", paging)
 
-        val pagination = PagingRenderer.render(paging, 10)
-        model.put("pagination", pagination)
-    }
+    val pagination = PagingRenderer.render(paging, 10)
+    model.put("pagination", pagination)
+  }
 }

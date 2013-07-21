@@ -9,5 +9,6 @@ public enum Sort {
     Oldest,
     Price,
     PriceHigh,
-    Random
+    Random,
+    Reference
 }
