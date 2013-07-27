@@ -1,24 +1,27 @@
 name := "scalapress"
 
-organization  := "com.sksamuel.scalapress"
+organization := "com.sksamuel.scalapress"
 
 version := "0.36-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
-seq(webSettings :_*)
+scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+
+seq(webSettings: _*)
 
 publishMavenStyle := true
 
-publishTo <<= version { (v: String) =>
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+publishTo <<= version {
+  (v: String) =>
+    val nexus = "https://oss.sonatype.org/"
+    if (v.trim.endsWith("SNAPSHOT"))
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in (Compile, packageBin) := false
+publishArtifact in(Compile, packageBin) := false
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
@@ -36,7 +39,7 @@ libraryDependencies += "com.fasterxml.jackson.datatype" % "jackson-datatype-hibe
 
 libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3"
 
-libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7"
+libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7" exclude("javax.persistence", "persistence-api")
 
 libraryDependencies += "com.spatial4j" % "spatial4j" % "0.3"
 
@@ -75,7 +78,7 @@ libraryDependencies += "com.sun.mail" % "javax.mail" % "1.5.0"
 libraryDependencies += "com.google.javascript" % "closure-compiler" % "r2388"
 
 libraryDependencies += "javax.transaction" % "jta" % "1.1"
- 
+
 libraryDependencies += "com.sksamuel.scrimage" % "scrimage-core" % "1.3.3"
 
 libraryDependencies += "org.springframework.security" % "spring-security-core" % "3.1.4.RELEASE"
@@ -138,21 +141,21 @@ libraryDependencies += "org.hsqldb" % "hsqldb" % "2.3.0" % "test"
 
 pomExtra := (
   <url>https://github.com/theon/scala-uri</url>
-  <licenses>
-    <license>
-      <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>git@github.com:sksamuel/scalapress.git</url>
-    <connection>scm:git@github.com:sksamuel/scalapress.git</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>theon</id>
-      <name>sksamuel</name>
-      <url>http://github.com/sksamuel</url>
-    </developer>
-  </developers>)
+    <licenses>
+      <license>
+        <name>Apache 2</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>git@github.com:sksamuel/scalapress.git</url>
+      <connection>scm:git@github.com:sksamuel/scalapress.git</connection>
+    </scm>
+    <developers>
+      <developer>
+        <id>theon</id>
+        <name>sksamuel</name>
+        <url>http://github.com/sksamuel</url>
+      </developer>
+    </developers>)
