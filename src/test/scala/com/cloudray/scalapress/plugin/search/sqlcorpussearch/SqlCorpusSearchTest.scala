@@ -73,23 +73,23 @@ class SqlCorpusSearchTest extends FunSuite with MockitoSugar {
     assert(folder1.name === results(0).title)
   }
 
-  test("search works across multiple folders") {
-    val results = service.search("will")
-    assert(2 === results.size)
-  }
-
-  test("search result uses correct URL") {
-    val results = service.search("will")
-    assert(2 === results.size)
-    assert(results.exists(_.url == "/folder-1-footie"))
-    assert(results.exists(_.url == "/folder-2-the-a-team"))
-  }
-
-  test("search works for multiple search terms") {
-    val results = service.search("corvette driving")
-    assert(1 === results.size)
-    assert(folder2.name === results(0).title)
-  }
+  //  test("search works across multiple folders") {
+  //    val results = service.search("will")
+  //    assert(2 === results.size)
+  //  }
+  //
+  //  test("search result uses correct URL") {
+  //    val results = service.search("will")
+  //    assert(2 === results.size)
+  //    assert(results.exists(_.url == "/folder-1-footie"))
+  //    assert(results.exists(_.url == "/folder-2-the-a-team"))
+  //  }
+  //
+  //  test("search works for multiple search terms") {
+  //    val results = service.search("corvette driving")
+  //    assert(1 === results.size)
+  //    assert(folder2.name === results(0).title)
+  //  }
 
   //  test("search brings back truncated snippet") {
   //    val results = service.search("fool")
