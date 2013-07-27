@@ -6,8 +6,6 @@ version := "0.36-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-
 seq(webSettings: _*)
 
 publishMavenStyle := true
@@ -37,9 +35,9 @@ libraryDependencies += "com.fasterxml.jackson.jaxrs" % "jackson-jaxrs-json-provi
 
 libraryDependencies += "com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.1.2"
 
-libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3"
+libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3" exclude("org.scalatest", "scalatest_2.10.0")
 
-libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7" exclude("javax.persistence", "persistence-api")
+libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7" exclude("org.scalatest", "scalatest_2.10") exclude("javax.persistence", "persistence-api")
 
 libraryDependencies += "com.spatial4j" % "spatial4j" % "0.3"
 
@@ -106,6 +104,8 @@ libraryDependencies += "org.aspectj" % "aspectjweaver" % "1.7.3"
 libraryDependencies += "org.hibernate" % "hibernate-core" % "4.2.3.Final"
 
 libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "4.2.3.Final"
+
+libraryDependencies += "com.googlecode.genericdao" % "dao-hibernate" % "1.2.0"
 
 libraryDependencies += "net.sourceforge.javacsv" % "javacsv" % "2.0"
 

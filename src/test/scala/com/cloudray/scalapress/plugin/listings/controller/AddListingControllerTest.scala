@@ -141,7 +141,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     process.listingPackage.objectType = new ObjectType
     controller.showFolders(process, errors, req)
     assert(1 === process.folders.size)
-    assert(5l === process.folders(00))
+    assert(5l === process.folders(0))
   }
 
   test("folders are not automatically set if choice is from more than 1") {
