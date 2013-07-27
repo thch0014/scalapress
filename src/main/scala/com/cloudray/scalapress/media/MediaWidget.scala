@@ -13,7 +13,8 @@ import scala.beans.BeanProperty
 
 @Entity
 @Table(name = "boxes_images")
-class MediaWidget extends Widget {
+class
+MediaWidget extends Widget {
 
   @BeanProperty var url: String = _
 

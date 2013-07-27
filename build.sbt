@@ -6,7 +6,25 @@ version := "0.36-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
+seq(webSettings :_*)
+
 publishMavenStyle := true
+
+publishTo <<= version { (v: String) =>
+  val nexus = "https://oss.sonatype.org/"
+  if (v.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+
+publishArtifact in (Compile, packageBin) := false
+
+net.virtualvoid.sbt.graph.Plugin.graphSettings
+
+libraryDependencies += "javax.servlet" % "servlet-api" % "2.5" % "provided"
+
+libraryDependencies += "org.mortbay.jetty" % "jetty" % "6.1.22" % "container"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.1.3"
 
@@ -91,6 +109,10 @@ libraryDependencies += "net.sourceforge.javacsv" % "javacsv" % "2.0"
 libraryDependencies += "org.elasticsearch" % "elasticsearch" % "0.90.2"
 
 libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s" % "0.90.2.8"
+
+libraryDependencies += "javax.validation" % "validation-api" % "1.1.0.Final"
+
+libraryDependencies += "org.hibernate" % "hibernate-validator" % "5.0.1.Final"
 
 libraryDependencies += "org.springframework" % "spring-context" % "3.2.3.RELEASE"
 
