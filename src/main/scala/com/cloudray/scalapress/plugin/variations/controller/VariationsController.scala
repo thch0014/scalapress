@@ -47,9 +47,9 @@ class VariationsController {
   @RequestMapping(value = Array("{id}/delete"))
   def delete(@PathVariable("id") id: Long) = {
     val variation = variationDao.find(id)
-    val objectTypeId = variation.obj.objectType.id
+    val objectId = variation.obj.id
     variationDao.remove(variation)
-    "redirect:/backoffice/plugin/variations?objectId=" + objectTypeId
+    "redirect:/backoffice/plugin/variations?objectId=" + objectId
   }
 
   def _dimensions(obj: Obj): Iterable[Dimension] = _dimensions(obj.objectType.id)
