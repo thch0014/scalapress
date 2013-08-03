@@ -269,7 +269,7 @@
 <div class="tab-pane" id="tab5">
 
     <legend>Images</legend>
-    <table class="table table-bordered table-condensed table-striped table-hover">
+    <table id="images-table" class="table table-bordered table-condensed table-striped table-hover">
         <tr>
             <th>Image</th>
             <th>Filename</th>
@@ -278,12 +278,12 @@
         </tr>
 
       #foreach ($a in $assets)
-          <tr>
+          <tr data-field-id="$a.filename()" class="asset-row">
               <td>
                   <ul class="thumbnails">
                       <li class="span6">
                           <div class="thumbnail"><img
-                                  src="/images/$a.filename()?width=128&height=128"/></div>
+                                  src="/images/$a.filename()?width=64&height=64"/></div>
                       </li>
                   </ul>
               </td>
@@ -297,8 +297,32 @@
       #end
     </table>
 
-
     Image Upload: <input type="file" name="upload"/>
+
+
+    <script>
+        $(function () {
+            $("#images-table").find("tbody").sortable({
+
+                update: function (event, ui) {
+                    var order = []
+                    $("#images-table").find("tr.asset-row").each(function (v) {
+                        var id = $(this).attr("data-field-id")
+                        order.push(id)
+                    })
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/backoffice/object/$form.o.id/image/order",
+                        contentType: "text/plain",
+                        data: order.join('-')
+                    });
+                }
+            });
+            $("#images-table").find("tbody").disableSelection();
+        });
+    </script>
+
 
 </div>
 

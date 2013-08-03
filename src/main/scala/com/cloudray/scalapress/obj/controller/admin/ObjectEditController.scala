@@ -17,7 +17,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Obj}
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValue}
-import com.cloudray.scalapress.media.{Asset, AssetStore, Image}
+import com.cloudray.scalapress.media._
 import com.cloudray.scalapress.util.mvc.AttributeValuesPopulator
 import com.cloudray.scalapress.enums.AttributeType
 import scala.collection.mutable
@@ -26,6 +26,8 @@ import org.joda.time.DateTimeZone
 import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.folder.controller.admin.SectionSorting
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.media.Asset
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
@@ -37,6 +39,7 @@ class ObjectEditController
   @Autowired var attributeValueDao: AttributeValueDao = _
   @Autowired var objectDao: ObjectDao = _
   @Autowired var folderDao: FolderDao = _
+  @Autowired var imageDao: ImageDao = _
   @Autowired var sectionDao: SectionDao = _
   @Autowired var context: ScalapressContext = _
   @Autowired var searchService: SearchService = _
@@ -137,6 +140,18 @@ class ObjectEditController
     form.o.sections.add(section)
     objectDao.save(form.o)
     "redirect:/backoffice/obj/" + form.o.id
+  }
+
+  @RequestMapping(value = Array("/image/order"), method = Array(RequestMethod.POST))
+  def reorderImages(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String = {
+    val ids = order.split("-")
+    if (ids.size == form.o.images.size)
+      form.o.images.asScala.foreach(img => {
+        val pos = ids.indexOf(img.id.toString)
+        img.position = pos
+        imageDao.save(img)
+      })
+    "ok"
   }
 
   @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
