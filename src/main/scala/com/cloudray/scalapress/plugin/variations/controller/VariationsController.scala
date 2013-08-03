@@ -24,10 +24,12 @@ class VariationsController {
     val obj = objectDao.find(id)
     model.put("obj", obj)
 
-    val variations = variationDao.findByObjectId(id)
+    val variations = variationDao.findByObjectId(id).sortBy(_.name)
     model.put("variations", variations.asJava)
 
-    val dimensions = dimensionDao.findAll().filterNot(_.objectType == null).filter(_.objectType.id == obj.objectType.id)
+    val dimensions = dimensionDao.findAll()
+      .filterNot(_.objectType == null)
+      .filter(_.objectType.id == obj.objectType.id)
     model.put("dimensions", dimensions.asJava)
 
     "admin/plugin/variations/list.vm"
