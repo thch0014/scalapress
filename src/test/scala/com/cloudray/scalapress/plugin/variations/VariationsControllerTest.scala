@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.{Obj, ObjectType, ObjectDao}
 import org.springframework.ui.ModelMap
-import org.mockito.Mockito
+import org.mockito.{Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.variations.controller.VariationsController
 
@@ -37,6 +37,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
 
   "a variations controller" should "set the dimensions from the obj's type in the model" in {
     Mockito.when(controller.dimensionDao.findAll()).thenReturn(List(d1, d2))
+    Mockito.when(controller.variationDao.findByObjectId(Matchers.anyLong())).thenReturn(Nil)
     val model = new ModelMap
     controller.edit(1, model)
     assert(2 === model.get("dimensions").asInstanceOf[java.util.Collection[Dimension]].size)
