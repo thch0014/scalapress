@@ -71,4 +71,12 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
     val actual = tag.render(sreq, Map.empty)
     assert("we're out everywhere" === actual.get)
   }
+
+  test("given stock >0 and in/out stock type then tag shows in stock message") {
+    obj.stock = 3
+    plugin.stockMethod = StockMethod.InOut
+    val sreq = ScalapressRequest(req, context).withObject(obj)
+    val actual = tag.render(sreq, Map.empty)
+    assert("In stock" === actual.get)
+  }
 }
