@@ -34,7 +34,7 @@ class FoldersWidget extends Widget with Logging {
   override def render(req: ScalapressRequest): Option[String] = {
     val root = Option(start).getOrElse(req.folderRoot)
     val xml = _renderChildren(root, 1)
-    Some(Utility.trim(xml).toString())
+    Option(xml).map(Utility.trim(_).toString())
   }
 
   def _renderChildren(parent: Folder, level: Int): Node = {
