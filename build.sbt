@@ -87,7 +87,7 @@ libraryDependencies += "org.springframework.security" % "spring-security-web" % 
 
 libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.2"
 
-libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.25"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.26"
 
 libraryDependencies += "commons-dbcp" % "commons-dbcp" % "1.4"
 
@@ -135,7 +135,7 @@ libraryDependencies += "org.springframework" % "spring-core" % "3.2.3.RELEASE"
 
 libraryDependencies += "commons-fileupload" % "commons-fileupload" % "1.3"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0.M6-SNAP35" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0.M6-SNAP36" % "test"
 
 libraryDependencies += "org.hsqldb" % "hsqldb" % "2.3.0" % "test"
 
