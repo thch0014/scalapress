@@ -2,7 +2,7 @@ name := "scalapress"
 
 organization := "com.sksamuel.scalapress"
 
-version := "0.36-SNAPSHOT"
+version := "0.37-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
