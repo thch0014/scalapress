@@ -140,7 +140,7 @@ libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0.M6-SNAP36" % "t
 libraryDependencies += "org.hsqldb" % "hsqldb" % "2.3.0" % "test"
 
 pomExtra := (
-  <url>https://github.com/theon/scala-uri</url>
+  <url>https://github.com/sksamuel/scalapress</url>
     <licenses>
       <license>
         <name>Apache 2</name>
