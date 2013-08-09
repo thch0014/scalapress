@@ -15,7 +15,7 @@ class CalendarJsonController {
     @Autowired var searchService: SearchService = _
     @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("application/json"), value = Array("widget/{id}"))
+    @RequestMapping(produces = Array("text/plain"), value = Array("widget/{id}"))
     @ResponseBody
     def json(@PathVariable("id") id: Long): Array[Event] = {
         val widget = context.widgetDao.find(id).asInstanceOf[CalendarWidget]
