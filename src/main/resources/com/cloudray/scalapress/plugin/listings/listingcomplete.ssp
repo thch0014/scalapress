@@ -1,0 +1,19 @@
+<%@ val url: String %>
+
+<div id="listing-confirmation-text">
+    <p>
+        Thank you.
+    </p>
+
+    <p>
+        Your listing is now completed.
+    </p>
+
+    <p>
+        When the listing has been verified it will be visible using the following url:
+        <br/>
+        <a href="${url}">
+          ${url}
+        </a>
+    </p>
+</div>
