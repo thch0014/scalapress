@@ -509,52 +509,52 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   //    assert("attribute with space" === results.facets(0).terms(0).term)
   //  }
   //
-  //  test("a service for folders should match objects with multiple folders") {
-  //    val q = new SavedSearch
-  //    q.searchFolders = "4"
-  //    val results = service.search(q)
-  //    assert(2 === results.refs.size)
-  //    assert(results.refs.map(_.id).contains(obj2.id))
-  //    assert(results.refs.map(_.id).contains(obj3.id))
-  //  }
-  //
-  //  test("a service for folders should match objects with single folders") {
-  //    val q = new SavedSearch
-  //    q.searchFolders = "4"
-  //    val results = service.search(q)
-  //    assert(results.refs.map(_.id).contains(20))
-  //  }
-  //
-  //  test("a random sort is sufficiently random") {
-  //    val q = new SavedSearch
-  //    q.sortType = Sort.Random
-  //    // all first refs will be id 20 so check that 2nd refs are random
-  //    val refs = for ( k <- 1 to 20 ) yield service.search(q).refs(1)
-  //    assert(refs.toSet.size > 1)
-  //  }
-  //
-  //  test("searching for slash in attribute") {
-  //    val av = new AttributeValue
-  //    av.attribute = avWithSlash.attribute
-  //    av.value = "axel/slash"
-  //
-  //    val q = new SavedSearch
-  //    q.attributeValues.add(av)
-  //    val results = service.search(q)
-  //    assert("zola" === results.refs(0).name)
-  //  }
-  //
-  //  test("searching for slash in free text") {
-  //    val q = new SavedSearch
-  //    q.name = "with / slash"
-  //    val results = service.search(q)
-  //    assert(results.refs.isEmpty)
-  //  }
-  //
-  //  test("ignore past should ignore documents prior to the date") {
-  //    val q = new SavedSearch
-  //    q.ignorePast = date1.attribute
-  //    val results = service.search(q)
-  //    assert(1 === results.refs.size)
-  //  }
+  test("a service for folders should match objects with multiple folders") {
+    val q = new SavedSearch
+    q.searchFolders = "4"
+    val results = service.search(q)
+    assert(2 === results.refs.size)
+    assert(results.refs.map(_.id).contains(obj2.id))
+    assert(results.refs.map(_.id).contains(obj3.id))
+  }
+
+  test("a service for folders should match objects with single folders") {
+    val q = new SavedSearch
+    q.searchFolders = "4"
+    val results = service.search(q)
+    assert(results.refs.map(_.id).contains(20))
+  }
+
+  test("a random sort is sufficiently random") {
+    val q = new SavedSearch
+    q.sortType = Sort.Random
+    // all first refs will be id 20 so check that 2nd refs are random
+    val refs = for ( k <- 1 to 20 ) yield service.search(q).refs(1)
+    assert(refs.toSet.size > 1)
+  }
+
+  test("searching for slash in attribute") {
+    val av = new AttributeValue
+    av.attribute = avWithSlash.attribute
+    av.value = "axel/slash"
+
+    val q = new SavedSearch
+    q.attributeValues.add(av)
+    val results = service.search(q)
+    assert("zola" === results.refs(0).name)
+  }
+
+  test("searching for slash in free text") {
+    val q = new SavedSearch
+    q.name = "with / slash"
+    val results = service.search(q)
+    assert(results.refs.isEmpty)
+  }
+
+  test("ignore past should ignore documents prior to the date") {
+    val q = new SavedSearch
+    q.ignorePast = date1.attribute
+    val results = service.search(q)
+    assert(1 === results.refs.size)
+  }
 }
