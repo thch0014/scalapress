@@ -47,7 +47,7 @@ libraryDependencies += "org.apache.velocity" % "velocity-tools" % "2.0"
 
 libraryDependencies += "org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1"
 
-libraryDependencies += "joda-time" % "joda-time" % "1.4"
+libraryDependencies += "joda-time" % "joda-time" % "2.2"
 
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.6.6"
 
