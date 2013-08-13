@@ -8,6 +8,8 @@ scalaVersion := "2.10.2"
 
 seq(webSettings: _*)
 
+scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+
 publishMavenStyle := true
 
 publishTo <<= version {
@@ -18,6 +20,10 @@ publishTo <<= version {
     else
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
+
+publishArtifact in Test := false
+
+parallelExecution in Test := false
 
 publishArtifact in(Compile, packageBin) := false
 
