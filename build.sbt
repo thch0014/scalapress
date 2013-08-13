@@ -85,7 +85,7 @@ libraryDependencies += "org.springframework.security" % "spring-security-config"
 
 libraryDependencies += "org.springframework.security" % "spring-security-web" % "3.1.4.RELEASE"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.2"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.3"
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.26"
 
@@ -117,25 +117,25 @@ libraryDependencies += "javax.validation" % "validation-api" % "1.1.0.Final"
 
 libraryDependencies += "org.hibernate" % "hibernate-validator" % "5.0.1.Final"
 
-libraryDependencies += "org.springframework" % "spring-context" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-context" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-beans" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-beans" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-core" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-core" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-orm" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-orm" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-web" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-web" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-webmvc" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-webmvc" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-context-support" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-context-support" % "3.2.4.RELEASE"
 
-libraryDependencies += "org.springframework" % "spring-core" % "3.2.3.RELEASE"
+libraryDependencies += "org.springframework" % "spring-core" % "3.2.4.RELEASE"
 
 libraryDependencies += "commons-fileupload" % "commons-fileupload" % "1.3"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0.M6-SNAP36" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.0.RC1-SNAP3" % "test"
 
 libraryDependencies += "org.hsqldb" % "hsqldb" % "2.3.0" % "test"
 
