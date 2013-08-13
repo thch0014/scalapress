@@ -5,5 +5,5 @@ import org.joda.time.Duration
 
 /** @author Stephen Samuel */
 class Listing(obj: Obj) {
-  def expiry: Duration = new Duration(System.currentTimeMillis() - obj.expiry)
+  def expiry: Duration = Duration.millis(System.currentTimeMillis() - obj.expiry)
 }

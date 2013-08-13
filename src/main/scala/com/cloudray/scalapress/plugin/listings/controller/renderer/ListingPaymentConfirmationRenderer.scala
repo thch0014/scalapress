@@ -17,7 +17,7 @@ class ListingPaymentConfirmationRenderer {
             <b>Title</b>
           </td>
           <td>
-            {listingPayment.obj.title}
+            {listingPayment.obj.name}
           </td>
         </tr>
         <tr>
