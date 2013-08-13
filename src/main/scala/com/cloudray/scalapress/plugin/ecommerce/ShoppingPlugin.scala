@@ -16,82 +16,88 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 @Table(name = "plugins_shopping")
 class ShoppingPlugin {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @ManyToOne
-    @JoinColumn(name = "basketMarkup")
-    @BeanProperty var basketMarkup: Markup = _
+  @ManyToOne
+  @JoinColumn(name = "basketMarkup")
+  @BeanProperty var basketMarkup: Markup = _
 
-    @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
+  @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
 
-    @Column(length = 10000)
-    @BeanProperty var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
+  @Column(length = 10000)
+  @BeanProperty var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
 
-    @Column(length = 100000)
-    @BeanProperty var outOfStockMessage: String = _
+  @Column(length = 100000)
+  @BeanProperty var outOfStockMessage: String = _
 
-    @Column(length = 100000)
-    @BeanProperty var orderConfirmationRecipients: String = _
+  @Column(length = 100000)
+  @BeanProperty var orderConfirmationRecipients: String = _
 
-    @Column(length = 100000)
-    @BeanProperty var orderConfirmationMessageBody: String = _
+  @Column(length = 100000)
+  @BeanProperty var orderConfirmationMessageBody: String = _
 
-    @Column(length = 100000)
-    @BeanProperty var orderCompletionMessageBody: String = _
+  @Column(length = 100000)
+  @BeanProperty var orderCompletionMessageBody: String = _
 
-    @Enumerated(EnumType.STRING)
-    @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
+  @Column(length = 1000)
+  @BeanProperty var orderConfirmationBcc: String = _
 
-    @ManyToOne
-    @JoinColumn(name = "basketLineMarkup")
-    @BeanProperty var basketLineMarkup: Markup = _
+  @Enumerated(EnumType.STRING)
+  @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
 
-    @ManyToOne
-    @JoinColumn(name = "invoiceLineMarkup")
-    @BeanProperty var invoiceLineMarkup: Markup = _
+  @ManyToOne
+  @JoinColumn(name = "basketLineMarkup")
+  @BeanProperty var basketLineMarkup: Markup = _
 
-    @ManyToOne
-    @JoinColumn(name = "invoiceMarkup")
-    @BeanProperty var invoiceMarkup: Markup = _
+  @ManyToOne
+  @JoinColumn(name = "invoiceLineMarkup")
+  @BeanProperty var invoiceLineMarkup: Markup = _
 
-    @Column(length = 10000)
-    @BeanProperty var terms: String = _
+  @ManyToOne
+  @JoinColumn(name = "invoiceMarkup")
+  @BeanProperty var invoiceMarkup: Markup = _
 
-    @BeanProperty var backorders: Boolean = _
+  @Column(length = 10000)
+  @BeanProperty var terms: String = _
 
-    @Column(length = 10000)
-    @BeanProperty var termsAcceptance: Boolean = _
+  @BeanProperty var backorders: Boolean = _
 
-    @Column(name = "checkoutScripts", length = 10000)
-    @BeanProperty var checkoutConfirmationScripts: String = _
+  @Column(length = 10000)
+  @BeanProperty var termsAcceptance: Boolean = _
 
-    @Column(length = 10000)
-    @BeanProperty var checkoutConfirmationText: String = _
+  @Column(name = "checkoutScripts", length = 10000)
+  @BeanProperty var checkoutConfirmationScripts: String = _
+
+  @Column(length = 10000)
+  @BeanProperty var checkoutConfirmationText: String = _
 }
 
 object ShoppingPlugin {
-    def defaultStatuses: Seq[String] = Seq(Order.STATUS_NEW, Order.STATUS_PAID, Order.STATUS_COMPLETED, Order.STATUS_CANCELLED)
+  def defaultStatuses: Seq[String] = Seq(Order.STATUS_NEW,
+    Order.STATUS_PAID,
+    Order.STATUS_COMPLETED,
+    Order.STATUS_CANCELLED)
 }
 
 trait ShoppingPluginDao extends GenericDao[ShoppingPlugin, java.lang.Long] {
-    def get: ShoppingPlugin
+  def get: ShoppingPlugin
 }
 
 @Component
 @Transactional
 class ShoppingPluginDaoImpl extends GenericDaoImpl[ShoppingPlugin, java.lang.Long] with ShoppingPluginDao {
-    def get: ShoppingPlugin = findAll.head
+  def get: ShoppingPlugin = findAll.head
 }
 
 @Component
 class ShoppingPluginValidator {
-    @Autowired var dao: ShoppingPluginDao = _
-    @PostConstruct def ensureOne() {
-        if (dao.findAll().size == 0) {
-            val plugin = new ShoppingPlugin
-            dao.save(plugin)
-        }
+  @Autowired var dao: ShoppingPluginDao = _
+  @PostConstruct def ensureOne() {
+    if (dao.findAll().size == 0) {
+      val plugin = new ShoppingPlugin
+      dao.save(plugin)
     }
+  }
 }

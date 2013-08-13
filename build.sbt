@@ -6,8 +6,6 @@ version := "0.37-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
-artifactName := "scalapress.war"
-
 seq(webSettings: _*)
 
 publishMavenStyle := true

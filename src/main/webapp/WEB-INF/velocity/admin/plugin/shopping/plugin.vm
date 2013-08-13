@@ -10,13 +10,13 @@
 
         <div class="controls">
             <select id="basketMarkup" name="basketMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!plugin.basketMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        $!{markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!plugin.basketMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    $!{markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -26,13 +26,13 @@
 
         <div class="controls">
             <select id="basketLineMarkup" name="basketLineMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!plugin.basketLineMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        $!{markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!plugin.basketLineMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    $!{markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <label class="control-label">Stock Method</label>
 
         <div class="controls">
-            #springFormSingleSelect("plugin.stockMethod", $stockMethods)
+          #springFormSingleSelect("plugin.stockMethod", $stockMethods)
         </div>
     </div>
 
@@ -50,7 +50,7 @@
         <label class="control-label">Default out of stock message</label>
 
         <div class="controls">
-            #springFormInput("plugin.outOfStockMessage")
+          #springFormInput("plugin.outOfStockMessage")
         </div>
     </div>
 
@@ -59,15 +59,7 @@
         <label class="control-label">Statuses</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.statuses", "rows='8'")
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label">Order Email Confirmation Recipients (Admin)</label>
-
-        <div class="controls">
-            #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
+          #springFormTextarea("plugin.statuses", "rows='8'")
         </div>
     </div>
     <div class="control-group">
@@ -75,30 +67,44 @@
 
         <div class="controls">
             <select id="invoiceMarkup" name="invoiceMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!plugin.invoiceMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        $!{markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!plugin.invoiceMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    $!{markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
 
     <legend>Email Notifications</legend>
     <div class="control-group">
-        <label class="control-label">Order Email Confirmation Text (Customers)</label>
+        <label class="control-label">Email Confirmation Text (Customers)</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
+          #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Email Confirmation Recipients (Admin)</label>
+
+        <div class="controls">
+          #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Email Confirmation Bcc</label>
+
+        <div class="controls">
+          #springFormInput("plugin.orderConfirmationBcc", "class='input-xlarge'")
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">Order Email Completion Text (Customers)</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.orderCompletionMessageBody", "class='input-block-level' rows='6'")
+          #springFormTextarea("plugin.orderCompletionMessageBody", "class='input-block-level' rows='6'")
         </div>
     </div>
 
@@ -108,13 +114,13 @@
 
         <div class="controls">
             <select id="invoiceLineMarkup" name="invoiceLineMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!plugin.invoiceLineMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        $!{markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!plugin.invoiceLineMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    $!{markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -126,7 +132,7 @@
         <label class="control-label">Checkout Confirmation Page Text</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block-level' rows='16'")
+          #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block-level' rows='16'")
         </div>
     </div>
 
@@ -135,7 +141,7 @@
         <label class="control-label">Checkout Confirmation Scripts</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block-level' rows='8'")
+          #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block-level' rows='8'")
         </div>
     </div>
 
@@ -143,7 +149,7 @@
         <label class="control-label">Require terms acceptance</label>
 
         <div class="controls">
-            #springFormCheckbox("plugin.termsAcceptance")
+          #springFormCheckbox("plugin.termsAcceptance")
         </div>
     </div>
 
@@ -151,7 +157,7 @@
         <label class="control-label">Terms and Conditions</label>
 
         <div class="controls">
-            #springFormTextarea("plugin.terms", "class='input-block-level' rows='12'")
+          #springFormTextarea("plugin.terms", "class='input-block-level' rows='12'")
         </div>
     </div>
 
