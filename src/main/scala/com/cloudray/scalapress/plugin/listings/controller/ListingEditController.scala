@@ -18,47 +18,47 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingFields
 @RequestMapping(Array("listing/{id}"))
 class ListingEditController {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var themeService: ThemeService = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var themeService: ThemeService = _
 
-    @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
+  @ResponseBody
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
 
-        val account = SpringSecurityResolver.getUser(req)
-        require(account.get.id == obj.account.id)
+    val account = SpringSecurityResolver.getUser(req)
+    require(account.get.id == obj.account.id)
 
-        val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")
-        val theme = themeService.default
-        val page = ScalapressPage(theme, sreq)
-        page.body(ListingFieldsRenderer.render(obj))
-        page
+    val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    page.body(ListingFieldsRenderer.render(obj))
+    page
+  }
+
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): String = {
+
+    obj.name = req.getParameter("title")
+    obj.content = req.getParameter("content")
+
+    obj.attributeValues.clear()
+    for ( a <- obj.objectType.attributes.asScala ) {
+
+      val values = req.getParameterValues("attributeValue_" + a.id)
+      if (values != null) {
+        values.map(_.trim).filter(_.length > 0).foreach(value => {
+          val av = new AttributeValue
+          av.attribute = a
+          av.value = value
+          av.obj = obj
+          obj.attributeValues.add(av)
+        })
+      }
     }
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): String = {
+    context.objectDao.save(obj)
+    "redirect:/listing/"
+  }
 
-        obj.name = req.getParameter("title")
-        obj.content = req.getParameter("content")
-
-        obj.attributeValues.clear()
-        for ( a <- obj.objectType.attributes.asScala ) {
-
-            val values = req.getParameterValues("attributeValue_" + a.id)
-            if (values != null) {
-                values.map(_.trim).filter(_.length > 0).foreach(value => {
-                    val av = new AttributeValue
-                    av.attribute = a
-                    av.value = value
-                    av.obj = obj
-                    obj.attributeValues.add(av)
-                })
-            }
-        }
-
-        context.objectDao.save(obj)
-        "redirect:/listing/"
-    }
-
-    @ModelAttribute("obj") def listing(@PathVariable("id") id: Long) = context.objectDao.find(id)
+  @ModelAttribute("obj") def listing(@PathVariable("id") id: Long) = context.objectDao.find(id)
 }

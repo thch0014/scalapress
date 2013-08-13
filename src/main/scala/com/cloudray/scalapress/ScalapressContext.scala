@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.ServletContextAware
 import javax.servlet.ServletContext
 import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
-import theme.MarkupDao
+import com.cloudray.scalapress.theme.{ThemeService, MarkupDao}
 import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
@@ -47,6 +47,8 @@ class ScalapressContext extends ServletContextAware {
 
   @Autowired var sectionDao: SectionDao = _
   @Autowired var widgetDao: WidgetDao = _
+
+  @Autowired var themeService: ThemeService = _
 
   def beans[T: Manifest]: Iterable[T] =
     WebApplicationContextUtils
