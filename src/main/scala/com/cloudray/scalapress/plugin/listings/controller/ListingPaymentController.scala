@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import com.cloudray.scalapress.plugin.listings.controller.renderer.{ListingPackageRenderer, ListingConfirmationRenderer, ListingCompleteRenderer, ListingWizardRenderer}
+import com.cloudray.scalapress.plugin.listings.controller.renderer._
 import scala.Array
-import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
+import com.cloudray.scalapress.plugin.listings.domain.{ListingPayment, ListingProcess}
 import org.springframework.validation.Errors
 import java.net.URL
 import com.cloudray.scalapress.plugin.listings._
@@ -17,9 +17,10 @@ import com.cloudray.scalapress.payments.{PaymentCallbackService, PaymentFormRend
 /** @author Stephen Samuel
   *
   *         Shows the payment pages for a listing and allows a user to update listing plan.
-  * */
+  **/
 @Controller // do not use /payment yet as it will clash with mylistings controller
-@RequestMapping(Array("listing/renewal/{id}"))
+@RequestMapping(Array("listing/renewal/{listingId}"))
+@SessionAttributes(Array("listingPayment"))
 class ListingPaymentController {
 
   @Autowired var context: ScalapressContext = _
@@ -33,46 +34,44 @@ class ListingPaymentController {
 
   @ResponseBody
   @RequestMapping(value = Array("package"), produces = Array("text/html"))
-  def showPackages(@ModelAttribute("process") process: ListingProcess,
-                   errors: Errors,
+  def showPackages(@ModelAttribute("listingPayment") listingPayment: ListingPayment,
+                   @PathVariable("listingId") listingId: Long,
                    req: HttpServletRequest): ScalapressPage = {
 
+    listingPayment.obj = context.objectDao.find(listingId)
     val packages = listingPackageDao.findAll().filterNot(_.deleted)
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_PACKAGE)
     val theme = context.themeService.default
     val page = ScalapressPage(theme, sreq)
 
-
     page.body(ListingPackageRenderer.render(packages, listingsPluginDao.get))
     page
   }
 
   @RequestMapping(value = Array("package/{packageId}"))
-  def selectPackage(@ModelAttribute("process") process: ListingProcess,
+  def selectPackage(@ModelAttribute("listingPayment") listingPayment: ListingPayment,
                     errors: Errors,
-                    @PathVariable("packageId") id: Long,
+                    @PathVariable("packageId") packageId: Long,
                     req: HttpServletRequest): String = {
 
-    process.listingPackage = listingPackageDao.find(id)
-    listingProcessDao.save(process)
-    "redirect:/listing/folder"
+    listingPayment.listingPackage = listingPackageDao.find(packageId)
+    "redirect:/listing/confirmation"
   }
 
   @ResponseBody
   @RequestMapping(value = Array("confirmation"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-  def showConfirmation(@ModelAttribute("process") process: ListingProcess,
+  def showConfirmation(@ModelAttribute("listingPayment") listingPayment: ListingPayment,
                        errors: Errors,
                        req: HttpServletRequest): ScalapressPage = {
 
-    val confRenderer = new ListingConfirmationRenderer(context)
+    val confRenderer = new ListingPaymentConfirmationRenderer
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CONFIRMATION)
     val theme = context.themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ConfirmationStep))
-    page.body(confRenderer.render(process))
+    page.body(confRenderer.render(listingPayment))
     page
   }
 
@@ -117,4 +116,6 @@ class ListingPaymentController {
     page.body(ListingCompleteRenderer.render(context, listing))
     page
   }
+
+  @ModelAttribute("listingPackage") def listingPayment = new ListingPayment
 }
