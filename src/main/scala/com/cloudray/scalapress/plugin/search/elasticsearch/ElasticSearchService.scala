@@ -53,8 +53,8 @@ class ElasticSearchService extends SearchService with Logging {
 
   var setup = false
 
-  val tempDir = File.createTempFile("findingfemp", "tmp").getParent
-  val dataDir = new File(tempDir + "/" + UUID.randomUUID().toString)
+  val tempDir = File.createTempFile("findingtemp", "tmp").getParent
+  val dataDir = new File(tempDir + "/elasticsearch-data-" + UUID.randomUUID().toString)
   dataDir.mkdir()
   dataDir.deleteOnExit()
   logger.info("Setting ES data dir [{}]", dataDir)
@@ -62,10 +62,7 @@ class ElasticSearchService extends SearchService with Logging {
   val settings = ImmutableSettings.settingsBuilder()
     .put("node.http.enabled", false)
     .put("http.enabled", false)
-    .put("indices.cache.filter.size", "8mb")
-    //  .put("index.gateway.type", "none")
-    //    .put("gateway.type", "none")
-    //   .put("index.store.type", "memory")
+    .put("indices.cache.filter.size", "4mb")
     .put("path.data", dataDir.getAbsolutePath)
     .put("index.number_of_shards", 1)
     .put("index.number_of_replicas", 0)
@@ -142,6 +139,10 @@ class ElasticSearchService extends SearchService with Logging {
         })
       }
     })
+
+    client.sync.delete {
+      s"$INDEX/$TYPE" -> obj.id
+    }
 
     client.sync.execute {
       insert into INDEX -> TYPE id obj.id fields _fields
