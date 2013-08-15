@@ -8,9 +8,11 @@ scalaVersion := "2.10.2"
 
 seq(webSettings: _*)
 
-scalacOptions := Seq("-encoding", "utf8")
-
 publishMavenStyle := true
+
+fork in Test := true
+
+javaOptions in Test ++= Seq("-Xmx2048m", "-Xmx2048m")
 
 publishTo <<= version {
   (v: String) =>
