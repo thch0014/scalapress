@@ -8,7 +8,7 @@ scalaVersion := "2.10.2"
 
 seq(webSettings: _*)
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-encoding", "utf8")
 
 publishMavenStyle := true
 
@@ -93,7 +93,7 @@ libraryDependencies += "org.springframework.security" % "spring-security-config"
 
 libraryDependencies += "org.springframework.security" % "spring-security-web" % "3.1.4.RELEASE"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.3"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.3" % "provided"
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.26"
 
@@ -117,7 +117,7 @@ libraryDependencies += "com.googlecode.genericdao" % "dao-hibernate" % "1.2.0"
 
 libraryDependencies += "net.sourceforge.javacsv" % "javacsv" % "2.0"
 
-libraryDependencies += "org.elasticsearch" % "elasticsearch" % "0.90.2"
+libraryDependencies += "org.elasticsearch" % "elasticsearch" % "0.90.2" % "provided"
 
 libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s" % "0.90.2.8"
 
