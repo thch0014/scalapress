@@ -12,9 +12,16 @@ publishMavenStyle := true
 
 autoScalaLibrary := false
 
-javaOptions in Test ++= Seq("-Xmx2048m", "-Xmx2048m")
+fork in Test := true
+
+javaOptions in Test ++= Seq("-Xmx2048m", "-XX:MaxPermSize=512m")
 
 crossPaths := false
+
+artifactName := {
+  (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+    artifact.name + "." + artifact.extension
+}
 
 publishTo <<= version {
   (v: String) =>
