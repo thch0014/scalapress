@@ -69,7 +69,8 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
   }
 
   test("that no value renders None") {
-    val rendered = new AttributeValueTag().render(sreq, Map("id" -> "6666", "prefix" -> "don't want this"))
+    val r = mock[ScalapressRequest]
+    val rendered = new AttributeValueTag().render(r, Map("id" -> "6666", "prefix" -> "don't want this"))
     assert(rendered.isEmpty)
   }
 

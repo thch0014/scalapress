@@ -12,8 +12,6 @@ publishMavenStyle := true
 
 autoScalaLibrary := false
 
-fork in Test := true
-
 javaOptions in Test ++= Seq("-Xmx2048m", "-Xmx2048m")
 
 crossPaths := false

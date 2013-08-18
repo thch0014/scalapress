@@ -235,7 +235,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     val q = queries.size match {
       case 0 => query("*:*")
-      case _ => bool(should(queries: _*))
+      case _ => bool(must(queries: _*))
     }
     val filter = filters.size match {
       case 0 => matchAllFilter
@@ -410,23 +410,12 @@ class ElasticSearchService extends SearchService with Logging {
       map.put("transport.txSize", node.getTransport.txSize.toString)
 
       node.getThreadPool.iterator().asScala.foreach(pool => {
-        map
-          .put("threadpool." + pool.getName + ".active",
-          pool.getActive.toString)
-        map
-          .put("threadpool." + pool.getName + ".active",
-          pool.getCompleted.toString)
-        map
-          .put("threadpool." + pool.getName + ".active",
-          pool.getLargest.toString)
-        map
-          .put("threadpool." + pool.getName + ".active", pool.getQueue.toString)
-        map
-          .put("threadpool." + pool.getName + ".active",
-          pool.getRejected.toString)
-        map
-          .put("threadpool." + pool.getName + ".active",
-          pool.getThreads.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getActive.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getCompleted.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getLargest.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getQueue.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getRejected.toString)
+        map.put("threadpool." + pool.getName + ".active", pool.getThreads.toString)
       })
 
       var k = 1

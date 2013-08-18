@@ -51,12 +51,15 @@ class AttributeSearchTagTest extends FlatSpec with MockitoSugar with OneInstance
 
   it should "render None when the attribute id is not valid" in {
 
+    val r = mock[ScalapressRequest]
+
+
     val option = new AttributeOption
     option.value = "coldplay"
 
     val a = new Attribute
     a.options.add(option)
-    Mockito.when(context.attributeDao.find(9)).thenReturn(a)
+    Mockito.when(r.attribute(9)).thenReturn(a)
 
     val actual = tag.render(sreq, Map("id" -> "149"))
     assert(actual.isEmpty)
