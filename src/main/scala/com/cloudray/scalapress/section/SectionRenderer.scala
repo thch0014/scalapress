@@ -14,6 +14,7 @@ object SectionRenderer extends Logging {
 
     val buffer = new ArrayBuffer[String]
     for ( section <- visible ) {
+      logger.debug("rendering section {}", section.getClass)
       buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
       try {
         section.render(req).foreach(buffer +=)
@@ -21,6 +22,7 @@ object SectionRenderer extends Logging {
         case e: Exception => logger.warn("{}", e)
       }
       buffer += "\n<!-- end section -->\n\n"
+      logger.debug("section completed")
     }
 
     buffer.mkString
