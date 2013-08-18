@@ -40,15 +40,12 @@ object TagRenderer extends Logging {
               case _ => Map.empty[String, String]
             }
 
-            logger.debug("Rendering tag {}", tag)
-            val qq = tag.render(request, params) match {
+            tag.render(request, params) match {
               case None => ""
               case Some(value) =>
                 if (value == null) ""
                 else value.replace("$", "\\$")
             }
-            logger.debug("{} done", tag)
-            qq
           })
         })
       }
