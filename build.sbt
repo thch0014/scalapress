@@ -10,6 +10,8 @@ seq(webSettings: _*)
 
 publishMavenStyle := true
 
+autoScalaLibrary := false
+
 fork in Test := true
 
 javaOptions in Test ++= Seq("-Xmx2048m", "-Xmx2048m")
@@ -45,9 +47,9 @@ libraryDependencies += "com.fasterxml.jackson.jaxrs" % "jackson-jaxrs-json-provi
 
 libraryDependencies += "com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.1.2"
 
-libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3" exclude("org.scalatest", "scalatest_2.10.0")
+libraryDependencies += "com.fasterxml.jackson.module" % "jackson-module-scala_2.10" % "2.1.3" exclude("org.scalatest", "scalatest_2.10.0") exclude("org.scala-lang", "compiler") exclude("org.scala-lang", "library") exclude("org.scala-lang", "scala-reflect")
 
-libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7" exclude("org.scalatest", "scalatest_2.10") exclude("javax.persistence", "persistence-api")
+libraryDependencies += "com.sksamuel.scoot" % "scoot" % "1.0.7" exclude("org.scalatest", "scalatest_2.10") exclude("javax.persistence", "persistence-api") exclude("org.scala-lang", "compiler") exclude("org.scala-lang", "library") exclude("org.scala-lang", "scala-reflect")
 
 libraryDependencies += "com.spatial4j" % "spatial4j" % "0.3"
 
@@ -55,7 +57,7 @@ libraryDependencies += "org.apache.velocity" % "velocity" % "1.7"
 
 libraryDependencies += "org.apache.velocity" % "velocity-tools" % "2.0"
 
-libraryDependencies += "org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1"
+libraryDependencies += "org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1" % "provided"
 
 libraryDependencies += "joda-time" % "joda-time" % "2.2"
 
@@ -71,7 +73,7 @@ libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 
 libraryDependencies += "commons-validator" % "commons-validator" % "1.4.0"
 
-libraryDependencies += "com.github.theon" % "scala-uri_2.10" % "0.3.5"
+libraryDependencies += "com.github.theon" % "scala-uri_2.10" % "0.3.5" exclude("org.scala-lang", "compiler") exclude("org.scala-lang", "library")
 
 libraryDependencies += "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2"
 
@@ -85,11 +87,11 @@ libraryDependencies += "com.enterprisedt" % "edtFTPj" % "1.5.3"
 
 libraryDependencies += "com.sun.mail" % "javax.mail" % "1.5.0"
 
-libraryDependencies += "com.google.javascript" % "closure-compiler" % "r2388"
+libraryDependencies += "com.google.javascript" % "closure-compiler" % "r2388" % "provided"
 
 libraryDependencies += "javax.transaction" % "jta" % "1.1"
 
-libraryDependencies += "com.sksamuel.scrimage" % "scrimage-core" % "1.3.3"
+libraryDependencies += "com.sksamuel.scrimage" % "scrimage-core" % "1.3.3" exclude("org.scala-lang", "compiler") exclude("org.scala-lang", "library") exclude("org.scala-lang", "scala-reflect")
 
 libraryDependencies += "org.springframework.security" % "spring-security-core" % "3.1.4.RELEASE"
 
@@ -123,7 +125,7 @@ libraryDependencies += "net.sourceforge.javacsv" % "javacsv" % "2.0"
 
 libraryDependencies += "org.elasticsearch" % "elasticsearch" % "0.90.2" % "provided"
 
-libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s" % "0.90.2.8"
+libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s" % "0.90.2.8" exclude("org.elasticsearch", "elasticsearch") exclude("org.scala-lang", "compiler") exclude("org.scala-lang", "library")
 
 libraryDependencies += "javax.validation" % "validation-api" % "1.1.0.Final"
 
