@@ -16,7 +16,7 @@ import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.sksamuel.elastic4s.{FilterDefinition, QueryDefinition, ElasticDsl, ElasticClient}
 import ElasticDsl._
-import com.sksamuel.elastic4s.FieldType.{LongType, StringType, GeoPointType, IntegerType}
+import com.sksamuel.elastic4s.FieldType._
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.common.unit.DistanceUnit
@@ -25,6 +25,11 @@ import org.elasticsearch.search.facet.terms.TermsFacet
 import org.elasticsearch.common.xcontent.XContentFactory
 import javax.annotation.PreDestroy
 import com.sksamuel.elastic4s.Analyzer.KeywordAnalyzer
+import com.cloudray.scalapress.search.Facet
+import scala.Some
+import com.cloudray.scalapress.search.FacetTerm
+import com.cloudray.scalapress.search.ObjectRef
+import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 
@@ -85,7 +90,8 @@ class ElasticSearchService extends SearchService with Logging {
     fields.append("location" typed GeoPointType)
     attributes.foreach(attr => {
       val t = attr.attributeType match {
-        case AttributeType.Numerical | AttributeType.Date | AttributeType.DateTime => LongType
+        case AttributeType.Numerical => DoubleType
+        case AttributeType.Date | AttributeType.DateTime => LongType
         case _ => StringType
       }
       fields.append(FIELD_ATTRIBUTE + attr.id typed t index "not_analyzed")
