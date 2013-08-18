@@ -13,7 +13,7 @@ object FolderTag extends ScalapressTag with TagBuilder {
 
     val folder = params
       .get("id")
-      .flatMap(id => Option(request.context.folderDao.find(id.toLong)))
+      .flatMap(id => Option(request.folder(id.toLong)))
       .orElse(request.folder)
 
     folder.map(f => {
@@ -74,7 +74,7 @@ object PrimaryFoldersTag extends ScalapressTag with TagBuilder {
     val sep = params.get("sep").getOrElse("")
     val activeClass = params.get("activeclass").getOrElse("current active")
 
-    val root = request.context.folderDao.root
+    val root = request.folderRoot
     val filtered = root.sortedSubfolders.filterNot(_.hidden).filterNot(f => exclude.contains(f.id.toString))
 
     val links = filtered.map(f => {

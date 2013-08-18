@@ -14,7 +14,7 @@ class NestedFoldersTag extends ScalapressTag with TagBuilder {
 
     val depth = params.get("depth").getOrElse("1").toInt
     val excluded = params.get("exclude").getOrElse("").split(",")
-    val root = request.context.folderDao.root
+    val root = request.folderRoot
     val buffer = new ArrayBuffer[String]
     buffer.append("<div class=\"nested-folders\">")
     _renderLevel(root, depth - 1, buffer, excluded)

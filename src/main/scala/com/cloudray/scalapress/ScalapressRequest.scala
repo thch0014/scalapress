@@ -9,6 +9,7 @@ import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import java.util.UUID
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
+import com.cloudray.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
@@ -36,15 +37,35 @@ case class ScalapressRequest(request: HttpServletRequest,
   def shoppingPlugin = cache.shoppingPlugin
   def installation = cache.installation
   def folderSettings = cache.folderSettings
-  def folderRoot = cache.folderRoot
   def widgets = cache.widgets
+  def folders = cache.folders
+  def folderRoot = cache.folderRoot
+  def folder(id: Long): Folder = cache.folder(id)
+  def attribute(id: Long): Attribute = cache.attribute(id)
 
   case class Cache(context: ScalapressContext) {
+    val _attributes = scala.collection.mutable.Map.empty[Long, Attribute]
+    val _folders = scala.collection.mutable.Map.empty[Long, Folder]
     lazy val shoppingPlugin = context.bean[ShoppingPluginDao].get
     lazy val installation = context.installationDao.get
     lazy val folderSettings = context.folderSettingsDao.head
-    lazy val folderRoot = context.folderDao.root
     lazy val widgets = context.widgetDao.findAll()
+    lazy val folders = {
+      val all = context.folderDao.findAll()
+      all.foreach(folder => _folders.put(folder.id, folder))
+      all
+    }
+    def folder(id: Long): Folder = _folders.get(id).getOrElse({
+      val folder = context.folderDao.find(id)
+      _folders.put(folder.id, folder)
+      folder
+    })
+    def attribute(id: Long): Attribute = _attributes.get(id).getOrElse({
+      val attr = context.attributeDao.find(id)
+      _attributes.put(attr.id, attr)
+      attr
+    })
+    lazy val folderRoot = context.folderDao.root
   }
 
   val errors = if (request.getAttribute("errors") == null) {
@@ -72,8 +93,6 @@ case class ScalapressRequest(request: HttpServletRequest,
         basket
     }
   }
-
-  def folders = context.folderDao.findAll()
 
   def param(key: String): Option[String] = Option(request.getParameter(key))
 

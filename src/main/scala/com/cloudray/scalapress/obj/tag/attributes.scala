@@ -22,7 +22,7 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
             .map(AttributeValueRenderer.renderValue)
 
           values.size match {
-            case 0 => Option(request.context.attributeDao.find(id.trim.toLong)).flatMap(attr => Option(attr.default))
+            case 0 => Option(request.attribute(id.trim.toLong)).flatMap(attr => Option(attr.default))
             case _ => Some(build(values.mkString(sep), params))
           }
         case None => None
@@ -35,7 +35,6 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
 class AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
 
   def render(request: ScalapressRequest,
-
              params: Map[String, String]): Option[String] = {
     params.get("id") match {
       case None => None

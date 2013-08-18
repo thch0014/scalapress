@@ -38,7 +38,7 @@ class AttributeSearchTag extends ScalapressTag {
       case None => None
       case Some(id) =>
         val name = "attr_" + id
-        Option(request.context.attributeDao.find(id.toLong)).flatMap(attr => {
+        Option(request.attribute(id.toLong)).flatMap(attr => {
           attr.attributeType match {
             case AttributeType.Selection =>
               val xml =

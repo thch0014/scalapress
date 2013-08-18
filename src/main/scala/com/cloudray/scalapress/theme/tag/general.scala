@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 @Tag("home")
 class HomeTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
-    val root = request.context.folderDao.root
+    val root = request.folderRoot
     val text = params.get("text").getOrElse(root.name)
     Option(buildLink("/", text, params))
   }
