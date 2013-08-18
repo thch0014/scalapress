@@ -14,6 +14,8 @@ fork in Test := true
 
 javaOptions in Test ++= Seq("-Xmx2048m", "-Xmx2048m")
 
+crossPaths := false
+
 publishTo <<= version {
   (v: String) =>
     val nexus = "https://oss.sonatype.org/"

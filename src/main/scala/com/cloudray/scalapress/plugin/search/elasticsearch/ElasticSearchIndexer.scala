@@ -31,37 +31,33 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
   @ManagedOperation(description = "perform a reindex")
   def index() {
 
+    var offset = 0
     val pageSize = 100
-
-    def _load(offset: Int) = {
-      logger.debug("Loading {} results from offset {}", pageSize, offset)
-      context.objectDao.search(new Search(classOf[Obj])
-        .setFirstResult(offset)
-        .setMaxResults(pageSize)
-        .addFilterLike("status", "live")
-        .addFilterNotEqual("objectType.name", "Account")
-        .addFilterNotEqual("objectType.name", "account")
-        .addFilterNotEqual("objectType.name", "Accounts")
-        .addFilterNotEqual("objectType.name", "accounts"))
-    }
-
-    def _index(offset: Int) {
+    var objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
+    while (!objs.isEmpty) {
       logger.info("Indexing from offset [{}]", offset)
-      val objs = _load(offset).filterNot(_.name == null).filterNot(_.name.isEmpty)
-      if (!objs.isEmpty) {
-        objs.foreach(obj => {
-          try {
-            service.index(obj)
-          } catch {
-            case e: Exception => logger.warn("{}", e)
-          }
-        })
-        _index(offset + pageSize)
-      }
+      objs.foreach(obj => {
+        try {
+          service.index(obj)
+        } catch {
+          case e: Exception => logger.warn("{}", e)
+        }
+      })
+      offset = offset + pageSize
+      objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
     }
-
-    _index(0)
-
     logger.info("Indexing finished")
+  }
+
+  def _load(offset: Int, pageSize: Int): Seq[Obj] = {
+    logger.debug("Loading {} results from offset {}", pageSize, offset)
+    context.objectDao.search(new Search(classOf[Obj])
+      .setFirstResult(offset)
+      .setMaxResults(pageSize)
+      .addFilterLike("status", "live")
+      .addFilterNotEqual("objectType.name", "Account")
+      .addFilterNotEqual("objectType.name", "account")
+      .addFilterNotEqual("objectType.name", "Accounts")
+      .addFilterNotEqual("objectType.name", "accounts"))
   }
 }
