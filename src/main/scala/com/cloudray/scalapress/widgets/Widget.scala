@@ -11,8 +11,6 @@ import org.fusesource.scalate.TemplateEngine
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Widget {
 
-  @Transient val engine = new TemplateEngine
-
   final def init(context: ScalapressContext) {
     this.location = "Left"
     _init(context)

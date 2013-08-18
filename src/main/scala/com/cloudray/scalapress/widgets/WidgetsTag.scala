@@ -15,7 +15,7 @@ class WidgetsTag extends ScalapressTag with Logging {
         logger.debug("No location set on widgets tag")
         None
       case Some(location) =>
-        val output = WidgetRenderer.render(location, sep, request, request.context)
+        val output = WidgetRenderer.render(location, sep, request)
         Option(output)
     }
   }

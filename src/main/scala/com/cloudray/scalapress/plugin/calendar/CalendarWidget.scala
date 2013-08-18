@@ -8,6 +8,7 @@ import com.cloudray.scalapress.obj.ObjectType
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.cloudray.scalapress.enums.Sort
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Entity
@@ -27,7 +28,7 @@ class CalendarWidget extends Widget {
   @BeanProperty var endDateAttribute: Attribute = _
 
   def render(req: ScalapressRequest): Option[String] = {
-    val output = engine.layout("/com/cloudray/scalapress/plugin/calendar/widget.ssp", Map("id" -> id.toString))
+    val output = Scalate.layout("/com/cloudray/scalapress/plugin/calendar/widget.ssp", Map("id" -> id.toString))
     Some(output)
   }
 

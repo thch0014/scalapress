@@ -32,9 +32,12 @@ class FoldersWidget extends Widget with Logging {
   override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
   override def render(req: ScalapressRequest): Option[String] = {
+    logger.debug("Rendering folders widget={}...", id)
     val root = Option(start).getOrElse(req.folderRoot)
     val xml = _renderChildren(root, 1)
-    Option(xml).map(Utility.trim(_).toString())
+    val rendered = Option(xml).map(Utility.trim(_).toString())
+    logger.debug("...folders widget={} rendered", id)
+    rendered
   }
 
   def _renderChildren(parent: Folder, level: Int): Node = {

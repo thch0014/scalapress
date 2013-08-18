@@ -60,7 +60,8 @@ object WidgetRenderer extends Logging {
   def widgetContainerClass(widget: Widget) = Option(widget.containerClass).getOrElse("") + " widgetcontainer"
 
   def render(widget: Widget, req: ScalapressRequest): Option[String] = {
-    widget.render(req) match {
+    logger.debug("Rendering widget {}...", widget)
+    val result = widget.render(req) match {
       case None => Some("\n<!-- widget " + widget.getClass + " - no content -->\n")
       case Some(body) => {
         val rendered = widget.container match {
@@ -71,6 +72,8 @@ object WidgetRenderer extends Logging {
         Option("\n<!-- widget: " + widget.getClass + "-->\n" + rendered + "\n<!-- end widget -->\n\n")
       }
     }
+    logger.debug("...completed")
+    result
   }
 
   def renderDiv(widget: Widget, body: Any): String = {
