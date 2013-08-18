@@ -92,7 +92,7 @@ libraryDependencies += "com.enterprisedt" % "edtFTPj" % "1.5.3"
 
 libraryDependencies += "com.sun.mail" % "javax.mail" % "1.5.0"
 
-libraryDependencies += "com.google.javascript" % "closure-compiler" % "r2388" % "provided"
+libraryDependencies += "com.google.javascript" % "closure-compiler" % "r2388"
 
 libraryDependencies += "javax.transaction" % "jta" % "1.1"
 
@@ -104,7 +104,7 @@ libraryDependencies += "org.springframework.security" % "spring-security-config"
 
 libraryDependencies += "org.springframework.security" % "spring-security-web" % "3.1.4.RELEASE"
 
-libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.3" % "provided"
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.5.3"
 
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.26"
 
