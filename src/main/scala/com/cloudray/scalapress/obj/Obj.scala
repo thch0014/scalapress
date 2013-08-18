@@ -24,6 +24,7 @@ class Obj extends SortedSections {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Index(name = "id_index")
   @BeanProperty var id: Long = _
 
   @Index(name = "name_index")

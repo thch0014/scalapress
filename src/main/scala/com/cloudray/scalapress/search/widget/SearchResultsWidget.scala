@@ -43,25 +43,27 @@ class SearchResultsWidget extends Widget with Logging {
         logger.debug("Loading objects... [widget={}]", id)
         val objects = _objects(request)
         logger.debug("...objects loaded [widget={}]", id)
-        objects.size match {
-          case 0 => Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
-          case _ =>
-            Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
-              case None => Some("<!-- search widget #" + id + ": no markup -->")
-              case Some(m) =>
-                val rendered = MarkupRenderer.renderObjects(objects, m, request)
-                Some(rendered)
-            }
+        if (objects.isEmpty) Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
+        else {
+          Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
+            case None => Some("<!-- search widget #" + id + ": no markup -->")
+            case Some(m) =>
+              val rendered = MarkupRenderer.renderObjects(objects, m, request)
+              Some(rendered)
+          }
         }
     }
   }
 
   def _objects(request: ScalapressRequest): Seq[Obj] = {
     val result = request.context.searchService.search(search)
-    val objs = request.context.objectDao
-      .findBulk(result.refs.map(_.id))
-      .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
-    _reorder(result.refs, objs)
+    if (result.refs.isEmpty) Nil
+    else {
+      val objs = request.context.objectDao
+        .findBulk(result.refs.map(_.id))
+        .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+      _reorder(result.refs, objs)
+    }
   }
 
   def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {

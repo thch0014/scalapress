@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search.section
 
 import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import javax.persistence._
-import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
+import com.cloudray.scalapress.search.SavedSearch
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -58,15 +58,17 @@ class SearchResultsSection extends Section with Logging {
 
   def _objects(request: ScalapressRequest): Seq[Obj] = {
     val result = request.context.searchService.search(search)
-    val objs = request.context.objectDao
-      .findBulk(result.refs.map(_.id))
-      .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
-    _reorder(result.refs, objs)
+    val ids = result.refs.map(_.id)
+    if (ids.isEmpty) Nil
+    else {
+      val objs = request.context.objectDao
+        .findBulk(ids)
+        .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+      _reorder(ids, objs)
+    }
   }
 
-  def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {
-    val ids = refs.map(_.id)
+  def _reorder(ids: Seq[Long], objs: Seq[Obj]): Seq[Obj] = {
     objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
   }
-
 }

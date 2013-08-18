@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.widgets
 
-import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
+import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import com.cloudray.scalapress.enums.WidgetContainer
 
 /** @author Stephen Samuel */
@@ -8,8 +8,7 @@ object WidgetRenderer extends Logging {
 
   def render(location: String,
              sep: String,
-             request: ScalapressRequest,
-             context: ScalapressContext): String = {
+             request: ScalapressRequest): String = {
 
     logger.debug("Loading widgets for location={}...", location)
     val widgets = request.widgets.filter(widget => location.equalsIgnoreCase(widget.location))
