@@ -12,22 +12,22 @@ import com.cloudray.scalapress.settings.InstallationDao
 @Component
 class GBaseCron extends CronTask with Logging {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var feedDao: GBaseFeedDao = _
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var installationDao: InstallationDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var feedDao: GBaseFeedDao = _
+  @Autowired var objectDao: ObjectDao = _
+  @Autowired var installationDao: InstallationDao = _
 
-    @Scheduled(cron = "0 0 12,18 * * *")
-    @Transactional
-    def run() {
-        logger.info("Running Google base cron...")
-        feedDao.findAll().foreach(g => {
-            logger.info("Processing feed [{}]", g)
-            GoogleBaseService.run(objectDao, feedDao, installationDao.get, g, context.assetStore)
-        })
-    }
+  @Scheduled(cron = "0 0 12,18 * * *")
+  @Transactional
+  def run() {
+    logger.info("Running Google base cron...")
+    feedDao.findAll().foreach(g => {
+      logger.info("Processing feed [{}]", g)
+      GoogleBaseService.run(objectDao, feedDao, installationDao.get, g, context.assetStore)
+    })
+  }
 }
 
 trait CronTask {
-    def run()
+  def run()
 }

@@ -8,23 +8,23 @@ import scala.beans.BeanProperty
 @Table(name = "feeds_googlebase")
 class GBaseFeed {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  @BeanProperty var id: Long = _
 
-    @BeanProperty var lastRuntime: Long = _
+  @BeanProperty var lastRuntime: Long = _
 
-    @BeanProperty var ftpHostname: String = _
-    @BeanProperty var ftpUsername: String = _
-    @BeanProperty var ftpPassword: String = _
-    @BeanProperty var ftpFilename: String = _
+  @BeanProperty var ftpHostname: String = _
+  @BeanProperty var ftpUsername: String = _
+  @BeanProperty var ftpPassword: String = _
+  @BeanProperty var ftpFilename: String = _
 
-    @BeanProperty var brandAttrName: String = _
-    @BeanProperty var partAttrName: String = _
+  @BeanProperty var brandAttrName: String = _
+  @BeanProperty var partAttrName: String = _
 
-    @Column(name = "productType")
-    @BeanProperty var productCategory: String = _
+  @Column(name = "productType")
+  @BeanProperty var productCategory: String = _
 
-    def backoffice: String = "/backoffice/feed/gbase/" + id
-    def runUrl: String = "/backoffice/feed/gbase/" + id + "/run"
+  def backoffice: String = "/backoffice/feed/gbase/" + id
+  def runUrl: String = "/backoffice/feed/gbase/" + id + "/run"
 }
