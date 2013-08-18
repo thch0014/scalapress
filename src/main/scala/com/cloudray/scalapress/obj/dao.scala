@@ -29,8 +29,13 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
       .addSort("id", true))
 
   def findBulk(longs: Seq[Long]): Seq[Obj] = {
-    val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
-    search(s)
+    longs.size match {
+      case 0 => Nil
+      case _ =>
+        val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
+        val results = search(s)
+        results
+    }
   }
 
   def search(q: ObjectQuery): Page[Obj] = {

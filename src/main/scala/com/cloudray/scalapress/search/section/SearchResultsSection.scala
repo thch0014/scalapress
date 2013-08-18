@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.search.section
 
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
+import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import javax.persistence._
 import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
 import com.cloudray.scalapress.section.Section
@@ -17,7 +17,7 @@ import com.cloudray.scalapress.obj.Obj
   * */
 @Entity
 @Table(name = "blocks_highlighted_items")
-class SearchResultsSection extends Section {
+class SearchResultsSection extends Section with Logging {
 
   @OneToOne
   @JoinColumn(name = "search")
@@ -40,7 +40,9 @@ class SearchResultsSection extends Section {
     Option(search) match {
       case None => Some("<!-- no search object set (section #" + id + ") -->")
       case Some(s) =>
+        logger.debug("Loading objects... [section={}]", id)
         val objects = _objects(request)
+        logger.debug("...objects loaded [section={}]", id)
         objects.size match {
           case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
           case _ =>
