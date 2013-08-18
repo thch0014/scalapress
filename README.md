@@ -12,6 +12,52 @@ scala based publishing platform
 
 ### Release History
 
+##### 0.37
+* Decreased perm gen usage
+* Optimized db access in search results
+* Updated elastic to avoid recursion on indexing
+* Fixed calendar json for IE 8
+* Easier to identify which site a backoffice page is for
+* Fixed SBT memory issues in tests
+* SP-159 fixed plugin account column lengths
+
+##### 0.36
+
+Added Listing object to contain listing specific calculations
+Added listing renewal controller flow
+Added delivery_select tag
+Converted elastic to use mostly filters. Added support for ignorePast into the searches.
+Converted listing renderer to SSP
+Updated joda to 2.2 for extra cool methods
+
+##### 0.35
+
+Added bcc to order confirmation emails
+Updated availbity tag for in/out boolean stock status
+SP-164 allow image ordering on backoffice objects
+SP-162 sorted variations by name in backoffice
+Added types to image tags
+Updated thumbnail to use bound not fix for thumnail resize
+Moved various plugins to SSP
+SP-155 updated nested folders tag to respect folder order
+Permalink field removed from admin folder edit.vm
+
+##### 0.34
+
+Integrated max size plugin for uploaded images
+SP-157 Updated delivery tag to include name.
+Updated object controller to strip non digts from numerical attribute type
+Basket line qty changed to HTML5 number input
+Updated thumbnail service to use thumbnails subfolder
+Changed shopping bag to basket on basket controller
+Added default attribute option rendering into attribute table
+Updated object exporter to only include live items
+Added error message on login page.
+Fixed disqus quote handling
+Added JMX support
+Added prioritized flag and updated searches to always place prioritized top
+Added facets into search controller. Added search settings.
+
 ##### 0.33 
 * Added deletion for object types.
 * Fixed cloning for objects.
