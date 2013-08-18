@@ -151,7 +151,8 @@ class BasketLinePriceTag extends ScalapressTag {
       val price =
         if (params.contains("ex")) line.price
         else if (params.contains("vat")) line.priceVat
-        else line.priceInc
+        else if (request.installation.vatEnabled) line.priceInc
+        else line.price
       "&pound;%1.2f".format(price / 100.0)
     })
   }
@@ -165,7 +166,8 @@ class BasketLineTotalTag extends ScalapressTag {
       val total =
         if (params.contains("ex")) line.subtotal
         else if (params.contains("vat")) line.vat
-        else line.total
+        else if (request.installation.vatEnabled) line.total
+        else line.subtotal
       "&pound;%1.2f".format(total / 100.0)
     })
   }
