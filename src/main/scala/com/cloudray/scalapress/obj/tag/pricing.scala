@@ -40,15 +40,15 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
     request.obj.map(obj => {
-      val text = if (params.contains("ex"))
-        obj.price
-      else if (params.contains("vat"))
-        obj.vat
-      else
-        obj.sellPriceInc
-      val textFormatted = "&pound;%1.2f".format(text / 100.0)
 
+      val text = if (params.contains("ex")) obj.price
+      else if (params.contains("vat")) obj.vat
+      else if (request.installation.vatEnabled) obj.sellPriceInc
+      else obj.price
+
+      val textFormatted = "&pound;%1.2f".format(text / 100.0)
       build(textFormatted, params + ("class" -> "price"))
+
     })
   }
 }
