@@ -4,9 +4,28 @@ import section.SearchFormSection
 import scala.xml.{Utility, Node, Unparsed, Elem}
 import com.cloudray.scalapress.enums.{Sort, SearchFieldType, AttributeType}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.search.widget.SearchFormWidget
 
 /** @author Stephen Samuel */
 object SearchFormRenderer {
+
+  def render(form: SearchForm, widget: SearchFormWidget): String = {
+    val sort = Option(form.sort).getOrElse(Sort.Name)
+    val fields = form.sortedFields
+    val renderedFields = renderFields(fields)
+
+    val submit = Option(form.submitLabel).getOrElse("Submit")
+    val objectType = Option(form.objectType)
+      .map(objectType => <input type="hidden" value={objectType.id.toString} name="type"/>).orNull
+
+    <form method="GET" action="/search">
+      <input type="hidden" name="sort" value={sort.name}/>
+      <input type="hidden" name="widgetId" value={widget.id
+      .toString}/>{objectType}{renderedFields}<button type="submit">
+      {submit}
+    </button>
+    </form>.toString()
+  }
 
   def render(form: SearchForm, section: SearchFormSection): String = {
 
@@ -20,8 +39,7 @@ object SearchFormRenderer {
 
     <form method="GET" action="/search">
       <input type="hidden" name="sort" value={sort.name}/>
-      <input type="hidden" name="sectionId" value={section
-      .id
+      <input type="hidden" name="sectionId" value={section.id
       .toString}/>{objectType}{renderedFields}<button type="submit">
       {submit}
     </button>
