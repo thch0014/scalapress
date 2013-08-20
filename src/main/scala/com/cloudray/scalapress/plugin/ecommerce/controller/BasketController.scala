@@ -91,8 +91,11 @@ class BasketController {
       case Some(line) =>
         basket.lines.remove(line)
         line.basket = null
-
         basketDao.save(basket)
+    }
+    if (basket.lines.isEmpty) {
+      basket.deliveryOption = null
+      basketDao.save(basket)
     }
     "redirect:/basket"
   }
