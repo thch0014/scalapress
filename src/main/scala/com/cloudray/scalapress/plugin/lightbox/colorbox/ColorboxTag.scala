@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.lightbox.colorbox
 
 import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import scala.collection.JavaConverters._
 import org.fusesource.scalate.TemplateEngine
 
 /** @author Stephen Samuel */
@@ -20,9 +19,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
     request.obj.map(obj => {
 
       var count = 0
-      val images = obj.images.asScala.toSeq
-      val sorted = images.sortBy(_.position)
-      val links = sorted.map(image => {
+      val links = obj.sortedImages.map(image => {
 
         val original = request.context.assetStore.link(image.filename)
         val thumb = request.context.thumbnailService.link(image.filename, width, height, t)
