@@ -15,14 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired
 @RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
 class CalendarWidgetController extends WidgetEditController with AttributePopulator with ObjectTypePopulator {
 
-    @Autowired var objectTypeDao: TypeDao = _
+  @Autowired var objectTypeDao: TypeDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {
-        val objectType = w.asInstanceOf[CalendarWidget].objectType
-        if (objectType != null) {
-            model.put("attributesMap", attributesMap(objectType.sortedAttributes))
-        }
-        "admin/plugin/calendar/widget/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {
+    val objectType = w.asInstanceOf[CalendarWidget].objectType
+    if (objectType != null) {
+      model.put("attributesMap", attributesMap(objectType.sortedAttributes))
     }
+    "admin/plugin/calendar/widget/edit.vm"
+  }
 }
