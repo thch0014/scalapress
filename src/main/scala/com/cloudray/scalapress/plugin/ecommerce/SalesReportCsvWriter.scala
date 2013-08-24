@@ -15,7 +15,7 @@ object SalesReportCsvWriter {
 
     val writer = new BufferedWriter(new FileWriter(file))
     val csv = new CsvWriter(writer, ',')
-    csv.writeRecord(_header)
+    csv.writeRecord(_headers)
 
     for ( line <- lines ) {
       csv.writeRecord(_row(line))
@@ -25,7 +25,7 @@ object SalesReportCsvWriter {
     file
   }
 
-  def _header: Array[String] = {
+  def _headers: Array[String] = {
     val buffer = new ArrayBuffer[String]
     buffer.append("orderId")
     buffer.append("date")
