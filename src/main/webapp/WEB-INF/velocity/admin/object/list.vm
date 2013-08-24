@@ -93,7 +93,7 @@
             <td><a href="$urlResolver.objectEdit($o)">$o.id</a></td>
             <td>$o.name</td>
             <td>$!o.status</td>
-            <td>$datetool.format($o.dateCreated)</td>
+            <td>$!datetool.format($o.dateCreated)</td>
             <td>
                 <a href="$urlResolver.objectEdit($o)" role="button" class="btn btn-mini"> <i
                         class="icon-pencil"></i></a>
