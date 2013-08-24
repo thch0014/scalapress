@@ -130,7 +130,7 @@ libraryDependencies += "net.sourceforge.javacsv" % "javacsv" % "2.0"
 
 libraryDependencies += "org.elasticsearch" % "elasticsearch" % "0.90.3"
 
-libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s" % "0.90.3.0"
+libraryDependencies += "com.sksamuel.elastic4s" % "elastic4s_2.10" % "0.90.3.0"
 
 libraryDependencies += "javax.validation" % "validation-api" % "1.1.0.Final"
 
