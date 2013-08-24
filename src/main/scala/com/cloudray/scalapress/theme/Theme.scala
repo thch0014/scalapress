@@ -8,20 +8,20 @@ import scala.beans.BeanProperty
 @Table(name = "templates")
 class Theme {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @Column(name = "name", length = 256)
-    @BeanProperty var name: String = _
+  @Column(name = "name", length = 256)
+  @BeanProperty var name: String = _
 
-    @Column(name = "header", length = 100000)
-    @BeanProperty var header: String = _
+  @Column(name = "header", length = 100000)
+  @BeanProperty var header: String = _
 
-    @Column(name = "footer", length = 100000)
-    @BeanProperty var footer: String = _
+  @Column(name = "footer", length = 100000)
+  @BeanProperty var footer: String = _
 
-    @Column(name = "dfault")
-    @BeanProperty var default: Boolean = _
+  @Column(name = "dfault")
+  @BeanProperty var default: Boolean = _
 
 }

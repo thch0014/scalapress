@@ -11,17 +11,17 @@ import com.cloudray.scalapress.theme.{ThemeDao, Theme}
 @RequestMapping(Array("backoffice/theme/{id}"))
 class ThemeEditController {
 
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute theme: Theme) = "admin/theme/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute theme: Theme) = "admin/theme/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute theme: Theme) = {
-        themeDao.save(theme)
-        edit(theme)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute theme: Theme) = {
+    themeDao.save(theme)
+    edit(theme)
+  }
 
-    @ModelAttribute def theme(@PathVariable("id") id: Long) = themeDao.find(id)
+  @ModelAttribute def theme(@PathVariable("id") id: Long) = themeDao.find(id)
 }

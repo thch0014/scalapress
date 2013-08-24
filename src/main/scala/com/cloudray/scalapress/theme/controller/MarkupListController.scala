@@ -11,18 +11,18 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/markup"))
 class MarkupListController {
 
-    @Autowired var markupDao: MarkupDao = _
+  @Autowired var markupDao: MarkupDao = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/theme/markup/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/theme/markup/list.vm"
 
-    @RequestMapping(value = Array("create"), produces = Array("text/html"))
-    def create = {
-        val markup = new Markup
-        markup.name = "new markup"
-        markupDao.save(markup)
-        "redirect:/backoffice/markup/" + markup.id
-    }
+  @RequestMapping(value = Array("create"), produces = Array("text/html"))
+  def create = {
+    val markup = new Markup
+    markup.name = "new markup"
+    markupDao.save(markup)
+    "redirect:/backoffice/markup/" + markup.id
+  }
 
-    @ModelAttribute("markups") def markups = markupDao.findAll().asJava
+  @ModelAttribute("markups") def markups = markupDao.findAll().asJava
 }

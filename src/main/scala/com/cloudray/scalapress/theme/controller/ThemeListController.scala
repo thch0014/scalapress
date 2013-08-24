@@ -13,19 +13,19 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/theme"))
 class ThemeListController {
 
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/theme/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/theme/list.vm"
 
-    @RequestMapping(value = Array("create"), produces = Array("text/html"))
-    def create = {
-        val theme = new Theme
-        theme.name = "new theme"
-        themeDao.save(theme)
-        "redirect:/backoffice/theme"
-    }
+  @RequestMapping(value = Array("create"), produces = Array("text/html"))
+  def create = {
+    val theme = new Theme
+    theme.name = "new theme"
+    themeDao.save(theme)
+    "redirect:/backoffice/theme"
+  }
 
-    @ModelAttribute("themes") def themes = themeDao.findAll().asJava
+  @ModelAttribute("themes") def themes = themeDao.findAll().asJava
 }
