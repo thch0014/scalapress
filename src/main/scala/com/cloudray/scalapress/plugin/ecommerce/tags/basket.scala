@@ -165,7 +165,8 @@ class BasketLineTotalTag extends ScalapressTag {
     request.line.map(line => {
       val total =
         if (params.contains("ex")) line.subtotal
-        else if (params.contains("vat")) line.vat
+        else if (params.contains("vat") && request.installation.vatEnabled) line.vat
+        else if (params.contains("vat")) 0
         else if (request.installation.vatEnabled) line.total
         else line.subtotal
       "&pound;%1.2f".format(total / 100.0)

@@ -145,7 +145,8 @@ class InvoiceLinePriceTag extends ScalapressTag with TagBuilder {
 
     request.orderLine.map(line => {
       val text = if (params.contains("ex")) line.priceExVat
-      else if (params.contains("vat")) line.priceVat
+      else if (params.contains("vat") && request.installation.vatEnabled) line.priceVat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) line.priceIncVat
       else line.priceExVat
       val textFormatted = "&pound;%1.2f".format(text)
@@ -160,7 +161,8 @@ class InvoiceLineTotalTag extends ScalapressTag with TagBuilder {
 
     request.orderLine.map(line => {
       val text = if (params.contains("ex")) line.totalExVat
-      else if (params.contains("vat")) line.totalVat
+      else if (params.contains("vat") && request.installation.vatEnabled) line.totalVat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) line.totalIncVat
       else line.totalExVat
       val textFormatted = "&pound;%1.2f".format(text)
