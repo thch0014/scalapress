@@ -13,6 +13,7 @@ class AttributeSearchTagTest extends FlatSpec with MockitoSugar with OneInstance
 
   val context = new ScalapressContext()
   context.attributeDao = mock[AttributeDao]
+
   val req = mock[HttpServletRequest]
 
   val sreq = ScalapressRequest(req, context)

@@ -62,7 +62,8 @@ case class ScalapressRequest(request: HttpServletRequest,
     })
     def attribute(id: Long): Attribute = _attributes.get(id).getOrElse({
       val attr = context.attributeDao.find(id)
-      _attributes.put(attr.id, attr)
+      if (attr != null)
+        _attributes.put(attr.id, attr)
       attr
     })
     lazy val folderRoot = context.folderDao.root
