@@ -3,7 +3,6 @@ package com.cloudray.scalapress.folder
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.section.{FolderContentSection, ObjectListSection, SubfolderSection}
-import org.scalatest.junit.JUnitRunner
 
 /** @author Stephen Samuel */
 class FolderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
