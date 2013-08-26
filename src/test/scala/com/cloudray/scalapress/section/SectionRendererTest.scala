@@ -41,7 +41,7 @@ class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePer
   }
 
   test("renderer sorts by section position") {
-    val rendered = SectionRenderer._render(Seq(section1, section2), sreq)
+    val rendered = SectionRenderer._render(Seq(section2, section1), sreq)
     assert("(?s).*kaaaan.*kirk.*".r.findFirstIn(rendered).isDefined)
   }
 }
