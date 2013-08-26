@@ -12,7 +12,6 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     val sep = params.get("sep").getOrElse(" ")
     params.get("id") match {
-      case None => Some("<!-- no id specified for attribute tag -->")
       case Some(id) => request.obj match {
         case Some(obj) =>
 
@@ -27,6 +26,7 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
           }
         case None => None
       }
+      case None => Some("<!-- no id specified for attribute tag -->")
     }
   }
 }
