@@ -122,7 +122,8 @@ class InvoiceDeliveryChargeTag extends ScalapressTag with TagBuilder {
 
     request.order.map(order => {
       val text = if (params.contains("ex")) order.deliveryEx
-      else if (params.contains("vat")) order.deliveryVat
+      else if (params.contains("vat") && request.installation.vatEnabled) order.deliveryVat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) order.deliveryInc
       else order.deliveryEx
       val textFormatted = "&pound;%1.2f".format(text)
