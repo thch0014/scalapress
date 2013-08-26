@@ -386,6 +386,12 @@
             <groupId>com.sksamuel.elastic4s</groupId>
             <artifactId>elastic4s_2.10</artifactId>
             <version>${elastic4s.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
