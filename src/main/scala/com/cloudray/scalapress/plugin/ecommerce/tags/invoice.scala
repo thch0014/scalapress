@@ -173,12 +173,13 @@ class InvoiceTotalTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.order.map(order => {
-      val text = if (params.contains("ex")) order.subtotal
-      else if (params.contains("vat")) order.vat
+      val amount = if (params.contains("ex")) order.subtotal
+      else if (params.contains("vat") && request.installation.vatEnabled) order.vat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) order.total
       else order.subtotal
-      val textFormatted = "&pound;%1.2f".format(text)
-      build(textFormatted, params)
+      val formatted = "&pound;%1.2f".format(amount)
+      build(formatted, params)
     })
   }
 }
@@ -189,7 +190,8 @@ class InvoiceLinesTotalTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.order.map(order => {
       val text = if (params.contains("ex")) order.linesSubtotal
-      else if (params.contains("vat")) order.linesVat
+      else if (params.contains("vat") && request.installation.vatEnabled) order.linesVat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) order.linesTotal
       else order.linesSubtotal
       val textFormatted = "&pound;%1.2f".format(text)
