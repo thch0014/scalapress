@@ -7,6 +7,8 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
 import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.settings.{InstallationDao, Installation}
+import org.mockito.Mockito
 
 /** @author Stephen Samuel */
 class BasketLineTotalTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -20,7 +22,13 @@ class BasketLineTotalTagTest extends FunSuite with MockitoSugar with OneInstance
   val tag = new BasketLineTotalTag()
 
   val req = mock[HttpServletRequest]
-  val context = mock[ScalapressContext]
+
+  val installation = new Installation
+  installation.vatNumber = "1234"
+  val context = new ScalapressContext
+  context.installationDao = mock[InstallationDao]
+  Mockito.when(context.installationDao.get).thenReturn(installation)
+
   val sreq = new ScalapressRequest(req, context).withLine(line1)
 
   test("given param of ex then price is ex vat") {
@@ -28,13 +36,25 @@ class BasketLineTotalTagTest extends FunSuite with MockitoSugar with OneInstance
     assert("&pound;20.00" === actual.get)
   }
 
-  test("given param of vat then shows the vat") {
+  test("given param of vat then shows the vat when vat is enabled") {
     val actual = tag.render(sreq, Map("vat" -> "1"))
     assert("&pound;2.00" === actual.get)
+  }
+
+  test("given param of vat then shows no vat when vat is disabled") {
+    installation.vatNumber = null
+    val actual = tag.render(sreq, Map("vat" -> "1"))
+    assert("&pound;0.00" === actual.get)
   }
 
   test("by default the tag shows inc vat price") {
     val actual = tag.render(sreq, Map.empty)
     assert("&pound;22.00" === actual.get)
+  }
+
+  test("tag does not add VAT when vat is disabled") {
+    installation.vatNumber = null
+    val actual = tag.render(sreq, Map.empty)
+    assert("&pound;20.00" === actual.get)
   }
 }

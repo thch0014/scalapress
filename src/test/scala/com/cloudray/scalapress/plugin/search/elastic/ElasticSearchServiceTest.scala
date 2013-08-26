@@ -156,57 +156,57 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(results(0).id === 2)
   }
 
-  //  test("multi name happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.name = "tony mowbray"
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(results(0).id === 2)
-  //  }
-  //
-  //  test("indexing and retrieval by object type happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.objectType = obj2.objectType
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(results(0).id === 4)
-  //  }
-  //
-  //  test("indexing and retrieval by only images happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.imageOnly = true
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(results(0).id === 2)
-  //  }
-  //
-  //  test("sorting by name happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.Name
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //    assert(results(0).id === 20)
-  //    assert(results(1).id === 4)
-  //    assert(results(2).id === 2)
-  //    assert(results(3).id === 1529)
-  //  }
-  //
-  //  test("sorting by Newest happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.Newest
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //
-  //    assert(results(0).id === 20)
-  //    assert(results(1).id === 1529)
-  //    assert(results(2).id === 4)
-  //    assert(results(3).id === 2)
-  //  }
+  test("multi name happy path") {
+
+    val search = new SavedSearch
+    search.name = "tony mowbray"
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(results(0).id === 2)
+  }
+
+  test("indexing and retrieval by object type happy path") {
+
+    val search = new SavedSearch
+    search.objectType = obj2.objectType
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(results(0).id === 4)
+  }
+
+  test("indexing and retrieval by only images happy path") {
+
+    val search = new SavedSearch
+    search.imageOnly = true
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(results(0).id === 2)
+  }
+
+  test("sorting by name happy path") {
+
+    val search = new SavedSearch
+    search.sortType = Sort.Name
+    val results = service.search(search).refs
+    assert(results.size === 4)
+    assert(results(0).id === 20)
+    assert(results(1).id === 4)
+    assert(results(2).id === 2)
+    assert(results(3).id === 1529)
+  }
+
+  test("sorting by Newest happy path") {
+
+    val search = new SavedSearch
+    search.sortType = Sort.Newest
+    val results = service.search(search).refs
+    assert(results.size === 4)
+
+    assert(results(0).id === 20)
+    assert(results(1).id === 1529)
+    assert(results(2).id === 4)
+    assert(results(3).id === 2)
+  }
   //
   //  test("sorting by Oldest happy path") {
   //
