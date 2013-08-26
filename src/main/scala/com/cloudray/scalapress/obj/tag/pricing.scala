@@ -42,7 +42,8 @@ object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
     request.obj.map(obj => {
 
       val text = if (params.contains("ex")) obj.price
-      else if (params.contains("vat")) obj.vat
+      else if (params.contains("vat") && request.installation.vatEnabled) obj.vat
+      else if (params.contains("vat")) 0
       else if (request.installation.vatEnabled) obj.sellPriceInc
       else obj.price
 
