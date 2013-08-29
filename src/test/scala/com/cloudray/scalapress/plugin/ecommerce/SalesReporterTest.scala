@@ -39,6 +39,7 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     order.account = new Obj
     order.account.name = "sammy"
     order.account.email = "sammy@fatty.com"
+    order.customerNote = "crappy order"
     Mockito.when(reporter.orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.apply(Seq(order)))
 
     val reports = reporter.generate("qweqwe", 10000, 20000)
@@ -47,5 +48,6 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     assert("444" === reports(0).orderId)
     assert("sammy@fatty.com" === reports(0).email)
     assert("sammy" === reports(0).name)
+    assert("crappy order" === reports(0).note)
   }
 }

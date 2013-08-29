@@ -27,7 +27,8 @@ class SalesReporter {
         order.status,
         order.subtotal,
         order.vat,
-        order.total))
+        order.total,
+        order.customerNote))
   }
 }
 
@@ -38,4 +39,5 @@ case class ReportLine(orderId: String,
                       status: String,
                       subtotal: Double,
                       vat: Double,
-                      total: Double)
+                      total: Double,
+                      note: String)

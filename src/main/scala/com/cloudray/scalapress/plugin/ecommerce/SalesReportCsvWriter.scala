@@ -35,6 +35,7 @@ object SalesReportCsvWriter {
     buffer.append("subtotal")
     buffer.append("vat")
     buffer.append("total")
+    buffer.append("customer note")
     buffer.toArray
   }
 
@@ -48,6 +49,7 @@ object SalesReportCsvWriter {
     buffer.append(line.subtotal.toString)
     buffer.append(line.vat.toString)
     buffer.append(line.total.toString)
+    buffer.append(line.note)
     buffer.toArray
   }
 }
