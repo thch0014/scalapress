@@ -10,26 +10,17 @@ import com.cloudray.scalapress.search.widget.SearchFormWidget
 object SearchFormRenderer {
 
   def render(form: SearchForm, widget: SearchFormWidget): String = {
-    val sort = Option(form.sort).getOrElse(Sort.Name)
-    val fields = form.sortedFields
-    val renderedFields = renderFields(fields)
-
-    val submit = Option(form.submitLabel).getOrElse("Submit")
-    val objectType = Option(form.objectType)
-      .map(objectType => <input type="hidden" value={objectType.id.toString} name="type"/>).orNull
-
-    <form method="GET" action="/search">
-      <input type="hidden" name="sort" value={sort.name}/>
-      <input type="hidden" name="widgetId" value={widget.id
-      .toString}/>{objectType}{renderedFields}<button type="submit">
-      {submit}
-    </button>
-    </form>.toString()
+    _render(form, "widgetId", widget.id.toString)
   }
 
   def render(form: SearchForm, section: SearchFormSection): String = {
+    _render(form, "sectionId", section.id.toString)
+  }
+
+  def _render(form: SearchForm, sourceParam: String, sourceValue: String): String = {
 
     val sort = Option(form.sort).getOrElse(Sort.Name)
+
     val fields = form.sortedFields
     val renderedFields = renderFields(fields)
 
@@ -39,8 +30,7 @@ object SearchFormRenderer {
 
     <form method="GET" action="/search">
       <input type="hidden" name="sort" value={sort.name}/>
-      <input type="hidden" name="sectionId" value={section.id
-      .toString}/>{objectType}{renderedFields}<button type="submit">
+      <input type="hidden" name={sourceParam} value={sourceValue}/>{objectType}{renderedFields}<button type="submit">
       {submit}
     </button>
     </form>.toString()
@@ -84,12 +74,24 @@ object SearchFormRenderer {
         {Unparsed(field.name)}
       </label>
       <select name="distance">
-        <option value="1">1 mile</option>
-        <option value="5">5 miles</option>
-        <option value="10">10 miles</option>
-        <option value="25" selected="true">25 miles</option>
-        <option value="50">50 miles</option>
-        <option value="100">100 miles</option>
+        <option value="1">
+          1 mile
+        </option>
+        <option value="5">
+          5 miles
+        </option>
+        <option value="10">
+          10 miles
+        </option>
+        <option value="25" selected="true">
+          25 miles
+        </option>
+        <option value="50">
+          50 miles
+        </option>
+        <option value="100">
+          100 miles
+        </option>
       </select>
     </div>)
   }
