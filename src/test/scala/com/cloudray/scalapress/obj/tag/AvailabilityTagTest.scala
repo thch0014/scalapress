@@ -53,7 +53,7 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
     assert("In Stock" === actual.get)
   }
 
-  test("given stock = 0 then the objects out of stock message renders") {
+  test("given stock = 0 and an out of stock message then the objects out of stock message renders") {
     obj.stock = 0
     obj.outStockMsg = "no more :("
     plugin.stockMethod = StockMethod.Manual

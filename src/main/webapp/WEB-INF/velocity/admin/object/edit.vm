@@ -131,6 +131,16 @@
             #springFormInput("form.o.stock", "class='input-small'")
           </div>
       </div>
+
+      <div class="control-group">
+          <label class="control-label">Out of stock message</label>
+
+          <div class="controls">
+            #springFormInput("form.o.outStockMsg", "")
+          </div>
+      </div>
+
+      outStockMsg
   #end
 
     <div class="control-group">
