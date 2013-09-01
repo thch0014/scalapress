@@ -207,342 +207,342 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(results(2).id === 4)
     assert(results(3).id === 2)
   }
-  //
-  //  test("sorting by Oldest happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.Oldest
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //
-  //    assert(results(0).id === 20)
-  //    assert(results(1).id === 2)
-  //    assert(results(2).id === 4)
-  //    assert(results(3).id === 1529)
-  //  }
-  //
-  //  test("sorting by attribute value puts missing values at start") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.Attribute
-  //    search.sortAttribute = av1.attribute
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //
-  //    assert(results(0).id === 20)
-  //    assert(results(1).id === 1529)
-  //    assert(results(2).id === 2)
-  //    assert(results(3).id === 4)
-  //  }
-  //
-  //  test("sorting by attribute desc value happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.AttributeDesc
-  //    search.sortAttribute = av1.attribute
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //
-  //    assert(results(0).id === 20) // steve mac is prioritized
-  //    assert(results(1).id === 4) // middles
-  //    assert(results(2).id === 2) // mackams
-  //  }
 
-  //  test("sorting by attribute value with numbers") {
-  //
-  //    val search = new SavedSearch
-  //    search.sortType = Sort.Attribute
-  //    search.sortAttribute = date1.attribute
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 4)
-  //
-  //    assert(20 === results(0).id) // steve mac is prioritized
-  //    assert(2 === results(1).id) // obj id 2 has value 51454
-  //    assert(4 === results(2).id) // obj id 4 has value 2142353
-  //    assert(1529 === results(3)
-  //      .id) // obj id 1529 has no value for this attribute so will be last
-  //  }
+  test("sorting by Oldest happy path") {
 
-  //  test("distance search happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.location = "SW11"
-  //    search
-  //      .distance = 100 // only two should be within 100m, TS19 should be 250m away
-  //    search.sortType = Sort.Distance
-  //    assert(service.search(search).refs.size === 2)
-  //
-  //    search
-  //      .distance = 300 // only two should be within 100m, TS19 should be 250m away
-  //    assert(service.search(search).refs.size === 3)
-  //  }
-  //
-  //  test("resp2ref happy path") {
-  //
-  //    val search = new SavedSearch
-  //    search.keywords = "mowbray"
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(2 === results(0).id)
-  //    assert("tony mowbray" === results(0).name)
-  //    assert("Live" === results(0).status)
-  //    assert(4 === results(0).attributes.size)
-  //  }
-  //
-  //  test("ref includes prioritized") {
-  //    val search = new SavedSearch
-  //    search.keywords = "steve"
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(20 === results(0).id)
-  //    assert(results(0).prioritized)
-  //
-  //    val search2 = new SavedSearch
-  //    search2.keywords = "mowbray"
-  //
-  //    val results2 = service.search(search2).refs
-  //    assert(results2.size === 1)
-  //    assert(2 === results2(0).id)
-  //    assert(!results2(0).prioritized)
-  //  }
-  //
-  //  test("attribute search with spaces") {
-  //
-  //    val searchav = new AttributeValue
-  //    searchav.attribute = new Attribute
-  //    searchav.attribute.id = 62
-  //    searchav.value = "attribute with space"
-  //
-  //
-  //    val search = new SavedSearch
-  //    search.attributeValues = Set(searchav).asJava
-  //
-  //    val results = service.search(search).refs
-  //    assert(results.size === 1)
-  //    assert(2 === results(0).id)
-  //    assert("tony mowbray" === results(0).name)
-  //  }
-  //
-  //  test("wildcard search count brings back total count") {
-  //
-  //    val search = new SavedSearch
-  //    val count = service.search(search).count
-  //    assert(4 === count)
-  //  }
-  //
-  //  test("name search returns query based count") {
-  //    val search = new SavedSearch
-  //    search.name = "mowbray"
-  //    val count = service.search(search).count
-  //    assert(1 === count)
-  //  }
-  //
-  //  test("attribute search returns query based count") {
-  //
-  //    val searchav = new AttributeValue
-  //    searchav.attribute = new Attribute
-  //    searchav.attribute.id = 62
-  //    searchav.value = "attribute with space"
-  //
-  //    val search = new SavedSearch
-  //    search.attributeValues.add(searchav)
-  //
-  //    val count = service.search(search).count
-  //    assert(1 === count)
-  //  }
+    val search = new SavedSearch
+    search.sortType = Sort.Oldest
+    val results = service.search(search).refs
+    assert(results.size === 4)
 
-  //  test("wildcard search getting tag facets") {
-  //
-  //    val search = new SavedSearch
-  //    search.facets = Seq(SearchService.FACET_TAGS)
-  //    val result = service.search(search)
-  //
-  //    assert(1 === result.facets.size)
-  //    assert(SearchService.FACET_TAGS === result.facets.head.name)
-  //    assert(2 === result.facets.head.terms.find(_.term == "coldplay").get.count)
-  //    assert(1 === result
-  //      .facets
-  //      .head
-  //      .terms
-  //      .find(_.term == "jethro tull")
-  //      .get
-  //      .count)
-  //  }
-  //
-  //  test("that elastic does not err on null av inputs") {
-  //
-  //    val av = new AttributeValue
-  //    av.attribute = new Attribute
-  //    av.attribute.id = 9184
-  //
-  //    val obj = new Obj
-  //    obj.id = 199
-  //    obj.name = "null-av-object"
-  //    obj.objectType = new ObjectType
-  //    obj.objectType.id = 1
-  //    obj.status = "Live"
-  //    obj.attributeValues.add(av)
-  //
-  //    val before = service.count
-  //    service.index(obj)
-  //    Thread.sleep(1500)
-  //
-  //    val after = service.count
-  //    assert(before + 1 === after)
-  //  }
-  //
-  //  test("that remove operation removes the item from the index") {
-  //
-  //    val search = new SavedSearch
-  //    assert(5 === service.search(search).count)
-  //
-  //    val obj = new Obj
-  //    obj.id = 5465464
-  //    obj.name = "to be removed"
-  //    obj.objectType = new ObjectType
-  //    obj.objectType.id = 1
-  //    obj.status = "Live"
-  //
-  //    service.index(obj)
-  //    Thread.sleep(1500)
-  //    assert(6 === service.search(search).count)
-  //
-  //    service.remove(obj.id.toString)
-  //    Thread.sleep(1500)
-  //    assert(5 === service.search(search).count)
-  //  }
+    assert(results(0).id === 20)
+    assert(results(1).id === 2)
+    assert(results(2).id === 4)
+    assert(results(3).id === 1529)
+  }
 
-  //  test("label search works on labels with a space") {
-  //
-  //    val search = new SavedSearch
-  //    search.labels = "jethro tull"
-  //    val result = service.search(search)
-  //    assert(1 === result.refs.size)
-  //  }
-  //
-  //  test("label search works on objects with multiple labels") {
-  //
-  //    val search = new SavedSearch
-  //    search.labels = "coldplay"
-  //    val result = service.search(search)
-  //
-  //    assert(2 === result.refs.size)
-  //  }
-  //
-  //  test("search max results of 0 changes to default") {
-  //    val search = new SavedSearch
-  //    search.maxResults = 0
-  //    val max = service._maxResults(search)
-  //    assert(service.DEFAULT_MAX_RESULTS === max)
-  //  }
-  //
-  //  test("search max results cannot exceed hard limit") {
-  //    val search = new SavedSearch
-  //    search.maxResults = service.MAX_RESULTS_HARD_LIMIT + 1
-  //    val max = service._maxResults(search)
-  //    assert(service.MAX_RESULTS_HARD_LIMIT === max)
-  //  }
-  //
-  //  test("acceptable search max results is used") {
-  //    val search = new SavedSearch
-  //    search.maxResults = 34
-  //    val max = service._maxResults(search)
-  //    assert(34 === max)
-  //  }
-  //
-  //  test("search escapes invalid characters in attribute values") {
-  //
-  //    val q = new SavedSearch
-  //    q.attributeValues.add(av)
-  //    val results = service.search(q)
-  //    assert(1 === results.refs.size)
-  //    assert(1529 === results.refs(0).id)
-  //  }
-  //
-  //  test("contains returns true when the id exists") {
-  //    assert(service.contains("4"))
-  //  }
-  //
-  //  test("contains returns false when the id does not exist") {
-  //    assert(!service.contains("44"))
-  //  }
+  test("sorting by attribute value puts missing values at start") {
 
-  //  test("facets returned happy path") {
-  //    val q = new SavedSearch
-  //    q.facets = Seq(av4.attribute.id.toString)
-  //    val results = service.search(q)
-  //    assert(1 === results.facets.size)
-  //    assert(2 === results.facets(0).terms.size)
-  //    assert(2 === results.facets(0).terms(0).count)
-  //    assert(1 === results.facets(0).terms(1).count)
-  //    assert("SW10" === results.facets(0).terms(0).term)
-  //    assert("TS19" === results.facets(0).terms(1).term)
-  //    assert(2 === results.facets(0).terms.size)
-  //    assert("2" === results.facets(0).field) // should be id of the attribute
-  //  }
-  //
-  //  test("facets should not include specified fields") {
-  //    val av1 = new AttributeValue
-  //    av1.attribute = av4.attribute
-  //    av1.value = "SW10"
-  //
-  //    val q = new SavedSearch
-  //    q.attributeValues = Set(av1).asJava
-  //    q.facets = Seq(av4.attribute.id.toString)
-  //    val results = service.search(q)
-  //    assert(0 === results.facets.size)
-  //  }
-  //
-  //  test("facets should be restored with spaces") {
-  //    val av1 = new AttributeValue
-  //    av1.attribute = av7.attribute
-  //    av1.value = "attribute with space"
-  //
-  //    val q = new SavedSearch
-  //    q.facets = Seq(av7.attribute.id.toString)
-  //    val results = service.search(q)
-  //    assert("attribute with space" === results.facets(0).terms(0).term)
-  //  }
-  //
-  //  test("a service for folders should match objects with multiple folders") {
-  //    val q = new SavedSearch
-  //    q.searchFolders = "4"
-  //    val results = service.search(q)
-  //    assert(2 === results.refs.size)
-  //    assert(results.refs.map(_.id).contains(obj2.id))
-  //    assert(results.refs.map(_.id).contains(obj3.id))
-  //  }
-  //
-  //  test("a service for folders should match objects with single folders") {
-  //    val q = new SavedSearch
-  //    q.searchFolders = "4"
-  //    val results = service.search(q)
-  //    assert(results.refs.map(_.id).contains(20))
-  //  }
-  //
-  //  test("a random sort is sufficiently random") {
-  //    val q = new SavedSearch
-  //    q.sortType = Sort.Random
-  //    // all first refs will be id 20 so check that 2nd refs are random
-  //    val refs = for ( k <- 1 to 20 ) yield service.search(q).refs(1)
-  //    assert(refs.toSet.size > 1)
-  //  }
-  //
-  //  test("searching for slash in attribute") {
-  //    val av = new AttributeValue
-  //    av.attribute = avWithSlash.attribute
-  //    av.value = "axel/slash"
-  //
-  //    val q = new SavedSearch
-  //    q.attributeValues.add(av)
-  //    val results = service.search(q)
-  //    assert("zola" === results.refs(0).name)
-  //  }
+    val search = new SavedSearch
+    search.sortType = Sort.Attribute
+    search.sortAttribute = av1.attribute
+
+    val results = service.search(search).refs
+    assert(results.size === 4)
+
+    assert(results(0).id === 20)
+    assert(results(1).id === 1529)
+    assert(results(2).id === 2)
+    assert(results(3).id === 4)
+  }
+
+  test("sorting by attribute desc value happy path") {
+
+    val search = new SavedSearch
+    search.sortType = Sort.AttributeDesc
+    search.sortAttribute = av1.attribute
+
+    val results = service.search(search).refs
+    assert(results.size === 4)
+
+    assert(results(0).id === 20) // steve mac is prioritized
+    assert(results(1).id === 4) // middles
+    assert(results(2).id === 2) // mackams
+  }
+
+  test("sorting by attribute value with numbers") {
+
+    val search = new SavedSearch
+    search.sortType = Sort.Attribute
+    search.sortAttribute = date1.attribute
+
+    val results = service.search(search).refs
+    assert(results.size === 4)
+
+    assert(20 === results(0).id) // steve mac is prioritized
+    assert(2 === results(1).id) // obj id 2 has value 51454
+    assert(4 === results(2).id) // obj id 4 has value 2142353
+    assert(1529 === results(3)
+      .id) // obj id 1529 has no value for this attribute so will be last
+  }
+
+  test("distance search happy path") {
+
+    val search = new SavedSearch
+    search.location = "SW11"
+    search
+      .distance = 100 // only two should be within 100m, TS19 should be 250m away
+    search.sortType = Sort.Distance
+    assert(service.search(search).refs.size === 2)
+
+    search
+      .distance = 300 // only two should be within 100m, TS19 should be 250m away
+    assert(service.search(search).refs.size === 3)
+  }
+
+  test("resp2ref happy path") {
+
+    val search = new SavedSearch
+    search.keywords = "mowbray"
+
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(2 === results(0).id)
+    assert("tony mowbray captain" === results(0).name)
+    assert("Live" === results(0).status)
+    assert(4 === results(0).attributes.size)
+  }
+
+  test("ref includes prioritized") {
+    val search = new SavedSearch
+    search.keywords = "steve"
+
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(20 === results(0).id)
+    assert(results(0).prioritized)
+
+    val search2 = new SavedSearch
+    search2.keywords = "mowbray"
+
+    val results2 = service.search(search2).refs
+    assert(results2.size === 1)
+    assert(2 === results2(0).id)
+    assert(!results2(0).prioritized)
+  }
+
+  test("attribute search with spaces") {
+
+    val searchav = new AttributeValue
+    searchav.attribute = new Attribute
+    searchav.attribute.id = 62
+    searchav.value = "attribute with space"
+
+
+    val search = new SavedSearch
+    search.attributeValues = Set(searchav).asJava
+
+    val results = service.search(search).refs
+    assert(results.size === 1)
+    assert(2 === results(0).id)
+    assert("tony mowbray captain" === results(0).name)
+  }
+
+  test("wildcard search count brings back total count") {
+
+    val search = new SavedSearch
+    val count = service.search(search).count
+    assert(4 === count)
+  }
+
+  test("name search returns query based count") {
+    val search = new SavedSearch
+    search.name = "mowbray"
+    val count = service.search(search).count
+    assert(1 === count)
+  }
+
+  test("attribute search returns query based count") {
+
+    val searchav = new AttributeValue
+    searchav.attribute = new Attribute
+    searchav.attribute.id = 62
+    searchav.value = "attribute with space"
+
+    val search = new SavedSearch
+    search.attributeValues.add(searchav)
+
+    val count = service.search(search).count
+    assert(1 === count)
+  }
+
+  test("wildcard search getting tag facets") {
+
+    val search = new SavedSearch
+    search.facets = Seq(SearchService.FACET_TAGS)
+    val result = service.search(search)
+
+    assert(1 === result.facets.size)
+    assert(SearchService.FACET_TAGS === result.facets.head.name)
+    assert(2 === result.facets.head.terms.find(_.term == "coldplay").get.count)
+    assert(1 === result
+      .facets
+      .head
+      .terms
+      .find(_.term == "jethro tull")
+      .get
+      .count)
+  }
+
+  test("that elastic does not err on null av inputs") {
+
+    val av = new AttributeValue
+    av.attribute = new Attribute
+    av.attribute.id = 9184
+
+    val obj = new Obj
+    obj.id = 199
+    obj.name = "null-av-object"
+    obj.objectType = new ObjectType
+    obj.objectType.id = 1
+    obj.status = "Live"
+    obj.attributeValues.add(av)
+
+    val before = service.count
+    service.index(obj)
+    Thread.sleep(1500)
+
+    val after = service.count
+    assert(before + 1 === after)
+  }
+
+  test("that remove operation removes the item from the index") {
+
+    val search = new SavedSearch
+    assert(5 === service.search(search).count)
+
+    val obj = new Obj
+    obj.id = 5465464
+    obj.name = "to be removed"
+    obj.objectType = new ObjectType
+    obj.objectType.id = 1
+    obj.status = "Live"
+
+    service.index(obj)
+    Thread.sleep(1500)
+    assert(6 === service.search(search).count)
+
+    service.remove(obj.id.toString)
+    Thread.sleep(1500)
+    assert(5 === service.search(search).count)
+  }
+
+  test("label search works on labels with a space") {
+
+    val search = new SavedSearch
+    search.labels = "jethro tull"
+    val result = service.search(search)
+    assert(1 === result.refs.size)
+  }
+
+  test("label search works on objects with multiple labels") {
+
+    val search = new SavedSearch
+    search.labels = "coldplay"
+    val result = service.search(search)
+
+    assert(2 === result.refs.size)
+  }
+
+  test("search max results of 0 changes to default") {
+    val search = new SavedSearch
+    search.maxResults = 0
+    val max = service._maxResults(search)
+    assert(service.DEFAULT_MAX_RESULTS === max)
+  }
+
+  test("search max results cannot exceed hard limit") {
+    val search = new SavedSearch
+    search.maxResults = service.MAX_RESULTS_HARD_LIMIT + 1
+    val max = service._maxResults(search)
+    assert(service.MAX_RESULTS_HARD_LIMIT === max)
+  }
+
+  test("acceptable search max results is used") {
+    val search = new SavedSearch
+    search.maxResults = 34
+    val max = service._maxResults(search)
+    assert(34 === max)
+  }
+
+  test("search escapes invalid characters in attribute values") {
+
+    val q = new SavedSearch
+    q.attributeValues.add(av)
+    val results = service.search(q)
+    assert(1 === results.refs.size)
+    assert(1529 === results.refs(0).id)
+  }
+
+  test("contains returns true when the id exists") {
+    assert(service.contains("4"))
+  }
+
+  test("contains returns false when the id does not exist") {
+    assert(!service.contains("44"))
+  }
+
+  test("facets returned happy path") {
+    val q = new SavedSearch
+    q.facets = Seq(av4.attribute.id.toString)
+    val results = service.search(q)
+    assert(1 === results.facets.size)
+    assert(2 === results.facets(0).terms.size)
+    assert(2 === results.facets(0).terms(0).count)
+    assert(1 === results.facets(0).terms(1).count)
+    assert("SW10" === results.facets(0).terms(0).term)
+    assert("TS19" === results.facets(0).terms(1).term)
+    assert(2 === results.facets(0).terms.size)
+    assert("2" === results.facets(0).field) // should be id of the attribute
+  }
+
+  test("facets should not include specified fields") {
+    val av1 = new AttributeValue
+    av1.attribute = av4.attribute
+    av1.value = "SW10"
+
+    val q = new SavedSearch
+    q.attributeValues = Set(av1).asJava
+    q.facets = Seq(av4.attribute.id.toString)
+    val results = service.search(q)
+    assert(0 === results.facets.size)
+  }
+
+  test("facets should be restored with spaces") {
+    val av1 = new AttributeValue
+    av1.attribute = av7.attribute
+    av1.value = "attribute with space"
+
+    val q = new SavedSearch
+    q.facets = Seq(av7.attribute.id.toString)
+    val results = service.search(q)
+    assert("attribute with space" === results.facets(0).terms(0).term)
+  }
+
+  test("a service for folders should match objects with multiple folders") {
+    val q = new SavedSearch
+    q.searchFolders = "4"
+    val results = service.search(q)
+    assert(2 === results.refs.size)
+    assert(results.refs.map(_.id).contains(obj2.id))
+    assert(results.refs.map(_.id).contains(obj3.id))
+  }
+
+  test("a service for folders should match objects with single folders") {
+    val q = new SavedSearch
+    q.searchFolders = "4"
+    val results = service.search(q)
+    assert(results.refs.map(_.id).contains(20))
+  }
+
+  test("a random sort is sufficiently random") {
+    val q = new SavedSearch
+    q.sortType = Sort.Random
+    // all first refs will be id 20 so check that 2nd refs are random
+    val refs = for ( k <- 1 to 20 ) yield service.search(q).refs(1)
+    assert(refs.toSet.size > 1)
+  }
+
+  test("searching for slash in attribute") {
+    val av = new AttributeValue
+    av.attribute = avWithSlash.attribute
+    av.value = "axel/slash"
+
+    val q = new SavedSearch
+    q.attributeValues.add(av)
+    val results = service.search(q)
+    assert("zola" === results.refs(0).name)
+  }
 
   test("searching for slash in free text") {
     val q = new SavedSearch
@@ -558,10 +558,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(1 === results.refs.size)
   }
 
-  //  test("ignore past should ignore documents prior to the date") {
-  //    val q = new SavedSearch
-  //    q.ignorePast = date1.attribute
-  //    val results = service.search(q)
-  //    assert(1 === results.refs.size)
-  //  }
+  test("ignore past should ignore documents prior to the date") {
+    val q = new SavedSearch
+    q.ignorePast = date1.attribute
+    val results = service.search(q)
+    assert(1 === results.refs.size)
+  }
 }
