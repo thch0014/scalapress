@@ -244,7 +244,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
     val filter = filters.size match {
       case 0 => matchAllFilter
-      case _ => bool(should(filters: _*))
+      case _ => bool(must(filters: _*))
     }
 
     filterQuery.filter(filter).query(q)
