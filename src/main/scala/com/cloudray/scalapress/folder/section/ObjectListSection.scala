@@ -18,7 +18,7 @@ import com.cloudray.scalapress.obj.attr.Attribute
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -74,8 +74,8 @@ class ObjectListSection extends Section {
       case _ => {
         val first = page.results.find(_.objectType != null)
         Option(markup).orElse(first.map(_.objectType.objectListMarkup)) match {
-          case None => "<!-- No markup found for folder -->"
           case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
+          case None => "<!-- No markup found for folder -->"
         }
       }
     }
