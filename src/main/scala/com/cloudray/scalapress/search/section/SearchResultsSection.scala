@@ -40,9 +40,10 @@ class SearchResultsSection extends Section with Logging {
     Option(search) match {
       case None => Some("<!-- no search object set (section #" + id + ") -->")
       case Some(s) =>
-        logger.debug("Loading objects... [section={}]", id)
+
         val objects = _objects(request)
         logger.debug("...objects loaded [section={}]", id)
+
         objects.size match {
           case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
           case _ =>

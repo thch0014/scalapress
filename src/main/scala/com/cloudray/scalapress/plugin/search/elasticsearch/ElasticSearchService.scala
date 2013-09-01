@@ -11,8 +11,6 @@ import com.cloudray.scalapress.enums.{Sort, AttributeType}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.search._
-import com.cloudray.scalapress.search.ObjectRef
-import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.obj.attr.Attribute
 import com.sksamuel.elastic4s.{FilterDefinition, QueryDefinition, ElasticDsl, ElasticClient}
 import ElasticDsl._
@@ -118,20 +116,21 @@ class ElasticSearchService extends SearchService with Logging {
   override def index(obj: Obj) {
     logger.debug("Indexing [{}, {}]", obj.id, obj.name)
 
-    val _fields = ListBuffer[(String, Any)](FIELD_OBJECT_ID -> obj.id,
+    val _fields = ListBuffer[(String, Any)](
+      FIELD_OBJECT_ID -> obj.id,
       FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
       FIELD_NAME -> _normalize(obj.name),
       FIELD_NAME_NOT_ANALYSED -> obj.name,
       FIELD_STATUS -> obj.status,
-      FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0))
+      FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
+    )
 
     Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
 
     val hasImage = obj.images.size > 0
     _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-    if (obj.folders.size > 0)
-      _fields append FIELD_FOLDERS -> obj.folders.asScala.map(_.id).asJava
+    obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
 
     obj.attributeValues.asScala
       .filterNot(_.value == null)
@@ -259,7 +258,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     val query = filter match {
       case None => _query(search)
-      case Some(f) => filterQuery.query(_query(search)).filter(f)
+      case Some(f) => filteredQuery.query(_query(search)).filter(f)
     }
 
     val limit = _maxResults(search)

@@ -82,6 +82,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj.attributeValues.add(av7)
   obj.attributeValues.add(date1)
   obj.labels = "coldplay,jethro tull"
+  obj.folders.add(folder2)
 
   val obj2 = new Obj
   obj2.id = 4
@@ -135,11 +136,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   val service = new ElasticSearchService
 
-  service
-    .setupIndex(List(av1.attribute,
-    av4.attribute,
-    av7.attribute,
-    date1.attribute))
+  service.setupIndex(List(av1.attribute, av4.attribute, av7.attribute, date1.attribute))
   service.index(obj2)
   service.index(obj3)
   service.index(obj)
