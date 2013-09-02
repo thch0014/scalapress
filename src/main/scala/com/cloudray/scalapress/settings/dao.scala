@@ -43,7 +43,7 @@ class InstallationDaoImpl extends GenericDaoImpl[Installation, java.lang.Long] w
 class InstallationDaoImplValidator {
   @Autowired var dao: InstallationDao = _
   @PostConstruct def ensureOne() {
-    if (dao.findAll().size == 0) {
+    if (dao.findAll().isEmpty) {
       val i = new Installation
       dao.save(i)
     }

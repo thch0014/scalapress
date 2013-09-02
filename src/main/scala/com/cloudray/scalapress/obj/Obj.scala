@@ -18,7 +18,7 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items")
-class Obj extends SortedSections {
+class Obj extends SortedSections with java.io.Serializable {
 
   def available = stock > 0
 
