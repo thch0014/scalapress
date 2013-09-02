@@ -83,7 +83,7 @@
 
         <log4j.version>1.2.17</log4j.version>
 
-        <mysql.version>5.1.25</mysql.version>
+        <mysql.version>5.1.26</mysql.version>
         <mockito.version>1.9.5</mockito.version>
 
         <rome.version>1.0</rome.version>
