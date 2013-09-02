@@ -12,18 +12,18 @@ import com.cloudray.scalapress.section.SectionDao
 @RequestMapping(Array("backoffice/plugin/disqus/section/{id}"))
 class DisqusSectionController {
 
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: DisqusSection) = "admin/plugin/disqus/section/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: DisqusSection) = "admin/plugin/disqus/section/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: DisqusSection) = {
-        sectionDao.save(section)
-        edit(section)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: DisqusSection) = {
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): DisqusSection =
-        sectionDao.find(id).asInstanceOf[DisqusSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): DisqusSection =
+    sectionDao.find(id).asInstanceOf[DisqusSection]
 }
