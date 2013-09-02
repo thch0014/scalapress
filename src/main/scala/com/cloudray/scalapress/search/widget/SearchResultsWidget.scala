@@ -8,6 +8,7 @@ import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.search.section.SingleObjectCache
 
 /** @author Stephen Samuel
   *
@@ -16,7 +17,10 @@ import com.cloudray.scalapress.obj.Obj
   * */
 @Entity
 @Table(name = "boxes_highlighted_items")
-class SearchResultsWidget extends Widget with Logging {
+class SearchResultsWidget extends Widget with Logging with SingleObjectCache[Seq[Obj]] {
+
+  val FIVE_MINUTES_MS = 1000 * 60 * 5
+  val CacheTimeout = FIVE_MINUTES_MS
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "search", nullable = true)
@@ -37,16 +41,21 @@ class SearchResultsWidget extends Widget with Logging {
   }
 
   def render(request: ScalapressRequest): Option[String] = {
+
     Option(search) match {
       case None => None
       case Some(s) =>
-        logger.debug("Loading objects... [widget={}]", id)
-        val objects = _objects(request)
+
+        val objects = cachedOrExecute(_objects(request))
         logger.debug("...objects loaded [widget={}]", id)
-        if (objects.isEmpty) Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
+
+        if (objects.isEmpty)
+          Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
+
         else {
           Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
-            case None => Some("<!-- search widget #" + id + ": no markup -->")
+            case None =>
+              Some("<!-- search widget #" + id + ": no markup -->")
             case Some(m) =>
               val rendered = MarkupRenderer.renderObjects(objects, m, request)
               Some(rendered)
