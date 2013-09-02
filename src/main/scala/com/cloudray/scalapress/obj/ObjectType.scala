@@ -15,7 +15,7 @@ import javax.persistence.Entity
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items_types")
-class ObjectType extends SortedSections {
+class ObjectType extends SortedSections with java.io.Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

@@ -17,9 +17,7 @@ import com.cloudray.scalapress.obj.Obj
   * */
 @Entity
 @Table(name = "blocks_highlighted_items")
-class SearchResultsSection extends Section with Logging with SingleObjectCache[Seq[Obj]] {
-
-  val CacheTimeout: Long = 1000 * 60
+class SearchResultsSection extends Section with Logging {
 
   @OneToOne
   @JoinColumn(name = "search")

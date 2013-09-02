@@ -8,7 +8,6 @@ import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.search.section.SingleObjectCache
 
 /** @author Stephen Samuel
   *
@@ -17,7 +16,7 @@ import com.cloudray.scalapress.search.section.SingleObjectCache
   * */
 @Entity
 @Table(name = "boxes_highlighted_items")
-class SearchResultsWidget extends Widget with Logging with SingleObjectCache[Seq[Obj]] {
+class SearchResultsWidget extends Widget with Logging {
 
   val CacheTimeout: Long = 1000 * 60
 

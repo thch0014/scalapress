@@ -12,49 +12,49 @@ import com.cloudray.scalapress.plugin.gallery.galleryview.Gallery
 @Entity
 @Table(name = "images")
 @deprecated("Images should really just be stored as strings now")
-class Image {
+class Image extends java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @BeanProperty var filename: String = _
-    @BeanProperty var description: String = _
-    @BeanProperty var name: String = _
+  @BeanProperty var filename: String = _
+  @BeanProperty var description: String = _
+  @BeanProperty var name: String = _
 
-    @BeanProperty var date: Long = _
-    @BeanProperty var position: Int = _
-    @BeanProperty var alt: String = _
+  @BeanProperty var date: Long = _
+  @BeanProperty var position: Int = _
+  @BeanProperty var alt: String = _
 
-    //@BeanProperty var contentType: String = _
+  //@BeanProperty var contentType: String = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var obj: Obj = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "item", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var obj: Obj = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gallery", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var gallery: Gallery = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "gallery", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var gallery: Gallery = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var folder: Folder = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var folder: Folder = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "imageBox", nullable = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var mediaWidget: MediaWidget = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "imageBox", nullable = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var mediaWidget: MediaWidget = _
 
 }
 
 object Image {
-    def apply(key: String) = {
-        val image = new Image
-        image.filename = key
-        image.date = new DateTime(DateTimeZone.UTC).getMillis
-        image
-    }
+  def apply(key: String) = {
+    val image = new Image
+    image.filename = key
+    image.date = new DateTime(DateTimeZone.UTC).getMillis
+    image
+  }
 }
