@@ -19,7 +19,7 @@ import com.cloudray.scalapress.obj.Obj
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging with SingleObjectCache[Seq[Obj]] {
 
-  val FIVE_MINUTES_MS: Long = 1000 * 60 * 5
+  val FIVE_MINUTES_MS: Long = 1000 * 60
   val CacheTimeout = FIVE_MINUTES_MS
 
   @OneToOne

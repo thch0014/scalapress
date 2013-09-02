@@ -14,12 +14,12 @@ import com.cloudray.scalapress.search.section.SingleObjectCache
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget with Logging with SingleObjectCache[Seq[Obj]] {
 
-  val FIVE_MINUTES_MS: Long = 1000 * 60 * 5
+  val FIVE_MINUTES_MS: Long = 1000 * 60
   val CacheTimeout = FIVE_MINUTES_MS
 
   @OneToOne(fetch = FetchType.EAGER)
