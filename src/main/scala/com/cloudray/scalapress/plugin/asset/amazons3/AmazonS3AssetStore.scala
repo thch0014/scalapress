@@ -20,165 +20,165 @@ class AmazonS3AssetStore(val cdnUrl: String,
                          val accessKey: String,
                          val bucketName: String) extends AssetStore with Logging {
 
-    val STORAGE_CLASS = StorageClass.ReducedRedundancy
+  val STORAGE_CLASS = StorageClass.ReducedRedundancy
 
-    def delete(key: String) {
-        getAmazonS3Client.deleteObject(bucketName, key)
+  def delete(key: String) {
+    getAmazonS3Client.deleteObject(bucketName, key)
+  }
+
+  def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = {
+    val pq = PagedQuery(pageNumber, pageSize)
+    listObjects(Option(query), pq.offset, pageSize).toList
+      .map(arg => Asset(arg.getKey, arg.getSize, link(arg.getKey), URLConnection.guessContentTypeFromName(arg.getKey)))
+      .toArray
+  }
+
+  def exists(key: String) = {
+    try {
+      getAmazonS3Client.getObjectMetadata(bucketName, key) != null
+    } catch {
+      case e: Exception => false
     }
+  }
 
-    def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = {
-        val pq = PagedQuery(pageNumber, pageSize)
-        listObjects(Option(query), pq.offset, pageSize).toList
-          .map(arg => Asset(arg.getKey, arg.getSize, link(arg.getKey), URLConnection.guessContentTypeFromName(arg.getKey)))
-          .toArray
+  def count: Int = {
+
+    val req: ListObjectsRequest = new ListObjectsRequest
+    req.setBucketName(bucketName)
+
+    var listing = getAmazonS3Client.listObjects(req)
+    var count = 0
+    while (listing.getObjectSummaries.size > 0) {
+      count = count + listing.getObjectSummaries.size()
+      listing = getAmazonS3Client.listNextBatchOfObjects(listing)
     }
+    count
+  }
 
-    def exists(key: String) = {
-        try {
-            getAmazonS3Client.getObjectMetadata(bucketName, key) != null
-        } catch {
-            case e: Exception => false
-        }
+  /**
+   * Lists all objects in the images bucket
+   */
+  private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3ObjectSummary] = {
+
+    val req: ListObjectsRequest = new ListObjectsRequest
+    req.setBucketName(bucketName)
+    req.setPrefix(prefix.orNull)
+
+    val buffer = new ListBuffer[S3ObjectSummary]
+
+    var listing = getAmazonS3Client.listObjects(req)
+    var summaries = listing.getObjectSummaries
+    buffer.appendAll(summaries.asScala)
+    while (summaries.size > 0) {
+      listing = getAmazonS3Client.listNextBatchOfObjects(listing)
+      summaries = listing.getObjectSummaries
+      buffer.appendAll(summaries.asScala)
     }
+    buffer.drop(start).take(limit)
+  }
 
-    def count: Int = {
+  override def baseUrl = cdnUrl
 
-        val req: ListObjectsRequest = new ListObjectsRequest
-        req.setBucketName(bucketName)
+  override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
-        var listing = getAmazonS3Client.listObjects(req)
-        var count = 0
-        while (listing.getObjectSummaries.size > 0) {
-            count = count + listing.getObjectSummaries.size()
-            listing = getAmazonS3Client.listNextBatchOfObjects(listing)
-        }
-        count
+  override def list(limit: Int): Array[Asset] = search(null, 0, limit)
+
+  def get(key: String): Option[InputStream] = {
+    try {
+      Option(getAmazonS3Client.getObject(bucketName, key)) match {
+        case None => None
+        case Some(obj) =>
+          Option(obj.getObjectContent) match {
+            case Some(in) =>
+              val b = IOUtils.toByteArray(in)
+              IOUtils.closeQuietly(in)
+              if (b.length == 0)
+                None
+              else
+                Option(new ByteArrayInputStream(b))
+            case None => None
+          }
+      }
+    } catch {
+      case e: Exception => None
     }
+  }
 
-    /**
-     * Lists all objects in the images bucket
-     */
-    private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3ObjectSummary] = {
+  def add(key: String, in: InputStream): String = {
+    val normalizedKey = getNormalizedKey(key)
+    put(normalizedKey, in)
+    normalizedKey
+  }
 
-        val req: ListObjectsRequest = new ListObjectsRequest
-        req.setBucketName(bucketName)
-        req.setPrefix(prefix.orNull)
+  def put(key: String, in: InputStream) {
 
-        val buffer = new ListBuffer[S3ObjectSummary]
+    val array: Array[Byte] = IOUtils.toByteArray(in)
+    IOUtils.closeQuietly(in)
 
-        var listing = getAmazonS3Client.listObjects(req)
-        var summaries = listing.getObjectSummaries
-        buffer.appendAll(summaries.asScala)
-        while (summaries.size > 0) {
-            listing = getAmazonS3Client.listNextBatchOfObjects(listing)
-            summaries = listing.getObjectSummaries
-            buffer.appendAll(summaries.asScala)
-        }
-        buffer.drop(start).take(limit)
-    }
+    val md = new ObjectMetadata
+    md.setContentLength(array.length)
+    md.setContentType(MimeTools.contentType(key))
+    md.setCacheControl("max-age=604800001")
 
-    override def baseUrl = cdnUrl
+    val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
+    request.setCannedAcl(CannedAccessControlList.PublicRead)
+    request.setStorageClass(STORAGE_CLASS)
 
-    override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
+    getAmazonS3Client.putObject(request)
+  }
 
-    override def list(limit: Int): Array[Asset] = search(null, 0, limit)
+  def getNormalizedKey(key: String): String = {
+    FilenameUtils.getBaseName(key) + "_" + new DateTime(DateTimeZone.UTC).getMillis + "." + FilenameUtils
+      .getExtension(key)
+  }
 
-    def get(key: String): Option[InputStream] = {
-        try {
-            Option(getAmazonS3Client.getObject(bucketName, key)) match {
-                case None => None
-                case Some(obj) =>
-                    Option(obj.getObjectContent) match {
-                        case Some(in) =>
-                            val b = IOUtils.toByteArray(in)
-                            IOUtils.closeQuietly(in)
-                            if (b.length == 0)
-                                None
-                            else
-                                Option(new ByteArrayInputStream(b))
-                        case None => None
-                    }
-            }
-        } catch {
-            case e: Exception => None
-        }
-    }
+  def add(in: InputStream): String = {
+    val key = UUID.randomUUID.toString
+    put(key, in)
+    key
+  }
 
-    def add(key: String, in: InputStream): String = {
-        val normalizedKey = getNormalizedKey(key)
-        put(normalizedKey, in)
-        normalizedKey
-    }
+  def getAmazonS3Client: AmazonS3Client = {
+    val cred: BasicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
+    new AmazonS3Client(cred)
+  }
 
-    def put(key: String, in: InputStream) {
+  //@PostConstruct
+  def run() {
 
-        val array: Array[Byte] = IOUtils.toByteArray(in)
-        IOUtils.closeQuietly(in)
+    import java.util.concurrent.Executors
+    import scala.concurrent._
 
-        val md = new ObjectMetadata
-        md.setContentLength(array.length)
-        md.setContentType(MimeTools.contentType(key))
-        md.setCacheControl("max-age=604800001")
+    implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
 
-        val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
-        request.setCannedAcl(CannedAccessControlList.PublicRead)
-        request.setStorageClass(STORAGE_CLASS)
-
-        getAmazonS3Client.putObject(request)
-    }
-
-    def getNormalizedKey(key: String): String = {
-        FilenameUtils.getBaseName(key) + "_" + new DateTime(DateTimeZone.UTC).getMillis + "." + FilenameUtils
-          .getExtension(key)
-    }
-
-    def add(in: InputStream): String = {
-        val key = UUID.randomUUID.toString
-        put(key, in)
-        key
-    }
-
-    def getAmazonS3Client: AmazonS3Client = {
-        val cred: BasicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
-        new AmazonS3Client(cred)
-    }
-
-    //@PostConstruct
-    def run() {
-
-        import java.util.concurrent.Executors
-        import scala.concurrent._
-
-        implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
-
-        val list = listObjects(null, 0, 100000)
-        logger.debug("Updating content type on {} objects", list.size)
+    val list = listObjects(null, 0, 100000)
+    logger.debug("Updating content type on {} objects", list.size)
+    future {
+      list.foreach(arg => {
         future {
-            list.foreach(arg => {
-                future {
-                    logger.info("Updating image" + arg.getKey)
+          logger.info("Updating image" + arg.getKey)
 
-                    try {
+          try {
 
-                        val md = new ObjectMetadata
-                        md.setContentType(MimeTools.contentType(arg.getKey))
-                        md.setCacheControl("max-age=2592000")
+            val md = new ObjectMetadata
+            md.setContentType(MimeTools.contentType(arg.getKey))
+            md.setCacheControl("max-age=2592000")
 
-                        val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
-                        copy.setNewObjectMetadata(md)
-                        copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-                        copy.setStorageClass(STORAGE_CLASS)
-                        getAmazonS3Client.copyObject(copy)
+            val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
+            copy.setNewObjectMetadata(md)
+            copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
+            copy.setStorageClass(STORAGE_CLASS)
+            getAmazonS3Client.copyObject(copy)
 
-                    } catch {
-                        case e: Exception => logger.warn("{}", e)
-                    }
-                }
-            })
-            future {
-                logger.info("Finished image updates")
-            }
+          } catch {
+            case e: Exception => logger.warn("{}", e)
+          }
         }
-        logger.debug("Upgrade completed", list.size)
+      })
+      future {
+        logger.info("Finished image updates")
+      }
     }
+    logger.debug("Upgrade completed", list.size)
+  }
 }

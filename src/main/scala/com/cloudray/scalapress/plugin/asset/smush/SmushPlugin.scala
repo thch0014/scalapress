@@ -10,46 +10,46 @@ import com.cloudray.scalapress.media.AssetLifecycleListener
 @Component
 class SmushPlugin extends AssetLifecycleListener {
 
-    val js = new YuiJavaScriptCompressor()
-    js.setPreserveAllSemiColons(true)
-    js.setLineBreak(1000)
-    js.setDisableOptimizations(true)
+  val js = new YuiJavaScriptCompressor()
+  js.setPreserveAllSemiColons(true)
+  js.setLineBreak(1000)
+  js.setDisableOptimizations(true)
 
-    val css = new YuiCssCompressor()
-    css.setLineBreak(1000)
+  val css = new YuiCssCompressor()
+  css.setLineBreak(1000)
 
-    def onStore(key: String, input: InputStream): (String, InputStream) = {
+  def onStore(key: String, input: InputStream): (String, InputStream) = {
 
-        if (key.toLowerCase.endsWith(".css")) {
-            val minified = _minifyCss(input)
-            (key, new ByteArrayInputStream(minified))
+    if (key.toLowerCase.endsWith(".css")) {
+      val minified = _minifyCss(input)
+      (key, new ByteArrayInputStream(minified))
 
-        } else if (key.toLowerCase.endsWith(".js")) {
-            val minified = _minifyJs(input)
-            (key, new ByteArrayInputStream(minified))
+    } else if (key.toLowerCase.endsWith(".js")) {
+      val minified = _minifyJs(input)
+      (key, new ByteArrayInputStream(minified))
 
-        } else {
-            (key, input)
-        }
+    } else {
+      (key, input)
     }
+  }
 
-    def _minifyCss(input: InputStream) = {
-        val source = IOUtils.toString(input, "UTF-8")
-        val minified = try {
-            css.compress(source)
-        } catch {
-            case e: Exception => source
-        }
-        minified.getBytes("UTF-8")
+  def _minifyCss(input: InputStream) = {
+    val source = IOUtils.toString(input, "UTF-8")
+    val minified = try {
+      css.compress(source)
+    } catch {
+      case e: Exception => source
     }
+    minified.getBytes("UTF-8")
+  }
 
-    def _minifyJs(input: InputStream) = {
-        val source = IOUtils.toString(input, "UTF-8")
-        val minified = try {
-            css.compress(source)
-        } catch {
-            case e: Exception => source
-        }
-        minified.getBytes("UTF-8")
+  def _minifyJs(input: InputStream) = {
+    val source = IOUtils.toString(input, "UTF-8")
+    val minified = try {
+      css.compress(source)
+    } catch {
+      case e: Exception => source
     }
+    minified.getBytes("UTF-8")
+  }
 }
