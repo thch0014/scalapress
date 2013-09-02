@@ -16,69 +16,69 @@ import org.springframework.web.multipart.MultipartFile
 @RequestMapping(Array("backoffice/obj"))
 class ObjectSearchController extends ObjectStatusPopulator {
 
-    @Autowired var objectDao: ObjectDao = _
-    @Autowired var typeDao: TypeDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var objectDao: ObjectDao = _
+  @Autowired var typeDao: TypeDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping
-    def search(@ModelAttribute("form") form: SearchForm,
-               @RequestParam(value = "typeId") typeId: Long,
-               @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-               model: ModelMap,
-               req: HttpServletRequest) = {
+  @RequestMapping
+  def search(@ModelAttribute("form") form: SearchForm,
+             @RequestParam(value = "typeId") typeId: Long,
+             @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
+             model: ModelMap,
+             req: HttpServletRequest) = {
 
-        val query = new ObjectQuery
-        query.pageNumber = pageNumber
-        query.pageSize = 20
-        query.status = Option(form.status)
-        query.name = Option(form.name)
-        query.typeId = Option(typeId).filter(_ > 0)
+    val query = new ObjectQuery
+    query.pageNumber = pageNumber
+    query.pageSize = 20
+    query.status = Option(form.status)
+    query.name = Option(form.name)
+    query.typeId = Option(typeId).filter(_ > 0)
 
-        val page = objectDao.search(query)
-        model.put("objects", page.java)
-        model.put("paging", Paging(req, page))
+    val page = objectDao.search(query)
+    model.put("objects", page.java)
+    model.put("paging", Paging(req, page))
 
-        "admin/object/list.vm"
-    }
+    "admin/object/list.vm"
+  }
 
-    @RequestMapping(value = Array("create"), params = Array("typeId"))
-    def create(@RequestParam("typeId") typeId: java.lang.Long): String = {
+  @RequestMapping(value = Array("create"), params = Array("typeId"))
+  def create(@RequestParam("typeId") typeId: java.lang.Long): String = {
 
-        val t = typeDao.find(typeId)
-        val obj = Obj(t)
-        objectDao.save(obj)
+    val t = typeDao.find(typeId)
+    val obj = Obj(t)
+    objectDao.save(obj)
 
-        "redirect:/backoffice/obj/" + obj.id
-    }
+    "redirect:/backoffice/obj/" + obj.id
+  }
 
-    @RequestMapping(value = Array("create"), params = Array("typeId", "name"))
-    def create(@RequestParam("typeId") typeId: java.lang.Long, @RequestParam("name") name: String): String = {
+  @RequestMapping(value = Array("create"), params = Array("typeId", "name"))
+  def create(@RequestParam("typeId") typeId: java.lang.Long, @RequestParam("name") name: String): String = {
 
-        val t = typeDao.find(typeId)
-        val obj = Obj(t)
-        obj.name = name
-        objectDao.save(obj)
+    val t = typeDao.find(typeId)
+    val obj = Obj(t)
+    obj.name = name
+    objectDao.save(obj)
 
-        "redirect:/backoffice/obj/" + obj.id
-    }
+    "redirect:/backoffice/obj/" + obj.id
+  }
 
-    @RequestMapping(value = Array("import"), params = Array("typeId"))
-    def imp(@RequestParam("typeId") typeId: java.lang.Long,
-            @RequestParam("upload") upload: MultipartFile): String = {
+  @RequestMapping(value = Array("import"), params = Array("typeId"))
+  def imp(@RequestParam("typeId") typeId: java.lang.Long,
+          @RequestParam("upload") upload: MultipartFile): String = {
 
-        val t = typeDao.find(typeId)
-        val importer = new ObjectImporter(objectDao, t)
-        importer.doImport(upload.getInputStream)
+    val t = typeDao.find(typeId)
+    val importer = new ObjectImporter(objectDao, t)
+    importer.doImport(upload.getInputStream)
 
-        "redirect:/backoffice/obj?typeId=" + typeId
-    }
+    "redirect:/backoffice/obj?typeId=" + typeId
+  }
 
-    @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
-    @ModelAttribute("form") def form = new SearchForm
+  @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
+  @ModelAttribute("form") def form = new SearchForm
 
 }
 
 class SearchForm {
-    @BeanProperty var status: String = "Live"
-    @BeanProperty var name: String = _
+  @BeanProperty var status: String = "Live"
+  @BeanProperty var name: String = _
 }

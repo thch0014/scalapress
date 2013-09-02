@@ -20,93 +20,93 @@ import com.cloudray.scalapress.util.mvc.UrlResolver
 @RequestMapping(Array("backoffice/type/{id}"))
 class TypeEditController extends MarkupPopulator {
 
-    @Autowired var typeDao: TypeDao = _
-    @Autowired var markupDao: MarkupDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var typeDao: TypeDao = _
+  @Autowired var markupDao: MarkupDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("type") t: ObjectType) = "admin/object/type/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute("type") t: ObjectType) = "admin/object/type/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute("type") t: ObjectType) = {
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute("type") t: ObjectType) = {
+    typeDao.save(t)
+    edit(t)
+  }
+
+  @RequestMapping(Array("section/create"))
+  def createSection(@ModelAttribute("type") t: ObjectType, @RequestParam("class") cls: String) = {
+    val section = Class.forName(cls).newInstance.asInstanceOf[Section]
+    section.objectType = t
+    section.visible = true
+    section.init(context)
+    t.sections.add(section)
+    typeDao.save(t)
+    "redirect:/backoffice/type/" + t.id
+  }
+
+  @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
+  def reorderSections(@RequestBody order: String, @ModelAttribute("type") t: ObjectType): String = {
+
+    val ids = order.split("-")
+    t.sections.asScala.foreach(section => {
+      val pos = ids.indexOf(section.id.toString)
+      section.position = pos
+      sectionDao.save(section)
+    })
+    "ok"
+  }
+
+  @RequestMapping(value = Array("section/{sectionId}/delete"))
+  def deleteSection(@ModelAttribute("type") t: ObjectType, @PathVariable("sectionId") sectionId: Long): String = {
+    t.sections.asScala.find(_.id == sectionId) match {
+      case None =>
+      case Some(section) =>
+        t.sections.remove(section)
+        section.obj = null
         typeDao.save(t)
-        edit(t)
     }
+    "redirect:/backoffice/type/"
+  }
 
-    @RequestMapping(Array("section/create"))
-    def createSection(@ModelAttribute("type") t: ObjectType, @RequestParam("class") cls: String) = {
-        val section = Class.forName(cls).newInstance.asInstanceOf[Section]
-        section.objectType = t
-        section.visible = true
-        section.init(context)
-        t.sections.add(section)
-        typeDao.save(t)
-        "redirect:/backoffice/type/" + t.id
-    }
+  @RequestMapping(Array("/attribute/create"))
+  def createAttribute(@ModelAttribute("type") t: ObjectType) = {
 
-    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
-    def reorderSections(@RequestBody order: String, @ModelAttribute("type") t: ObjectType): String = {
+    val attribute = new Attribute
+    attribute.name = "new attribute"
+    attribute.attributeType = AttributeType.Text
+    attribute.objectType = t
+    t.attributes.add(attribute)
 
-        val ids = order.split("-")
-        t.sections.asScala.foreach(section => {
-            val pos = ids.indexOf(section.id.toString)
-            section.position = pos
-            sectionDao.save(section)
-        })
-        "ok"
-    }
+    typeDao.save(t)
 
-    @RequestMapping(value = Array("section/{sectionId}/delete"))
-    def deleteSection(@ModelAttribute("type") t: ObjectType, @PathVariable("sectionId") sectionId: Long): String = {
-        t.sections.asScala.find(_.id == sectionId) match {
-            case None =>
-            case Some(section) =>
-                t.sections.remove(section)
-                section.obj = null
-                typeDao.save(t)
-        }
-        "redirect:/backoffice/type/"
-    }
+    "redirect:" + UrlResolver.typeEdit(t)
+  }
 
-    @RequestMapping(Array("/attribute/create"))
-    def createAttribute(@ModelAttribute("type") t: ObjectType) = {
+  @RequestMapping(value = Array("/attribute/order"), method = Array(RequestMethod.POST))
+  def reorderAttributes(@RequestBody order: String, @ModelAttribute("type") t: ObjectType): String = {
 
-        val attribute = new Attribute
-        attribute.name = "new attribute"
-        attribute.attributeType = AttributeType.Text
-        attribute.objectType = t
-        t.attributes.add(attribute)
+    val ids = order.split("-")
+    t.attributes.asScala.foreach(a => {
+      val pos = ids.indexOf(a.id.toString)
+      a.position = pos
+      context.attributeDao.save(a)
+    })
+    "ok"
+  }
 
-        typeDao.save(t)
+  @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
-        "redirect:" + UrlResolver.typeEdit(t)
-    }
+    val t = typeDao.find(id)
+    val sortedAttributes = t.attributes.asScala.toSeq.sortBy(_.position).asJava
 
-    @RequestMapping(value = Array("/attribute/order"), method = Array(RequestMethod.POST))
-    def reorderAttributes(@RequestBody order: String, @ModelAttribute("type") t: ObjectType): String = {
+    model.put("type", t)
+    model.put("attributes", sortedAttributes)
 
-        val ids = order.split("-")
-        t.attributes.asScala.foreach(a => {
-            val pos = ids.indexOf(a.id.toString)
-            a.position = pos
-            context.attributeDao.save(a)
-        })
-        "ok"
-    }
+    val sections = t.sections.asScala.toSeq.sortBy(_.position).asJava
+    model.put("sections", sections)
+  }
 
-    @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
-
-        val t = typeDao.find(id)
-        val sortedAttributes = t.attributes.asScala.toSeq.sortBy(_.position).asJava
-
-        model.put("type", t)
-        model.put("attributes", sortedAttributes)
-
-        val sections = t.sections.asScala.toSeq.sortBy(_.position).asJava
-        model.put("sections", sections)
-    }
-
-    @ModelAttribute("classes") def classes = ComponentClassScanner
-      .sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
+  @ModelAttribute("classes") def classes = ComponentClassScanner
+    .sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
 }

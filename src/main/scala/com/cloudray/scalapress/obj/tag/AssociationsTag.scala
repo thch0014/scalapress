@@ -9,17 +9,17 @@ import com.cloudray.scalapress.obj.Obj
 /** @author Stephen Samuel */
 @Tag("associations")
 class AssociationsTag extends ScalapressTag {
-    def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-        request.obj.flatMap(obj => {
-            val associations = obj.associations.asScala.toSeq.filter(_.status == Obj.STATUS_LIVE)
-            associations.size match {
-                case 0 => None
-                case _ =>
-                    params.get("markup")
-                      .flatMap(id => Option(request.context.markupDao.find(id.toLong)))
-                      .map(m => MarkupRenderer.renderObjects(associations, m, request))
-            }
-        })
-    }
+    request.obj.flatMap(obj => {
+      val associations = obj.associations.asScala.toSeq.filter(_.status == Obj.STATUS_LIVE)
+      associations.size match {
+        case 0 => None
+        case _ =>
+          params.get("markup")
+            .flatMap(id => Option(request.context.markupDao.find(id.toLong)))
+            .map(m => MarkupRenderer.renderObjects(associations, m, request))
+      }
+    })
+  }
 }

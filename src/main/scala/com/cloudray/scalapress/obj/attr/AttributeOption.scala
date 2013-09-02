@@ -10,18 +10,18 @@ import com.cloudray.thirdparty.NaturalOrderComparator
 @Table(name = "attributes_options")
 class AttributeOption extends Ordered[AttributeOption] {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attribute")
-    @BeanProperty var attribute: Attribute = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "attribute")
+  @BeanProperty var attribute: Attribute = _
 
-    @BeanProperty var value: String = _
+  @BeanProperty var value: String = _
 
-    @BeanProperty var position: Int = _
+  @BeanProperty var position: Int = _
 
-    def compare(that: AttributeOption): Int =
-        new NaturalOrderComparator().compare(Option(value).getOrElse(""), Option(that.value).getOrElse(""))
+  def compare(that: AttributeOption): Int =
+    new NaturalOrderComparator().compare(Option(value).getOrElse(""), Option(that.value).getOrElse(""))
 }
