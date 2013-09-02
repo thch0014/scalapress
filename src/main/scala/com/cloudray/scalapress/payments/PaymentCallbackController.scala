@@ -11,20 +11,20 @@ import org.springframework.stereotype.Controller
 @RequestMapping(Array("payment/callback"))
 class PaymentCallbackController extends Logging {
 
-    @Autowired var paymentCallbackService: PaymentCallbackService = _
+  @Autowired var paymentCallbackService: PaymentCallbackService = _
 
-    @ResponseBody
-    @RequestMapping
-    def callback(req: HttpServletRequest, resp: HttpServletResponse) {
-        logger.info("Callback received: {}", req.getParameterMap)
-        paymentCallbackService.callbacks(req)
-        resp.setStatus(200)
-    }
+  @ResponseBody
+  @RequestMapping
+  def callback(req: HttpServletRequest, resp: HttpServletResponse) {
+    logger.info("Callback received: {}", req.getParameterMap)
+    paymentCallbackService.callbacks(req)
+    resp.setStatus(200)
+  }
 
-    @ResponseBody
-    @RequestMapping(Array("listing"))
-    @deprecated("for h4s, remove once their paypal updated")
-    def callbackh4s(req: HttpServletRequest, resp: HttpServletResponse) {
-        callback(req, resp)
-    }
+  @ResponseBody
+  @RequestMapping(Array("listing"))
+  @deprecated("for h4s, remove once their paypal updated")
+  def callbackh4s(req: HttpServletRequest, resp: HttpServletResponse) {
+    callback(req, resp)
+  }
 }

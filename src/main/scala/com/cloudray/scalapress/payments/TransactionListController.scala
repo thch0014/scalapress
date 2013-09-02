@@ -14,19 +14,19 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/tx"))
 class TransactionListController {
 
-    @Autowired var context: ScalapressContext = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping
-    def search(@RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-               model: ModelMap, req: HttpServletRequest): String = {
+  @RequestMapping
+  def search(@RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
+             model: ModelMap, req: HttpServletRequest): String = {
 
-        val search = new Search(classOf[Transaction])
-        search.setMaxResults(50)
-        search.addSort("id", true)
-        val results = context.transactionDao.search(search)
+    val search = new Search(classOf[Transaction])
+    search.setMaxResults(50)
+    search.addSort("id", true)
+    val results = context.transactionDao.search(search)
 
-        model.put("results", results.asJava)
-        //  model.put("paging", Paging(req, orders))
-        "admin/tx/list.vm"
-    }
+    model.put("results", results.asJava)
+    //  model.put("paging", Paging(req, orders))
+    "admin/tx/list.vm"
+  }
 }

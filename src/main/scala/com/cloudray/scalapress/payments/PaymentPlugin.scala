@@ -13,38 +13,38 @@ import scala.beans.BeanProperty
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class PaymentPlugin {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  @BeanProperty var id: Long = _
 
-    def name: String
-    def processor: PaymentProcessor
-    def enabled: Boolean
+  def name: String
+  def processor: PaymentProcessor
+  def enabled: Boolean
 }
 
 trait PaymentPluginDao extends GenericDao[PaymentPlugin, java.lang.Long] {
-    def enabled: Seq[PaymentPlugin]
+  def enabled: Seq[PaymentPlugin]
 }
 
 @Component
 @Transactional
 class PaymentPluginDaoImpl extends GenericDaoImpl[PaymentPlugin, java.lang.Long] with PaymentPluginDao {
-    def enabled: Seq[PaymentPlugin] = findAll.filter(p => p.enabled)
+  def enabled: Seq[PaymentPlugin] = findAll.filter(p => p.enabled)
 }
 
 @Component
 class PaymentPluginValidator {
 
-    @Autowired var paymentPluginDao: PaymentPluginDao = _
+  @Autowired var paymentPluginDao: PaymentPluginDao = _
 
-    @PostConstruct
-    def ensurePluginsCreated() {
-        ComponentClassScanner.paymentPlugins.foreach(plugin => {
-            val plugins = paymentPluginDao.findAll()
-            if (!plugins.exists(arg => arg.getClass.isAssignableFrom(plugin) || plugin.isAssignableFrom(arg.getClass)))
-                paymentPluginDao.save(plugin.newInstance)
+  @PostConstruct
+  def ensurePluginsCreated() {
+    ComponentClassScanner.paymentPlugins.foreach(plugin => {
+      val plugins = paymentPluginDao.findAll()
+      if (!plugins.exists(arg => arg.getClass.isAssignableFrom(plugin) || plugin.isAssignableFrom(arg.getClass)))
+        paymentPluginDao.save(plugin.newInstance)
 
-        })
-    }
+    })
+  }
 }
 
