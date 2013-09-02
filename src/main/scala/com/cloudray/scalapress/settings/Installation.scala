@@ -13,17 +13,21 @@ class Installation {
   @BeanProperty var id: Long = _
 
   // email for the software to send emails to
+  @Column(length = 1000)
   @BeanProperty var adminEmail: String = _
 
   @BeanProperty var postcode: String = null
 
   // public contact email
+  @Column(length = 1000)
   @BeanProperty var email: String = null
 
   @BeanProperty var telephone: String = null
 
+  @Column(length = 1000)
   @BeanProperty var address: String = null
 
+  @Column(length = 1000)
   @BeanProperty var name: String = null
 
   @BeanProperty var vatNumber: String = _
