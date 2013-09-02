@@ -19,7 +19,7 @@ import com.cloudray.scalapress.search.section.SingleObjectCache
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget with Logging with SingleObjectCache[Seq[Obj]] {
 
-  val CacheTimeout = 1000 * 60
+  val CacheTimeout: Long = 1000 * 60
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "search", nullable = true)
@@ -45,7 +45,7 @@ class SearchResultsWidget extends Widget with Logging with SingleObjectCache[Seq
       case None => None
       case Some(s) =>
 
-        val objects = cachedOrExecute(_objects(request))
+        val objects = _objects(request)
         logger.debug("...objects loaded [widget={}]", id)
 
         if (objects.isEmpty)

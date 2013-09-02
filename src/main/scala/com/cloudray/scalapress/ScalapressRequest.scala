@@ -44,10 +44,10 @@ case class ScalapressRequest(request: HttpServletRequest,
   def attribute(id: Long): Attribute = cache.attribute(id)
 
   case class Cache(context: ScalapressContext) {
+    lazy val installation = context.installationDao.get
     val _attributes = scala.collection.mutable.Map.empty[Long, Attribute]
     val _folders = scala.collection.mutable.Map.empty[Long, Folder]
     lazy val shoppingPlugin = context.bean[ShoppingPluginDao].get
-    lazy val installation = context.installationDao.get
     lazy val folderSettings = context.folderSettingsDao.head
     lazy val widgets = context.widgetDao.findAll()
     lazy val folders = {
