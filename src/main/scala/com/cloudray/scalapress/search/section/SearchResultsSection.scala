@@ -14,10 +14,13 @@ import com.cloudray.scalapress.obj.Obj
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
-class SearchResultsSection extends Section with Logging {
+class SearchResultsSection extends Section with Logging with SingleObjectCache[Seq[Obj]] {
+
+  val FIVE_MINUTES_MS = 1000 * 60 * 5
+  val CacheTimeout = FIVE_MINUTES_MS
 
   @OneToOne
   @JoinColumn(name = "search")
@@ -41,7 +44,7 @@ class SearchResultsSection extends Section with Logging {
       case None => Some("<!-- no search object set (section #" + id + ") -->")
       case Some(s) =>
 
-        val objects = _objects(request)
+        val objects = cachedOrExecute(_objects(request))
         logger.debug("...objects loaded [section={}]", id)
 
         objects.size match {
@@ -59,9 +62,9 @@ class SearchResultsSection extends Section with Logging {
 
   def _objects(request: ScalapressRequest): Seq[Obj] = {
     val result = request.context.searchService.search(search)
-    val ids = result.refs.map(_.id)
-    if (ids.isEmpty) Nil
+    if (result.refs.isEmpty) Nil
     else {
+      val ids = result.refs.map(_.id)
       val objs = request.context.objectDao
         .findBulk(ids)
         .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
