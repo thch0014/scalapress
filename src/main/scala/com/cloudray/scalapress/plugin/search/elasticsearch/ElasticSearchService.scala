@@ -114,6 +114,7 @@ class ElasticSearchService extends SearchService with Logging {
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
   def _attributeRestore(value: String): String = value.replace("_", " ")
 
+  override def index(obj: Obj) = index(Seq(obj))
   override def index(objs: Seq[Obj]) {
     logger.debug("Indexing {} objects", objs.size)
 

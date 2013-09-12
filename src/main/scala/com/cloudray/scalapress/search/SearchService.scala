@@ -5,6 +5,7 @@ import com.cloudray.scalapress.obj.Obj
 /** @author Stephen Samuel */
 trait SearchService {
 
+  def index(obj: Obj)
   def index(objs: Seq[Obj])
   def remove(id: String)
   def contains(id: String): Boolean
