@@ -36,13 +36,11 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     var objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
     while (!objs.isEmpty) {
       logger.info("Indexing from offset [{}]", offset)
-      objs.foreach(obj => {
-        try {
-          service.index(obj)
-        } catch {
-          case e: Exception => logger.warn("{}", e)
-        }
-      })
+      try {
+        service.index(objs)
+      } catch {
+        case e: Exception => logger.warn("{}", e)
+      }
       offset = offset + pageSize
       objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
     }

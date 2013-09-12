@@ -12,7 +12,7 @@ import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.obj.attr.Attribute
-import com.sksamuel.elastic4s.{FilterDefinition, QueryDefinition, ElasticDsl, ElasticClient}
+import com.sksamuel.elastic4s._
 import ElasticDsl._
 import com.sksamuel.elastic4s.FieldType._
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
@@ -114,45 +114,43 @@ class ElasticSearchService extends SearchService with Logging {
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
   def _attributeRestore(value: String): String = value.replace("_", " ")
 
-  override def index(obj: Obj) {
-    logger.debug("Indexing [{}, {}]", obj.id, obj.name)
+  override def index(objs: Seq[Obj]) {
+    logger.debug("Indexing {} objects", objs.size)
 
-    val _fields = ListBuffer[(String, Any)](
-      FIELD_OBJECT_ID -> obj.id,
-      FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
-      FIELD_NAME -> _normalize(obj.name),
-      FIELD_NAME_NOT_ANALYSED -> obj.name,
-      FIELD_STATUS -> obj.status,
-      FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
-    )
+    val inserts = objs.map(obj => {
+      val _fields = ListBuffer[(String, Any)](
+        FIELD_OBJECT_ID -> obj.id,
+        FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
+        FIELD_NAME -> _normalize(obj.name),
+        FIELD_NAME_NOT_ANALYSED -> obj.name,
+        FIELD_STATUS -> obj.status,
+        FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
+      )
 
-    Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
+      Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
 
-    val hasImage = obj.images.size > 0
-    _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
+      val hasImage = obj.images.size > 0
+      _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-    obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
+      obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
 
-    obj.attributeValues.asScala
-      .filterNot(_.value == null)
-      .filterNot(_.value.isEmpty)
-      .foreach(av => {
-      _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
-      _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
-      if (av.attribute.attributeType == AttributeType.Postcode) {
-        Postcode.gps(av.value).foreach(gps => {
-          _fields.append(FIELD_LOCATION -> gps.string())
-        })
-      }
+      obj.attributeValues.asScala
+        .filterNot(_.value == null)
+        .filterNot(_.value.isEmpty)
+        .foreach(av => {
+        _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
+        _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
+        if (av.attribute.attributeType == AttributeType.Postcode) {
+          Postcode.gps(av.value).foreach(gps => {
+            _fields.append(FIELD_LOCATION -> gps.string())
+          })
+        }
+      })
+
+      insert into INDEX -> TYPE id obj.id fields _fields
     })
 
-    client.sync.delete {
-      s"$INDEX/$TYPE" -> obj.id
-    }
-
-    client.sync.execute {
-      insert into INDEX -> TYPE id obj.id fields _fields
-    }
+    client.bulk(inserts: _*)
   }
 
   override def remove(_id: String) {
