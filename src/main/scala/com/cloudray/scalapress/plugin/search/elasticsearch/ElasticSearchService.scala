@@ -28,6 +28,7 @@ import scala.Some
 import com.cloudray.scalapress.search.FacetTerm
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.search.SearchResult
+import scala.concurrent.Await
 
 /** @author Stephen Samuel */
 
@@ -116,7 +117,7 @@ class ElasticSearchService extends SearchService with Logging {
 
   override def index(obj: Obj) = index(Seq(obj))
   override def index(objs: Seq[Obj]) {
-    logger.debug("Indexing {} objects", objs.size)
+    logger.debug("Indexing {} objects...", objs.size)
 
     val inserts = objs.map(obj => {
       val _fields = ListBuffer[(String, Any)](
@@ -151,7 +152,9 @@ class ElasticSearchService extends SearchService with Logging {
       insert into INDEX -> TYPE id obj.id fields _fields
     })
 
-    client.bulk(inserts: _*)
+    import scala.concurrent.duration._
+    Await.ready(client.bulk(inserts: _*), 1 minute)
+    logger.debug("... indexed")
   }
 
   override def remove(_id: String) {
