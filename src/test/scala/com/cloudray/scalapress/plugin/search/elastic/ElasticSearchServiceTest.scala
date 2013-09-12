@@ -137,10 +137,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val service = new ElasticSearchService
 
   service.setupIndex(List(av1.attribute, av4.attribute, av7.attribute, date1.attribute))
-  service.index(obj2)
-  service.index(obj3)
-  service.index(obj)
-  service.index(obj4)
+  service.index(Seq(obj2, obj3, obj, obj4))
 
   Thread.sleep(1500)
 
@@ -386,7 +383,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj.attributeValues.add(av)
 
     val before = service.count
-    service.index(obj)
+    service.index(Seq(obj))
     Thread.sleep(1500)
 
     val after = service.count
@@ -405,7 +402,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     obj.objectType.id = 1
     obj.status = "Live"
 
-    service.index(obj)
+    service.index(Seq(obj))
     Thread.sleep(1500)
     assert(6 === service.search(search).count)
 
