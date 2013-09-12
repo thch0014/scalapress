@@ -69,6 +69,7 @@ class ElasticSearchService extends SearchService with Logging {
     .put("path.data", dataDir.getAbsolutePath)
     .put("index.number_of_shards", 1)
     .put("index.number_of_replicas", 0)
+    .put("index.refresh_interval", 10)
     .put("indices.memory.min_shard_index_buffer_size", "1mb")
     .put("indices.memory.index_buffer_size", "10%")
     .put("min_index_buffer_size", "4mb")
