@@ -127,7 +127,7 @@ class ObjectEditController
 
     objectDao.save(form.o)
     if (!form.o.objectType.name.toLowerCase.contains("account"))
-      searchService.index(form.o)
+      searchService.index(Seq(form.o))
     "redirect:/backoffice/obj/" + form.o.id
   }
 
