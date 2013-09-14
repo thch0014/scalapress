@@ -81,12 +81,12 @@ class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
         }
         case _ =>
           obj.stock match {
-            case 0 => Some(build("In Stock", params))
-            case _ =>
+            case 0 =>
               val outMessage = Option(obj.outStockMsg)
                 .filterNot(_.isEmpty)
                 .getOrElse(sreq.shoppingPlugin.outOfStockMessage)
               Some(build(outMessage, params))
+            case _ => Some(build("In Stock", params))
           }
       }
     })
