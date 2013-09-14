@@ -8,26 +8,28 @@ import com.cloudray.scalapress.folder.Folder
 /** @author Stephen Samuel */
 object SectionRenderer extends Logging {
 
-  def _render(sections: Seq[Section], req: ScalapressRequest): String = {
+  def render(obj: Obj, sreq: ScalapressRequest): String =
+    _render(obj.objectType.sortedSections ++ obj.sortedSections, sreq)
 
-    val visible = sections.filter(_.visible)
+  def render(folder: Folder, sreq: ScalapressRequest): String =
+    _render(folder.sortedSections, sreq)
 
-    val buffer = new ArrayBuffer[String]
-    for ( section <- visible ) {
-      buffer += "<!-- section " + section.id + ": " + section.getClass + " -->\n"
-      try {
-        section.render(req).foreach(buffer +=)
-      } catch {
-        case e: Exception => logger.warn("{}", e)
-      }
-      buffer += "\n<!-- end section -->\n\n"
-    }
-
-    buffer.mkString
+  def _render(sections: Seq[Section], sreq: ScalapressRequest): String = {
+    val rendered = for ( section <- sections if section.visible ) yield _render(section, sreq)
+    rendered.mkString
   }
 
-  def render(obj: Obj, req: ScalapressRequest): String =
-    _render(obj.objectType.sortedSections ++ obj.sortedSections, req)
-
-  def render(folder: Folder, req: ScalapressRequest): String = _render(folder.sortedSections, req)
+  def _render(section: Section, sreq: ScalapressRequest): String = {
+    logger.debug("Rendering section [{}]...", section)
+    val buffer = new ArrayBuffer[String]
+    buffer.append("<!-- section " + section.id + ": " + section.getClass + " -->\n")
+    try {
+      section.render(sreq).foreach(buffer +=)
+    } catch {
+      case e: Exception => logger.warn("{}", e)
+    }
+    buffer.append("\n<!-- end section -->\n\n")
+    logger.debug("...rendered")
+    buffer.mkString
+  }
 }

@@ -39,37 +39,37 @@ class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTe
     assert(section.render(req).get.contains( """var disqus_identifier = "152";"""))
   }
 
-  test("given an object request then the page title is the name of the object") {
+  test("given an object sreq then the page title is the name of the object") {
     Mockito.when(req.obj).thenReturn(Option(obj))
     Mockito.when(req.folder).thenReturn(None)
     assert(section.render(req).get.contains( """var disqus_title = "coldplay tickets";"""))
   }
 
-  test("given a folder request then the page title is the name of the folder") {
+  test("given a folder sreq then the page title is the name of the folder") {
     Mockito.when(req.obj).thenReturn(None)
     Mockito.when(req.folder).thenReturn(Option(folder))
     assert(section.render(req).get.contains( """var disqus_title = "live events";"""))
   }
 
-  test("given an object request then the page url is the url of the object") {
+  test("given an object sreq then the page url is the url of the object") {
     Mockito.when(req.obj).thenReturn(Option(obj))
     Mockito.when(req.folder).thenReturn(None)
     assert(section.render(req).get.contains( """var disqus_url = "http://buffet.com/object-34-coldplay-tickets";"""))
   }
 
-  test("given a folder request then the page url is the url of the folder") {
+  test("given a folder sreq then the page url is the url of the folder") {
     Mockito.when(req.obj).thenReturn(None)
     Mockito.when(req.folder).thenReturn(Option(folder))
     assert(section.render(req).get.contains( """var disqus_url = "http://buffet.com/folder-0-live-events";"""))
   }
 
-  test("given a non object/folder request then the page url is the empty string") {
+  test("given a non object/folder sreq then the page url is the empty string") {
     Mockito.when(req.obj).thenReturn(None)
     Mockito.when(req.folder).thenReturn(None)
     assert(section.render(req).get.contains( """var disqus_url = "";"""))
   }
 
-  test("given a non object/folder request then the page title is the empty string") {
+  test("given a non object/folder sreq then the page title is the empty string") {
     Mockito.when(req.obj).thenReturn(None)
     Mockito.when(req.folder).thenReturn(None)
     assert(section.render(req).get.contains( """var disqus_title = "";"""))

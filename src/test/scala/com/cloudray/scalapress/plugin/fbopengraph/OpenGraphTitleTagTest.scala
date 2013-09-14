@@ -21,7 +21,7 @@ class OpenGraphTitleTagTest extends FunSuite with MockitoSugar with OneInstanceP
         assert("<meta property=\"og:title\" content=\"big shirt\"/>" === output.get)
     }
 
-    test("tag returns none for request with no object") {
+    test("tag returns none for sreq with no object") {
         val output = new OpenGraphTitleTag().render(sreq, Map.empty)
         assert(output.isEmpty)
     }

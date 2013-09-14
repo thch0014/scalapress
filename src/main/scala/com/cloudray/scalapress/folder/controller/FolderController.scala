@@ -35,6 +35,7 @@ class FolderController extends Logging {
   @ResponseBody
   @RequestMapping(value = Array("{id:\\d+}"), produces = Array("text/html"))
   def view(@PathVariable("id") id: Long, req: HttpServletRequest): ScalapressPage = {
+    logger.debug("Folder requested received {}", id)
     Option(folderDao.find(id)) match {
       case Some(folder) => view(folder, req)
       case None => view(folderDao.root, req)
@@ -42,8 +43,8 @@ class FolderController extends Logging {
   }
 
   def view(folder: Folder, req: HttpServletRequest): ScalapressPage = {
-    if (folder == null)
-      throw new RedirectException("/")
+    logger.debug("Folder requested received {}", folder)
+    if (folder == null) throw new RedirectException("/")
 
     Option(folder.redirect).filter(_.trim.length > 0) match {
       case Some(redirect) => throw new RedirectException(folder.redirect)
@@ -51,22 +52,23 @@ class FolderController extends Logging {
     }
 
     logger.debug("Headers/footers")
-    val header = Option(folder.header).orElse(Option(folderPluginDao.head.header)).getOrElse("")
-    val footer = Option(folder.footer).orElse(Option(folderPluginDao.head.footer)).getOrElse("")
+    val header = Option(folder.header).orElse(Option(folderPluginDao.head.header))
+    val footer = Option(folder.footer).orElse(Option(folderPluginDao.head.footer))
     logger.debug("Headers/footers completed")
 
+    logger.debug("Creating sreq")
     val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
+    logger.debug("Loading theme")
     val theme = themeService.theme(folder)
+    logger.debug("Creating page")
     val page = ScalapressPage(theme, sreq)
 
-    if (SpringSecurityResolver.hasAdminRole(req))
-      page.toolbar(sreq)
-    page.body(header)
+    if (SpringSecurityResolver.hasAdminRole(req)) page.toolbar(sreq)
+    header.foreach(page body)
     logger.debug("Sections...")
     page.body(SectionRenderer.render(folder, sreq))
     logger.debug("...completed")
-    page.body(footer)
+    footer.foreach(page body)
     page
   }
 }
-

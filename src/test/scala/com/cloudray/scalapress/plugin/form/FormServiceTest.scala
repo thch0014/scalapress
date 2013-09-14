@@ -58,7 +58,7 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
         assert(upper >= sub.date)
     }
 
-    test("creating submission sets ip from request") {
+    test("creating submission sets ip from sreq") {
         val sub = service._createSubmission(form, Nil, sreq)
         assert("56.78.45.3" === sub.ipAddress)
     }

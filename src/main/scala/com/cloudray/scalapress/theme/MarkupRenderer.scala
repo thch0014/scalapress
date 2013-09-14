@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.theme
 
-import com.cloudray.scalapress.ScalapressRequest
+import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
@@ -8,7 +8,7 @@ import tag.TagRenderer
 import com.cloudray.scalapress.search.CorpusResult
 
 /** @author Stephen Samuel */
-object MarkupRenderer {
+object MarkupRenderer extends Logging {
 
   def render(lines: Seq[BasketLine], m: Markup, r: ScalapressRequest): String = {
     require(m != null)
@@ -55,7 +55,12 @@ object MarkupRenderer {
   def renderObjects(objects: Seq[Obj], m: Markup, request: ScalapressRequest) = {
     val start = TagRenderer.render(m.start, request)
     val body = objects
-      .map(o => TagRenderer.render(m.body, request.withObject(o)))
+      .map(o => {
+      logger.debug("Rendering object {}", o)
+      val q = TagRenderer.render(m.body, request.withObject(o))
+      logger.debug("... rendered")
+      q
+    })
       .mkString(TagRenderer.render(m.between, request))
     val end = TagRenderer.render(m.end, request)
     start + body + end

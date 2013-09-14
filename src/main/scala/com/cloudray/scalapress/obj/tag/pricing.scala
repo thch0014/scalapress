@@ -3,8 +3,6 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.enums.StockMethod
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.plugin.variations.VariationDao
-import com.cloudray.scalapress.plugin.ecommerce.ShoppingPlugin
 
 /** @author Stephen Samuel */
 object RrpTag extends ScalapressTag with TagBuilder {
@@ -72,27 +70,23 @@ class ObjectStockTag extends ScalapressTag with TagBuilder {
 
 @Tag("availability")
 class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
-  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+  def render(sreq: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    request.obj.flatMap(obj => {
-      request.shoppingPlugin.stockMethod match {
+    sreq.obj.flatMap(obj => {
+      sreq.shoppingPlugin.stockMethod match {
         case StockMethod.Off => None
         case StockMethod.InOut => obj.stock match {
-          case 0 => Option(obj.outStockMsg).orElse(Option(request.context.bean[ShoppingPlugin].outOfStockMessage))
+          case 0 => Option(obj.outStockMsg).orElse(Option(sreq.shoppingPlugin.outOfStockMessage))
           case _ => Some("In stock")
         }
         case _ =>
-          request.context.bean[VariationDao].findByObjectId(obj.id).size match {
-            case 0 =>
-              if (obj.stock > 0) {
-                Some(build("In Stock", params))
-              } else {
-                val outMessage = Option(obj.outStockMsg)
-                  .filterNot(_.isEmpty)
-                  .getOrElse(request.shoppingPlugin.outOfStockMessage)
-                Some(build(outMessage, params))
-              }
-            case _ => None
+          obj.stock match {
+            case 0 => Some(build("In Stock", params))
+            case _ =>
+              val outMessage = Option(obj.outStockMsg)
+                .filterNot(_.isEmpty)
+                .getOrElse(sreq.shoppingPlugin.outOfStockMessage)
+              Some(build(outMessage, params))
           }
       }
     })

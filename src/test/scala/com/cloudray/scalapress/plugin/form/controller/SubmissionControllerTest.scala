@@ -67,7 +67,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
         assert(page._body.exists(_.toString.contains(FormSubmissionTextRenderer.DEFAULT.toString())))
     }
 
-    test("given a request with an object when creating a submission then the object field is set") {
+    test("given a sreq with an object when creating a submission then the object field is set") {
         val submission = new Submission
         Mockito
           .when(controller
@@ -79,7 +79,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
         assert(o === submission.obj)
     }
 
-    test("given a request with a folder when creating a submission then the folder field is set") {
+    test("given a sreq with a folder when creating a submission then the folder field is set") {
         val submission = new Submission
         Mockito
           .when(controller

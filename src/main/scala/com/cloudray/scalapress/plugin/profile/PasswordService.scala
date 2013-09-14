@@ -39,7 +39,7 @@ class PasswordService extends Logging {
         msg.setTo(email)
         msg.setFrom("donotreply@" + installationDao.get.domain)
         msg.setText(body)
-        msg.setSubject("Password reset request")
+        msg.setSubject("Password reset sreq")
         mailSender.send(msg)
     }
   }

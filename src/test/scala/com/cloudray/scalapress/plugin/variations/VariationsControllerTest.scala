@@ -51,7 +51,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
     assert(2 === model.get("variations").asInstanceOf[java.util.Collection[Variation]].size)
   }
 
-  it should "update stock and prices for all variations from request parameters" in {
+  it should "update stock and prices for all variations from sreq parameters" in {
     Mockito.when(controller.variationDao.findByObjectId(1)).thenReturn(List(v1, v2))
     Mockito.when(req.getParameter("price_" + v1.id)).thenReturn("425")
     Mockito.when(req.getParameter("stock_" + v1.id)).thenReturn("44")

@@ -23,12 +23,12 @@ class LoginSuccessHandlerTest extends FlatSpec with MockitoSugar with OneInstanc
   val resp = mock[HttpServletResponse]
   val auth = mock[Authentication]
 
-  "a login handler" should "redirect to root when no login redirect is set and saved request is null" in {
+  "a login handler" should "redirect to root when no login redirect is set and saved sreq is null" in {
     handler.onAuthenticationSuccess(req, resp, auth)
     Mockito.verify(resp).sendRedirect("/")
   }
 
-  "a login handler" should "redirect to saved request when no login redirect is set" in {
+  "a login handler" should "redirect to saved sreq when no login redirect is set" in {
     val session = mock[HttpSession]
     val saved = mock[DefaultSavedRequest]
     Mockito.when(saved.getRedirectUrl).thenReturn("/coldplay.html")

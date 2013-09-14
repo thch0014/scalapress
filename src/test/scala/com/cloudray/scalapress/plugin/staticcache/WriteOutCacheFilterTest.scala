@@ -27,7 +27,7 @@ class WriteOutCacheFilterTest extends FunSuite with OneInstancePerTest with Mock
         assert("/home/sam/cache" === file.getAbsolutePath)
     }
 
-    test("cache file uses cache directory and request path") {
+    test("cache file uses cache directory and sreq path") {
         val file = filter._cacheFile(req)
         assert("/home/sam/cache/_some_path.html" === file.getAbsolutePath)
     }

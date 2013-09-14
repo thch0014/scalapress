@@ -23,7 +23,7 @@ class InstallationController {
     "admin/settings/installation.vm"
   }
 
-  @ModelAttribute("request") def req(request: HttpServletRequest) = request
+  @ModelAttribute("sreq") def req(request: HttpServletRequest) = request
   @ModelAttribute def assetStore = context.assetStore
   @ModelAttribute def installation = context.installationDao.get
 }

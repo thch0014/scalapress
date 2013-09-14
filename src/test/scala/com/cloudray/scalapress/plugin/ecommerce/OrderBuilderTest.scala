@@ -36,7 +36,7 @@ class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTes
         Mockito.verify(orderDao).save(order)
     }
 
-    test("when creating an order then the IP address is set from the request") {
+    test("when creating an order then the IP address is set from the sreq") {
         Mockito.when(req.getRemoteAddr).thenReturn("1.2.3.4")
         val order = builder._order(account, basket, req)
         assert("1.2.3.4" === order.ipAddress)

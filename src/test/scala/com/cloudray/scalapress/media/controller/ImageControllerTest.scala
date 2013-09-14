@@ -26,12 +26,12 @@ class ImageControllerTest extends FunSuite with MockitoSugar with OneInstancePer
     .when(controller.thumbnailService.thumbnail("coldplay.jpg", 100, 200, "fit"))
     .thenReturn(Some(Scrimage.empty(100, 200)))
 
-  test("resized request loads asset from thumbnail service") {
+  test("resized sreq loads asset from thumbnail service") {
     controller.imageResized3("coldplay.jpg", 100, 200, resp)
     Mockito.verify(controller.thumbnailService).thumbnail("coldplay.jpg", 100, 200, "fit")
   }
 
-  test("resized request set response content type as png") {
+  test("resized sreq set response content type as png") {
     controller.imageResized3("coldplay.jpg", 100, 200, resp)
     Mockito.verify(resp).setContentType("image/png")
   }
@@ -52,7 +52,7 @@ class ImageControllerTest extends FunSuite with MockitoSugar with OneInstancePer
     Mockito.verify(resp).setStatus(404)
   }
 
-  test("a non resize request uses content type of original") {
+  test("a non resize sreq uses content type of original") {
     Mockito.when(controller.assetStore.get("jethro.jpg")).thenReturn(Some(new ByteArrayInputStream(Array[Byte]())))
     controller.image("jethro.jpg", resp)
     Mockito.verify(resp).setContentType("image/jpeg")

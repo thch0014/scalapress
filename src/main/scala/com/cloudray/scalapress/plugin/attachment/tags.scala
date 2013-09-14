@@ -7,7 +7,7 @@ import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 @Tag("attachment_link")
 class AttachmentLinkTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        //        request.attachment match {
+        //        sreq.attachment match {
         //            case None => None
         //            case Some(a) => {
         //                val link = context.assetStore.link(a.filename)
@@ -28,7 +28,7 @@ class AttachmentLinkTag extends ScalapressTag with TagBuilder {
 @Tag("attachment_name")
 class AttachmentNameTag extends ScalapressTag with TagBuilder {
     def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-        //        request.attachment match {
+        //        sreq.attachment match {
         //            case None => None
         //            case Some(a) => {
         //                val name = Option(a.name).getOrElse(a.filename)

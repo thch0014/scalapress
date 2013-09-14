@@ -24,6 +24,7 @@ object TagRenderer extends Logging {
       case _ => {
 
         mappings.foldLeft(text)((b, a) => {
+          val start = System.currentTimeMillis()
           require(text != null)
 
           val tagname = a._1
@@ -31,7 +32,7 @@ object TagRenderer extends Logging {
 
           require(tagname != null)
 
-          regex(tagname).r.replaceAllIn(b, m => {
+          val tt = regex(tagname).r.replaceAllIn(b, m => {
             require(b != null)
 
             val params = m.groupCount match {
@@ -47,6 +48,10 @@ object TagRenderer extends Logging {
                 else value.replace("$", "\\$")
             }
           })
+          val time = System.currentTimeMillis() - start
+          if (time > 1)
+            logger.debug("Tag {} took {}ms", a._1, time)
+          tt
         })
       }
     }

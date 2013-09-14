@@ -68,8 +68,11 @@ class CssTag extends ScalapressTag with TagBuilder {
 
 @Tag("copyright")
 class CopyrightTag extends ScalapressTag with TagBuilder {
-
   def render(request: ScalapressRequest, params: Map[String, String]) = {
-    Some("Copyright &copy; " + new DateTime().toString("yyyy"))
+    Some("Copyright &copy; " + CopyrightTag.year)
   }
+}
+
+object CopyrightTag {
+  val year = new DateTime().toString("yyyy")
 }

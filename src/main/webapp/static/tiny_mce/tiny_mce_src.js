@@ -1261,7 +1261,7 @@ tinymce.create('static tinymce.util.XHR', {
 
 			x.send(o.data);
 
-			// Syncronous request
+			// Syncronous sreq
 			if (!o.async)
 				return ready();
 
@@ -4942,7 +4942,7 @@ tinymce.dom = {};
 			if (doc.documentElement.doScroll && win === win.top) {
 				(function() {
 					try {
-						// If IE is used, use the trick by Diego Perini licensed under MIT by request to the author.
+						// If IE is used, use the trick by Diego Perini licensed under MIT by sreq to the author.
 						// http://javascript.nwbox.com/IEContentLoaded/
 						doc.documentElement.doScroll("left");
 					} catch (ex) {

@@ -27,7 +27,7 @@ case class CallbackResult(tx: Transaction, callbackInfo: String) {
 }
 
 /**
- * A purchase models the data that a processor needs to create the parameters for a payment request.
+ * A purchase models the data that a processor needs to create the parameters for a payment sreq.
  */
 trait Purchase {
   val SPLITTER = "-"

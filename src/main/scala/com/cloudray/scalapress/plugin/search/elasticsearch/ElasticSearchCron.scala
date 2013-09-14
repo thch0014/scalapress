@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 class ElasticSearchCron extends Runnable with Logging {
 
-    @Autowired var indexer: ElasticSearchIndexer = _
+  @Autowired var indexer: ElasticSearchIndexer = _
 
-    @Scheduled(fixedDelay = 1000 * 60 * 30, initialDelay = 1000 * 60 * 2)
-    @Transactional
-    def run() {
-        logger.info("Running search service index")
-        indexer.index()
-    }
+  @Scheduled(fixedDelay = 1000 * 60 * 30, initialDelay = 0)
+  @Transactional
+  def run() {
+    logger.info("Running search service index")
+    indexer.index()
+  }
 }
