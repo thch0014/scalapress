@@ -1,0 +1,10 @@
+<%@ val id: String %>
+<%@ val name: String %>
+
+<div class="control-group">
+    <div class="controls">
+        <label class="checkbox">
+            <input type="checkbox" name="${id}"/>${name}
+        </label>
+    </div>
+</div>

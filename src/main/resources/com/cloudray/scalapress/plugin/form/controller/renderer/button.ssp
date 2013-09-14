@@ -1,0 +1,7 @@
+<%@ val text: String %>
+
+<div class="control-group">
+    <div class="controls">
+        <button type="submit" class="btn">${text}</button>
+    </div>
+</div>

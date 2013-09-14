@@ -1,0 +1,16 @@
+<%@ val id: String %>
+<%@ val name: String %>
+<%@ val text: String %>
+<%@ val star: String %>
+
+<div class="control-group">
+    <label class="control-label">
+      ${name} ${star}
+    </label>
+
+    <div class="controls" style="height: auto">
+        <textarea name="${id}">
+          ${text}
+        </textarea>
+    </div>
+</div>
