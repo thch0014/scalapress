@@ -15,7 +15,7 @@ trait ElasticSearchIndexer {
 }
 
 @Component
-@ManagedResource(description = "Elasticsearch reindexer")
+@ManagedResource(description = "Elasticsearch Indexer")
 class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
   @Autowired var service: ElasticSearchService = _
@@ -36,11 +36,13 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     var objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
     while (!objs.isEmpty) {
       logger.info("Indexing from offset [{}]", offset)
+      logger.debug("Indexing {} objects...", objs.size)
       try {
         service.index(objs)
       } catch {
         case e: Exception => logger.warn("{}", e)
       }
+      logger.debug("... indexed")
       offset = offset + pageSize
       objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)
     }

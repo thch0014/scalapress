@@ -66,14 +66,14 @@ class ElasticSearchService extends SearchService with Logging {
   val settings = ImmutableSettings.settingsBuilder()
     .put("node.http.enabled", false)
     .put("http.enabled", false)
-    .put("indices.cache.filter.size", "4mb")
     .put("path.data", dataDir.getAbsolutePath)
     .put("index.number_of_shards", 1)
     .put("index.number_of_replicas", 0)
     .put("index.refresh_interval", 10)
     .put("indices.memory.min_shard_index_buffer_size", "1mb")
-    .put("indices.memory.index_buffer_size", "10%")
-    .put("min_index_buffer_size", "4mb")
+    .put("indices.memory.index_buffer_size", "5%")
+    .put("indices.cache.filter.size", "4mb")
+    .put("indices.min_index_buffer_size", "4mb")
     .build
 
   val client = ElasticClient.local(settings)
@@ -98,7 +98,7 @@ class ElasticSearchService extends SearchService with Logging {
     })
 
     client.execute {
-      create index INDEX mappings {
+      create index INDEX replicas 0 shards 1 mappings {
         TYPE source true as (fields.toList: _*)
       }
     }
@@ -117,7 +117,6 @@ class ElasticSearchService extends SearchService with Logging {
 
   override def index(obj: Obj) = index(Seq(obj))
   override def index(objs: Seq[Obj]) {
-    logger.debug("Indexing {} objects...", objs.size)
 
     val inserts = objs.map(obj => {
       val _fields = ListBuffer[(String, Any)](
@@ -154,7 +153,6 @@ class ElasticSearchService extends SearchService with Logging {
 
     import scala.concurrent.duration._
     Await.ready(client.bulk(inserts: _*), 1 minute)
-    logger.debug("... indexed")
   }
 
   override def remove(_id: String) {
@@ -250,7 +248,7 @@ class ElasticSearchService extends SearchService with Logging {
       case _ => bool(must(filters: _*))
     }
 
-    filterQuery.filter(filter).query(q)
+    filteredQuery.filter(filter).query(q)
   }
 
   def _search(search: SavedSearch): SearchResponse = {
