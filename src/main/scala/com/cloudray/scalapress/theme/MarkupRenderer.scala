@@ -55,12 +55,7 @@ object MarkupRenderer extends Logging {
   def renderObjects(objects: Seq[Obj], m: Markup, request: ScalapressRequest) = {
     val start = TagRenderer.render(m.start, request)
     val body = objects
-      .map(o => {
-      logger.debug("Rendering object {}", o)
-      val q = TagRenderer.render(m.body, request.withObject(o))
-      logger.debug("... rendered")
-      q
-    })
+      .map(o => TagRenderer.render(m.body, request.withObject(o)))
       .mkString(TagRenderer.render(m.between, request))
     val end = TagRenderer.render(m.end, request)
     start + body + end

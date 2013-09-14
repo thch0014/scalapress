@@ -14,7 +14,22 @@ trait ThemeDao extends GenericDao[Theme, java.lang.Long] {
 @Transactional
 class ThemeDaoImpl extends GenericDaoImpl[Theme, java.lang.Long] with ThemeDao {
 
-  def findDefault: Theme = findAll.find(_.default) match {
+  val EXPIRY_MS = 1000 * 60
+  var _defaultExpiry: Long = 0
+  var _default: Theme = _
+
+  def findDefault: Theme = {
+    if (_defaultExpiry > System.currentTimeMillis()) _default
+    else _resetDefault
+  }
+
+  def _resetDefault: Theme = {
+    _default = _loadDefault
+    _defaultExpiry = System.currentTimeMillis() + EXPIRY_MS
+    _default
+  }
+
+  def _loadDefault = findAll.find(_.default) match {
     case None => findAll.head
     case Some(t) => t
   }
