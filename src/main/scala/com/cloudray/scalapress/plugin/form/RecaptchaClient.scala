@@ -1,30 +1,34 @@
 package com.cloudray.scalapress.plugin.form
 
-import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.util.EntityUtils
 import org.apache.http.client.entity.UrlEncodedFormEntity
 import org.apache.http.message.BasicNameValuePair
 import java.util
 import org.apache.http.NameValuePair
+import org.apache.http.client.HttpClient
 
 /** @author Stephen Samuel */
-object RecaptchaClient {
+class RecaptchaClient(client: HttpClient) {
 
-    def post(recaptchaChallenge: String, recaptchaResponse: String, ipaddress: String): Boolean = {
+  val URL = "http://www.google.com/recaptcha/api/verify"
 
-        val post = new HttpPost("http://www.google.com/recaptcha/api/verify")
+  def post(recaptchaChallenge: String, recaptchaResponse: String, ipaddress: String): Boolean = {
+    val post = createPost(recaptchaChallenge, recaptchaResponse, ipaddress)
+    val resp = client.execute(post)
+    val outcome = EntityUtils.toString(resp.getEntity)
+    outcome.toLowerCase.startsWith("true")
+  }
 
-        val nameValuePairs = new util.ArrayList[NameValuePair]()
-        nameValuePairs.add(new BasicNameValuePair("privatekey", "6LeFAt0SAAAAAPIxED6O_TlpcRS66wrZc0NEva_s"))
-        nameValuePairs.add(new BasicNameValuePair("remoteip", ipaddress))
-        nameValuePairs.add(new BasicNameValuePair("challenge", recaptchaChallenge))
-        nameValuePairs.add(new BasicNameValuePair("response", recaptchaResponse))
-        post.setEntity(new UrlEncodedFormEntity(nameValuePairs))
+  def createPost(recaptchaChallenge: String, recaptchaResponse: String, ipaddress: String): HttpPost = {
+    val nameValuePairs = new util.ArrayList[NameValuePair]()
+    nameValuePairs.add(new BasicNameValuePair("privatekey", "6LeFAt0SAAAAAPIxED6O_TlpcRS66wrZc0NEva_s"))
+    nameValuePairs.add(new BasicNameValuePair("remoteip", ipaddress))
+    nameValuePairs.add(new BasicNameValuePair("challenge", recaptchaChallenge))
+    nameValuePairs.add(new BasicNameValuePair("response", recaptchaResponse))
 
-        val client = new DefaultHttpClient
-        val resp = client.execute(post)
-        val outcome = EntityUtils.toString(resp.getEntity)
-        outcome.toLowerCase.startsWith("true")
-    }
+    val post = new HttpPost(URL)
+    post.setEntity(new UrlEncodedFormEntity(nameValuePairs))
+    post
+  }
 }
