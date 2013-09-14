@@ -18,26 +18,24 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping(Array("backoffice/section/objectlist/{id}"))
 class ObjectListSectionController extends MarkupPopulator with SortPopulator with AttributePopulator {
 
-    @Autowired var markupDao: MarkupDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var markupDao: MarkupDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
-        val objects = section._objects(ScalapressRequest(req, context))
-        if (objects.size > 0)
-            model.put("attributesMap", attributesMap(objects.head.objectType.sortedAttributes))
-        "admin/folder/section/objectlist.vm"
-    }
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
+    val objects = section._objects(ScalapressRequest(req, context))
+    if (objects.size > 0)
+      model.put("attributesMap", attributesMap(objects.head.objectType.sortedAttributes))
+    "admin/folder/section/objectlist.vm"
+  }
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
-        sectionDao.save(section)
-        edit(section, model, req)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
+    sectionDao.save(section)
+    edit(section, model, req)
+  }
 
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): ObjectListSection =
-        sectionDao
-          .find(id)
-          .asInstanceOf[ObjectListSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): ObjectListSection =
+    sectionDao.find(id).asInstanceOf[ObjectListSection]
 }
