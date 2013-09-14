@@ -46,7 +46,7 @@ object ImagesTag extends ScalapressTag with TagBuilder with Logging {
     request.obj.orElse(request.line.map(_.obj)).map(obj => {
 
       val limit = params.get("limit").getOrElse("100").toInt
-      val images = Nil//_images(obj, limit)
+      val images = _images(obj, limit)
       val rendered = images.map(i => _renderImage(i, params, obj, request.context))
       rendered.mkString("\n")
 

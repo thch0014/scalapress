@@ -12,7 +12,7 @@ class ThemeService {
   @Autowired var servletContext: ServletContext = _
   @Autowired var themeDao: ThemeDao = _
 
-  def theme(folder: Folder) = Option(folder.theme).getOrElse(themeDao.findDefault)
+  def theme(folder: Folder) = themeDao.findDefault
   def theme(obj: Obj) = themeDao.findDefault
   def default = themeDao.findDefault
 }
