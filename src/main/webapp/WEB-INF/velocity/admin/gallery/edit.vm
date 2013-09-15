@@ -9,10 +9,17 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("gallery.name")
+          #springFormInput("gallery.name")
         </div>
     </div>
 
+    <div class="control-group">
+        <label class="control-label">Initialization Params</label>
+
+        <div class="controls">
+          #springFormInput("gallery.params") Eg panel_width: 462, panel_height: 320
+        </div>
+    </div>
 
     <div class="control-group">
         <label class="control-label">Upload</label>
@@ -30,17 +37,17 @@
 </form>
 
 <ul class="thumbnails">
-    #foreach ($image in $gallery.images)
-        <li class="span2">
-            <div class="thumbnail">
-                <img data-src="holder.js/300x200" src="/images/$image.filename?width=200&height=160">
-                <a class="btn btn-mini" href="/images/$image.filename">
-                    <i class="icon-eyeball icon-white"></i> View Original</a>
-                <a class="btn btn-danger btn-mini" href="/backoffice/gallery/$gallery.id/delete/$image.filename">
-                    <i class="icon-trash icon-white"></i> Remove</a>
-            </div>
-        </li>
-    #end
+  #foreach ($image in $gallery.images)
+      <li class="span2">
+          <div class="thumbnail">
+              <img data-src="holder.js/300x200" src="/images/$image.filename?width=200&height=160">
+              <a class="btn btn-mini" href="/images/$image.filename">
+                  <i class="icon-eyeball icon-white"></i> View Original</a>
+              <a class="btn btn-danger btn-mini" href="/backoffice/gallery/$gallery.id/delete/$image.filename">
+                  <i class="icon-trash icon-white"></i> Remove</a>
+          </div>
+      </li>
+  #end
 </ul>
 
 #parse("/admin/footer.vm")

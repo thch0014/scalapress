@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.gallery.galleryview
 
-import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import java.util
 import com.cloudray.scalapress.media.Image
 import scala.beans.BeanProperty
@@ -11,17 +11,21 @@ import org.hibernate.annotations.{NotFound, NotFoundAction}
 @Table(name = "galleries")
 class Gallery {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @BeanProperty var name: String = _
-    @BeanProperty var description: String = null
+  @BeanProperty var name: String = _
 
-    @BeanProperty var showDateUploaded: Boolean = _
+  @Column(length = 2000)
+  @BeanProperty var description: String = null
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
+  @BeanProperty var params: String = null
+
+  @BeanProperty var showDateUploaded: Boolean = _
+
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL), orphanRemoval = true)
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
 
 }
