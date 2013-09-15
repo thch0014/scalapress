@@ -4,7 +4,7 @@ import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryRenderer, GalleryDao, Gallery}
+import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao, Gallery}
 
 /** @author Stephen Samuel */
 @Entity
@@ -19,8 +19,8 @@ class GallerySection extends Section {
 
   def render(request: ScalapressRequest): Option[String] = {
     val render = Option(gallery) match {
-      case None => GalleryRenderer.renderCovers(request.context.bean[GalleryDao].findAll())
-      case Some(g) => GalleryRenderer.renderGallery(g, request.context.assetStore)
+      case None => GalleryViewRenderer.renderCovers(request.context.bean[GalleryDao].findAll())
+      case Some(g) => GalleryViewRenderer.renderGallery(g, request.context.assetStore)
     }
     Option(render)
   }

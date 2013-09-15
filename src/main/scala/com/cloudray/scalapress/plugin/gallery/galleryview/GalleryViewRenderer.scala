@@ -7,16 +7,16 @@ import com.cloudray.scalapress.media.{AssetStore, Image}
 import com.cloudray.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */
-object GalleryRenderer {
+object GalleryViewRenderer {
 
   def renderCovers(galleries: Seq[Gallery]): String = {
-    val covers = galleries.flatMap(renderCover)
+    val covers = galleries.flatMap(_renderCover)
     <ul class="thumbnails gallerycovers">
       {covers}
     </ul>.toString()
   }
 
-  private def renderCover(gallery: Gallery): Option[Elem] = {
+  def _renderCover(gallery: Gallery): Option[Elem] = {
     gallery.images.asScala.headOption match {
       case None => None
       case Some(image) => {
@@ -40,13 +40,13 @@ object GalleryRenderer {
   def renderGallery(gallery: Gallery, assetStore: AssetStore): String = {
     val sb = new ArrayBuffer[String]
     sb.append("<!--gallery " + gallery.id + " " + gallery.images.size() + " images -->")
-    sb.append("<ul id='gallery" + gallery.id + "'>" + renderImages(gallery.images.asScala, assetStore) + "</ul>")
-    sb.append(generateScript(gallery))
+    sb.append("<ul id='gallery" + gallery.id + "'>" + _renderImages(gallery.images.asScala, assetStore) + "</ul>")
+    sb.append(_generateScript(gallery))
     sb.append("<!--end gallery-->")
     sb.mkString("\n")
   }
 
-  private def renderImages(images: Seq[Image], assetStore: AssetStore): String = {
+  def _renderImages(images: Seq[Image], assetStore: AssetStore): String = {
     val sb = new ArrayBuffer[String]
     for ( image <- images ) {
       val src = assetStore.link(image.filename)
@@ -55,7 +55,7 @@ object GalleryRenderer {
     sb.mkString("\n")
   }
 
-  private def generateScript(gallery: Gallery) = {
+  def _generateScript(gallery: Gallery) = {
     val params = Option(gallery.getParams).getOrElse("")
     val script = "$('#gallery" + gallery.id + "').galleryView(" + params + ");"
     "<script>" + script + "</script>"

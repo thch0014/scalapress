@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryRenderer, GalleryDao}
+import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao}
 
 /** @author Stephen Samuel
   *
@@ -38,7 +38,7 @@ class GalleryController {
                 val sreq = ScalapressRequest(req, context).withTitle(gallery.name)
 
                 val page = ScalapressPage(theme, sreq)
-                page.body(GalleryRenderer.renderGallery(gallery, context.assetStore))
+                page.body(GalleryViewRenderer.renderGallery(gallery, context.assetStore))
                 page
         }
     }
@@ -52,7 +52,7 @@ class GalleryController {
 
         val page = ScalapressPage(theme, ScalapressRequest(req, context))
         page.body("<h1>Galleries</h1>")
-        page.body(GalleryRenderer.renderCovers(gallery))
+        page.body(GalleryViewRenderer.renderCovers(gallery))
         page
     }
 }
