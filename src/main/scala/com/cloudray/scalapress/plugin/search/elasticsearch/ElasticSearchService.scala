@@ -119,12 +119,12 @@ class ElasticSearchService extends SearchService with Logging {
   override def index(objs: Seq[Obj]) {
     logger.debug("Bulk indexing {} objects", objs.size)
 
-    val executions = objs.map(obj => obj.status match {
+    val executions = objs.map(obj => obj.status.toLowerCase match {
 
-      case Obj.STATUS_DELETED | Obj.STATUS_DISABLED =>
+      case Obj.STATUS_DELETED.toLowerCase | Obj.STATUS_DISABLED.toLowerCase =>
         new DeleteByIdDefinition(INDEX, TYPE, obj.id.toString)
 
-      case Obj.STATUS_LIVE =>
+      case Obj.STATUS_LIVE.toLowerCase =>
         val _fields = ListBuffer[(String, Any)](
           FIELD_OBJECT_ID -> obj.id,
           FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
