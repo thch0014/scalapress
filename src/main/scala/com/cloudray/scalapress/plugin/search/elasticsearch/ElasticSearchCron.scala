@@ -16,12 +16,13 @@ class ElasticSearchCron extends Runnable with Logging {
   @Scheduled(fixedDelay = 1000 * 60 * 2, initialDelay = 0)
   @Transactional
   def run() {
-    logger.info("Starting elastic search INDEX")
     lastRuntime match {
       case 0 =>
+        logger.info("Starting elastic search FULL index")
         indexer.fullIndex()
         lastRuntime = System.currentTimeMillis()
       case _ =>
+        logger.info("Starting elastic search incremental index [since={}]", lastRuntime)
         indexer.incrementalIndex(lastRuntime)
     }
   }
