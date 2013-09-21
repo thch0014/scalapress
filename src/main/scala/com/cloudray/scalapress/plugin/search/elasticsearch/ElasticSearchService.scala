@@ -239,6 +239,7 @@ class ElasticSearchService extends SearchService with Logging {
 
     search.attributeValues.asScala
       .filter(_.value.trim.length > 0)
+      .filterNot(_.value.trim.toLowerCase == "any")
       .foreach(av => queries.append(field(_attrField(av.attribute.id), _attributeNormalize(av.value))))
 
     Option(search.hasAttributes)
