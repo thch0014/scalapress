@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.auth.BasicAWSCredentials
 import java.util.UUID
 import org.apache.commons.io.{FilenameUtils, IOUtils}
-import com.amazonaws.services.s3.model.{CopyObjectRequest, S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
+import com.amazonaws.services.s3.model.{S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
 import scala.collection.JavaConverters._
 import java.net.URLConnection
 import com.cloudray.scalapress.Logging
@@ -20,6 +20,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
                          val accessKey: String,
                          val bucketName: String) extends AssetStore with Logging {
 
+  val CACHE_CONTROL = "max-age=2592000"
   val STORAGE_CLASS = StorageClass.ReducedRedundancy
 
   def delete(key: String) {
@@ -92,10 +93,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
             case Some(in) =>
               val b = IOUtils.toByteArray(in)
               IOUtils.closeQuietly(in)
-              if (b.length == 0)
-                None
-              else
-                Option(new ByteArrayInputStream(b))
+              if (b.length == 0) None
+              else Option(new ByteArrayInputStream(b))
             case None => None
           }
       }
@@ -118,7 +117,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
     val md = new ObjectMetadata
     md.setContentLength(array.length)
     md.setContentType(MimeTools.contentType(key))
-    md.setCacheControl("max-age=604800001")
+    md.setCacheControl(CACHE_CONTROL)
 
     val request = new PutObjectRequest(bucketName, key, new ByteArrayInputStream(array), md)
     request.setCannedAcl(CannedAccessControlList.PublicRead)
@@ -141,44 +140,5 @@ class AmazonS3AssetStore(val cdnUrl: String,
   def getAmazonS3Client: AmazonS3Client = {
     val cred: BasicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey)
     new AmazonS3Client(cred)
-  }
-
-  //@PostConstruct
-  def run() {
-
-    import java.util.concurrent.Executors
-    import scala.concurrent._
-
-    implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
-
-    val list = listObjects(null, 0, 100000)
-    logger.debug("Updating content type on {} objects", list.size)
-    future {
-      list.foreach(arg => {
-        future {
-          logger.info("Updating image" + arg.getKey)
-
-          try {
-
-            val md = new ObjectMetadata
-            md.setContentType(MimeTools.contentType(arg.getKey))
-            md.setCacheControl("max-age=2592000")
-
-            val copy = new CopyObjectRequest(bucketName, arg.getKey, bucketName, arg.getKey)
-            copy.setNewObjectMetadata(md)
-            copy.setCannedAccessControlList(CannedAccessControlList.PublicRead)
-            copy.setStorageClass(STORAGE_CLASS)
-            getAmazonS3Client.copyObject(copy)
-
-          } catch {
-            case e: Exception => logger.warn("{}", e)
-          }
-        }
-      })
-      future {
-        logger.info("Finished image updates")
-      }
-    }
-    logger.debug("Upgrade completed", list.size)
   }
 }
