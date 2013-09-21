@@ -28,20 +28,19 @@ class ObjectController extends Logging {
     resp.setStatus(404)
   }
 
-  @ModelAttribute def obj(@PathVariable("id") id: Long) = Option(objectDao.find(id)) match {
-    case None => throw new NotFoundException
-    case Some(obj) => obj
-  }
+  @ModelAttribute def obj(@PathVariable("id") id: Long) =
+    Option(objectDao.find(id)) match {
+      case None => throw new NotFoundException
+      case Some(obj) => obj
+    }
 
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
   def view(@ModelAttribute obj: Obj, req: HttpServletRequest) = {
 
-    if (obj.status.toLowerCase == "deleted" || obj.status.toLowerCase == "disabled")
-      throw new NotFoundException()
-
-    if (obj.objectType.name.toLowerCase.startsWith("account"))
-      throw new NotFoundException()
+    if (obj.isDeleted || obj.isDisabled) throw new NotFoundException()
+    if (obj.objectType == null) throw new NotFoundException()
+    if (obj.objectType.name.toLowerCase.startsWith("account")) throw new NotFoundException()
 
     val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
     val theme = themeService.theme(obj)

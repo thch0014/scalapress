@@ -167,6 +167,9 @@ class Obj extends SortedSections with java.io.Serializable {
     dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
   }
   override def toString: String = s"Obj [id=$id, name=$name, status=$status]"
+
+  def isDeleted = Obj.STATUS_DELETED.equalsIgnoreCase(status)
+  def isDisabled = Obj.STATUS_DISABLED.equalsIgnoreCase(status)
 }
 
 object Obj {
