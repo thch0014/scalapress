@@ -139,8 +139,6 @@
             #springFormInput("form.o.outStockMsg", "")
           </div>
       </div>
-
-      outStockMsg
   #end
 
     <div class="control-group">
