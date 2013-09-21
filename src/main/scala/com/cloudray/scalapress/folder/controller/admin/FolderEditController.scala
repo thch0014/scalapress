@@ -17,103 +17,105 @@ import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.media.AssetStore
 import scala.Some
 import scala.collection.immutable.ListMap
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/{id}"))
 class FolderEditController extends EnumPopulator with ThemePopulator with SectionSorting {
 
-    @Autowired var assetStore: AssetStore = _
-    @Autowired var folderDao: FolderDao = _
-    @Autowired var themeDao: ThemeDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var assetStore: AssetStore = _
+  @Autowired var folderDao: FolderDao = _
+  @Autowired var themeDao: ThemeDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @ResponseBody
-    @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
-    def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder): String =
-        reorderSections(order, folder.sections.asScala)
+  @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
+  def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder, response: HttpServletResponse) {
+    reorderSections(order, folder.sections.asScala)
+    response.setStatus(HttpServletResponse.SC_OK)
+  }
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute folder: Folder) = "admin/folder/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute folder: Folder) = "admin/folder/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute folder: Folder) = {
-        if (folder.id == 1)
-            folder.parent = null
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute folder: Folder) = {
+    if (folder.id == 1)
+      folder.parent = null
+    folderDao.save(folder)
+    edit(folder)
+  }
+
+  @RequestMapping(Array("section/create"))
+  def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String) = {
+    val section = Class.forName(cls).newInstance.asInstanceOf[Section]
+    section.folder = folder
+    section.name = "new " + Class.forName(cls).getSimpleName
+    section.visible = true
+    section.init(context)
+    folder.sections.add(section)
+    folderDao.save(folder)
+    "redirect:/backoffice/folder/" + folder.id
+  }
+
+  //    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
+  //    def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
+  //
+  //        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
+  //
+  //        val image = new Image
+  //        image.filename = key
+  //        image.date = System.currentTimeMillis()
+  //        image.folder = folder
+  //        folder.images.add(image)
+  //
+  //        folderDao.save(folder)
+  //        "redirect:" + UrlResolver.folderEdit(folder)
+  //    }
+
+  @RequestMapping(value = Array("section/{sectionId}/delete"))
+  def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {
+    folder.sections.asScala.find(_.id == sectionId) match {
+      case None =>
+      case Some(section) =>
+        folder.sections.remove(section)
+        section.folder = null
         folderDao.save(folder)
-        edit(folder)
     }
+    "forward:" + UrlResolver.folderEdit(folder)
+  }
 
-    @RequestMapping(Array("section/create"))
-    def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String) = {
-        val section = Class.forName(cls).newInstance.asInstanceOf[Section]
-        section.folder = folder
-        section.name = "new " + Class.forName(cls).getSimpleName
-        section.visible = true
-        section.init(context)
-        folder.sections.add(section)
-        folderDao.save(folder)
-        "redirect:/backoffice/folder/" + folder.id
-    }
+  @ModelAttribute("parents") def parents = {
 
-    //    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
-    //    def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
-    //
-    //        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
-    //
-    //        val image = new Image
-    //        image.filename = key
-    //        image.date = System.currentTimeMillis()
-    //        image.folder = folder
-    //        folder.images.add(image)
-    //
-    //        folderDao.save(folder)
-    //        "redirect:" + UrlResolver.folderEdit(folder)
-    //    }
+    val folders = folderDao.findAll().sortBy(_.id)
 
-    @RequestMapping(value = Array("section/{sectionId}/delete"))
-    def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {
-        folder.sections.asScala.find(_.id == sectionId) match {
-            case None =>
-            case Some(section) =>
-                folder.sections.remove(section)
-                section.folder = null
-                folderDao.save(folder)
-        }
-        "forward:" + UrlResolver.folderEdit(folder)
-    }
+    val map = mutable.Map(0l -> "-Default-")
+    folders.map(f => {
+      map += (f.id -> f.fullName)
+    })
 
-    @ModelAttribute("parents") def parents = {
+    val ordered = ListMap(map.toList.sortBy {
+      _._2
+    }: _*)
 
-        val folders = folderDao.findAll().sortBy(_.id)
+    ordered.asJava
+  }
 
-        val map = mutable.Map(0l -> "-Default-")
-        folders.map(f => {
-            map += (f.id -> f.fullName)
-        })
+  @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)
 
-        val ordered = ListMap(map.toList.sortBy {
-            _._2
-        }: _*)
+  @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
+    val folder = folderDao.find(id)
+    val sections = folder.sortedSections.asJava
+    map.put("eyeball", UrlGenerator.url(folder))
+    map.put("folder", folder)
+    map.put("sections", sections)
+  }
 
-        ordered.asJava
-    }
-
-    @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)
-
-    @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
-        val folder = folderDao.find(id)
-        val sections = folder.sortedSections.asJava
-        map.put("eyeball", UrlGenerator.url(folder))
-        map.put("folder", folder)
-        map.put("sections", sections)
-    }
-
-    @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
-        val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
-        val empty = mutable.LinkedHashMap.empty[String, String]
-        val map = empty ++: sections.map(c => (c.getName, c.getSimpleName)).toMap
-        map.asJava
-    }
+  @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
+    val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
+    val empty = mutable.LinkedHashMap.empty[String, String]
+    val map = empty ++: sections.map(c => (c.getName, c.getSimpleName)).toMap
+    map.asJava
+  }
 }

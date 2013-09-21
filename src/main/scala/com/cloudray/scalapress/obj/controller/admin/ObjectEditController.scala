@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
-import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
@@ -156,8 +156,12 @@ class ObjectEditController
   }
 
   @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
-  def reorderSections(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String =
+  def reorderSections(@RequestBody order: String,
+                      @ModelAttribute("form") form: EditForm,
+                      response: HttpServletResponse) {
     reorderSections(order, form.o.sections.asScala)
+    response.setStatus(HttpServletResponse.SC_OK)
+  }
 
   @RequestMapping(value = Array("association/{associationId}/delete"))
   def deleteAssociation(@ModelAttribute("form") form: EditForm,
