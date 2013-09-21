@@ -30,7 +30,6 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
   @Transactional
   @ManagedOperation(description = "perform a reindex")
   def index() {
-
     var offset = 0
     val pageSize = 100
     var objs = _load(offset, pageSize).filterNot(_.name == null).filterNot(_.name.isEmpty)

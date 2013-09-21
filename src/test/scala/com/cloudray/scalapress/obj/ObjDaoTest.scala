@@ -7,6 +7,15 @@ import com.cloudray.scalapress.TestDatabaseContext
 /** @author Stephen Samuel */
 class ObjDaoTest extends FunSuite with MockitoSugar {
 
+  test("saving an object sets updated date") {
+    val obj = new Obj
+    val start = System.currentTimeMillis()
+    TestDatabaseContext.objectDao.save(obj)
+    val end = System.currentTimeMillis()
+    assert(obj.dateUpdated >= start)
+    assert(obj.dateUpdated <= end)
+  }
+
   test("persisting an obj is assigned id") {
 
     val obj = new Obj
@@ -66,7 +75,6 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
     assert(obj3.id === objs(0).id)
     assert(obj2.id === objs(1).id)
   }
-
 
   test("recent only includes live objects") {
 

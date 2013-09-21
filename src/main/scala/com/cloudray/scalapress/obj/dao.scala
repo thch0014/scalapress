@@ -37,6 +37,11 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     }
   }
 
+  override def save(obj: Obj): Boolean = {
+    obj.dateUpdated = System.currentTimeMillis()
+    super.save(obj)
+  }
+
   def search(q: ObjectQuery): Page[Obj] = {
     val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset)
     q.typeId.foreach(t => {
