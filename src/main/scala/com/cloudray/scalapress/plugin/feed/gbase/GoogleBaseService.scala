@@ -24,7 +24,10 @@ object GoogleBaseService extends Logging {
     val file = new GoogleBaseBuilder(installation.domain, feed.productCategory, assetStore).csv(objs, feed)
     logger.debug("Gbase file generated [{}]", file)
 
-    upload(file, feed)
+    upload(file, feed) match {
+      case true => logger.info("GBase upload completed")
+      case false => logger.error("GBase upload failed")
+    }
     file.delete
 
     feed.lastRuntime = new DateTime(DateTimeZone.UTC).getMillis
@@ -42,24 +45,34 @@ object GoogleBaseService extends Logging {
     objs
   }
 
-  def upload(file: File, feed: GBaseFeed) {
+  def upload(file: File, feed: GBaseFeed): Boolean = {
 
-    val ftp = new FTPClient()
-    ftp.setRemoteHost(feed.ftpHostname)
+    try {
 
-    logger.debug("Connecting to the FTP server...")
-    ftp.connect()
-    logger.debug("...connected")
+      val ftp = new FTPClient()
+      ftp.setRemoteHost(feed.ftpHostname)
 
-    ftp.user(feed.ftpUsername)
-    ftp.password(feed.ftpPassword)
+      logger.debug("Connecting to the FTP server...")
+      ftp.connect()
+      logger.debug("...connected")
 
-    logger.debug("Uploading file to {}...", feed.ftpFilename)
-    val in = FileUtils.openInputStream(file)
-    ftp.put(in, feed.ftpFilename)
-    logger.debug("...file has been uploaded")
+      ftp.user(feed.ftpUsername)
+      ftp.password(feed.ftpPassword)
 
-    IOUtils.closeQuietly(in)
-    ftp.quit()
+      logger.debug("Uploading file to {}...", feed.ftpFilename)
+      val in = FileUtils.openInputStream(file)
+      ftp.put(in, feed.ftpFilename)
+      logger.debug("...file has been uploaded")
+
+      IOUtils.closeQuietly(in)
+      ftp.quit()
+
+      true
+
+    } catch {
+      case e: Exception =>
+        logger.warn("Could not complete upload {}", e.getMessage)
+        false
+    }
   }
 }
