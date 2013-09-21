@@ -2,17 +2,17 @@
 <toolbox>
     <tool>
         <key>datetool</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.DateTool</class>
     </tool>
     <tool>
         <key>datecmptool</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.ComparisonDateTool</class>
     </tool>
     <tool>
         <key>sorttool</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.SortTool</class>
     </tool>
     <tool>
@@ -22,17 +22,17 @@
     </tool>
     <tool>
         <key>math</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.MathTool</class>
     </tool>
     <tool>
         <key>display</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.DisplayTool</class>
     </tool>
     <tool>
         <key>number</key>
-        <scope>sreq</scope>
+        <scope>request</scope>
         <class>org.apache.velocity.tools.generic.NumberTool</class>
     </tool>
 </toolbox>

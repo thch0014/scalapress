@@ -16,7 +16,7 @@ class ElasticSearchCron extends Runnable with Logging {
   @Scheduled(fixedDelay = 1000 * 60 * 2, initialDelay = 0)
   @Transactional
   def run() {
-    logger.info("** Starting incremental index")
+    logger.info("Starting elastic search INDEX")
     incremental match {
       case false =>
         indexer.fullIndex()
