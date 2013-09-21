@@ -5,9 +5,10 @@ import com.sksamuel.scrimage.{Image => Scrimage, Format}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
+import com.cloudray.scalapress.Logging
 
 @Component
-class ThumbnailService {
+class ThumbnailService extends Logging {
 
   @Autowired var assetStore: AssetStore = _
 
@@ -19,18 +20,27 @@ class ThumbnailService {
   def _store(filename: String, image: Scrimage): Unit =
     assetStore.put(filename, new ByteArrayInputStream(image.write(Format.PNG)))
 
+  def _imageOp(image: Scrimage, w: Int, h: Int, `type`: String): Scrimage = `type` match {
+    case "bound" => image.bound(w, h)
+    case "cover" => image.cover(w, h)
+    case _ => image.fit(w, h)
+  }
+
   def thumbnail(key: String, w: Int, h: Int, `type`: String): Option[Scrimage] = {
     assetStore.get(_filename(key, w, h)) match {
       case Some(thumb) => Some(Scrimage(thumb))
       case _ =>
         assetStore.get(key) match {
-          case Some(original) =>
-            val thumb =
-              if (`type` == "bound") Scrimage(original).bound(w, h)
-              else if (`type` == "cover") Scrimage(original).cover(w, h)
-              else Scrimage(original).fit(w, h)
-            _store(_filename(key, w, h), thumb)
-            Some(thumb)
+          case Some(stream) =>
+            try {
+              val thumb = _imageOp(Scrimage(stream), w, h, `type`)
+              _store(_filename(key, w, h), thumb)
+              Some(thumb)
+            } catch {
+              case e: Exception =>
+                logger.warn(e.getMessage)
+                None
+            }
           case _ => None
         }
     }
