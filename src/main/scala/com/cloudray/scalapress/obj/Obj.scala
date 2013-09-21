@@ -99,7 +99,10 @@ class Obj extends SortedSections with java.io.Serializable {
   @BeanProperty var content: String = _
   def content(limit: Int): String = content.take(limit)
 
+  @Column(name = "dateCreated")
   @BeanProperty var dateCreated: java.lang.Long = _
+
+  @Column(name = "dateUpdated")
   @BeanProperty var dateUpdated: java.lang.Long = _
 
   @Column(name = "reference", length = 5000)

@@ -10,7 +10,12 @@ scala based publishing platform
 [![Build Status](https://travis-ci.org/sksamuel/scalapress.png)](https://travis-ci.org/sksamuel/scalapress)
 
 
+
 ### Release History
+
+
+##### 0.38
+Updated elastic indexer to be incremental
 
 ##### 0.37
 * Decreased perm gen usage

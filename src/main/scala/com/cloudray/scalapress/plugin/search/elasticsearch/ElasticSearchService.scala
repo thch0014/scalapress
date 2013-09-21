@@ -117,6 +117,7 @@ class ElasticSearchService extends SearchService with Logging {
 
   override def index(obj: Obj) = index(Seq(obj))
   override def index(objs: Seq[Obj]) {
+    logger.debug("Bulk indexing {} objects", objs.size)
 
     val inserts = objs.map(obj => {
       val _fields = ListBuffer[(String, Any)](

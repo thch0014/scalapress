@@ -11,17 +11,18 @@ import org.springframework.transaction.annotation.Transactional
 class ElasticSearchCron extends Runnable with Logging {
 
   @Autowired var indexer: ElasticSearchIndexer = _
-  var incremental: Boolean = false
+  var lastRuntime: Long = 0
 
   @Scheduled(fixedDelay = 1000 * 60 * 2, initialDelay = 0)
   @Transactional
   def run() {
     logger.info("Starting elastic search INDEX")
-    incremental match {
-      case false =>
+    lastRuntime match {
+      case 0 =>
         indexer.fullIndex()
-        incremental = true
-      case true => indexer.incrementalIndex()
+        lastRuntime = System.currentTimeMillis()
+      case _ =>
+        indexer.incrementalIndex(lastRuntime)
     }
   }
 }

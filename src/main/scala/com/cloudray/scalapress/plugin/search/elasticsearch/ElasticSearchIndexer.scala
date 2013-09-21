@@ -8,13 +8,11 @@ import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import org.springframework.jmx.export.annotation.{ManagedOperation, ManagedResource}
-import scala.concurrent.duration.Duration
-import java.util.concurrent.TimeUnit
 
 /** @author Stephen Samuel */
 trait ElasticSearchIndexer {
   def fullIndex(): Unit
-  def incrementalIndex(): Unit
+  def incrementalIndex(since: Long): Unit
 }
 
 @Component
@@ -38,9 +36,8 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
   @Transactional
   @ManagedOperation(description = "perform an incremental index")
-  def incrementalIndex(): Unit = {
-    val cutOffTime = System.currentTimeMillis() - Duration(1, TimeUnit.HOURS).toMillis
-    index(_loadUpdated(_, _, cutOffTime))
+  def incrementalIndex(since: Long): Unit = {
+    index(_loadUpdated(_, _, since))
   }
 
   def index(loader: (Int, Int) => Seq[Obj]) {
@@ -67,19 +64,17 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
         !objs.isEmpty
       }
       def _load(): Unit = {
+        logger.debug("Loading objects [offset={}]", offset)
         objs = loader(offset, PAGE_SIZE)
         offset = offset + PAGE_SIZE
       }
     }
   }
 
-  def _loadAll(offset: Int, pageSize: Int): Seq[Obj] = {
-    logger.debug("Loading objects [offset={}]", offset)
-    context.objectDao.search(_basicSearch(offset, pageSize))
-  }
+  def _loadAll(offset: Int, pageSize: Int): Seq[Obj] = context.objectDao.search(_basicSearch(offset, pageSize))
 
-  def _loadUpdated(offset: Int, pageSize: Int, cutOffTime: Long): Seq[Obj] =
-    context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterThan("dateUpdated", cutOffTime))
+  def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Obj] =
+    context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterThan("dateUpdated", since))
 
   def _basicSearch(offset: Int, pageSize: Int) = new Search(classOf[Obj])
     .setFirstResult(offset)
