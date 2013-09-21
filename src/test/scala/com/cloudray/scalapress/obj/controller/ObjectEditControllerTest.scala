@@ -8,37 +8,40 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.obj.controller.admin.{EditForm, ObjectEditController}
 import com.cloudray.scalapress.obj.{Obj, ObjectDao}
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 class ObjectEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val controller = new ObjectEditController
-    controller.objectDao = mock[ObjectDao]
-    controller.folderDao = mock[FolderDao]
-    controller.sectionDao = mock[SectionDao]
+  val controller = new ObjectEditController
+  controller.objectDao = mock[ObjectDao]
+  controller.folderDao = mock[FolderDao]
+  controller.sectionDao = mock[SectionDao]
 
-    val section1 = new FolderContentSection
-    section1.id = 6
-    val section2 = new SubfolderSection
-    section2.id = 4
-    val section3 = new FolderContentSection
-    section3.id = 15
+  val response = mock[HttpServletResponse]
 
-    val obj = new Obj
-    obj.sections.add(section1)
-    obj.sections.add(section2)
-    obj.sections.add(section3)
+  val section1 = new FolderContentSection
+  section1.id = 6
+  val section2 = new SubfolderSection
+  section2.id = 4
+  val section3 = new FolderContentSection
+  section3.id = 15
 
-    val form = new EditForm
-    form.o = obj
+  val obj = new Obj
+  obj.sections.add(section1)
+  obj.sections.add(section2)
+  obj.sections.add(section3)
 
-    test("section re-ordering persists updated positions") {
-        controller.reorderSections("4-15-6", form)
-        Mockito.verify(controller.sectionDao).save(section1)
-        Mockito.verify(controller.sectionDao).save(section2)
-        Mockito.verify(controller.sectionDao).save(section3)
-        assert(0 === section2.position)
-        assert(1 === section3.position)
-        assert(2 === section1.position)
-    }
+  val form = new EditForm
+  form.o = obj
+
+  test("section re-ordering persists updated positions") {
+    controller.reorderSections("4-15-6", form, response)
+    Mockito.verify(controller.sectionDao).save(section1)
+    Mockito.verify(controller.sectionDao).save(section2)
+    Mockito.verify(controller.sectionDao).save(section3)
+    assert(0 === section2.position)
+    assert(1 === section3.position)
+    assert(2 === section1.position)
+  }
 }

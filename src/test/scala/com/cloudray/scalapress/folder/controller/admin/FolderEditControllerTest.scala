@@ -6,6 +6,7 @@ import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSection}
 import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -13,6 +14,8 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
   val controller = new FolderEditController
   controller.folderDao = mock[FolderDao]
   controller.sectionDao = mock[SectionDao]
+
+  val response = mock[HttpServletResponse]
 
   val section1 = new FolderContentSection
   section1.id = 6
@@ -27,7 +30,7 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
   folder.sections.add(section3)
 
   test("section re-ordering persists updated positions") {
-    controller.reorderSections("4-15-6", folder)
+    controller.reorderSections("4-15-6", folder, response)
     Mockito.verify(controller.sectionDao).save(section1)
     Mockito.verify(controller.sectionDao).save(section2)
     Mockito.verify(controller.sectionDao).save(section3)
