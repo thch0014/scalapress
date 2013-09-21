@@ -15,7 +15,8 @@ scala based publishing platform
 
 
 ##### 0.38
-Updated elastic indexer to be incremental
+* Updated elastic indexer to be incremental
+* Closed out multiple bugs
 
 ##### 0.37
 * Decreased perm gen usage
@@ -28,12 +29,12 @@ Updated elastic indexer to be incremental
 
 ##### 0.36
 
-Added Listing object to contain listing specific calculations
-Added listing renewal controller flow
-Added delivery_select tag
-Converted elastic to use mostly filters. Added support for ignorePast into the searches.
-Converted listing renderer to SSP
-Updated joda to 2.2 for extra cool methods
+* Added Listing object to contain listing specific calculations
+* Added listing renewal controller flow
+* Added delivery_select tag
+* Converted elastic to use mostly filters. Added support for ignorePast into the searches.
+* Converted listing renderer to SSP
+* Updated joda to 2.2 for extra cool methods
 
 ##### 0.35
 
