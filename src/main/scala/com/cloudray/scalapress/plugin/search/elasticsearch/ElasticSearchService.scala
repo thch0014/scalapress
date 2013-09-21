@@ -35,6 +35,10 @@ import scala.concurrent.Await
 @Component
 class ElasticSearchService extends SearchService with Logging {
 
+  val DELETED = Obj.STATUS_DELETED.toLowerCase
+  val DISABLED = Obj.STATUS_DISABLED.toLowerCase
+  val LIVE = Obj.STATUS_LIVE.toLowerCase
+
   val MAX_RESULTS_HARD_LIMIT = 1000
   val DEFAULT_MAX_RESULTS = 200
 
@@ -121,10 +125,11 @@ class ElasticSearchService extends SearchService with Logging {
 
     val executions = objs.map(obj => obj.status.toLowerCase match {
 
-      case Obj.STATUS_DELETED.toLowerCase | Obj.STATUS_DISABLED.toLowerCase =>
+      case DELETED | DISABLED =>
+        logger.debug("Creating delete operation [id={}]", obj.id)
         new DeleteByIdDefinition(INDEX, TYPE, obj.id.toString)
 
-      case Obj.STATUS_LIVE.toLowerCase =>
+      case LIVE =>
         val _fields = ListBuffer[(String, Any)](
           FIELD_OBJECT_ID -> obj.id,
           FIELD_OBJECT_TYPE -> obj.objectType.id.toString,

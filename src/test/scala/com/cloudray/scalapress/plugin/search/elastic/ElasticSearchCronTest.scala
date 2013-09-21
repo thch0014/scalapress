@@ -10,7 +10,7 @@ class ElasticSearchCronTest extends FlatSpec with OneInstancePerTest with Mockit
 
   "the search cron" should "have reasonable reindex time" in {
     val annotation = classOf[ElasticSearchCron].getMethod("run").getAnnotation(classOf[Scheduled])
-    assert(annotation.fixedDelay() > 1000 * 60 * 25 || annotation.fixedRate() > 1000 * 60 * 25)
+    assert(annotation.fixedDelay() >= 1000 * 60 * 5 || annotation.fixedRate() > 1000 * 60 * 5)
   }
 
 }

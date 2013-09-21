@@ -13,7 +13,7 @@ class ElasticSearchCron extends Runnable with Logging {
   @Autowired var indexer: ElasticSearchIndexer = _
   var lastRuntime: Long = 0
 
-  @Scheduled(fixedDelay = 1000 * 60 * 2, initialDelay = 0)
+  @Scheduled(fixedDelay = 1000 * 60 * 5, initialDelay = 0)
   @Transactional
   def run() {
     lastRuntime match {
