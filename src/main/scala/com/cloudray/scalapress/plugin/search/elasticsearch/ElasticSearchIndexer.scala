@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import org.springframework.jmx.export.annotation.{ManagedOperation, ManagedResource}
+import scala.concurrent.duration.Duration
+import java.util.concurrent.TimeUnit
 
 /** @author Stephen Samuel */
 trait ElasticSearchIndexer {
@@ -32,7 +34,7 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
   @Transactional
   @ManagedOperation(description = "perform a full index")
-  def fullIndex(): Unit = index(_loadAll)
+  def fullIndex(): Unit = index(_loadLive)
 
   @Transactional
   @ManagedOperation(description = "perform an incremental index")
@@ -71,15 +73,18 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     }
   }
 
-  def _loadAll(offset: Int, pageSize: Int): Seq[Obj] = context.objectDao.search(_basicSearch(offset, pageSize))
+  def _loadLive(offset: Int, pageSize: Int): Seq[Obj] =
+    context.objectDao.search(_basicSearch(offset, pageSize).addFilterLike("status", Obj.STATUS_LIVE))
 
-  def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Obj] =
-    context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterThan("dateUpdated", since))
+  def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Obj] = {
+    // include an extra overlap of 15 minutes to allow for time diffs on different nodes
+    val _since = since - Duration(15, TimeUnit.MINUTES).toMillis
+    context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterOrEqual("dateUpdated", _since))
+  }
 
   def _basicSearch(offset: Int, pageSize: Int) = new Search(classOf[Obj])
     .setFirstResult(offset)
     .setMaxResults(pageSize)
-    .addFilterLike("status", "live")
     .addFilterNotNull("name")
     .addFilterNotEqual("objectType.name", "Account")
     .addFilterNotEqual("objectType.name", "account")

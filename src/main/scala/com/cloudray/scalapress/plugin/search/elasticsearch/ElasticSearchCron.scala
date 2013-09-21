@@ -22,7 +22,7 @@ class ElasticSearchCron extends Runnable with Logging {
         indexer.fullIndex()
         lastRuntime = System.currentTimeMillis()
       case _ =>
-        logger.info("Starting elastic search incremental index [since={}]", lastRuntime)
+        logger.info("Starting elastic search incremental index [lastRuntime={}]", lastRuntime)
         indexer.incrementalIndex(lastRuntime)
     }
   }

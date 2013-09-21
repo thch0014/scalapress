@@ -119,41 +119,46 @@ class ElasticSearchService extends SearchService with Logging {
   override def index(objs: Seq[Obj]) {
     logger.debug("Bulk indexing {} objects", objs.size)
 
-    val inserts = objs.map(obj => {
-      val _fields = ListBuffer[(String, Any)](
-        FIELD_OBJECT_ID -> obj.id,
-        FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
-        FIELD_NAME -> _normalize(obj.name),
-        FIELD_NAME_NOT_ANALYSED -> obj.name,
-        FIELD_STATUS -> obj.status,
-        FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
-      )
+    val executions = objs.map(obj => obj.status match {
 
-      Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
+      case Obj.STATUS_DELETED | Obj.STATUS_DISABLED =>
+        new DeleteByIdDefinition(INDEX, TYPE, obj.id.toString)
 
-      val hasImage = obj.images.size > 0
-      _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
+      case Obj.STATUS_LIVE =>
+        val _fields = ListBuffer[(String, Any)](
+          FIELD_OBJECT_ID -> obj.id,
+          FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
+          FIELD_NAME -> _normalize(obj.name),
+          FIELD_NAME_NOT_ANALYSED -> obj.name,
+          FIELD_STATUS -> obj.status,
+          FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
+        )
 
-      obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
+        Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
 
-      obj.attributeValues.asScala
-        .filterNot(_.value == null)
-        .filterNot(_.value.isEmpty)
-        .foreach(av => {
-        _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
-        _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
-        if (av.attribute.attributeType == AttributeType.Postcode) {
-          Postcode.gps(av.value).foreach(gps => {
-            _fields.append(FIELD_LOCATION -> gps.string())
-          })
-        }
-      })
+        val hasImage = obj.images.size > 0
+        _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-      insert into INDEX -> TYPE id obj.id fields _fields
+        obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
+
+        obj.attributeValues.asScala
+          .filterNot(_.value == null)
+          .filterNot(_.value.isEmpty)
+          .foreach(av => {
+          _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
+          _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
+          if (av.attribute.attributeType == AttributeType.Postcode) {
+            Postcode.gps(av.value).foreach(gps => {
+              _fields.append(FIELD_LOCATION -> gps.string())
+            })
+          }
+        })
+
+        insert into INDEX -> TYPE id obj.id fields _fields
     })
 
     import scala.concurrent.duration._
-    Await.ready(client.bulk(inserts: _*), 1 minute)
+    Await.ready(client.bulk(executions: _*), 1 minute)
   }
 
   override def remove(_id: String) {
