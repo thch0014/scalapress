@@ -32,6 +32,17 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
   order.account = new Obj
   order.account.email = "kirk@enterprise.com"
 
+  test("no domain set uses localhost") {
+    installation.domain = null
+    plugin.orderCompletionMessageBody = "go go go"
+    service.orderCompleted(order)
+
+    val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+    Mockito.verify(service.mailSender).send(captor.capture)
+    val msg = captor.getValue
+    assert(msg.getReplyTo === "donotreply@localhost")
+  }
+
   test("that a message is sent via mail sender") {
     plugin.orderCompletionMessageBody = "go go go"
     service.orderCompleted(order)

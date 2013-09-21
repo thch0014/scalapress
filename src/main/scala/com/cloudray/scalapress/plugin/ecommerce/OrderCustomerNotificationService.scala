@@ -35,12 +35,14 @@ class OrderCustomerNotificationService extends Logging {
   def _send(order: Order, body: String) {
 
     val installation = context.installationDao.get
-    val domain = installation.domain
+    val domain = Option(installation.domain).getOrElse("localhost")
     val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
+    val replyAddress = "donotreply@" + nowww
 
     val message = new SimpleMailMessage()
-    message.setFrom(installation.name + " <donotreply@" + nowww + ">")
+    message.setFrom(s"${installation.name} <$replyAddress>")
     message.setTo(order.account.email)
+    message.setReplyTo(replyAddress)
     message.setSubject("Order #" + order.id)
     message.setText(body)
     Option(shoppingPluginDao.get.orderConfirmationBcc).filterNot(_.isEmpty).map(_.split(",")).foreach(message.setBcc)
