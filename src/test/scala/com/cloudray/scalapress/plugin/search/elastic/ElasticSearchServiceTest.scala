@@ -15,11 +15,11 @@ import com.cloudray.scalapress.folder.Folder
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   val folder1 = new Folder
-  folder1.name = "tickets"
+  folder1.name = "folder1"
   folder1.id = 4
 
   val folder2 = new Folder
-  folder2.name = "events"
+  folder2.name = "folder2"
   folder2.id = 19
 
   val av1 = new AttributeValue
@@ -75,7 +75,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj.name = "tony mowbray captain"
   obj.objectType = new ObjectType
   obj.objectType.id = 1
-  obj.status = "Live"
+  obj.status = Obj.STATUS_LIVE
   obj.images.add(new Image)
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av4)
@@ -89,7 +89,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj2.name = "bryan robson captain"
   obj2.objectType = new ObjectType
   obj2.objectType.id = 2
-  obj2.status = "Disabled"
+  obj2.status = Obj.STATUS_LIVE
   obj2.attributeValues.add(av2)
   obj2.attributeValues.add(av5)
   obj2.attributeValues.add(date3)
@@ -101,7 +101,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj3.name = "steve mclaren"
   obj3.objectType = new ObjectType
   obj3.objectType.id = 3
-  obj3.status = "Live"
+  obj3.status = Obj.STATUS_LIVE
   obj3.prioritized = true
   obj3.attributeValues.add(av3)
   obj3.attributeValues.add(av6)
@@ -130,7 +130,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj4.name = "zola"
   obj4.objectType = new ObjectType
   obj4.objectType.id = 2234
-  obj4.status = "live"
+  obj4.status = Obj.STATUS_LIVE
   obj4.attributeValues.add(av)
   obj4.attributeValues.add(avWithSlash)
 
@@ -140,6 +140,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   service.index(Seq(obj2, obj3, obj, obj4))
 
   Thread.sleep(1500)
+
+  println(service.count)
 
   test("indexing and retrieval by name happy path") {
 
@@ -215,7 +217,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(results(3).id === 1529)
   }
 
-  test("sorting by attribute value puts missing values at start") {
+  test("sorting by attribute value puts missing values at end") {
 
     val search = new SavedSearch
     search.sortType = Sort.Attribute
@@ -225,9 +227,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(results.size === 4)
 
     assert(results(0).id === 20)
-    assert(results(1).id === 1529)
-    assert(results(2).id === 2)
-    assert(results(3).id === 4)
+    assert(results(1).id === 2)
+    assert(results(2).id === 4)
+    assert(results(3).id === 1529)
+
   }
 
   test("sorting by attribute desc value happy path") {

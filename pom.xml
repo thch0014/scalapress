@@ -56,8 +56,8 @@
         <cglib.version>2.2.2</cglib.version>
 
         <ehcache.version>2.6.6</ehcache.version>
-        <elasticsearch.version>0.90.3</elasticsearch.version>
-        <elastic4s.version>0.90.4.0</elastic4s.version>
+        <elasticsearch.version>0.90.5</elasticsearch.version>
+        <elastic4s.version>0.90.5.0</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
