@@ -13,8 +13,8 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
 
   override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    val height = params.get("height").getOrElse("120").toInt
-    val width = params.get("width").getOrElse("160").toInt
+    val height = _height(params)
+    val width = _width(params)
     val text = params.get("text").getOrElse("")
     request.obj.map(obj => {
 
@@ -35,4 +35,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
       links.mkString("\n\n") + script
     })
   }
+
+  def _height(params: Map[String, String]) = params.get("h").orElse(params.get("height")).getOrElse("120").toInt
+  def _width(params: Map[String, String]) = params.get("w").orElse(params.get("width")).getOrElse("160").toInt
 }
