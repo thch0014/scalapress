@@ -45,8 +45,10 @@ class ThumbnailService extends Logging {
    */
   def link(filename: String, w: Int, h: Int, opType: OpType): String = {
     val key = _thumbkey(filename, w, h, opType)
-    if (!_exists(key))
+    if (!_exists(key)) {
       _thumbnail(filename, w, h, opType)
+      _setCached(key)
+    }
     assetStore.link(key)
   }
 
