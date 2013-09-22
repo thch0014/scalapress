@@ -15,15 +15,14 @@ import java.util.UUID
 class ThumbnailService extends Logging {
 
   val THUMBNAIL_PREFIX = "_thumbnail"
+  val MAX_BYTES = 1024 * 1024 * 10
 
   @Autowired var assetStore: AssetStore = _
 
   val manager = CacheManager.getInstance()
 
   val config = new CacheConfiguration()
-  config.setEternal(true)
-  config.setMaxBytesLocalHeap("1m")
-  config.setMaxElementsOnDisk(0)
+  config.setMaxBytesLocalHeap(MAX_BYTES)
   config.setName("thumbnail-cache-" + UUID.randomUUID())
   config.setMemoryStoreEvictionPolicy("LRU")
 
@@ -37,7 +36,7 @@ class ThumbnailService extends Logging {
     }
   }
 
-  def _setCached(key: String): Unit = cache.put(new Element(key, true))
+  def _setCached(key: String): Unit = cache.putIfAbsent(new Element(key, true))
 
   /**
    * Returns a link to the asset store of a thumbnail generated version of the given image.
@@ -53,6 +52,7 @@ class ThumbnailService extends Logging {
   }
 
   def _exists(key: String): Boolean = {
+    logger.debug("Cache [size={}, elements={}]", cache.calculateInMemorySize(), cache.getSize)
     if (cache.get(key) != null) {
       true
     } else if (assetStore.exists(key)) {

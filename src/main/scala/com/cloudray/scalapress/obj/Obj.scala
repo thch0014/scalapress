@@ -49,7 +49,7 @@ class Obj extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var listingPackage: ListingPackage = _
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "obj", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
   @BatchSize(size = 20)
   @NotFound(action = NotFoundAction.IGNORE)
