@@ -24,6 +24,7 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
             case 0 => Option(request.attribute(id.trim.toLong)).flatMap(attr => Option(attr.default))
             case _ => Some(build(values.mkString(sep), params))
           }
+
         case None => None
       }
       case None => Some("<!-- no id specified for attribute tag -->")

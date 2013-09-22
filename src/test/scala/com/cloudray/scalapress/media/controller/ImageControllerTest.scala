@@ -23,12 +23,12 @@ class ImageControllerTest extends FunSuite with MockitoSugar with OneInstancePer
   Mockito.when(resp.getOutputStream).thenReturn(out)
   Mockito.when(controller.assetStore.get("coldplay.jpg")).thenReturn(Some(in))
   Mockito
-    .when(controller.thumbnailService.thumbnail("coldplay.jpg", 100, 200, "fit"))
+    .when(controller.thumbnailService._generate("coldplay.jpg", 100, 200, "fit"))
     .thenReturn(Some(Scrimage.empty(100, 200)))
 
   test("resized sreq loads asset from thumbnail service") {
     controller.imageResized3("coldplay.jpg", 100, 200, resp)
-    Mockito.verify(controller.thumbnailService).thumbnail("coldplay.jpg", 100, 200, "fit")
+    Mockito.verify(controller.thumbnailService)._generate("coldplay.jpg", 100, 200, "fit")
   }
 
   test("resized sreq set response content type as png") {

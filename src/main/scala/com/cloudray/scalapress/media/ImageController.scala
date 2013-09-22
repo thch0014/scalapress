@@ -43,7 +43,7 @@ class ImageController extends Logging {
                    @RequestParam(value = "type", required = false) `type`: String,
                    resp: HttpServletResponse) {
 
-    thumbnailService.thumbnail(filename, width, height, `type`) match {
+    thumbnailService._generate(filename, width, height, `type`) match {
       case Some(thumb) =>
         resp.setContentType("image/png")
         thumb.write(resp.getOutputStream, Format.PNG)

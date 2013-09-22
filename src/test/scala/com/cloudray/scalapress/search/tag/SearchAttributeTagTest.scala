@@ -9,7 +9,7 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
-class AttributeSearchTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
+class SearchAttributeTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
   val context = new ScalapressContext()
   context.attributeDao = mock[AttributeDao]
@@ -18,7 +18,7 @@ class AttributeSearchTagTest extends FlatSpec with MockitoSugar with OneInstance
 
   val sreq = ScalapressRequest(req, context)
 
-  val tag = new AttributeSearchTag
+  val tag = new SearchAttributeTag
 
   "an attribute search tag" should "render using the id param" in {
 

@@ -30,7 +30,7 @@ class QuickSearchTag extends ScalapressTag {
 }
 
 @Tag("search_attribute")
-class AttributeSearchTag extends ScalapressTag {
+class SearchAttributeTag extends ScalapressTag {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 

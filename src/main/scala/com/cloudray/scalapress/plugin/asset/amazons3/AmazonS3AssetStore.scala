@@ -84,6 +84,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
   override def list(limit: Int): Array[Asset] = search(null, 0, limit)
 
+  override def list(prefix: String, limit: Int): Array[Asset] = search(prefix, 0, limit)
+
   def get(key: String): Option[InputStream] = {
     try {
       Option(getAmazonS3Client.getObject(bucketName, key)) match {
