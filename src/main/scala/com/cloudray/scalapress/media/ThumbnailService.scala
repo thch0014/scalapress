@@ -43,10 +43,10 @@ class ThumbnailService extends Logging {
    * Returns a link to the asset store of a thumbnail generated version of the given image.
    * This method will ensure that the thumbnail version has been created and stored at the asset store.
    */
-  def link(filename: String, w: Int, h: Int, t: String): String = {
-    val key = _thumbkey(filename, w, h, t)
+  def link(filename: String, w: Int, h: Int, opType: OpType): String = {
+    val key = _thumbkey(filename, w, h, opType)
     if (!_exists(key))
-      _thumbnail(filename, w, h, t)
+      _thumbnail(filename, w, h, opType)
     assetStore.link(key)
   }
 
@@ -62,15 +62,14 @@ class ThumbnailService extends Logging {
   }
 
   // returns the key of what the asset should be stored under at the asset store
-  def _thumbkey(filename: String, w: Int, h: Int, t: String): String = {
+  def _thumbkey(filename: String, w: Int, h: Int, opType: OpType): String = {
     val basename = FilenameUtils.getBaseName(filename)
-    val _type = Option(t).getOrElse("fit")
-    s"_thumbnails/${basename}_${_type}_${w}x$h.png"
+    s"_thumbnails/${basename}_${opType}_${w}x$h.png"
   }
 
   // generate and store a thumbnail
-  def _thumbnail(filename: String, w: Int, h: Int, t: String): Option[Scrimage] = {
-    logger.debug("Generating thumbnail [filename={}, w={}, h={}]", Array(filename, w, h))
+  def _thumbnail(filename: String, w: Int, h: Int, t: OpType): Option[Scrimage] = {
+    logger.debug("Generating thumbnail [{}]", Array(filename, w, h, t))
     val thumb = _generate(filename, w, h, t)
     val key = _thumbkey(filename, w, h, t)
     thumb.map(_store(key, _))
@@ -80,23 +79,40 @@ class ThumbnailService extends Logging {
   def _store(filename: String, image: Scrimage): Unit =
     assetStore.put(filename, new ByteArrayInputStream(image.write(Format.PNG)))
 
-  /**
-   * performs the resize of the given image, using the method specified by type
-   */
-  def _transform(image: Scrimage, w: Int, h: Int, `type`: String): Scrimage = `type` match {
-    case "bound" => image.bound(w, h)
-    case "cover" => image.cover(w, h)
-    case _ => image.fit(w, h)
-  }
-
   // generate a thumbnail and returns it
-  def _generate(filename: String, w: Int, h: Int, t: String): Option[Scrimage] = {
+  def _generate(filename: String, w: Int, h: Int, opType: OpType): Option[Scrimage] = {
     assetStore.get(filename) match {
       case Some(image) =>
-        Option(_transform(Scrimage(image), w, h, t))
+        Option(_transform(Scrimage(image), w, h, opType))
       case _ =>
         logger.debug("Original image could not be found, unable to create thumbnail")
         None
     }
   }
+
+  /**
+   * performs the resize of the given image, using the method specified by type
+   */
+  def _transform(image: Scrimage, w: Int, h: Int, opType: OpType): Scrimage = opType match {
+    case Bound => image.bound(w, h)
+    case Cover => image.cover(w, h)
+    case Fit => image.fit(w, h)
+  }
+}
+
+trait OpType {
+  def _opType(option: Option[String]) = option match {
+    case Some("bound") => Bound
+    case Some("cover") => Cover
+    case _ => Fit
+  }
+}
+case object Bound extends OpType {
+  override def toString = "bound"
+}
+case object Cover extends OpType {
+  override def toString = "cover"
+}
+case object Fit extends OpType {
+  override def toString = "fit"
 }

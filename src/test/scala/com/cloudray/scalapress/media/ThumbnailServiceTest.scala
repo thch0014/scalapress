@@ -22,23 +22,18 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
   })
 
   "a thumbnail service" should "use the dimensions and type in the generated filename" in {
-    val filename = service._thumbkey("coldplay_large.png", 50, 60, "bound")
+    val filename = service._thumbkey("coldplay_large.png", 50, 60, Bound)
     assert("_thumbnails/coldplay_large_bound_50x60.png" === filename)
   }
 
   it should "generate a link using the asset store cdn" in {
-    val link = service.link("coldplay.png", 100, 200, "fit")
-    assert("s3.com/_thumbnails/coldplay_fit_100x200.png" === link)
-  }
-
-  it should "handle null image operation type" in {
-    val link = service.link("coldplay.png", 100, 200, null)
+    val link = service.link("coldplay.png", 100, 200, Fit)
     assert("s3.com/_thumbnails/coldplay_fit_100x200.png" === link)
   }
 
   it should "store a thumb when the thumbnail does not already exist" in {
     Mockito.when(service.assetStore.get("coldplay.png")).thenReturn(Some(input))
-    service.link("coldplay.png", 100, 200, "fit")
+    service.link("coldplay.png", 100, 200, Fit)
     Mockito
       .verify(service.assetStore)
       .put(Matchers.eq("_thumbnails/coldplay_fit_100x200.png"), Matchers.any[InputStream])
@@ -46,13 +41,13 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
 
   it should "not store a thumb when the thumbnail exists" in {
     Mockito.when(service._exists(Matchers.anyString())).thenReturn(true)
-    service.link("coldplay.png", 100, 200, "bound")
+    service.link("coldplay.png", 100, 200, Bound)
     Mockito.verify(service.assetStore, Mockito.never()).put(Matchers.anyString, Matchers.any[InputStream])
   }
 
   it should "not store a thumb when the original cannot be fetched to generate a thumbnail" in {
     Mockito.when(service._exists(Matchers.anyString())).thenReturn(false)
-    service.link("coldplay.png", 100, 200, "bound")
+    service.link("coldplay.png", 100, 200, Bound)
     Mockito.verify(service.assetStore, Mockito.never()).put(Matchers.anyString, Matchers.any[InputStream])
   }
 

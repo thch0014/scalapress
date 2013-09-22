@@ -11,7 +11,7 @@ import com.sksamuel.scrimage.Format
 
 @Controller
 @RequestMapping(Array("images"))
-class ImageController extends Logging {
+class ImageController extends Logging with OpType {
 
   @Autowired var assetStore: AssetStore = _
   @Autowired var thumbnailService: ThumbnailService = _
@@ -43,7 +43,7 @@ class ImageController extends Logging {
                    @RequestParam(value = "type", required = false) `type`: String,
                    resp: HttpServletResponse) {
 
-    thumbnailService._generate(filename, width, height, `type`) match {
+    thumbnailService._generate(filename, width, height, _opType(Option(`type`))) match {
       case Some(thumb) =>
         resp.setContentType("image/png")
         thumb.write(resp.getOutputStream, Format.PNG)

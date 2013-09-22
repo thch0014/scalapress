@@ -3,16 +3,16 @@ package com.cloudray.scalapress.plugin.lightbox.colorbox
 import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 import org.fusesource.scalate.TemplateEngine
+import com.cloudray.scalapress.media.OpType
 
 /** @author Stephen Samuel */
 @Tag("colorbox")
-class ColorboxTag extends ScalapressTag with TagBuilder {
+class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
 
   val engine = new TemplateEngine
 
   override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    val t = params.get("type").getOrElse("")
     val height = params.get("height").getOrElse("120").toInt
     val width = params.get("width").getOrElse("160").toInt
     val text = params.get("text").getOrElse("")
@@ -22,7 +22,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder {
       val links = obj.sortedImages.map(image => {
 
         val original = request.context.assetStore.link(image.filename)
-        val thumb = request.context.thumbnailService.link(image.filename, width, height, t)
+        val thumb = request.context.thumbnailService.link(image.filename, width, height, _opType(params.get("type")))
         val style = if (count == 0) "" else "display: none"
         count = count + 1
 
