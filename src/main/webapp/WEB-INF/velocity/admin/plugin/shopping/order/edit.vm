@@ -12,6 +12,7 @@
     <div class="controls">
         <span class="input-xlarge uneditable-input">$order.account.name</span>
         <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$!order.account.email</a>
+        <a href="/backoffice/obj/$order.account.id" class="btn btn-mini">Edit Account</a>
     </div>
 </div>
 
