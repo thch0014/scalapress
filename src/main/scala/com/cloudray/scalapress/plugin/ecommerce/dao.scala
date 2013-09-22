@@ -8,13 +8,18 @@ import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import scala.collection.JavaConverters._
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 
 /** @author Stephen Samuel */
 
 trait OrderDao extends GenericDao[Order, java.lang.Long] {
   def search(q: OrderQuery): Page[Order]
   def emails: Seq[String]
+  def ordersPerDay(limit: Int): Seq[OrderTotal]
 }
+
+case class OrderTotal(date: LocalDate, total: Int)
 
 @Component
 @Transactional
@@ -48,4 +53,12 @@ class OrderDaoImpl extends GenericDaoImpl[Order, java.lang.Long] with OrderDao {
     .asScala
     .toSeq
     .asInstanceOf[Seq[String]]
+
+  def ordersPerDay(limit: Int): Seq[OrderTotal] = {
+    val query = super.getSession.createSQLQuery(
+      "SELECT count(*), from_unixtime(datePlaced / 1000, \"%Y-%m-%d\") as date FROM orders GROUP BY date ORDER BY datePlaced DESC limit 365")
+    val results = query.list().asInstanceOf[java.util.List[Array[Object]]].asScala.reverse
+    val formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+    for ( result <- results ) yield OrderTotal(formatter.parseLocalDate(result(1).toString), result(0).toString.toInt)
+  }
 }

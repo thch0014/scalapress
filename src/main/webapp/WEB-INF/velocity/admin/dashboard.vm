@@ -88,36 +88,37 @@
     </div>
 </div>
 
-##<div id="dailySales">
-##
-##</div>
-##
-##<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-##<script>
-##    function drawVisualization() {
-##
-##        var data = google.visualization.arrayToDataTable([
-##            ['Date', 'Total']
-##          #foreach ($sales in $dailySales.entrySet())
-##              ,
-##              ['$sales.key', $sales.value]
-##          #end
-##        ]);
-##
-##        new google.visualization.ColumnChart(document.getElementById('dailySales')).
-##                draw(data,
-##                {title: "Past 7 Days Sales",
-##                    legend: {
-##                        position: "none"
-##                    },
-##                    width: 1024, height: 400,
-##                    hAxis: {title: "Date"}}
-##        );
-##    }
-##</script>
-##<script type="text/javascript">
-##    google.load('visualization', '1.0', {'packages': ['corechart']});
-##    google.setOnLoadCallback(drawVisualization);
-##</script>
+<div class="well">
+    <h4>
+        Daily Order Count Past 365 Days
+    </h4>
+
+    <div id="orderTotals">
+    </div>
+</div>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {packages: ["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'Order Total']
+          #foreach ($orderTotal in $orderTotals)
+              ,
+              ['$orderTotal.date()', $orderTotal.total()]
+          #end
+        ]);
+
+        var options = {
+            hAxis: {textPosition: 'none'},
+            vAxis: {textPosition: 'none'},
+            legend: { position: 'none' },
+            chartArea: {left: 0, top: 0, width: "100%"}
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('orderTotals'));
+        chart.draw(data, options);
+    }
+</script>
 
 #parse("/admin/footer.vm")

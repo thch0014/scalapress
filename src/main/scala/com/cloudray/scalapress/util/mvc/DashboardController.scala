@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,21 +23,15 @@ class DashboardController {
   IOUtils.closeQuietly(in)
 
   @Autowired var context: ScalapressContext = _
+  @Autowired var orderDao: OrderDao = _
 
   @RequestMapping(produces = Array("text/html"))
   def dashboard = "admin/dashboard.vm"
 
-  //  @ModelAttribute("dailySales") def dailySales: java.util.Map[String, Int] = {
-  //    val q = new OrderQuery
-  //    q.pageSize = 100000000
-  //    q.from = Some(new DateMidnight(DateTimeZone.UTC).minusDays(7).getMillis)
-  //    q.to = Some(new DateMidnight(DateTimeZone.UTC).plusDays(1).getMillis)
-  //    val orders = context.bean[OrderDao].search(q).results
-  //    val grouped = orders.groupBy(order => new DateMidnight(order.datePlaced, DateTimeZone.UTC))
-  //    val totals = grouped
-  //      .map(group => (group._1.toString("dd/MM/yyyy"), group._2.foldLeft(0)((a, b) => a + b.total.toInt)))
-  //    totals.asJava
-  //  }
+  @ModelAttribute("orderTotals") def orderTotals: java.util.List[OrderTotal] = {
+    val orders = orderDao.ordersPerDay(365)
+    orders.asJava
+  }
 
   @ModelAttribute("installation") def installation = context.installationDao.get
   @ModelAttribute("indexed") def indexed = context.searchService.count

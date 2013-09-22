@@ -19,7 +19,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
 
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="/static/js/bootbox.min.js"/>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="/static/js/bootbox.min.js"></script>
     <script src="/static/js/bootstrap-wysihtml5.js"></script>
     <script src="/static/js/bootstrap-datepicker.js"></script>
     <script src="/static/js/bootstrap-tag.js"></script>
