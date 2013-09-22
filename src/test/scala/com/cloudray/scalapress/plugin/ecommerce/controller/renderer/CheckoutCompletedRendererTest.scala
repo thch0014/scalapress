@@ -9,15 +9,25 @@ import com.cloudray.scalapress.obj.Obj
 /** @author Stephen Samuel */
 class CheckoutCompletedRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val order = new Order
-    order.id = 15515
-    order.account = new Obj
-    order.account.name = "sammy"
-    order.account.email = "s@g.com"
+  val order = new Order
+  order.id = 15515
+  order.account = new Obj
+  order.account.name = "sammy"
+  order.account.email = "s@g.com"
 
-    test("default render contains order id") {
-        val actual = CheckoutCompletedRenderer.render(null, order)
-        assert(actual.contains("15515"))
-    }
+  test("default render performs order replacement") {
+    val actual = CheckoutCompletedRenderer.render(null, order)
+    assert("<p>Thank you for your order</p><p>Your order id is 15515</p>" === actual)
+  }
 
+  test("default render does not contain array buffer") {
+    val actual = CheckoutCompletedRenderer.render(null, order)
+    println(actual)
+    assert(!actual.contains("ArrayBuffer"))
+  }
+
+  test("custom render performs order replacement") {
+    val actual = CheckoutCompletedRenderer.render("cool order dude. Id is [order_id]. [order_email]", order)
+    assert("cool order dude. Id is 15515. s@g.com" === actual)
+  }
 }

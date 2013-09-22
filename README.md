@@ -17,6 +17,7 @@ scala based publishing platform
 ##### 0.38
 * Updated elastic indexer to be incremental
 * Closed out multiple bugs
+* Upgraded elastic search to 0.90.5
 
 ##### 0.37
 * Decreased perm gen usage
