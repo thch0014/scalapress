@@ -67,10 +67,10 @@ class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
   }
 
   it should "render image tag using thumbnail store when dimensions specified" in {
-    Mockito.when(context.thumbnailService.link(i.filename, 100, 200, Bound))
-      .thenReturn("http://www.jtull.com/images/jtull_bound_100x200.png")
+    Mockito.when(context.thumbnailService.link(i.filename, 100, 200, Fit))
+      .thenReturn("http://www.jtull.com/images/jtull_fit_100x200.png")
     val tag = new ImagesTag()._renderImage(i, Map("w" -> "100", "h" -> "200"), obj, context)
-    assert( """<img src="http://www.jtull.com/images/jtull_100x200.png" height="200" width="100" class=""/>""" === tag)
+    assert( """<img src="http://www.jtull.com/images/jtull_fit_100x200.png" height="200" width="100" class=""/>""" === tag)
   }
 
   it should "render image tag using the operation type when specified" in {
