@@ -57,16 +57,21 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
     val obj1 = new Obj
     obj1.name = "grandfather"
+    obj1.objectType = new ObjectType
+    obj1.objectType.name = "Object"
     obj1.status = Obj.STATUS_LIVE
 
     val obj2 = new Obj
     obj2.name = "father"
+    obj2.objectType = obj1.objectType
     obj2.status = Obj.STATUS_LIVE
 
     val obj3 = new Obj
     obj3.name = "son"
+    obj3.objectType = obj1.objectType
     obj3.status = Obj.STATUS_LIVE
 
+    TestDatabaseContext.typeDao.save(obj1.objectType)
     TestDatabaseContext.objectDao.save(obj1)
     TestDatabaseContext.objectDao.save(obj2)
     TestDatabaseContext.objectDao.save(obj3)
@@ -80,16 +85,21 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
     val obj1 = new Obj
     obj1.name = "grandfather"
+    obj1.objectType = new ObjectType
+    obj1.objectType.name = "Object"
     obj1.status = Obj.STATUS_DELETED
 
     val obj2 = new Obj
     obj2.name = "father"
+    obj2.objectType = obj1.objectType
     obj2.status = Obj.STATUS_DISABLED
 
     val obj3 = new Obj
     obj3.name = "son"
+    obj3.objectType = obj1.objectType
     obj3.status = Obj.STATUS_LIVE
 
+    TestDatabaseContext.typeDao.save(obj1.objectType)
     TestDatabaseContext.objectDao.save(obj1)
     TestDatabaseContext.objectDao.save(obj2)
     TestDatabaseContext.objectDao.save(obj3)
