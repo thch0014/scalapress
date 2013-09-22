@@ -25,6 +25,10 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
   def recent(i: Int): Seq[Obj] =
     search(new Search(classOf[Obj])
       .addFilterEqual("status", Obj.STATUS_LIVE)
+      .addFilterNotEqual("objectType.name", "Account")
+      .addFilterNotEqual("objectType.name", "account")
+      .addFilterNotEqual("objectType.name", "Accounts")
+      .addFilterNotEqual("objectType.name", "accounts")
       .setMaxResults(i)
       .addSort("id", true))
 
