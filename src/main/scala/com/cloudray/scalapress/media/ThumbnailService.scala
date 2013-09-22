@@ -14,7 +14,7 @@ import java.util.UUID
 @Component
 class ThumbnailService extends Logging {
 
-  val THUMBNAIL_PREFIX = "_thumbnail"
+  val THUMBNAIL_PREFIX = "_thumbnails"
   val MAX_BYTES = 1024 * 1024 * 10
 
   @Autowired var assetStore: AssetStore = _
@@ -66,7 +66,7 @@ class ThumbnailService extends Logging {
   // returns the key of what the asset should be stored under at the asset store
   def _thumbkey(filename: String, w: Int, h: Int, opType: OpType): String = {
     val basename = FilenameUtils.getBaseName(filename)
-    s"_thumbnails/${basename}_${opType}_${w}x$h.png"
+    s"$THUMBNAIL_PREFIX/${basename}_${opType}_${w}x$h.png"
   }
 
   // generate and store a thumbnail
