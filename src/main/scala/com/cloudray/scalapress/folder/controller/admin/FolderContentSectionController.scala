@@ -12,17 +12,17 @@ import com.cloudray.scalapress.folder.section.FolderContentSection
 @RequestMapping(Array("backoffice/folder/section/content/{id}"))
 class FolderContentSectionController {
 
-    @Autowired var sectionDao: SectionDao = _
+  @Autowired var sectionDao: SectionDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: FolderContentSection) = "admin/folder/section/content.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: FolderContentSection) = "admin/folder/section/content.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: FolderContentSection) = {
-        sectionDao.save(section)
-        edit(section)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: FolderContentSection) = {
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): FolderContentSection =
-        sectionDao.find(id).asInstanceOf[FolderContentSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): FolderContentSection =
+    sectionDao.find(id).asInstanceOf[FolderContentSection]
 }
