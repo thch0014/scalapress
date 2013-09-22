@@ -15,9 +15,9 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 @RequestMapping(Array("backoffice/plugin/folder/widget/folder/{id}"))
 class FolderWidgetController extends WidgetEditController with FolderPopulator {
 
-    @Autowired var folderDao: FolderDao = _
+  @Autowired var folderDao: FolderDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = "admin/plugin/folder/widget/folder.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = "admin/plugin/folder/widget/folder.vm"
 }
 

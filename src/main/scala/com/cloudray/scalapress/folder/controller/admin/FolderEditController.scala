@@ -59,21 +59,6 @@ class FolderEditController extends EnumPopulator with ThemePopulator with Sectio
     "redirect:/backoffice/folder/" + folder.id
   }
 
-  //    @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
-  //    def upload(@ModelAttribute folder: Folder, @RequestParam("upload") upload: MultipartFile): String = {
-  //
-  //        val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
-  //
-  //        val image = new Image
-  //        image.filename = key
-  //        image.date = System.currentTimeMillis()
-  //        image.folder = folder
-  //        folder.images.add(image)
-  //
-  //        folderDao.save(folder)
-  //        "redirect:" + UrlResolver.folderEdit(folder)
-  //    }
-
   @RequestMapping(value = Array("section/{sectionId}/delete"))
   def deleteSection(@ModelAttribute folder: Folder, @PathVariable("sectionId") sectionId: Long): String = {
     folder.sections.asScala.find(_.id == sectionId) match {

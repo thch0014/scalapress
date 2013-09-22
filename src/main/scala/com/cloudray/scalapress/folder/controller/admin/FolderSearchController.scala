@@ -12,34 +12,34 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/folder"))
 class FolderSearchController {
 
-    @Autowired var folderDao: FolderDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var folderDao: FolderDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/folder/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/folder/list.vm"
 
-    @RequestMapping(value = Array("create"))
-    def create: String = {
+  @RequestMapping(value = Array("create"))
+  def create: String = {
 
-        val root = folderDao.root
-        val folder = Folder(root)
-        folderDao.save(folder)
+    val root = folderDao.root
+    val folder = Folder(root)
+    folderDao.save(folder)
 
-        "redirect:/backoffice/folder"
-    }
+    "redirect:/backoffice/folder"
+  }
 
-    @RequestMapping(value = Array("create"), params = Array("name"))
-    def create(@RequestParam("name") name: String): String = {
+  @RequestMapping(value = Array("create"), params = Array("name"))
+  def create(@RequestParam("name") name: String): String = {
 
-        val root = folderDao.root
-        val folder = Folder(root)
-        folder.name = name
-        folderDao.save(folder)
+    val root = folderDao.root
+    val folder = Folder(root)
+    folder.name = name
+    folderDao.save(folder)
 
-        "redirect:/backoffice/folder/" + folder.id
-    }
+    "redirect:/backoffice/folder/" + folder.id
+  }
 
-    @ModelAttribute("folders") def folders = {
-        folderDao.findAll().sortBy(_.fullName).asJava
-    }
+  @ModelAttribute("folders") def folders = {
+    folderDao.findAll().sortBy(_.fullName).asJava
+  }
 }

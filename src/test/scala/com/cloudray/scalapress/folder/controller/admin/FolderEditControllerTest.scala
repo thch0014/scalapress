@@ -7,6 +7,7 @@ import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSe
 import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -14,6 +15,8 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
   val controller = new FolderEditController
   controller.folderDao = mock[FolderDao]
   controller.sectionDao = mock[SectionDao]
+  controller.context = new ScalapressContext
+  controller.context.sectionDao = mock[SectionDao]
 
   val response = mock[HttpServletResponse]
 
@@ -91,5 +94,24 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
     assert("Members > Face man" === it.next().getValue)
     assert("Members > Murdock" === it.next().getValue)
     assert("Members > hannibal" === it.next().getValue)
+  }
+
+  test("a new section is set to visible") {
+    val folder = new Folder
+    controller.createSection(folder, classOf[FolderContentSection].getName)
+    import scala.collection.JavaConverters._
+    assert(folder.sections.asScala.toSeq.head.visible)
+  }
+
+  test("a new section is added to the folder") {
+    val folder = new Folder
+    controller.createSection(folder, classOf[FolderContentSection].getName)
+    assert(folder.sections.size === 1)
+  }
+
+  test("a new section is persisted") {
+    val folder = new Folder
+    controller.createSection(folder, classOf[FolderContentSection].getName)
+    Mockito.verify(controller.folderDao).save(folder)
   }
 }
