@@ -31,9 +31,11 @@ class ThumbnailService extends Logging {
 
   @PostConstruct
   def populate() {
+    logger.info("Prepopulating thumbnail cache")
     for ( asset <- assetStore.list(THUMBNAIL_PREFIX, 10000) ) {
       _setCached(asset.filename)
     }
+    logger.info("Cache [size={}, bytes={}]", cache.getSize, cache.calculateInMemorySize())
   }
 
   def _setCached(key: String): Unit = cache.putIfAbsent(new Element(key, true))
@@ -54,7 +56,7 @@ class ThumbnailService extends Logging {
     val key = _thumbkey(filename, w, h, t)
     _fetch(key) match {
       case Some(thumb) =>
-        _setCached(key)
+        _setCached(key) // we know it exists so the next person can go straight to the asset store
         Some(thumb)
       case _ =>
         val thumb = _generate(filename, w, h, t)

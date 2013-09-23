@@ -61,6 +61,7 @@ object WidgetRenderer extends Logging {
 
   def render(widget: Widget, req: ScalapressRequest): Option[String] = {
     logger.debug("Rendering widget {}...", widget)
+    val start = System.currentTimeMillis()
     val result = widget.render(req) match {
       case None => Some("\n<!-- widget " + widget.getClass + " - no content -->\n")
       case Some(body) => {
@@ -72,7 +73,7 @@ object WidgetRenderer extends Logging {
         Option("\n<!-- widget: " + widget.getClass + "-->\n" + rendered + "\n<!-- end widget -->\n\n")
       }
     }
-    logger.debug("...completed")
+    logger.debug("...completed in {} ms", System.currentTimeMillis() - start)
     result
   }
 

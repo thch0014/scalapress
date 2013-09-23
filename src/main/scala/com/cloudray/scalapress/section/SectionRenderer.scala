@@ -21,6 +21,7 @@ object SectionRenderer extends Logging {
 
   def _render(section: Section, sreq: ScalapressRequest): String = {
     logger.debug("Rendering section [{}]...", section)
+    val start = System.currentTimeMillis()
     val buffer = new ArrayBuffer[String]
     buffer.append("<!-- section " + section.id + ": " + section.getClass + " -->\n")
     try {
@@ -29,7 +30,7 @@ object SectionRenderer extends Logging {
       case e: Exception => logger.warn("{}", e)
     }
     buffer.append("\n<!-- end section -->\n\n")
-    logger.debug("...rendered")
+    logger.debug("...rendered in {} ms", System.currentTimeMillis() - start)
     buffer.mkString
   }
 }
