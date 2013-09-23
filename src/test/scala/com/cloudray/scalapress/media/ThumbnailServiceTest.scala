@@ -4,9 +4,10 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.mockito.{Matchers, Mockito}
 import com.sksamuel.scrimage.{Image => Scrimage}
-import java.io.{InputStream, ByteArrayInputStream}
+import java.io.ByteArrayInputStream
 import org.mockito.stubbing.Answer
 import org.mockito.invocation.InvocationOnMock
+import net.sf.ehcache.Element
 
 /** @author Stephen Samuel */
 class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
@@ -26,35 +27,22 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
     assert("_thumbnails/coldplay_large_bound_50x60.png" === filename)
   }
 
-  it should "generate a link using the asset store cdn" in {
+  it should "generate a link using the thumbnail service when the asset is not cached" in {
+    val link = service.link("coldplay.png", 100, 200, Fit)
+    assert("/thumbnail/coldplay.png?w=100&h=200&opType=fit" === link)
+  }
+
+  it should "generate a link using the asset service when the asset is cached" in {
+    service.cache.put(new Element("_thumbnails/coldplay_fit_100x200.png", true))
     val link = service.link("coldplay.png", 100, 200, Fit)
     assert("s3.com/_thumbnails/coldplay_fit_100x200.png" === link)
   }
 
-  it should "store a thumb when the thumbnail does not already exist" in {
-    Mockito.when(service.assetStore.get("coldplay.png")).thenReturn(Some(input))
-    service.link("coldplay.png", 100, 200, Fit)
-    Mockito
-      .verify(service.assetStore)
-      .put(Matchers.eq("_thumbnails/coldplay_fit_100x200.png"), Matchers.any[InputStream])
-  }
-
-  it should "not store a thumb when the thumbnail exists" in {
-    Mockito.when(service._exists(Matchers.anyString())).thenReturn(true)
-    service.link("coldplay.png", 100, 200, Bound)
-    Mockito.verify(service.assetStore, Mockito.never()).put(Matchers.anyString, Matchers.any[InputStream])
-  }
-
-  it should "not store a thumb when the original cannot be fetched to generate a thumbnail" in {
-    Mockito.when(service._exists(Matchers.anyString())).thenReturn(false)
-    service.link("coldplay.png", 100, 200, Bound)
-    Mockito.verify(service.assetStore, Mockito.never()).put(Matchers.anyString, Matchers.any[InputStream])
-  }
-
-  it should "cache a lookup" in {
-    Mockito.when(service._exists(Matchers.anyString())).thenReturn(true)
-    assert(service.cache.get("qwerty") == null)
-    service._exists("qwerty")
-    assert(service.cache.get("qwerty") != null)
-  }
+  //  it should "store a thumb when the thumbnail does not already exist" in {
+  //    Mockito.when(service.assetStore.get("coldplay.png")).thenReturn(Some(input))
+  //    service.link("coldplay.png", 100, 200, Fit)
+  //    Mockito
+  //      .verify(service.assetStore)
+  //      .put(Matchers.eq("_thumbnails/coldplay_fit_100x200.png"), Matchers.any[InputStream])
+  //  }
 }

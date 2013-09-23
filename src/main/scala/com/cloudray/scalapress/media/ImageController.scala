@@ -18,6 +18,7 @@ class ImageController extends Logging with OpType {
 
   @ResponseBody
   @RequestMapping(value = Array("{w:\\d+}/{h:\\d+}/{filename}"))
+  @deprecated
   def imageResized3(@PathVariable("filename") filename: String,
                     @PathVariable("w") width: Int,
                     @PathVariable("h") height: Int,
@@ -27,6 +28,7 @@ class ImageController extends Logging with OpType {
 
   @ResponseBody
   @RequestMapping(value = Array("{filename}"), params = Array("w", "h"))
+  @deprecated
   def imageResized2(@PathVariable("filename") filename: String,
                     @RequestParam("w") width: Int,
                     @RequestParam("h") height: Int,
@@ -37,13 +39,14 @@ class ImageController extends Logging with OpType {
 
   @ResponseBody
   @RequestMapping(value = Array("{filename}"), params = Array("width", "height"))
+  @deprecated
   def imageResized(@PathVariable("filename") filename: String,
                    @RequestParam("width") width: Int,
                    @RequestParam("height") height: Int,
                    @RequestParam(value = "type", required = false) `type`: String,
                    resp: HttpServletResponse) {
 
-    thumbnailService._generate(filename, width, height, _opType(Option(`type`))) match {
+    thumbnailService.thumbnail(filename, width, height, _opType(Option(`type`))) match {
       case Some(thumb) =>
         resp.setContentType("image/png")
         thumb.write(resp.getOutputStream, Format.PNG)
