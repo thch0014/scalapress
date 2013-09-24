@@ -2,7 +2,6 @@ package com.cloudray.scalapress.media
 
 import javax.persistence._
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.folder.Folder
 import org.joda.time.{DateTimeZone, DateTime}
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import scala.beans.BeanProperty
@@ -37,11 +36,6 @@ class Image extends java.io.Serializable {
   @JoinColumn(name = "gallery", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var gallery: Gallery = _
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "category", nullable = true)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var folder: Folder = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "imageBox", nullable = true)

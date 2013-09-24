@@ -1,7 +1,7 @@
 package com.cloudray.scalapress
 
 import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao}
-import com.cloudray.scalapress.media.{ThumbnailService, AssetStore}
+import com.cloudray.scalapress.media.{ImageDao, ThumbnailService, AssetStore}
 import obj.{ObjectDao, TypeDao}
 import search.{SavedSearchDao, SearchFormDao, SearchService}
 import section.SectionDao
@@ -20,6 +20,8 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Component
 class ScalapressContext extends ServletContextAware {
+
+  @Autowired var imageDao: ImageDao = _
 
   @Autowired var assetStore: AssetStore = _
   @Autowired var thumbnailService: ThumbnailService = _

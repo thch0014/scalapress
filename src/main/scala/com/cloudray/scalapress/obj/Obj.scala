@@ -6,7 +6,6 @@ import javax.persistence._
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.media.Image
 import org.joda.time.{DateTimeZone, DateTime}
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -49,12 +48,8 @@ class Obj extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var listingPackage: ListingPackage = _
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "obj", cascade = Array(CascadeType.ALL))
-  @Fetch(FetchMode.SELECT)
-  @BatchSize(size = 20)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
-  def sortedImages: Seq[Image] = images.asScala.toSeq.sortBy(_.id).sortBy(_.position)
+  @ElementCollection(fetch = FetchType.EAGER)
+  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
 
   @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @Fetch(FetchMode.SELECT)
