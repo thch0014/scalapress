@@ -46,11 +46,11 @@
         <property name="maxWait" value="10000"/>
         <property name="initialSize" value="2"/>
         <property name="minIdle" value="2"/>
-        <property name="maxIdle" value="10"/>
-        <property name="maxActive" value="30"/>
+        <property name="maxIdle" value="2"/>
+        <property name="maxActive" value="10"/>
         <property name="removeAbandoned" value="true"/>
-        <property name="minEvictableIdleTimeMillis" value="600000"/>
-        <property name="timeBetweenEvictionRunsMillis" value="300000"/>
+        <property name="minEvictableIdleTimeMillis" value="180000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="120000"/>
         <property name="logAbandoned" value="true"/>
         <property name="validationQueryTimeout" value="2000"/>
     </bean>
