@@ -9,10 +9,12 @@ import com.cloudray.scalapress.obj.attr.{AttributeValue, AttributeFuncs, Attribu
 @Tag("attribute_value")
 class AttributeValueTag extends ScalapressTag with TagBuilder {
 
+  def isAllDigits(x: String) = x forall Character.isDigit
+
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     val sep = params.get("sep").getOrElse(" ")
     params.get("id") match {
-      case Some(id) => request.obj match {
+      case Some(id) if isAllDigits(id) => request.obj match {
         case Some(obj) =>
 
           val values = obj.attributeValues.asScala.toSeq
