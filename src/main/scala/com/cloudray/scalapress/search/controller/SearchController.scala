@@ -37,6 +37,14 @@ class SearchController extends Logging {
   @RequestMapping(value = Array("count"), produces = Array("text/html"))
   def count = searchService.count.toString
 
+  def _isAttributeParameter(param: String): Boolean =
+    try {
+      param.drop("attr_".length).toLong
+      true
+    } catch {
+      case _: Throwable => false
+    }
+
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
   def search(req: HttpServletRequest,
@@ -54,7 +62,7 @@ class SearchController extends Logging {
                defaultValue = "1") pageNumber: Int): ScalapressPage = {
 
     val attributeValues = req.getParameterMap.asScala
-      .filter(arg => arg._1.toString.startsWith("attr_"))
+      .filter(arg => _isAttributeParameter(arg._1.toString))
       .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
       .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
       .map(arg => {
