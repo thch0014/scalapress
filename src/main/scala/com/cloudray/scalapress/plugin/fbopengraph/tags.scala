@@ -36,7 +36,7 @@ class OpenGraphImageTag extends ScalapressTag {
     request.obj
       .filter(_.images.size > 0)
       .map(obj => {
-      val imageLink = "http://" + request.installation.domain + "/images/300/300/" + obj.sortedImages(0).filename
+      val imageLink = "http://" + request.installation.domain + "/images/300/300/" + obj.sortedImages(0)
         <meta property="og:image" content={imageLink}/>.toString()
     })
   }

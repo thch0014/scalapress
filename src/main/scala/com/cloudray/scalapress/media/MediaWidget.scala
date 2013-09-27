@@ -1,13 +1,14 @@
 package com.cloudray.scalapress.media
 
-import javax.persistence.{CascadeType, FetchType, OneToMany, Table, Entity}
+import javax.persistence._
 import com.cloudray.scalapress.ScalapressRequest
-import scala.Array
 import java.util
 import scala.collection.JavaConverters._
-import org.hibernate.annotations._
 import com.cloudray.scalapress.widgets.Widget
 import scala.beans.BeanProperty
+import javax.persistence.Table
+import scala.Some
+import javax.persistence.Entity
 
 /** @author Stephen Samuel */
 
@@ -18,13 +19,9 @@ MediaWidget extends Widget {
 
   @BeanProperty var url: String = _
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "mediaWidget", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-  @Fetch(FetchMode.SUBSELECT)
-  @BatchSize(size = 50)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var images: java.util.Set[Image] = new util.HashSet[Image]()
-
-  def sortedImages = images.asScala.toSeq.sortBy(_.id)
+  @ElementCollection(fetch = FetchType.EAGER)
+  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  def sortedImages = images.asScala.toSeq
 
   override def backoffice = "/backoffice/widget/media/" + id
 
@@ -32,7 +29,7 @@ MediaWidget extends Widget {
     sortedImages.headOption match {
       case None => None
       case Some(image) => {
-        val src = req.context.assetStore.link(image.filename)
+        val src = req.context.assetStore.link(image)
         val html = Option(url) match {
           case None => ImageRenderer.link(src)
           case Some(u) => "<a href='" + u + "'>" + ImageRenderer.link(src) + "</a>"

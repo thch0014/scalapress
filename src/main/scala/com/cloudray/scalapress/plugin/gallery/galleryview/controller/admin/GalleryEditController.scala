@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Pat
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.media.Image
-import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryDao, Gallery}
 
 /** @author Stephen Samuel */
@@ -25,28 +23,15 @@ class GalleryEditController {
            @RequestParam(value = "upload", required = false) file: MultipartFile) = {
     if (file != null && !file.isEmpty) {
       val key = context.assetStore.add(file.getOriginalFilename, file.getInputStream)
-      val image = new Image
-      image.filename = key
-      image.name = file.getOriginalFilename
-      image.date = new DateTime(DateTimeZone.UTC).getMillis
-      image.gallery = g
-      g.images.add(image)
+      g.images.add(key)
     }
-
     galleryDao.save(g)
     edit(g)
   }
 
   @RequestMapping(value = Array("delete/{filename}"))
   def deleteImage(@ModelAttribute("gallery") g: Gallery, @PathVariable("filename") filename: String) = {
-    import scala.collection.JavaConverters._
-    g.getImages.asScala.find(_.filename == filename) match {
-      case None =>
-      case Some(image) =>
-        g.getImages.remove(image)
-        image.setGallery(null)
-        galleryDao.save(g)
-    }
+    if (g.images.remove(filename)) galleryDao.save(g)
     "redirect:/backoffice/gallery/" + g.id
   }
 

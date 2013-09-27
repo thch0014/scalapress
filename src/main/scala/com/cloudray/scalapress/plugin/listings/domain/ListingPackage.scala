@@ -53,7 +53,7 @@ class ListingPackage {
       buffer.append(duration match {
         case x if x == 365 => "for 1 year"
         case x if x == 30 => "for 1 month"
-        case x if (x % 30 == 0) => "for " + duration / 30 + " months"
+        case x if x % 30 == 0 => "for " + duration / 30 + " months"
         case x => "for " + x + " days"
       })
     buffer.mkString(" ")

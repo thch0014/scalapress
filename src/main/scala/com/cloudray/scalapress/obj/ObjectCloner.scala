@@ -2,7 +2,6 @@ package com.cloudray.scalapress.obj
 
 import com.cloudray.scalapress.obj.attr.AttributeValue
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.Image
 
 /** @author Stephen Samuel */
 class ObjectCloner {
@@ -30,12 +29,7 @@ class ObjectCloner {
       copy
     }).asJava
 
-    clone.images = obj.images.asScala.map(i => {
-      val copy = new Image
-      copy.filename = i.filename
-      copy.obj = clone
-      copy
-    }).asJava
+    clone.images = obj.images
 
     clone
   }

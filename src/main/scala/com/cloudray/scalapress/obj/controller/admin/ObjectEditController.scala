@@ -116,9 +116,7 @@ class ObjectEditController
     if (form.upload != null) {
       if (!form.upload.isEmpty) {
         val key = assetStore.add(form.upload.getOriginalFilename, form.upload.getInputStream)
-        val image = Image(key)
-        image.obj = form.o
-        form.o.images.add(image)
+        form.o.images.add(key)
       }
     }
 
@@ -148,9 +146,9 @@ class ObjectEditController
     val ids = order.split("-")
     if (ids.size == form.o.images.size)
       form.o.images.asScala.foreach(img => {
-        val pos = ids.indexOf(img.id.toString)
-        img.position = pos
-        imageDao.save(img)
+        //        val pos = ids.indexOf(img.id.toString)
+        //      img.position = pos
+        //    imageDao.save(img)
       })
     "ok"
   }
@@ -190,23 +188,14 @@ class ObjectEditController
   @RequestMapping(Array("image/{filename}/remove"))
   def removeImage(@PathVariable("filename") filename: String,
                   @ModelAttribute("form") form: EditForm) = {
-    form.o.images.asScala.find(_.filename == filename) match {
-      case None =>
-      case Some(img) =>
-        form.o.images.remove(img)
-        img.obj = null
-        objectDao.save(form.o)
-    }
+    if (form.o.images.remove(filename)) objectDao.save(form.o)
     "redirect:/backoffice/obj/" + form.o.id
   }
 
   @ModelAttribute("assets") def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
     val obj = objectDao.find(id)
     val java = obj.images.asScala.map(img => {
-      Asset(img.filename,
-        0,
-        assetStore.link(img.filename),
-        URLConnection.guessContentTypeFromName(img.filename))
+      Asset(img, 0, assetStore.link(img), URLConnection.guessContentTypeFromName(img))
     }).asJava
     java
   }

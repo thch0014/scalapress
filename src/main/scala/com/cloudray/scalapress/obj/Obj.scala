@@ -50,6 +50,7 @@ class Obj extends SortedSections with java.io.Serializable {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  def sortedImages = images.asScala.toSeq
 
   @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @Fetch(FetchMode.SELECT)

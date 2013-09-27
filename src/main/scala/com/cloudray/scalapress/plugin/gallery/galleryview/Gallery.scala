@@ -2,9 +2,8 @@ package com.cloudray.scalapress.plugin.gallery.galleryview
 
 import javax.persistence._
 import java.util
-import com.cloudray.scalapress.media.Image
 import scala.beans.BeanProperty
-import org.hibernate.annotations.{NotFound, NotFoundAction}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
@@ -24,8 +23,7 @@ class Gallery {
 
   @BeanProperty var showDateUploaded: Boolean = _
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = Array(CascadeType.ALL), orphanRemoval = true)
-  @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
-
+  @ElementCollection(fetch = FetchType.EAGER)
+  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  def sortedImages = images.asScala.toSeq
 }

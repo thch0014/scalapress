@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import java.net.URLConnection
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.{Asset, AssetStore, MediaWidget, Image}
+import com.cloudray.scalapress.media.{Asset, AssetStore, MediaWidget}
 import com.cloudray.scalapress.widgets.controller.WidgetEditController
 
 /** @author Stephen Samuel */
@@ -22,9 +22,9 @@ class MediaWidgetController extends WidgetEditController {
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {
 
-    val assets = w.asInstanceOf[MediaWidget].images.asScala.map(img => {
-      Asset(img.filename, 0, assetStore.link(img.filename),
-        URLConnection.guessContentTypeFromName(img.filename))
+    val assets = w.asInstanceOf[MediaWidget].sortedImages.map(img => {
+      Asset(img, 0, assetStore.link(img),
+        URLConnection.guessContentTypeFromName(img))
     })
 
     model.put("assets", assets.asJava)
@@ -37,10 +37,8 @@ class MediaWidgetController extends WidgetEditController {
 
     if (upload != null && !upload.isEmpty) {
       val key = assetStore.add(upload.getOriginalFilename, upload.getInputStream)
-      val image = Image(key)
-      image.mediaWidget = w.asInstanceOf[MediaWidget]
       w.asInstanceOf[MediaWidget].images.clear()
-      w.asInstanceOf[MediaWidget].images.add(image)
+      w.asInstanceOf[MediaWidget].images.add(key)
     }
 
     widgetDao.save(w)

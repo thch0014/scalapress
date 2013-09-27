@@ -4,7 +4,6 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.Image
 
 /** @author Stephen Samuel */
 class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -41,15 +40,8 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
 
-  val image1 = new Image
-  image1.filename = "sunderland.jpg"
-  image1.obj = obj
-  image1.id = 54
-
-  val image2 = new Image
-  image2.filename = "sunderland.jpg"
-  image2.obj = obj
-  image2.id = 235
+  val image1 = "sunderland.jpg"
+  val image2 = "sunderland.jpg"
 
   obj.images.add(image1)
   obj.images.add(image2)
@@ -112,9 +104,5 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
   test("object clone copies images and updates object reference  and resets id") {
     val clone = cloner.clone(obj)
     assert(2 === clone.images.size)
-    clone.images.asScala.foreach(image => {
-      assert(clone === image.obj)
-      assert(0 === image.id)
-    })
   }
 }

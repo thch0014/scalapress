@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.search.elastic
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
-import com.cloudray.scalapress.media.Image
 import com.cloudray.scalapress.enums.{AttributeType, Sort}
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.search.{SearchService, SavedSearch}
@@ -76,7 +75,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj.objectType = new ObjectType
   obj.objectType.id = 1
   obj.status = Obj.STATUS_LIVE
-  obj.images.add(new Image)
+  obj.images.add("tony.png")
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av4)
   obj.attributeValues.add(av7)

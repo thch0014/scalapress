@@ -21,8 +21,8 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
       var count = 0
       val links = obj.sortedImages.map(image => {
 
-        val original = request.context.assetStore.link(image.filename)
-        val thumb = request.context.thumbnailService.link(image.filename, width, height, _opType(params.get("type")))
+        val original = request.context.assetStore.link(image)
+        val thumb = request.context.thumbnailService.link(image, width, height, _opType(params.get("type")))
         val style = if (count == 0) "" else "display: none"
         count = count + 1
 

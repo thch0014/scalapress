@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.gallery.galleryview
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.{AssetStore, Image}
+import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */
@@ -20,7 +20,7 @@ object GalleryViewRenderer {
     gallery.images.asScala.headOption match {
       case None => None
       case Some(image) => {
-        val src = "/images/" + image.filename
+        val src = "/images/" + image
         val e =
           <li class="span2">
             <div class="thumbnail">
@@ -40,17 +40,17 @@ object GalleryViewRenderer {
   def renderGallery(gallery: Gallery, assetStore: AssetStore): String = {
     val sb = new ArrayBuffer[String]
     sb.append("<!--gallery " + gallery.id + " " + gallery.images.size() + " images -->")
-    sb.append("<ul id='gallery" + gallery.id + "'>" + _renderImages(gallery.images.asScala, assetStore) + "</ul>")
+    sb.append("<ul id='gallery" + gallery.id + "'>" + _renderImages(gallery.sortedImages, assetStore) + "</ul>")
     sb.append(_generateScript(gallery))
     sb.append("<!--end gallery-->")
     sb.mkString("\n")
   }
 
-  def _renderImages(images: Seq[Image], assetStore: AssetStore): String = {
+  def _renderImages(images: Seq[String], assetStore: AssetStore): String = {
     val sb = new ArrayBuffer[String]
     for ( image <- images ) {
-      val src = assetStore.link(image.filename)
-      sb.append("<li><img data-frame='" + src + "' src='" + src + "' title='" + image.filename + "'/></li>")
+      val src = assetStore.link(image)
+      sb.append("<li><img data-frame='" + src + "' src='" + src + "' title='" + image + "'/></li>")
     }
     sb.mkString("\n")
   }

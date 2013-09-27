@@ -12,48 +12,48 @@ import scala.collection.JavaConverters._
 @Table(name = "plugin_galleriffic_section")
 class GallerifficSection extends Section {
 
-    @ElementCollection
-    @BeanProperty var images: java.util.Set[String] = new util.HashSet[String]()
+  @ElementCollection
+  @BeanProperty var images: java.util.Set[String] = new util.HashSet[String]()
 
-    override def desc: String = "A section showing a galleriffic gallery"
-    override def backoffice: String = "/backoffice/plugin/galleriffic/section/" + id
-    override def render(request: ScalapressRequest): Option[String] = {
+  override def desc: String = "A section showing a galleriffic gallery"
+  override def backoffice: String = "/backoffice/plugin/galleriffic/section/" + id
+  override def render(request: ScalapressRequest): Option[String] = {
 
-        val rows = _images.map(i => _rows(i))
-        rows.size match {
-            case 0 => None
-            case _ =>
-                val controls = <div id="gallery" class="galleriffic-content">
-                    <div id="loading" class="galleriffic-loader"></div>
-                    <div id="slideshow" class="galleriffic-slideshow"></div>
-                    <div id="caption" class="galleriffic-embox"></div>
-                </div>
-                val thumbs = <div id="thumbs" class="galleriffic-navigation">
-                    <ul class="galleriffic-thumbs noscript">
-                        {rows}
-                    </ul>
-                </div>
-                Some(controls + "\n\n" + thumbs + "\n\n" + _script)
-        }
+    val rows = _images.map(i => _rows(i))
+    rows.size match {
+      case 0 => None
+      case _ =>
+        val controls = <div id="gallery" class="galleriffic-content">
+          <div id="loading" class="galleriffic-loader"></div>
+          <div id="slideshow" class="galleriffic-slideshow"></div>
+          <div id="caption" class="galleriffic-embox"></div>
+        </div>
+        val thumbs = <div id="thumbs" class="galleriffic-navigation">
+          <ul class="galleriffic-thumbs noscript">
+            {rows}
+          </ul>
+        </div>
+        Some(controls + "\n\n" + thumbs + "\n\n" + _script)
     }
+  }
 
-    def _rows(filename: String) = {
-        val fullsize = "/images/" + filename + "?width=800&height=600"
-        val thumbnail = "/images/" + filename + "?width=100&height=100"
-        <li>
-            <a class="galleriffic-thumb" href={fullsize}>
-                <img src={thumbnail}/>
-            </a>
-        </li>
-    }
+  def _rows(filename: String) = {
+    val fullsize = "/images/" + filename + "?width=800&height=600"
+    val thumbnail = "/images/" + filename + "?width=100&height=100"
+    <li>
+      <a class="galleriffic-thumb" href={fullsize}>
+        <img src={thumbnail}/>
+      </a>
+    </li>
+  }
 
-    def _images: Iterable[String] = images.size match {
-        case 0 => Option(obj).map(_.images.asScala.map(_.filename)).getOrElse(Nil)
-        case _ => images.asScala
-    }
+  def _images: Iterable[String] = images.size match {
+    case 0 => Option(obj).map(_.images.asScala).getOrElse(Nil)
+    case _ => images.asScala
+  }
 
-    def _script = {
-        """<script>
+  def _script = {
+    """<script>
             // We only want these styles applied when javascript is enabled
 			$('div.galleriffic-navigation').css({'width' : '610px'});
 			$('div.galleriffic-content').css('display', 'block');
@@ -99,6 +99,6 @@ class GallerifficSection extends Section {
             });
         });
         </script>"""
-    }
+  }
 
 }
