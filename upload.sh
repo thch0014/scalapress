@@ -5,4 +5,4 @@ if [ -z "$1" ]; then
 fi
 
 scp target/scalapress.war ubuntu@$1:ROOT.war
-scp target/scalapress-deps.war ubuntu@$1:scalapress-deps.jar
+scp target/scalapress-deps.jar ubuntu@$1:scalapress-deps.jar

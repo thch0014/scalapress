@@ -19,6 +19,7 @@ scala based publishing platform
 * Closed out multiple bugs
 * Upgraded elastic search to 0.90.5
 * Updated thumbnail service to eagerly generate thumbnails in asset store and hold local cache
+* Added uberjar deployment to pom
 
 ##### 0.37
 * Decreased perm gen usage
