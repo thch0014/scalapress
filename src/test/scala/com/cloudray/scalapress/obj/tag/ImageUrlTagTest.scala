@@ -40,6 +40,6 @@ class ImageUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar
     obj.images.add(image3)
 
     val render = ImageUrlTag.render(sreq, Map("limit" -> "4"))
-    assert("/images/qwe\n/images/bbbb\n/images/dfg" === render.get)
+    assert("/images/qwe\n/images/dfg\n/images/bbbb" === render.get)
   }
 }
