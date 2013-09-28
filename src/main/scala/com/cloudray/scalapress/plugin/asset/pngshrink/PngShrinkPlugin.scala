@@ -26,12 +26,11 @@ class PngShrinkPlugin extends AssetLifecycleListener with Logging {
     } else {
       (key, input)
     }
-
   }
 
   def _optimize(input: InputStream): InputStream = {
     val image = Image(input)
-    val compressed = image.writer(Format.PNG).withMaxCompression.write()
+    val compressed = image.writer(Format.PNG).withCompression(1).write()
     new ByteArrayInputStream(compressed)
   }
 }
