@@ -15,6 +15,6 @@ echo "Creating backup of dependency lib"
 cp /home/ubuntu/scalapress-deps.jar /home/ubuntu/scalapress-deps.jar.bak
 
 echo "Copying dependency lib"
-cp /home/ubuntu/scalapress-deps.jar /usr/share/tomcat/lib/
+cp /home/ubuntu/scalapress-deps.jar /usr/share/tomcat7/lib/
 
 service tomcat7 restart
