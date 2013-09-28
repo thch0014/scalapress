@@ -17,12 +17,8 @@ class Image extends java.io.Serializable {
   @BeanProperty var id: Long = _
 
   @BeanProperty var filename: String = _
-  @BeanProperty var description: String = _
-  @BeanProperty var name: String = _
 
-  @BeanProperty var date: Long = _
   @BeanProperty var position: Int = _
-  @BeanProperty var alt: String = _
 
   //@BeanProperty var contentType: String = _
 
