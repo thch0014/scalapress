@@ -36,9 +36,10 @@ class ObjImageMigrator extends Logging {
     } else if (image.imageBox != null) {
 
       val widget = context.widgetDao.find(image.imageBox.toLong).asInstanceOf[MediaWidget]
-
-      widget.images.add(image.filename)
-      context.widgetDao.save(widget)
+      if (widget != null) {
+        widget.images.add(image.filename)
+        context.widgetDao.save(widget)
+      }
 
     } else if (image.gallery != null) {
 
