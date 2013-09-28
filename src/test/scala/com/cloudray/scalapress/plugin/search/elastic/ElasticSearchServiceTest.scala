@@ -394,7 +394,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   test("that remove operation removes the item from the index") {
 
     val search = new SavedSearch
-    assert(5 === service.search(search).count)
+    assert(6 === service.search(search).count)
 
     val obj = new Obj
     obj.id = 5465464
@@ -405,11 +405,11 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
     service.index(Seq(obj))
     Thread.sleep(1500)
-    assert(6 === service.search(search).count)
+    assert(7 === service.search(search).count)
 
     service.remove(obj.id.toString)
     Thread.sleep(1500)
-    assert(5 === service.search(search).count)
+    assert(6 === service.search(search).count)
   }
 
   test("label search works on labels with a space") {
