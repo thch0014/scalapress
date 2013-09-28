@@ -21,17 +21,13 @@ class ObjImageMigrator extends Logging {
 
     if (image.item != null) {
 
-      //  logger.debug("object {}", image.item)
       val obj = context.objectDao.find(image.item.toLong)
-
-      //    logger.debug("images before {}", obj.images.size)
-
-      if (!obj.images.contains(image.filename)) {
-        obj.images.add(image.filename)
-        context.objectDao.save(obj)
+      if (obj != null) {
+        if (!obj.images.contains(image.filename)) {
+          obj.images.add(image.filename)
+          context.objectDao.save(obj)
+        }
       }
-
-      //     logger.debug("images after {}", obj.images.size)
 
     } else if (image.imageBox != null) {
 
@@ -44,9 +40,10 @@ class ObjImageMigrator extends Logging {
     } else if (image.gallery != null) {
 
       val gallery = galleryDao.find(image.gallery.toLong)
-
-      gallery.images.add(image.filename)
-      galleryDao.save(gallery)
+      if (gallery != null) {
+        gallery.images.add(image.filename)
+        galleryDao.save(gallery)
+      }
     }
   }
 
