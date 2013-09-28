@@ -20,6 +20,9 @@ scala based publishing platform
 * Upgraded elastic search to 0.90.5
 * Updated thumbnail service to eagerly generate thumbnails in asset store and hold local cache
 * Added uberjar deployment to pom
+* Updated images to be inline instead of a join. Huge reduction in the number of DB hits.
+* Updated release procedure and server spool up.
+* New multisite hosting option -perm gen usage now constant at ~200mb instead of 100mb per install.
 
 ##### 0.37
 * Decreased perm gen usage
