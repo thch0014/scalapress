@@ -111,6 +111,16 @@ class ElasticSearchService extends SearchService with Logging {
     } catch {
       case _: Exception => logger.error("Could not create INDEX")
     }
+
+    try {
+      client.execute {
+        insert into INDEX -> "dummy" fields {
+          "name" -> "sam"
+        }
+      }
+    } catch {
+      case _: Exception => logger.error("Could not index dunmy object")
+    }
   }
 
   override def contains(_id: String): Boolean = {
