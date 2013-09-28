@@ -8,18 +8,26 @@
 
     <legend>Attributes</legend>
     <div class="control-group">
-        <label class="control-label">brandAttribute</label>
+        <label class="control-label">Brand Attribute</label>
 
         <div class="controls">
-            #springFormInput("feed.brandAttrName", "class='input-large'")
+          #springFormInput("feed.brandAttrName", "class='input-large'")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">partNumberAttribute</label>
+        <label class="control-label">Part Number Attribute</label>
 
         <div class="controls">
-            #springFormInput("feed.partAttrName", "class='input-large'")
+          #springFormInput("feed.partAttrName", "class='input-large'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Shipping Cost</label>
+
+        <div class="controls">
+          #springFormInput("feed.shippingCost", "class='input-small'")
         </div>
     </div>
 
@@ -28,7 +36,7 @@
         <label class="control-label">FTP Hostname</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpHostname", "class='input-large'")
+          #springFormInput("feed.ftpHostname", "class='input-large'")
         </div>
     </div>
 
@@ -36,7 +44,7 @@
         <label class="control-label">FTP Username</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpUsername", "class='input-large'")
+          #springFormInput("feed.ftpUsername", "class='input-large'")
         </div>
     </div>
 
@@ -44,7 +52,7 @@
         <label class="control-label">FTP Password</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpPassword", "class='input-large'")
+          #springFormInput("feed.ftpPassword", "class='input-large'")
         </div>
     </div>
 
@@ -52,7 +60,7 @@
         <label class="control-label">Google Product Category</label>
 
         <div class="controls">
-            #springFormInput("feed.productCategory", "class='input-xlarge'")
+          #springFormInput("feed.productCategory", "class='input-xlarge'")
         </div>
     </div>
 
@@ -60,7 +68,7 @@
         <label class="control-label">Output Filename</label>
 
         <div class="controls">
-            #springFormInput("feed.ftpFilename", "class='input-large'")
+          #springFormInput("feed.ftpFilename", "class='input-large'")
         </div>
     </div>
 

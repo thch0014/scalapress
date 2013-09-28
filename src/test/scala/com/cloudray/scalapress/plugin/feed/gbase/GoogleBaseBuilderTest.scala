@@ -50,7 +50,6 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
         .mkString(","))
   }
 
-
   test("objects with no image are filtered out") {
     obj.images.clear()
     assert(builder.filter(feed, Array(obj)).size == 0)
@@ -88,7 +87,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
 
     val row = builder.row(feed, obj)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,in stock,Sony,BB66,GB::Courier:4.95 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,in stock,Sony,BB66,GB::Courier:10.00 GBP" ===
         row.mkString(","))
   }
 
@@ -108,7 +107,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
 
     val row = builder.row(feed, obj)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:4.95 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
         row.mkString(","))
   }
 
@@ -138,7 +137,15 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
     obj.attributeValues.add(av)
     val row = builder.row(feed, obj)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,used,19.99 GBP,out of stock,Sony,BB66,GB::Courier:4.95 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,used,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
+        row.mkString(","))
+  }
+
+  test("builder uses shipping cost from feed") {
+    feed.shippingCost = "14.75"
+    val row = builder.row(feed, obj)
+    assert(
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:14.75 GBP" ===
         row.mkString(","))
   }
 }

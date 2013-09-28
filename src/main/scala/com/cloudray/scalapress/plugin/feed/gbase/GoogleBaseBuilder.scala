@@ -17,7 +17,6 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
   val CONDITION_USED = "used"
   val CONDITION_REFURBISHED = "refurbished"
 
-  val ShippingCost = "4.95"
   val ShippingDesc = "Courier"
 
   def csv(objs: Seq[Obj], feed: GBaseFeed): File = {
@@ -90,7 +89,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
       availability,
       brand,
       mpn,
-      shipping)
+      shipping(feed.shippingCost))
   }
 
   def content(string: String): String = string
@@ -100,7 +99,8 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     .replace("\n", "")
     .replace("\r", "")
 
-  def shipping: String = "GB::" + ShippingDesc + ":" + ShippingCost + " GBP"
+  def shipping(shippingCost: String): String =
+    "GB::" + ShippingDesc + ":" + Option(shippingCost).getOrElse("10.00") + " GBP"
 
   def _condition(obj: Obj) = {
     AttributeFuncs.attributeValue(obj, "condition") match {

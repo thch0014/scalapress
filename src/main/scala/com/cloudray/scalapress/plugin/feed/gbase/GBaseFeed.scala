@@ -22,6 +22,8 @@ class GBaseFeed {
   @BeanProperty var brandAttrName: String = _
   @BeanProperty var partAttrName: String = _
 
+  @BeanProperty var shippingCost: String = _
+
   @Column(name = "productType")
   @BeanProperty var productCategory: String = _
 
