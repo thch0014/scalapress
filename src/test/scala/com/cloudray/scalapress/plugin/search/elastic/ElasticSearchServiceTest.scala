@@ -325,10 +325,9 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("wildcard search count brings back total count") {
-
     val search = new SavedSearch
     val count = service.search(search).count
-    assert(4 === count)
+    assert(5 === count) // includes dummy object
   }
 
   test("name search returns query based count") {
