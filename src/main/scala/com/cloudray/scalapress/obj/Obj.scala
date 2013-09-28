@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj
 import attr.AttributeValue
 import java.util
 import javax.persistence._
-import org.hibernate.annotations._
+import javax.persistence.OrderBy
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.folder.Folder
 import org.joda.time.{DateTimeZone, DateTime}
@@ -13,6 +13,7 @@ import javax.persistence.CascadeType
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
+import org.hibernate.annotations._
 
 /** @author Stephen Samuel */
 @Entity
@@ -48,6 +49,7 @@ class Obj extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var listingPackage: ListingPackage = _
 
+  @OrderBy("Obj_id ASC")
   @ElementCollection(fetch = FetchType.EAGER)
   @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
   def sortedImages = images.asScala.toSeq

@@ -34,23 +34,23 @@ class ObjectType extends SortedSections with java.io.Serializable {
     .map(_.split("\n").map(_.trim).filter(_.length > 0))
     .getOrElse(Array[String]())
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
-  @Fetch(FetchMode.JOIN)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
   def sortedAttributes = attributes.asScala.toSeq.sortBy(_.position)
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
+  @Fetch(FetchMode.SELECT)
   @BatchSize(size = 10)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "listitemmarkup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var objectListMarkup: Markup = _
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "objectViewMarkup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var objectViewMarkup: Markup = _
