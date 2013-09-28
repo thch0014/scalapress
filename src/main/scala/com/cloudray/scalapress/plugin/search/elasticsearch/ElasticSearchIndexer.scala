@@ -45,10 +45,12 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
   def index(loader: (Int, Int) => Seq[Obj]) {
     logger.info("Starting index")
     for ( objs <- iterator(loader) ) {
-      try {
-        service.index(objs)
-      } catch {
-        case e: Exception => logger.warn("{}", e)
+      for ( obj <- objs ) {
+        try {
+          service.index(obj)
+        } catch {
+          case e: Exception => logger.warn("{}", e)
+        }
       }
     }
     logger.info("Indexing finished")
