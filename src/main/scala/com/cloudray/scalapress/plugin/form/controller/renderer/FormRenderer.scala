@@ -25,7 +25,7 @@ object FormRenderer {
     <form method="POST" enctype="multipart/form-data" action={action(form, req)} class="form-horizontal">
       {if (captchaError) <div class='alert alert-error'>Please try the captcha again</div> else null}{renderedFields}{if (form
       .captcha) Unparsed(_captcha)
-    else ""}{button(form)}
+    else ""}{Unparsed(button(form))}
     </form>.toString()
   }
 
