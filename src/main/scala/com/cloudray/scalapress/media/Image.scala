@@ -2,7 +2,6 @@ package com.cloudray.scalapress.media
 
 import javax.persistence._
 import com.cloudray.scalapress.obj.Obj
-import org.joda.time.{DateTimeZone, DateTime}
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.gallery.galleryview.Gallery
@@ -42,13 +41,4 @@ class Image extends java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var mediaWidget: MediaWidget = _
 
-}
-
-object Image {
-  def apply(key: String) = {
-    val image = new Image
-    image.filename = key
-    image.date = new DateTime(DateTimeZone.UTC).getMillis
-    image
-  }
 }
