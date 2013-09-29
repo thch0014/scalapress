@@ -7,30 +7,32 @@
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
-        <th>Type</th>
+        <th>Uploading to</th>
+        <th>Category</th>
         <th>Last Runtime</th>
         <th></th>
     </tr>
 
-    #foreach ($feed in $feeds)
-        <tr>
-            <td>$feed.id</td>
-            <td>$feed.feedType()</td>
-            <td>
-                #if($feed.lastRuntime>0)
+  #foreach ($feed in $feeds)
+      <tr>
+          <td>$feed.id</td>
+          <td>$feed.ftpHostname</td>
+          <td>$feed.productCategory</td>
+          <td>
+            #if($feed.lastRuntime>0)
                  $datetool.format($feed.lastRuntime)
                 #end
-            </td>
-            <td>
-                <a href="$feed.backoffice()" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i> </a>
-                <a href="$feed.runUrl()" role="button" class="btn btn-mini">
-                    <i class="icon-play"></i> </a></td>
-        </tr>
-    #end
+          </td>
+          <td>
+              <a href="$feed.backoffice()" role="button" class="btn btn-mini">
+                  <i class="icon-pencil"></i> </a>
+              <a href="$feed.runUrl()" role="button" class="btn btn-mini">
+                  <i class="icon-play"></i> </a></td>
+      </tr>
+  #end
 </table>
 
-<a href="/backoffice/feed/create" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New Feed</a>
+<a href="/backoffice/feed/create" role="button" class="btn"> <i class="icon-plus"></i> Create New Feed</a>
 
 
 #parse("/admin/footer.vm")

@@ -12,18 +12,18 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/feed"))
 class GBaseListController {
 
-    @Autowired var feedDao: GBaseFeedDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var feedDao: GBaseFeedDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping
-    def list = "admin/feed/list.vm"
+  @RequestMapping
+  def list = "admin/feed/list.vm"
 
-    @RequestMapping(Array("create"))
-    def create = {
-        val gbase = new GBaseFeed
-        feedDao.save(gbase)
-        "redirect:/backoffice/feed"
-    }
+  @RequestMapping(Array("create"))
+  def create = {
+    val gbase = new GBaseFeed
+    feedDao.save(gbase)
+    "redirect:/backoffice/feed"
+  }
 
-    @ModelAttribute("feeds") def feeds = feedDao.findAll().asJava
+  @ModelAttribute("feeds") def feeds = feedDao.findAll().asJava
 }
