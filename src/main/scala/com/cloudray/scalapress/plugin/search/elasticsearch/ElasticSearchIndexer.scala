@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
-import org.springframework.transaction.annotation.Transactional
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.obj.Obj
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,18 +31,13 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     service.setupIndex(attributes)
   }
 
-  @Transactional
   @ManagedOperation(description = "perform a full index")
   def fullIndex(): Unit = index(_loadLive)
 
-  @Transactional
   @ManagedOperation(description = "perform an incremental index")
-  def incrementalIndex(since: Long): Unit = {
-    index(_loadUpdated(_, _, since))
-  }
+  def incrementalIndex(since: Long): Unit = index(_loadUpdated(_, _, since))
 
   def index(loader: (Int, Int) => Seq[Obj]) {
-    logger.info("Starting index")
     for ( objs <- iterator(loader) ) {
       for ( obj <- objs ) {
         try {
@@ -53,7 +47,6 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
         }
       }
     }
-    logger.info("Indexing finished")
   }
 
   // returns an iterator of sequences of objs, that is, each element in the iterator is in fact

@@ -632,6 +632,9 @@
                         <version>2.4</version>
                         <configuration>
                             <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+                            <packagingIncludes>
+                                WEB-INF/lib/elasticsearch*.jar,WEB-INF/lib/elastic4s.jar
+                            </packagingIncludes>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -648,6 +651,8 @@
                                     <artifactSet>
                                         <excludes>
                                             <exclude>com.cloudray:*</exclude>
+                                            <exclude>org.elasticsearch:*</exclude>
+                                            <exclude>com.sksamuel.elastic4s:*</exclude>
                                         </excludes>
                                     </artifactSet>
                                     <filters>

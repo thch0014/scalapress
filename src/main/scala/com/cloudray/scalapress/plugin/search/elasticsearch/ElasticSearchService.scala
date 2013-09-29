@@ -103,24 +103,10 @@ class ElasticSearchService extends SearchService with Logging {
     })
 
     logger.debug("Creating INDEX {}->{}", INDEX, TYPE)
-    try {
-      client.execute {
-        create index INDEX replicas 0 shards 1 mappings {
-          TYPE source true as (fields.toList: _*)
-        }
+    client.sync.execute {
+      create index INDEX replicas 0 shards 1 mappings {
+        TYPE source true as (fields.toList: _*)
       }
-    } catch {
-      case _: Exception => logger.error("Could not create INDEX")
-    }
-
-    try {
-      client.execute {
-        insert into INDEX -> "dummy" fields {
-          "name" -> "sam"
-        }
-      }
-    } catch {
-      case _: Exception => logger.error("Could not index dunmy object")
     }
   }
 
