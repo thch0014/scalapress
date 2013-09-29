@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.obj.attr
 
-import AttributeType
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ArrayBuffer
 

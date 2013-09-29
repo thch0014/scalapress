@@ -3,7 +3,6 @@ package com.cloudray.scalapress.obj.attr
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.springframework.context.support.ClassPathXmlApplicationContext
-import AttributeType
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */

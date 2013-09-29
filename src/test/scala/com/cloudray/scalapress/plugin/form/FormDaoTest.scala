@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.form
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import FormFieldType
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */

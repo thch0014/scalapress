@@ -4,7 +4,6 @@ import javax.persistence._
 import org.hibernate.validator.constraints.NotEmpty
 import java.util
 import scala.Array
-import AttributeType
 import org.hibernate.annotations.Index
 import com.cloudray.scalapress.obj.ObjectType
 import collection.mutable

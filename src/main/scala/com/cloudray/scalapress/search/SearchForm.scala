@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence._
-import Sort
 import com.cloudray.scalapress.obj.ObjectType
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._

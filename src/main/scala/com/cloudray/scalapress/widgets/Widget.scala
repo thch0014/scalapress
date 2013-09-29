@@ -2,9 +2,7 @@ package com.cloudray.scalapress.widgets
 
 import javax.persistence._
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
-import WidgetContainer
 import scala.beans.BeanProperty
-import org.fusesource.scalate.TemplateEngine
 
 /** @author Stephen Samuel */
 @Entity

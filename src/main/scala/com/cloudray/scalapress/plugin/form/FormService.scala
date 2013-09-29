@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import org.springframework.mail.{MailSender, SimpleMailMessage}
-import FormFieldType
 import com.cloudray.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ListBuffer

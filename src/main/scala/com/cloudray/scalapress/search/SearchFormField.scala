@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
-import SearchFieldType
 import org.hibernate.annotations.{FetchMode, Fetch}
 import com.cloudray.scalapress.obj.attr.Attribute
 import scala.beans.BeanProperty

@@ -3,7 +3,6 @@ package com.cloudray.scalapress.obj.attr
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.Obj
-import AttributeType
 import scala.util.Random
 
 /** @author Stephen Samuel */

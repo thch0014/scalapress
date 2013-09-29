@@ -2,7 +2,6 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{OneInstancePerTest, FunSuite}
-import AttributeType
 import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
