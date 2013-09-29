@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
-import org.springframework.jmx.export.annotation.{ManagedOperation, ManagedResource}
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
 
@@ -17,7 +16,6 @@ trait ElasticSearchIndexer {
 }
 
 @Component
-@ManagedResource(description = "Elasticsearch Indexer")
 class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
   val PAGE_SIZE = 100
@@ -31,10 +29,8 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     service.setupIndex(attributes)
   }
 
-  @ManagedOperation(description = "perform a full index")
   def fullIndex(): Unit = index(_loadLive)
 
-  @ManagedOperation(description = "perform an incremental index")
   def incrementalIndex(since: Long): Unit = index(_loadUpdated(_, _, since))
 
   def index(loader: (Int, Int) => Seq[Obj]) {
