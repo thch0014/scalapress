@@ -92,6 +92,8 @@ object UrlResolver {
   def objectImageUpload(o: Obj): String = objectEdit(o) + "/upload"
 
   val types = "/backoffice/type"
+
+  @deprecated
   def typeEdit(t: ObjectType) = "/backoffice/type/" + t.id
 
   def login = "/login"

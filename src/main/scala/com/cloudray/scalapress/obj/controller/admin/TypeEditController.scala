@@ -12,7 +12,6 @@ import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.obj.{TypeDao, ObjectType}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
-import com.cloudray.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */
 @Controller
@@ -69,17 +68,21 @@ class TypeEditController extends MarkupPopulator {
   }
 
   @RequestMapping(Array("/attribute/create"))
-  def createAttribute(@ModelAttribute("type") t: ObjectType) = {
+  def createAttribute(@ModelAttribute("type") t: ObjectType, @RequestParam("names") names: String) = {
 
-    val attribute = new Attribute
-    attribute.name = "new attribute"
-    attribute.attributeType = AttributeType.Text
-    attribute.objectType = t
-    t.attributes.add(attribute)
+    var position = t.attributes.asScala.zipWithIndex.maxBy(_._1.position)._1.position
+    Option(names).map(_.split("\n")).getOrElse(Array[String]()).foreach(name => {
+      val attribute = new Attribute
+      attribute.name = name
+      attribute.attributeType = AttributeType.Text
+      attribute.objectType = t
+      position = position + 1
+      attribute.position = position
+      t.attributes.add(attribute)
+      typeDao.save(t)
+    })
 
-    typeDao.save(t)
-
-    "redirect:" + UrlResolver.typeEdit(t)
+    "redirect:/backoffice/type/" + t.id
   }
 
   @RequestMapping(value = Array("/attribute/order"), method = Array(RequestMethod.POST))
@@ -100,7 +103,7 @@ class TypeEditController extends MarkupPopulator {
     val sortedAttributes = t.sortedAttributes
 
     model.put("type", t)
-    model.put("attributes", sortedAttributes)
+    model.put("attributes", sortedAttributes.asJava)
 
     val sections = t.sections.asScala.toSeq.sortBy(_.position).asJava
     model.put("sections", sections)

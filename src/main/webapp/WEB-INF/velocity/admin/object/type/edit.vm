@@ -1,5 +1,31 @@
 #parse("/admin/header.vm")
 
+<div id="create-attributes-modal" class="modal hide">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create Attributes</h3>
+    </div>
+    <form method="GET" action="/backoffice/type/$type.id/attribute/create" class="form-horizontal">
+        <div class="modal-body">
+
+            <div class="control-group">
+                <label class="control-label" for="names">Names</label>
+
+                <div class="controls">
+                    <textarea id="names" cols="80" rows="6" name="names"
+                              placeholder="Enter attribute names one per line"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </form>
+</div>
+
 
 <h3>Edit Type: $type.name</h3>
 
@@ -67,9 +93,10 @@
 
 </form>
 
-
-<a href="$urlResolver.createAttribute($type)" role="button" class="btn"> <i class="icon-plus"></i> Create Attribute</a>
-
+<p>
+    <a href="#create-attributes-modal" role="button" class="btn" data-toggle="modal">
+        <i class="icon-plus-sign"></i> Create Attribute</a>
+</p>
 
 <table class="table table-condensed table-striped table-hover" id="attributes-table">
     <tr>

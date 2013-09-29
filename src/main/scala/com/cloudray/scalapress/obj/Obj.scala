@@ -73,6 +73,8 @@ class Obj extends SortedSections with java.io.Serializable {
     inverseJoinColumns = Array(new JoinColumn(name = "category"))
   )
   @NotFound(action = NotFoundAction.IGNORE)
+  @Fetch(FetchMode.SELECT)
+  @BatchSize(size = 5)
   @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
