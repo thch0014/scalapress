@@ -39,11 +39,11 @@
         <compiler.version.source>1.6</compiler.version.source>
         <compiler.version.target>1.6</compiler.version.target>
 
-        <aspectj.version>1.7.3</aspectj.version>
+        <aspectj.version>1.6.10</aspectj.version>
         <aws.version>1.6.0</aws.version>
 
-        <commons.httpcore.version>4.3</commons.httpcore.version>
-        <commons.httpclient.version>4.3</commons.httpclient.version>
+        <commons.httpcore.version>4.2.1</commons.httpcore.version>
+        <commons.httpclient.version>4.2.1</commons.httpclient.version>
         <commons.lang.version>2.6</commons.lang.version>
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <commons.io.version>2.4</commons.io.version>
