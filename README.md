@@ -3,16 +3,9 @@ scalapress
 
 scala based publishing platform
 
-
-
-
-
 [![Build Status](https://travis-ci.org/sksamuel/scalapress.png)](https://travis-ci.org/sksamuel/scalapress)
 
-
-
 ### Release History
-
 
 ##### 0.38
 * Updated elastic indexer to be incremental
@@ -24,6 +17,7 @@ scala based publishing platform
 * Updated release procedure and server spool up.
 * New multisite hosting option -perm gen usage now constant at ~200mb instead of 100mb per install.
 * [Plugin] added PngShrink plugin
+* Added backorders to shopping plugin
 
 ##### 0.37
 * Decreased perm gen usage

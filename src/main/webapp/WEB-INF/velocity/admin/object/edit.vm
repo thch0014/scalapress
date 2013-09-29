@@ -139,6 +139,15 @@
             #springFormInput("form.o.outStockMsg", "")
           </div>
       </div>
+
+
+      <div class="control-group">
+          <label class="control-label">Backorders</label>
+
+          <div class="controls">
+            #springFormCheckbox("form.o.backorders", "")
+          </div>
+      </div>
   #end
 
     <div class="control-group">
