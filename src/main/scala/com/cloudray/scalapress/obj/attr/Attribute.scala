@@ -87,5 +87,5 @@ class Attribute {
 
   @Column(name = "default")
   @BeanProperty var default: String = _
-
+  override def toString: String = s"Attribute [name=$name, id=$id, position=$position]"
 }

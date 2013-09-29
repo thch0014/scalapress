@@ -98,7 +98,7 @@ class TypeEditController extends MarkupPopulator {
   @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
     val t = typeDao.find(id)
-    val sortedAttributes = t.attributes.asScala.toSeq.sortBy(_.position).asJava
+    val sortedAttributes = t.sortedAttributes
 
     model.put("type", t)
     model.put("attributes", sortedAttributes)

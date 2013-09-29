@@ -37,7 +37,7 @@ class ObjectType extends SortedSections with java.io.Serializable {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
-  def sortedAttributes = attributes.asScala.toSeq.sortBy(_.position)
+  def sortedAttributes = attributes.asScala.toSeq.sortBy(_.id).sortBy(_.position)
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)

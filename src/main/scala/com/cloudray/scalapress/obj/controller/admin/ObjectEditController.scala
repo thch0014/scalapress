@@ -217,7 +217,7 @@ class ObjectEditController
     obj.status = WordUtils.capitalizeFully(obj.status)
 
     model.put("attributesWithValues",
-      attributeEditMap(obj.objectType.attributes.asScala.toSeq, obj.attributeValues.asScala.toSeq))
+      attributeEditMap(obj.objectType.sortedAttributes, obj.attributeValues.asScala.toSeq))
     model.put("form", form)
     model.put("eyeball", UrlGenerator.url(obj))
 
