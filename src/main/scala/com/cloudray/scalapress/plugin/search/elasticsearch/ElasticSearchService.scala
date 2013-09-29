@@ -78,6 +78,7 @@ class ElasticSearchService extends SearchService with Logging {
     .put("indices.memory.index_buffer_size", "5%")
     .put("indices.cache.filter.size", "4mb")
     .put("indices.min_index_buffer_size", "4mb")
+    .put("cluster.name", "scalapress-" + UUID.randomUUID.toString.substring(0, 8))
     .build
 
   val client = ElasticClient.local(settings)
@@ -137,7 +138,6 @@ class ElasticSearchService extends SearchService with Logging {
   override def index(obj: Obj) = index(Seq(obj))
   override def index(objs: Seq[Obj]) {
     require(objs != null)
-    logger.debug("Bulk indexing {} objects", objs.size)
 
     val executions = objs.map(obj => Option(obj.status).getOrElse(Obj.STATUS_DELETED).toLowerCase match {
 
