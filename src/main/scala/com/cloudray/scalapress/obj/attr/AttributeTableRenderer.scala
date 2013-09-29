@@ -32,18 +32,19 @@ object AttributeTableRenderer {
     }
 
     val sorted = new TreeMap()(ordering) ++ groupedByAttribute
-    val nodes = sorted.map(arg => {
-      val label = Unparsed(arg._1.name)
-      val values = arg._2.map(AttributeValueRenderer.renderValue).mkString(" ")
-      Utility.trim(<tr>
-        <td class="attribute-label">
-          {label}
-        </td>
-        <td class="attribute-value">
-          {Unparsed(values)}
-        </td>
-      </tr>)
-    })
+    val nodes = sorted.map(arg => Utility.trim(row(arg._1, arg._2)))
     nodes.toSeq
+  }
+
+  def row(attribute: Attribute, values: Seq[AttributeValue]) = {
+    val renderedValues = values.map(arg => "<span>" + AttributeValueRenderer.renderValue(arg) + "</span>").mkString
+    <tr>
+      <td class="attribute-label">
+        {Unparsed(attribute.name)}
+      </td>
+      <td class="attribute-value">
+        {Unparsed(renderedValues)}
+      </td>
+    </tr>
   }
 }

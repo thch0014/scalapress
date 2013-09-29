@@ -658,6 +658,9 @@
                                         <filter>
                                             <artifact>*:*</artifact>
                                             <excludes>
+                                                <exclude>WEB-INF/*</exclude>
+                                                <exclude>WEB-INF/**</exclude>
+                                                <exclude>WEB-INF/**/*</exclude>
                                                 <exclude>**/elastic*.jar</exclude>
                                                 <exclude>**/lucene*.jar</exclude>
                                             </excludes>
