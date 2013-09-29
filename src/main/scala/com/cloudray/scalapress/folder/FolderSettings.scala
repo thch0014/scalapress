@@ -2,9 +2,9 @@ package com.cloudray.scalapress.folder
 
 import javax.persistence._
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.enums.Sort
 import org.hibernate.annotations.{NotFoundAction, NotFound}
 import com.cloudray.scalapress.theme.Markup
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 @Entity

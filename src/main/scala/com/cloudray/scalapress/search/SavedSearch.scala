@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence._
-import com.cloudray.scalapress.enums.Sort
+import Sort
 import scala.Array
 import org.hibernate.annotations._
 import com.cloudray.scalapress.obj.ObjectType

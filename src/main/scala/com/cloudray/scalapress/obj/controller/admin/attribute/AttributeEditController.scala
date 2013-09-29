@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, PathV
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletResponse
-import com.cloudray.scalapress.obj.attr.{AttributeOptionDao, AttributeDao, AttributeOption, Attribute}
+import com.cloudray.scalapress.obj.attr._
 import com.cloudray.scalapress.util.EnumPopulator
 
 /** @author Stephen Samuel */

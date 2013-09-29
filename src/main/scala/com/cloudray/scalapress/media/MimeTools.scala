@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.media
 
 import org.apache.commons.io.FilenameUtils
-import com.cloudray.scalapress.enums.MimeType
+import MimeType
 
 object MimeTools {
 

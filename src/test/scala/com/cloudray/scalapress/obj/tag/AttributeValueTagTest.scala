@@ -2,11 +2,10 @@ package com.cloudray.scalapress.obj.tag
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute, AttributeValue}
 import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.enums.AttributeType
 
 /** @author Stephen Samuel */
 class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

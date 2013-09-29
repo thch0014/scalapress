@@ -1,8 +1,7 @@
 package com.cloudray.scalapress.util.mvc
 
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
-import com.cloudray.scalapress.enums.AttributeType
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
 import java.text.SimpleDateFormat
 
 /** @author Stephen Samuel */

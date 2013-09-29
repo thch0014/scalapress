@@ -4,8 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.enums.SearchFieldType
-import com.cloudray.scalapress.search.{SearchFormDao, SearchFormField, SearchForm}
+import com.cloudray.scalapress.search.{SearchFieldType, SearchFormDao, SearchFormField, SearchForm}
 import com.cloudray.scalapress.obj.TypeDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator

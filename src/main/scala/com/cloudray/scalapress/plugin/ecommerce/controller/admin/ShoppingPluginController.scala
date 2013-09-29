@@ -7,10 +7,10 @@ import com.cloudray.scalapress.{ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
-import com.cloudray.scalapress.enums.StockMethod
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.EnumPopulator
+import com.cloudray.scalapress.obj.StockMethod
 
 /** @author Stephen Samuel */
 @Controller

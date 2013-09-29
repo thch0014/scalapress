@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.controller.admin
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.enums.AttributeType
+import com.cloudray.scalapress.obj.attr.AttributeType
 
 /** @author Stephen Samuel */
 class ObjectEditControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

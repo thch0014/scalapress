@@ -3,9 +3,8 @@ package com.cloudray.scalapress.plugin.search.elastic
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
-import com.cloudray.scalapress.enums.{AttributeType, Sort}
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
-import com.cloudray.scalapress.search.{SearchService, SavedSearch}
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
+import com.cloudray.scalapress.search.{Sort, SearchService, SavedSearch}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder

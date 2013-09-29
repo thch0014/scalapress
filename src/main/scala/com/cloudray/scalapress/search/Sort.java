@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.enums;
+package com.cloudray.scalapress.search;
 
 public enum Sort {
     Attribute,

@@ -4,8 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
-import com.cloudray.scalapress.enums.WidgetContainer
+import com.cloudray.scalapress.widgets.{WidgetContainer, WidgetDao, Widget}
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 

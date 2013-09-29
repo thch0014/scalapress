@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.enums;
+package com.cloudray.scalapress.media;
 
 public enum MimeType {
     $323("text/h323"),

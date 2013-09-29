@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search
 
 import javax.persistence._
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.enums.Sort
+import Sort
 
 /** @author Stephen Samuel */
 @Entity

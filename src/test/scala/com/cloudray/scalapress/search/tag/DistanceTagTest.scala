@@ -5,8 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
-import com.cloudray.scalapress.enums.AttributeType
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
 class DistanceTagTest extends FunSuite with MockitoSugar {

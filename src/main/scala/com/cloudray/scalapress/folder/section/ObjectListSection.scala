@@ -3,14 +3,13 @@ package com.cloudray.scalapress.folder.section
 import javax.persistence.{EnumType, Enumerated, ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
-import com.cloudray.scalapress.enums.Sort
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
-import com.cloudray.scalapress.search.PagingRenderer
+import com.cloudray.scalapress.search.{Sort, PagingRenderer}
 import com.cloudray.scalapress.obj.{ObjectSorter, Obj}
 import com.cloudray.scalapress.obj.attr.Attribute
 

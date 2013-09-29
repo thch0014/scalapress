@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.plugin.form
 
 import javax.persistence.{EnumType, Enumerated, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import com.cloudray.scalapress.enums.{FieldSize, FormFieldType}
 import scala.beans.BeanProperty
 import javax.persistence.Column
 

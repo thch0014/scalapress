@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.obj.{Obj, ObjectDao}
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
-import com.cloudray.scalapress.enums.AttributeType
+import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
 class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

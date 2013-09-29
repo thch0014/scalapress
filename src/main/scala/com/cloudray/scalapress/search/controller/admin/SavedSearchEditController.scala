@@ -9,12 +9,11 @@ import com.cloudray.scalapress.search.{SavedSearch, SavedSearchDao}
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.obj.TypeDao
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.attr.AttributeValue
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue}
 import com.cloudray.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator}
 import com.cloudray.scalapress.util.{AttributePopulator, ObjectTypePopulator, SortPopulator}
 import com.cloudray.scalapress.util.mvc.AttributeValuesPopulator
 import java.text.SimpleDateFormat
-import com.cloudray.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 

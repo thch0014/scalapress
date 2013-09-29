@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.enums.AttributeType
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.obj.{TypeDao, ObjectType}
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
 import com.cloudray.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */

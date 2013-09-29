@@ -7,11 +7,10 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import scala.collection.mutable.ListBuffer
-import com.cloudray.scalapress.enums.{Sort, AttributeType}
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.search._
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
 import com.sksamuel.elastic4s._
 import ElasticDsl._
 import com.sksamuel.elastic4s.FieldType._

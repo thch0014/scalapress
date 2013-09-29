@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.obj
 
-import com.cloudray.scalapress.enums.Sort
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeFuncs}
 import scala.util.Random
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 object ObjectSorter {

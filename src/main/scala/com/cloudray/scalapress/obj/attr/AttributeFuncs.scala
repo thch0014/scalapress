@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.enums.AttributeType
+import AttributeType
 
 /** @author Stephen Samuel */
 object AttributeFuncs {

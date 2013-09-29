@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.attr
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.springframework.context.support.ClassPathXmlApplicationContext
-import com.cloudray.scalapress.enums.AttributeType
+import AttributeType
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */

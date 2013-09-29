@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.enums.{StockMethod, CheckoutMethod}
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.cloudray.scalapress.theme.Markup
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
+import com.cloudray.scalapress.obj.StockMethod
 
 /** @author Stephen Samuel */
 @Entity

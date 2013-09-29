@@ -16,10 +16,9 @@ import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClass
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Obj}
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValue}
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValueDao, AttributeValue}
 import com.cloudray.scalapress.media._
 import com.cloudray.scalapress.util.mvc.AttributeValuesPopulator
-import com.cloudray.scalapress.enums.AttributeType
 import scala.collection.mutable
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTimeZone

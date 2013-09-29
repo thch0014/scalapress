@@ -2,8 +2,8 @@ package com.cloudray.scalapress.obj
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.enums.Sort
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTest {

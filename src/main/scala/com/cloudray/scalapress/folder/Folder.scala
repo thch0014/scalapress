@@ -2,7 +2,7 @@ package com.cloudray.scalapress.folder
 
 import javax.persistence._
 import java.util
-import com.cloudray.scalapress.enums.FolderOrdering
+import FolderOrdering
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.obj.Obj

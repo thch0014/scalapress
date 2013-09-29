@@ -7,7 +7,7 @@ import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.form._
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.enums.FormFieldType
+import FormFieldType
 import scala.Some
 
 /** @author Stephen Samuel */

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
 import collection.immutable.TreeMap
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.enums.Sort
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 trait SortPopulator {

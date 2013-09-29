@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.enums.FolderOrdering
 import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClassScanner}
 import collection.mutable
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.folder.{FolderDao, Folder}
+import com.cloudray.scalapress.folder.{FolderOrdering, FolderDao, Folder}
 import com.cloudray.scalapress.theme.ThemeDao
 import com.cloudray.scalapress.obj.controller.admin.ThemePopulator
 import com.cloudray.scalapress.util.mvc.UrlResolver

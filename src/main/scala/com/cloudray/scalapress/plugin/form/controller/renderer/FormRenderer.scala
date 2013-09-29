@@ -3,8 +3,7 @@ package com.cloudray.scalapress.plugin.form.controller.renderer
 import scala.collection.JavaConverters._
 import xml.{Node, Unparsed}
 import com.cloudray.scalapress.ScalapressRequest
-import com.cloudray.scalapress.enums.{FieldSize, FormFieldType}
-import com.cloudray.scalapress.plugin.form.{FormField, Form}
+import com.cloudray.scalapress.plugin.form.{FieldSize, FormFieldType, FormField, Form}
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.util.Scalate

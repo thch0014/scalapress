@@ -5,12 +5,12 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder}
 import java.util
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
-import com.cloudray.scalapress.enums.Sort
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.theme.Markup
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

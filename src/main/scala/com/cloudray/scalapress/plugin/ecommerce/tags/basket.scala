@@ -2,11 +2,11 @@ package com.cloudray.scalapress.plugin.ecommerce.tags
 
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.enums.StockMethod
 import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.obj.StockMethod
 
 /** @author Stephen Samuel */
 @Tag("basket")

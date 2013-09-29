@@ -1,11 +1,10 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.enums.AttributeType
 import xml.Unparsed
 import collection.Iterable
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
+import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */

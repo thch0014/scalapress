@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.enums;
+package com.cloudray.scalapress.folder;
 
 public enum FolderOrdering {
     Alphabetical,
