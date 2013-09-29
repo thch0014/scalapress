@@ -76,7 +76,7 @@ class ThumbnailService extends Logging {
 
   def _store(filename: String, image: Scrimage): Unit = {
     logger.debug("Persisting thumbnail [{}]", filename)
-    assetStore.put(filename, new ByteArrayInputStream(image.write(Format.PNG)))
+    assetStore.put(filename, new ByteArrayInputStream(image.writer(Format.PNG).withMaxCompression.write()))
   }
 
   def _generate(filename: String, w: Int, h: Int, opType: OpType): Option[Scrimage] = {
