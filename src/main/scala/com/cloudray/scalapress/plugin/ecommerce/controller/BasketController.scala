@@ -89,7 +89,6 @@ class BasketController {
     basket.lines.asScala.find(_.id == id) match {
       case None =>
       case Some(line) =>
-        basket.lines.remove(line)
         line.basket = null
         basketDao.save(basket)
     }
