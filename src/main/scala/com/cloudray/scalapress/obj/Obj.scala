@@ -28,13 +28,10 @@ class Obj extends SortedSections with java.io.Serializable {
 
   @Index(name = "name_index")
   @BeanProperty var name: String = _
-
-  @BeanProperty var expiry: Long = 0
-
   @BeanProperty var email: String = _
 
+  @BeanProperty var expiry: Long = 0
   @BeanProperty var labels: String = _
-
   @BeanProperty var prioritized: Boolean = _
 
   @Index(name = "owner_index")
@@ -185,7 +182,7 @@ object Obj {
     obj.objectType = t
     obj.name = "new object"
     obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
-    obj.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+    obj.dateUpdated = obj.dateCreated
     obj.status = STATUS_LIVE
     obj
   }

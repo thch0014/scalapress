@@ -42,10 +42,13 @@ class OrderCustomerNotificationService extends Logging {
     val message = new SimpleMailMessage()
     message.setFrom(s"${installation.name} <$replyAddress>")
     message.setTo(order.account.email)
+
+    val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
+    message.setBcc(bcc)
+
     message.setReplyTo(replyAddress)
     message.setSubject("Order #" + order.id)
     message.setText(body)
-    Option(shoppingPluginDao.get.orderConfirmationBcc).filterNot(_.isEmpty).map(_.split(",")).foreach(message.setBcc)
 
     try {
       mailSender.send(message)
