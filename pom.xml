@@ -631,10 +631,9 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>2.4</version>
                         <configuration>
-                            <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
-                            <packagingIncludes>
-                                WEB-INF/lib/elasticsearch*.jar,WEB-INF/lib/elastic4s.jar
-                            </packagingIncludes>
+                            <packagingExcludes>
+                                %regex[WEB-INF/lib/(?!elastic|lucene).*.jar]
+                            </packagingExcludes>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -652,13 +651,14 @@
                                         <excludes>
                                             <exclude>com.cloudray:*</exclude>
                                             <exclude>org.elasticsearch:*</exclude>
-                                            <exclude>com.sksamuel.elastic4s:*</exclude>
+                                            <exclude>com.sksamuel:*</exclude>
                                         </excludes>
                                     </artifactSet>
                                     <filters>
                                         <filter>
                                             <excludes>
                                                 <exclude>/WEB-INF/*</exclude>
+                                                <exclude>WEB-INF</exclude>
                                             </excludes>
                                         </filter>
                                     </filters>
