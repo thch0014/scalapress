@@ -656,9 +656,12 @@
                                     </artifactSet>
                                     <filters>
                                         <filter>
+                                            <artifact>*:*</artifact>
                                             <excludes>
-                                                <exclude>/WEB-INF/*</exclude>
-                                                <exclude>WEB-INF</exclude>
+                                                <exclude>**/elastic*.jar</exclude>
+                                                <exclude>**/lucene*.jar</exclude>
+                                                <exclude>**/velocity/**/*</exclude>
+                                                <exclude>**/static/**/*</exclude>
                                             </excludes>
                                         </filter>
                                     </filters>
