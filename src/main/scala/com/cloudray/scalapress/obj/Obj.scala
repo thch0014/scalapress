@@ -3,7 +3,6 @@ package com.cloudray.scalapress.obj
 import attr.AttributeValue
 import java.util
 import javax.persistence._
-import javax.persistence.OrderBy
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.folder.Folder
 import org.joda.time.{DateTimeZone, DateTime}
@@ -49,9 +48,9 @@ class Obj extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var listingPackage: ListingPackage = _
 
-  @OrderBy("Obj_id ASC")
   @ElementCollection(fetch = FetchType.EAGER)
-  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  @Fetch(FetchMode.SUBSELECT)
+  @BeanProperty var images: java.util.Set[String] = new util.HashSet[String]()
   def sortedImages = images.asScala.toSeq
 
   @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
@@ -108,10 +107,10 @@ class Obj extends SortedSections with java.io.Serializable {
   @Column(name = "reference", length = 5000)
   @BeanProperty var exernalReference: String = _
 
-  @Column(length = 500)
+  @Column(name = "descriptionTag", length = 500)
   @BeanProperty var descriptionTag: String = _
 
-  @Column(length = 500)
+  @Column(name = "titleTag", length = 500)
   @BeanProperty var titleTag: String = _
 
   @Column(name = "keywords", length = 500)

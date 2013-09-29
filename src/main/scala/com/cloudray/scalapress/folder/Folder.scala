@@ -13,8 +13,8 @@ import javax.persistence.Table
 import javax.persistence.CascadeType
 import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
-import org.hibernate.annotations.Index
 import org.joda.time.{DateTimeZone, DateTime}
+import scala.Some
 
 /** @author Stephen Samuel */
 @Entity
@@ -29,7 +29,6 @@ class Folder extends SortedSections {
   @Fetch(FetchMode.SELECT)
   @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
 
-  @Index(name = "parent_index")
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
   @Fetch(FetchMode.SUBSELECT)
   @BatchSize(size = 40)
@@ -42,6 +41,7 @@ class Folder extends SortedSections {
     .sortBy(_.name)
     .sortBy(_.position)
 
+  @Index(name = "parent_index")
   @ManyToOne(cascade = Array(CascadeType.ALL))
   @JoinColumn(name = "parent")
   @Fetch(FetchMode.JOIN)
