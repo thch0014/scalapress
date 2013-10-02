@@ -7,6 +7,10 @@ scala based publishing platform
 
 ### Release History
 
+##### 0.39
+
+Added prioritized tag and prioritizedonly to image, object and attribute tags.
+
 ##### 0.38
 * Updated elastic indexer to be incremental
 * Closed out multiple bugs
