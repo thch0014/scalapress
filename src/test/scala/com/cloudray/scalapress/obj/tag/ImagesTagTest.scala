@@ -15,14 +15,16 @@ class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
   val context = new ScalapressContext
   context.thumbnailService = mock[ThumbnailService]
   context.assetStore = mock[AssetStore]
-  val sreq = ScalapressRequest(req, context)
-
-  val obj = new Obj
-  obj.id = 14
 
   val i = "jtull_large.png"
 
+  val obj = new Obj
+  obj.id = 14
+  obj.images.add(i)
+
   val tag = new ImagesTag
+
+  val sreq = ScalapressRequest(req, context).withObject(obj)
 
   "an images tag" should "calculate limit from params" in {
     val limit = tag._limit(Map("something" -> "qqewqwe", "limit" -> "11"))
@@ -61,22 +63,46 @@ class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
 
   it should "render image tag using supplied img class" in {
     Mockito.when(context.assetStore.link(i)).thenReturn("http://www.jtull.com/jtull_large.png")
-    val tag = new ImagesTag()._renderImage(i, Map("imgclass" -> "thumb-large"), obj, context)
-    assert( """<img src="http://www.jtull.com/jtull_large.png" class="thumb-large"/>""" === tag)
+    val tag = new ImagesTag().render(sreq, Map("imgclass" -> "thumb-large"))
+    assert( """<img src="http://www.jtull.com/jtull_large.png" class="thumb-large"/>""" === tag.get)
   }
 
   it should "render image tag using thumbnail store when dimensions specified" in {
     Mockito.when(context.thumbnailService.link(i, 100, 200, Fit))
       .thenReturn("http://www.jtull.com/images/jtull_fit_100x200.png")
-    val tag = new ImagesTag()._renderImage(i, Map("w" -> "100", "h" -> "200"), obj, context)
-    assert( """<img src="http://www.jtull.com/images/jtull_fit_100x200.png" height="200" width="100" class=""/>""" === tag)
+    val a = tag._renderImage(i, Map("w" -> "100", "h" -> "200"), obj, context)
+    assert( """<img src="http://www.jtull.com/images/jtull_fit_100x200.png" height="200" width="100" class=""/>""" === a)
   }
 
   it should "render image tag using the operation type when specified" in {
     Mockito.when(context.thumbnailService.link(i, 100, 200, Cover))
       .thenReturn("http://www.jtull.com/images/jtull.png?w=100&h=200&type=cover")
-    val tag = new ImagesTag()._renderImage(i, Map("w" -> "100", "h" -> "200", "type" -> "cover"), obj, context)
+    val a = tag.render(sreq, Map("w" -> "100", "h" -> "200", "type" -> "cover"))
     assert(
-      """<img src="http://www.jtull.com/images/jtull.png?w=100&h=200&type=cover" height="200" width="100" class=""/>""" === tag)
+      """<img src="http://www.jtull.com/images/jtull.png?w=100&h=200&type=cover" height="200" width="100" class=""/>""" === a.get)
+  }
+
+  it should "render when pri only is set and the object is prioritized" in {
+    Mockito.when(context.assetStore.link(i)).thenReturn("http://www.jtull.com/jtull_large.png")
+    obj.prioritized = true
+    assert(tag.render(sreq, Map("prioritizedonly" -> "1")).isDefined)
+  }
+
+  it should "render when pri only is not set and the object is prioritized" in {
+    Mockito.when(context.assetStore.link(i)).thenReturn("http://www.jtull.com/jtull_large.png")
+    obj.prioritized = true
+    assert(tag.render(sreq, Map.empty).isDefined)
+  }
+
+  it should "not render when pri only is set and the object is not prioritized" in {
+    Mockito.when(context.assetStore.link(i)).thenReturn("http://www.jtull.com/jtull_large.png")
+    obj.prioritized = false
+    assert(tag.render(sreq, Map("prioritizedonly" -> "1")).isEmpty)
+  }
+
+  it should "render when pri only is not set and the object is not prioritized" in {
+    Mockito.when(context.assetStore.link(i)).thenReturn("http://www.jtull.com/jtull_large.png")
+    obj.prioritized = false
+    assert(tag.render(sreq, Map.empty).isDefined)
   }
 }

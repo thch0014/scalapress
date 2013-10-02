@@ -36,7 +36,8 @@ class ImagesTag extends ScalapressTag with TagBuilder with Logging {
   }
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.orElse(request.line.map(_.obj)).map(obj => {
+    val ponly = params.get("prioritizedonly").filter(_ == "1").isDefined
+    request.obj.orElse(request.line.map(_.obj)).filter(_.prioritized || !ponly).map(obj => {
       val limit = _limit(params)
       val images = _images(obj, limit)
       val rendered = images.map(i => _renderImage(i, params, obj, request.context))
