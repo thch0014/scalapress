@@ -68,7 +68,7 @@
         <hibernate.core.version>4.2.2.Final</hibernate.core.version>
         <hibernate.validator.version>5.0.1.Final</hibernate.validator.version>
 
-        <javax.servlet.version>3.0</javax.servlet.version>
+        <javax.servlet.version>2.5</javax.servlet.version>
         <javax.jsp.version>2.1</javax.jsp.version>
         <javax.mail.version>1.4.6</javax.mail.version>
         <javax.jaxb.version>2.2.5</javax.jaxb.version>

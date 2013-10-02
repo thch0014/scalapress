@@ -3,17 +3,21 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 object ObjectTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
-    request.obj.map(obj => {
-      val text = params.get("text").getOrElse(obj.name)
-      params.contains("link") match {
-        case true => buildLink(UrlGenerator.url(obj), text, params)
-        case false => build(text, params)
-      }
-    })
+    val ponly = params.get("prioritizedonly").filter(_ == "1").isDefined
+    request.obj.filter(_.prioritized || !ponly).map(_render(_, params))
+  }
+
+  def _render(obj: Obj, params: Map[String, String]): String = {
+    val text = params.get("text").getOrElse(obj.name)
+    params.contains("link") match {
+      case true => buildLink(UrlGenerator.url(obj), text, params)
+      case false => build(text, params)
+    }
   }
 }
 
@@ -34,8 +38,8 @@ class SummaryTag extends ScalapressTag with TagBuilder {
 object LinkTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
 
-    val folderUrl = request.folder.map(UrlGenerator.url(_))
-    val objectUrl = request.obj.map(UrlGenerator.url(_))
+    val folderUrl = request.folder.map(UrlGenerator.url)
+    val objectUrl = request.obj.map(UrlGenerator.url)
     objectUrl.orElse(folderUrl)
   }
 }
