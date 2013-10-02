@@ -15,8 +15,8 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
     val ponly = params.get("prioritizedonly").filter(_ == "1").isDefined
     val sep = params.get("sep").getOrElse(" ")
     params.get("id") match {
-      case Some(id) if isAllDigits(id) => request.obj match {
-        case Some(obj) if obj.prioritized || !ponly =>
+      case Some(id) if isAllDigits(id) => request.obj.filter(_.prioritized || !ponly) match {
+        case Some(obj) =>
 
           val values = obj.attributeValues.asScala.toSeq
             .filter(_.attribute.id == id.trim.toLong)

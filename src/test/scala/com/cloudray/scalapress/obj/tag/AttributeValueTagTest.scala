@@ -49,21 +49,21 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
 
   test("prioritized av object should render when pri only set") {
     obj.prioritized = true
-    assert(tag.render(sreq, Map("prioritizedonly" -> "1")).isDefined)
+    assert(tag.render(sreq, Map("id" -> "2", "prioritizedonly" -> "1")).isDefined)
   }
 
   test("prioritized av object should render when pri only not set") {
     obj.prioritized = true
-    assert(tag.render(sreq, Map.empty).isDefined)
+    assert(tag.render(sreq, Map("id" -> "2")).isDefined)
   }
 
   test("non prioritized av object should not render when pri only set") {
     obj.prioritized = false
-    assert(tag.render(sreq, Map("prioritizedonly" -> "1")).isEmpty)
+    assert(tag.render(sreq, Map("id" -> "2", "prioritizedonly" -> "1")).isEmpty)
   }
 
   test("non prioritized av object should render when pri only not set") {
     obj.prioritized = false
-    assert(tag.render(sreq, Map.empty).isDefined)
+    assert(tag.render(sreq, Map("id" -> "2")).isDefined)
   }
 }
