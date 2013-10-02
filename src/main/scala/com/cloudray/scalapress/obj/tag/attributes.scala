@@ -12,10 +12,11 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
   def isAllDigits(x: String) = x forall Character.isDigit
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+    val ponly = params.get("prioritizedonly").filter(_ == "1").isDefined
     val sep = params.get("sep").getOrElse(" ")
     params.get("id") match {
       case Some(id) if isAllDigits(id) => request.obj match {
-        case Some(obj) =>
+        case Some(obj) if obj.prioritized || !ponly =>
 
           val values = obj.attributeValues.asScala.toSeq
             .filter(_.attribute.id == id.trim.toLong)
@@ -29,7 +30,7 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
 
         case None => None
       }
-      case None => Some("<!-- no id specified for attribute tag -->")
+      case None => None
     }
   }
 }
