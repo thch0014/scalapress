@@ -11,23 +11,23 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 @RequestMapping(Array("backoffice/user/{id}"))
 class UserEditController {
 
-    @Autowired var userDao: UserDao = _
-    @Autowired var context: ScalapressContext = _
-    @Autowired var passwordEncoder: PasswordEncoder = _
+  @Autowired var userDao: UserDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var passwordEncoder: PasswordEncoder = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute user: User) = "admin/user/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute user: User) = "admin/user/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute user: User) = {
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute user: User) = {
 
-        Option(user.changePassword).map(_.trim).filter(_.length > 0).foreach(pass => {
-            user.passwordHash = passwordEncoder.encodePassword(pass, null)
-        })
+    Option(user.changePassword).map(_.trim).filterNot(_.isEmpty).foreach(pass => {
+      user.passwordHash = passwordEncoder.encodePassword(pass, null)
+    })
 
-        userDao.save(user)
-        edit(user)
-    }
+    userDao.save(user)
+    "redirect:/backoffice/user"
+  }
 
-    @ModelAttribute def folder(@PathVariable("id") id: Long) = userDao.find(id)
+  @ModelAttribute def folder(@PathVariable("id") id: Long) = userDao.find(id)
 }
