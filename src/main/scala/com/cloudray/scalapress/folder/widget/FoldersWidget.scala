@@ -73,13 +73,12 @@ class FoldersWidget extends Widget with Logging {
     Utility.trim(xml)
   }
 
-  def _children(parent: Folder) =
+  def _children(parent: Folder): Seq[Folder] =
     parent.sortedSubfolders
       .filterNot(_.hidden)
       .filterNot(_.name == null)
       .filterNot(f => _exclusions.contains(f.id.toString))
       .filterNot(f => _exclusions.contains(f.name.toLowerCase.replaceAll("\\s{2,}", " ").trim))
-      .sortBy(_.name)
 
   def _exclusions: Seq[String] =
     Option(exclusions)
