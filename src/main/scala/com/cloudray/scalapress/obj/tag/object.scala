@@ -14,9 +14,10 @@ object ObjectTag extends ScalapressTag with TagBuilder {
 
   def _render(obj: Obj, params: Map[String, String]): String = {
     val text = params.get("text").getOrElse(obj.name)
-    params.contains("link") match {
-      case true => buildLink(UrlGenerator.url(obj), text, params)
-      case false => build(text, params)
+    params.get("link") match {
+      case Some(link) if link == "prioritized" && obj.prioritized => buildLink(UrlGenerator.url(obj), text, params)
+      case Some(link) if link != "prioritized" => buildLink(UrlGenerator.url(obj), text, params)
+      case _ => build(text, params)
     }
   }
 }

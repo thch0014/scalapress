@@ -18,6 +18,36 @@ class ObjectTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
   val sreq = new ScalapressRequest(req, context).withObject(obj)
 
+  test("object renders link when link=prioritized and object is prioritized") {
+    obj.prioritized = true
+    val render = ObjectTag.render(sreq, Map("link" -> "prioritized"))
+    assert("<a href='/object-123-coldplay-tickets' class='' id='' rel=''>coldplay tickets</a>" === render.get)
+  }
+
+  test("object renders no link when link=prioritized and object is not prioritized") {
+    obj.prioritized = false
+    val render = ObjectTag.render(sreq, Map("link" -> "prioritized"))
+    assert("coldplay tickets" === render.get)
+  }
+
+  test("object renders link when link is set to anything but prioritized and object is prioritized") {
+    obj.prioritized = true
+    val render = ObjectTag.render(sreq, Map("link" -> "all"))
+    assert("<a href='/object-123-coldplay-tickets' class='' id='' rel=''>coldplay tickets</a>" === render.get)
+  }
+
+  test("object renders link when link is set to anything but prioritized and object is not prioritized") {
+    obj.prioritized = false
+    val render = ObjectTag.render(sreq, Map("link" -> "all"))
+    assert("<a href='/object-123-coldplay-tickets' class='' id='' rel=''>coldplay tickets</a>" === render.get)
+  }
+
+  test("object renders no link when link param is not set") {
+    obj.prioritized = false
+    val render = ObjectTag.render(sreq, Map.empty)
+    assert("coldplay tickets" === render.get)
+  }
+
   test("object tag uses object name for link text when text not supplied") {
     val render = ObjectTag.render(sreq, Map("link" -> "1"))
     assert("<a href='/object-123-coldplay-tickets' class='' id='' rel=''>coldplay tickets</a>" === render.get)
