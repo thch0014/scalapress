@@ -76,7 +76,7 @@ class ObjectEditController
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest) = {
 
-    Option(form.changePassword).map(_.trim).filter(_.length > 0).foreach(pass => {
+    Option(form.changePassword).map(_.trim).filterNot(_.isEmpty).foreach(pass => {
       form.o.passwordHash = passwordEncoder.encodePassword(pass, null)
     })
 

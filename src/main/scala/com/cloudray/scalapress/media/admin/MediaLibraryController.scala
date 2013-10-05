@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.media.{AssetLifecycleListener, AssetStore}
 import java.io._
 import org.springframework.ui.ModelMap
@@ -39,7 +38,7 @@ class MediaLibraryController {
       val result = listeners.foldLeft(start)(op)
       assetStore.put(result._1, result._2)
     }
-    "redirect:" + UrlResolver.medialib
+    "redirect:/backoffice/medialib"
   }
 
   @ModelAttribute def assets(@RequestParam(value = "q", required = false) q: String,

@@ -8,7 +8,7 @@ import org.mockito.{Matchers, Mockito}
 /** @author Stephen Samuel */
 class TinyCmeControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val controller = new TinymceController
+    val controller = new TinyMceImageListController
     controller.assetStore = mock[AssetStore]
 
     Mockito

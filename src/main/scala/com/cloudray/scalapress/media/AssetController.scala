@@ -11,22 +11,22 @@ import org.apache.commons.io.IOUtils
 @RequestMapping(Array("asset"))
 class AssetController {
 
-    @Autowired var assetStore: AssetStore = _
+  @Autowired var assetStore: AssetStore = _
 
-    @ExceptionHandler(Array(classOf[RuntimeException]))
-    def handleException1(e: RuntimeException, resp: HttpServletResponse) {
-        resp.setStatus(404)
-    }
+  @ExceptionHandler(Array(classOf[RuntimeException]))
+  def handleException1(e: RuntimeException, resp: HttpServletResponse) {
+    resp.setStatus(404)
+  }
 
-    @RequestMapping(value = Array("{key}"))
-    @ResponseBody
-    def asset(@PathVariable("key") key: String, resp: HttpServletResponse) {
-        assetStore.get(key) match {
-            case None => throw new RuntimeException
-            case Some(input) =>
-                resp.setContentType(MimeTools.contentType(key))
-                IOUtils.copy(input, resp.getOutputStream)
-                IOUtils.closeQuietly(input)
-        }
+  @RequestMapping(value = Array("{key}"))
+  @ResponseBody
+  def asset(@PathVariable("key") key: String, resp: HttpServletResponse) {
+    assetStore.get(key) match {
+      case None => throw new RuntimeException
+      case Some(input) =>
+        resp.setContentType(MimeTools.contentType(key))
+        IOUtils.copy(input, resp.getOutputStream)
+        IOUtils.closeQuietly(input)
     }
+  }
 }

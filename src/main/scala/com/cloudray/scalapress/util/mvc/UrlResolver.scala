@@ -42,6 +42,7 @@ object UrlResolver {
 
   val dashboard: String = "/backoffice"
 
+  @deprecated
   val medialib: String = "/backoffice/medialib"
   val mediaupload: String = "/backoffice/medialib/upload"
 
