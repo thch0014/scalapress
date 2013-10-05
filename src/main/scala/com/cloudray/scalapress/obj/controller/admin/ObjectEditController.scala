@@ -188,7 +188,7 @@ class ObjectEditController
   def removeImage(@PathVariable("filename") filename: String,
                   @ModelAttribute("form") form: EditForm) = {
     if (form.o.images.remove(filename)) objectDao.save(form.o)
-    "redirect:/backoffice/obj/" + form.o.id
+    "redirect:/backoffice/obj/" + form.o.id + "#tab5"
   }
 
   @ModelAttribute("assets") def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
