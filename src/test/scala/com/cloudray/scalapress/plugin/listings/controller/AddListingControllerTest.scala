@@ -51,6 +51,8 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com:8080"))
   val process = new ListingProcess
   process.listingPackage = new ListingPackage
+  process.listingPackage.objectType = new ObjectType
+  process.listingPackage.objectType.id = 4
   process.listingPackage.fee = 1000
   process.listing = new Obj
   process.listing.id = 454
@@ -138,7 +140,6 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     assert(0 === process.folders.size)
     process.listingPackage.folders = "5"
     process.listingPackage.maxFolders = 2
-    process.listingPackage.objectType = new ObjectType
     controller.showFolders(process, errors, req)
     assert(1 === process.folders.size)
     assert(5l === process.folders(0))
@@ -148,7 +149,6 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     assert(0 === process.folders.size)
     process.listingPackage.folders = "5,6"
     process.listingPackage.maxFolders = 2
-    process.listingPackage.objectType = new ObjectType
     controller.showFolders(process, errors, req)
     assert(0 === process.folders.size)
   }
@@ -209,7 +209,9 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   }
 
   test("folders page uses sections for title") {
+    process.listingPackage.folders = "5,6"
+    process.listingPackage.maxFolders = 2
     val page = controller.showFolders(process, errors, req)
-    assert(page.render.contains(ListingTitles.CHOOSE_FOLDERS))
+    assert(page.req.title.get === ListingTitles.CHOOSE_FOLDERS)
   }
 }
