@@ -77,7 +77,7 @@ object ListingFieldsRenderer {
     options
   }
 
-  private def _renderSelection(attr: Attribute) = {
+  private def _selection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
       <label class="control-label">
@@ -85,13 +85,13 @@ object ListingFieldsRenderer {
       </label>
       <div class="controls">
         <select name={"attributeValue_" + attr.id} placeholder="Title">
-          {_options(attr)}
+          <option disabled="disabled" selected="selected">Please choose</option>{_options(attr)}
         </select>
       </div>
     </div>
   }
 
-  def _renderText(attr: Attribute, size: String, value: Option[String]) = {
+  def _text(attr: Attribute, size: String, value: Option[String]) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
       <label class="control-label">
@@ -104,7 +104,7 @@ object ListingFieldsRenderer {
     </div>
   }
 
-  def _renderYesNo(attr: Attribute) =
+  def _yesno(attr: Attribute) =
     <div>
       <label class="control-label">
         {Unparsed(attr.name)}
@@ -138,10 +138,10 @@ object ListingFieldsRenderer {
     attributes.toSeq.sortBy(_.position).map(attr => {
       val value = attributeValues.find(av => av.attribute.id == attr.id).map(_.value)
       attr.attributeType match {
-        case AttributeType.Postcode | AttributeType.Numerical => _renderText(attr, "input-small", value)
-        case AttributeType.Boolean => _renderYesNo(attr)
-        case AttributeType.Selection => _renderSelection(attr)
-        case _ => _renderText(attr, "input-xlarge", value)
+        case AttributeType.Postcode | AttributeType.Numerical => _text(attr, "input-small", value)
+        case AttributeType.Boolean => _yesno(attr)
+        case AttributeType.Selection => _selection(attr)
+        case _ => _text(attr, "input-xlarge", value)
       }
     })
   }

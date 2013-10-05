@@ -180,7 +180,7 @@ class AddListingController {
 
   @RequestMapping(value = Array("image/remove"))
   def removeImage(@ModelAttribute("process") process: ListingProcess,
-                   @RequestParam(value = "key", required = true) key: String): String = {
+                  @RequestParam(value = "key", required = true) key: String): String = {
 
     process.imageKeys = process.imageKeys.filterNot(_ == key)
     listingProcessDao.save(process)
