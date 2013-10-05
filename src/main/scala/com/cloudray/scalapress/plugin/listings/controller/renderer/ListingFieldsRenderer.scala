@@ -85,7 +85,7 @@ object ListingFieldsRenderer {
       </label>
       <div class="controls">
         <select name={"attributeValue_" + attr.id} placeholder="Title">
-          <option disabled="disabled" selected="selected">Please choose</option>{_options(attr)}
+          <option value={""} disabled="disabled" selected="selected">Please choose</option>{_options(attr)}
         </select>
       </div>
     </div>
