@@ -32,6 +32,8 @@ class OrderCustomerNotificationService extends Logging {
     }
   }
 
+  def _format = Option(shoppingPluginDao.get.emailFormat).getOrElse("text")
+
   def _send(order: Order, body: String) {
 
     val installation = context.installationDao.get

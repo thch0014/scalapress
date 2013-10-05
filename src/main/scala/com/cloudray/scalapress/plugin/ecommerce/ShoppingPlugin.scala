@@ -72,6 +72,9 @@ class ShoppingPlugin {
 
   @Column(length = 10000)
   @BeanProperty var checkoutConfirmationText: String = _
+
+  @Column
+  @BeanProperty var emailFormat: String = _
 }
 
 object ShoppingPlugin {
