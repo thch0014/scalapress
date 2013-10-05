@@ -19,6 +19,8 @@ object ListingFieldsRenderer {
     val attributeValues = process.attributeValues.asScala
 
     <div id="listing-process-details">
+    <p>Please fill in as much detail as you can about your listing. The more information you can enter here the more likely your listing is to get noticed.<br /> 
+    <em>Please note that fields marked with</em> * <em>are mandatory and must be completed or selected from the available options.</em></p>
       <form method="POST" action="/listing/field">
         <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
         attributeValues)}{_sectionAttributes(
@@ -61,6 +63,9 @@ object ListingFieldsRenderer {
   private def _content(content: String) =
     <div>
       <label class="control-label">Content *</label>
+      <p>Please enter as much detailed information as you can for the main content section of your listing. There is no limit to the 
+      amount of text that you can enter, but please note that you cannot use HTML tags such as <b></b> or any other markup as this is 
+      automatically removed.</p>
       <div class="controls">
         <textarea class="input-block-level" rows="12" name="content">
           {content}
