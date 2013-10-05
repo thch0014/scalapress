@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import scala.collection.JavaConverters._
-import xml.Unparsed
+import scala.xml.{Node, Unparsed}
 import collection.Iterable
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
@@ -68,27 +68,50 @@ object ListingFieldsRenderer {
       </div>
     </div>
 
-  private def _options(attr: Attribute) = {
-    val options = attr.options.asScala.map(opt =>
-      <option>
-        {opt.value}
-      </option>)
-    options.prepend(<option value=" ">-Select-</option>)
-    options
-  }
-
-  private def _selection(attr: Attribute) = {
+  def _singleSelection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
       <label class="control-label">
         {Unparsed(name)}
       </label>
       <div class="controls">
-        <select name={"attributeValue_" + attr.id} placeholder="Title">
-          <option value={""} disabled="disabled" selected="selected">Please choose</option>{_options(attr)}
-        </select>
+        {_select(attr)}
       </div>
     </div>
+  }
+
+  def _select(attr: Attribute): Node = {
+    <select name={"attributeValue_" + attr.id} placeholder="Title">
+      <option value={""}>Please choose</option>{_options(attr)}
+    </select>
+  }
+
+  def _options(attr: Attribute): Seq[Node] = {
+    attr.options.asScala.map(opt =>
+      <option>
+        {opt.value}
+      </option>)
+  }
+
+  def _multipleSelection(attr: Attribute) = {
+    val name = attr.name + (if (attr.optional) "" else " *")
+    <div>
+      <label class="control-label">
+        {Unparsed(name)}
+      </label>
+      <div class="controls">
+        {_checkboxes(attr)}
+      </div>
+    </div>
+  }
+
+  def _checkboxes(attr: Attribute): Seq[Node] = {
+    val name = "attributeValue_" + attr.id
+    attr.options.asScala.map(opt =>
+      <label class="checkbox">
+        <input type="checkbox" value={opt.value} name={name}/>{opt.value}
+      </label>
+    )
   }
 
   def _text(attr: Attribute, size: String, value: Option[String]) = {
@@ -140,7 +163,8 @@ object ListingFieldsRenderer {
       attr.attributeType match {
         case AttributeType.Postcode | AttributeType.Numerical => _text(attr, "input-small", value)
         case AttributeType.Boolean => _yesno(attr)
-        case AttributeType.Selection => _selection(attr)
+        case AttributeType.Selection if attr.multipleValues => _multipleSelection(attr)
+        case AttributeType.Selection => _singleSelection(attr)
         case _ => _text(attr, "input-xlarge", value)
       }
     })

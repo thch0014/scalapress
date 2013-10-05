@@ -25,3 +25,14 @@ class AttributeOption extends Ordered[AttributeOption] {
   def compare(that: AttributeOption): Int =
     new NaturalOrderComparator().compare(Option(value).getOrElse(""), Option(that.value).getOrElse(""))
 }
+
+object AttributeOption {
+  def apply(id: Long, attribute: Attribute, value: String, position: Int): AttributeOption = {
+    val option = new AttributeOption
+    option.id = id
+    option.attribute = attribute
+    option.value = value
+    option.position = position
+    option
+  }
+}
