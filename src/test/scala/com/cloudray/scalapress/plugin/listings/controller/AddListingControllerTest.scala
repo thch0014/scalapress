@@ -207,4 +207,9 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     Mockito.verify(controller.paymentFormRenderer).renderPaymentForm(captor.capture)
     assert("http://domain.com:8080/listing/completed" === captor.getValue.successUrl)
   }
+
+  test("folders page uses sections for title") {
+    val page = controller.showFolders(process, errors, req)
+    assert(page.render.contains(ListingTitles.CHOOSE_FOLDERS))
+  }
 }
