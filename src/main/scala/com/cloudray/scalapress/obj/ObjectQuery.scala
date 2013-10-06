@@ -18,6 +18,16 @@ class ObjectQuery extends PagedQuery {
     this
   }
 
+  def withName(name: String) = {
+    this.name = Option(name)
+    this
+  }
+
+  def withTypeId(typeId: Long) = {
+    this.typeId = Option(typeId)
+    this
+  }
+
   def withStatus(status: String) = {
     this.status = Option(status)
     this

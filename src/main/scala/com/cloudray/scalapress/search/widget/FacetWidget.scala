@@ -5,7 +5,7 @@ import com.cloudray.scalapress.ScalapressRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.{SavedSearch, Facet, SearchService}
 import com.cloudray.scalapress.folder.Folder
-import javax.persistence.{Table, Entity}
+import javax.persistence.{Transient, Table, Entity}
 import com.cloudray.scalapress.util.Scalate
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
@@ -19,6 +19,7 @@ import com.cloudray.scalapress.obj.Obj
 @Table(name = "search_widget_facet")
 class FacetWidget extends Widget {
 
+  @Transient
   @Autowired var service: SearchService = _
 
   def render(sreq: ScalapressRequest): Option[String] = sreq.folder.flatMap(folder => _render(folder, sreq.request))
