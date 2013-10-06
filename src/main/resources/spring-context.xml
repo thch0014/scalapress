@@ -13,6 +13,7 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
+                <value>classpath:/sites/scalapress.props</value>
                 <value>classpath:/sites/scalapress-${env}.properties</value>
             </list>
         </property>
@@ -25,6 +26,9 @@
 
     <context:component-scan base-package="com.cloudray.scalapress"/>
     <context:component-scan base-package="com.cloudray.migration"/>
+
+
+    <bean id="searchService" class="${search.service.implementation}"/>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${sendgrid.smtp}"/>

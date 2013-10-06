@@ -8,6 +8,7 @@ import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
+import com.cloudray.scalapress.search.SearchService
 
 /** @author Stephen Samuel */
 trait ElasticSearchIndexer {
@@ -20,13 +21,16 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
 
   val PAGE_SIZE = 100
 
-  @Autowired var service: ElasticSearchService = _
+  @Autowired var service: SearchService = _
   @Autowired var context: ScalapressContext = _
 
   @PostConstruct
   def setupIndexes() {
     val attributes = context.attributeDao.findAll()
-    service.setupIndex(attributes)
+    service match {
+      case service: ElasticSearchService => service.setupIndex(attributes)
+      case _ =>
+    }
   }
 
   def fullIndex(): Unit = index(_loadLive)
@@ -34,14 +38,18 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
   def incrementalIndex(since: Long): Unit = index(_loadUpdated(_, _, since))
 
   def index(loader: (Int, Int) => Seq[Obj]) {
-    for ( objs <- iterator(loader) ) {
-      for ( obj <- objs ) {
-        try {
-          service.index(obj)
-        } catch {
-          case e: Exception => logger.warn("{}", e)
+    service match {
+      case service: ElasticSearchService =>
+        for ( objs <- iterator(loader) ) {
+          for ( obj <- objs ) {
+            try {
+              service.index(obj)
+            } catch {
+              case e: Exception => logger.warn("{}", e)
+            }
+          }
         }
-      }
+      case _ =>
     }
   }
 

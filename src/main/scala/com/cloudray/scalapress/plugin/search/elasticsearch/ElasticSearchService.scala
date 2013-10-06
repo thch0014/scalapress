@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.search.elasticsearch
 
 import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
-import org.springframework.stereotype.Component
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
@@ -30,8 +29,6 @@ import com.cloudray.scalapress.search.SearchResult
 import scala.concurrent.Await
 
 /** @author Stephen Samuel */
-
-@Component
 class ElasticSearchService extends SearchService with Logging {
 
   val DELETED = Obj.STATUS_DELETED.toLowerCase

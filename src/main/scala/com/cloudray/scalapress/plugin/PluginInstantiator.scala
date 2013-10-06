@@ -26,7 +26,7 @@ class PluginInstantiator extends Logging with ApplicationContextAware {
                   .createBean(klass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
                 logger.debug("Created plugin [{}]", bean)
             } catch {
-                case e: Exception => logger.warn("{}", e)
+                case e: Exception => logger.error("{}", e)
             }
         })
     }
