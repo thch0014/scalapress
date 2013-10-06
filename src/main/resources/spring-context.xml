@@ -13,7 +13,7 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:/sites/scalapress.props</value>
+                <value>classpath:/scalapress.props</value>
                 <value>classpath:/sites/scalapress-${env}.properties</value>
             </list>
         </property>
