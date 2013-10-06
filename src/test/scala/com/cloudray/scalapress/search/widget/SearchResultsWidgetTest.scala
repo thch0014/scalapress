@@ -9,17 +9,17 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class SearchResultsWidgetTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val context = new ScalapressContext
-    context.savedSearchDao = mock[SavedSearchDao]
+  val context = new ScalapressContext
+  context.savedSearchDao = mock[SavedSearchDao]
 
-    test("init creates and persists a new search") {
-        val widget = new SearchResultsWidget
-        widget._init(context)
-        Mockito.verify(context.savedSearchDao).save(widget.search)
-    }
+  test("init creates and persists a new search") {
+    val widget = new SearchResultsWidget
+    widget._init(context)
+    Mockito.verify(context.savedSearchDao).save(widget.search)
+  }
 
-    test("backoffice url is absolute") {
-        val widget = new SearchResultsWidget
-        assert(widget.backoffice.startsWith("/backoffice/"))
-    }
+  test("backoffice url is absolute") {
+    val widget = new SearchResultsWidget
+    assert(widget.backoffice.startsWith("/backoffice/"))
+  }
 }

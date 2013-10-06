@@ -17,7 +17,7 @@ import com.cloudray.scalapress.obj.attr.Attribute
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ObjectListSection extends Section {
@@ -53,7 +53,7 @@ class ObjectListSection extends Section {
       case e: Exception => Nil
     }
 
-    val live = objects.filter(_.status.toLowerCase == "live")
+    val live = objects.filterNot(_.status == Obj.STATUS_LIVE)
     val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
     sorted
   }

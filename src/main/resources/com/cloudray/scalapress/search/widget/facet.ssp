@@ -1,0 +1,11 @@
+<%@ val facet: com.cloudray.scalapress.search.Facet %>
+
+<div class="spFacet">
+    <h3>${facet.name}</h3>
+    <dl>
+      #for (term <- facet.terms)
+        <dt>${term.term}</dt>
+        <dd>(${term.count})</dd>
+    #end
+    </dl>
+</div>
