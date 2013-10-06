@@ -132,13 +132,9 @@ class SearchController extends Logging {
         case Some(markup) =>
           logger.debug("Using markup {}", markup)
 
-          if (paging.totalPages > 1)
-            page.body(PagingRenderer.render(paging))
-
+          if (paging.totalPages > 1) page.body(PagingRenderer.render(paging))
           page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
-
-          if (paging.totalPages > 1)
-            page.body(PagingRenderer.render(paging))
+          if (paging.totalPages > 1) page.body(PagingRenderer.render(paging))
       }
     }
     page
