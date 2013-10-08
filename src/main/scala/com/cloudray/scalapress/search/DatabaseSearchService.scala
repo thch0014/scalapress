@@ -6,16 +6,32 @@ import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel
   *
-  *         An implementation of SearchService that searches the database for item titles only.
-  **/
+  *         An implementation of SearchService that simply defers to the backing database.
+  * */
 class DatabaseSearchService extends SearchService {
 
   @Autowired var objectDao: ObjectDao = _
 
-  def stats: Map[String, String] = Map.empty
-  def typeahead(q: String, limit: Int): Seq[ObjectRef] = Nil
   def search(search: SavedSearch): SearchResult = {
-    val objs = objectDao.search(new ObjectQuery().withStatus(Obj.STATUS_LIVE).withName(search.name))
+
+    val q = new ObjectQuery().withStatus(Obj.STATUS_LIVE).withName(search.name)
+
+    if (search.objectType != null) {
+      q.withTypeId(search.objectType.id)
+    }
+
+    if (search.objectType != null) {
+      q.withPageSize(search.maxResults)
+    }
+
+    if (search.minPrice > 0) {
+      q.withMinPrice(search.minPrice)
+    }
+    if (search.maxPrice > 0) {
+      q.withMaxPrice(search.maxPrice)
+    }
+
+    val objs = objectDao.search(q)
     val refs = objs.results.map(obj =>
       ObjectRef(obj.id, obj.objectType.id, obj.name, obj.status, Map.empty, Nil, obj.prioritized))
     new SearchResult(refs, Nil, -1)
@@ -23,10 +39,11 @@ class DatabaseSearchService extends SearchService {
 
   def count: Long = objectDao.count(new Search(classOf[Obj]))
   def contains(id: String): Boolean = objectDao.find(id.toLong) != null
+  def typeahead(q: String, limit: Int): Seq[ObjectRef] = Nil
 
-  // the following are no-op methods, as there is no "index". This implementation
-  // just reads straight from the db
+  // the following are no-op methods, as there is no "index".
   def remove(id: String): Unit = {}
-  def index(objs: Seq[Obj]): Unit = {}
   def index(obj: Obj): Unit = {}
+  def stats: Map[String, String] = Map.empty
+
 }
