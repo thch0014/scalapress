@@ -5,11 +5,10 @@ import com.cloudray.scalapress.ScalapressRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.{SavedSearch, Facet, SearchService}
 import com.cloudray.scalapress.folder.Folder
-import javax.persistence.{Transient, Table, Entity}
+import javax.persistence.{Column, Transient, Table, Entity}
 import com.cloudray.scalapress.util.Scalate
-import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Obj
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel
   *
@@ -21,6 +20,9 @@ class FacetWidget extends Widget {
 
   @Transient
   @Autowired var service: SearchService = _
+
+  @Column
+  @BeanProperty var attributes: String = _
 
   def render(sreq: ScalapressRequest): Option[String] = sreq.folder.flatMap(folder => _render(folder, sreq.request))
 
@@ -36,18 +38,16 @@ class FacetWidget extends Widget {
     Scalate.layout("/com/cloudray/scalapress/search/widget/facet.ssp", Map("facet" -> facet))
 
   def _facets(folder: Folder): Iterable[Facet] = {
-    folder.objects.asScala.headOption match {
-      case None => Nil
-      case Some(obj) =>
-        val search = _createSearch(folder, obj)
+    _attributes match {
+      case seq if seq.isEmpty => Nil
+      case seq =>
+        val search = _createSearch(folder, seq)
         val result = service.search(search)
         result.facets
     }
   }
 
-  def _createSearch(folder: Folder, obj: Obj): SavedSearch = {
-    _createSearch(folder, obj.objectType.attributes.asScala.filter(_.facet).map(_.id.toString))
-  }
+  def _attributes: Seq[String] = Option(attributes).getOrElse("").split(",").map(_.trim)
 
   def _createSearch(folder: Folder, facets: Iterable[String]): SavedSearch = {
     val search = new SavedSearch

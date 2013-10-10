@@ -20,6 +20,7 @@ class FacetWidgetTest extends FlatSpec with OneInstancePerTest with MockitoSugar
   val sreq = ScalapressRequest(mock[HttpServletRequest], context).withFolder(folder)
 
   val widget = new FacetWidget
+  widget.attributes = "1,2"
   widget.service = mock[SearchService]
 
   "a facet widget" should "render nothing when not in a folder" in {
