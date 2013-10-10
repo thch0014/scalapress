@@ -1,15 +1,13 @@
-package com.cloudray.scalapress.obj
+package com.cloudray.migration
 
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.media.{MediaWidget, Image}
 import javax.annotation.PostConstruct
-import org.springframework.stereotype.Component
 import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 import org.springframework.transaction.annotation.Transactional
 
 /** @author Stephen Samuel */
-@Component
 class ObjImageMigrator extends Logging {
 
   @Autowired var context: ScalapressContext = _
