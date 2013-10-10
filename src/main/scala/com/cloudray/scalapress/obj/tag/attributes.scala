@@ -15,7 +15,7 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
     val ponly = params.get("prioritizedonly").filter(_ == "1").isDefined
     val sep = params.get("sep").getOrElse(" ")
     params.get("id") match {
-      case Some(id) if isAllDigits(id) => request.obj.filter(_.prioritized || !ponly) match {
+      case Some(id) if isAllDigits(id.trim) => request.obj.filter(_.prioritized || !ponly) match {
         case Some(obj) =>
 
           val values = obj.attributeValues.asScala.toSeq
@@ -28,9 +28,9 @@ class AttributeValueTag extends ScalapressTag with TagBuilder {
             case _ => Some(build(values.mkString(sep), params))
           }
 
-        case None => None
+        case _ => None
       }
-      case None => None
+      case _ => None
     }
   }
 }

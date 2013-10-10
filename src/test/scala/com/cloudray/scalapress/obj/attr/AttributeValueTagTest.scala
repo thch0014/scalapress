@@ -82,4 +82,12 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
     val rendered = new AttributeValueTag().render(sreq, Map("id" -> "15115", "prefix" -> "prefix"))
     assert("sammy" === rendered.get)
   }
+
+  test("that the tag handles whitespace in the id param") {
+    val a = new Attribute
+    a.default = "sammy"
+    Mockito.when(context.attributeDao.find(15115)).thenReturn(a)
+    val rendered = new AttributeValueTag().render(sreq, Map("id" -> "  15115 "))
+    assert("sammy" === rendered.get)
+  }
 }
