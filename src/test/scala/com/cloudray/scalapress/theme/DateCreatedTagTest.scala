@@ -11,26 +11,25 @@ import com.cloudray.scalapress.folder.Folder
 /** @author Stephen Samuel */
 class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val req = mock[HttpServletRequest]
-    val context = mock[ScalapressContext]
+  val req = mock[HttpServletRequest]
+  val context = mock[ScalapressContext]
 
-    val obj = new Obj
-    obj.dateCreated = 1364122808957l
+  val obj = new Obj
+  obj.dateCreated = 1364122808957l
 
-    val f = new Folder
-    f.dateCreated = 1364122808957l
+  val f = new Folder
+  f.dateCreated = 1364122808957l
 
+  test("custom format object happy path") {
 
-    test("custom format object happy path") {
+    val sreq = new ScalapressRequest(req, context).withObject(obj)
+    val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy!MM!dd"))
+    assert("2013!03!24" === rendered.get)
+  }
 
-        val sreq = new ScalapressRequest(req, context).withObject(obj)
-        val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy!MM!dd"))
-        assert("2013!03!24" === rendered.get)
-    }
-
-    test("custom format folder happy path") {
-        val sreq = new ScalapressRequest(req, context).withFolder(f)
-        val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy^MM^dd"))
-        assert("2013^03^24" === rendered.get)
-    }
+  test("custom format folder happy path") {
+    val sreq = new ScalapressRequest(req, context).withFolder(f)
+    val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy^MM^dd"))
+    assert("2013^03^24" === rendered.get)
+  }
 }
