@@ -9,9 +9,8 @@ import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import javax.persistence.Transient
-import org.fusesource.scalate.TemplateEngine
 import com.cloudray.scalapress.plugin.profile.AccountPluginDao
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,8 +21,6 @@ class LoginController {
   @Autowired var themeService: ThemeService = _
   @Autowired var context: ScalapressContext = _
   @Autowired var accountPluginDao: AccountPluginDao = _
-
-  @Transient val engine = new TemplateEngine
 
   @RequestMapping(value = Array("login"), produces = Array("text/html"))
   def loginredirect(req: HttpServletRequest, resp: HttpServletResponse): String = {
@@ -50,7 +47,7 @@ class LoginController {
 
     val sreq = ScalapressRequest(req, context).withTitle("Login")
     val theme = themeService.default
-    val body = engine.layout("/com/cloudray/scalapress/security/login.ssp",
+    val body = Scalate.layout("/com/cloudray/scalapress/security/login.ssp",
       Map("error" -> error, "errorMessage" -> errorMessage))
 
     val page = ScalapressPage(theme, sreq)
