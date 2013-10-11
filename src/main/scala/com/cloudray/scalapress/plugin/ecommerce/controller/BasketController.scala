@@ -52,8 +52,12 @@ class BasketController {
   @RequestMapping(method = Array(RequestMethod.POST))
   def update(@ModelAttribute basket: Basket, req: HttpServletRequest): String = {
     basket.lines.asScala.foreach(line => {
-      val qty = req.getParameter("qty" + line.id).toInt
-      line.qty = qty
+      try {
+        val qty = req.getParameter("qty" + line.id).toInt
+        line.qty = qty
+      } catch {
+        case e: Exception => line.qty = 1
+      }
     })
     basketDao.save(basket)
     "redirect:/basket"
