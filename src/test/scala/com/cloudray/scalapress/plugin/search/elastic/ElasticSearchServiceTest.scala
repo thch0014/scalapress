@@ -558,4 +558,15 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val results = service.search(q)
     assert(1 === results.refs.size)
   }
+
+  test("a + character in a name query is stripped") {
+    val q = new SavedSearch
+    q.name = "captain + tony"
+    val results1 = service.search(q)
+    assert(1 === results1.refs.size)
+
+    q.name = "captain+tony"
+    val results2 = service.search(q)
+    assert(1 === results2.refs.size)
+  }
 }
