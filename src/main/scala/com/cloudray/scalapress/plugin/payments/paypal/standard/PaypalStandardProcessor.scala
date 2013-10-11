@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.payments.paypal.standard
 
 import com.cloudray.scalapress.Logging
-import org.apache.http.impl.client.DefaultHttpClient
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.params.BasicHttpParams
-import org.apache.http.util.EntityUtils
 import com.cloudray.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
+import org.apache.http.params.BasicHttpParams
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.impl.client.DefaultHttpClient
+import org.apache.http.util.EntityUtils
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProcessor with Logging {
@@ -53,21 +53,26 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
     params.toMap
   }
 
-  def _createTx(params: Map[String, String]): Transaction = {
+  def _createTx(params: Map[String, String]): Option[Transaction] = {
     logger.debug("Creating Tx from Params [{}]", params)
 
-    val transactionId = params("txn_id")
-    val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
+    params.get("txn_id") match {
+      case None => None
 
-    val tx = Transaction(transactionId, paymentProcessorName, amount)
-    tx.status = params("payment_status")
-    tx.currency = params("mc_currency")
-    tx.transactionType = params("payment_type")
-    tx.payerStatus = params("payer_status")
-    tx.paymentProcessor = paymentProcessorName
-    tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
-    tx.payeeEmail = params.get("payer_email").orNull
-    tx
+      case Some(txid) =>
+        val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
+
+        val tx = Transaction(txid, paymentProcessorName, amount)
+        tx.status = params("payment_status")
+        tx.currency = params("mc_currency")
+        tx.transactionType = params("payment_type")
+        tx.payerStatus = params("payer_status")
+        tx.paymentProcessor = paymentProcessorName
+        tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
+        tx.payeeEmail = params.get("payer_email").orNull
+
+        Some(tx)
+    }
   }
 
   def callback(params: Map[String, String]): Option[CallbackResult] = {
@@ -77,9 +82,7 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
     //            None
     //       case true =>
     //            logger.info("IPN callback is valid")
-    val tx = _createTx(params)
-    Some(CallbackResult(tx, _custom(params)))
-    //    }
+    _createTx(params).map(tx => CallbackResult(tx, _custom(params)))
   }
 
   def _custom(params: Map[String, String]): String = params("custom")
