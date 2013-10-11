@@ -6,7 +6,7 @@ import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.folder.Folder
 import javax.servlet.http.HttpServletRequest
-import org.mockito.{Mockito, Matchers}
+import org.mockito.{ArgumentCaptor, Mockito, Matchers}
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.Facet
 import org.apache.commons.io.IOUtils
@@ -46,5 +46,19 @@ class FacetWidgetTest extends FlatSpec with OneInstancePerTest with MockitoSugar
     val expected = IOUtils.toString(getClass.getResourceAsStream("/com/cloudray/scalapress/search/widget/facet1.html"))
     val xml2 = Utility.trim(XML.loadString(expected))
     assert(xml1 === xml2)
+  }
+
+  "a facet widget" should "use the attributes field to select facets" in {
+
+    widget.attributes = "1,5,9"
+    val captor = ArgumentCaptor.forClass(classOf[SavedSearch])
+    Mockito.when(widget.service.search(Matchers.any[SavedSearch])).thenReturn(new SearchResult)
+
+    widget.render(sreq)
+    Mockito.verify(widget.service).search(captor.capture)
+    assert(3 === captor.getValue.facets.size)
+    assert(captor.getValue.facets.toSeq.contains("1"))
+    assert(captor.getValue.facets.toSeq.contains("5"))
+    assert(captor.getValue.facets.toSeq.contains("9"))
   }
 }
