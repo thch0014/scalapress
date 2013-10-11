@@ -53,7 +53,7 @@ class ObjectListSection extends Section {
       case e: Exception => Nil
     }
 
-    val live = objects.filterNot(_.status == Obj.STATUS_LIVE)
+    val live = objects.filter(_.status.toLowerCase == Obj.STATUS_LIVE.toLowerCase)
     val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
     sorted
   }

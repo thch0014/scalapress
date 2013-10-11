@@ -54,7 +54,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
 
   test("only live object are included") {
     val objects = section._objects(sreq)
-    assert(0 === objects.count(_.status != "live"))
+    assert(0 === objects.count(_.status.toLowerCase != "live"))
     assert(2 === objects.size)
   }
 
