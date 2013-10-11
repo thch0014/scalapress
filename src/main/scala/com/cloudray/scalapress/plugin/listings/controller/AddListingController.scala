@@ -16,17 +16,13 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 import com.cloudray.scalapress.plugin.listings.controller.renderer._
-import scala.Some
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
-import javax.persistence.Transient
-import org.fusesource.scalate.TemplateEngine
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("listing"))
 class AddListingController {
-
-  @Transient val engine = new TemplateEngine
 
   @Autowired var listingProcessService: ListingProcessService = _
   @Autowired var listingProcessDao: ListingProcessDao = _
@@ -172,7 +168,7 @@ class AddListingController {
     val page = ScalapressPage(theme, sreq)
 
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep))
-    val form = engine.layout("/com/cloudray/scalapress/plugin/listings/images.ssp",
+    val form = Scalate.layout("/com/cloudray/scalapress/plugin/listings/images.ssp",
       Map("plugin" -> listingsPluginDao.get, "process" -> process))
     page.body(form)
     page
