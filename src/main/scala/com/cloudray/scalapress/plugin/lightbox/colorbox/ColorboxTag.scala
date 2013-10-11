@@ -2,14 +2,12 @@ package com.cloudray.scalapress.plugin.lightbox.colorbox
 
 import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import org.fusesource.scalate.TemplateEngine
 import com.cloudray.scalapress.media.OpType
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Tag("colorbox")
 class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
-
-  val engine = new TemplateEngine
 
   override def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
@@ -26,12 +24,12 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
         val style = if (count == 0) "" else "display: none"
         count = count + 1
 
-        engine.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/image.ssp",
+        Scalate.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/image.ssp",
           Map("original" -> original, "thumb" -> thumb, "style" -> style, "title" -> obj.name,
             "width" -> width, "height" -> height, "text" -> text))
       })
 
-      val script = engine.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/script.ssp")
+      val script = Scalate.layout("/com/cloudray/scalapress/plugin/lightbox/colorbox/script.ssp")
       links.mkString("\n\n") + script
     })
   }

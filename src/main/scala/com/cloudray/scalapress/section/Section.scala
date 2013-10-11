@@ -6,7 +6,6 @@ import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.obj.{ObjectType, Obj}
 import com.cloudray.scalapress.folder.Folder
 import scala.beans.BeanProperty
-import org.fusesource.scalate.TemplateEngine
 
 /** @author Stephen Samuel */
 @Entity
@@ -16,8 +15,6 @@ abstract class Section {
   def desc: String
   def render(request: ScalapressRequest): Option[String]
   def backoffice: String = "/backoffice/section/" + id
-
-  @Transient val engine = new TemplateEngine
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)

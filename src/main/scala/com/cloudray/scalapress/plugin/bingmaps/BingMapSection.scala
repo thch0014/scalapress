@@ -5,6 +5,7 @@ import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.obj.attr.AttributeFuncs
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Entity
@@ -28,8 +29,7 @@ class BingMapSection extends Section {
       val hrefSrc = "http://www.bing.com/maps/?v=2&cp=l=16&where1=" + pc
       val sectionId = "section-" + id
 
-      engine
-        .layout("/com/cloudray/scalapress/plugin/bingmaps/section.ssp",
+      Scalate.layout("/com/cloudray/scalapress/plugin/bingmaps/section.ssp",
         Map("iframeSrc" -> iframeSrc, "hrefSrc" -> hrefSrc, "sectionId" -> sectionId))
     })
   }

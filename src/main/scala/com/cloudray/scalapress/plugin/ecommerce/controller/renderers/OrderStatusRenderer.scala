@@ -1,9 +1,8 @@
 package com.cloudray.scalapress.plugin.ecommerce.controller.renderers
 
-import org.fusesource.scalate.TemplateEngine
+import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 object OrderStatusRenderer {
-  val engine = new TemplateEngine
-  def form = engine.layout("/com/cloudray/scalapress/plugin/ecommerce/order_status.ssp")
+  def form = Scalate.layout("/com/cloudray/scalapress/plugin/ecommerce/order_status.ssp")
 }
