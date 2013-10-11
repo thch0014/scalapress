@@ -35,7 +35,9 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
   }
 
   def _height(params: Map[String, String]) =
-    params.get("h").orElse(params.get("height").map(_.replaceAll("\\D", ""))).getOrElse("120").toInt
+    params.get("h").orElse(params.get("height")
+      .map(_.replaceAll("\\D", "")).filterNot(_.isEmpty)).getOrElse("120").toInt
   def _width(params: Map[String, String]) =
-    params.get("w").orElse(params.get("width").map(_.replaceAll("\\D", ""))).getOrElse("160").toInt
+    params.get("w").orElse(params.get("width")
+      .map(_.replaceAll("\\D", "")).filterNot(_.isEmpty)).getOrElse("160").toInt
 }
