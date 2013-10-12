@@ -213,7 +213,7 @@ class ElasticSearchService extends SearchService with Logging {
     val filters = new ListBuffer[FilterDefinition]
 
     Option(search.name).orElse(Option(search.keywords))
-      .map(_.trim.replace("+", " "))
+      .map(_.replace("+", " ").replace("\\", "").trim)
       .filterNot(_.isEmpty)
       .foreach(_
       .split(" ")
