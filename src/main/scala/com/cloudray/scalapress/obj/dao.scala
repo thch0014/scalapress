@@ -7,6 +7,7 @@ import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
 import com.googlecode.genericdao.search.Search
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
@@ -56,7 +57,18 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     q.status.filterNot(_.isEmpty).foreach(s.addFilterEqual("status", _))
     q.name.filterNot(_.isEmpty).foreach(t => s.addFilterLike("name", "%" + t + "%"))
     q.minPrice.filter(_ > 0).foreach(s.addFilterGreaterOrEqual("price", _))
-    s.addSortDesc("id")
+    q.sort match {
+      case Some(sort) => sort match {
+        case Sort.Name => s.addSortAsc("name")
+        case Sort.Newest => s.addSortDesc("id")
+        case Sort.Oldest => s.addSortAsc("id")
+        case Sort.Random => s.addSortDesc("id")
+        case Sort.Price => s.addSortAsc("price")
+        case Sort.PriceHigh => s.addSortDesc("price")
+        case _ => s.addSortDesc("id")
+      }
+      case None => s.addSortDesc("id")
+    }
     val result = searchAndCount(s)
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
   }

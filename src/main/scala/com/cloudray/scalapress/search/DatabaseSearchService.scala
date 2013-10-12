@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.obj.{ObjectQuery, ObjectDao, Obj}
+import com.cloudray.scalapress.obj._
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel
   *
   *         An implementation of SearchService that simply defers to the backing database.
-  **/
+  * */
 class DatabaseSearchService extends SearchService {
 
   @Autowired var objectDao: ObjectDao = _
@@ -30,6 +30,8 @@ class DatabaseSearchService extends SearchService {
     if (search.maxPrice > 0) {
       q.withMaxPrice(search.maxPrice)
     }
+
+    q.withSort(search.sortType)
 
     val objs = objectDao.search(q)
     val refs = objs.results.map(obj =>

@@ -2,6 +2,7 @@ package com.cloudray.scalapress.obj
 
 import com.sksamuel.scoot.soa.PagedQuery
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
 class ObjectQuery extends PagedQuery {
@@ -13,6 +14,12 @@ class ObjectQuery extends PagedQuery {
   @BeanProperty var exernalReference: Option[String] = None
   @BeanProperty var minPrice: Option[Int] = None
   @BeanProperty var maxPrice: Option[Int] = None
+  @BeanProperty var sort: Option[Sort] = None
+
+  def withSort(sort: Sort): ObjectQuery = {
+    this.sort = Option(sort)
+    this
+  }
 
   def withAccountId(a: Option[Long]): ObjectQuery = {
     this.accountId = a
