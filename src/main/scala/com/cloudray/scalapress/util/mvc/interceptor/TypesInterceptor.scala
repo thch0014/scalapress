@@ -8,11 +8,11 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 class TypesInterceptor(typeDao: TypeDao) extends HandlerInterceptorAdapter {
-    override def postHandle(request: HttpServletRequest,
-                            response: HttpServletResponse,
-                            handler: Any,
-                            modelAndView: ModelAndView) {
-        if (modelAndView != null)
-            modelAndView.getModelMap.put("types", typeDao.findAll().filterNot(_.deleted).sortBy(_.id).asJava)
-    }
+  override def postHandle(request: HttpServletRequest,
+                          response: HttpServletResponse,
+                          handler: Any,
+                          modelAndView: ModelAndView) {
+    if (modelAndView != null)
+      modelAndView.getModelMap.put("types", typeDao.findAll().filterNot(_.deleted).sortBy(_.id).asJava)
+  }
 }

@@ -10,16 +10,16 @@ import com.cloudray.scalapress.ScalapressContext
 /** @author Stephen Samuel */
 class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {
 
-    val providers = ComponentClassScanner.menus.map(_.newInstance())
-    val renderer = BootstrapMenuRenderer
+  val providers = ComponentClassScanner.menus.map(_.newInstance())
+  val renderer = BootstrapMenuRenderer
 
-    override def postHandle(request: HttpServletRequest,
-                            response: HttpServletResponse,
-                            handler: Any,
-                            modelAndView: ModelAndView) {
-        if (modelAndView != null) {
-            val item = providers.flatMap(_.item(context)).sorted
-            modelAndView.getModelMap.put("pluginMenu", renderer.render(item))
-        }
+  override def postHandle(request: HttpServletRequest,
+                          response: HttpServletResponse,
+                          handler: Any,
+                          modelAndView: ModelAndView) {
+    if (modelAndView != null) {
+      val item = providers.flatMap(_.item(context)).sorted
+      modelAndView.getModelMap.put("pluginMenu", renderer.render(item))
     }
+  }
 }

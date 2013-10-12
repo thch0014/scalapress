@@ -5,6 +5,6 @@ import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class GalleryMenuProvider extends MenuItemProvider {
-    def item(context: ScalapressContext): Option[MenuItem] =
-        Some(MenuLink("Galleries", Some("icon-picture"), "/backoffice/gallery"))
+  def item(context: ScalapressContext): Option[MenuItem] =
+    Some(MenuLink("Galleries", Some("icon-picture"), "/backoffice/gallery"))
 }
