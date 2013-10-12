@@ -62,7 +62,11 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
 
     val transactionId = params.get("VPSTxId").orNull
     val authCode = params.get("TxAuthNo").orNull
-    val amount: Int = (params.get("Amount").getOrElse("0").toDouble * 100).toInt
+    val amount: Int = try {
+      params.get("Amount").map(_.toDouble).map(_ * 100).map(_.toInt).getOrElse(0)
+    } catch {
+      case e: Exception => 0
+    }
 
     val payment = Transaction(transactionId, paymentProcessorName, amount)
     payment.transactionId = transactionId
