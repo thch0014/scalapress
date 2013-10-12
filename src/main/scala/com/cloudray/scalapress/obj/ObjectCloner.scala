@@ -2,6 +2,7 @@ package com.cloudray.scalapress.obj
 
 import com.cloudray.scalapress.obj.attr.AttributeValue
 import scala.collection.JavaConverters._
+import java.util
 
 /** @author Stephen Samuel */
 class ObjectCloner {
@@ -29,7 +30,7 @@ class ObjectCloner {
       copy
     }).asJava
 
-    clone.images = obj.images
+    clone.images = new util.ArrayList(obj.images)
 
     clone
   }
