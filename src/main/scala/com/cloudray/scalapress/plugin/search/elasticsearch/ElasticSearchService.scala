@@ -20,7 +20,7 @@ import org.elasticsearch.search.sort.SortOrder
 import org.elasticsearch.search.facet.terms.TermsFacet
 import org.elasticsearch.common.xcontent.XContentFactory
 import javax.annotation.PreDestroy
-import com.sksamuel.elastic4s.Analyzer.KeywordAnalyzer
+import com.sksamuel.elastic4s.Analyzer.{WhitespaceAnalyzer, KeywordAnalyzer}
 import com.cloudray.scalapress.search.Facet
 import scala.Some
 import com.cloudray.scalapress.search.FacetTerm
@@ -85,6 +85,7 @@ class ElasticSearchService extends SearchService with Logging {
     fields.append(id typed StringType index "not_analyzed" store true)
     fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
+    fields.append(FIELD_NAME typed StringType analyzer WhitespaceAnalyzer store true)
     fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
     fields.append(FIELD_TAGS typed StringType analyzer KeywordAnalyzer)
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
@@ -277,10 +278,10 @@ class ElasticSearchService extends SearchService with Logging {
     val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
     val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
 
-    val facets = filteredFacets.map(_ match {
+    val facets = filteredFacets.map {
       case id if id.forall(_.isDigit) => facet terms id fields FIELD_ATTRIBUTE + id size 20
       case name => facet terms name fields name
-    })
+    }
 
     val prioritized = by field FIELD_PRIORITIZED order SortOrder.DESC
     val sort = _sort(search)
@@ -392,14 +393,7 @@ class ElasticSearchService extends SearchService with Logging {
   }
 
   def stats: Map[String, String] = {
-    val nodes = client
-      .admin
-      .cluster()
-      .prepareNodesStats()
-      .all()
-      .execute()
-      .actionGet(TIMEOUT)
-      .getNodes
+    val nodes = client.admin.cluster().prepareNodesStats().all().execute().actionGet(TIMEOUT).getNodes
     val map = scala.collection.mutable.Map[String, String]()
     nodes.flatMap(node => {
       map.put("jvm.mem.heapUsed", node.getJvm.mem.heapUsed.mb + "mb")
