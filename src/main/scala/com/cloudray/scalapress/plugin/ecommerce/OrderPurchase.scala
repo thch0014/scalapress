@@ -5,6 +5,7 @@ import com.cloudray.scalapress.payments.Purchase
 
 /** @author Stephen Samuel */
 class OrderPurchase(val order: Order, val domain: String) extends Purchase {
+  require(order != null)
 
   def successUrl: String = "http://" + domain + "/checkout/completed"
   def failureUrl: String = "http://" + domain + "/checkout/payment/failure"
