@@ -30,6 +30,7 @@
                 <prop key="velocimacro.library">macro/paging.macro</prop>
                 <prop key="velocimacro.library.autoreload">true</prop>
                 <prop key="file.resource.loader.cache">false</prop>
+                <prop key="parser.pool.size">8</prop>
                 <prop key="input.encoding">UTF-8</prop>
                 <prop key="output.encoding">UTF-8</prop>
                 <prop key="default.contentType">UTF-8</prop>
