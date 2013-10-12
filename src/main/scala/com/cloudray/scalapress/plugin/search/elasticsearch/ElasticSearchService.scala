@@ -20,7 +20,6 @@ import org.elasticsearch.search.sort.SortOrder
 import org.elasticsearch.search.facet.terms.TermsFacet
 import org.elasticsearch.common.xcontent.XContentFactory
 import javax.annotation.PreDestroy
-import com.sksamuel.elastic4s.Analyzer.{WhitespaceAnalyzer, KeywordAnalyzer}
 import com.cloudray.scalapress.search.Facet
 import scala.Some
 import com.cloudray.scalapress.search.FacetTerm

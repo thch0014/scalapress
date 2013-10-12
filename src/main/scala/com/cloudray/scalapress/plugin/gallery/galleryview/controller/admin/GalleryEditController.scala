@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gallery.controller.admin
+package com.cloudray.scalapress.plugin.gallery.galleryview.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
