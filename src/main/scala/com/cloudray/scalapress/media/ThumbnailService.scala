@@ -66,7 +66,11 @@ class ThumbnailService extends Logging {
     }
   }
 
-  def _fetch(key: String): Option[Scrimage] = assetStore.get(key).map(in => Scrimage(in))
+  def _fetch(key: String): Option[Scrimage] = try {
+    assetStore.get(key).map(in => Scrimage(in))
+  } catch {
+    case e: Exception => None
+  }
 
   // returns the key of what the asset should be stored under at the asset store
   def _thumbkey(filename: String, w: Int, h: Int, opType: OpType): String = {
