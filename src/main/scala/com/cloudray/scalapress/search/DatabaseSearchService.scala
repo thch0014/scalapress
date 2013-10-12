@@ -7,7 +7,7 @@ import com.googlecode.genericdao.search.Search
 /** @author Stephen Samuel
   *
   *         An implementation of SearchService that simply defers to the backing database.
-  * */
+  **/
 class DatabaseSearchService extends SearchService {
 
   @Autowired var objectDao: ObjectDao = _

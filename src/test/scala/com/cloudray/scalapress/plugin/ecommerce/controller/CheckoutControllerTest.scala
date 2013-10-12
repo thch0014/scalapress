@@ -67,6 +67,9 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
   }
 
   test("that showPayments uses the correct title") {
+    val basket = new Basket
+    basket.order = new Order
+    Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
     val page = controller.showPayments(req)
     assert(CheckoutTitles.PAYMENT === page.req.title.get)
   }

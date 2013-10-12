@@ -80,7 +80,7 @@ case class ScalapressRequest(request: HttpServletRequest,
 
   def basket: Basket = {
     Option(request.getAttribute(ScalapressConstants.BasketKey)) match {
-      case Some(basket) => basket.asInstanceOf[Basket]
+      case Some(value) => value.asInstanceOf[Basket]
       case None =>
         val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
         val basket = Option(context.bean[BasketDao].find(sessionId)) match {
