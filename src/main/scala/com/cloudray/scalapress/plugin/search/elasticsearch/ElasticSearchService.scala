@@ -103,6 +103,10 @@ class ElasticSearchService extends SearchService with Logging {
       create index INDEX replicas 0 shards 1 mappings {
         TYPE source true as (fields.toList: _*)
       }
+
+      //      analysis {
+      //      CustomAnalyzerDefinition("letterDigitAnalyzer", LetterTokenizer, LowercaseTokenFilter)
+      //  }
     }
   }
 

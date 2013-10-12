@@ -88,6 +88,8 @@
     </div>
 </div>
 
+#if ($orderTotals)
+
 <div class="well">
     <h4>
         Daily Order Count Past 365 Days
@@ -120,5 +122,7 @@
         chart.draw(data, options);
     }
 </script>
+
+#end
 
 #parse("/admin/footer.vm")
