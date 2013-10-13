@@ -70,7 +70,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   val obj = new Obj
   obj.id = 2
-  obj.name = "tony mowbray captain"
+  obj.name = "tony mowbray captain bankrupt1986"
   obj.objectType = new ObjectType
   obj.objectType.id = 1
   obj.status = Obj.STATUS_LIVE
@@ -283,7 +283,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val results = service.search(search).refs
     assert(results.size === 1)
     assert(2 === results(0).id)
-    assert("tony mowbray captain" === results(0).name)
+    assert("tony mowbray captain bankrupt1986" === results(0).name)
     assert("Live" === results(0).status)
     assert(4 === results(0).attributes.size)
   }
@@ -320,7 +320,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val results = service.search(search).refs
     assert(results.size === 1)
     assert(2 === results(0).id)
-    assert("tony mowbray captain" === results(0).name)
+    assert("tony mowbray captain bankrupt1986" === results(0).name)
   }
 
   test("wildcard search count brings back total count") {
@@ -568,5 +568,16 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     q.name = "captain+tony"
     val results2 = service.search(q)
     assert(1 === results2.refs.size)
+  }
+
+  test("strings are tokenized at letter/digit boundaries") {
+    val q = new SavedSearch
+    q.name = "1986"
+    val results1 = service.search(q)
+    assert(1 === results1.refs.size)
+
+    q.name = "bankrupt"
+    val results2 = service.search(q)
+    assert(2 === results2.refs.size)
   }
 }
