@@ -1,5 +1,5 @@
-<%@ val plugin: com.cloudray.scalapress.plugin.listings.domain.ListingsPlugin %>
-<%@ val process: com.cloudray.scalapress.plugin.listings.domain.ListingProcess %>
+<%@ val headerText: String %>
+<%@ val images: Array[String] %>
 
 <div class="modal hide" role="dialog" id="listing-image-upload-modal">
     <div class="modal-header">
@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
         <form enctype="multipart/form-data" method="POST" class="form-horizontal"><p>
-            Select file(s)) to upload
+            Select file(s) to upload
         </p>
 
             <input type="file" name="upload"/>
@@ -32,7 +32,7 @@
     <form method="POST" enctype="multipart/form-data" action="/">
 
         <table>
-          #for (key <- process.imageKeys)
+          #for (key <- images)
             <tr>
                 <td><img src="/images/${key}?w=220&h=180"></td>
                 <td><a href="/listing/image/remove?key=${key}" role="button" class="btn btn-small btn-danger">Remove</a>
