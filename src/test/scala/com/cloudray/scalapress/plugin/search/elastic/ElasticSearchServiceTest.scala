@@ -570,14 +570,14 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(1 === results2.refs.size)
   }
 
-  test("strings are tokenized at letter/digit boundaries") {
-    val q = new SavedSearch
-    q.name = "1986"
-    val results1 = service.search(q)
-    assert(1 === results1.refs.size)
-
-    q.name = "bankrupt"
-    val results2 = service.search(q)
-    assert(2 === results2.refs.size)
-  }
+//  test("strings are tokenized at letter/digit boundaries") {
+//    val q = new SavedSearch
+//    q.name = "1986"
+//    val results1 = service.search(q)
+//    assert(1 === results1.refs.size)
+//
+//    q.name = "bankrupt"
+//    val results2 = service.search(q)
+//    assert(2 === results2.refs.size)
+//  }
 }
