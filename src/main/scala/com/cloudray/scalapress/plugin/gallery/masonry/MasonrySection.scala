@@ -16,8 +16,6 @@ import org.apache.commons.io.IOUtils
 class MasonrySection extends Section {
 
   private val SSP_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry_image.ssp"
-  private val JS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.js"
-  private val CSS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.css"
   private val CONTAINER_START = "<div class=\"masonry-container\">"
   private val CONTAINER_END = "</div>"
 
@@ -31,8 +29,8 @@ class MasonrySection extends Section {
   override def render(request: ScalapressRequest): Option[String] = {
     val assetStore = request.context.bean[AssetStore]
     val rows = imagesToRender.map(imageHtml(assetStore, _)).mkString("\n")
-    val js = IOUtils.toString(getClass.getResourceAsStream(JS_RESOURCE))
-    val css = IOUtils.toString(getClass.getResourceAsStream(CSS_RESOURCE))
+    val js = IOUtils.toString(getClass.getResourceAsStream(MasonrySection.JS_RESOURCE))
+    val css = IOUtils.toString(getClass.getResourceAsStream(MasonrySection.CSS_RESOURCE))
 
     val components = List("<script>", js, "</script><style>", css, "</style>", CONTAINER_START, rows, CONTAINER_END)
     Some(components.mkString("\n"))
@@ -53,4 +51,11 @@ class MasonrySection extends Section {
     case _ => images.asScala
   }
 
+}
+
+object MasonrySection {
+  private val JS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.js"
+  private val CSS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.css"
+  val js = IOUtils.toString(getClass.getResourceAsStream(JS_RESOURCE))
+  val css = IOUtils.toString(getClass.getResourceAsStream(CSS_RESOURCE))
 }
