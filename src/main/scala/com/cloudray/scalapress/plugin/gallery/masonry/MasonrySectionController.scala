@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Pat
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.plugin.gallery.gallerific.GallerifficSection
 import com.cloudray.scalapress.plugin.gallery.GalleryImage
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
@@ -21,8 +20,7 @@ class MasonrySectionController {
   def edit(@ModelAttribute("section") section: MasonrySection) = "admin/plugin/gallery/masonry/section/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute("section") section: MasonrySection,
-           req: HttpServletRequest,
+  def save(@ModelAttribute("section") section: MasonrySection, req: HttpServletRequest,
            @RequestParam(value = "upload", required = false) upload: MultipartFile) = {
 
     section.images = section.images.asScala.map(img => {
@@ -32,20 +30,22 @@ class MasonrySectionController {
 
     if (upload != null && !upload.isEmpty) {
       val key = context.assetStore.add(upload.getOriginalFilename, upload.getInputStream)
-      section.images.add(GalleryImage(key, null))
+      if (key != null) {
+        section.images.add(GalleryImage(key, null))
+      }
     }
 
     context.sectionDao.save(section)
     edit(section)
   }
 
-  def deleteImage(@ModelAttribute("section") section: MasonrySection,
-                  @PathVariable("filename") filename: String) = {
-    section.images.remove(filename)
+  @RequestMapping(value = Array("delete/{key}"), method = Array(RequestMethod.GET))
+  def deleteImage(@ModelAttribute("section") section: MasonrySection, @PathVariable("key") key: String) = {
+    section.images = section.images.asScala.filterNot(_.key == key).asJava
     context.sectionDao.save(section)
-    edit(section)
+    "redirect:/backoffice/plugin/gallery/masonry/section/" + section.id
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): GallerifficSection =
-    context.sectionDao.find(id).asInstanceOf[GallerifficSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): MasonrySection =
+    context.sectionDao.find(id).asInstanceOf[MasonrySection]
 }

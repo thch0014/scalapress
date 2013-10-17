@@ -6,8 +6,10 @@ import com.cloudray.scalapress.media.{MediaWidget, Image}
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
+@Component
 class ObjImageMigrator extends Logging {
 
   @Autowired var context: ScalapressContext = _

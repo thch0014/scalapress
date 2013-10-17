@@ -1,0 +1,55 @@
+#parse("/admin/header.vm")
+
+<h3>Masonry Section</h3>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+          #springFormInput("section.name", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+          #springFormCheckbox("section.visible")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Upload</label>
+
+        <div class="controls">
+            <input type="file" name="upload"/>
+        </div>
+    </div>
+
+    <ul class="thumbnails">
+      #foreach ($image in $section.images())
+          <li class="span2">
+              <div class="thumbnail">
+                  <img data-src="holder.js/300x200" src="/images/$image.key()?width=200&height=160">
+                  <a class="btn btn-mini" href="/images/$image.key()">
+                      <i class="icon-eyeball icon-white"></i> View Original</a>
+                  <a class="btn btn-danger btn-mini"
+                     href="/backoffice/plugin/gallery/masonry/section/$section.id/delete/$image.key()">
+                      <i class="icon-trash icon-white"></i> Remove</a>
+                  <textarea name="desc_$image.key()" placeholder="enter caption">$!image.description()</textarea>
+              </div>
+          </li>
+      #end
+    </ul>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+</form>
+
+
+
+#parse("/admin/footer.vm")

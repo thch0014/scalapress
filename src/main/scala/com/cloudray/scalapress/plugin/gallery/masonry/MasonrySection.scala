@@ -6,11 +6,20 @@ import com.cloudray.scalapress.section.Section
 import java.util
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.gallery.GalleryImage
+import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.media.AssetStore
+import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "plugin_gallery_masonry")
 class MasonrySection extends Section {
+
+  private val SSP_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry_image.ssp"
+  private val JS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.js"
+  private val CSS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.css"
+  private val CONTAINER_START = "<div class=\"masonry-container\">"
+  private val CONTAINER_END = "</div>"
 
   @ElementCollection
   var images: java.util.Set[GalleryImage] = new util.HashSet[GalleryImage]()
@@ -20,27 +29,27 @@ class MasonrySection extends Section {
   override def backoffice: String = "/backoffice/plugin/gallery/masonry/section/" + id
 
   override def render(request: ScalapressRequest): Option[String] = {
-    val rows = imagesToRender.map(imageHtml).mkString("\n")
-    val container = <div class="masonry_container"></div>
-    val script = ""
-    Some(rows + container + script)
+    val assetStore = request.context.bean[AssetStore]
+    val rows = imagesToRender.map(imageHtml(assetStore, _)).mkString("\n")
+    val js = IOUtils.toString(getClass.getResourceAsStream(JS_RESOURCE))
+    val css = IOUtils.toString(getClass.getResourceAsStream(CSS_RESOURCE))
+
+    val components = List("<script>", js, "</script><style>", css, "</style>", CONTAINER_START, rows, CONTAINER_END)
+    Some(components.mkString("\n"))
   }
 
-  def imageHtml(image: GalleryImage) = {
-    val fullsize = "/images/" + image.key + "?width=800&height=600"
-    val thumbnail = "/images/" + image.key + "?width=100&height=100"
-    <li>
-      <a class="masonry-thumb" href={fullsize}>
-        <img src={thumbnail}/>
-      </a>
-    </li>
+  /** Renders the HTML for a single image
+    */
+  def imageHtml(assetStore: AssetStore, image: GalleryImage): String = {
+    val url = assetStore.link(image.key)
+    Scalate.layout(SSP_RESOURCE, Map("caption" -> Option(image.description), "imageUrl" -> url))
   }
 
   /** Returns the images that this section should render. Will use images set on the section
     * or fetch from the container if applicable.
     */
   def imagesToRender: Iterable[GalleryImage] = images.size match {
-    case 0 => Option(obj).flatMap(_.images.asScala).map(GalleryImage(_, null))
+    case 0 => Option(obj).map(_.images.asScala.map(GalleryImage(_, null))).getOrElse(Nil)
     case _ => images.asScala
   }
 
