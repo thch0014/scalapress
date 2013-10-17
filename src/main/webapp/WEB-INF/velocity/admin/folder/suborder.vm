@@ -2,7 +2,6 @@
 
 <h3>Subfolder Ordering</h3>
 
-
 <table class="table table-condensed table-hover" id="subfolders-table">
     <tr>
         <th>Id</th>
@@ -10,7 +9,7 @@
     </tr>
     #foreach ($f in $folder.sortedSubfolders())
         <tr data-section-id="$f.id" class="subfolder-row">
-            <td>$f.id</td>
+            <td>$f.id qeqeq</td>
             <td>$f.fullName()</td>
         </tr>
     #end

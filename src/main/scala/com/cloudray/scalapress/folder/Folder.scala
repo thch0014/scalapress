@@ -33,11 +33,12 @@ class Folder extends SortedSections {
   @BatchSize(size = 40)
   @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
-  def sortedSubfolders: Seq[Folder] = {
+  // has to be array to work with velocity
+  def sortedSubfolders: Array[Folder] = {
     val ordered = subfolders
       .asScala
-      .toSeq
       .filterNot(_.name == null)
+      .toArray
       .sortBy(_.name)
     folderOrdering match {
       case FolderOrdering.Manual => ordered.sortBy(_.position)
