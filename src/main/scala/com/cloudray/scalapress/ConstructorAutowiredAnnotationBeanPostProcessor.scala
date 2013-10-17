@@ -1,7 +1,6 @@
 package com.cloudray.scalapress
 
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter
-import com.cloudray.scalapress.Logging
 import org.springframework.stereotype.Component
 import java.lang.reflect.Constructor
 import org.springframework.beans.factory.annotation.Autowired

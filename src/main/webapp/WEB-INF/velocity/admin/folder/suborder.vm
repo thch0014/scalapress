@@ -9,7 +9,7 @@
     </tr>
     #foreach ($f in $folder.sortedSubfolders())
         <tr data-section-id="$f.id" class="subfolder-row">
-            <td>$f.id qeqeq</td>
+            <td>$f.id </td>
             <td>$f.fullName()</td>
         </tr>
     #end
