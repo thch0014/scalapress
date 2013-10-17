@@ -10,6 +10,7 @@ scala based publishing platform
 ##### 0.39
 
 Added prioritized tag and prioritizedonly to image, object and attribute tags.
+Added masonry image gallery plugin
 
 ##### 0.38
 * Updated elastic indexer to be incremental
