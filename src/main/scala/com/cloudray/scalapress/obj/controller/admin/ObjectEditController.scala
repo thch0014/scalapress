@@ -181,7 +181,7 @@ class ObjectEditController
         section.obj = null
         objectDao.save(form.o)
     }
-    "redirect:/backoffice/obj/" + form.o.id
+    "redirect:/backoffice/obj/" + form.o.id + "#tab3"
   }
 
   @RequestMapping(Array("image/{filename}/remove"))
