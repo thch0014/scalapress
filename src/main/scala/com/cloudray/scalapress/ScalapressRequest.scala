@@ -10,6 +10,7 @@ import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import java.util.UUID
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.cloudray.scalapress.obj.attr.Attribute
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
@@ -23,7 +24,9 @@ case class ScalapressRequest(request: HttpServletRequest,
                              corpusResult: Option[CorpusResult] = None,
                              line: Option[BasketLine] = None,
                              location: Option[String] = None,
-                             paging: Option[Paging] = None) {
+                             paging: Option[Paging] = None,
+                             scripts: ListBuffer[String] = new ListBuffer(),
+                             styles: ListBuffer[String] = new ListBuffer()) {
 
   val cacheKey = "scalapress.cache"
   private val cache = if (request.getAttribute(cacheKey) == null) {
@@ -117,6 +120,16 @@ case class ScalapressRequest(request: HttpServletRequest,
   def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
   def withResult(r: CorpusResult): ScalapressRequest = copy(corpusResult = Option(r))
   def withSearchResult(r: SearchResult): ScalapressRequest = copy(searchResult = Option(r))
+
+  def script(js: String): ScalapressRequest = {
+    scripts.append(js)
+    this
+  }
+
+  def style(css: String): ScalapressRequest = {
+    styles.append(css)
+    this
+  }
 }
 
 object ScalapressRequest {
