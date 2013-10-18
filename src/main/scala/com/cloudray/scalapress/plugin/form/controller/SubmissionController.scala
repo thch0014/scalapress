@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.plugin.form.{RecaptchaClient, Form, FormService, FormDao, SubmissionDao}
+import com.cloudray.scalapress.plugin.form.{RecaptchaClient, Form, FormSubmissionService, FormDao, SubmissionDao}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.folder.controller.FolderController
 import com.cloudray.scalapress.util.mvc.ScalapressPage
@@ -22,7 +22,7 @@ class SubmissionController extends Logging {
   @Autowired var submissionDao: SubmissionDao = _
   @Autowired var context: ScalapressContext = _
   @Autowired var formDao: FormDao = _
-  @Autowired var formService: FormService = _
+  @Autowired var formService: FormSubmissionService = _
   @Autowired var themeDao: ThemeDao = _
   @Autowired var themeService: ThemeService = _
   @Autowired var folderController: FolderController = _

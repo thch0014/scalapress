@@ -11,9 +11,9 @@ import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 
 /** @author Stephen Samuel */
-class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class FormSubmissionServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val service = new FormService
+  val service = new FormSubmissionService
   service.submissionDao = mock[SubmissionDao]
 
   val req = mock[HttpServletRequest]
@@ -89,6 +89,7 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
     Mockito.verify(service.mailSender).send(captor.capture)
     val msg = captor.getValue
     assert(msg.getTo === Array("s@sam.com"))
+    assert(msg.getFrom === "donotreply@coldplay.com")
   }
 
   test("no submitter email is sent if no submitter field is set") {
@@ -106,6 +107,7 @@ class FormServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest
     assert(msg.getTo.contains("admin@sambo.com"))
     assert(msg.getTo.contains("rambo@first.com"))
     assert(msg.getSubject.contains("contact us"))
+    assert(msg.getFrom === "donotreply@coldplay.com")
   }
 
   test("no admin email is sent if no recipients are set") {

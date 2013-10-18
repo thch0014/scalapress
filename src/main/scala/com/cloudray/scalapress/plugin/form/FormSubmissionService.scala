@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 @Component
-class FormService extends Logging {
+class FormSubmissionService extends Logging {
 
   val EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
 
@@ -84,7 +84,7 @@ class FormService extends Logging {
                 val subject = Option(form.submissionEmailSubject).getOrElse("Form submission received")
 
                 val message = new SimpleMailMessage()
-                message.setFrom("nodotreply@" + _domain)
+                message.setFrom("donotreply@" + _domain)
                 message.setTo(kv.value)
                 message.setSubject(subject)
                 message.setText(body)
@@ -118,7 +118,7 @@ class FormService extends Logging {
       }
 
       val message = new SimpleMailMessage()
-      message.setFrom("nodotreply@" + _domain)
+      message.setFrom("donotreply@" + _domain)
       message.setTo(recipients.toArray)
       message.setSubject("Submission: " + submission.formName)
       message.setText(body.mkString("\n"))
