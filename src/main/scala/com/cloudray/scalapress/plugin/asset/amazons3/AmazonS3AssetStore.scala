@@ -5,14 +5,15 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.auth.BasicAWSCredentials
 import java.util.UUID
 import org.apache.commons.io.{FilenameUtils, IOUtils}
-import com.amazonaws.services.s3.model.{S3ObjectSummary, ListObjectsRequest, StorageClass, CannedAccessControlList, PutObjectRequest, ObjectMetadata}
-import scala.collection.JavaConverters._
+import com.amazonaws.services.s3.model._
 import java.net.URLConnection
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.media.{MimeTools, Asset, AssetStore}
+import com.cloudray.scalapress.media.{MimeTools, AssetStore}
 import org.joda.time.{DateTimeZone, DateTime}
 import com.sksamuel.scoot.soa.PagedQuery
 import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.media.Asset
+import scala.Some
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -59,21 +60,24 @@ class AmazonS3AssetStore(val cdnUrl: String,
   /**
    * Lists all objects in the images bucket
    */
-  private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3ObjectSummary] = {
+  private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3VersionSummary] = {
 
-    val req: ListObjectsRequest = new ListObjectsRequest
+    val req = new ListVersionsRequest
     req.setBucketName(bucketName)
     req.setPrefix(prefix.orNull)
+    req.setDelimiter("/")
+    req.setMaxResults(1000)
 
-    val buffer = new ListBuffer[S3ObjectSummary]
+    val buffer = new ListBuffer[S3VersionSummary]
 
-    var listing = getAmazonS3Client.listObjects(req)
-    var summaries = listing.getObjectSummaries
-    buffer.appendAll(summaries.asScala)
-    while (summaries.size > 0) {
-      listing = getAmazonS3Client.listNextBatchOfObjects(listing)
-      summaries = listing.getObjectSummaries
-      buffer.appendAll(summaries.asScala)
+    import scala.collection.JavaConverters._
+
+    var listing = getAmazonS3Client.listVersions(req)
+    var versions = listing.getVersionSummaries
+    while (versions != null && versions.size > 0) {
+      buffer.appendAll(versions.asScala)
+      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
+      versions = listing.getVersionSummaries
     }
     buffer.drop(start).take(limit)
   }
