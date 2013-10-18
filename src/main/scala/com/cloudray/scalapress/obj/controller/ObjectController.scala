@@ -41,6 +41,7 @@ class ObjectController extends Logging {
     if (obj.isDeleted || obj.isDisabled) throw new NotFoundException()
     if (obj.objectType == null) throw new NotFoundException()
     if (obj.objectType.name.toLowerCase.startsWith("account")) throw new NotFoundException()
+    if (obj.objectType.hidden) throw new NotFoundException()
 
     val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
     val theme = themeService.theme(obj)

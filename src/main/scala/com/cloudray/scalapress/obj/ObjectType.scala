@@ -25,7 +25,9 @@ class ObjectType extends SortedSections with java.io.Serializable {
 
   @BeanProperty var deleted: Boolean = false
 
-  def searchable: Boolean = !name.toLowerCase.contains("account")
+  @BeanProperty var hidden: Boolean = false
+
+  def searchable: Boolean = !hidden && !name.toLowerCase.contains("account")
 
   @BeanProperty var prices: Boolean = false
 

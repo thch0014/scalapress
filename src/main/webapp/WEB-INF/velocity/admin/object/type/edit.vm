@@ -35,7 +35,15 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-          #springFormInput("type.name")
+          #springFormInput("type.name", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Hidden</label>
+
+        <div class="controls">
+          #springFormCheckbox("type.hidden", "")
         </div>
     </div>
 
@@ -43,7 +51,7 @@
         <label class="control-label">Prices</label>
 
         <div class="controls">
-          #springFormCheckbox("type.prices")
+          #springFormCheckbox("type.prices", "")
         </div>
     </div>
 
