@@ -28,7 +28,7 @@
 </div>
 
 <div id="listing-process-images">
-  ${plugin.imagesPageText}
+  ${headerText}
     <form method="POST" enctype="multipart/form-data" action="/">
 
         <table>
