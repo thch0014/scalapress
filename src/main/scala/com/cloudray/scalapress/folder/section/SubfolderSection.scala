@@ -6,6 +6,7 @@ import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Entity
@@ -18,14 +19,16 @@ class SubfolderSection extends Section {
   @BeanProperty var markup: Markup = _
 
   def render(request: ScalapressRequest): Option[String] = {
-    val m = Option(markup)
-      .orElse(Option(request.folderSettings.subfolderMarkup))
-      .getOrElse(SubfolderSection.DefaultMarkup)
-    val render = MarkupRenderer.renderFolders(_folders, m, request)
-    Option(render)
+    Option(folder).map(folder => {
+      val m = Option(markup)
+        .orElse(Option(request.folderSettings.subfolderMarkup))
+        .getOrElse(SubfolderSection.DefaultMarkup)
+      val render = MarkupRenderer.renderFolders(_folders, m, request)
+      render
+    })
   }
 
-  def _folders = folder.sortedSubfolders.filterNot(_.hidden)
+  def _folders: Seq[Folder] = folder.sortedSubfolders.filterNot(_.hidden)
   def desc = "Show a clickable list of the sub folders of this folder"
 
 }
