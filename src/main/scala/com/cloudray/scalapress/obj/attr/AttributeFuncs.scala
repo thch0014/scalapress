@@ -35,7 +35,7 @@ object AttributeFuncs {
 
   def attributeValues(obj: Obj, attribute: Attribute): Iterable[String] = {
     Option(attribute) match {
-      case Some(a) => obj.attributeValues.asScala.filter(_.attribute.id == attribute.id).map(_.value)
+      case Some(a) => obj.sortedAttributeValues.filter(_.attribute.id == attribute.id).map(_.value)
       case None => Nil
     }
   }

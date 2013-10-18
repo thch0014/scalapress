@@ -18,7 +18,7 @@
                     <label class="control-label">Name</label>
 
                     <div class="controls">
-                        #springFormInput("form.name")
+                      #springFormInput("form.name")
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
                     <label class="control-label">Email Notification Recipients</label>
 
                     <div class="controls">
-                        #springFormTextarea("form.recipients")
+                      #springFormTextarea("form.recipients")
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                     <label class="control-label">Submit Button Text</label>
 
                     <div class="controls">
-                        #springFormInput("form.submitButtonText")
+                      #springFormInput("form.submitButtonText")
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                     <label class="control-label">Submission Email Subject</label>
 
                     <div class="controls">
-                        #springFormInput("form.submissionEmailSubject")
+                      #springFormInput("form.submissionEmailSubject")
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
                     <label class="control-label">Submission Email Body</label>
 
                     <div class="controls">
-                        #springFormTextarea("form.submissionEmailBody")
+                      #springFormTextarea("form.submissionEmailBody")
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@
                     <label class="control-label">Submission Redirect</label>
 
                     <div class="controls">
-                        #springFormInput("form.submissionRedirect")
+                      #springFormInput("form.submissionRedirect")
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                     <label class="control-label">Use Captcha</label>
 
                     <div class="controls">
-                        #springFormCheckbox("form.captcha")
+                      #springFormCheckbox("form.captcha")
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
                     <label class="control-label">Submission Page Text</label>
 
                     <div class="controls">
-                        #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
+                      #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <a href="/backoffice/form" class="btn">Return</a>
     </div>
 
 
@@ -104,25 +104,25 @@
         <th>Required</th>
         <th></th>
     </tr>
-    #foreach ($field in $fields)
-        <tr data-field-id="$field.id" class="field-row">
-            <td>$field.id</td>
-            <td>$field.name</td>
-            <td>$field.fieldType</td>
-            <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
-            <td>
-                <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-mini">
-                    <i class="icon-pencil"></i></a>
+  #foreach ($field in $fields)
+      <tr data-field-id="$field.id" class="field-row">
+          <td>$field.id</td>
+          <td>$field.name</td>
+          <td>$field.fieldType</td>
+          <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
+          <td>
+              <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-mini">
+                  <i class="icon-pencil"></i></a>
 
 
-                <a onClick="bootbox.confirm('Confirm delete', function(result) {
-                        if (result) {
-                        window.location='/backoffice/form/$form.id/field/$field.id/delete';
-                        }})" role="button" class="btn btn-danger btn-mini">
-                    <i class="icon-trash icon-white"></i></a>
-            </td>
-        </tr>
-    #end
+              <a onClick="bootbox.confirm('Confirm delete', function(result) {
+                      if (result) {
+                      window.location='/backoffice/form/$form.id/field/$field.id/delete';
+                      }})" role="button" class="btn btn-danger btn-mini">
+                  <i class="icon-trash icon-white"></i></a>
+          </td>
+      </tr>
+  #end
 </table>
 
 

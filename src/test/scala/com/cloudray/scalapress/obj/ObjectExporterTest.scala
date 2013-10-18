@@ -95,13 +95,7 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
     obj.attributeValues.add(av3)
 
     val row = new ObjectExporter()._row(obj, attributes, "mysite.com")
-    assert(Array[String]("123",
-      "11-04-2013",
-      "coldplay tickets",
-      "super status",
-      "http://mysite.com/object-123-coldplay-tickets", "5.99", "10.0", "6.58", "19.99", "4.50", "1.49", "5",
-      "Samsung|Apple",
-      "GalaxyS") === row)
+    assert("Apple|Samsung" === row(12))
   }
 }
 
