@@ -170,13 +170,17 @@ class CheckoutController extends Logging {
     val port = new URL(req.getRequestURL.toString).getPort
     val domain = if (port == 8080) host + ":8080" else host
 
-    val purchase = new OrderPurchase(sreq.basket.order, domain)
+    if (sreq.basket.order == null) {
+      showConfirmation(req)
+    } else {
+      val purchase = new OrderPurchase(sreq.basket.order, domain)
 
-    val theme = themeService.default
-    val page = ScalapressPage(theme, sreq)
-    page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep).toString())
-    page.body(paymentFormRenderer.renderPaymentForm(purchase))
-    page
+      val theme = themeService.default
+      val page = ScalapressPage(theme, sreq)
+      page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.PaymentStep).toString())
+      page.body(paymentFormRenderer.renderPaymentForm(purchase))
+      page
+    }
   }
 
   @ResponseBody
