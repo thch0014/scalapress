@@ -91,8 +91,8 @@ class ObjectExporter {
     buffer.append(obj.stock.toString)
 
     for ( attribute <- attributes ) {
-      val value = AttributeFuncs.attributeValue(obj, attribute).orNull
-      buffer.append(value)
+      val values = AttributeFuncs.attributeValues(obj, attribute).mkString("|")
+      buffer.append(values)
     }
     buffer.toArray
   }

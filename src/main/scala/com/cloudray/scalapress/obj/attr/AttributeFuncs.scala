@@ -13,6 +13,8 @@ object AttributeFuncs {
     qqq
   }
 
+  /** returns the first attribute value or none
+    */
   def attributeValue(obj: Obj, attribute: Attribute): Option[String] = {
     Option(attribute) match {
       case Some(a) => obj.attributeValues.asScala.find(_.attribute.id == attribute.id).flatMap(av => Option(av.value))
@@ -31,6 +33,13 @@ object AttributeFuncs {
     }
   }
 
+  def attributeValues(obj: Obj, attribute: Attribute): Iterable[String] = {
+    Option(attribute) match {
+      case Some(a) => obj.attributeValues.asScala.filter(_.attribute.id == attribute.id).map(_.value)
+      case None => Nil
+    }
+  }
+
   def attributeValues(obj: Obj, s: String): Seq[String] = {
     obj.attributeValues.asScala.toSeq
       .filter(_.attribute.name != null)
@@ -40,7 +49,13 @@ object AttributeFuncs {
   }
 
   def setAttributeValue(obj: Obj, attribute: Attribute, value: String) {
+    // remove any existing attribute values first
     obj.attributeValues = obj.attributeValues.asScala.filterNot(_.attribute == attribute).asJava
+    // then add the new one
+    addAttributeValue(obj, attribute, value)
+  }
+
+  def addAttributeValue(obj: Obj, attribute: Attribute, value: String) {
     val av = new AttributeValue
     av.value = value
     av.attribute = attribute
