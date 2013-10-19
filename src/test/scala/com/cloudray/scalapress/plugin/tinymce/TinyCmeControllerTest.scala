@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.tinymce
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.media.{Asset, AssetStore}
+import com.cloudray.scalapress.media.{AssetQuery, Asset, AssetStore}
 import org.mockito.{Matchers, Mockito}
 
 /** @author Stephen Samuel */
@@ -11,9 +11,7 @@ class TinyCmeControllerTest extends FunSuite with MockitoSugar with OneInstanceP
   val controller = new TinyMceImageListController
   controller.assetStore = mock[AssetStore]
 
-  Mockito
-    .when(controller.assetStore.list(Matchers.anyInt))
-    .thenReturn(Array(
+  Mockito.when(controller.assetStore.search(Matchers.any[AssetQuery])).thenReturn(Array(
     Asset("coldplay.png", 0, "aws.cdn.com/coldplay.png", null),
     Asset("keane.gif", 0, "aws.cdn.com/keane.gif", null),
     Asset("starsailor.png", 0, "aws.cdn.com/starsailor.png", null),

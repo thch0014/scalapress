@@ -15,6 +15,7 @@ import java.util.UUID
 class ThumbnailService extends Logging {
 
   val THUMBNAIL_PREFIX = "_thumbnails"
+  val THUMBNAIL_QUERY = AssetQuery(THUMBNAIL_PREFIX, 1, 10000)
   val MAX_BYTES = 1024 * 1024 * 10
 
   @Autowired var assetStore: AssetStore = _
@@ -32,7 +33,7 @@ class ThumbnailService extends Logging {
   @PostConstruct
   def populate() {
     logger.info("Prepopulating thumbnail cache")
-    for ( asset <- assetStore.list(THUMBNAIL_PREFIX, 10000) ) {
+    for ( asset <- assetStore.search(THUMBNAIL_QUERY) ) {
       _setCached(asset.filename)
     }
     logger.info("Cache [size={}, bytes={}]", cache.getSize, cache.calculateInMemorySize())

@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.tinymce
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.media.{AssetQuery, AssetStore}
 
 /** @author Stephen Samuel */
 @Controller
@@ -17,8 +17,7 @@ class TinyMceImageListController {
   def images: String = {
     val sb = new StringBuffer("var tinyMCEImageList = new Array(")
 
-    val assets = assetStore
-      .list(10000)
+    val assets = assetStore.search(AssetQuery(1, 10000))
       .filterNot(_.filename.startsWith("_thumbnail"))
       .filter(
       asset => asset.filename.endsWith("jpg") ||

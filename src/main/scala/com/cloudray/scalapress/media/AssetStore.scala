@@ -5,6 +5,15 @@ import java.io.InputStream
 /** @author Stephen Samuel */
 trait AssetStore {
 
+  /** Returns the number of assets in the asset store.
+    * Implementations are permitted to use best effort when counting.
+    * This is useful for backing stores that adhere to eventual consistency where
+    * exact counts would be costly.
+    */
+  def count: Int
+
+  /** Returns true if the given key exists in the store.
+    */
   def exists(key: String): Boolean
 
   // adds the given stream with a generated id and returns that id
@@ -21,20 +30,30 @@ trait AssetStore {
 
   def delete(key: String)
 
-  def list(limit: Int): Array[Asset]
+  /** Searches the index for assets that match the given query.
+    * Implementations are permitted to use best effort when performing the search.
+    * This is useful for backing stores that adhere to eventual consistency where
+    * exact searches would be costly.
+    */
+  def search(query: AssetQuery): Array[Asset]
 
-  def list(prefix: String, limit: Int) : Array[Asset]
-
-  def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset]
-
-  // returns an externally accessible base URL for this store.
+  /** Returns the externally accessible base URL for this asset store.
+    */
+  @deprecated("not all images might have the same base url, find a way around this for future", "0.39")
   def baseUrl: String
 
-  // returns an externally accessible URL for the given asset
+  /** Returns the externally accessible base URL for the given asset key
+    */
   def link(key: String): String
 
-  // returns the number of items in this asset store
-  def count: Int
 }
 
+case class AssetQuery(prefix: Option[String], pageNumber: Int, pageSize: Int) {
+  def offset: Int = (pageNumber - 1) * pageSize
+}
+object AssetQuery {
+  def apply(pageNumber: Int, pageSize: Int): AssetQuery = apply(None, pageNumber, pageSize)
+  def apply(prefix: String, pageNumber: Int, pageSize: Int): AssetQuery =
+    AssetQuery(Option(prefix), pageNumber, pageSize)
+}
 case class Asset(filename: String, size: Long, url: String, contentType: String)

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.{AssetLifecycleListener, AssetStore}
+import com.cloudray.scalapress.media.{AssetQuery, AssetLifecycleListener, AssetStore}
 import java.io._
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.{Paging, Page}
@@ -41,13 +41,13 @@ class MediaLibraryController {
     "redirect:/backoffice/medialib"
   }
 
-  @ModelAttribute def assets(@RequestParam(value = "q", required = false) q: String,
+  @ModelAttribute def assets(@RequestParam(value = "q", required = false) prefix: String,
                              @RequestParam(value = "pageNumber", required = false, defaultValue = "1") pageNumber: Int,
                              req: HttpServletRequest,
                              model: ModelMap) {
 
-    val assets = assetStore.search(q, pageNumber, PAGE_SIZE).toList
-    model.put("assets", assets.asJava)
+    val assets = assetStore.search(AssetQuery(prefix, pageNumber, PAGE_SIZE))
+    model.put("assets", assets)
 
     val page = Page(assets, pageNumber, PAGE_SIZE, assetStore.count)
     val paging = Paging(req, page)

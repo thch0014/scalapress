@@ -9,8 +9,11 @@ scala based publishing platform
 
 ##### 0.39
 
-Added prioritized tag and prioritizedonly to image, object and attribute tags.
-Added masonry image gallery plugin
+* Added prioritized tag and prioritizedonly to image, object and attribute tags.
+* Added masonry image gallery plugin
+* Reworked S3 asset store for faster enumeration. Updated asset store contract.
+* Added options for form fields
+* Fixed memory leak with Scalate
 
 ##### 0.38
 * Updated elastic indexer to be incremental

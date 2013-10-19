@@ -8,12 +8,10 @@ import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.amazonaws.services.s3.model._
 import java.net.URLConnection
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.media.{MimeTools, AssetStore}
+import com.cloudray.scalapress.media.{AssetQuery, MimeTools, AssetStore, Asset}
 import org.joda.time.{DateTimeZone, DateTime}
-import com.sksamuel.scoot.soa.PagedQuery
 import scala.collection.mutable.ListBuffer
-import com.cloudray.scalapress.media.Asset
-import scala.Some
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -24,18 +22,50 @@ class AmazonS3AssetStore(val cdnUrl: String,
   val CACHE_CONTROL = "max-age=2592000"
   val STORAGE_CLASS = StorageClass.ReducedRedundancy
 
-  def delete(key: String) {
+  var assets = loadAssets
+  logger.info("Preloaded assets [count: {}]", assets.size)
+
+  override def count: Int = assets.size
+
+  override def search(q: AssetQuery): Array[Asset] = {
+    val filtered = q.prefix match {
+      case Some(prefix) => {
+        val lowerPrefix = prefix.toLowerCase
+        assets.filter(_.filename.toLowerCase.startsWith(lowerPrefix))
+      }
+      case None => assets
+    }
+    filtered.drop(q.offset).take(q.pageSize).toArray
+  }
+
+  def contentType(filename: String): String = URLConnection.guessContentTypeFromName(filename)
+
+  override def delete(key: String): Unit = {
     getAmazonS3Client.deleteObject(bucketName, key)
+    assets = assets.filterNot(_.filename == key)
   }
 
-  def search(query: String, pageNumber: Int, pageSize: Int): Array[Asset] = {
-    val pq = PagedQuery(pageNumber, pageSize)
-    listObjects(Option(query), pq.offset, pageSize).toList
-      .map(arg => Asset(arg.getKey, arg.getSize, link(arg.getKey), URLConnection.guessContentTypeFromName(arg.getKey)))
-      .toArray
+  def toAsset(arg: S3VersionSummary) = Asset(arg.getKey, arg.getSize, link(arg.getKey), contentType(arg.getKey))
+
+  def loadAssets: List[Asset] = {
+
+    val assets = new ListBuffer[Asset]
+
+    val req = new ListVersionsRequest
+    req.setBucketName(bucketName)
+
+    var listing = getAmazonS3Client.listVersions(req)
+    var versions = listing.getVersionSummaries
+    while (versions != null && versions.size > 0) {
+      assets appendAll versions.asScala.map(toAsset)
+      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
+      versions = listing.getVersionSummaries
+    }
+
+    assets.toList
   }
 
-  def exists(key: String) = {
+  override def exists(key: String) = {
     try {
       getAmazonS3Client.getObjectMetadata(bucketName, key) != null
     } catch {
@@ -43,54 +73,11 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
   }
 
-  def count: Int = {
-
-    val req: ListObjectsRequest = new ListObjectsRequest
-    req.setBucketName(bucketName)
-
-    var listing = getAmazonS3Client.listObjects(req)
-    var count = 0
-    while (listing.getObjectSummaries.size > 0) {
-      count = count + listing.getObjectSummaries.size()
-      listing = getAmazonS3Client.listNextBatchOfObjects(listing)
-    }
-    count
-  }
-
-  /**
-   * Lists all objects in the images bucket
-   */
-  private def listObjects(prefix: Option[String], start: Int, limit: Int): Seq[S3VersionSummary] = {
-
-    val req = new ListVersionsRequest
-    req.setBucketName(bucketName)
-    req.setPrefix(prefix.orNull)
-    req.setDelimiter("/")
-    req.setMaxResults(1000)
-
-    val buffer = new ListBuffer[S3VersionSummary]
-
-    import scala.collection.JavaConverters._
-
-    var listing = getAmazonS3Client.listVersions(req)
-    var versions = listing.getVersionSummaries
-    while (versions != null && versions.size > 0) {
-      buffer.appendAll(versions.asScala)
-      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
-      versions = listing.getVersionSummaries
-    }
-    buffer.drop(start).take(limit)
-  }
-
   override def baseUrl = cdnUrl
 
   override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
-  override def list(limit: Int): Array[Asset] = search(null, 0, limit)
-
-  override def list(prefix: String, limit: Int): Array[Asset] = search(prefix, 0, limit)
-
-  def get(key: String): Option[InputStream] = {
+  override def get(key: String): Option[InputStream] = {
     try {
       Option(getAmazonS3Client.getObject(bucketName, key)) match {
         case None => None
@@ -109,15 +96,21 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
   }
 
-  def add(key: String, in: InputStream): String = {
+  override def add(key: String, in: InputStream): String = {
     val normalizedKey = getNormalizedKey(key)
     put(normalizedKey, in)
     normalizedKey
   }
 
-  def put(key: String, in: InputStream) {
+  override def add(in: InputStream): String = {
+    val key = UUID.randomUUID.toString
+    put(key, in)
+    key
+  }
 
-    val array: Array[Byte] = IOUtils.toByteArray(in)
+  override def put(key: String, in: InputStream) {
+
+    val array = IOUtils.toByteArray(in)
     IOUtils.closeQuietly(in)
 
     val md = new ObjectMetadata
@@ -130,17 +123,12 @@ class AmazonS3AssetStore(val cdnUrl: String,
     request.setStorageClass(STORAGE_CLASS)
 
     getAmazonS3Client.putObject(request)
+    assets = Asset(key, array.length, link(key), contentType(key)) :: assets
   }
 
   def getNormalizedKey(key: String): String = {
     FilenameUtils.getBaseName(key) + "_" + new DateTime(DateTimeZone.UTC).getMillis + "." + FilenameUtils
       .getExtension(key)
-  }
-
-  def add(in: InputStream): String = {
-    val key = UUID.randomUUID.toString
-    put(key, in)
-    key
   }
 
   def getAmazonS3Client: AmazonS3Client = {
