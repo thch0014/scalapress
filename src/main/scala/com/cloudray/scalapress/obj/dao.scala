@@ -57,6 +57,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     q.status.filterNot(_.isEmpty).foreach(s.addFilterEqual("status", _))
     q.name.filterNot(_.isEmpty).foreach(t => s.addFilterLike("name", "%" + t + "%"))
     q.minPrice.filter(_ > 0).foreach(s.addFilterGreaterOrEqual("price", _))
+    s.setMaxResults(q.maxResults)
     q.sort match {
       case Some(sort) => sort match {
         case Sort.Name => s.addSortAsc("name")
