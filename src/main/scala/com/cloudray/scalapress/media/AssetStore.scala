@@ -1,6 +1,7 @@
 package com.cloudray.scalapress.media
 
 import java.io.InputStream
+import scala.deprecated
 
 /** @author Stephen Samuel */
 trait AssetStore {
@@ -17,18 +18,27 @@ trait AssetStore {
   def exists(key: String): Boolean
 
   // adds the given stream with a generated id and returns that id
+  @deprecated("should be provided with a key, let consumer of this api generate one if needed", "0.39")
   def add(input: InputStream): String
 
-  // adds the given stream with the given key, generating a new key if the provided one is in use
-  @deprecated("should be provided with a key, let consumer of this api generate one if needed", "0.39")
+  /** Adds the given stream under a unique key. The given key is used as a hint and may
+    * not be the actual key used. This method guarantees not to overwrite any existing asset.
+    *
+    * @return the key that the asset was stored under
+    */
   def add(key: String, input: InputStream): String
 
-  // adds the given stream and overrides any existing
+  /** Adds the given stream to the asset store, overriding any existing asset that
+    * is stored under the same key. This method guarantees to use the key provided.
+    */
   def put(key: String, input: InputStream)
 
-  // returns a stream of the given key or none if the file was not found
+  /** returns a stream of the given key or none if the file was not found
+    */
   def get(key: String): Option[InputStream]
 
+  /** Removes the given key from the asset store, or does nothing if the key does not exist
+    */
   def delete(key: String)
 
   /** Searches the index for assets that match the given query.
@@ -38,12 +48,12 @@ trait AssetStore {
     */
   def search(query: AssetQuery): Array[Asset]
 
-  /** Returns the externally accessible base URL for this asset store.
+  /** Returns an externally accessible base URL for this asset store.
     */
   @deprecated("not all images might have the same base url, find a way around this for future", "0.39")
   def baseUrl: String
 
-  /** Returns the externally accessible base URL for the given asset key
+  /** Returns an externally accessible base URL for the given asset key
     */
   def link(key: String): String
 
