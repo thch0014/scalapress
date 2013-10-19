@@ -128,10 +128,13 @@ class RegistrationController {
 }
 
 class RegistrationForm {
+
   @NotEmpty
   @BeanProperty var name: String = _
+
   @NotEmpty
   @BeanProperty var email: String = _
+
   @NotEmpty
   @BeanProperty var password: String = _
 }

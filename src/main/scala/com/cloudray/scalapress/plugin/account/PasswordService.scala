@@ -4,16 +4,16 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.cloudray.scalapress.settings.InstallationDao
-import com.cloudray.scalapress.obj.ObjectDao
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.sksamuel.scoot.rest.Logging
 import org.apache.commons.lang.RandomStringUtils
+import com.cloudray.scalapress.account.AccountDao
 
 /** @author Stephen Samuel */
 @Component
 class PasswordService extends Logging {
 
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var accountDao: AccountDao = _
   @Autowired var passwordTokenDao: PasswordTokenDao = _
   @Autowired var mailSender: MailSender = _
   @Autowired var installationDao: InstallationDao = _
@@ -21,7 +21,7 @@ class PasswordService extends Logging {
 
   def request(email: String) {
 
-    objectDao.byEmail(email) match {
+    accountDao.byEmail(email) match {
       case None => logger.debug("No account found [{}]", email)
       case Some(account) =>
 
@@ -52,10 +52,10 @@ class PasswordService extends Logging {
         val domain = installationDao.get.domain
         val password = RandomStringUtils.randomAlphanumeric(8)
 
-        val account = objectDao.byEmail(email).get
+        val account = accountDao.byEmail(email).get
         account.passwordHash = passwordEncoder.encodePassword(password, null)
         logger.debug("Saving account with updated password")
-        objectDao.save(account)
+        accountDao.save(account)
 
         val body = "A message from the admin at " + domain + ".\n\nYour password has been reset to:\n" + password + "\n\nYou can login to your account here:\nhttp://" + domain + "/login"
 
