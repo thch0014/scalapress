@@ -21,7 +21,7 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
 
   override def search(q: AccountQuery): Page[Account] = {
     val s = new Search(classOf[Account]).setMaxResults(q.pageSize).setFirstResult(q.offset)
-    q.typeId.foreach(t => {
+    q.accountTypeId.foreach(t => {
       s.addFetch("accountType")
       s.addFilterEqual("accountType.id", t)
     })

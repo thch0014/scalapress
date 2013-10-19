@@ -1,0 +1,93 @@
+#parse("/admin/header.vm")
+
+<div id="create-account-modal" class="modal hide">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create $type.name</h3>
+    </div>
+    <form method="GET" action="/backoffice/account/create" class="form-horizontal">
+        <input type="hidden" name="typeId" value="$type.id"/>
+
+        <div class="modal-body">
+
+            <div class="control-group">
+                <label class="control-label" for="new-account-name">Name</label>
+
+                <div class="controls">
+                    <input type="text" id="new-account-name" name="name" placeholder="New $accountType.name Name">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+<h3>$accountType.name</h3>
+
+<form method="GET" class="form-horizontal">
+    <input type="hidden" name="accountTypeId" value="$accountType.id"/>
+
+    <div class="control-group">
+        <label class="control-label" for="name">Name</label>
+
+        <div class="controls">
+          #springFormInput("form.name", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Status</label>
+
+        <div class="controls">
+          #springFormSingleSelect("form.status", $accountStatusMap, "")
+        </div>
+    </div>
+
+    <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+    <a href="#create-account-modal" role="button" class="btn" data-toggle="modal">
+        <i class="icon-plus-sign"></i> Create  $accountType.name</a>
+
+</form>
+
+
+#paging($paging)
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Date Created</th>
+        <th></th>
+    </tr>
+  #foreach ($account in $accounts)
+      <tr>
+          <td><a href="/backoffice/account/$account.id">$account.id</a></td>
+          <td>$account.name</td>
+          <td>$account.status</td>
+          <td>$!datetool.format($account.dateCreated)</td>
+          <td>
+              <a href="/backoffice/account/$account.id" role="button" class="btn btn-mini">
+                  <i class="icon-pencil"></i></a>
+          </td>
+      </tr>
+  #end
+</table>
+
+#paging($paging)
+
+<a href="#create-account-modal" role="button" class="btn" data-toggle="modal">
+    <i class="icon-plus-sign"></i> Create $accountType.name</a>
+
+
+
+
+#parse("/admin/footer.vm")
