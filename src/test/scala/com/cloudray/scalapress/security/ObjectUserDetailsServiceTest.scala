@@ -7,29 +7,29 @@ import com.cloudray.scalapress.account.Account
 /** @author Stephen Samuel */
 class ObjectUserDetailsServiceTest extends FunSuite with MockitoSugar {
 
-  val obj = new Account
-  obj.name = "sammy"
-  obj.email = "sam@sammy.com"
-  obj.passwordHash = "passhash"
+  val acc = new Account
+  acc.name = "sammy"
+  acc.email = "sam@sammy.com"
+  acc.passwordHash = "passhash"
 
   test("that a user is never expired ") {
-    assert(new AccountUserDetails(obj).isAccountNonExpired)
-    assert(new AccountUserDetails(obj).isCredentialsNonExpired)
+    assert(new AccountUserDetails(acc).isAccountNonExpired)
+    assert(new AccountUserDetails(acc).isCredentialsNonExpired)
   }
 
   test("that the password comes from the user obj") {
-    assert("passhash" === new AccountUserDetails(obj).password)
+    assert("passhash" === new AccountUserDetails(acc).password)
   }
 
   test("that the username comes from the user obj") {
-    assert("sam@sammy.com" === new AccountUserDetails(obj).username)
+    assert("sam@sammy.com" === new AccountUserDetails(acc).username)
   }
 
   test("that a user is enabled if status is active") {
-    obj.status = Account.STATUS_ACTIVE
-    assert(new AccountUserDetails(obj).enabled)
+    acc.status = Account.STATUS_ACTIVE
+    assert(new AccountUserDetails(acc).enabled)
 
-    obj.status = Account.STATUS_ACTIVE
-    assert(!new AccountUserDetails(obj).enabled)
+    acc.status = Account.STATUS_DISABLED
+    assert(!new AccountUserDetails(acc).enabled)
   }
 }
