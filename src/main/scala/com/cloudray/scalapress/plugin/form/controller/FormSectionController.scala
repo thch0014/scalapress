@@ -15,21 +15,21 @@ import com.cloudray.scalapress.obj.controller.admin.FormPopulator
 @RequestMapping(Array("backoffice/plugin/form/section/{id}"))
 class FormSectionController extends FormPopulator {
 
-    @Autowired var formDao: FormDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var formDao: FormDao = _
+  @Autowired var sectionDao: SectionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: FormSection) = "admin/plugin/form/section/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: FormSection) = "admin/plugin/form/section/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: FormSection) = {
-        sectionDao.save(section)
-        edit(section)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: FormSection) = {
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): FormSection =
-        sectionDao
-          .find(id)
-          .asInstanceOf[FormSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): FormSection =
+    sectionDao
+      .find(id)
+      .asInstanceOf[FormSection]
 }

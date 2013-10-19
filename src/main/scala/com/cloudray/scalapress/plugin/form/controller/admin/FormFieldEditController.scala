@@ -13,23 +13,23 @@ import com.cloudray.scalapress.util.EnumPopulator
 @RequestMapping(Array("backoffice/form/{formId}/field/{fieldId}"))
 class FormFieldEditController extends EnumPopulator {
 
-    @Autowired var context: ScalapressContext = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("field") field: FormField) = "admin/plugin/form/fieldedit.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("field") field: FormField) = "admin/plugin/form/fieldedit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("field") field: FormField) = {
-        context.bean[FormFieldDao].save(field)
-        "redirect:/backoffice/form/" + field.form.id
-    }
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("field") field: FormField) = {
+    context.bean[FormFieldDao].save(field)
+    "redirect:/backoffice/form/" + field.form.id
+  }
 
-    @ModelAttribute def field(@PathVariable("fieldId") fieldId: Long,
-                              model: ModelMap) {
-        val field = context.bean[FormFieldDao].find(fieldId)
-        model.put("field", field)
-    }
+  @ModelAttribute def field(@PathVariable("fieldId") fieldId: Long,
+                            model: ModelMap) {
+    val field = context.bean[FormFieldDao].find(fieldId)
+    model.put("field", field)
+  }
 
-    @ModelAttribute("typesMap") def typesMap = populate(FormFieldType.values)
-    @ModelAttribute("fieldSizesMap") def fieldSizesMap = populate(FieldSize.values)
+  @ModelAttribute("typesMap") def typesMap = populate(FormFieldType.values)
+  @ModelAttribute("fieldSizesMap") def fieldSizesMap = populate(FieldSize.values)
 }

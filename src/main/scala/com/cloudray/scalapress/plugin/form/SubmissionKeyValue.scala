@@ -9,17 +9,17 @@ import org.hibernate.annotations.{NotFoundAction, NotFound}
 @Table(name = "forms_submissions_data")
 class SubmissionKeyValue {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: Long = _
 
-    @ManyToOne
-    @JoinColumn(name = "submission")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @BeanProperty var submission: Submission = _
+  @ManyToOne
+  @JoinColumn(name = "submission")
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var submission: Submission = _
 
-    @Column(name = "name")
-    @BeanProperty var key: String = _
-    @BeanProperty var value: String = _
+  @Column(name = "name")
+  @BeanProperty var key: String = _
+  @BeanProperty var value: String = _
 
 }

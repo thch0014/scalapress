@@ -12,24 +12,24 @@ import com.cloudray.scalapress.plugin.form.{FormDao, Form}
 @RequestMapping(Array("backoffice/form"))
 class FormListController {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var formDao: FormDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var formDao: FormDao = _
 
-    @RequestMapping
-    def list = "admin/plugin/form/list.vm"
+  @RequestMapping
+  def list = "admin/plugin/form/list.vm"
 
-    @RequestMapping(value = Array("create"))
-    def create: String = {
+  @RequestMapping(value = Array("create"))
+  def create: String = {
 
-        val form = new Form
-        form.name = "new form"
-        formDao.save(form)
+    val form = new Form
+    form.name = "new form"
+    formDao.save(form)
 
-        "redirect:/backoffice/form/" + form.id
-    }
+    "redirect:/backoffice/form/" + form.id
+  }
 
-    import scala.collection.JavaConverters._
+  import scala.collection.JavaConverters._
 
-    @ModelAttribute("forms") def forms = formDao.findAll().asJava
+  @ModelAttribute("forms") def forms = formDao.findAll().asJava
 
 }

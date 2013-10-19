@@ -15,23 +15,23 @@ import com.cloudray.scalapress.plugin.form.SubmissionDao
 @RequestMapping(Array("backoffice/submission"))
 class SubmissionListController {
 
-    @Autowired var submissionDao: SubmissionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var submissionDao: SubmissionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/plugin/form/submissions/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/plugin/form/submissions/list.vm"
 
-    @ModelAttribute def submissions(req: HttpServletRequest,
-                                    @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-                                    model: ModelMap) {
-        val subs = submissionDao.search(PagedQuery(pageNumber, 50))
-        model.put("submissions", subs.java)
-        model.put("paging", Paging(req, subs))
-    }
+  @ModelAttribute def submissions(req: HttpServletRequest,
+                                  @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
+                                  model: ModelMap) {
+    val subs = submissionDao.search(PagedQuery(pageNumber, 50))
+    model.put("submissions", subs.java)
+    model.put("paging", Paging(req, subs))
+  }
 
-    @RequestMapping(Array("{id}/delete"))
-    def delete(@PathVariable("id") id: Long) = {
-        submissionDao.removeById(id)
-        "redirect:/backoffice/submission"
-    }
+  @RequestMapping(Array("{id}/delete"))
+  def delete(@PathVariable("id") id: Long) = {
+    submissionDao.removeById(id)
+    "redirect:/backoffice/submission"
+  }
 }

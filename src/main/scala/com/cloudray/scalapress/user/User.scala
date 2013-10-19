@@ -9,22 +9,22 @@ import scala.beans.BeanProperty
 @Entity
 class User extends java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: java.lang.Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty var id: java.lang.Long = _
 
-    @Column(name = "active", nullable = false)
-    @BeanProperty var active: Boolean = _
+  @Column(name = "active", nullable = false)
+  @BeanProperty var active: Boolean = _
 
-    @Column(name = "name")
-    @BeanProperty var name: String = _
+  @Column(name = "name")
+  @BeanProperty var name: String = _
 
-    @Column(name = "username")
-    @BeanProperty var username: String = _
+  @Column(name = "username")
+  @BeanProperty var username: String = _
 
-    @Column(name = "passwordHash")
-    @BeanProperty var passwordHash: String = _
+  @Column(name = "passwordHash")
+  @BeanProperty var passwordHash: String = _
 
-    @Transient
-    @BeanProperty var changePassword: String = _
+  @Transient
+  @BeanProperty var changePassword: String = _
 }
