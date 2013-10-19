@@ -7,6 +7,7 @@ import org.mockito.{Matchers, ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 
@@ -36,7 +37,7 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     val order = new Order
     order.id = 444
     order.datePlaced = 1234124214
-    order.account = new Obj
+    order.account = new Account
     order.account.name = "sammy"
     order.account.email = "sammy@fatty.com"
     order.customerNote = "crappy order"

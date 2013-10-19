@@ -10,8 +10,8 @@ import com.cloudray.scalapress.plugin.ecommerce.domain._
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.payments.{Purchase, PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -22,7 +22,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
 
   val order = new Order
   order.id = 151
-  order.account = new Obj
+  order.account = new Account
   order.account.id = 616
   order.account.name = "sammy"
   order.account.email = "q@a.com"

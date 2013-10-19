@@ -13,6 +13,7 @@ import scala.collection.JavaConverters._
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import org.hibernate.annotations._
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 @Entity
@@ -38,7 +39,7 @@ class Obj extends SortedSections with java.io.Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "account")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var account: Obj = _
+  @BeanProperty var account: Account = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "listing_package")

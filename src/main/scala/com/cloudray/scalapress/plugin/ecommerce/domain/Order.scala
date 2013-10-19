@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.plugin.ecommerce.domain
 
 import javax.persistence._
-import com.cloudray.scalapress.obj.Obj
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.payments.Transaction
@@ -10,6 +9,7 @@ import org.hibernate.annotations._
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 @Entity
@@ -71,7 +71,7 @@ class Order {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "account")
-  @BeanProperty var account: Obj = _
+  @BeanProperty var account: Account = _
 
   @Column(name = "salesPerson")
   @BeanProperty var createdBy: Long = _
@@ -92,7 +92,7 @@ object Order {
   val STATUS_COMPLETED = "Completed"
   val STATUS_CANCELLED = "Cancelled"
 
-  def apply(ipAddress: String, account: Obj) = {
+  def apply(ipAddress: String, account: Account) = {
     val order = new Order
     order.datePlaced = new DateTime(DateTimeZone.UTC).getMillis
     order.status = "New"

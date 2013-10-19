@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component
 import com.cloudray.scalapress.obj.Obj
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel
   *
   *         This service will complete a listing process
   *
-  * */
+  **/
 @Component
 class ListingProcessService extends Logging {
 
@@ -23,7 +24,7 @@ class ListingProcessService extends Logging {
   def process(process: ListingProcess): Obj = {
     logger.debug("Building listing for process [{}]", process)
 
-    val account = context.objectDao.find(process.accountId.toLong)
+    val account = context.accountDao.find(process.accountId.toLong)
     val listing = _listing(account, process)
     logger.debug("Created listing [{}]", listing.id)
 
@@ -49,7 +50,7 @@ class ListingProcessService extends Logging {
   }
 
   // build the listing object
-  def _listing(account: Obj, process: ListingProcess) = {
+  def _listing(account: Account, process: ListingProcess) = {
     val obj = new ListingProcessObjectBuilder(context).build(process)
     obj.account = account
     context.objectDao.save(obj)

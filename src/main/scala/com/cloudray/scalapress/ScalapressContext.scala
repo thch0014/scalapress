@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.account.{AccountTypeDao, AccountDao}
 
 /** @author Stephen Samuel */
 @Component
@@ -44,6 +45,9 @@ class ScalapressContext extends ServletContextAware {
 
   @Autowired var objectDao: ObjectDao = _
   @Autowired var typeDao: TypeDao = _
+
+  @Autowired var accountDao: AccountDao = _
+  @Autowired var accountTypeDao: AccountTypeDao = _
 
   @Autowired var markupDao: MarkupDao = _
 

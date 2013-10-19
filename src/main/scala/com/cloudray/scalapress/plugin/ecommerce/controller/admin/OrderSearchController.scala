@@ -10,8 +10,8 @@ import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
-import com.cloudray.scalapress.obj.Obj
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 @Controller
@@ -60,12 +60,12 @@ class OrderSearchController extends OrderStatusPopulator {
   def create(req: HttpServletRequest, @RequestParam(value = "accountId", defaultValue = "0") accountId: Long) = {
     val account = accountId match {
       case 0 =>
-        val account = Obj(context.typeDao.getAccount.get)
-        account.status = "Disabled"
+        val account = Account(context.accountTypeDao.default)
+        account.status = Account.STATUS_ACTIVE
         account.name = "New Account"
-        context.objectDao.save(account)
+        context.accountDao.save(account)
         account
-      case _ => context.objectDao.find(accountId)
+      case _ => context.accountDao.find(accountId)
     }
     val u = Order(req.getRemoteAddr, account)
     orderDao.save(u)

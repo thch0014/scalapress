@@ -5,9 +5,9 @@ import org.scalatest.mock.MockitoSugar
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
-import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -29,7 +29,7 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
 
   val order = new Order
   order.id = 151
-  order.account = new Obj
+  order.account = new Account
   order.account.email = "kirk@enterprise.com"
 
   test("no domain set uses localhost") {

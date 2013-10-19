@@ -42,8 +42,21 @@ class Account {
 
   @PrePersist
   def updateLastModified(): Unit = dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+  override def toString: String = s"Account [id=$id, status=$status, name=$name]"
 }
 
 object Account {
   val STATUS_ACTIVE = "active"
+
+  def apply(t: AccountType) = {
+    require(t != null)
+
+    val a = new Account
+    a.accountType = t
+    a.name = "new account"
+    a.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+    a.dateUpdated = a.dateCreated
+    a.status = STATUS_ACTIVE
+    a
+  }
 }

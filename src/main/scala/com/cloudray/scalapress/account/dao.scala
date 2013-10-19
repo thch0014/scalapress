@@ -53,8 +53,12 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
     search(new Search(classOf[Account]).addFilterEqual("accountType.id", id))
 }
 
-trait AccountTypeDao extends GenericDao[AccountType, java.lang.Long]
+trait AccountTypeDao extends GenericDao[AccountType, java.lang.Long] {
+  def default: AccountType
+}
 
 @Component
 @Transactional
-class AccountTypeDaoImpl extends GenericDaoImpl[AccountType, java.lang.Long] with AccountTypeDao
+class AccountTypeDaoImpl extends GenericDaoImpl[AccountType, java.lang.Long] with AccountTypeDao {
+  def default = findAll.head
+}
