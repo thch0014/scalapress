@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.profile.{AccountPlugin, AccountPluginDao}
+import com.cloudray.scalapress.plugin.account.{AccountPlugin, AccountPluginDao}
 
 /** @author Stephen Samuel */
 class LoginControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

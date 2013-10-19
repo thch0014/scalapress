@@ -14,7 +14,7 @@ import com.cloudray.scalapress.folder.{FolderDao, FolderDaoImpl}
 import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
-import com.cloudray.scalapress.plugin.profile.{AccountPluginDao, AccountPluginDaoImpl}
+import com.cloudray.scalapress.plugin.account.{AccountPluginDao, AccountPluginDaoImpl}
 import com.cloudray.scalapress.plugin.variations._
 
 /** @author Stephen Samuel */

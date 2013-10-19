@@ -29,11 +29,13 @@ class ObjToAccountMigrator(accountDao: AccountDao,
     }
 
     typeDao.getAccount.foreach(objectType => {
-      val query = new ObjectQuery().withAccountId(objectType.id).withMaxResults(500)
+      val query = new ObjectQuery().withTypeId(objectType.id).withMaxResults(500)
       migrate()
 
       def migrate() {
         val results = objectDao.search(query).results
+        logger.info("Migrating {} objects into accounts", results.size)
+
         results.foreach(obj => {
           val account = new Account
           account.id = obj.id
@@ -45,10 +47,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.registrationIpAddress = obj.ipAddress
           account.accountType = accountType
 
-          logger.info("Creating account [{}]", account)
           accountDao.save(account)
-
-          logger.info("Removing account-object [{}]", obj)
           objectDao.remove(obj)
         })
         if (results.size > 0)

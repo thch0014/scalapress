@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.profile.{AccountPlugin, AccountPluginDao}
+import com.cloudray.scalapress.plugin.account.{AccountPlugin, AccountPluginDao}
 import javax.servlet.http.{HttpSession, HttpServletResponse, HttpServletRequest}
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.savedrequest.DefaultSavedRequest

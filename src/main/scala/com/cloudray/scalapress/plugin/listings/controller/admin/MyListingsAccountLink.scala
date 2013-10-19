@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings.controller.admin
 
-import com.cloudray.scalapress.plugin.profile.AccountLink
+import com.cloudray.scalapress.plugin.account.AccountLink
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 
