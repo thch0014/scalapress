@@ -10,6 +10,7 @@ import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.media.{AssetQuery, MimeTools, AssetStore, Asset}
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -20,8 +21,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
   val CACHE_CONTROL = "max-age=2592000"
   val STORAGE_CLASS = StorageClass.ReducedRedundancy
 
-  var assets = loadAssets
-  logger.info("Preloaded assets [count: {}]", assets.size)
+  var assets: List[Asset] = Nil
 
   override def count: Int = assets.size
 
@@ -102,7 +102,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
   def toAsset(arg: S3VersionSummary) = Asset(arg.getKey, arg.getSize, link(arg.getKey), contentType(arg.getKey))
 
-  def loadAssets: List[Asset] = {
+  @PostConstruct
+  def loadAssets() {
 
     val assets = new ListBuffer[Asset]
 
@@ -117,7 +118,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
       versions = listing.getVersionSummaries
     }
 
-    assets.toList
+    logger.info("Loaded assets [count: {}]", assets.size)
+    this.assets = assets.toList
   }
 
   def getAmazonS3Client: AmazonS3Client = {

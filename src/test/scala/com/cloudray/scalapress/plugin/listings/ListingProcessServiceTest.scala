@@ -3,11 +3,12 @@ package com.cloudray.scalapress.plugin.listings
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.{Obj, ObjectType, ObjectDao}
+import com.cloudray.scalapress.obj.{ObjectType, ObjectDao}
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
 import com.cloudray.scalapress.obj.attr.AttributeValue
+import com.cloudray.scalapress.account.{Account, AccountDao}
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -19,16 +20,17 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
   process.title = "horse for sale cheap"
   process.accountId = "214"
 
-  val account = new Obj
+  val account = new Account
   account.id = 214
   account.name = "sammy"
 
   val service = new ListingProcessService
   service.context = new ScalapressContext
   service.context.objectDao = mock[ObjectDao]
+  service.context.accountDao = mock[AccountDao]
   service.listingProcessDao = mock[ListingProcessDao]
   service.listingAdminNotificationService = mock[ListingAdminNotificationService]
-  Mockito.when(service.context.objectDao.find(214)).thenReturn(account)
+  Mockito.when(service.context.accountDao.find(214)).thenReturn(account)
 
   test("that the object is assigned the account from the process") {
     val listing = service.process(process)
