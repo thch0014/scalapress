@@ -23,8 +23,7 @@ class AccountSearchController(accountDao: AccountDao,
   def search(@ModelAttribute("form") form: SearchForm,
              @RequestParam(value = "accountTypeId") accountTypeId: Long,
              @RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,
-             model: ModelMap,
-             req: HttpServletRequest) = {
+             model: ModelMap, req: HttpServletRequest) = {
 
     val query = new AccountQuery
     query.pageNumber = pageNumber
@@ -41,9 +40,10 @@ class AccountSearchController(accountDao: AccountDao,
   }
 
   @RequestMapping(value = Array("create"), params = Array("accountTypeId", "name"))
-  def create(@RequestParam("accountTypeId") typeId: java.lang.Long, @RequestParam("name") name: String): String = {
+  def create(@RequestParam("accountTypeId") accountTypeId: java.lang.Long,
+             @RequestParam("name") name: String): String = {
 
-    val t = accountTypeDao.find(typeId)
+    val t = accountTypeDao.find(accountTypeId)
     val acc = Account(t)
     acc.name = name
     accountDao.save(acc)

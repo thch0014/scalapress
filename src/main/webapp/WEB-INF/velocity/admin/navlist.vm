@@ -1,9 +1,13 @@
 <ul class="nav nav-tabs nav-stacked">
     <li><a href="/backoffice"><i class="icon-home"></i> Dashboard</a></li>
     <li><a href="/backoffice/folder"><i class="icon-folder-open"></i> Folders</a></li>
-    #foreach ($type in $types)
-        <li><a href="/backoffice/obj?typeId=$type.id"><i class="$type.bootIcon()"></i> $type.name</a></li>
-    #end
+  #foreach ($type in $types)
+      <li><a href="/backoffice/obj?typeId=$type.id"><i class="$type.bootIcon()"></i> $type.name</a></li>
+  #end
+  #foreach ($accountType in $accountTypes)
+      <li><a href="/backoffice/account?accountTypeId=$accountType.id">
+          <i class="icon-user"></i> $accountType.name</a></li>
+  #end
     <li><a href="/backoffice/form"><i class="icon-align-center"></i> Forms</a></li>
     <li><a href="/backoffice/submission"><i class="icon-pencil"></i> Submissions</a></li>
     <li><a href="/backoffice/medialib"><i class="icon-camera"></i> Media Library</a></li>

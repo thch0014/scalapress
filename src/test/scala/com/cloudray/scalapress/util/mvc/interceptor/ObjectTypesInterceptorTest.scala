@@ -10,10 +10,10 @@ import java.util
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-class TypesInterceptorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val dao = mock[TypeDao]
-    val interceptor = new TypesInterceptor(dao)
+    val interceptor = new ObjectTypesInterceptor(dao)
 
     test("types do not include deleted") {
         val type1 = new ObjectType

@@ -47,8 +47,8 @@ class Account {
 }
 
 object Account {
-  val STATUS_ACTIVE = "active"
-  val STATUS_DISABLED = "disabled"
+  val STATUS_ACTIVE = "Active"
+  val STATUS_DISABLED = "Disabled"
 
   def apply(t: AccountType) = {
     require(t != null)

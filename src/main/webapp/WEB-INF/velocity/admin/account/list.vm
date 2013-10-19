@@ -4,10 +4,10 @@
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create $type.name</h3>
+        <h3>Create $accountType.name</h3>
     </div>
     <form method="GET" action="/backoffice/account/create" class="form-horizontal">
-        <input type="hidden" name="typeId" value="$type.id"/>
+        <input type="hidden" name="accountTypeId" value="$accountType.id"/>
 
         <div class="modal-body">
 
@@ -26,8 +26,6 @@
         </div>
     </form>
 </div>
-
-
 
 
 <h3>$accountType.name</h3>
@@ -83,11 +81,5 @@
 </table>
 
 #paging($paging)
-
-<a href="#create-account-modal" role="button" class="btn" data-toggle="modal">
-    <i class="icon-plus-sign"></i> Create $accountType.name</a>
-
-
-
 
 #parse("/admin/footer.vm")

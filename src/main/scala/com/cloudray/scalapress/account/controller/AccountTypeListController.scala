@@ -9,9 +9,8 @@ import com.cloudray.scalapress.account.{AccountType, AccountTypeDao}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("/backoffice/accounttype"))
-class AccounTypeListController {
-
-  @Autowired var accountTypeDao: AccountTypeDao = _
+@Autowired
+class AccountTypeListController(accountTypeDao: AccountTypeDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/account/type/list.vm"
@@ -31,5 +30,5 @@ class AccounTypeListController {
     "redirect:/backoffice/accounttype"
   }
 
-  @ModelAttribute("types") def types = accountTypeDao.findAll().sortBy(_.id).asJava
+  @ModelAttribute("accountTypes") def types = accountTypeDao.findAll().sortBy(_.id).asJava
 }

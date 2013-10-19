@@ -8,16 +8,19 @@ import org.springframework.ui.ModelMap
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.{AccountDao, Account}
+import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.obj.controller.admin.AccountStatusPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/account/{id}"))
+@Autowired
 class AccountEditController(accountDao: AccountDao,
                             passwordEncoder: PasswordEncoder,
-                            context: ScalapressContext) {
+                            context: ScalapressContext) extends AccountStatusPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute("form") form: EditForm): String = "admin/object/edit.vm"
+  def edit(@ModelAttribute("form") form: EditForm): String = "admin/account/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest): String = {

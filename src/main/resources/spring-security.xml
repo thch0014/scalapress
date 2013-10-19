@@ -23,7 +23,7 @@
         <security:authentication-provider user-service-ref="adminUserDetailsService">
             <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
-        <security:authentication-provider user-service-ref="objectUserDetailsService">
+        <security:authentication-provider user-service-ref="accountUserDetailsService">
             <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>

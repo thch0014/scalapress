@@ -28,6 +28,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.cloudray.scalapress.account.AccountTypeDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -38,6 +39,7 @@ class WebConfig extends WebMvcConfigurationSupport {
   @Autowired var context: ScalapressContext = _
   @Autowired var folderDao: FolderDao = _
   @Autowired var typeDao: TypeDao = _
+  @Autowired var accountTypeDao: AccountTypeDao = _
   @Autowired var basketDao: BasketDao = _
   @Autowired var markupDao: MarkupDao = _
   @Autowired var themeDao: ThemeDao = _
@@ -72,7 +74,8 @@ class WebConfig extends WebMvcConfigurationSupport {
 
     registry.addInterceptor(SessionInterceptor)
     registry.addInterceptor(UrlResolverInterceptor)
-    registry.addInterceptor(new TypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
+    registry.addInterceptor(new ObjectTypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
+    registry.addInterceptor(new AccountTypesInterceptor(accountTypeDao)).addPathPatterns("/backoffice/**")
     registry.addInterceptor(new SiteInterceptor(context))
     registry.addInterceptor(new MenuInterceptor(context)).addPathPatterns("/backoffice/**")
   }

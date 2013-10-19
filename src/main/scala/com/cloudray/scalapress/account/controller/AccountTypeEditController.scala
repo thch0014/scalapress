@@ -8,10 +8,12 @@ import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.account.{AccountType, AccountTypeDao}
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/accounttype/{id}"))
+@Autowired
 class AccountTypeEditController(accountTypeDao: AccountTypeDao,
                                 markupDao: MarkupDao,
                                 sectionDao: SectionDao,

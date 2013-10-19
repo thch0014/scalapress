@@ -5,6 +5,7 @@ import com.cloudray.scalapress.account.{AccountType, AccountTypeDao, AccountDao,
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.Logging
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 @Component
@@ -12,6 +13,7 @@ import com.cloudray.scalapress.Logging
 class ObjToAccountMigrator(accountDao: AccountDao, objectDao: ObjectDao, accountTypeDao: AccountTypeDao)
   extends Logging {
 
+  //@PostConstruct
   def run() {
 
     val accountType = accountTypeDao.findAll().headOption match {

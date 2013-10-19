@@ -7,7 +7,7 @@ import com.cloudray.scalapress.obj.TypeDao
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-class TypesInterceptor(typeDao: TypeDao) extends HandlerInterceptorAdapter {
+class ObjectTypesInterceptor(typeDao: TypeDao) extends HandlerInterceptorAdapter {
   override def postHandle(request: HttpServletRequest,
                           response: HttpServletResponse,
                           handler: Any,
