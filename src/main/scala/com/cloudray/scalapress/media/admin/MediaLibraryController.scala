@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.media.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestMethod, RequestParam, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
@@ -25,6 +25,12 @@ class MediaLibraryController {
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
   def list = "admin/media/library.vm"
+
+  @RequestMapping(value = Array("delete/{key}"), produces = Array("text/html"))
+  def delete(@PathVariable("key") key: String): String = {
+    assetStore.delete(key)
+    "redirect:/backoffice/medialib"
+  }
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
   def upload(@RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
