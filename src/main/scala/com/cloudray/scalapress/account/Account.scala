@@ -11,12 +11,12 @@ import org.hibernate.annotations.{NotFoundAction, NotFound, Index}
 class Account {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Index(name = "id_index")
-  @BeanProperty var id: Long = _
+  @BeanProperty var id: java.lang.Long = _
 
   @Index(name = "status_index")
   @BeanProperty var status: String = _
+
   def isActive = Account.STATUS_ACTIVE == status
 
   @Index(name = "name_index")
@@ -54,6 +54,7 @@ object Account {
     require(t != null)
 
     val a = new Account
+    a.id = System.currentTimeMillis() % 10000000
     a.accountType = t
     a.name = "new account"
     a.dateCreated = new DateTime(DateTimeZone.UTC).getMillis

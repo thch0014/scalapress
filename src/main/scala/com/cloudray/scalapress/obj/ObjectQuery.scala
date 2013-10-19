@@ -27,11 +27,6 @@ class ObjectQuery extends PagedQuery {
     this
   }
 
-  def withAccountId(a: Option[Long]): ObjectQuery = {
-    this.accountId = a
-    this
-  }
-
   def withAccountId(a: Long): ObjectQuery = {
     this.accountId = Option(a)
     this

@@ -104,6 +104,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
   @PostConstruct
   def loadAssets() {
+    logger.info("Loading assets, be patient S3 is slow...")
 
     val assets = new ListBuffer[Asset]
 

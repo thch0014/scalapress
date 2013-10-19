@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util
 import com.googlecode.genericdao.search.ISearch
 
 /** @author Stephen Samuel */
-trait GenericDao[T, ID <: java.io.Serializable] {
+trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
 
   /**
    * <p>
@@ -60,6 +60,9 @@ trait GenericDao[T, ID <: java.io.Serializable] {
    * x
    */
   def search(search: ISearch): List[T]
+
+  def update(entity: T)
+  def merge(entity: T)
 
   /**
    * Search for a single entity using the given parameters.

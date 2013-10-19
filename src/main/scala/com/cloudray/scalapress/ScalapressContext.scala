@@ -17,6 +17,7 @@ import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.{AccountTypeDao, AccountDao}
+import com.cloudray.scalapress.plugin.ecommerce.OrderDao
 
 /** @author Stephen Samuel */
 @Component
@@ -53,6 +54,8 @@ class ScalapressContext extends ServletContextAware {
 
   @Autowired var sectionDao: SectionDao = _
   @Autowired var widgetDao: WidgetDao = _
+
+  @Autowired var orderDao: OrderDao = _
 
   @Autowired var themeService: ThemeService = _
 

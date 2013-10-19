@@ -13,8 +13,7 @@ import javax.annotation.PostConstruct
 class ObjToAccountMigrator(accountDao: AccountDao,
                            objectDao: ObjectDao,
                            typeDao: TypeDao,
-                           accountTypeDao: AccountTypeDao)
-  extends Logging {
+                           accountTypeDao: AccountTypeDao) extends Logging {
 
   @PostConstruct
   def run() {
@@ -41,6 +40,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.id = obj.id
           account.passwordHash = obj.passwordHash
           account.dateCreated = obj.dateCreated
+          account.dateUpdated = obj.dateUpdated
           account.status = Account.STATUS_ACTIVE
           account.email = obj.email_deprecated
           account.name = obj.name

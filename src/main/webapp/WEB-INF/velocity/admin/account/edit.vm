@@ -51,6 +51,31 @@
 
 </form>
 
+$orders
 
+#if ($orders.size() > 0)
+<label>Orders</label>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Date Placed</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+  #foreach ($account in $accounts)
+      <tr>
+          <td><a href="/backoffice/order/$order.id">$order.id</a></td>
+          <td>$!datetool.format($order.dateCreated())</td>
+          <td>$order.status()</td>
+          <td>$order.total()</td>
+          <td>
+              <a href="/backoffice/order/$order.id" role="button" class="btn btn-mini">
+                  <i class="icon-pencil"></i></a>
+          </td>
+      </tr>
+  #end
+</table>
+#end
 
 #parse("/admin/footer.vm")

@@ -10,6 +10,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.{AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.obj.controller.admin.AccountStatusPopulator
+import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 
 /** @author Stephen Samuel */
 @Controller
@@ -43,6 +44,8 @@ class AccountEditController(accountDao: AccountDao,
 
   @ModelAttribute("installation") def installation = context.installationDao.get
 
+  @ModelAttribute("orders") def orders(@PathVariable("id") id: Long) =
+    context.orderDao.search(new OrderQuery().withAccountId(id)).java
 }
 
 class EditForm {

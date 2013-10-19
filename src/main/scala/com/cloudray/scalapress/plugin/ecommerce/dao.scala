@@ -43,6 +43,10 @@ class OrderDaoImpl extends GenericDaoImpl[Order, java.lang.Long] with OrderDao {
     q.to.foreach(timestamp => {
       s.addFilterLessOrEqual("datePlaced", timestamp)
     })
+    q.accountId.foreach(accountId => {
+      s.addFetch("account")
+      s.addFilterEqual("account.id", "%" + accountId + "%")
+    })
     val result = searchAndCount(s)
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
   }

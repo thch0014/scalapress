@@ -15,7 +15,7 @@ import org.hibernate.SessionFactory
  *
  */
 @Transactional
-class GenericDaoImpl[T, ID <: java.io.Serializable] extends HibernateBaseDAO with GenericDao[T, ID] {
+class GenericDaoImpl[T <: AnyRef, ID <: java.io.Serializable] extends HibernateBaseDAO with GenericDao[T, ID] {
 
   @Autowired
   override def setSessionFactory(sessionFactory: SessionFactory) {
@@ -40,6 +40,10 @@ class GenericDaoImpl[T, ID <: java.io.Serializable] extends HibernateBaseDAO wit
   def findAll: List[T] = {
     _all(persistentClass).asScala.toList
   }
+
+  def update(entity: T) = super._saveOrUpdate(entity)
+
+  def merge(entity: T) = super._merge(entity)
 
   def findAll(limit: Int): List[T] = {
     search(new Search(persistentClass).setMaxResults(limit))
