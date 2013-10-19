@@ -17,10 +17,6 @@ trait AssetStore {
     */
   def exists(key: String): Boolean
 
-  // adds the given stream with a generated id and returns that id
-  @deprecated("should be provided with a key, let consumer of this api generate one if needed", "0.39")
-  def add(input: InputStream): String
-
   /** Adds the given stream under a unique key. The given key is used as a hint and may
     * not be the actual key used. This method guarantees not to overwrite any existing asset.
     *
@@ -33,7 +29,9 @@ trait AssetStore {
     */
   def put(key: String, input: InputStream)
 
-  /** returns a stream of the given key or none if the file was not found
+  /** Returns a stream for the asset stored under the given key.
+    *
+    * @return an InputStream for the asset or None if no asset was found.
     */
   def get(key: String): Option[InputStream]
 
@@ -42,9 +40,8 @@ trait AssetStore {
   def delete(key: String)
 
   /** Searches the index for assets that match the given query.
-    * Implementations are permitted to use best effort when performing the search.
-    * This is useful for backing stores that adhere to eventual consistency where
-    * exact searches would be costly.
+    * Implementations are permitted to use best effort when performing the search, to allow for
+    * backing stores that adhere to eventual consistency where exact searches would be costly.
     */
   def search(query: AssetQuery): Array[Asset]
 

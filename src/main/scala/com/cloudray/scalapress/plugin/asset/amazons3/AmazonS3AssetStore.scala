@@ -10,7 +10,6 @@ import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.media.{AssetQuery, MimeTools, AssetStore, Asset}
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
-import java.util.UUID
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -76,12 +75,6 @@ class AmazonS3AssetStore(val cdnUrl: String,
     val normalizedKey = getNormalizedKey(key)
     put(normalizedKey, in)
     normalizedKey
-  }
-
-  override def add(in: InputStream): String = {
-    val key = UUID.randomUUID.toString
-    put(key, in)
-    key
   }
 
   override def put(key: String, in: InputStream) {
