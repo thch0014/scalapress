@@ -18,7 +18,7 @@ import com.cloudray.scalapress.account.{Account, AccountDao}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("account"))
+@RequestMapping(Array("profile"))
 class ProfileController {
 
   @Autowired var accountDao: AccountDao = _

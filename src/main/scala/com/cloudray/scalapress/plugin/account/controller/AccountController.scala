@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
-import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.theme.{MarkupRenderer, ThemeService}
 import com.cloudray.scalapress.plugin.account.{AccountLink, AccountPluginDao}
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
@@ -11,17 +10,17 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.account.Account
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("account"))
-class AccountController {
+@Autowired
+class AccountController(themeService: ThemeService,
+                        accountPluginDao: AccountPluginDao,
+                        context: ScalapressContext) {
 
   var links: Seq[Class[_ <: AccountLink]] = new ComponentClassScanner().getSubtypes(classOf[AccountLink])
-
-  @Autowired var themeService: ThemeService = _
-  @Autowired var accountPluginDao: AccountPluginDao = _
-  @Autowired var context: ScalapressContext = _
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

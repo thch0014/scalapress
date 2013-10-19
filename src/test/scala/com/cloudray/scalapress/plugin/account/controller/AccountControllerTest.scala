@@ -14,12 +14,13 @@ import com.cloudray.scalapress.account.Account
 class AccountControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
   val plugin = new AccountPlugin
+  val themeService = mock[ThemeService]
+  val accountPluginDao = mock[AccountPluginDao]
+  val context = new ScalapressContext
 
-  val controller = new AccountController
+  val controller = new AccountController(themeService, accountPluginDao, context)
   controller.links = Nil
-  controller.themeService = mock[ThemeService]
-  controller.accountPluginDao = mock[AccountPluginDao]
-  Mockito.when(controller.accountPluginDao.get).thenReturn(plugin)
+  Mockito.when(accountPluginDao.get).thenReturn(plugin)
 
   val user = new Account
   user.id = 15
