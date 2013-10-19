@@ -7,7 +7,7 @@ import com.cloudray.scalapress.search.Sort
 /** @author Stephen Samuel */
 class AccountQuery extends PagedQuery {
 
-  @BeanProperty var typeId: Option[Long] = None
+  @BeanProperty var accountTypeId: Option[Long] = None
   @BeanProperty var status: Option[String] = None
   @BeanProperty var name: Option[String] = None
   @BeanProperty var sort: Option[Sort] = None
@@ -22,8 +22,8 @@ class AccountQuery extends PagedQuery {
     this
   }
 
-  def withTypeId(typeId: Long): AccountQuery = {
-    this.typeId = Option(typeId)
+  def withTypeId(accountTypeId: Long): AccountQuery = {
+    this.accountTypeId = Option(accountTypeId)
     this
   }
 
