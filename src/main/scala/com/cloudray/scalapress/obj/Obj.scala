@@ -29,7 +29,9 @@ class Obj extends SortedSections with java.io.Serializable {
 
   @Index(name = "name_index")
   @BeanProperty var name: String = _
-  @BeanProperty var email: String = _
+
+  @Column(name = "email")
+  @BeanProperty var email_deprecated: String = _
 
   @BeanProperty var expiry: Long = 0
   @BeanProperty var labels: String = _

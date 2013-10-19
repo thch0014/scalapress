@@ -14,7 +14,6 @@ class ObjectCloner {
     clone.price = obj.price
     clone.id = 0
     clone.vatRate = obj.vatRate
-    clone.email = obj.email
     clone.content = obj.content
     clone.titleTag = obj.titleTag
     clone.keywordsTag = obj.keywordsTag

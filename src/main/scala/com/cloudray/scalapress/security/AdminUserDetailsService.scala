@@ -31,7 +31,7 @@ class AdminUserDetails(val user: User, context: ScalapressContext) extends Scala
   def getPassword: String = user.passwordHash
   def getAuthorities = List(AdminAuthority, UserAuthority).asJava
   def account = {
-    context.objectDao.byEmail("admin@localhost") match {
+    context.accountDao.byEmail("admin@localhost") match {
       case None =>
 
         val accountType = context.accountTypeDao.default

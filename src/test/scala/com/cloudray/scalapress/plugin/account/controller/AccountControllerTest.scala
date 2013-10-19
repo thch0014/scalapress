@@ -3,12 +3,12 @@ package com.cloudray.scalapress.plugin.account.controller
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.mockito.Mockito
-import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.{ThemeService, Markup}
 import java.util.UUID
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.account.{AccountLink, AccountPluginDao, AccountPlugin}
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 class AccountControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
@@ -21,7 +21,7 @@ class AccountControllerTest extends FlatSpec with MockitoSugar with OneInstanceP
   controller.accountPluginDao = mock[AccountPluginDao]
   Mockito.when(controller.accountPluginDao.get).thenReturn(plugin)
 
-  val user = new Obj
+  val user = new Account
   user.id = 15
 
   val req = mock[HttpServletRequest]

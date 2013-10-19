@@ -16,7 +16,6 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
   def search(query: ObjectQuery): Page[Obj]
   def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]]
   def findByType(id: Long): List[Obj]
-  def byEmail(email: String): Option[Obj]
 }
 
 @Component
@@ -68,12 +67,6 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     }
     val result = searchAndCount(s)
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
-  }
-
-  override def byEmail(email: String): Option[Obj] = {
-    val search = new Search(classOf[Obj])
-    search.addFilterEqual("email", email)
-    super.search(search).headOption
   }
 
   def findByType(id: Long): List[Obj] = search(new Search(classOf[Obj]).addFilterEqual("objectType.id", id))

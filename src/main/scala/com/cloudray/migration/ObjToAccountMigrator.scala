@@ -42,7 +42,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.passwordHash = obj.passwordHash
           account.dateCreated = obj.dateCreated
           account.status = Account.STATUS_ACTIVE
-          account.email = obj.email
+          account.email = obj.email_deprecated
           account.name = obj.name
           account.registrationIpAddress = obj.ipAddress
           account.accountType = accountType

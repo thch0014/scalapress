@@ -17,7 +17,6 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
   obj.price = 135
   obj.content = "super content"
   obj.vatRate = 10.00
-  obj.email = "sam@sksamuel.com"
   obj.exernalReference = "ext-124"
   obj.expiry = 554345345
   obj.titleTag = "title fight"
@@ -84,9 +83,7 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
     assert(obj.objectType.id === cloner.clone(obj).objectType.id)
   }
 
-  test("object clone includes email") {
-    assert("sam@sksamuel.com" === cloner.clone(obj).email)
-  }
+
 
   test("object clone includes content") {
     assert("super content" === cloner.clone(obj).content)
