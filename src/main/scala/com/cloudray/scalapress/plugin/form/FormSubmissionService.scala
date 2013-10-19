@@ -12,14 +12,13 @@ import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 @Component
-class FormSubmissionService extends Logging {
+@Autowired
+class FormSubmissionService(context: ScalapressContext,
+                            assetStore: AssetStore,
+                            submissionDao: SubmissionDao,
+                            mailSender: MailSender) extends Logging {
 
   val EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var submissionDao: SubmissionDao = _
-  @Autowired var mailSender: MailSender = _
 
   def doSubmission(form: Form, sreq: ScalapressRequest, files: Iterable[MultipartFile]): Submission = {
 
