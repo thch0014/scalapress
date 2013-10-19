@@ -20,6 +20,7 @@ trait AssetStore {
   def add(input: InputStream): String
 
   // adds the given stream with the given key, generating a new key if the provided one is in use
+  @deprecated("should be provided with a key, let consumer of this api generate one if needed", "0.39")
   def add(key: String, input: InputStream): String
 
   // adds the given stream and overrides any existing

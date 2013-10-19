@@ -3,15 +3,14 @@ package com.cloudray.scalapress.plugin.asset.amazons3
 import java.io.{ByteArrayInputStream, InputStream}
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.auth.BasicAWSCredentials
-import java.util.UUID
 import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.amazonaws.services.s3.model._
 import java.net.URLConnection
 import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.media.{AssetQuery, MimeTools, AssetStore, Asset}
-import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
+import java.util.UUID
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,
@@ -27,42 +26,9 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
   override def count: Int = assets.size
 
-  override def search(q: AssetQuery): Array[Asset] = {
-    val filtered = q.prefix match {
-      case Some(prefix) => {
-        val lowerPrefix = prefix.toLowerCase
-        assets.filter(_.filename.toLowerCase.startsWith(lowerPrefix))
-      }
-      case None => assets
-    }
-    filtered.drop(q.offset).take(q.pageSize).toArray
-  }
-
-  def contentType(filename: String): String = URLConnection.guessContentTypeFromName(filename)
-
   override def delete(key: String): Unit = {
     getAmazonS3Client.deleteObject(bucketName, key)
     assets = assets.filterNot(_.filename == key)
-  }
-
-  def toAsset(arg: S3VersionSummary) = Asset(arg.getKey, arg.getSize, link(arg.getKey), contentType(arg.getKey))
-
-  def loadAssets: List[Asset] = {
-
-    val assets = new ListBuffer[Asset]
-
-    val req = new ListVersionsRequest
-    req.setBucketName(bucketName)
-
-    var listing = getAmazonS3Client.listVersions(req)
-    var versions = listing.getVersionSummaries
-    while (versions != null && versions.size > 0) {
-      assets appendAll versions.asScala.map(toAsset)
-      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
-      versions = listing.getVersionSummaries
-    }
-
-    assets.toList
   }
 
   override def exists(key: String) = {
@@ -74,7 +40,6 @@ class AmazonS3AssetStore(val cdnUrl: String,
   }
 
   override def baseUrl = cdnUrl
-
   override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
 
   override def get(key: String): Option[InputStream] = {
@@ -94,6 +59,17 @@ class AmazonS3AssetStore(val cdnUrl: String,
     } catch {
       case e: Exception => None
     }
+  }
+
+  override def search(q: AssetQuery): Array[Asset] = {
+    val filtered = q.prefix match {
+      case Some(prefix) => {
+        val lowerPrefix = prefix.toLowerCase
+        assets.filter(_.filename.toLowerCase.startsWith(lowerPrefix))
+      }
+      case None => assets
+    }
+    filtered.drop(q.offset).take(q.pageSize).toArray
   }
 
   override def add(key: String, in: InputStream): String = {
@@ -126,9 +102,29 @@ class AmazonS3AssetStore(val cdnUrl: String,
     assets = Asset(key, array.length, link(key), contentType(key)) :: assets
   }
 
-  def getNormalizedKey(key: String): String = {
-    FilenameUtils.getBaseName(key) + "_" + new DateTime(DateTimeZone.UTC).getMillis + "." + FilenameUtils
-      .getExtension(key)
+  def getNormalizedKey(key: String): String = baseName(key) + "_" + System.currentTimeMillis() + "." + extension(key)
+  def baseName(key: String): String = FilenameUtils.getBaseName(key)
+  def extension(key: String): String = FilenameUtils.getExtension(key)
+  def contentType(filename: String): String = URLConnection.guessContentTypeFromName(filename)
+
+  def toAsset(arg: S3VersionSummary) = Asset(arg.getKey, arg.getSize, link(arg.getKey), contentType(arg.getKey))
+
+  def loadAssets: List[Asset] = {
+
+    val assets = new ListBuffer[Asset]
+
+    val req = new ListVersionsRequest
+    req.setBucketName(bucketName)
+
+    var listing = getAmazonS3Client.listVersions(req)
+    var versions = listing.getVersionSummaries
+    while (versions != null && versions.size > 0) {
+      assets appendAll versions.asScala.map(toAsset)
+      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
+      versions = listing.getVersionSummaries
+    }
+
+    assets.toList
   }
 
   def getAmazonS3Client: AmazonS3Client = {
