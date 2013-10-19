@@ -17,6 +17,7 @@ class Account {
 
   @Index(name = "status_index")
   @BeanProperty var status: String = _
+  def isActive = Account.STATUS_ACTIVE == status
 
   @Index(name = "name_index")
   @BeanProperty var name: String = _

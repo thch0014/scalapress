@@ -4,32 +4,31 @@ import org.springframework.security.core.userdetails.{UsernameNotFoundException,
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.account.{AccountDao, Account}
 
 /** @author Stephen Samuel
   *
   *         Loads user details from the normal objects table
   **/
 @Component
-class ObjectUserDetailsService extends UserDetailsService {
-
-  @Autowired var objectDao: ObjectDao = _
+@Autowired
+class AccountUserDetailsService(accountDao: AccountDao) extends UserDetailsService {
 
   def loadUserByUsername(username: String): UserDetails =
-    objectDao.byEmail(username) match {
+    accountDao.byEmail(username) match {
+      case Some(obj) => new AccountUserDetails(obj)
       case None => throw new UsernameNotFoundException(username)
-      case Some(obj) => new ObjectUserDetails(obj)
     }
 }
 
-class ObjectUserDetails(obj: Obj) extends ScalaPressUserDetails {
+class AccountUserDetails(acc: Account) extends ScalaPressUserDetails {
 
-  def isEnabled: Boolean = obj.status.toLowerCase == "live"
+  def isEnabled: Boolean = acc.isActive
   def isCredentialsNonExpired: Boolean = true
-  def isAccountNonLocked: Boolean = true
+  def isAccountNonLocked: Boolean = acc.isActive
   def isAccountNonExpired: Boolean = true
-  def getUsername: String = obj.email
-  def getPassword: String = obj.passwordHash
-  def userObject: Obj = obj
+  def getUsername: String = acc.email
+  def getPassword: String = acc.passwordHash
+  def account: Account = acc
   def getAuthorities = List(UserAuthority).asJava
 }

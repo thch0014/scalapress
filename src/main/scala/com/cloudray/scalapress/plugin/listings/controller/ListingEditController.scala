@@ -25,7 +25,7 @@ class ListingEditController {
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
 
-    val account = SpringSecurityResolver.getUser(req)
+    val account = SpringSecurityResolver.getAccount(req)
     require(account.get.id == obj.account.id)
 
     val sreq = ScalapressRequest(req, context).withTitle("Edit Listing")

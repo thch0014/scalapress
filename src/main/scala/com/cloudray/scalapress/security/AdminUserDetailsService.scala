@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.user.{User, UserDao}
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 @Component
@@ -30,29 +30,27 @@ class AdminUserDetails(val user: User, context: ScalapressContext) extends Scala
   def getUsername: String = user.username
   def getPassword: String = user.passwordHash
   def getAuthorities = List(AdminAuthority, UserAuthority).asJava
-  def userObject: Obj = {
+  def account = {
     context.objectDao.byEmail("admin@localhost") match {
       case None =>
 
-        val accountType = context.typeDao.findAll()
-          .find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts").get
+        val accountType = context.accountTypeDao.default
 
-        val obj = new Obj
-        obj.name = "admin"
-        obj.email = "admin@localhost"
-        obj.objectType = accountType
-        context.objectDao.save(obj)
+        val account = new Account
+        account.name = "admin"
+        account.email = "admin@localhost"
+        account.accountType = accountType
+        context.accountDao.save(account)
 
-        obj
+        account
 
-      case Some(obj) => obj
+      case Some(obj) => account
     }
   }
 }
 
 abstract class ScalaPressUserDetails extends UserDetails {
-  // returns the user object for the current security context
-  def userObject: Obj
+  def account: Account
   def username = getUsername
   def password = getPassword
   def authorities = getAuthorities

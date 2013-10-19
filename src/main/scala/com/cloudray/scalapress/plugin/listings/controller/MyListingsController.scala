@@ -16,24 +16,24 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRende
 @RequestMapping(Array("listing"))
 class MyListingsController {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var themeService: ThemeService = _
-    var securityResolver: SecurityResolver = SpringSecurityResolver
+  @Autowired var context: ScalapressContext = _
+  @Autowired var themeService: ThemeService = _
+  var securityResolver: SecurityResolver = SpringSecurityResolver
 
-    @ResponseBody
-    @RequestMapping(produces = Array("text/html"))
-    def list(req: HttpServletRequest): ScalapressPage = {
+  @ResponseBody
+  @RequestMapping(produces = Array("text/html"))
+  def list(req: HttpServletRequest): ScalapressPage = {
 
-        val account = securityResolver.getUser(req)
-        val query = new ObjectQuery().withAccountId(account.map(_.id))
-        val objects = context.objectDao.search(query)
+    val account = securityResolver.getAccount(req)
+    val query = new ObjectQuery().withAccountId(account.map(_.id))
+    val objects = context.objectDao.search(query)
 
-        val sreq = ScalapressRequest(req, context).withTitle("My Listings")
-        val theme = themeService.default
-        val page = ScalapressPage(theme, sreq)
+    val sreq = ScalapressRequest(req, context).withTitle("My Listings")
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
 
-        page.body(ListingsRenderer.myListings(objects.results))
-        page.body(ListingsRenderer.createListing)
-        page
-    }
+    page.body(ListingsRenderer.myListings(objects.results))
+    page.body(ListingsRenderer.createListing)
+    page
+  }
 }

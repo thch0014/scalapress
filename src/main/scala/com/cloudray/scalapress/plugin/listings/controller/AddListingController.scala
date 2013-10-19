@@ -305,7 +305,7 @@ class AddListingController {
       case Some(p) => p
     }
 
-    process.accountId = SpringSecurityResolver.getUser(req).map(_.id.toString).orNull
+    process.accountId = SpringSecurityResolver.getAccount(req).map(_.id.toString).orNull
     listingProcessDao.save(process)
     process
   }

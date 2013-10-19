@@ -8,20 +8,20 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.security.{SecurityResolver, SpringSecurityResolver}
 import com.cloudray.scalapress.plugin.profile.controller.renderer.ProfileRenderer
 import org.apache.commons.lang.StringUtils
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import com.cloudray.scalapress.account.{Account, AccountDao}
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("profile"))
 class ProfileController {
 
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var accountDao: AccountDao = _
   @Autowired var themeDao: ThemeDao = _
   @Autowired var themeService: ThemeService = _
   @Autowired var accountPluginDao: AccountPluginDao = _
@@ -45,18 +45,18 @@ class ProfileController {
   def update(req: HttpServletRequest, @ModelAttribute profile: Profile, errors: Errors): String = {
     if (profile.email != null)
       if (profile.name != null) {
-        val account = securityResolver.getUser(req).get
+        val account = securityResolver.getAccount(req).get
         account.name = profile.name
         account.email = profile.email
         if (StringUtils.isNotBlank(profile.password)) {
           account.passwordHash = passwordEncoder.encodePassword(profile.password, null)
         }
-        objectDao.save(account)
+        accountDao.save(account)
       }
     "redirect:profile"
   }
 
-  @ModelAttribute def profile(req: HttpServletRequest) = Profile(securityResolver.getUser(req).get)
+  @ModelAttribute def profile(req: HttpServletRequest) = Profile(securityResolver.getAccount(req).get)
 }
 
 class Profile {
@@ -66,7 +66,7 @@ class Profile {
 }
 
 object Profile {
-  def apply(obj: Obj): Profile = {
+  def apply(obj: Account): Profile = {
     val profile = new Profile
     profile.name = obj.name
     profile.email = obj.email

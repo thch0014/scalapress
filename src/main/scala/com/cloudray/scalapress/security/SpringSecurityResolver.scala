@@ -3,7 +3,7 @@ package com.cloudray.scalapress.security
 import javax.servlet.http.HttpServletRequest
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.Authentication
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 object SpringSecurityResolver extends SecurityResolver {
@@ -20,7 +20,7 @@ object SpringSecurityResolver extends SecurityResolver {
   def getAdminDetails(req: HttpServletRequest): AdminUserDetails =
     getUserDetails(req).get.asInstanceOf[AdminUserDetails]
 
-  def getUser(req: HttpServletRequest): Option[Obj] = getUserDetails(req).flatMap(arg => Option(arg.userObject))
+  def getAccount(req: HttpServletRequest): Option[Account] = getUserDetails(req).flatMap(arg => Option(arg.account))
 
   def hasAdminRole(req: HttpServletRequest): Boolean =
     getAuth(req).exists(_.getAuthorities.contains(AdminAuthority))
@@ -31,5 +31,5 @@ object SpringSecurityResolver extends SecurityResolver {
 
 trait SecurityResolver {
   def hasUserRole(req: HttpServletRequest): Boolean
-  def getUser(req: HttpServletRequest): Option[Obj]
+  def getAccount(req: HttpServletRequest): Option[Account]
 }
