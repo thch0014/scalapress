@@ -28,11 +28,11 @@
         <maven.plugin.dependency.version>2.7</maven.plugin.dependency.version>
         <maven.plugin.gpg.version>1.4</maven.plugin.gpg.version>
         <maven.plugin.jar.version>2.4</maven.plugin.jar.version>
-        <maven.plugin.war.version>2.3</maven.plugin.war.version>
+        <maven.plugin.war.version>2.4</maven.plugin.war.version>
         <maven.plugin.javadoc.version>2.9</maven.plugin.javadoc.version>
         <maven.plugin.release.version>2.3.2</maven.plugin.release.version>
-        <maven.plugin.surefire.version>2.14.1</maven.plugin.surefire.version>
-        <maven.plugin.scala.version>3.1.5</maven.plugin.scala.version>
+        <maven.plugin.surefire.version>2.16</maven.plugin.surefire.version>
+        <maven.plugin.scala.version>3.1.6</maven.plugin.scala.version>
         <maven.plugin.scalatest.version>1.0-M2</maven.plugin.scalatest.version>
         <maven.plugin.source.version>2.2.1</maven.plugin.source.version>
 
@@ -59,7 +59,7 @@
         <edtftpj.version>1.5.3</edtftpj.version>
         <ehcache.version>2.6.6</ehcache.version>
         <elasticsearch.version>0.90.5</elasticsearch.version>
-        <elastic4s.version>0.90.5.2</elastic4s.version>
+        <elastic4s.version>0.90.5.5</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
