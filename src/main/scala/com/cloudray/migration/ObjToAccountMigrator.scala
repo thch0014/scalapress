@@ -22,7 +22,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
       case Some(t) => t
       case None =>
         val accountType = new AccountType
-        accountType.name = "Basic Account"
+        accountType.name = "Account"
         accountTypeDao.save(accountType)
         accountType
     }

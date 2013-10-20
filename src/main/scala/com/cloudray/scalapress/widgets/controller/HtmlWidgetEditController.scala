@@ -12,18 +12,18 @@ import org.springframework.ui.ModelMap
 @RequestMapping(Array("backoffice/widget/html/{id}"))
 class HtmlWidgetEditController extends WidgetContainerMapPopulator {
 
-    @Autowired var widgetDao: WidgetDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var widgetDao: WidgetDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = "admin/widget/html.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = "admin/widget/html.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = {
-        widgetDao.save(w)
-        edit(w, model)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute("widget") w: HtmlWidget, model: ModelMap) = {
+    widgetDao.save(w)
+    edit(w, model)
+  }
 
-    @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[HtmlWidget]
+  @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[HtmlWidget]
 
 }

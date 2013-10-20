@@ -12,7 +12,12 @@ class ObjectTypesInterceptor(typeDao: TypeDao) extends HandlerInterceptorAdapter
                           response: HttpServletResponse,
                           handler: Any,
                           modelAndView: ModelAndView) {
-    if (modelAndView != null)
-      modelAndView.getModelMap.put("types", typeDao.findAll().filterNot(_.deleted).sortBy(_.id).asJava)
+    if (modelAndView != null) {
+      val types = typeDao.findAll()
+        .filterNot(_.deleted)
+        .filterNot(_.name.toLowerCase.startsWith("account"))
+        .sortBy(_.id)
+      modelAndView.getModelMap.put("types", types.asJava)
+    }
   }
 }

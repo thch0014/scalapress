@@ -12,20 +12,20 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/user"))
 class UserListController {
 
-    @Autowired var userDao: UserDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var userDao: UserDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/user/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/user/list.vm"
 
-    @RequestMapping(value = Array("create"), produces = Array("text/html"))
-    def create = {
-        val u = new User
-        u.name = "new user"
-        u.username = "nousername"
-        userDao.save(u)
-        list
-    }
+  @RequestMapping(value = Array("create"), produces = Array("text/html"))
+  def create = {
+    val u = new User
+    u.name = "new user"
+    u.username = "nousername"
+    userDao.save(u)
+    list
+  }
 
-    @ModelAttribute("users") def users = userDao.findAll().asJava
+  @ModelAttribute("users") def users = userDao.findAll().asJava
 }

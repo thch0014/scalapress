@@ -15,48 +15,49 @@ import scala.collection.mutable
 @RequestMapping(Array("backoffice/widget"))
 class WidgetListController {
 
-    @Autowired var context: ScalapressContext = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping
-    def list = "admin/widget/list.vm"
+  @RequestMapping
+  def list = "admin/widget/list.vm"
 
-    @RequestMapping(value = Array("create"), method = Array(RequestMethod.POST))
-    def create(@RequestParam("class") klass: String) = {
-        val widget = Class.forName(klass).newInstance().asInstanceOf[Widget]
-        widget.init(context)
-        "redirect:/backoffice/widget"
+  @RequestMapping(value = Array("create"), method = Array(RequestMethod.POST))
+  def create(@RequestParam("class") klass: String) = {
+    val widget = Class.forName(klass).newInstance().asInstanceOf[Widget]
+    widget.init(context)
+    "redirect:/backoffice/widget"
+  }
+
+  @RequestMapping(value = Array("{id}/delete"))
+  def delete(@PathVariable("id") id: Long) = {
+    context.widgetDao.removeById(id)
+    "redirect:/backoffice/widget"
+  }
+
+  @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
+  def reorderWidgets(@RequestBody order: String): String = {
+
+    val widgets = context.widgetDao.findAll()
+    val ids = order.split("-")
+    if (ids.size == widgets.size)
+      widgets.foreach(w => {
+        val pos = ids.indexOf(w.id.toString)
+        w.position = pos
+        context.widgetDao.save(w)
+      })
+    "ok"
+  }
+
+  @ModelAttribute("widgets") def widgets = {
+    val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
+      .position))
+    context.widgetDao.findAll().sorted(ordering).toArray
+  }
+
+  @ModelAttribute("classes") def classes = {
+    val map = new mutable.LinkedHashMap[String, String]
+    for ( c <- ComponentClassScanner.widgets.sortBy(_.getSimpleName) ) {
+      map += c.getName -> c.getSimpleName
     }
-
-    @RequestMapping(value = Array("{id}/delete"))
-    def delete(@PathVariable("id") id: Long) = {
-        context.widgetDao.removeById(id)
-        "redirect:/backoffice/widget"
-    }
-
-    @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
-    def reorderWidgets(@RequestBody order: String): String = {
-
-        val widgets = context.widgetDao.findAll()
-        val ids = order.split("-")
-        if (ids.size == widgets.size)
-            widgets.foreach(w => {
-                val pos = ids.indexOf(w.id.toString)
-                w.position = pos
-                context.widgetDao.save(w)
-            })
-        "ok"
-    }
-
-    @ModelAttribute("widgets") def widgets = {
-        val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x.position))
-        context.widgetDao.findAll().sorted(ordering).toArray
-    }
-
-    @ModelAttribute("classes") def classes = {
-        val map = new mutable.LinkedHashMap[String, String]
-        for ( c <- ComponentClassScanner.widgets.sortBy(_.getSimpleName) ) {
-            map += c.getName -> c.getSimpleName
-        }
-        map.asJava
-    }
+    map.asJava
+  }
 }
