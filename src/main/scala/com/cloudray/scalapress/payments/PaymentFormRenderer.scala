@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Component
-class PaymentFormRenderer {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class PaymentFormRenderer(context: ScalapressContext) {
 
   def renderPaymentForm(purchase: Purchase): Elem = {
 
