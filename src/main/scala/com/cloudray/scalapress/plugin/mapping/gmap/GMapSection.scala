@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gmap
+package com.cloudray.scalapress.plugin.mapping.gmap
 
 import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}

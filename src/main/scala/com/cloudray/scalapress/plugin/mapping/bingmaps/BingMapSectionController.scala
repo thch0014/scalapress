@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.bingmaps
+package com.cloudray.scalapress.plugin.mapping.bingmaps
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}

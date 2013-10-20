@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.bingmaps
+package com.cloudray.scalapress.plugin.mapping.bingmaps
 
 import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gmap
+package com.cloudray.scalapress.plugin.mapping.gmap
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
