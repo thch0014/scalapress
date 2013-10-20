@@ -20,13 +20,13 @@ import javax.servlet.http.HttpServletResponse
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/{id}"))
-class FolderEditController extends EnumPopulator with ThemePopulator with SectionSorting {
-
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var folderDao: FolderDao = _
-  @Autowired var themeDao: ThemeDao = _
-  @Autowired var sectionDao: SectionDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class FolderEditController(val assetStore: AssetStore,
+                           val folderDao: FolderDao,
+                           val themeDao: ThemeDao,
+                           val sectionDao: SectionDao,
+                           val context: ScalapressContext)
+  extends EnumPopulator with ThemePopulator with SectionSorting {
 
   @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
   def reorderSections(@RequestBody order: String, @ModelAttribute folder: Folder, response: HttpServletResponse) {

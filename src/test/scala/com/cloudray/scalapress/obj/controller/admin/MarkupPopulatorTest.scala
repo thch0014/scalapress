@@ -22,7 +22,7 @@ class MarkupPopulatorTest extends FunSuite with MockitoSugar with OneInstancePer
     m3.name = "hannibal"
 
     val populator = new MarkupPopulator {
-        var markupDao: MarkupDao = mock[MarkupDao]
+        val markupDao: MarkupDao = mock[MarkupDao]
     }
 
     Mockito.when(populator.markupDao.findAll()).thenReturn(List(m1, m2, m3))

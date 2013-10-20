@@ -11,7 +11,7 @@ import scala.collection.JavaConverters._
 
 trait ObjectTypePopulator {
 
-  var objectTypeDao: TypeDao
+  val objectTypeDao: TypeDao
 
   @ModelAttribute def objectTypes(model: ModelMap) {
     val objectTypes = objectTypeDao.findAll()

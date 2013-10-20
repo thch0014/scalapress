@@ -12,7 +12,7 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 @RequestMapping(Array("backoffice/plugin/search/widget/searchform/{id}"))
 class SearchFormWidgetController extends WidgetEditController {
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = "admin/plugin/search/widget/searchform.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = "admin/plugin/search/widget/searchform.vm"
 }
 

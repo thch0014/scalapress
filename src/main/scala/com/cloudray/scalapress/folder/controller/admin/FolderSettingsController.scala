@@ -14,10 +14,9 @@ import com.cloudray.scalapress.theme.MarkupDao
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/folder/settings"))
-class FolderSettingsController extends SortPopulator with MarkupPopulator {
-
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class FolderSettingsController(val markupDao: MarkupDao,
+                               context: ScalapressContext) extends SortPopulator with MarkupPopulator {
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
   def edit(req: HttpServletRequest) = "admin/folder/settings.vm"

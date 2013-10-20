@@ -2,20 +2,18 @@ package com.cloudray.scalapress.search.section
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
-import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import scala.Array
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.SortPopulator
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/search/section/form/{id}"))
-class SearchFormSectionController extends MarkupPopulator with SortPopulator {
-
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class SearchFormSectionController(val markupDao: MarkupDao,
+                                  context: ScalapressContext) extends MarkupPopulator with SortPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("section") section: SearchFormSection) = "admin/search/section/form.vm"

@@ -5,7 +5,7 @@ import com.cloudray.scalapress.section.{Section, SectionDao}
 /** @author Stephen Samuel */
 trait SectionSorting {
 
-  var sectionDao: SectionDao
+  val sectionDao: SectionDao
 
   def reorderSections(order: String, sections: Iterable[Section]) {
     val ids = order.split("-")

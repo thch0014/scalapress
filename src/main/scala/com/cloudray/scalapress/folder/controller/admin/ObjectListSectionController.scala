@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletRequest
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/section/objectlist/{id}"))
-class ObjectListSectionController extends MarkupPopulator with SortPopulator with AttributePopulator {
-
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var sectionDao: SectionDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class ObjectListSectionController(val markupDao: MarkupDao,
+                                  val sectionDao: SectionDao,
+                                  context: ScalapressContext)
+  extends MarkupPopulator with SortPopulator with AttributePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {

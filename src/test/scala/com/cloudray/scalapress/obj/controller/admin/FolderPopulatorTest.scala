@@ -38,7 +38,7 @@ class FolderPopulatorTest extends FunSuite with MockitoSugar with OneInstancePer
     f6.parent = f5
 
     val populator = new FolderPopulator {
-        var folderDao: FolderDao = mock[FolderDao]
+        val folderDao: FolderDao = mock[FolderDao]
     }
 
     Mockito.when(populator.folderDao.findAll()).thenReturn(List(f1, f2, f3, f4, f5, f6))

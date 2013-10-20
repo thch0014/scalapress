@@ -15,13 +15,12 @@ import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/section/{id}"))
-class SectionEditController extends MarkupPopulator {
-
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var objectDao: ObjectDao = _
-  @Autowired var sectionDao: SectionDao = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var markupDao: MarkupDao = _
+@Autowired
+class SectionEditController(val assetStore: AssetStore,
+                            val objectDao: ObjectDao,
+                            val sectionDao: SectionDao,
+                            val markupDao: MarkupDao,
+                            context: ScalapressContext) extends MarkupPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("section") section: Section) = "admin/section/edit.vm"

@@ -3,7 +3,6 @@ package com.cloudray.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.search.{SearchFieldType, SearchFormDao, SearchFormField, SearchForm}
 import com.cloudray.scalapress.obj.TypeDao
 import com.cloudray.scalapress.theme.MarkupDao
@@ -13,12 +12,11 @@ import com.cloudray.scalapress.util.{ObjectTypePopulator, SortPopulator}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/searchform/{id}"))
-class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator with SortPopulator {
-
-  @Autowired var objectTypeDao: TypeDao = _
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var searchFormDao: SearchFormDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class SearchFormEditController(val objectTypeDao: TypeDao,
+                               val markupDao: MarkupDao,
+                               val searchFormDao: SearchFormDao)
+  extends MarkupPopulator with ObjectTypePopulator with SortPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("form") form: SearchForm) = "admin/searchform/edit.vm"
@@ -46,5 +44,6 @@ class SearchFormEditController extends MarkupPopulator with ObjectTypePopulator 
   @ModelAttribute("form") def form(@PathVariable("id") id: Long) = searchFormDao.find(id)
 
   import scala.collection.JavaConverters._
+
   @ModelAttribute("fields") def fields(@PathVariable("id") id: Long) = searchFormDao.find(id).sortedFields.asJava
 }

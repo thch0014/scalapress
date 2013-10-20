@@ -15,11 +15,10 @@ import com.cloudray.scalapress.obj.StockMethod
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/shopping"))
-class ShoppingPluginController extends MarkupPopulator with EnumPopulator {
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var shoppingPluginDao: ShoppingPluginDao = _
+@Autowired
+class ShoppingPluginController(val context: ScalapressContext,
+                               val markupDao: MarkupDao,
+                               val shoppingPluginDao: ShoppingPluginDao) extends MarkupPopulator with EnumPopulator {
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
   def edit(req: HttpServletRequest,

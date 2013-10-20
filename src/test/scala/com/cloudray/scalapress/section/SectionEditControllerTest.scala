@@ -6,13 +6,19 @@ import org.springframework.ui.ModelMap
 import org.mockito.Mockito
 import com.cloudray.scalapress.theme.{Markup, MarkupDao}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.obj.ObjectDao
 
 /** @author Stephen Samuel */
 class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new SectionEditController
-  controller.sectionDao = mock[SectionDao]
-  controller.markupDao = mock[MarkupDao]
+  val sectionDao = mock[SectionDao]
+  val markupDao = mock[MarkupDao]
+  val assetStore = mock[AssetStore]
+  val objectDao = mock[ObjectDao]
+  val context = new ScalapressContext
+  val controller = new SectionEditController(assetStore, objectDao, sectionDao, markupDao, context)
 
   val section = new StringSection("coldplay")
   Mockito.when(controller.sectionDao.find(123l)).thenReturn(section)

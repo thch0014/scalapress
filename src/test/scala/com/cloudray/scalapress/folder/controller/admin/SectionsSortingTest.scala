@@ -9,7 +9,7 @@ import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSe
 class SectionsSortingTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val sorter = new SectionSorting {
-    var sectionDao: SectionDao = mock[SectionDao]
+    val sectionDao: SectionDao = mock[SectionDao]
   }
 
   val section1 = new FolderContentSection

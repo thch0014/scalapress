@@ -31,18 +31,17 @@ import scala.Some
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}"))
-class ObjectEditController
+@Autowired
+class ObjectEditController(val assetStore: AssetStore,
+                           val attributeValueDao: AttributeValueDao,
+                           val objectDao: ObjectDao,
+                           val folderDao: FolderDao,
+                           val imageDao: ImageDao,
+                           val sectionDao: SectionDao,
+                           val context: ScalapressContext,
+                           val searchService: SearchService,
+                           val passwordEncoder: PasswordEncoder)
   extends FolderPopulator with AttributeValuesPopulator with EnumPopulator with SectionSorting {
-
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var attributeValueDao: AttributeValueDao = _
-  @Autowired var objectDao: ObjectDao = _
-  @Autowired var folderDao: FolderDao = _
-  @Autowired var imageDao: ImageDao = _
-  @Autowired var sectionDao: SectionDao = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var searchService: SearchService = _
-  @Autowired var passwordEncoder: PasswordEncoder = _
 
   @RequestMapping(Array("clone"))
   def clone(@ModelAttribute("form") form: EditForm) = {

@@ -13,11 +13,11 @@ import com.cloudray.scalapress.search.SavedSearchDao
 @RequestMapping(Array("backoffice/savedsearch"))
 class SavedSearchListController {
 
-    @Autowired var dao: SavedSearchDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var dao: SavedSearchDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping(produces = Array("text/html"))
-    def list = "admin/savedsearch/list.vm"
+  @RequestMapping(produces = Array("text/html"))
+  def list = "admin/savedsearch/list.vm"
 
-    @ModelAttribute("searches") def searches = dao.findAll().asJava
+  @ModelAttribute("searches") def searches = dao.findAll().asJava
 }

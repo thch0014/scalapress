@@ -9,15 +9,18 @@ import com.cloudray.scalapress.folder.section.ObjectListSection
 import org.mockito.Mockito
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao}
+import com.cloudray.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 class ObjectListSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new ObjectListSectionController
-  controller.sectionDao = mock[SectionDao]
-  controller.context = new ScalapressContext
-  controller.context.folderSettingsDao = mock[FolderPluginDao]
-  Mockito.when(controller.context.folderSettingsDao.head).thenReturn(new FolderSettings)
+  val sectionDao = mock[SectionDao]
+  val context = new ScalapressContext
+  context.folderSettingsDao = mock[FolderPluginDao]
+  val markupDao = mock[MarkupDao]
+
+  val controller = new ObjectListSectionController(markupDao, sectionDao, context)
+  Mockito.when(context.folderSettingsDao.head).thenReturn(new FolderSettings)
 
   val section = new ObjectListSection
 

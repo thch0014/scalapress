@@ -2,21 +2,40 @@ package com.cloudray.scalapress.obj.controller.admin
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.attr.AttributeType
+import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeType}
 import com.cloudray.scalapress.obj.{ObjectDao, Obj}
 import org.mockito.Mockito
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.folder.section.{SubfolderSection, FolderContentSection}
+import com.cloudray.scalapress.media.{ImageDao, AssetStore}
+import com.cloudray.scalapress.search.SearchService
+import com.cloudray.scalapress.ScalapressContext
+import org.springframework.security.authentication.encoding.PasswordEncoder
 
 /** @author Stephen Samuel */
 class ObjectEditControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val controller = new ObjectEditController
-  controller.objectDao = mock[ObjectDao]
-  controller.folderDao = mock[FolderDao]
-  controller.sectionDao = mock[SectionDao]
+  val objectDao = mock[ObjectDao]
+  val folderDao = mock[FolderDao]
+  val sectionDao = mock[SectionDao]
+  val assetStore = mock[AssetStore]
+  val attributeValueDao = mock[AttributeValueDao]
+  val imageDao = mock[ImageDao]
+  val passwordEncoder = mock[PasswordEncoder]
+  val serviceSearch = mock[SearchService]
+  val context = new ScalapressContext
+
+  val controller = new ObjectEditController(assetStore,
+    attributeValueDao,
+    objectDao,
+    folderDao,
+    imageDao,
+    sectionDao,
+    context,
+    serviceSearch,
+    passwordEncoder)
 
   val response = mock[HttpServletResponse]
 

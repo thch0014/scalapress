@@ -18,7 +18,7 @@ import com.cloudray.scalapress.account.Account
 /** @author Stephen Samuel */
 trait MarkupPopulator {
 
-  var markupDao: MarkupDao
+  val markupDao: MarkupDao
 
   @ModelAttribute def markups(model: ModelMap) {
     val markups = markupDao.findAll().sortBy(_.id)
@@ -101,7 +101,7 @@ trait AccountStatusPopulator {
 
 trait ThemePopulator {
 
-  var themeDao: ThemeDao
+  val themeDao: ThemeDao
 
   @ModelAttribute def themes(model: ModelMap) {
     val themes = themeDao.findAll().sortBy(_.id)
@@ -118,7 +118,7 @@ trait ThemePopulator {
 
 trait FolderPopulator {
 
-  var folderDao: FolderDao
+  val folderDao: FolderDao
 
   @ModelAttribute def folders(model: ModelMap) {
     val folders = folderDao.findAll().sortBy(_.id)

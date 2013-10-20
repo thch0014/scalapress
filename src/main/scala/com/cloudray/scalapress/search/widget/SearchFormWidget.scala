@@ -10,7 +10,7 @@ import javax.persistence._
   *
   *         Shows a search box with options
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_search")
 class SearchFormWidget extends Widget {

@@ -22,7 +22,7 @@ class ThemePopulatorTest extends FunSuite with MockitoSugar with OneInstancePerT
     t3.name = "hannibal"
 
     val populator = new ThemePopulator {
-        var themeDao: ThemeDao = mock[ThemeDao]
+        val themeDao: ThemeDao = mock[ThemeDao]
     }
 
     Mockito.when(populator.themeDao.findAll()).thenReturn(List(t1, t2, t3))

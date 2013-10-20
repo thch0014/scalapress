@@ -16,12 +16,11 @@ import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/type/{id}"))
-class TypeEditController extends MarkupPopulator {
-
-  @Autowired var typeDao: TypeDao = _
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var sectionDao: SectionDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class TypeEditController(val typeDao: TypeDao,
+                         val markupDao: MarkupDao,
+                         val sectionDao: SectionDao,
+                         val context: ScalapressContext) extends MarkupPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("type") t: ObjectType) = "admin/object/type/edit.vm"

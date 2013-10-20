@@ -8,15 +8,19 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.theme.ThemeDao
+import com.cloudray.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new FolderEditController
-  controller.folderDao = mock[FolderDao]
-  controller.sectionDao = mock[SectionDao]
-  controller.context = new ScalapressContext
-  controller.context.sectionDao = mock[SectionDao]
+  val folderDao = mock[FolderDao]
+  val sectionDao = mock[SectionDao]
+  val context = new ScalapressContext
+  context.sectionDao = mock[SectionDao]
+  val themeDao = mock[ThemeDao]
+  val assetStore = mock[AssetStore]
+  val controller = new FolderEditController(assetStore, folderDao, themeDao, sectionDao, context)
 
   val response = mock[HttpServletResponse]
 

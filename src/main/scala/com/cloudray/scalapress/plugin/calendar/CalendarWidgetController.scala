@@ -7,15 +7,15 @@ import scala.Array
 import com.cloudray.scalapress.widgets.Widget
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.util.{ObjectTypePopulator, AttributePopulator}
-import com.cloudray.scalapress.obj.{ObjectType, TypeDao}
+import com.cloudray.scalapress.obj.TypeDao
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
-class CalendarWidgetController extends WidgetEditController with AttributePopulator with ObjectTypePopulator {
-
-  @Autowired var objectTypeDao: TypeDao = _
+@Autowired
+class CalendarWidgetController(val objectTypeDao: TypeDao)
+  extends WidgetEditController with AttributePopulator with ObjectTypePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
@@ -13,11 +12,10 @@ import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/plugin/account"))
-class AccountPluginController extends MarkupPopulator {
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var markupDao: MarkupDao = _
-  @Autowired var accountPluginDao: AccountPluginDao = _
+@Autowired
+class AccountPluginController(val context: ScalapressContext,
+                              val markupDao: MarkupDao,
+                              val accountPluginDao: AccountPluginDao) extends MarkupPopulator {
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
   def edit(req: HttpServletRequest) = "admin/plugin/account/plugin.vm"
