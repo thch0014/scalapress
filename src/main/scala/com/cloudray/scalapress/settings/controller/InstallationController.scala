@@ -10,9 +10,8 @@ import com.cloudray.scalapress.settings.Installation
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/settings/installation"))
-class InstallationController {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class InstallationController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(request: HttpServletRequest) = "admin/settings/installation.vm"

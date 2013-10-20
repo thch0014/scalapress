@@ -12,9 +12,8 @@ import scala.collection.immutable.TreeMap
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/debug"))
-class DebugController {
-
-  @Autowired var searchService: SearchService = _
+@Autowired
+class DebugController(searchService: SearchService) {
 
   @RequestMapping
   def debug(request: HttpServletRequest) = "admin/settings/debug.vm"

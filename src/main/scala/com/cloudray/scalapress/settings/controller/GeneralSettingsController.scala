@@ -9,9 +9,8 @@ import com.cloudray.scalapress.settings.{Installation, GeneralSettings}
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/settings/general"))
-class GeneralSettingsController {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class GeneralSettingsController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("settings") gsettings: GeneralSettings,
