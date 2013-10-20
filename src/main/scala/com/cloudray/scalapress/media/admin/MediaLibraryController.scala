@@ -16,12 +16,11 @@ import com.cloudray.scalapress.search.PagingRenderer
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/medialib"))
-class MediaLibraryController {
+@Autowired
+class MediaLibraryController(assetStore: AssetStore,
+                             context: ScalapressContext) {
 
   val PAGE_SIZE = 36
-
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var context: ScalapressContext = _
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
   def list = "admin/media/library.vm"

@@ -96,7 +96,8 @@ class TypeEditController(val typeDao: TypeDao,
     "ok"
   }
 
-  @ModelAttribute def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
+  @ModelAttribute
+  def t(@PathVariable("id") id: java.lang.Long, model: ModelMap) {
 
     val t = typeDao.find(id)
     val sortedAttributes = t.sortedAttributes
@@ -108,6 +109,6 @@ class TypeEditController(val typeDao: TypeDao,
     model.put("sections", sections)
   }
 
-  @ModelAttribute("classes") def classes = ComponentClassScanner
-    .sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
+  @ModelAttribute("classes")
+  def classes = ComponentClassScanner.sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
 }

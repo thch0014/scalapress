@@ -9,9 +9,8 @@ import com.cloudray.scalapress.util.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @Component
-class PaymentCallbackService extends Logging {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class PaymentCallbackService(context: ScalapressContext) extends Logging {
 
   def callbacks(req: HttpServletRequest) {
     val params: java.util.Map[String, Array[String]] = req

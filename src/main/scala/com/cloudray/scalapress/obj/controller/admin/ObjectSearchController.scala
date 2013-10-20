@@ -14,11 +14,10 @@ import org.springframework.web.multipart.MultipartFile
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/obj"))
-class ObjectSearchController extends ObjectStatusPopulator {
-
-  @Autowired var objectDao: ObjectDao = _
-  @Autowired var typeDao: TypeDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class ObjectSearchController(objectDao: ObjectDao,
+                             typeDao: TypeDao,
+                             context: ScalapressContext) extends ObjectStatusPopulator {
 
   @RequestMapping
   def search(@ModelAttribute("form") form: SearchForm,
@@ -73,8 +72,11 @@ class ObjectSearchController extends ObjectStatusPopulator {
     "redirect:/backoffice/obj?typeId=" + typeId
   }
 
-  @ModelAttribute("type") def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
-  @ModelAttribute("form") def form = new SearchForm
+  @ModelAttribute("type")
+  def types(@RequestParam("typeId") typeId: Long) = typeDao.find(typeId)
+
+  @ModelAttribute("form")
+  def form = new SearchForm
 
 }
 

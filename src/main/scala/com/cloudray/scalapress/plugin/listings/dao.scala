@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
-trait ListingPackageDao extends GenericDao[ListingPackage, java.lang.Long]
+trait ListingPackageDao extends GenericDao[ListingPackage, java.lang.Long] {
+  def enabled: Boolean
+}
 
 @Component
 @Transactional
-class ListingPackageDaoImpl extends GenericDaoImpl[ListingPackage, java.lang.Long] with ListingPackageDao
+class ListingPackageDaoImpl extends GenericDaoImpl[ListingPackage, java.lang.Long] with ListingPackageDao {
+  def enabled: Boolean = findAll.size > 0
+}
 
 trait ListingProcessDao extends GenericDao[ListingProcess, String]
 
@@ -21,22 +25,22 @@ trait ListingProcessDao extends GenericDao[ListingProcess, String]
 class ListingProcessDaoImpl extends GenericDaoImpl[ListingProcess, String] with ListingProcessDao
 
 trait ListingsPluginDao extends GenericDao[ListingsPlugin, java.lang.Long] {
-    def get: ListingsPlugin
+  def get: ListingsPlugin
 }
 
 @Component
 @Transactional
 class ListingsPluginDaoImpl extends GenericDaoImpl[ListingsPlugin, java.lang.Long] with ListingsPluginDao {
-    def get = findAll.head
+  def get = findAll.head
 }
 
 @Component
 class ListingsPluginDaoValidator {
-    @Autowired var dao: ListingsPluginDao = _
-    @PostConstruct def ensureOne() {
-        if (dao.findAll().size == 0) {
-            val plugin = new ListingsPlugin
-            dao.save(plugin)
-        }
+  @Autowired var dao: ListingsPluginDao = _
+  @PostConstruct def ensureOne() {
+    if (dao.findAll().size == 0) {
+      val plugin = new ListingsPlugin
+      dao.save(plugin)
     }
+  }
 }

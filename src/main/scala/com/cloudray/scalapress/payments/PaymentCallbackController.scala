@@ -9,9 +9,8 @@ import org.springframework.stereotype.Controller
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("payment/callback"))
-class PaymentCallbackController extends Logging {
-
-  @Autowired var paymentCallbackService: PaymentCallbackService = _
+@Autowired
+class PaymentCallbackController(paymentCallbackService: PaymentCallbackService) extends Logging {
 
   @ResponseBody
   @RequestMapping
