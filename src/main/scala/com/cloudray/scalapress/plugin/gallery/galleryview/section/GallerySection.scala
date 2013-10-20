@@ -5,6 +5,7 @@ import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao, Gallery}
+import org.hibernate.annotations.{NotFoundAction, NotFound}
 
 /** @author Stephen Samuel */
 @Entity
@@ -13,6 +14,7 @@ class GallerySection extends Section {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "gallery")
+  @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var gallery: Gallery = _
 
   def desc: String = "For showing an image gallery/slideshow by http://spaceforaname.com/galleryview"
