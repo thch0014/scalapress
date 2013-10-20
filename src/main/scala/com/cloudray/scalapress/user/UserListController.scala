@@ -4,16 +4,13 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/user"))
-class UserListController {
-
-  @Autowired var userDao: UserDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class UserListController(userDao: UserDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/user/list.vm"

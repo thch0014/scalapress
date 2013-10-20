@@ -7,11 +7,11 @@ import org.mockito.{Matchers, Mockito}
 /** @author Stephen Samuel */
 class UserListControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val controller = new UserListController
-    controller.userDao = mock[UserDao]
+  val userDao = mock[UserDao]
+  val controller = new UserListController(userDao)
 
-    test("a created user is persisted") {
-        controller.create
-        Mockito.verify(controller.userDao).save(Matchers.any[User])
-    }
+  test("a created user is persisted") {
+    controller.create
+    Mockito.verify(userDao).save(Matchers.any[User])
+  }
 }

@@ -2,18 +2,15 @@ package com.cloudray.scalapress.user
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
-import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/user/{id}"))
-class UserEditController {
-
-  @Autowired var userDao: UserDao = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var passwordEncoder: PasswordEncoder = _
+@Autowired
+class UserEditController(userDao: UserDao,
+                         passwordEncoder: PasswordEncoder) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute user: User) = "admin/user/edit.vm"
