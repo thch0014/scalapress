@@ -1,0 +1,54 @@
+#parse("/admin/header.vm")
+
+<h3>Attachment Section</h3>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+    <div class="control-group">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+          #springFormInput("section.name", "class='input-xlarge'")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Visible</label>
+
+        <div class="controls">
+          #springFormCheckbox("section.visible", "")
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Upload</label>
+
+        <div class="controls">
+            <input type="file" name="upload"/>
+        </div>
+    </div>
+
+    <ul class="thumbnails">
+      #foreach ($attachment in $section.attachments())
+          <li class="span2">
+            $attachment.assetKey()
+              <a class="btn btn-mini" href="/asset/$attachment.assetKey()">
+                  <i class="icon-download-alt icon-white"></i> Download Original</a>
+              <a class="btn btn-danger btn-mini"
+                 href="/backoffice/plugin/attachment/section/$section.id/delete/$attachment.assetKey()">
+                  <i class="icon-trash icon-white"></i> Remove</a>
+              <textarea name="desc_$attachment.assetKey()"
+                        placeholder="enter description of attachment">$!attachment.description()</textarea>
+          </li>
+      #end
+    </ul>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+</form>
+
+
+
+#parse("/admin/footer.vm")

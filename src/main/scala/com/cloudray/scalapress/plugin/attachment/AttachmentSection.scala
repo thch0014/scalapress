@@ -1,57 +1,46 @@
 package com.cloudray.scalapress.plugin.attachment
 
-import javax.persistence.{Table, Entity}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
+import javax.persistence.{ElementCollection, Table, Entity}
+import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.util.Scalate
+import scala.beans.BeanProperty
+import java.util
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "blocks_attachments")
 class AttachmentSection extends Section {
 
-  def desc: String = "Shows attachments for a folder or object"
+  @ElementCollection
+  @BeanProperty var attachments: java.util.List[Attachment] = new util.ArrayList[Attachment]()
 
-  def render(request: ScalapressRequest): Option[String] = None
-  //        val attachments = _loadAttachments(sreq, sreq.context)
-  //        if (attachments.isEmpty)
-  //            None
-  //        else
-  //            Some(_xml(attachments, sreq.context).toString())
-  //    }
+  override def desc: String = "Shows attachments for a folder or object"
+  override def backoffice: String = "/backoffice/plugin/attachment/section/" + id
 
-  def _loadAttachments(request: ScalapressRequest, context: ScalapressContext): Iterable[Attachment] = {
-    request.obj match {
-      case None => request.folder match {
-        case None => Nil
-        case Some(f) => context.bean[AttachmentDao].findByFolder(f)
-      }
-      case Some(o) => context.bean[AttachmentDao].findByObj(o)
-    }
+  def render(sreq: ScalapressRequest): Option[String] = {
+    val assetStore = sreq.context.assetStore
+    if (attachments.isEmpty) None
+    else Some(html(attachments.asScala, assetStore))
   }
 
-  def _xml(attachments: Iterable[Attachment], context: ScalapressContext) = {
-    scala.xml.Utility.trim(<div id={"section-" + id} class="attachment-section">
-      {_renderAttachments(attachments, context.assetStore)}
-    </div>)
+  def html(attachments: Seq[Attachment], assetStore: AssetStore): String = {
+    val start = "<div id=\"section-" + id + "\" class=\"attachment-section\">"
+    val body = renderAttachments(attachments, assetStore)
+    val end = "</div>"
+    start + body + end
   }
 
-  def _renderAttachments(attachments: Iterable[Attachment], assetStore: AssetStore) = {
-    attachments.map(a => {
-      val link = assetStore.link(a.filename)
-      scala.xml.Utility.trim(<div class="attachment-row">
-        <div class="attachment-name">
-          {a.name}
-        </div>
-        <div class="attachment-name">
-          {a.description}
-        </div>
-        <div class="attachment-link">
-          <a href={link}>
-            Download file
-          </a>
-        </div>
-      </div>)
-    })
+  def renderAttachments(attachments: Seq[Attachment], assetStore: AssetStore): String =
+    attachments.map(renderAttachment(_, assetStore)).mkString("\n")
+
+  def getLink(attachment: Attachment, store: AssetStore): String = store.link(attachment.assetKey)
+
+  def renderAttachment(attachment: Attachment, store: AssetStore): String = {
+    val link = getLink(attachment, store)
+    Scalate.layout("/com/cloudray/scalapress/plugin/attachment/attachment.ssp",
+      Map("description" -> attachment.description, "link" -> link))
   }
 }

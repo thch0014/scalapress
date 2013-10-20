@@ -71,6 +71,7 @@ object UrlResolver {
   def attributeEdit(a: Attribute) = "/backoffice/attribute/" + a.id
   def createAttribute(t: ObjectType) = typeEdit(t) + "/attribute/create"
 
+  @deprecated
   def folderEdit(folder: Folder) = "/backoffice/folder/" + folder.id
   val folders = "/backoffice/folder"
   def folderImageUpload(folder: Folder): String = folderEdit(folder) + "/upload"

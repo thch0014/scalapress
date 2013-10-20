@@ -1,0 +1,11 @@
+<%@ val description: String %>
+<%@ val link: String %>
+
+<div class="attachment-row">
+    <div class="attachment-description">
+      ${description}
+    </div>
+    <div class="attachment-link">
+        <a href="${link}">Download file</a>
+    </div>
+</div>

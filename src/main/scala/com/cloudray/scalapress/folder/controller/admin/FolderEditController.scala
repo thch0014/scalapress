@@ -12,7 +12,6 @@ import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.folder.{FolderOrdering, FolderDao, Folder}
 import com.cloudray.scalapress.theme.ThemeDao
 import com.cloudray.scalapress.obj.controller.admin.ThemePopulator
-import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.media.AssetStore
 import scala.Some
 import scala.collection.immutable.ListMap
@@ -55,7 +54,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator with Sectio
     section.init(context)
     folder.sections.add(section)
     folderDao.save(folder)
-    "redirect:/backoffice/folder/" + folder.id
+    "redirect:/backoffice/folder/" + folder.id + "#tab3"
   }
 
   @RequestMapping(value = Array("section/{sectionId}/delete"))
@@ -67,7 +66,7 @@ class FolderEditController extends EnumPopulator with ThemePopulator with Sectio
         section.folder = null
         folderDao.save(folder)
     }
-    "forward:" + UrlResolver.folderEdit(folder)
+    "forward:/backoffice/folder/" + folder.id + "#tab3"
   }
 
   @ModelAttribute("parents") def parents = {
