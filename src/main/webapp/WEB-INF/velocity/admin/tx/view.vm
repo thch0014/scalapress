@@ -42,4 +42,12 @@
     </div>
 </div>
 
+<div class="control-group">
+    <label class="control-label">Status</label>
+
+    <div class="controls">
+      #springFormInput("tx.status", "")
+    </div>
+</div>
+
 #parse("/admin/footer.vm")

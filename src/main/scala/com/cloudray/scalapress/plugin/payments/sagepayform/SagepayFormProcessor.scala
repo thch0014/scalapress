@@ -68,7 +68,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
       case e: Exception => 0
     }
 
-    val payment = Transaction(transactionId, paymentProcessorName, amount)
+    val payment = Transaction(transactionId, paymentProcessorName, amount, "Completed")
     payment.transactionId = transactionId
     payment.authCode = authCode
     payment

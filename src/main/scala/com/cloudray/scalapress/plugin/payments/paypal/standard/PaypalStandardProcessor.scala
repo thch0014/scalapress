@@ -61,9 +61,9 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
 
       case Some(txid) =>
         val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
+        val status = params("payment_status")
 
-        val tx = Transaction(txid, paymentProcessorName, amount)
-        tx.status = params("payment_status")
+        val tx = Transaction(txid, paymentProcessorName, amount, status)
         tx.currency = params("mc_currency")
         tx.transactionType = params("payment_type")
         tx.payerStatus = params("payer_status")
