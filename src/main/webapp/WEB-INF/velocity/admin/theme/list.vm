@@ -1,5 +1,30 @@
 #parse("/admin/header.vm")
 
+<div id="upload-theme-modal" class="modal hide">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Create Folder</h3>
+    </div>
+    <form method="GET" action="/backoffice/theme/upload" class="form-horizontal">
+        <div class="modal-body">
+
+            <div class="control-group">
+                <label class="control-label" for="upload">Theme File</label>
+
+                <div class="controls">
+                    <input type="file" name="upload"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Upload</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </form>
+</div>
+
 
 <h3>Themes</h3>
 
@@ -10,18 +35,21 @@
         <th>Default</th>
         <th></th>
     </tr>
-    #foreach ($theme in $themes)
-        <tr>
-            <td>$theme.id</td>
-            <td>$theme.name</td>
-            <td>$theme.default</td>
-            <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
-            </a></td>
-        </tr>
-    #end
+  #foreach ($theme in $themes)
+      <tr>
+          <td>$theme.id</td>
+          <td>$theme.name</td>
+          <td>$theme.default</td>
+          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+          </a></td>
+      </tr>
+  #end
 </table>
 
-<a href="$urlResolver.createTheme()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+<a href="/backoffice/theme/create" role="button" class="btn"> <i class="icon-plus"></i> Create Theme</a>
+<a href="#upload-theme-modal" role="button" class="btn" data-toggle="modal">
+    <i class="icon-upload-alt"></i> Upload Theme</a>
+
 
 
 #parse("/admin/footer.vm")

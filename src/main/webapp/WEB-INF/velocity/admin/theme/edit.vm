@@ -9,7 +9,7 @@
         <label class="control-label">Name</label>
 
         <div class="controls">
-            #springFormInput("theme.name")
+          #springFormInput("theme.name")
         </div>
     </div>
 
@@ -17,7 +17,7 @@
         <label class="control-label">Default</label>
 
         <div class="controls">
-            #springFormCheckbox("theme.default")
+          #springFormCheckbox("theme.default")
         </div>
     </div>
 
@@ -28,10 +28,10 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
-                #springFormTextarea("theme.header", "rows='24' class='input-block-level '")
+              #springFormTextarea("theme.header", "rows='24' class='input-block-level '")
             </div>
             <div class="tab-pane" id="tab2">
-                #springFormTextarea("theme.footer", "rows='24' class='input-block-level '")
+              #springFormTextarea("theme.footer", "rows='24' class='input-block-level '")
             </div>
         </div>
     </div>
