@@ -27,6 +27,7 @@ import com.cloudray.scalapress.folder.controller.admin.SectionSorting
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.media.Asset
 import scala.Some
+import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -224,6 +225,7 @@ class ObjectEditController(val assetStore: AssetStore,
   }
 
   @ModelAttribute("installation") def installation = context.installationDao.get
+  @ModelAttribute("listingsEnabled") def listingsEnabled = context.bean[ListingPackageDao].enabled
 
   @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
     val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)

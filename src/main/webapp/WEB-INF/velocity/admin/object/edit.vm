@@ -150,6 +150,27 @@
       </div>
   #end
 
+  #if ($listingsEnabled)
+
+      <div class="control-group">
+          <label class="control-label">Listing Account</label>
+
+          <div class="controls">
+            #springFormInput("form.o.account.id", "")
+          </div>
+      </div>
+
+      <div class="control-group">
+          <label class="control-label">Listing Expiry</label>
+
+          <div class="controls">
+            #springFormInput("form.o.expiry", "class='input-small'")
+          </div>
+      </div>
+
+  #end
+
+
     <div class="control-group">
         <label class="control-label">Change Password</label>
 
@@ -443,7 +464,8 @@
         to list</a>
     &nbsp;
     <a href="/backoffice/obj/${form.o.id}/clone" class="btn btn-inverse"><i class="icon-copy"></i> Copy Object</a>
-    <a href="/backoffice/order/create?accountId=${form.o.id}" class="btn"><i class="icon-shopping-cart"></i> Create order</a>
+    <a href="/backoffice/order/create?accountId=${form.o.id}" class="btn"><i class="icon-shopping-cart"></i> Create
+        order</a>
 </div>
 
 </form>

@@ -8,28 +8,26 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class TypeListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val dao = mock[TypeDao]
+  val dao = mock[TypeDao]
+  val controller = new TypeListController(dao)
 
-    val controller = new TypeListController
-    controller.typeDao = dao
+  test("types do not include deleted") {
+    val type1 = new ObjectType
+    type1.deleted = false
+    val type2 = new ObjectType
+    type2.deleted = true
+    Mockito.when(dao.findAll()).thenReturn(List(type1, type2))
+    val types = controller.types
+    assert(1 === types.size)
+    assert(type1 === types.get(0))
+  }
 
-    test("types do not include deleted") {
-        val type1 = new ObjectType
-        type1.deleted = false
-        val type2 = new ObjectType
-        type2.deleted = true
-        Mockito.when(dao.findAll()).thenReturn(List(type1, type2))
-        val types = controller.types
-        assert(1 === types.size)
-        assert(type1 === types.get(0))
-    }
-
-    test("deleting an object type sets deleted flag to true and persists") {
-        val type1 = new ObjectType
-        type1.deleted = false
-        Mockito.when(dao.find(14)).thenReturn(type1)
-        controller.delete(14)
-        Mockito.verify(dao).save(type1)
-        assert(type1.deleted)
-    }
+  test("deleting an object type sets deleted flag to true and persists") {
+    val type1 = new ObjectType
+    type1.deleted = false
+    Mockito.when(dao.find(14)).thenReturn(type1)
+    controller.delete(14)
+    Mockito.verify(dao).save(type1)
+    assert(type1.deleted)
+  }
 }
