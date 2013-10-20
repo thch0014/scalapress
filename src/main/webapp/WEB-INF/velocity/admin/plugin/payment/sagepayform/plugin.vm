@@ -5,26 +5,26 @@
 <form class="form-horizontal" method="POST">
 
     <div class="control-group">
-        <label class="control-label">sagePayVendorEmail</label>
+        <label class="control-label">Vendor Email</label>
 
         <div class="controls">
-            #springFormInput("plugin.sagePayVendorEmail")
+          #springFormInput("plugin.sagePayVendorEmail", "")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">sagePayEncryptionPassword</label>
+        <label class="control-label">Vendor Name</label>
 
         <div class="controls">
-            #springFormInput("plugin.sagePayEncryptionPassword")
+          #springFormInput("plugin.sagePayVendorName", "")
         </div>
     </div>
 
     <div class="control-group">
-        <label class="control-label">sagePayVendorName</label>
+        <label class="control-label">Encryption Password</label>
 
         <div class="controls">
-            #springFormInput("plugin.sagePayVendorName")
+          #springFormInput("plugin.sagePayEncryptionPassword", "")
         </div>
     </div>
 
