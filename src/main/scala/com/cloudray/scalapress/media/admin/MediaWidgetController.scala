@@ -2,7 +2,7 @@ package com.cloudray.scalapress.media.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMethod, RequestMapping}
-import com.cloudray.scalapress.widgets.Widget
+import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
@@ -15,7 +15,7 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 @Controller
 @RequestMapping(Array("backoffice/widget/media/{id}"))
 @Autowired
-class MediaWidgetController(assetStore: AssetStore) extends WidgetEditController {
+class MediaWidgetController(assetStore: AssetStore, widgetDao: WidgetDao) extends WidgetEditController(widgetDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {

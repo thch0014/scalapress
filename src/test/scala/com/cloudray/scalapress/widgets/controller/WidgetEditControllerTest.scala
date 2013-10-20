@@ -9,14 +9,14 @@ import com.cloudray.scalapress.media.MediaWidget
 /** @author Stephen Samuel */
 class WidgetEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val dao = mock[WidgetDao]
-    val controller = new WidgetEditController
-    controller.widgetDao = dao
+  val dao = mock[WidgetDao]
+  val widgetDao = dao
+  val controller = new WidgetEditController(widgetDao)
 
-    test("generic widget controller loads from dao") {
-        val w = new MediaWidget
-        Mockito.when(dao.find(3)).thenReturn(w)
-        val actual = controller.widget(3)
-        assert(w === actual)
-    }
+  test("generic widget controller loads from dao") {
+    val w = new MediaWidget
+    Mockito.when(dao.find(3)).thenReturn(w)
+    val actual = controller.widget(3)
+    assert(w === actual)
+  }
 }
