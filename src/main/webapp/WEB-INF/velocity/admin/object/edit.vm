@@ -27,14 +27,6 @@
         </div>
     </div>
 
-    <div class=" control-group">
-        <label class="control-label">Email</label>
-
-        <div class="controls">
-          #springFormInput("form.o.email", "class='input-xxlarge'")
-        </div>
-    </div>
-
     <div class="control-group">
         <label class="control-label">Status</label>
 
@@ -169,16 +161,6 @@
       </div>
 
   #end
-
-
-    <div class="control-group">
-        <label class="control-label">Change Password</label>
-
-        <div class="controls">
-          #springFormInput("form.changePassword")
-        </div>
-    </div>
-
 
 </div>
 <div class="tab-pane" id="tab2">

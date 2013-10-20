@@ -38,7 +38,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
         results.foreach(obj => {
           val account = new Account
           account.id = obj.id
-          account.passwordHash = obj.passwordHash
+          account.passwordHash = obj.password_deprecated
           account.dateCreated = obj.dateCreated
           account.dateUpdated = obj.dateUpdated
           account.status = Account.STATUS_ACTIVE

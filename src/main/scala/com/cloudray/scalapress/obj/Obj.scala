@@ -14,6 +14,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import org.hibernate.annotations._
 import com.cloudray.scalapress.account.Account
+import javax.persistence.Column
 
 /** @author Stephen Samuel */
 @Entity
@@ -31,7 +32,14 @@ class Obj extends SortedSections with java.io.Serializable {
   @BeanProperty var name: String = _
 
   @Column(name = "email")
-  @BeanProperty var email_deprecated: String = _
+  @BeanProperty
+  @deprecated
+  var email_deprecated: String = _
+
+  @deprecated
+  @BeanProperty
+  @Column(name = "passwordHash")
+  var password_deprecated: String = _
 
   @BeanProperty var expiry: Long = 0
   @BeanProperty var labels: String = _
@@ -157,9 +165,6 @@ class Obj extends SortedSections with java.io.Serializable {
   @BeanProperty var orderable: Boolean = false
 
   @BeanProperty var backorders: Boolean = _
-
-  // used by account types
-  @BeanProperty var passwordHash: String = _
 
   @BeanProperty var ipAddress: String = _
 

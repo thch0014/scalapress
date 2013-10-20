@@ -76,10 +76,6 @@ class ObjectEditController(val assetStore: AssetStore,
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest) = {
 
-    Option(form.changePassword).map(_.trim).filterNot(_.isEmpty).foreach(pass => {
-      form.o.passwordHash = passwordEncoder.encodePassword(pass, null)
-    })
-
     form.o.price = (form.sellPrice * 100).toInt
     form.o.costPrice = (form.costPrice * 100).toInt
     form.o.rrp = (form.rrp * 100).toInt
@@ -241,7 +237,6 @@ class EditForm {
   @BeanProperty var costPrice: Double = _
   @BeanProperty var rrp: Double = _
   @BeanProperty var o: Obj = _
-  @BeanProperty var changePassword: String = _
   @BeanProperty var folderIds: Array[Long] = _
   @BeanProperty var upload: MultipartFile = _
 }
