@@ -7,7 +7,7 @@ import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
-import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
+import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.account.AccountPluginDao
@@ -15,12 +15,10 @@ import com.cloudray.scalapress.account.AccountPluginDao
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping
-class LoginController {
-
-  @Autowired var themeDao: ThemeDao = _
-  @Autowired var themeService: ThemeService = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var accountPluginDao: AccountPluginDao = _
+@Autowired
+class LoginController(themeService: ThemeService,
+                      context: ScalapressContext,
+                      accountPluginDao: AccountPluginDao) {
 
   @RequestMapping(value = Array("login"), produces = Array("text/html"))
   def loginredirect(req: HttpServletRequest, resp: HttpServletResponse): String = {

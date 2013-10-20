@@ -6,17 +6,20 @@ import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class LoginControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val controller = new LoginController
-  controller.themeService = mock[ThemeService]
+  val themeService = mock[ThemeService]
+  val context = new ScalapressContext
+
+  val accountPluginDao = mock[AccountPluginDao]
+  Mockito.when(accountPluginDao.get).thenReturn(plugin)
+
+  val controller = new LoginController(themeService, context, accountPluginDao)
 
   val plugin = new AccountPlugin
-
-  controller.accountPluginDao = mock[AccountPluginDao]
-  Mockito.when(controller.accountPluginDao.get).thenReturn(plugin)
 
   val req = mock[HttpServletRequest]
 

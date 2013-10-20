@@ -10,10 +10,9 @@ import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
 @Component
-class AdminUserDetailsService extends UserDetailsService {
-
-  @Autowired var userDao: UserDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class AdminUserDetailsService(userDao: UserDao,
+                              context: ScalapressContext) extends UserDetailsService {
 
   def loadUserByUsername(username: String): UserDetails = Option(userDao.byUsername(username)) match {
     case None => throw new UsernameNotFoundException(username)

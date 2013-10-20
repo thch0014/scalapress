@@ -12,12 +12,12 @@ import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
 /** @author Stephen Samuel */
 class LoginSuccessHandlerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val handler = new LoginSuccessHandler
-  handler.context = mock[ScalapressContext]
+  val context = mock[ScalapressContext]
+  val handler = new LoginSuccessHandler(context)
   val plugin = new AccountPlugin
   val dao = mock[AccountPluginDao]
   Mockito.when(dao.get).thenReturn(plugin)
-  Mockito.when(handler.context.bean[AccountPluginDao]).thenReturn(dao)
+  Mockito.when(context.bean[AccountPluginDao]).thenReturn(dao)
 
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]
