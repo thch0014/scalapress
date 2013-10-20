@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8"/>
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-tag.css"/>
-    <link rel="stylesheet" href="/static/css/scalapress.css"/>
+    <link rel="stylesheet" href="netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css">
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
+    <link rel="stylesheet" href="/static/css/scalapress.css">
 
     <script src="/static/js/wysihtml5-0.3.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+    <script src="ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="/static/js/bootbox.min.js"></script>
     <script src="/static/js/bootstrap-wysihtml5.js"></script>
@@ -26,7 +26,6 @@
     <script src="/static/js/bootstrap-tag.js"></script>
 
     <script type="text/javascript" src="/static/tiny_mce/tiny_mce.js"></script>
-
 
     <script type="text/javascript">
         tinyMCE.init({

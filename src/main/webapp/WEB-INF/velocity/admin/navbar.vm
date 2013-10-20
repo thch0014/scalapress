@@ -1,14 +1,21 @@
-<div class="navbar navbar-static-top navbar-inverse">
-    <div class="navbar-inner">
-        <form class="navbar-search pull-right" method="GET" action="/backoffice/search">
-            <input type="text" name="q" class="search-query" placeholder="Search">
-            <button>Go</button>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+  <div class="navbar-header">
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	      <span class="sr-only">Toggle navigation</span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a class="navbar-brand" href="#">$site.name</a>
+  </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <form class="navbar-form navbar-right" role="search" method="GET" action="/backoffice/search">
+		<div class="form-group">
+			<input name="q" class="search-query" placeholder="Search" type="text" />
+		</div>
+		<button>Go</button>
         </form>
-        <div class="container" style="width: auto; padding: 0 20px;">
-            <a class="brand" href="#">
-              $site.name
-            </a>
-            <ul class="nav">
+            <ul class="nav navbar-nav">
                 <li>
                     <a href="/backoffice/">Dashboard</a>
                 </li>
@@ -63,4 +70,4 @@
             </ul>
         </div>
     </div>
-</div>
+</nav>
