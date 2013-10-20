@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gmap
+package com.cloudray.scalapress.plugin.mapping.gmap
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar

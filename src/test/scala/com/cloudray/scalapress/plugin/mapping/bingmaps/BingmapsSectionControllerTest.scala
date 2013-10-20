@@ -4,7 +4,6 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.section.SectionDao
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.bingmaps.{BingMapSection, BingMapSectionController}
 
 /** @author Stephen Samuel */
 class BingmapsSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
