@@ -1,15 +1,14 @@
-package com.cloudray.scalapress.plugin.account.controller
+package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import com.cloudray.scalapress.theme.{MarkupRenderer, ThemeService}
-import com.cloudray.scalapress.plugin.account.{AccountLink, AccountPluginDao}
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.util.ComponentClassScanner
-import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.account.{AccountLink, Account}
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */

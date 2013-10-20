@@ -7,6 +7,8 @@ import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.Logging
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
+import org.springframework.beans.factory.annotation.Autowired
+import javax.annotation.PostConstruct
 
 /** @author Stephen Samuel */
 trait AccountDao extends GenericDao[Account, java.lang.Long] {
@@ -61,4 +63,40 @@ trait AccountTypeDao extends GenericDao[AccountType, java.lang.Long] {
 @Transactional
 class AccountTypeDaoImpl extends GenericDaoImpl[AccountType, java.lang.Long] with AccountTypeDao {
   def default = findAll.head
+}
+
+trait AccountPluginDao extends GenericDao[AccountPlugin, java.lang.Long] {
+  def get: AccountPlugin
+}
+
+@Component
+@Transactional
+class AccountPluginDaoImpl extends GenericDaoImpl[AccountPlugin, java.lang.Long] with AccountPluginDao {
+  def get = findAll.head
+}
+
+@Component
+class AccountPluginValidator {
+  @Autowired var dao: AccountPluginDao = _
+  @PostConstruct def ensureOne() {
+    if (dao.findAll().size == 0) {
+      val plugin = new AccountPlugin
+      dao.save(plugin)
+    }
+  }
+}
+
+trait PasswordTokenDao extends GenericDao[PasswordToken, java.lang.Long] {
+  def find(email: String, token: String): Option[PasswordToken]
+}
+
+@Component
+@Transactional
+class PasswordTokenDaoImpl extends GenericDaoImpl[PasswordToken, java.lang.Long] with PasswordTokenDao {
+  def find(email: String, token: String): Option[PasswordToken] = {
+    val search = new Search(classOf[PasswordToken])
+    search.addFilterEqual("email", email)
+    search.addFilterEqual("token", token)
+    Option(super.searchUnique(search))
+  }
 }

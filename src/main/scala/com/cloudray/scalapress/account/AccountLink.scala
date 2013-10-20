@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account
+package com.cloudray.scalapress.account
 
 import com.cloudray.scalapress.ScalapressContext
 

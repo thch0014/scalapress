@@ -2,12 +2,14 @@ package com.cloudray.scalapress.plugin.account.controller
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.account.{AccountPluginDao, AccountPlugin}
+import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
 import com.cloudray.scalapress.theme.ThemeService
 import org.mockito.Mockito
 import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import org.springframework.validation.Errors
+import com.cloudray.scalapress.account.controller.{RegistrationForm, RegistrationController}
+import com.cloudray.scalapress.account.AccountPlugin
 
 /** @author Stephen Samuel */
 class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

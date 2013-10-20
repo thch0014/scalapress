@@ -2,10 +2,11 @@ package com.cloudray.scalapress.plugin.account
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.account.controller.RegistrationForm
 import org.springframework.validation.{FieldError, Errors}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.account.controller.renderer.RegistrationRenderer
+import com.cloudray.scalapress.account.controller.RegistrationForm
+import com.cloudray.scalapress.account.AccountPlugin
 
 /** @author Stephen Samuel */
 class RegistrationRendererTest extends FunSuite with OneInstancePerTest with MockitoSugar {

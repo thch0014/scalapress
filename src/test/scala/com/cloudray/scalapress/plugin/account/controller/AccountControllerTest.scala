@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.{ThemeService, Markup}
 import java.util.UUID
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.plugin.account.{AccountLink, AccountPluginDao, AccountPlugin}
-import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
+import com.cloudray.scalapress.account.{AccountLink, AccountPlugin, Account}
+import com.cloudray.scalapress.account.controller.AccountController
 
 /** @author Stephen Samuel */
 class AccountControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

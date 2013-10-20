@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.listings.controller.admin
 
-import com.cloudray.scalapress.plugin.account.AccountLink
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
+import com.cloudray.scalapress.account.AccountLink
 
 /** @author Stephen Samuel */
 class MyListingsAccountLink extends AccountLink {

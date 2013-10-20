@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.controller
+package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}

@@ -10,12 +10,11 @@ import org.apache.commons.io.FilenameUtils
 
 /** @author Stephen Samuel */
 @Component
-class ImageMaxSizePlugin extends AssetLifecycleListener {
+@Autowired
+class ImageMaxSizePlugin(context: ScalapressContext) extends AssetLifecycleListener {
 
   val DEFAULT_MAX_WIDTH = 1600
   val DEFAULT_MAX_HEIGHT = 1600
-
-  @Autowired var context: ScalapressContext = _
 
   def onStore(key: String, input: InputStream): (String, InputStream) = {
 

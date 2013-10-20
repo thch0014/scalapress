@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.account.controller.renderer
 
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.plugin.account.AccountPlugin
-import com.cloudray.scalapress.plugin.account.controller.RegistrationForm
+import com.cloudray.scalapress.account.controller.RegistrationForm
+import com.cloudray.scalapress.account.AccountPlugin
 
 /** @author Stephen Samuel */
 object RegistrationRenderer {

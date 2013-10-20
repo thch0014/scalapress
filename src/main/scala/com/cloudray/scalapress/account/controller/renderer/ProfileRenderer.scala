@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.account.controller.renderer
 
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.plugin.account.AccountPlugin
-import com.cloudray.scalapress.plugin.account.controller.Profile
+import com.cloudray.scalapress.account.AccountPlugin
+import com.cloudray.scalapress.account.controller.Profile
 
 /** @author Stephen Samuel */
 object ProfileRenderer {

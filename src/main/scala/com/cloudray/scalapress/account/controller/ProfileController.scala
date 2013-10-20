@@ -1,9 +1,8 @@
-package com.cloudray.scalapress.plugin.account.controller
+package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.account.AccountPluginDao
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
@@ -14,7 +13,7 @@ import com.cloudray.scalapress.security.{SecurityResolver, SpringSecurityResolve
 import com.cloudray.scalapress.plugin.account.controller.renderer.ProfileRenderer
 import org.apache.commons.lang.StringUtils
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.cloudray.scalapress.account.{Account, AccountDao}
+import com.cloudray.scalapress.account.{AccountPluginDao, Account, AccountDao}
 
 /** @author Stephen Samuel */
 @Controller

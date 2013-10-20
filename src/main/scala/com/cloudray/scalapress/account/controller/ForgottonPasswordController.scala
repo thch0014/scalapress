@@ -1,25 +1,23 @@
-package com.cloudray.scalapress.plugin.account.controller
+package com.cloudray.scalapress.account.controller
 
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, ResponseBody, RequestMapping}
 import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
-import com.cloudray.scalapress.plugin.account.PasswordService
+import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.plugin.account.controller.renderer.ForgottonPasswordRenderer
+import com.cloudray.scalapress.account.PasswordService
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("password"))
-class ForgottonPasswordController {
-
-  @Autowired var themeDao: ThemeDao = _
-  @Autowired var themeService: ThemeService = _
-  @Autowired var passwordService: PasswordService = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class ForgottonPasswordController(themeService: ThemeService,
+                                  passwordService: PasswordService,
+                                  context: ScalapressContext) {
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

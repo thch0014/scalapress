@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.account.{AccountPlugin, AccountPluginDao}
+import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.account.AccountPlugin
 
 /** @author Stephen Samuel */
 @Controller

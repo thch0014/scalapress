@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account
+package com.cloudray.scalapress.account
 
 import javax.persistence._
 import scala.beans.BeanProperty

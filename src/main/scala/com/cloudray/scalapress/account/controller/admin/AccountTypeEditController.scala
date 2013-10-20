@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.account.controller
+package com.cloudray.scalapress.account.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
