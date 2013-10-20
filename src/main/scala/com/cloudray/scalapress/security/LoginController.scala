@@ -9,8 +9,8 @@ import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import com.cloudray.scalapress.plugin.account.AccountPluginDao
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.account.AccountPluginDao
 
 /** @author Stephen Samuel */
 @Controller

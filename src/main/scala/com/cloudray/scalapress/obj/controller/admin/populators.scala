@@ -35,7 +35,7 @@ trait MarkupPopulator {
 
 trait FormPopulator {
 
-  var formDao: FormDao
+  val formDao: FormDao
 
   @ModelAttribute def forms(model: ModelMap) {
     val forms = formDao.findAll()

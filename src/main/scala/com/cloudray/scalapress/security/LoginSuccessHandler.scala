@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.account.AccountPluginDao
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import com.cloudray.scalapress.account.AccountPluginDao
 
 /** @author Stephen Samuel */
 @Component

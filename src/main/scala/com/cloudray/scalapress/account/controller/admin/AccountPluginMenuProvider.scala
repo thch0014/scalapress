@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.controller.admin
+package com.cloudray.scalapress.account.controller.admin
 
 import com.cloudray.scalapress.settings.{Menu, MenuItemProvider, MenuLink, MenuItem}
 import com.cloudray.scalapress.ScalapressContext

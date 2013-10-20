@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.controller.admin
+package com.cloudray.scalapress.account.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import scala.Array
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
-import com.cloudray.scalapress.account.AccountPlugin
+import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
 
 /** @author Stephen Samuel */
 @Controller

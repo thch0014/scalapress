@@ -8,14 +8,13 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class DisqusSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val dao = mock[SectionDao]
-    val controller = new DisqusSectionController
-    controller.sectionDao = dao
+  val dao = mock[SectionDao]
+  val controller = new DisqusSectionController(dao)
 
-    test("discus controller casts to DiscusSection") {
-        val disqus = new DisqusSection
-        Mockito.when(dao.find(3)).thenReturn(disqus)
-        val actual: DisqusSection = controller.section(3)
-        assert(disqus === actual)
-    }
+  test("discus controller casts to DiscusSection") {
+    val disqus = new DisqusSection
+    Mockito.when(dao.find(3)).thenReturn(disqus)
+    val actual: DisqusSection = controller.section(3)
+    assert(disqus === actual)
+  }
 }

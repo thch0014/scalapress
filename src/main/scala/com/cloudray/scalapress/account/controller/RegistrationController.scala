@@ -9,7 +9,6 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.plugin.account.AccountPluginDao
 import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder
@@ -18,7 +17,7 @@ import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.account.controller.renderer.RegistrationRenderer
-import com.cloudray.scalapress.account.{Account, AccountTypeDao, AccountDao}
+import com.cloudray.scalapress.account.{AccountPluginDao, Account, AccountTypeDao, AccountDao}
 
 /** @author Stephen Samuel */
 @Controller

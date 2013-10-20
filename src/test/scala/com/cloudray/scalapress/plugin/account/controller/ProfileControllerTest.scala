@@ -2,13 +2,12 @@ package com.cloudray.scalapress.plugin.account.controller
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
 import com.cloudray.scalapress.theme.ThemeService
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.security.SecurityResolver
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder
-import com.cloudray.scalapress.account.{AccountPlugin, Account, AccountDao}
+import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin, Account, AccountDao}
 import com.cloudray.scalapress.account.controller.{Profile, ProfileController}
 
 /** @author Stephen Samuel */

@@ -4,11 +4,10 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.account.{AccountPluginDao}
 import javax.servlet.http.{HttpSession, HttpServletResponse, HttpServletRequest}
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.savedrequest.DefaultSavedRequest
-import com.cloudray.scalapress.account.AccountPlugin
+import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
 
 /** @author Stephen Samuel */
 class LoginSuccessHandlerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

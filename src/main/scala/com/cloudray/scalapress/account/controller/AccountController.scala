@@ -8,7 +8,7 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.util.ComponentClassScanner
-import com.cloudray.scalapress.account.{AccountLink, Account}
+import com.cloudray.scalapress.account.{AccountPluginDao, AccountLink, Account}
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */

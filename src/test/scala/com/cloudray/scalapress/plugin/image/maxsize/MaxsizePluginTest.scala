@@ -17,12 +17,12 @@ class MaxsizePluginTest extends FlatSpec with MockitoSugar with OneInstancePerTe
   val image = Image.empty(200, 200)
   val input = new ByteArrayInputStream(image.write)
 
-  val plugin = new ImageMaxSizePlugin
-  plugin.context = new ScalapressContext
-  plugin.context.generalSettingsDao = mock[GeneralSettingsDao]
+  val context = new ScalapressContext
+  context.generalSettingsDao = mock[GeneralSettingsDao]
+  val plugin = new ImageMaxSizePlugin(context)
 
   val settings = new GeneralSettings
-  Mockito.when(plugin.context.generalSettingsDao.get).thenReturn(settings)
+  Mockito.when(context.generalSettingsDao.get).thenReturn(settings)
 
   "the plugin" should "resize an image that is larger than max sizes" in {
     settings.maxImageWidth = 150
