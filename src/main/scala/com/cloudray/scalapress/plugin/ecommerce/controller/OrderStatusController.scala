@@ -17,36 +17,36 @@ import com.cloudray.scalapress.payments.TransactionDao
 @RequestMapping(Array("orderstatus"))
 class OrderStatusController {
 
-    @Autowired var orderDao: OrderDao = _
-    @Autowired var paymentDao: TransactionDao = _
-    @Autowired var themeService: ThemeService = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var orderDao: OrderDao = _
+  @Autowired var paymentDao: TransactionDao = _
+  @Autowired var themeService: ThemeService = _
+  @Autowired var context: ScalapressContext = _
 
-    @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def get(req: HttpServletRequest): ScalapressPage = {
+  @ResponseBody
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def get(req: HttpServletRequest): ScalapressPage = {
 
-        val sreq = ScalapressRequest(req, context).withTitle("Order Status")
-        val theme = themeService.default
-        val page = ScalapressPage(theme, sreq)
-        page.body(OrderStatusRenderer.form)
-        page
-    }
+    val sreq = ScalapressRequest(req, context).withTitle("Order Status")
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    page.body(OrderStatusRenderer.form)
+    page
+  }
 
-    @ResponseBody
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def post(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
-             req: HttpServletRequest): ScalapressPage = {
+  @ResponseBody
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def post(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
+           req: HttpServletRequest): ScalapressPage = {
 
-        val order = orderDao.find(orderId)
-        if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
-            get(req)
+    val order = orderDao.find(orderId)
+    if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
+      get(req)
 
-        val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
-        val theme = themeService.default
-        val page = ScalapressPage(theme, sreq)
-        page.body("Order status: " + order.status)
-        page.body("The status of your order is " + order.status)
-        page
-    }
+    val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    page.body("Order status: " + order.status)
+    page.body("The status of your order is " + order.status)
+    page
+  }
 }

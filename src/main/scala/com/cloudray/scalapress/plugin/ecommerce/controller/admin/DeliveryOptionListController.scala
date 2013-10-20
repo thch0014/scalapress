@@ -14,31 +14,31 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/delivery"))
 class DeliveryOptionListController {
 
-    @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-    @Autowired var context: ScalapressContext = _
+  @Autowired var deliveryOptionDao: DeliveryOptionDao = _
+  @Autowired var context: ScalapressContext = _
 
-    @RequestMapping
-    def list = "admin/plugin/shopping/delivery/list.vm"
+  @RequestMapping
+  def list = "admin/plugin/shopping/delivery/list.vm"
 
-    @RequestMapping(value = Array("create"))
-    def create = {
-        val d = new DeliveryOption
-        deliveryOptionDao.save(d)
-        "redirect:/backoffice/delivery"
-    }
+  @RequestMapping(value = Array("create"))
+  def create = {
+    val d = new DeliveryOption
+    deliveryOptionDao.save(d)
+    "redirect:/backoffice/delivery"
+  }
 
-    @ResponseBody
-    @RequestMapping(value = Array("/order"), method = Array(RequestMethod.POST))
-    def reorder(@RequestBody order: String): String = {
+  @ResponseBody
+  @RequestMapping(value = Array("/order"), method = Array(RequestMethod.POST))
+  def reorder(@RequestBody order: String): String = {
 
-        val ids = order.split("-")
-        deliveryOptionDao.findAll().foreach(d => {
-            val pos = ids.indexOf(d.id.toString)
-            d.position = pos
-            deliveryOptionDao.save(d)
-        })
-        "ok"
-    }
+    val ids = order.split("-")
+    deliveryOptionDao.findAll().foreach(d => {
+      val pos = ids.indexOf(d.id.toString)
+      d.position = pos
+      deliveryOptionDao.save(d)
+    })
+    "ok"
+  }
 
-    @ModelAttribute("options") def options = deliveryOptionDao.findAll().sortBy(_.position).asJava
+  @ModelAttribute("options") def options = deliveryOptionDao.findAll().sortBy(_.position).asJava
 }

@@ -16,29 +16,29 @@ import com.cloudray.scalapress.obj.ObjectDao
 @RequestMapping(Array("backoffice/plugin/shopping/address/{id}"))
 class AddressEntryController {
 
-    @Autowired var context: ScalapressContext = _
-    @Autowired var addressDao: AddressDao = _
-    @Autowired var objectDao: ObjectDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var addressDao: AddressDao = _
+  @Autowired var objectDao: ObjectDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit = "admin/plugin/shopping/address/entry.vm"
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit = "admin/plugin/shopping/address/entry.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def submit(@PathVariable("id") accountId: Long,
-               @RequestParam("orderId") orderId: Long,
-               @Valid @ModelAttribute("address") address: Address,
-               errors: Errors) = {
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def submit(@PathVariable("id") accountId: Long,
+             @RequestParam("orderId") orderId: Long,
+             @Valid @ModelAttribute("address") address: Address,
+             errors: Errors) = {
 
-        if (errors.hasErrors)
-            edit
-        else {
-            address.active = true
-            address.account = accountId.toString
-            addressDao.save(address)
-            "redirect:/backoffice/order/" + orderId
-        }
+    if (errors.hasErrors)
+      edit
+    else {
+      address.active = true
+      address.account = accountId.toString
+      addressDao.save(address)
+      "redirect:/backoffice/order/" + orderId
     }
+  }
 
-    @ModelAttribute("orderId") def orderId(@RequestParam("orderId") orderId: Long) = orderId
-    @ModelAttribute("address") def address = new Address()
+  @ModelAttribute("orderId") def orderId(@RequestParam("orderId") orderId: Long) = orderId
+  @ModelAttribute("address") def address = new Address()
 }
