@@ -8,11 +8,11 @@ import org.mockito.{Matchers, Mockito}
 /** @author Stephen Samuel */
 class MarkupListControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val controller = new MarkupListController
-    controller.markupDao = mock[MarkupDao]
+  val markupDao = mock[MarkupDao]
+  val controller = new MarkupListController(markupDao)
 
-    test("when creating a markup the markup is persisted") {
-        controller.create
-        Mockito.verify(controller.markupDao).save(Matchers.any[Markup])
-    }
+  test("when creating a markup the markup is persisted") {
+    controller.create
+    Mockito.verify(markupDao).save(Matchers.any[Markup])
+  }
 }

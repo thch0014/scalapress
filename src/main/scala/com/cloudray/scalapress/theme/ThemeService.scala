@@ -1,16 +1,13 @@
 package com.cloudray.scalapress.theme
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
-import javax.servlet.ServletContext
+import org.springframework.stereotype.Component
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.folder.Folder
+import org.springframework.beans.factory.annotation.Autowired
 
-@Service
-class ThemeService {
-
-  @Autowired var servletContext: ServletContext = _
-  @Autowired var themeDao: ThemeDao = _
+@Component
+@Autowired
+class ThemeService(themeDao: ThemeDao) {
 
   def theme(folder: Folder) = Option(folder.theme).getOrElse(themeDao.findDefault)
   def theme(obj: Obj) = themeDao.findDefault

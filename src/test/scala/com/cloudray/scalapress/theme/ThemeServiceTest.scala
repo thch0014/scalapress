@@ -8,11 +8,11 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class ThemeServiceTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
 
-  val service = new ThemeService
-  service.themeDao = mock[ThemeDao]
+  val themeDao = mock[ThemeDao]
+  val service = new ThemeService(themeDao)
 
   val default = new Theme
-  Mockito.when(service.themeDao.findDefault).thenReturn(default)
+  Mockito.when(themeDao.findDefault).thenReturn(default)
 
   "a theme service" should "use folder theme before default" in {
     val folder = new Folder

@@ -8,11 +8,11 @@ import org.mockito.{Matchers, Mockito}
 /** @author Stephen Samuel */
 class ThemeListControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val controller = new ThemeListController
-    controller.themeDao = mock[ThemeDao]
+  val themeDao = mock[ThemeDao]
+  val controller = new ThemeListController(themeDao)
 
-    test("when creating a theme the theme is persisted") {
-        controller.create
-        Mockito.verify(controller.themeDao).save(Matchers.any[Theme])
-    }
+  test("when creating a theme the theme is persisted") {
+    controller.create
+    Mockito.verify(themeDao).save(Matchers.any[Theme])
+  }
 }

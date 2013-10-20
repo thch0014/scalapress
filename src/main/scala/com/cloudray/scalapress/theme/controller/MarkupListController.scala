@@ -9,9 +9,8 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/markup"))
-class MarkupListController {
-
-  @Autowired var markupDao: MarkupDao = _
+@Autowired
+class MarkupListController(markupDao: MarkupDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/theme/markup/list.vm"

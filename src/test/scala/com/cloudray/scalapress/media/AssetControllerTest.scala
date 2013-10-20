@@ -12,8 +12,8 @@ class AssetControllerTest extends FunSuite with MockitoSugar with OneInstancePer
 
     val resp = mock[HttpServletResponse]
     val store = mock[AssetStore]
-    val controller = new AssetController()
-    controller.assetStore = store
+    val assetStore = store
+    val controller = new AssetController(assetStore)
 
     Mockito.when(store.get(Matchers.anyString)).thenReturn(Some(new ByteArrayInputStream(Array[Byte](1, 2))))
     Mockito.when(resp.getOutputStream).thenReturn(new ServletOutputStream {

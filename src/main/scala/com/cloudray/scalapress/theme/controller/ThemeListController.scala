@@ -3,18 +3,14 @@ package com.cloudray.scalapress.theme.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.{ThemeDao, Theme}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/theme"))
-class ThemeListController {
-
-  @Autowired var themeDao: ThemeDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class ThemeListController(themeDao: ThemeDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/theme/list.vm"
