@@ -28,20 +28,28 @@
         </div>
     </div>
 
-    <ul class="thumbnails">
+    <table class="table table-condensed table-hover">
+        <tr>
+            <th>Attachment</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
       #foreach ($attachment in $section.attachments())
-          <li class="span2">
-            $attachment.assetKey()
-              <a class="btn btn-mini" href="/asset/$attachment.assetKey()">
-                  <i class="icon-download-alt icon-white"></i> Download Original</a>
-              <a class="btn btn-danger btn-mini"
-                 href="/backoffice/plugin/attachment/section/$section.id/delete/$attachment.assetKey()">
+          <tr>
+              <td>$attachment.assetKey()
+                  <a class="btn btn-mini" href="/asset/$attachment.assetKey()">
+                      <i class="icon-download-alt icon-white"></i> Download</a>
+              </td>
+              <td><textarea name="desc_$attachment.assetKey()" cols="80" class="input-xlarge"
+                            placeholder="enter description of attachment">$!attachment.description()</textarea></td>
+              <td><a class="btn btn-danger btn-mini"
+                     href="/backoffice/plugin/attachment/section/$section.id/delete/$attachment.assetKey()">
                   <i class="icon-trash icon-white"></i> Remove</a>
-              <textarea name="desc_$attachment.assetKey()"
-                        placeholder="enter description of attachment">$!attachment.description()</textarea>
-          </li>
+              </td>
+          </tr>
       #end
-    </ul>
+    </table>
+
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save</button>
