@@ -12,11 +12,10 @@ import scala.Some
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/form/{id}"))
-class FormEditController {
-
-  @Autowired var submissionDao: SubmissionDao = _
-  @Autowired var formDao: FormDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class FormEditController(submissionDao: SubmissionDao,
+                         formDao: FormDao,
+                         context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute form: Form) = "admin/plugin/form/edit.vm"

@@ -31,7 +31,7 @@
         <label class="control-label">Status</label>
 
         <div class="controls">
-          #springFormSingleSelect("form.o.status", $statuses)
+          #springFormSingleSelect("form.o.status", $statuses, "")
         </div>
     </div>
 

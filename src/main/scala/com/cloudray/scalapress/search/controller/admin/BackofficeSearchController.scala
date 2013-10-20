@@ -12,11 +12,10 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/search"))
-class BackofficeSearchController {
-
-  @Autowired var service: SearchService = _
-  @Autowired var objectDao: ObjectDao = _
-  @Autowired var typeDao: TypeDao = _
+@Autowired
+class BackofficeSearchController(service: SearchService,
+                                 objectDao: ObjectDao,
+                                 typeDao: TypeDao) {
 
   @RequestMapping
   def test(@RequestParam("q") q: String, model: ModelMap) = {

@@ -14,11 +14,10 @@ import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/submission/{id}"))
-class SubmissionViewController {
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var submissionDao: SubmissionDao = _
+class SubmissionViewController(context: ScalapressContext,
+                               submissionDao: SubmissionDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def view = "admin/plugin/form/submissions/view.vm"

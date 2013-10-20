@@ -11,9 +11,8 @@ import com.cloudray.scalapress.util.EnumPopulator
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/form/{formId}/field/{fieldId}"))
-class FormFieldEditController extends EnumPopulator {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class FormFieldEditController(context: ScalapressContext) extends EnumPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("field") field: FormField) = "admin/plugin/form/fieldedit.vm"

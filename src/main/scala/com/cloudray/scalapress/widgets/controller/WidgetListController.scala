@@ -13,9 +13,8 @@ import scala.collection.mutable
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/widget"))
-class WidgetListController {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class WidgetListController(context: ScalapressContext) {
 
   @RequestMapping
   def list = "admin/widget/list.vm"

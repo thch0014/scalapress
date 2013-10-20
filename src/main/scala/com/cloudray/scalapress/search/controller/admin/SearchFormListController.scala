@@ -11,10 +11,9 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/searchform"))
-class SearchFormListController {
-
-  @Autowired var searchFormDao: SearchFormDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class SearchFormListController(searchFormDao: SearchFormDao,
+                               context: ScalapressContext) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/searchform/list.vm"
