@@ -7,9 +7,6 @@ object WizardRenderer {
 
   def render(steps: Seq[WizardStep], active: WizardStep): Node = {
 
-    // todo remove this css once h4s updated
-    val css = "ul.wizard li { list-style-image: none !important; }"
-
     var index = 0
     val renderedSteps = steps.map(step => {
 
@@ -31,9 +28,6 @@ object WizardRenderer {
       <ul class="nav nav-pills wizard">
         {Unparsed(rendered)}
       </ul>
-      <style>
-        {Unparsed(css)}
-      </style>
     </div>
   }
 }

@@ -12,9 +12,8 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/tx"))
-class TransactionListController {
-
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class TransactionListController(context: ScalapressContext) {
 
   @RequestMapping
   def search(@RequestParam(value = "pageNumber", defaultValue = "1") pageNumber: Int,

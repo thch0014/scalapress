@@ -9,9 +9,8 @@ import org.apache.commons.io.IOUtils
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("asset"))
-class AssetController {
-
-  @Autowired var assetStore: AssetStore = _
+@Autowired
+class AssetController(assetStore: AssetStore) {
 
   @ExceptionHandler(Array(classOf[RuntimeException]))
   def handleException1(e: RuntimeException, resp: HttpServletResponse) {
