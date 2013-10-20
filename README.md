@@ -14,6 +14,8 @@ scala based publishing platform
 * Reworked S3 asset store for faster enumeration. Updated asset store contract.
 * Added options for form fields
 * Fixed memory leak with Scalate
+* Moved accounts to seperate top level entities. Added migrator for this.
+* Updated all plugins to use new accounts system
 
 ##### 0.38
 * Updated elastic indexer to be incremental
