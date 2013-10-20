@@ -225,8 +225,12 @@ class ObjectEditController(val assetStore: AssetStore,
 
   @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
     val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
-    val empty = mutable.LinkedHashMap.empty[String, String]
-    val map = empty ++: sections.map(c => (c.getName, c.getSimpleName)).toMap
+
+    val map = mutable.LinkedHashMap.empty[String, String]
+    sections.foreach(section => {
+      map.put(section.getName, section.getSimpleName)
+    })
+
     map.asJava
   }
 }
