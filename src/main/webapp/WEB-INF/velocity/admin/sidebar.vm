@@ -1,20 +1,29 @@
-<ul class="nav nav-tabs nav-stacked">
-    <li><a href="/backoffice"><i class="glyphicon  glyphicon-home"></i> Dashboard</a></li>
-    <li><a href="/backoffice/folder"><i class="glyphicon  glyphicon-folder-open"></i> Folders</a></li>
+<ul class="list-group">
+    <li class="list-group-item"><a href="/backoffice"><i class="glyphicon  glyphicon-home"></i> Dashboard</a></li>
+    <li class="list-group-item"><a href="/backoffice/folder"><i class="glyphicon  glyphicon-folder-open"></i>
+        Folders</a></li>
   #foreach ($type in $types)
-      <li><a href="/backoffice/obj?typeId=$type.id"><i class="$type.bootIcon()"></i> $type.name</a></li>
+      <li class="list-group-item"><a href="/backoffice/obj?typeId=$type.id"><i class="$type.bootIcon()"></i> $type.name
+      </a></li>
   #end
   #foreach ($accountType in $accountTypes)
-      <li><a href="/backoffice/account?accountTypeId=$accountType.id">
+      <li class="list-group-item"><a href="/backoffice/account?accountTypeId=$accountType.id">
           <i class="glyphicon  glyphicon-user"></i> $accountType.name</a></li>
   #end
-    <li><a href="/backoffice/form"><i class="glyphicon  glyphicon-align-center"></i> Forms</a></li>
-    <li><a href="/backoffice/submission"><i class="glyphicon  glyphicon-pencil"></i> Submissions</a></li>
-    <li><a href="/backoffice/medialib"><i class="glyphicon  glyphicon-camera"></i> Media Library</a></li>
-    <li><a href="/backoffice/order"><i class="glyphicon  glyphicon-shopping-cart"></i> Orders</a></li>
-    <li><a href="/backoffice/tx"><i class="glyphicon  glyphicon-credit-card"></i> Transactions</a></li>
-    <li><a href="/backoffice/widget"><i class="glyphicon  glyphicon-asterisk"></i> Widgets</a></li>
-    <li><a href="/j_spring_security_logout"><i class="glyphicon  glyphicon-lock"></i> Logout</a></li>
+    <li class="list-group-item"><a href="/backoffice/form"><i class="glyphicon  glyphicon-align-center"></i> Forms</a>
+    </li>
+    <li class="list-group-item"><a href="/backoffice/submission"><i class="glyphicon  glyphicon-pencil"></i> Submissions</a>
+    </li>
+    <li class="list-group-item"><a href="/backoffice/medialib"><i class="glyphicon  glyphicon-camera"></i> Media Library</a>
+    </li>
+    <li class="list-group-item"><a href="/backoffice/order"><i class="glyphicon  glyphicon-shopping-cart"></i>
+        Orders</a></li>
+    <li class="list-group-item"><a href="/backoffice/tx"><i class="glyphicon  glyphicon-credit-card"></i>
+        Transactions</a></li>
+    <li class="list-group-item"><a href="/backoffice/widget"><i class="glyphicon  glyphicon-asterisk"></i> Widgets</a>
+    </li>
+    <li class="list-group-item"><a href="/j_spring_security_logout"><i class="glyphicon  glyphicon-lock"></i> Logout</a>
+    </li>
 </ul>
 
 #if ($buildNumber)

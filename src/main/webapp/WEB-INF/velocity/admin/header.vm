@@ -66,15 +66,15 @@
 </head>
 <body>
 
+
   #parse("/admin/navbar.vm")
 
+
 <div class="container">
+
     <div class="row">
         <div class="col-md-2">
-
-            <br/>
           #parse("/admin/sidebar.vm")
-
         </div>
         <div class="col-md-10">
 
