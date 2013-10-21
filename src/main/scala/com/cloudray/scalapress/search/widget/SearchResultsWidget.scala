@@ -13,12 +13,10 @@ import com.cloudray.scalapress.obj.Obj
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget with Logging {
-
-  val CacheTimeout: Long = 1000 * 60
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "search", nullable = true)

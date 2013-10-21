@@ -1,71 +1,58 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Section</h3>
+<div class="page-header">
+    <h2>Object List Section: $section.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-            #springFormInput("section.name", "class='input-xlarge'")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("section.visible")
-        </div>
-    </div>
+  #parse("/admin/section/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Sort</label>
 
         <div class="col-lg-8">
-            <select id="sort" name="sort">
-                #foreach($option in $sortMap.keySet())
-                    <option value="${option}"
-                        #if("$!section.sort" == "$option")
-                            selected="selected"
-                        #end>
-                        ${sortMap.get($option)}</option>
-                #end
+            <select id="sort" name="sort" class="form-control">
+              #foreach($option in $sortMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.sort" == "$option")
+                          selected="selected"
+                    #end>
+                    ${sortMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
 
-    #if ($section.sort == "Attribute" || $section.sort == "AttributeDesc")
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Sort Attribute</label>
+  #if ($section.sort == "Attribute" || $section.sort == "AttributeDesc")
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Sort Attribute</label>
 
-            <div class="col-lg-8">
-                <select id="sortAttribute" name="sortAttribute">
-                    #foreach($option in $attributesMap.keySet())
-                        <option value="${option}"
-                            #if("$!section.sortAttribute.id" == "$option") selected="selected" #end>
-                            ${attributesMap.get($option)}
-                        </option>
-                    #end
-                </select>
-            </div>
-        </div>
-    #end
+          <div class="col-lg-8">
+              <select id="sortAttribute" name="sortAttribute" class="form-control">
+                #foreach($option in $attributesMap.keySet())
+                    <option value="${option}"
+                      #if("$!section.sortAttribute.id" == "$option") selected="selected" #end>
+                      ${attributesMap.get($option)}
+                    </option>
+                #end
+              </select>
+          </div>
+      </div>
+  #end
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Markup</label>
 
         <div class="col-lg-8">
-            <select id="markup" name="markup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!section.markup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${markupMap.get($option)}</option>
-                #end
+            <select id="markup" name="markup" class="form-control">
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.markup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -74,14 +61,11 @@
         <label class="col-lg-2 control-label">Page Size</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.pageSize", "class='input-sm'")
+          #springFormInput("section.pageSize", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
-    </div>
+  #parse("/admin/section/actions.vm")
 
 </form>
 

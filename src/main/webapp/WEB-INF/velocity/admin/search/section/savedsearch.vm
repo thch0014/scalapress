@@ -1,38 +1,26 @@
 #parse("/admin/header.vm")
 
+<div class="page-header">
+    <h2>Search Results Section: $section.id</h2>
+</div>
 
-<h3>Edit Search Results Section</h3>
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-            #springFormInput("section.name", "class='input-xlarge'")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("section.visible", "")
-        </div>
-    </div>
+  #parse("/admin/section/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Markup</label>
 
         <div class="col-lg-8">
             <select id="markup" name="markup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!section.markup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${markupMap.get($option)}</option>
-                #end
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.markup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -46,10 +34,7 @@
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
-    </div>
+  #parse("/admin/section/actions.vm")
 
 </form>
 

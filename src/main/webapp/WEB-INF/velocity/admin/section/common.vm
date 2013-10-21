@@ -2,7 +2,7 @@
     <label class="col-lg-2 control-label">Name</label>
 
     <div class="col-lg-8">
-        #springFormInput("section.name", "class='input-xlarge'")
+      #springFormInput("section.name", "class='form-control'")
     </div>
 </div>
 
@@ -10,6 +10,6 @@
     <label class="col-lg-2 control-label">Visible</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("section.visible")
+      #springFormCheckbox("section.visible", "")
     </div>
 </div>

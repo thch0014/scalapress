@@ -132,10 +132,10 @@
             <i class="icon-plus"></i> Create  $type.name
         </a>
         <a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-download"></i> Export as CSV
+            <i class="glyphicon glyphicon-download-alt"></i> Export as CSV
         </a>
         <a href="#import-modal" role='button' class="btn btn-default" data-toggle="modal">
-            <i class="glyphicon glyphicon-upload"></i> Import CSV
+            <i class="glyphicon glyphicon-upload-alt"></i> Import CSV
         </a>
     </div>
 </div>

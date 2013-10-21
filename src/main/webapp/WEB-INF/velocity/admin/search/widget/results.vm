@@ -1,41 +1,21 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Search Results Widget</h3>
+<div class="page-header">
+    <h2>Search Results Widget: $widget.id</h2>
+</div>
 
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.name")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("widget.visible")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Location</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.location")
-        </div>
-    </div>
+  #parse("/admin/widget/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Search</label>
 
         <div class="col-lg-8">
             Edit Saved Search <a href="/backoffice/savedsearch/$widget.search.id" class="btn btn-xs btn-default">
-            <i class="glyphicon  glyphicon-pencil"></i></a>
+            <i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
 
@@ -43,120 +23,19 @@
         <label class="col-lg-2 control-label">Markup</label>
 
         <div class="col-lg-8">
-            <select id="markup" name="markup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!widget.markup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${markupMap.get($option)}</option>
-                #end
+            <select id="markup" name="markup" class="form-control">
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!widget.markup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container</label>
-
-        <div class="col-lg-8">
-            #springFormSingleSelect("widget.container", $widgetContainerMap)
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container Class</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.containerClass")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container Id</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.containerId")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Caption</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.caption")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Restricted</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("widget.restricted")
-        </div>
-    </div>
-
-    #if ($widget.restricted)
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On All Folders</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnAllFolders")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Included folders</label>
-
-            <div class="col-lg-8">
-                #springFormInput("widget.includeFolders", "class='input-xlarge'")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Excluded folders</label>
-
-            <div class="col-lg-8">
-                #springFormInput("widget.excludeFolders", "class='input-xlarge'")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On All Objects</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnAllObjects")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Home</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnHome")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Others</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnOthers")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Search Results</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnSearchResults")
-            </div>
-        </div>
-    #end
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  #parse("/admin/widget/buttons.vm")
 
 </form>
 

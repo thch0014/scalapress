@@ -2,7 +2,7 @@
 
 
 <div class="page-header">
-    <h2>Edit: $folder.name</h2>
+    <h2>Edit Folder $folder.name</h2>
 </div>
 
 <form class="form-horizontal" method="POST">

@@ -1,25 +1,12 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Search Form Section</h3>
+<div class="page-header">
+    <h2>Search Form Section: $section.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-          #springFormInput("section.name", "class='input-xlarge'")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-          #springFormCheckbox("section.visible", "")
-        </div>
-    </div>
+  #parse("/admin/section/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Search Form</label>
@@ -34,14 +21,11 @@
         <label class="col-lg-2 control-label">No results text</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("section.noResultsText", "class='input-xlarge'")
+          #springFormTextarea("section.noResultsText", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
-    </div>
+  #parse("/admin/section/actions.vm")
 
 </form>
 
