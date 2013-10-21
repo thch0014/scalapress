@@ -1,25 +1,25 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Calendar Widget</h3>
-
+<div class="page-header">
+    <h2>Calendar Widget</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
-    #parse("/admin/widget/common.vm")
+  #parse("/admin/widget/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Object Type</label>
 
         <div class="col-lg-8">
-            <select id="objectType" name="objectType">
-                #foreach($option in $objectTypesMap.keySet())
-                    <option value="${option}"
-                        #if("$!widget.objectType.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${objectTypesMap.get($option)}</option>
-                #end
+            <select id="objectType" name="objectType" class="form-control">
+              #foreach($option in $objectTypesMap.keySet())
+                  <option value="${option}"
+                    #if("$!widget.objectType.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${objectTypesMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -28,13 +28,13 @@
         <label class="col-lg-2 control-label">Start Date Attribute</label>
 
         <div class="col-lg-8">
-            <select id="sortAttribute" name="startDateAttribute">
-                #foreach($option in $attributesMap.keySet())
-                    <option value="${option}"
-                        #if("$!widget.startDateAttribute.id" == "$option") selected="selected" #end>
-                        ${attributesMap.get($option)}
-                    </option>
-                #end
+            <select id="sortAttribute" name="startDateAttribute" class="form-control">
+              #foreach($option in $attributesMap.keySet())
+                  <option value="${option}"
+                    #if("$!widget.startDateAttribute.id" == "$option") selected="selected" #end>
+                    ${attributesMap.get($option)}
+                  </option>
+              #end
             </select>
         </div>
     </div>
@@ -43,21 +43,18 @@
         <label class="col-lg-2 control-label">End Date Attribute</label>
 
         <div class="col-lg-8">
-            <select id="sortAttribute" name="endDateAttribute">
-                #foreach($option in $attributesMap.keySet())
-                    <option value="${option}"
-                        #if("$!widget.endDateAttribute.id" == "$option") selected="selected" #end>
-                        ${attributesMap.get($option)}
-                    </option>
-                #end
+            <select id="sortAttribute" name="endDateAttribute" class="form-control">
+              #foreach($option in $attributesMap.keySet())
+                  <option value="${option}"
+                    #if("$!widget.endDateAttribute.id" == "$option") selected="selected" #end>
+                    ${attributesMap.get($option)}
+                  </option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  #parse("/admin/widget/buttons.vm")
 
 </form>
 

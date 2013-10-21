@@ -1,7 +1,10 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Saved Search</h3>
+<div class="page-header">
+    <h2>Edit Saved Search</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +12,7 @@
     <label class="col-lg-2 control-label">Name search</label>
 
     <div class="col-lg-8">
-      #springFormInput("search.name")
+      #springFormInput("search.name", "class='form-control'")
     </div>
 </div>
 
@@ -33,7 +36,7 @@
     <label class="col-lg-2 control-label">Keywords search</label>
 
     <div class="col-lg-8">
-      #springFormInput("search.keywords")
+      #springFormInput("search.keywords", "class='form-control'")
     </div>
 </div>
 
@@ -41,7 +44,7 @@
     <label class="col-lg-2 control-label">Labels search</label>
 
     <div class="col-lg-8">
-      #springFormInput("search.labels")
+      #springFormInput("search.labels", "class='form-control'")
     </div>
 </div>
 
@@ -49,7 +52,7 @@
     <label class="col-lg-2 control-label">Max Results</label>
 
     <div class="col-lg-8">
-      #springFormInput("search.maxResults")
+      #springFormInput("search.maxResults", "class='form-control'")
     </div>
 </div>
 
@@ -57,7 +60,7 @@
     <label class="col-lg-2 control-label">Search in folder</label>
 
     <div class="col-lg-8">
-      #springFormInput("search.searchFolders", "class='input-sm'")
+      #springFormInput("search.searchFolders", "class='form-control'")
     </div>
 </div>
 
@@ -74,7 +77,7 @@
     <label class="col-lg-2 control-label">Sort</label>
 
     <div class="col-lg-8">
-        <select id="sortType" name="sortType">
+        <select id="sortType" name="sortType" class="form-control">
           #foreach($option in $sortMap.keySet())
               <option value="${option}"
                 #if("$!search.sortType" == "$option") selected="selected" #end>
@@ -91,7 +94,7 @@
       <label class="col-lg-2 control-label">Sort Attribute</label>
 
       <div class="col-lg-8">
-          <select id="sortAttribute" name="sortAttribute">
+          <select id="sortAttribute" name="sortAttribute" class="form-control">
             #foreach($option in $attributesMap.keySet())
                 <option value="${option}"
                   #if("$!search.sortAttribute.id" == "$option") selected="selected" #end>
@@ -108,7 +111,7 @@
     <label class="col-lg-2 control-label">Ignore Past</label>
 
     <div class="col-lg-8">
-        <select id="ignorePast" name="ignorePast">
+        <select id="ignorePast" name="ignorePast" class="form-control">
           #foreach($option in $attributesMap.keySet())
               <option value="${option}"
                 #if("$!search.ignorePast.id" == "$option") selected="selected" #end>
@@ -133,13 +136,13 @@
         #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
 
           #foreach ($value in $values)
-              <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="input-xxlarge"/><br/>
+              <input type="text" name="attributeValues$a.id" value="$esc.html($value)" class="form-control"/><br/>
           #end
 
         #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
           #foreach ($value in $values)
               <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
-                     class="input-sm"/><br/>
+                     class="form-control"/><br/>
           #end
 
         #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")
@@ -165,7 +168,7 @@
               #end
 
                 <label class="checkbox inline">
-                    <input type="checkbox" name="attributeValues$a.id"
+                    <input type="checkbox" name="attributeValues$a.id" class="form-control"
                            value="$esc.html($option.value)" $!checked/>
                   $option.value
                 </label>
@@ -173,7 +176,7 @@
 
           #else
 
-              <select name="attributeValues$a.id" class="input-xlarge">
+              <select name="attributeValues$a.id" class="form-control">
                   <option value="">-None-</option>
                 #foreach ($option in $a.orderedOptions())
                   #if($values.contains($option.value))
@@ -188,7 +191,7 @@
           #end
 
         #elseif ($a.attributeType == "Boolean")
-            <select name="attributeValues$a.id" class="input-medium">
+            <select name="attributeValues$a.id" class="form-control">
                 <option value="">-Not Specified-</option>
                 <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
                 <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
@@ -200,11 +203,13 @@
   #end
 
 
-
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <a href="/backoffice/savedsearch" class="btn btn-default">Return</a>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="/backoffice/savedsearch" class="btn btn-default">Return</a>
+    </div>
 </div>
+
 
 </form>
 

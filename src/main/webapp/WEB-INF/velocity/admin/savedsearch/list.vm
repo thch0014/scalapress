@@ -1,7 +1,9 @@
 #parse("/admin/header.vm")
 
 
-<h3>Saved Searches</h3>
+<div class="page-header">
+    <h2>Saved Searches</h2>
+</div>
 
 
 <table class="table table-condensed table-striped table-hover">
@@ -10,20 +12,26 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($s in $searches)
-        <tr>
-            <td>$s.id</td>
-            <td>$!s.name</td>
-            <td>
-                <a href="/backoffice/savedsearch/$s.id" class="btn btn-xs btn-default">
-                    <i class="glyphicon  glyphicon-pencil"></i> </a>
-                <a href="/search/saved/$s.id" class="btn btn-xs btn-default">
-                    <i class="glyphicon  glyphicon-eye-open"></i> </a></td>
-        </tr>
-    #end
+  #foreach ($s in $searches)
+      <tr>
+          <td>$s.id</td>
+          <td>$!s.name</td>
+          <td>
+              <a href="/backoffice/savedsearch/$s.id" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i> </a>
+              <a href="/search/saved/$s.id" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-eye-open"></i> </a>
+          </td>
+      </tr>
+  #end
 </table>
 
-<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-xs btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create Form</a>
-
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="//backoffice/searchform/create" role="button" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i> Create search form
+        </a>
+    </div>
+</div>
 
 #parse("/admin/footer.vm")
