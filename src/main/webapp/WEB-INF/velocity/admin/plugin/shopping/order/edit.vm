@@ -2,8 +2,8 @@
 
 <div class="page-header">
     <h2>Order $order.id</h2>
-    <h4>Placed: $datetool.format($order.datePlaced) &nbsp; &nbsp; Status: $order.status &nbsp; &nbsp;
-        Total: $number.currency($order.total())</h4>
+    <h5>Placed: $datetool.format($order.datePlaced) &nbsp; &nbsp; Status: $order.status &nbsp; &nbsp;
+        Total: $number.currency($order.total())</h5>
 </div>
 
 <form class="form-horizontal" method="POST">

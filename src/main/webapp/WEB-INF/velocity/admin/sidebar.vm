@@ -1,29 +1,43 @@
 <ul class="list-group">
-    <li class="list-group-item"><a href="/backoffice"><i class="glyphicon  glyphicon-home"></i> Dashboard</a></li>
-    <li class="list-group-item"><a href="/backoffice/folder"><i class="glyphicon  glyphicon-folder-open"></i>
-        Folders</a></li>
+    <a class="list-group-item" href="/backoffice"><i class="glyphicon  glyphicon-home"></i>
+        Dashboard</a>
+    <a class="list-group-item" href="/backoffice/folder"><i class="glyphicon  glyphicon-folder-open"></i>
+        Folders</a>
   #foreach ($type in $types)
-      <li class="list-group-item"><a href="/backoffice/obj?typeId=$type.id"><i class="$type.bootIcon()"></i> $type.name
-      </a></li>
+      <a class="list-group-item" href="/backoffice/obj?typeId=$type.id">
+          <i class="$type.bootIcon()"></i> $type.name
+      </a>
   #end
   #foreach ($accountType in $accountTypes)
-      <li class="list-group-item"><a href="/backoffice/account?accountTypeId=$accountType.id">
-          <i class="glyphicon  glyphicon-user"></i> $accountType.name</a></li>
+      <a class="list-group-item" href="/backoffice/account?accountTypeId=$accountType.id">
+          <i class="glyphicon glyphicon-user"></i> $accountType.name</a>
   #end
-    <li class="list-group-item"><a href="/backoffice/form"><i class="glyphicon  glyphicon-align-center"></i> Forms</a>
-    </li>
-    <li class="list-group-item"><a href="/backoffice/submission"><i class="glyphicon  glyphicon-pencil"></i> Submissions</a>
-    </li>
-    <li class="list-group-item"><a href="/backoffice/medialib"><i class="glyphicon  glyphicon-camera"></i> Media Library</a>
-    </li>
-    <li class="list-group-item"><a href="/backoffice/order"><i class="glyphicon  glyphicon-shopping-cart"></i>
-        Orders</a></li>
-    <li class="list-group-item"><a href="/backoffice/tx"><i class="glyphicon  glyphicon-credit-card"></i>
-        Transactions</a></li>
-    <li class="list-group-item"><a href="/backoffice/widget"><i class="glyphicon  glyphicon-asterisk"></i> Widgets</a>
-    </li>
-    <li class="list-group-item"><a href="/j_spring_security_logout"><i class="glyphicon  glyphicon-lock"></i> Logout</a>
-    </li>
+    <a class="list-group-item" href="/backoffice/form">
+        <i class="glyphicon glyphicon-align-center"></i> Forms
+    </a>
+
+    <a class="list-group-item" href="/backoffice/submission">
+        <i class="glyphicon glyphicon-pencil"></i> Submissions</a>
+
+    <a class="list-group-item" href="/backoffice/medialib">
+        <i class="glyphicon glyphicon-camera"></i> Media Library</a>
+
+    <a class="list-group-item" href="/backoffice/order">
+        <i class="glyphicon glyphicon-shopping-cart"></i> Orders
+    </a>
+
+    <a class="list-group-item" href="/backoffice/tx">
+        <i class="glyphicon glyphicon-credit-card"></i> Transactions
+    </a>
+
+    <a class="list-group-item" href="/backoffice/widget">
+        <i class="glyphicon glyphicon-asterisk"></i> Widgets
+    </a>
+
+    <a class="list-group-item" href="/j_spring_security_logout">
+        <i class="glyphicon glyphicon-lock"></i> Logout
+    </a>
+
 </ul>
 
 #if ($buildNumber)

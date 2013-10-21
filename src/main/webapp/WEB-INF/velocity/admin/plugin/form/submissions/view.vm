@@ -1,10 +1,12 @@
 #parse("/admin/header.vm")
 
+<div class="page-header">
+    <h2>Submission: #$submission.id</h2>
+    <h5>Form name: $submission.formName</h5>
+    <h5>Date: $datetool.format("HH:mm EEEE dd MMMM yyyy", $submission.date)</h5>
+    <h5>Page: $!submission.page().get().name()</h5>
+</div>
 
-<h3>Submission: #$submission.id</h3>
-<h5>Form name: $submission.formName</h5>
-<h5>Date: $datetool.format("HH:mm EEEE dd MMMM yyyy", $submission.date)</h5>
-<h5>Page: !$submission.page().get().name()</h5>
 
 <table class="table table-condensed table-striped table-hover">
     <tr>
@@ -12,30 +14,32 @@
         <th>Value</th>
         <th></th>
     </tr>
-    #foreach ($data in $submission.data)
-        <tr>
-            <td>$data.key</td>
-            <td>$data.value</td>
-        </tr>
-    #end
+  #foreach ($data in $submission.data)
+      <tr>
+          <td>$data.key</td>
+          <td>$data.value</td>
+      </tr>
+  #end
 </table>
 
 
 #if ($submission.attachments.size() > 0)
 <legend>Attachments</legend>
 <table class="table table-condensed table-striped table-hover">
-    #foreach ($a in $submission.attachments)
-        <tr>
-            <td><a href="$assetStore.link($a)">$a</a></td>
-        </tr>
-    #end
+  #foreach ($a in $submission.attachments)
+      <tr>
+          <td><a href="$assetStore.link($a)">$a</a></td>
+      </tr>
+  #end
     <tr>
         <td><a href="/backoffice/submission/$submission.id/downloadall">Download All</a></td>
     </tr>
 </table>
 #end
 
-<a href="/backoffice/submission/$submission.id/delete" class="btn btn-danger"><i class="glyphicon  glyphicon-trash"></i> Delete</a>
+<a href="/backoffice/submission/$submission.id/delete" class="btn btn-danger">
+    <i class="glyphicon glyphicon-trash"></i> Delete
+</a>
 
 
 #parse("/admin/footer.vm")

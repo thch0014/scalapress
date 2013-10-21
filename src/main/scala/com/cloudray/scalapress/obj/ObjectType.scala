@@ -64,6 +64,6 @@ class ObjectType extends SortedSections with java.io.Serializable {
     case "image" | "images" => "glyphicon glyphicon-picture"
     case "product" | "products" => "glyphicon glyphicon-th-large"
     case "membership" | "account" | "accounts" => "glyphicon glyphicon-user"
-    case _ => "glyphicon glyphicon-circle-blank"
+    case _ => "glyphicon glyphicon-record"
   }
 }
