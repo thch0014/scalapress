@@ -1,32 +1,31 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Widget</h3>
+<div class="page-header">
+    <h2>Attribute Widget: $widget.id</h2>
+</div>
 
 
 <form class="form-horizontal" method="POST">
 
-    #parse("/admin/widget/common.vm")
+  #parse("/admin/widget/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Attribute</label>
 
         <div class="col-lg-8">
-            <select id="attribute" name="attribute">
-                #foreach($option in $attributesMap.keySet())
-                    <option value="${option}"
-                        #if("$!widget.attribute.id" == "$option") selected="selected" #end>
-                        ${attributesMap.get($option)}
-                    </option>
-                #end
+            <select id="attribute" name="attribute" class="form-control">
+              #foreach($option in $attributesMap.keySet())
+                  <option value="${option}"
+                    #if("$!widget.attribute.id" == "$option") selected="selected" #end>
+                    ${attributesMap.get($option)}
+                  </option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  #parse("/admin/widget/buttons.vm")
 
 </form>
 

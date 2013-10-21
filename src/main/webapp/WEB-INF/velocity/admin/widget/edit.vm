@@ -1,34 +1,36 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Widget</h3>
-
+<div class="page-header">
+    <h2>Widget: $widget.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
-    #parse("/admin/widget/common.vm")
+  #parse("/admin/widget/common.vm")
 
-    #if ($widget.simpleEditor)
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Content</label>
+  #if ($widget.simpleEditor)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Content</label>
 
-            <div class="col-lg-8">
-                #springFormTextarea("widget.content", "rows='16' class='input-block-level'")
-            </div>
+          <div class="col-lg-8">
+            #springFormTextarea("widget.content", "rows='16' class='")
+          </div>
+      </div>
+  #else
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Content</label>
+
+          <div class="col-lg-8">
+            #springFormTextarea("widget.content", "rows='16' class='tinymce'")
+          </div>
+      </div>
+  #end
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default">Cancel</button>
         </div>
-    #else
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Content</label>
-
-            <div class="col-lg-8">
-                #springFormTextarea("widget.content", "rows='16' class='input-block-level tinymce'")
-            </div>
-        </div>
-    #end
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

@@ -1,8 +1,10 @@
 <ul class="list-group">
-    <a class="list-group-item" href="/backoffice"><i class="glyphicon  glyphicon-home"></i>
-        Dashboard</a>
-    <a class="list-group-item" href="/backoffice/folder"><i class="glyphicon  glyphicon-folder-open"></i>
-        Folders</a>
+    <a class="list-group-item" href="/backoffice">
+        <i class="glyphicon glyphicon-home"></i> Dashboard
+    </a>
+    <a class="list-group-item" href="/backoffice/folder">
+        <i class="glyphicon  glyphicon-folder-close"></i> Folders
+    </a>
   #foreach ($type in $types)
       <a class="list-group-item" href="/backoffice/obj?typeId=$type.id">
           <i class="$type.bootIcon()"></i> $type.name

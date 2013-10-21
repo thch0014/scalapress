@@ -41,14 +41,14 @@ object BootstrapMenuRenderer extends Renderer {
     val icon = menu.icon.map(arg => <i class={arg}>
       &nbsp;
     </i>).orNull
-    <li class="dropdown-submenu">
+    <li class="dropdown-menu">
       <a tabindex="-1" href="#">
         {icon}{menu.label}
       </a>{render(menu.items)}
     </li>
   }
 
-  private[settings] def _renderDivider = <li class="divider"></li>
+  private[settings] def _renderDivider = <li role="presentation" class="divider"></li>
 
   private[settings] def _renderLink(link: MenuLink) = {
     val icon = link.icon.map(arg => <i class={arg}>

@@ -1,6 +1,6 @@
 #parse("/admin/header.vm")
 
-<div id="create-object-modal" class="modal hide">
+<div id="create-object-modal" class="modal">
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -28,7 +28,7 @@
 </div>
 
 
-<div class="modal hide" role="dialog" id="import-modal">
+<div class="modal" role="dialog" id="import-modal">
     <div class="modal-header">
         <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>
         <h3>Import CSV</h3>

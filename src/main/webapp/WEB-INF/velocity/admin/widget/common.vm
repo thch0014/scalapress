@@ -2,7 +2,7 @@
     <label class="col-lg-2 control-label">Name</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.name")
+      #springFormInput("widget.name", "class='form-control'")
     </div>
 </div>
 
@@ -10,7 +10,7 @@
     <label class="col-lg-2 control-label">Visible</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.visible")
+      #springFormCheckbox("widget.visible", "")
     </div>
 </div>
 
@@ -18,7 +18,7 @@
     <label class="col-lg-2 control-label">Location</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.location")
+      #springFormInput("widget.location", "class='form-control'")
     </div>
 </div>
 
@@ -26,7 +26,7 @@
     <label class="col-lg-2 control-label">Container</label>
 
     <div class="col-lg-8">
-        #springFormSingleSelect("widget.container", $widgetContainerMap)
+      #springFormSingleSelect("widget.container", $widgetContainerMap, "class='form-control'")
     </div>
 </div>
 
@@ -34,7 +34,7 @@
     <label class="col-lg-2 control-label">Container Class</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.containerClass")
+      #springFormInput("widget.containerClass", "class='form-control'")
     </div>
 </div>
 
@@ -42,7 +42,7 @@
     <label class="col-lg-2 control-label">Container Id</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.containerId")
+      #springFormInput("widget.containerId", "class='form-control'")
     </div>
 </div>
 
@@ -50,7 +50,7 @@
     <label class="col-lg-2 control-label">Caption</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.caption")
+      #springFormInput("widget.caption", "class='form-control'")
     </div>
 </div>
 
@@ -58,7 +58,7 @@
     <label class="col-lg-2 control-label">Restricted</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.restricted")
+      #springFormCheckbox("widget.restricted", "")
     </div>
 </div>
 
@@ -67,7 +67,7 @@
     <label class="col-lg-2 control-label">Display On All Folders</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.displayOnAllFolders")
+      #springFormCheckbox("widget.displayOnAllFolders")
     </div>
 </div>
 
@@ -75,7 +75,7 @@
     <label class="col-lg-2 control-label">Included folders</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.includeFolders", "class='input-xlarge'")
+      #springFormInput("widget.includeFolders", "class='form-control'")
     </div>
 </div>
 
@@ -83,7 +83,7 @@
     <label class="col-lg-2 control-label">Excluded folders</label>
 
     <div class="col-lg-8">
-        #springFormInput("widget.excludeFolders", "class='input-xlarge'")
+      #springFormInput("widget.excludeFolders", "class='form-control'")
     </div>
 </div>
 
@@ -91,7 +91,7 @@
     <label class="col-lg-2 control-label">Display On All Objects</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.displayOnAllObjects")
+      #springFormCheckbox("widget.displayOnAllObjects")
     </div>
 </div>
 
@@ -99,7 +99,7 @@
     <label class="col-lg-2 control-label">Display On Home</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.displayOnHome")
+      #springFormCheckbox("widget.displayOnHome")
     </div>
 </div>
 
@@ -107,7 +107,7 @@
     <label class="col-lg-2 control-label">Display On Others</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.displayOnSearchResults")
+      #springFormCheckbox("widget.displayOnSearchResults")
     </div>
 </div>
 
@@ -115,7 +115,7 @@
     <label class="col-lg-2 control-label">Display On Others</label>
 
     <div class="col-lg-8">
-        #springFormCheckbox("widget.displayOnOthers")
+      #springFormCheckbox("widget.displayOnOthers")
     </div>
 </div>
 
