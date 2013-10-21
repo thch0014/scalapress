@@ -1,7 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Markup</h3>
+<div class="page-header">
+    <h2>Markup $markup.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +10,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("markup.name")
+          #springFormInput("markup.name", "class='form-control'")
         </div>
     </div>
 
@@ -22,23 +23,25 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane" id="tab1">
-                #springFormTextarea("markup.start", "rows='24' class='input-block-level '")
+              #springFormTextarea("markup.start", "rows='24' class='form-control '")
             </div>
             <div class="tab-pane active" id="tab2">
-                #springFormTextarea("markup.body", "rows='24' class='input-block-level '")
+              #springFormTextarea("markup.body", "rows='24' class='form-control '")
             </div>
             <div class="tab-pane" id="tab3">
-                #springFormTextarea("markup.between", "rows='24' class='input-block-level '")
+              #springFormTextarea("markup.between", "rows='24' class='form-control '")
             </div>
             <div class="tab-pane" id="tab4">
-                #springFormTextarea("markup.end", "rows='24' class='input-block-level '")
+              #springFormTextarea("markup.end", "rows='24' class='form-control '")
             </div>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/markup" class="btn btn-default">Return</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a href="/backoffice/markup" class="btn btn-default">Return</a>
+        </div>
     </div>
 
 </form>

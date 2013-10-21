@@ -1,9 +1,18 @@
 #parse("/admin/header.vm")
 
 
-<h3>Markup</h3>
+<div class="page-header">
+    <h2>Markup</h2>
+</div>
 
-<a href="/backoffice/markup/create" role="button" class="btn btn-sm"> <i class="glyphicon  glyphicon-plus"></i> Create New markup</a>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/markup/create" role="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Create new markup
+        </a>
+    </div>
+</div>
 
 
 <table class="table">
@@ -12,15 +21,25 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($m in $markups)
-        <tr>
-            <td>$m.id</td>
-            <td>$!m.name</td>
-            <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-xs btn-default"> <i class="glyphicon  glyphicon-pencil"></i>
-            </a></td>
-        </tr>
-    #end
+  #foreach ($m in $markups)
+      <tr>
+          <td>$m.id</td>
+          <td>$!m.name</td>
+          <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-xs btn-default">
+              <i class="glyphicon glyphicon-pencil"></i>
+          </a></td>
+      </tr>
+  #end
 </table>
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/markup/create" role="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Create new markup
+        </a>
+    </div>
+</div>
 
 
 #parse("/admin/footer.vm")
