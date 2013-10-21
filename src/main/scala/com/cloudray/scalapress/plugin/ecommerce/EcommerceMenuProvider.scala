@@ -6,11 +6,10 @@ import com.cloudray.scalapress.settings.MenuLink
 import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
-class ShoppingMenuProvider extends MenuItemProvider {
+class EcommerceMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Seq[MenuItem] = {
     Seq(MenuHeader("Shopping"),
-      MenuLink("Show Orders", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/order"),
       MenuLink("Delivery Options", Some("icon-truck"), "/backoffice/delivery"),
       MenuLink("Shopping Settings", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/plugin/shopping"),
       MenuLink("Sales Report", Some("glyphicon glyphicon-list-alt"), "/backoffice/plugin/shopping/salesreport"),
