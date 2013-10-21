@@ -10,55 +10,55 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.name") #springShowErrors(",")
+          #springFormInput("address.name") #springShowErrors(",")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Company</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.company") #springShowErrors(",")
+          #springFormInput("address.company") #springShowErrors(",")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Address</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.address1") #springShowErrors(" ")
+          #springFormInput("address.address1") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
 
         <div class="col-lg-8">
-            #springFormInput("address.address2") #springShowErrors(" ")
+          #springFormInput("address.address2") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">City</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.town") #springShowErrors(" ")
+          #springFormInput("address.town") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Postcode</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.postcode") #springShowErrors(" ")
+          #springFormInput("address.postcode") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Country</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.country") #springShowErrors(" ")
+          #springFormInput("address.country") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Telephone</label>
 
         <div class="col-lg-8">
-            #springFormInput("address.telephone") #springShowErrors(",")
+          #springFormInput("address.telephone") #springShowErrors(",")
         </div>
     </div>
 
@@ -68,7 +68,7 @@
         <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
-    #springFormHiddenInput("orderId")
+  #springFormHiddenInput("orderId")
 </form>
 
 #parse("/admin/footer.vm")

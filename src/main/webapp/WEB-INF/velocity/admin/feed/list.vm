@@ -1,8 +1,6 @@
 #parse("/admin/header.vm")
 
-
 <h3>Feeds</h3>
-
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -32,7 +30,8 @@
   #end
 </table>
 
-<a href="/backoffice/feed/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create New Feed</a>
+<a href="/backoffice/feed/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i>
+    Create New Feed</a>
 
 
 #parse("/admin/footer.vm")
