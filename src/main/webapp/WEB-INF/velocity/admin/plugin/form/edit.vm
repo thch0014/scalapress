@@ -1,7 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Form</h3>
+<div class="page-header">
+    <h2>Edit Form: $form.name</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -15,56 +16,56 @@
             <div class="tab-pane active" id="tab1">
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Name</label>
+                    <label class="col-lg-3 control-label">Name</label>
 
                     <div class="col-lg-8">
-                      #springFormInput("form.name")
+                      #springFormInput("form.name", "class='form-control'")
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Email Notification Recipients</label>
+                    <label class="col-lg-3 control-label">Email Notification Recipients</label>
 
                     <div class="col-lg-8">
-                      #springFormTextarea("form.recipients")
+                      #springFormTextarea("form.recipients", "class='form-control'")
                     </div>
                 </div>
 
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Submit Button Text</label>
+                    <label class="col-lg-3 control-label">Submit Button Text</label>
 
                     <div class="col-lg-8">
-                      #springFormInput("form.submitButtonText")
+                      #springFormInput("form.submitButtonText", "class='form-control'")
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Submission Email Subject</label>
+                    <label class="col-lg-3 control-label">Submission Email Subject</label>
 
                     <div class="col-lg-8">
-                      #springFormInput("form.submissionEmailSubject")
+                      #springFormInput("form.submissionEmailSubject", "class='form-control'")
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Submission Email Body</label>
+                    <label class="col-lg-3 control-label">Submission Email Body</label>
 
                     <div class="col-lg-8">
-                      #springFormTextarea("form.submissionEmailBody")
+                      #springFormTextarea("form.submissionEmailBody", "class='form-control'")
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Submission Redirect</label>
+                    <label class="col-lg-3 control-label">Submission Redirect</label>
 
                     <div class="col-lg-8">
-                      #springFormInput("form.submissionRedirect")
+                      #springFormInput("form.submissionRedirect", "class='form-control'")
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-lg-2 control-label">Use Captcha</label>
+                    <label class="col-lg-3 control-label">Use Captcha</label>
 
                     <div class="col-lg-8">
                       #springFormCheckbox("form.captcha")
@@ -73,29 +74,25 @@
 
             </div>
             <div class="tab-pane" id="tab2">
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Submission Page Text</label>
-
-                    <div class="col-lg-8">
-                      #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
-                    </div>
-                </div>
-
-
+              #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
             </div>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/form" class="btn btn-default">Return</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-save"></i> Save changes
+            </button>
+            <a href="/backoffice/form" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to forms
+            </a>
+        </div>
     </div>
-
 
 </form>
 
-
+<legend>Form Fields</legend>
 <table class="table table-condensed table-hover" id="fields-table">
     <tr>
         <th>Id</th>
@@ -119,14 +116,19 @@
                       if (result) {
                       window.location='/backoffice/form/$form.id/field/$field.id/delete';
                       }})" role="button" class="btn btn-danger btn-xs">
-                  <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
+                  <i class="glyphicon glyphicon-trash"></i></a>
           </td>
       </tr>
   #end
 </table>
 
 
-<a href="/backoffice/form/$form.id/field/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create Form Field</a>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/form/$form.id/field/create" role="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Add form field</a>
+    </div>
+</div>
 
 
 <script>

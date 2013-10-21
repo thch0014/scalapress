@@ -1,8 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Orders</h3>
-
+<div class="page-header">
+    <h2>Orders</h2>
+</div>
 
 <form method="GET" class="form-horizontal">
 
@@ -10,7 +10,7 @@
         <label class="col-lg-2 control-label">Order Id</label>
 
         <div class="col-lg-8">
-            #springFormInput("form.orderId")
+          #springFormInput("form.orderId", "class='form-control'")
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <label class="col-lg-2 control-label">Customer Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("form.name")
+          #springFormInput("form.name", "class='form-control'")
         </div>
     </div>
 
@@ -26,48 +26,62 @@
         <label class="col-lg-2 control-label">Status</label>
 
         <div class="col-lg-8">
-            #springFormSingleSelect("form.status", $orderStatusMap)
+          #springFormSingleSelect("form.status", $orderStatusMap, "class='form-control'")
         </div>
     </div>
-    <button type="submit">Search</button>
 
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> Search orders
+            </button>
+        </div>
+    </div>
 </form>
 
-
-<form method="POST" action="/backoffice/order/create">
-    <input type="hidden" id="add-account-id" name="accountId"/>
-    <input type="text" class="input-xlarge" id="add-account-typeahead" value=""/>
-    <script>
-        autosep = ":";
-        $('#add-account-typeahead').typeahead({
-            source: function (query, process) {
-                return $.ajax({
-                    url: "/rest/obj?objectTypeName=Account",
-                    type: 'GET',
-                    data: {q: query},
-                    dataType: 'json',
-                    success: function (json) {
-                        var arr = [];
-                        for (var i in json) {
-                            arr.push(json[i][0] + autosep + json[i][1]);
-                        }
-                        process(arr);
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Create order</h3>
+    </div>
+    <div class="panel-body">
+        <form method="POST" action="/backoffice/order/create" class="form-horizontal">
+            <input type="hidden" id="add-account-id" name="accountId"/>
+            <input type="text" class="input-xlarge" id="add-account-typeahead" value=""/>
+            <script>
+                autosep = ":";
+                $('#add-account-typeahead').typeahead({
+                    source: function (query, process) {
+                        return $.ajax({
+                            url: "/rest/obj?objectTypeName=Account",
+                            type: 'GET',
+                            data: {q: query},
+                            dataType: 'json',
+                            success: function (json) {
+                                var arr = [];
+                                for (var i in json) {
+                                    arr.push(json[i][0] + autosep + json[i][1]);
+                                }
+                                process(arr);
+                            }
+                        });
+                    }, highlighter: function (item) {
+                        var parts = item.split(autosep);
+                        parts.shift();
+                        return parts.join(autosep);
+                    }, updater: function (item) {
+                        var parts = item.split(autosep);
+                        var id = parts.shift();
+                        $('#add-account-id').val(id);
+                        return parts.join(autosep);
                     }
-                });
-            }, highlighter: function (item) {
-                var parts = item.split(autosep);
-                parts.shift();
-                return parts.join(autosep);
-            }, updater: function (item) {
-                var parts = item.split(autosep);
-                var id = parts.shift();
-                $('#add-account-id').val(id);
-                return parts.join(autosep);
-            }
-        })
-    </script>
-    <button type="submit" class="btn btn-sm"><i class="glyphicon  glyphicon-plus"></i> Create New Order</button>
-</form>
+                })
+            </script>
+            <button type="submit" class="btn btn-success">
+                <i class="glyphicon glyphicon-plus"></i> Create Order
+            </button>
+        </form>
+    </div>
+</div>
 
 #paging($paging)
 
@@ -80,22 +94,22 @@
         <th>Total</th>
         <th></th>
     </tr>
-    #foreach ($o in $orders)
-        <tr>
-            <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
-            <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
-            <td>$!o.status</td>
-            <td>$!o.account.name $!o.account.email</td>
-            <td>$o.total()</td>
-            <td>
-                <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs btn-default">
-                    <i class="glyphicon  glyphicon-pencil"></i> </a>
+  #foreach ($o in $orders)
+      <tr>
+          <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
+          <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
+          <td>$!o.status</td>
+          <td>$!o.account.name $!o.account.email</td>
+          <td>$o.total()</td>
+          <td>
+              <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-pencil"></i> </a>
 
-                <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs btn-default">
-                    <i class="glyphicon  glyphicon-print"></i> </a>
-            </td>
-        </tr>
-    #end
+              <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-print"></i> </a>
+          </td>
+      </tr>
+  #end
 </table>
 
 #paging($paging)
