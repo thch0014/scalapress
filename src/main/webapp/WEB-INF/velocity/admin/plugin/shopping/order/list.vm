@@ -66,7 +66,7 @@
             }
         })
     </script>
-    <button type="submit" class="btn btn-sm"><i class="icon-plus"></i> Create New Order</button>
+    <button type="submit" class="btn btn-sm"><i class="glyphicon glyphicon-plus"></i> Create New Order</button>
 </form>
 
 #paging($paging)
@@ -89,10 +89,10 @@
             <td>$o.total()</td>
             <td>
                 <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs">
-                    <i class="icon-pencil"></i> </a>
+                    <i class="glyphicon glyphicon-pencil"></i> </a>
 
                 <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs">
-                    <i class="icon-print"></i> </a>
+                    <i class="glyphicon glyphicon-print"></i> </a>
             </td>
         </tr>
     #end

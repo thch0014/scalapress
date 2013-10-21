@@ -25,14 +25,14 @@
           </td>
           <td>
               <a href="$feed.backoffice()" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i> </a>
+                  <i class="glyphicon glyphicon-pencil"></i> </a>
               <a href="$feed.runUrl()" role="button" class="btn btn-xs">
-                  <i class="icon-play"></i> </a></td>
+                  <i class="glyphicon glyphicon-play"></i> </a></td>
       </tr>
   #end
 </table>
 
-<a href="/backoffice/feed/create" role="button" class="btn"> <i class="icon-plus"></i> Create New Feed</a>
+<a href="/backoffice/feed/create" role="button" class="btn"> <i class="glyphicon glyphicon-plus"></i> Create New Feed</a>
 
 
 #parse("/admin/footer.vm")

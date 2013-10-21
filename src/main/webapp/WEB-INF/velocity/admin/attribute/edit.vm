@@ -138,17 +138,17 @@
           <td>
               <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
                  class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+                  <i class="glyphicon glyphicon-pencil"></i></a>
 
               <a href="/backoffice/attribute/$attribute.id/option/$option.id/delete" role="button"
                  class="btn btn-xs btn-danger">
-                  <i class="icon-trash icon-white"></i></a>
+                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
           </td>
       </tr>
   #end
     <tr>
         <td colspan="2"><a href="/backoffice/attribute/$attribute.id/option/create">
-            <i class="icon-plus"></i> Create New Option</a></td>
+            <i class="glyphicon glyphicon-plus"></i> Create New Option</a></td>
     </tr>
 </table>
 #end

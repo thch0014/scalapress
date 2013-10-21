@@ -40,9 +40,9 @@
             <div class="thumbnail">
                 <img data-src="holder.js/300x200" src="/images/$filename?width=200&height=160">
                 <a class="btn btn-xs" href="/images/$filename">
-                    <i class="icon-eyeball icon-white"></i> View Original</a>
+                    <i class="glyphicon glyphicon-eyeball icon-white"></i> View Original</a>
                 <a class="btn btn-danger btn-xs" href="/backoffice/plugin/slidesjs/$section.id/delete/$filename">
-                    <i class="icon-trash icon-white"></i> Remove</a>
+                    <i class="glyphicon glyphicon-trash icon-white"></i> Remove</a>
             </div>
         </li>
     #end

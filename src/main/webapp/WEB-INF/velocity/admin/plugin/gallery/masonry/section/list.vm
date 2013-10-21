@@ -17,14 +17,14 @@
             <td>
               $s.folder.name
                 <a href="/backoffice/folder/$s.folder.id" role="button" class="btn btn-xs">
-                    <i class="icon-folder-close"></i>
+                    <i class="glyphicon glyphicon-folder-close"></i>
                 </a>
             </td>
         #end
           <td>
             $s.name
               <a href="/backoffice/plugin/gallery/masonry/section/$s.id" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i>
+                  <i class="glyphicon glyphicon-pencil"></i>
               </a>
           </td>
       </tr>

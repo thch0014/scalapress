@@ -16,12 +16,12 @@
             <td>$theme.id</td>
             <td>$theme.name</td>
             <td>$theme.default</td>
-            <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
+            <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i>
             </a></td>
         </tr>
     #end
 </table>
 
-<a href="$urlResolver.createTheme()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create</a>
+<a href="$urlResolver.createTheme()" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-plus"></i> Create</a>
 
 #parse("/admin/footer.vm")

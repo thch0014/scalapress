@@ -35,7 +35,7 @@
 
         <div class="controls">
             Edit Saved Search <a href="/backoffice/savedsearch/$widget.search.id" class="btn btn-xs">
-            <i class="icon-pencil"></i></a>
+            <i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
 

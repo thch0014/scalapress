@@ -34,10 +34,10 @@
               <div class="thumbnail">
                   <img data-src="holder.js/300x200" src="/images/$image.key()?width=200&height=160">
                   <a class="btn btn-xs" href="/images/$image.key()">
-                      <i class="icon-eyeball icon-white"></i> View Original</a>
+                      <i class="glyphicon glyphicon-eyeball icon-white"></i> View Original</a>
                   <a class="btn btn-danger btn-xs"
                      href="/backoffice/plugin/gallery/masonry/section/$section.id/delete/$image.key()">
-                      <i class="icon-trash icon-white"></i> Remove</a>
+                      <i class="glyphicon glyphicon-trash icon-white"></i> Remove</a>
                   <textarea name="desc_$image.key()" placeholder="enter caption">$!image.description()</textarea>
               </div>
           </li>

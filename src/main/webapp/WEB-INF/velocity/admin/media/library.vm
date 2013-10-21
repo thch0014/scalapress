@@ -5,8 +5,8 @@
 
 <form class='form-horizontal' method='GET'>
     <input type="text" class=" input-xlarge" placeholder="Search for media" name="q"/>
-    <button type="submit" class="btn btn-primary"><i class="icon-search"></i> Search</button>
-    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal"> <i class="icon-upload"></i>
+    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search</button>
+    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal"> <i class="glyphicon glyphicon-upload"></i>
         Upload Media</a>
 </form>
 
@@ -43,10 +43,10 @@ $pagination
                   <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
 
                   <a class="btn btn-xs" href="/images/$a.filename()">
-                      <i class="icon-eye-open icon-white"></i> View Original</a>
+                      <i class="glyphicon glyphicon-eye-open icon-white"></i> View Original</a>
 
                   <a class="btn btn-xs btn-danger" href="/backoffice/medialib/delete/$a.filename()">
-                      <i class="icon-trash icon-white"></i> Delete</a>
+                      <i class="glyphicon glyphicon-trash icon-white"></i> Delete</a>
               </div>
           </li>
       #end

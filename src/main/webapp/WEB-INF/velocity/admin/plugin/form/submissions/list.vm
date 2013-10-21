@@ -23,14 +23,14 @@
             #end</td>
             <td>
                 <a href="$urlResolver.viewSubmission($s)" role="button" class="btn btn-xs">
-                    <i class="icon-eye-open"></i></a>
+                    <i class="glyphicon glyphicon-eye-open"></i></a>
 
 
                 <a onClick="bootbox.confirm('Confirm delete', function(result) {
                         if (result) {
                             window.location='/backoffice/submission/$s.id/delete';
                         }})" role="button" class="btn btn-danger btn-xs">
-                    <i class="icon-trash icon-white"></i></a>
+                    <i class="glyphicon glyphicon-trash icon-white"></i></a>
             </td>
         </tr>
     #end

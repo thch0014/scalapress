@@ -20,13 +20,13 @@
             <td>$!w.name</td>
             <td>$!w.location</td>
             <td>
-                <a href="$w.backoffice()" role="button" class="btn btn-xs"> <i class="icon-pencil"></i></a>
+                <a href="$w.backoffice()" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i></a>
 
                 <a onClick="bootbox.confirm('Confirm delete', function(result) {
                         if (result) {
                         window.location='/backoffice/widget/$w.id/delete';
                         }})" role="button" class="btn btn-danger btn-xs">
-                    <i class="icon-trash icon-white"></i></a>
+                    <i class="glyphicon glyphicon-trash icon-white"></i></a>
             </td>
         </tr>
         #end

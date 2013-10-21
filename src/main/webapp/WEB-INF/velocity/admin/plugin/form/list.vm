@@ -4,7 +4,7 @@
 <h3>Forms</h3>
 
 
-<a href="/backoffice/form/create" role="button" class="btn btn-primary"> <i class="icon-plus"></i> Create Form</a>
+<a href="/backoffice/form/create" role="button" class="btn btn-primary"> <i class="glyphicon glyphicon-plus"></i> Create Form</a>
 
 
 <table class="table table-condensed table-hover">
@@ -17,7 +17,7 @@
       <tr>
           <td>$f.id</td>
           <td>$f.name</td>
-          <td><a href="$urlResolver.editForm($f)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
+          <td><a href="$urlResolver.editForm($f)" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i>
           </a></td>
       </tr>
   #end

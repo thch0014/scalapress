@@ -16,9 +16,9 @@
           <td>$accountType.name</td>
           <td>
               <a href="/backoffice/accounttype/$accountType.id" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+                  <i class="glyphicon glyphicon-pencil"></i></a>
               <a href="/backoffice/accounttype/$accountType.id/delete" role="button" class="btn btn-danger btn-xs">
-                  <i class="icon-trash"></i></a>
+                  <i class="glyphicon glyphicon-trash"></i></a>
           </td>
       </tr>
   #end
@@ -52,6 +52,6 @@
 
 
 <a href="#create-accounttype-modal" role="button" class="btn" data-toggle="modal">
-    <i class="icon-plus-sign"></i> Create Account Type</a>
+    <i class="glyphicon glyphicon-plus-sign"></i> Create Account Type</a>
 
 #parse("/admin/footer.vm")

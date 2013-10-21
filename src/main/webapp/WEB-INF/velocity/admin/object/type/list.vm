@@ -15,15 +15,15 @@
             <td>$t.id</td>
             <td>$t.name</td>
             <td>
-                <a href="$urlResolver.typeEdit($t)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i></a>
-                <a href="/backoffice/type/$t.id/delete" role="button" class="btn btn-danger btn-xs"> <i class="icon-trash"></i></a>
+                <a href="$urlResolver.typeEdit($t)" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="/backoffice/type/$t.id/delete" role="button" class="btn btn-danger btn-xs"> <i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     #end
 </table>
 
 
-<a href="/backoffice/type/create" role="button" class="btn btn-inverse"> <i class="icon-white icon-plus"></i> Create New Item Type</a>
+<a href="/backoffice/type/create" role="button" class="btn btn-inverse"> <i class="icon-white glyphicon glyphicon-plus"></i> Create New Item Type</a>
 
 
 #parse("/admin/footer.vm")

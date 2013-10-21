@@ -103,7 +103,7 @@
 
 <p>
     <a href="#create-attributes-modal" role="button" class="btn" data-toggle="modal">
-        <i class="icon-plus-sign"></i> Create Attribute</a>
+        <i class="glyphicon glyphicon-plus-sign"></i> Create Attribute</a>
 </p>
 
 <table class="table table-condensed table-striped table-hover" id="attributes-table">
@@ -122,7 +122,7 @@
           <td>$!a.attributeType</td>
           <td>
               <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+                  <i class="glyphicon glyphicon-pencil"></i></a>
           </td>
       </tr>
   #end
@@ -165,11 +165,11 @@
           <td>$s.desc()</td>
           <td>
               <a href="$s.backoffice()" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+                  <i class="glyphicon glyphicon-pencil"></i></a>
 
               <a href="/backoffice/type/$type.id/section/$s.id/delete" role="button"
                  class="btn btn-xs btn-danger">
-                  <i class="icon-trash icon-white"></i></a>
+                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
           </td>
       </tr>
   #end

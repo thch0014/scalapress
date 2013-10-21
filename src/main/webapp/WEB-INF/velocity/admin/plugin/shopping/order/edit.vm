@@ -242,7 +242,7 @@
             <td>$number.number($l.totalIncVat())</td>
             <td>
                 <a class="btn btn-sm" href="/backoffice/order/$order.id/line/$l.id/remove">
-                    <i class="icon-trash"></i></a>
+                    <i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
     #end

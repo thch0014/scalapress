@@ -40,15 +40,15 @@
           <td>$theme.id</td>
           <td>$theme.name</td>
           <td>$theme.default</td>
-          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
+          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i>
           </a></td>
       </tr>
   #end
 </table>
 
-<a href="/backoffice/theme/create" role="button" class="btn"> <i class="icon-plus"></i> Create Theme</a>
+<a href="/backoffice/theme/create" role="button" class="btn"> <i class="glyphicon glyphicon-plus"></i> Create Theme</a>
 <a href="#upload-theme-modal" role="button" class="btn" data-toggle="modal">
-    <i class="icon-upload-alt"></i> Upload Theme</a>
+    <i class="glyphicon glyphicon-upload-alt"></i> Upload Theme</a>
 
 
 

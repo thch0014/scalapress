@@ -23,7 +23,7 @@
 
     <div class="control-group">
         <label class="control-label">
-            <a href="/backoffice/form/$section.form.id" class="btn btn-xs"><i class="icon-pencil"></i></a> Form
+            <a href="/backoffice/form/$section.form.id" class="btn btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> Form
         </label>
 
         <div class="controls">

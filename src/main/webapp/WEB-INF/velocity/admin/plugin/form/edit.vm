@@ -112,21 +112,21 @@
           <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
           <td>
               <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+                  <i class="glyphicon glyphicon-pencil"></i></a>
 
 
               <a onClick="bootbox.confirm('Confirm delete', function(result) {
                       if (result) {
                       window.location='/backoffice/form/$form.id/field/$field.id/delete';
                       }})" role="button" class="btn btn-danger btn-xs">
-                  <i class="icon-trash icon-white"></i></a>
+                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
           </td>
       </tr>
   #end
 </table>
 
 
-<a href="/backoffice/form/$form.id/field/create" role="button" class="btn"> <i class="icon-plus"></i> Create Form Field</a>
+<a href="/backoffice/form/$form.id/field/create" role="button" class="btn"> <i class="glyphicon glyphicon-plus"></i> Create Form Field</a>
 
 
 <script>

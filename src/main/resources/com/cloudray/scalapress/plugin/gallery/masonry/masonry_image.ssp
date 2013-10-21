@@ -2,7 +2,7 @@
 <%@ val caption: Option[String] %>
 
 <div class="masonry-image">
-    <div class="image-zoom"><i class="icon-zoom-in"></i></div>
+    <div class="image-zoom"><i class="glyphicon glyphicon-zoom-in"></i></div>
     <a class="colorbox cboxElement" href="${imageUrl}">
         <img src="${imageUrl}" class="masonry-thumb"/></a>
 			<span class="caption full-caption">

@@ -22,7 +22,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Create</button>
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </form>
 </div>
@@ -49,9 +49,9 @@
         </div>
     </div>
 
-    <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+    <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i> Search</button>
     <a href="#create-account-modal" role="button" class="btn" data-toggle="modal">
-        <i class="icon-plus-sign"></i> Create  $accountType.name</a>
+        <i class="glyphicon glyphicon-plus-sign"></i> Create  $accountType.name</a>
 
 </form>
 
@@ -73,8 +73,8 @@
           <td>$account.status</td>
           <td>$!datetool.format($account.dateCreated)</td>
           <td>
-              <a href="/backoffice/account/$account.id" role="button" class="btn btn-xs">
-                  <i class="icon-pencil"></i></a>
+              <a href="/backoffice/account/$account.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i></a>
           </td>
       </tr>
   #end

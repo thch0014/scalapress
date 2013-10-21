@@ -16,14 +16,14 @@
             <td>$!s.name</td>
             <td>
                 <a href="/backoffice/savedsearch/$s.id" class="btn btn-xs">
-                    <i class="icon-pencil"></i> </a>
+                    <i class="glyphicon glyphicon-pencil"></i> </a>
                 <a href="/search/saved/$s.id" class="btn btn-xs">
-                    <i class="icon-eye-open"></i> </a></td>
+                    <i class="glyphicon glyphicon-eye-open"></i> </a></td>
         </tr>
     #end
 </table>
 
-<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create Form</a>
+<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-plus"></i> Create Form</a>
 
 
 #parse("/admin/footer.vm")

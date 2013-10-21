@@ -28,7 +28,7 @@
 <h3>Folders</h3>
 
 <p>
-    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i> Create Folder</a>
+    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create Folder</a>
 </p>
 
 <table class="table table-condensed table-hover">
@@ -43,16 +43,16 @@
             <td>$f.fullName()</td>
             <td>
                 <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-xs"> <i
-                        class="icon-pencil"></i></a>
+                        class="glyphicon glyphicon-pencil"></i></a>
                 <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-xs"> <i
-                        class="icon-eye-open"></i></a>
+                        class="glyphicon glyphicon-eye-open"></i></a>
             </td>
         </tr>
     #end
 </table>
 
 <p>
-    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="icon-plus-sign"></i> Create Folder</a>
+    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create Folder</a>
 </p>
 
 #parse("/admin/footer.vm")

@@ -68,13 +68,13 @@
             <td>$f.fieldType</td>
             <td>
                 <a href="$urlResolver.editSearchFormField($f)" role="button" class="btn btn-xs">
-                    <i class="icon-pencil"></i> </a></td>
+                    <i class="glyphicon glyphicon-pencil"></i> </a></td>
         </tr>
     #end
 </table>
 
 <a href="/backoffice/searchform/$form.id/field/create" class="btn btn-xs btn-info">
-    <i class="icon-plus"></i> Create Form Field</a>
+    <i class="glyphicon glyphicon-plus"></i> Create Form Field</a>
 
 
 #parse("/admin/footer.vm")
