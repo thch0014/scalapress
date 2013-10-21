@@ -14,8 +14,7 @@ class PaymentMenuProvider extends MenuItemProvider {
       MenuLink("Paypal Standard",
         Some("glyphicon glyphicon-credit-card"),
         "/backoffice/plugin/payment/paypal/standard"),
-      MenuLink("Sage Pay", Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform"),
-      MenuLink("Transactions", Some("icon-money"), "/backoffice/tx")
+      MenuLink("Sage Pay", Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform")
     )
   }
 }
