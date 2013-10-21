@@ -76,6 +76,10 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .page-header {
+            margin: 0 0 20px;
+        }
     </style>
 </head>
 <body>
