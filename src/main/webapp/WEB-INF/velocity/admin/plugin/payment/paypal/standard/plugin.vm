@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Paypal Standard Plugin Settings</h3>
+<div class="page-header">
+    <h2>Paypal Standard Plugin Settings</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -8,7 +10,7 @@
         <label class="col-lg-2 control-label">Production</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("plugin.production")
+          #springFormCheckbox("plugin.production", "")
         </div>
     </div>
 
@@ -16,13 +18,14 @@
         <label class="col-lg-2 control-label">Account Email</label>
 
         <div class="col-lg-8">
-            #springFormInput("plugin.accountEmail")
+          #springFormInput("plugin.accountEmail", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>

@@ -14,9 +14,6 @@ class PaymentMenuProvider extends MenuItemProvider {
       MenuLink("Paypal Standard",
         Some("glyphicon glyphicon-credit-card"),
         "/backoffice/plugin/payment/paypal/standard"),
-      MenuLink("Worldpay Select Junior",
-        Some("icon-credit-card"),
-        "/backoffice/plugin/payment/worldpay/selectjunior"),
       MenuLink("Sage Pay", Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform"),
       MenuLink("Transactions", Some("icon-money"), "/backoffice/tx")
     )

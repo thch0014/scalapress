@@ -11,7 +11,6 @@ class ShoppingMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Seq[MenuItem] = {
     Seq(MenuHeader("Shopping"),
       MenuLink("Show Orders", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/order"),
-      MenuLink("Create Order", Some("glyphicon glyphicon-plus"), "/backoffice/order/create"),
       MenuLink("Delivery Options", Some("icon-truck"), "/backoffice/delivery"),
       MenuLink("Shopping Settings", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/plugin/shopping"),
       MenuLink("Sales Report", Some("glyphicon glyphicon-list-alt"), "/backoffice/plugin/shopping/salesreport"),

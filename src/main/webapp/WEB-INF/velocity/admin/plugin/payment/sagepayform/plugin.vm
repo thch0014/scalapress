@@ -1,6 +1,9 @@
 #parse("/admin/header.vm")
 
-<h3>SagepayForm Plugin Settings</h3>
+<div class="page-header">
+    <h2>SagepayForm Plugin Settings</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
@@ -8,7 +11,7 @@
         <label class="col-lg-2 control-label">Vendor Email</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.sagePayVendorEmail", "")
+          #springFormInput("plugin.sagePayVendorEmail", "class='form-control'")
         </div>
     </div>
 
@@ -16,7 +19,7 @@
         <label class="col-lg-2 control-label">Vendor Name</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.sagePayVendorName", "")
+          #springFormInput("plugin.sagePayVendorName", "class='form-control'")
         </div>
     </div>
 
@@ -24,13 +27,14 @@
         <label class="col-lg-2 control-label">Encryption Password</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.sagePayEncryptionPassword", "")
+          #springFormInput("plugin.sagePayEncryptionPassword", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>

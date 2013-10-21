@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Shopping Plugin Settings</h3>
+<div class="page-header">
+    <h2>Ecommerce Plugin Settings</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +11,7 @@
         <label class="col-lg-2 control-label">Basket Markup</label>
 
         <div class="col-lg-8">
-            <select id="basketMarkup" name="basketMarkup">
+            <select id="basketMarkup" name="basketMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!plugin.basketMarkup.id" == "$option")
@@ -25,7 +27,7 @@
         <label class="col-lg-2 control-label">Basket Line Markup</label>
 
         <div class="col-lg-8">
-            <select id="basketLineMarkup" name="basketLineMarkup">
+            <select id="basketLineMarkup" name="basketLineMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!plugin.basketLineMarkup.id" == "$option")
@@ -42,7 +44,7 @@
         <label class="col-lg-2 control-label">Stock Method</label>
 
         <div class="col-lg-8">
-          #springFormSingleSelect("plugin.stockMethod", $stockMethods)
+          #springFormSingleSelect("plugin.stockMethod", $stockMethods, "class='form-control'")
         </div>
     </div>
 
@@ -50,7 +52,7 @@
         <label class="col-lg-2 control-label">Default out of stock message</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.outOfStockMessage")
+          #springFormInput("plugin.outOfStockMessage", "class='form-control'")
         </div>
     </div>
 
@@ -59,14 +61,14 @@
         <label class="col-lg-2 control-label">Statuses</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.statuses", "rows='8'")
+          #springFormTextarea("plugin.statuses", "rows='8' class='form-control'")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Invoice Markup</label>
 
         <div class="col-lg-8">
-            <select id="invoiceMarkup" name="invoiceMarkup">
+            <select id="invoiceMarkup" name="invoiceMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!plugin.invoiceMarkup.id" == "$option")
@@ -83,28 +85,28 @@
         <label class="col-lg-2 control-label">Email Confirmation Text (Customers)</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
+          #springFormTextarea("plugin.orderConfirmationMessageBody", "class='form-control' rows='6'")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Email Confirmation Recipients (Admin)</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
+          #springFormTextarea("plugin.orderConfirmationRecipients", "class='form-control' rows='4'")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Email Confirmation Bcc</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.orderConfirmationBcc", "class='input-xlarge'")
+          #springFormInput("plugin.orderConfirmationBcc", "class='form-control'")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Order Email Completion Text (Customers)</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.orderCompletionMessageBody", "class='input-block-level' rows='6'")
+          #springFormTextarea("plugin.orderCompletionMessageBody", "class='form-control' rows='6'")
         </div>
     </div>
 
@@ -113,7 +115,7 @@
         <label class="col-lg-2 control-label">Invoice Line Markup</label>
 
         <div class="col-lg-8">
-            <select id="invoiceLineMarkup" name="invoiceLineMarkup">
+            <select id="invoiceLineMarkup" name="invoiceLineMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!plugin.invoiceLineMarkup.id" == "$option")
@@ -132,7 +134,7 @@
         <label class="col-lg-2 control-label">Checkout Confirmation Page Text</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block-level' rows='16'")
+          #springFormTextarea("plugin.checkoutConfirmationText", "class='form-control' rows='16'")
         </div>
     </div>
 
@@ -141,7 +143,7 @@
         <label class="col-lg-2 control-label">Checkout Confirmation Scripts</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block-level' rows='8'")
+          #springFormTextarea("plugin.checkoutConfirmationScripts", "class='form-control' rows='8'")
         </div>
     </div>
 
@@ -149,7 +151,7 @@
         <label class="col-lg-2 control-label">Require terms acceptance</label>
 
         <div class="col-lg-8">
-          #springFormCheckbox("plugin.termsAcceptance")
+          #springFormCheckbox("plugin.termsAcceptance", "")
         </div>
     </div>
 
@@ -157,13 +159,14 @@
         <label class="col-lg-2 control-label">Terms and Conditions</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.terms", "class='input-block-level' rows='12'")
+          #springFormTextarea("plugin.terms", "class='form-control' rows='12'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>
