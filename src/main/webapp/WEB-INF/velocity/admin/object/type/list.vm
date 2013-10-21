@@ -1,7 +1,9 @@
 #parse("/admin/header.vm")
 
 
-<h3>Object Types</h3>
+<div class="page-header">
+    <h2>Object Types</h2>
+</div>
 
 
 <table class="table table-condensed table-hover">
@@ -10,20 +12,28 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($t in $types)
-        <tr>
-            <td>$t.id</td>
-            <td>$t.name</td>
-            <td>
-                <a href="$urlResolver.typeEdit($t)" role="button" class="btn btn-xs btn-default"> <i class="glyphicon  glyphicon-pencil"></i></a>
-                <a href="/backoffice/type/$t.id/delete" role="button" class="btn btn-danger btn-xs"> <i class="glyphicon  glyphicon-trash"></i></a>
-            </td>
-        </tr>
-    #end
+  #foreach ($t in $types)
+      <tr>
+          <td>$t.id</td>
+          <td>$t.name</td>
+          <td>
+              <a href="$urlResolver.typeEdit($t)" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="/backoffice/type/$t.id/delete" role="button" class="btn btn-danger btn-xs">
+                  <i class="glyphicon glyphicon-trash"></i>
+              </a>
+          </td>
+      </tr>
+  #end
 </table>
 
-
-<a href="/backoffice/type/create" role="button" class="btn btn-inverse"> <i class="glyphicon  glyphicon-white glyphicon  glyphicon-plus"></i> Create New Item Type</a>
-
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/type/create" role="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Create New Item Type
+        </a>
+    </div>
+</div>
 
 #parse("/admin/footer.vm")

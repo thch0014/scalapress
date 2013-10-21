@@ -1,8 +1,11 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit $form.o.objectType.name: $form.o.name</h3>
-<h6>ID: $form.o.id &nbsp; Created: $datetool.format($form.o.dateCreated)</h6>
+<div class="page-header">
+    <h2>$form.o.objectType.name: $form.o.name</h2>
+    <h5>ID: $form.o.id &nbsp; Created: $datetool.format($form.o.dateCreated)</h5>
+</div>
+
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 

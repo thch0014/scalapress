@@ -1,46 +1,53 @@
 #parse("/admin/header.vm")
 
-<div id="create-attributes-modal" class="modal hide">
-
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create Attributes</h3>
-    </div>
-    <form method="GET" action="/backoffice/type/$type.id/attribute/create" class="form-horizontal">
-        <div class="modal-body">
-
-            <div class="form-group">
-                <label class="col-lg-2 control-label" for="names">Names</label>
-
-                <div class="col-lg-8">
-                    <textarea id="names" cols="80" rows="6" name="names"
-                              placeholder="Enter attribute names one per line"></textarea>
-                </div>
+<div id="create-attributes-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Create Attributes</h3>
             </div>
+            <form method="GET" action="/backoffice/type/$type.id/attribute/create" class="form-horizontal">
+                <div class="modal-body">
 
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="names">Names</label>
+
+                        <div class="col-lg-8">
+                            <textarea id="names" cols="50" rows="6" name="names" class="form-control"
+                                      placeholder="Enter attribute names one per line"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Create</button>
-            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 
-<h3>Edit Type: $type.name</h3>
+<div class="page-header">
+    <h2>Object Type: $type.name</h2>
+</div>
 
+
+<legend>Details</legend>
 <form class="form-horizontal" method="POST">
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
+        <label class="col-lg-3 control-label">Name</label>
 
         <div class="col-lg-8">
-          #springFormInput("type.name", "")
+          #springFormInput("type.name", "class='form-control'")
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Hidden</label>
+        <label class="col-lg-3 control-label">Hidden</label>
 
         <div class="col-lg-8">
           #springFormCheckbox("type.hidden", "")
@@ -48,7 +55,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Prices</label>
+        <label class="col-lg-3 control-label">Prices</label>
 
         <div class="col-lg-8">
           #springFormCheckbox("type.prices", "")
@@ -56,18 +63,18 @@
     </div>
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Link Groups</label>
+        <label class="col-lg-3 control-label">Link Groups</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("type.linkGroups", "class='input-block-level' rows='8'")
+          #springFormTextarea("type.linkGroups", "class='form-control' rows='8'")
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Object List Markup</label>
+        <label class="col-lg-3 control-label">Object List Markup</label>
 
         <div class="col-lg-8">
-            <select id="objectListMarkup" name="objectListMarkup">
+            <select id="objectListMarkup" name="objectListMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!type.objectListMarkup.id" == "$option")
@@ -80,10 +87,10 @@
     </div>
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Object View Markup</label>
+        <label class="col-lg-3 control-label">Object View Markup</label>
 
         <div class="col-lg-8">
-            <select id="objectViewMarkup" name="objectViewMarkup">
+            <select id="objectViewMarkup" name="objectViewMarkup" class="form-control">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!type.objectViewMarkup.id" == "$option")
@@ -95,17 +102,20 @@
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-save"></i> Save changes
+            </button>
+            <a href="/backoffice/type" role="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to list
+            </a>
+        </div>
     </div>
 
 </form>
 
-<p>
-    <a href="#create-attributes-modal" role="button" class="btn btn-default" data-toggle="modal">
-        <i class="glyphicon  glyphicon-plus-sign"></i> Create Attribute</a>
-</p>
-
+<legend>Attributes</legend>
 <table class="table table-condensed table-striped table-hover" id="attributes-table">
     <tr>
         <th>Id</th>
@@ -127,6 +137,14 @@
       </tr>
   #end
 </table>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="#create-attributes-modal" role="button" class="btn btn-primary" data-toggle="modal">
+            <i class="glyphicon  glyphicon-plus-sign"></i> Create Attribute
+        </a>
+    </div>
+</div>
 
 
 <script>
@@ -165,26 +183,30 @@
           <td>$s.desc()</td>
           <td>
               <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i></a>
-
-              <a href="/backoffice/type/$type.id/section/$s.id/delete" role="button"
-                 class="btn btn-xs btn-danger">
-                  <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
+                  <i class="glyphicon  glyphicon-pencil"></i>
+              </a>
+              <a href="/backoffice/type/$type.id/section/$s.id/delete" role="button" class="btn btn-xs btn-danger">
+                  <i class="glyphicon glyphicon-trash"></i>
+              </a>
           </td>
       </tr>
   #end
 </table>
 
-<form method="POST" action="/backoffice/type/$type.id/section/create">
-    Add Section:
-    <select name="class">
-      #foreach($class in $classes.keySet())
-          <option value="${class}">${classes.get($class)}</option>
-      #end
-    </select>
-    <button type="submit">Submit</button>
-</form>
+<div class="panel panel-default">
+    <div class="panel-body">
 
-<a href="/backoffice/plugin/variations/dimensions?objectTypeId=$type.id" class="btn btn-primary">Object Variations</a>
+        <form method="POST" action="/backoffice/type/$type.id/section/create">
+            Add Section:
+            <select name="class">
+              #foreach($class in $classes.keySet())
+                  <option value="${class}">${classes.get($class)}</option>
+              #end
+            </select>
+            <button type="submit" class="btn btn-primary">Add section</button>
+        </form>
+
+    </div>
+</div>
 
 #parse("/admin/footer.vm")

@@ -48,7 +48,7 @@ class AttributeEditController extends EnumPopulator {
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute a: Attribute) = {
     attributeDao.save(a)
-    "redirect:/backoffice/attribute/" + a.id
+    "redirect:/backoffice/type/" + a.objectType.id
   }
 
   @ModelAttribute def attr(@PathVariable("id") id: Long) = attributeDao.find(id)
