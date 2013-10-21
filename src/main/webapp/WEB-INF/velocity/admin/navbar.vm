@@ -48,7 +48,7 @@
                       #end
                         <li class="divider"></li>
 
-                        <li><a href="/backoffice/theme/"><i class="glyphicon  glyphicon-desktop"></i> Themes</a></li>
+                        <li><a href="/backoffice/theme/"><i class="glyphicon glyphicon-picture"></i> Themes</a></li>
                         <li><a href="/backoffice/markup/"><i class="glyphicon  glyphicon-eye-close"></i> Markups</a>
                         </li>
 

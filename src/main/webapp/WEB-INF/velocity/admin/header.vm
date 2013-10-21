@@ -63,6 +63,20 @@
             height: "500px"
         });
     </script>
+    <style>
+        @media (min-width:1200px) {
+            .container {
+                max-width: 100%
+            }
+        }
+
+        .truncate {
+            width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 <body>
 
