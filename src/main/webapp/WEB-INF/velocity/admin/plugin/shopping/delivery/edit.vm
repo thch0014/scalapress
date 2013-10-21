@@ -1,8 +1,9 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Delivery Rate</h3>
-
+<div class="page-header">
+    <h2>Edit Delivery Rate</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -10,45 +11,49 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("form.option.name", "class='input-xxlarge'")
+          #springFormInput("form.option.name", "class='form-control'")
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Vat Rate</label>
 
-        <div class="col-lg-8">
-            #springFormInput("form.option.vatRate")
+        <div class="col-lg-4">
+          #springFormInput("form.option.vatRate", "class='form-control'")
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Charge</label>
 
-        <div class="col-lg-8">
-            #springFormInput("form.charge")
+        <div class="col-lg-4">
+          #springFormInput("form.charge", "class='form-control'")
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Min Price</label>
 
-        <div class="col-lg-8">
-            #springFormInput("form.minPrice")
+        <div class="col-lg-4">
+          #springFormInput("form.minPrice", "class='form-control'")
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Max Price</label>
 
-        <div class="col-lg-8">
-            #springFormInput("form.maxPrice")
+        <div class="col-lg-4">
+          #springFormInput("form.maxPrice", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/delivery" type="button" class="btn btn-default">Return</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <a href="/backoffice/delivery" type="button" class="btn btn-default">Return</a>
+            </div>
+        </div>
     </div>
 
 </form>
