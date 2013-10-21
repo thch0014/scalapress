@@ -2,8 +2,8 @@
 
 <h3>Dimensions</h3>
 
-<a href="/backoffice/plugin/variations/dimensions/create?objectTypeId=$objectTypeId" role="button" class="btn">
-    <i class="glyphicon glyphicon-plus"></i> Create Dimension</a>
+<a href="/backoffice/plugin/variations/dimensions/create?objectTypeId=$objectTypeId" role="button" class="btn btn-default">
+    <i class="glyphicon  glyphicon-plus"></i> Create Dimension</a>
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -17,8 +17,8 @@
           <td>$d.id</td>
           <td>$d.objectType.name</td>
           <td>$d.name</td>
-          <td><a href="/backoffice/plugin/variations/dimensions/$d.id" role="button" class="btn btn-xs">
-              <i class="glyphicon glyphicon-pencil"></i>
+          <td><a href="/backoffice/plugin/variations/dimensions/$d.id" role="button" class="btn btn-xs btn-default">
+              <i class="glyphicon  glyphicon-pencil"></i>
           </a></td>
       </tr>
   #end

@@ -4,98 +4,98 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Server</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Server</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             $request.localName
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Cdn</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Cdn</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             $assetStore.cdn
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Domain</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Domain</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.domain")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Admin Email</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Admin Email</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.adminEmail")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Address</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Address</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.address")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Postcode</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Postcode</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.postcode")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Country</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Country</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.country")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Email</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Email</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.email")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Telephone</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Telephone</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.telephone")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Vat Number</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Vat Number</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.vatNumber")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Company Number</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Company Number</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("installation.companyNumber")
         </div>
     </div>
@@ -103,7 +103,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

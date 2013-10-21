@@ -7,9 +7,9 @@ import com.cloudray.scalapress.ScalapressContext
 class FormMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Option[MenuItem] = {
-    Some(Menu("Forms", Some("icon-align-center"), Seq(
-      MenuLink("Show Forms", Some("icon-align-center"), "/backoffice/form"),
-      MenuLink("Submissions", Some("icon-pencil"), "/backoffice/submission"))))
+    Some(Menu("Forms", Some("glyphicon glyphicon-align-center"), Seq(
+      MenuLink("Show Forms", Some("glyphicon glyphicon-align-center"), "/backoffice/form"),
+      MenuLink("Submissions", Some("glyphicon glyphicon-pencil"), "/backoffice/submission"))))
 
   }
 }

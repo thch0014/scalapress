@@ -112,7 +112,7 @@ object CheckoutConfirmationRenderer {
             <input type="checkbox" name="newsletterOptin"/>
             Please send me details of your special offers. You can opt out at any time.
         </label>
-            <button type="submit" class="btn">
+            <button type="submit" class="btn btn-default">
                 Confirm
             </button>
         </form>
@@ -131,7 +131,7 @@ object CheckoutConfirmationRenderer {
                 </p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
     }

@@ -9,10 +9,10 @@
     <form method="GET" action="/backoffice/theme/upload" class="form-horizontal">
         <div class="modal-body">
 
-            <div class="control-group">
-                <label class="control-label" for="upload">Theme File</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="upload">Theme File</label>
 
-                <div class="controls">
+                <div class="col-lg-8">
                     <input type="file" name="upload"/>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Upload</button>
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </form>
 </div>
@@ -40,15 +40,15 @@
           <td>$theme.id</td>
           <td>$theme.name</td>
           <td>$theme.default</td>
-          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="glyphicon glyphicon-pencil"></i>
+          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs btn-default"> <i class="glyphicon  glyphicon-pencil"></i>
           </a></td>
       </tr>
   #end
 </table>
 
-<a href="/backoffice/theme/create" role="button" class="btn"> <i class="glyphicon glyphicon-plus"></i> Create Theme</a>
-<a href="#upload-theme-modal" role="button" class="btn" data-toggle="modal">
-    <i class="glyphicon glyphicon-upload-alt"></i> Upload Theme</a>
+<a href="/backoffice/theme/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create Theme</a>
+<a href="#upload-theme-modal" role="button" class="btn btn-default" data-toggle="modal">
+    <i class="glyphicon  glyphicon-upload-alt"></i> Upload Theme</a>
 
 
 

@@ -10,11 +10,11 @@ import com.cloudray.scalapress.ScalapressContext
 class PaymentMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Option[MenuItem] = {
-    Some(Menu("Payments", Some("icon-credit-card"), Seq(
+    Some(Menu("Payments", Some("glyphicon glyphicon-credit-card"), Seq(
       MenuLink("Paypal Standard", None, "/backoffice/plugin/payment/paypal/standard"),
       MenuLink("Worldpay Select Junior", None, "/backoffice/plugin/payment/worldpay/selectjunior"),
       MenuLink("Sage Pay", None, "/backoffice/plugin/sagepayform"),
       MenuDivider,
-      MenuLink("Transactions", Some("icon-credit-card"), "/backoffice/tx"))))
+      MenuLink("Transactions", Some("glyphicon glyphicon-credit-card"), "/backoffice/tx"))))
   }
 }

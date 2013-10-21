@@ -64,7 +64,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
 
   def _complete(process: ListingProcess) = {
     <form method="POST" action="/listing/confirmation">
-      <button type="submit" class="btn">
+      <button type="submit" class="btn btn-default">
         Complete
       </button>
     </form>

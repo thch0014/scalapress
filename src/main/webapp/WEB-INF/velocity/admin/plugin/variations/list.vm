@@ -18,7 +18,7 @@
               <td><input type="text" name="price_$v.id" class="input-sm" value="$v.price"></td>
               <td><input type="text" name="stock_$v.id" class="input-sm" value="$v.stock"></td>
               <td><a href="/backoffice/plugin/variations/$v.id/delete" class="btn btn-sm btn-danger">
-                  <i class="glyphicon glyphicon-trash"></i></a></td>
+                  <i class="glyphicon  glyphicon-trash"></i></a></td>
           </tr>
       #end
     </table>
@@ -46,7 +46,7 @@
 </form>
 
 <div class="form-actions">
-    <a href="/backoffice/obj/$obj.id" class="btn">Return to $obj.name</a>
+    <a href="/backoffice/obj/$obj.id" class="btn btn-default">Return to $obj.name</a>
 </div>
 
 

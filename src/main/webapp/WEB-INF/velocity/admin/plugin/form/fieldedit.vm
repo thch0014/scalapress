@@ -5,65 +5,65 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("field.name", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Type</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Type</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormSingleSelect("field.fieldType", $typesMap)
         </div>
     </div>
 
   #if ($field.fieldType == "Email" || $field.fieldType == "Text" || $field.fieldType == "TextArea")
-      <div class="control-group">
-          <label class="control-label">Size</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Size</label>
 
-          <div class="controls">
+          <div class="col-lg-8">
             #springFormSingleSelect("field.size", $fieldSizesMap)
           </div>
       </div>
   #end
 
-    <div class="control-group">
-        <label class="control-label">Required</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Required</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("field.required", "")
         </div>
     </div>
 
   #if ($field.fieldType == "Email" || $field.fieldType == "Text")
-      <div class="control-group">
-          <label class="control-label">Placeholder</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Placeholder</label>
 
-          <div class="controls">
+          <div class="col-lg-8">
             #springFormInput("field.placeholder", "")
           </div>
       </div>
   #end
 
   #if ($field.fieldType == "Email")
-      <div class="control-group">
-          <label class="control-label">Submitter Email Field</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Submitter Email Field</label>
 
-          <div class="controls">
+          <div class="col-lg-8">
             #springFormCheckbox("field.submitterEmailField", "")
           </div>
       </div>
   #end
 
   #if ($field.fieldType == "TickBoxes" || $field.fieldType == "DropDownMenu" || $field.fieldType == "Radio")
-      <div class="control-group">
-          <label class="control-label">Options</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Options</label>
 
-          <div class="controls">
+          <div class="col-lg-8">
             #springFormTextarea("field.options", "cols='70', rows='18'")
           </div>
       </div>
@@ -71,7 +71,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn" href="/backoffice/form/$field.form.id">Return</a>
+        <a role="button" class="btn btn-default" href="/backoffice/form/$field.form.id">Return</a>
     </div>
 
 </form>

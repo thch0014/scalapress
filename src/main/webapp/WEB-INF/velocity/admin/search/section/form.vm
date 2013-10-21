@@ -5,42 +5,42 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Visible</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Visible</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("section.visible", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Search Form</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Search Form</label>
 
-        <div class="controls">
-            Edit Search Form <a href="/backoffice/searchform/$section.searchForm.id" class="btn btn-xs">
-            <i class="glyphicon glyphicon-pencil"></i></a>
+        <div class="col-lg-8">
+            Edit Search Form <a href="/backoffice/searchform/$section.searchForm.id" class="btn btn-xs btn-default">
+            <i class="glyphicon  glyphicon-pencil"></i></a>
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">No results text</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">No results text</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("section.noResultsText", "class='input-xlarge'")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
     </div>
 
 </form>

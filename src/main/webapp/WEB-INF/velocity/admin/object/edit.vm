@@ -19,28 +19,28 @@
 <div class="tab-content">
 <div class="tab-pane active" id="tab1">
 
-    <div class=" control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
-          #springFormInput("form.o.name", "class='input-xxlarge'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.name", "class='form-control'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Status</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Status</label>
 
-        <div class="controls">
-          #springFormSingleSelect("form.o.status", $statuses, "")
+        <div class="col-lg-8">
+          #springFormSingleSelect("form.o.status", $statuses, "class='form-control'")
         </div>
     </div>
 
   #foreach ($folderId in $form.folderIds)
-      <div class="control-group">
-          <label class="control-label">Folder</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Folder</label>
 
-          <div class="controls">
-              <select id="folderIds" name="folderIds" class="input-xxlarge">
+          <div class="col-lg-8">
+              <select id="folderIds" name="folderIds" class="form-control">
                 #foreach($option in $foldersMap.keySet())
                     <option value="${option}"
                       #if("$folderId" == "$option")
@@ -53,110 +53,110 @@
       </div>
   #end
 
-    <div class="control-group">
-        <label class="control-label">Reference</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Reference</label>
 
-        <div class="controls">
-          #springFormInput("form.o.exernalReference", "class='input-xlarge'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.exernalReference", "class='form-control'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Tags</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Tags</label>
 
-        <div class="controls">
-          #springFormInput("form.o.labels", "data-provide='tag'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.labels", "data-provide='tag' class='form-control'")
         </div>
     </div>
 
 
-    <div class="control-group">
-        <label class="control-label">Prioritized</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Prioritized</label>
 
-        <div class="controls">
-          #springFormCheckbox("form.o.prioritized", "")
+        <div class="col-lg-8">
+          #springFormCheckbox("form.o.prioritized", "class='form-control'")
         </div>
     </div>
 
   #if ($form.o.objectType.prices)
 
-      <div class="control-group">
-          <label class="control-label">Price</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Price</label>
 
-          <div class="controls">
-            #springFormInput("form.sellPrice", "class='input-sm'")
+          <div class="col-lg-8">
+            #springFormInput("form.sellPrice", "class='form-control'")
           </div>
       </div>
 
-      <div class="control-group">
-          <label class="control-label">Cost Price</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Cost Price</label>
 
-          <div class="controls">
-            #springFormInput("form.costPrice", "class='input-sm'")
+          <div class="col-lg-8">
+            #springFormInput("form.costPrice", "class='form-control'")
           </div>
       </div>
 
     #if ($installation.vatEnabled())
 
-        <div class="control-group">
-            <label class="control-label">Vat Rate</label>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Vat Rate</label>
 
-            <div class="controls">
-              #springFormInput("form.o.vatRate", "class='input-sm'")
+            <div class="col-lg-8">
+              #springFormInput("form.o.vatRate", "class='form-control'")
             </div>
         </div>
 
     #end
 
-      <div class="control-group">
-          <label class="control-label">RRP</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">RRP</label>
 
-          <div class="controls">
-            #springFormInput("form.rrp", "class='input-sm'")
+          <div class="col-lg-8">
+            #springFormInput("form.rrp", "class='form-control'")
           </div>
       </div>
 
-      <div class="control-group">
-          <label class="control-label">Stock Level</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Stock Level</label>
 
-          <div class="controls">
-            #springFormInput("form.o.stock", "class='input-sm'")
+          <div class="col-lg-8">
+            #springFormInput("form.o.stock", "class='form-control'")
           </div>
       </div>
 
-      <div class="control-group">
-          <label class="control-label">Out of stock message</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Out of stock message</label>
 
-          <div class="controls">
-            #springFormInput("form.o.outStockMsg", "")
+          <div class="col-lg-8">
+            #springFormInput("form.o.outStockMsg", "class='form-control'")
           </div>
       </div>
 
 
-      <div class="control-group">
-          <label class="control-label">Backorders</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Backorders</label>
 
-          <div class="controls">
-            #springFormCheckbox("form.o.backorders", "")
+          <div class="col-lg-8">
+            #springFormCheckbox("form.o.backorders", "class='form-control'")
           </div>
       </div>
   #end
 
   #if ($listingsEnabled)
 
-      <div class="control-group">
-          <label class="control-label">Listing Account</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Listing Account</label>
 
-          <div class="controls">
-            #springFormInput("form.o.account.id", "")
+          <div class="col-lg-8">
+            #springFormInput("form.o.account.id", "class='form-control'")
           </div>
       </div>
 
-      <div class="control-group">
-          <label class="control-label">Listing Expiry</label>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Listing Expiry</label>
 
-          <div class="controls">
-            #springFormInput("form.o.expiry", "class='input-sm'")
+          <div class="col-lg-8">
+            #springFormInput("form.o.expiry", "class='form-control'")
           </div>
       </div>
 
@@ -165,27 +165,27 @@
 </div>
 <div class="tab-pane" id="tab2">
 
-    <div class="control-group">
-        <label class="control-label">Title Tag</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Title Tag</label>
 
-        <div class="controls">
-          #springFormInput("form.o.titleTag", "class='input-xxlarge'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.titleTag", "class='form-control'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Description Tag</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Description Tag</label>
 
-        <div class="controls">
-          #springFormInput("form.o.descriptionTag", "class='input-xxlarge'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.descriptionTag", "class='form-control'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Keywords Tag</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Keywords Tag</label>
 
-        <div class="controls">
-          #springFormInput("form.o.keywordsTag", "class='input-xxlarge'")
+        <div class="col-lg-8">
+          #springFormInput("form.o.keywordsTag", "class='form-control'")
         </div>
     </div>
 
@@ -198,13 +198,13 @@
     #set($a = $attributeWithValues.productElement(0))
     #set($values = $attributeWithValues.productElement(1))
 
-      <div class="control-group">
-          <label class="control-label">$a.name ($a.id)
-              <a href="/backoffice/attribute/$a.id" class="btn btn-xs">
-                  <i class="glyphicon glyphicon-pencil"></i></a>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">$a.name ($a.id)
+              <a href="/backoffice/attribute/$a.id" class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-pencil"></i></a>
           </label>
 
-          <div class="controls">
+          <div class="col-lg-8">
 
             #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
 
@@ -232,7 +232,7 @@
                        data-date-format="dd-mm-yyyy">
                       <input size="16" type="text" name="attributeValues$a.id"
                              value="$!datetool.format("dd-MM-yyyy", $value)"/>
-                      <span class="add-on"><i class="glyphicon glyphicon-th"></i></span>
+                      <span class="add-on"><i class="glyphicon  glyphicon-th"></i></span>
                   </div>
               #end
 
@@ -256,7 +256,7 @@
 
               #else
 
-                  <select name="attributeValues$a.id" class="input-xlarge">
+                  <select name="attributeValues$a.id" class="form-control">
                     #if ($a.optional)
                         <option value="">-None-</option>#end
                     #foreach ($option in $a.orderedOptions())
@@ -272,7 +272,7 @@
               #end
 
             #elseif ($a.attributeType == "Boolean")
-                <select name="attributeValues$a.id" class="input-medium">
+                <select name="attributeValues$a.id" class="form-control">
                     <option #if($values.contains("Yes")|| $values.contains("yes")) selected='true' #end>Yes</option>
                     <option #if($values.contains("No") || $values.contains("no")) selected='true' #end>No</option>
                 </select>
@@ -312,7 +312,7 @@
               <td>
                   <a href="/backoffice/object/$form.o.id/image/$a.filename()/remove"
                      class="btn btn-danger">
-                      <i class="glyphicon glyphicon-trash icon-white"></i></a></td>
+                      <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a></td>
           </tr>
       #end
     </table>
@@ -362,12 +362,12 @@
               <td>$!s.name()</td>
               <td>$s.desc()</td>
               <td>
-                  <a href="$s.backoffice()" role="button" class="btn btn-xs">
-                      <i class="glyphicon glyphicon-pencil"></i></a>
+                  <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
+                      <i class="glyphicon  glyphicon-pencil"></i></a>
 
                   <a href="/backoffice/obj/$form.o.id/section/$s.id/delete" role="button"
                      class="btn btn-xs btn-danger">
-                      <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                      <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
               </td>
           </tr>
       #end
@@ -394,7 +394,7 @@
               <td><a href="/backoffice/obj/$a.id">$a.name</a></td>
               <td><a href="/backoffice/obj/$form.o.id/association/$a.id/delete" role="button"
                      class="btn btn-xs btn-danger">
-                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                  <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
               </td>
           </tr>
       #end
@@ -439,29 +439,39 @@
 </div>
 
 
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Save changes</button>
-    &nbsp;
-    <a href="/backoffice/obj?typeId=${form.o.objectType.id}" class="btn btn-info"><i class="glyphicon glyphicon-arrow-left"></i> Return
-        to list</a>
-    &nbsp;
-    <a href="/backoffice/obj/${form.o.id}/clone" class="btn btn-inverse"><i class="glyphicon glyphicon-copy"></i> Copy Object</a>
-    <a href="/backoffice/order/create?accountId=${form.o.id}" class="btn"><i class="glyphicon glyphicon-shopping-cart"></i> Create
-        order</a>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+        &nbsp;
+        <a href="/backoffice/obj?typeId=${form.o.objectType.id}" class="btn btn-default">
+            <i class="glyphicon glyphicon-arrow-left"></i> Return to list</a>
+        &nbsp;
+        <a href="/backoffice/obj/${form.o.id}/clone" class="btn btn-default">
+            <i class="glyphicon glyphicon-copy"></i> Copy object</a>
+        &nbsp;
+        <a href="/backoffice/order/create?accountId=${form.o.id}" class="btn btn-default">
+            <i class="glyphicon glyphicon-shopping-cart"></i> Create order</a>
+    </div>
 </div>
 
 </form>
 
 
-<form method="POST" action="/backoffice/obj/$form.o.id/section/create" class="form-inline">
-    <label>Add Section:</label>
-    <select name="class">
-      #foreach($class in $classes.keySet())
-          <option value="${class}">${classes.get($class)}</option>
-      #end
-    </select>
-    <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-white glyphicon glyphicon-plus-sign"></i> Add</button>
-</form>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="POST" action="/backoffice/obj/$form.o.id/section/create" class="form-inline">
+            <label>Add Section:</label>
+            <select name="class" class="form-control">
+              #foreach($class in $classes.keySet())
+                  <option value="${class}">${classes.get($class)}</option>
+              #end
+            </select>
+            <button class="btn btn-success" type="submit"><i
+                    class="glyphicon  glyphicon-white glyphicon  glyphicon-plus-sign"></i> Add section
+            </button>
+        </form>
+    </div>
+</div>
 
 
 <script>
@@ -478,8 +488,6 @@
 
 </script>
 
-
-<a href="/backoffice/plugin/variations?objectId=$form.o.id" class="btn btn-info">Variations</a>
 
 
 #parse("/admin/footer.vm")

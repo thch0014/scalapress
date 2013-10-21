@@ -4,26 +4,26 @@
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Visible</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Visible</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("section.visible")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Upload</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Upload</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <input type="file" name="upload"/>
         </div>
     </div>
@@ -39,10 +39,10 @@
         <li class="span2">
             <div class="thumbnail">
                 <img data-src="holder.js/300x200" src="/images/$filename?width=200&height=160">
-                <a class="btn btn-xs" href="/images/$filename">
-                    <i class="glyphicon glyphicon-eyeball icon-white"></i> View Original</a>
+                <a class="btn btn-xs btn-default" href="/images/$filename">
+                    <i class="glyphicon  glyphicon-eyeball glyphicon  glyphicon-white"></i> View Original</a>
                 <a class="btn btn-danger btn-xs" href="/backoffice/plugin/caroufredsel/$section.id/delete/$filename">
-                    <i class="glyphicon glyphicon-trash icon-white"></i> Remove</a>
+                    <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i> Remove</a>
             </div>
         </li>
     #end

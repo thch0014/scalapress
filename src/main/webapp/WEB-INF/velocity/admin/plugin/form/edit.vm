@@ -14,59 +14,59 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
 
-                <div class="control-group">
-                    <label class="control-label">Name</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Name</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormInput("form.name")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Email Notification Recipients</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Email Notification Recipients</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormTextarea("form.recipients")
                     </div>
                 </div>
 
 
-                <div class="control-group">
-                    <label class="control-label">Submit Button Text</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submit Button Text</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormInput("form.submitButtonText")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Submission Email Subject</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submission Email Subject</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormInput("form.submissionEmailSubject")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Submission Email Body</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submission Email Body</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormTextarea("form.submissionEmailBody")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Submission Redirect</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submission Redirect</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormInput("form.submissionRedirect")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Use Captcha</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Use Captcha</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormCheckbox("form.captcha")
                     </div>
                 </div>
@@ -74,10 +74,10 @@
             </div>
             <div class="tab-pane" id="tab2">
 
-                <div class="control-group">
-                    <label class="control-label">Submission Page Text</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submission Page Text</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                       #springFormTextarea("form.submissionText", "rows='12' class='input-block-level tinymce'")
                     </div>
                 </div>
@@ -89,7 +89,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/form" class="btn">Return</a>
+        <a href="/backoffice/form" class="btn btn-default">Return</a>
     </div>
 
 
@@ -111,22 +111,22 @@
           <td>$field.fieldType</td>
           <td>#if ($field.required) <span class="label label-important">Required</span>#end</td>
           <td>
-              <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-xs">
-                  <i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="/backoffice/form/$form.id/field/$field.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-pencil"></i></a>
 
 
               <a onClick="bootbox.confirm('Confirm delete', function(result) {
                       if (result) {
                       window.location='/backoffice/form/$form.id/field/$field.id/delete';
                       }})" role="button" class="btn btn-danger btn-xs">
-                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                  <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
           </td>
       </tr>
   #end
 </table>
 
 
-<a href="/backoffice/form/$form.id/field/create" role="button" class="btn"> <i class="glyphicon glyphicon-plus"></i> Create Form Field</a>
+<a href="/backoffice/form/$form.id/field/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create Form Field</a>
 
 
 <script>

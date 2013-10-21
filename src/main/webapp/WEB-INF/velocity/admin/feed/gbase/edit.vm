@@ -7,67 +7,67 @@
 <form class="form-horizontal" method="POST">
 
     <legend>Attributes</legend>
-    <div class="control-group">
-        <label class="control-label">Brand Attribute</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Brand Attribute</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.brandAttrName", "class='input-lg'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Part Number Attribute</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Part Number Attribute</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.partAttrName", "class='input-lg'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Shipping Cost</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Shipping Cost</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.shippingCost", "class='input-sm'")
         </div>
     </div>
 
     <legend>Ftp Details</legend>
-    <div class="control-group">
-        <label class="control-label">FTP Hostname</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">FTP Hostname</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.ftpHostname", "class='input-lg'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">FTP Username</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">FTP Username</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.ftpUsername", "class='input-lg'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">FTP Password</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">FTP Password</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.ftpPassword", "class='input-lg'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Google Product Category</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Google Product Category</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.productCategory", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Output Filename</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Output Filename</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("feed.ftpFilename", "class='input-lg'")
         </div>
     </div>

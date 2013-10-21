@@ -5,18 +5,18 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("form.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Object Type</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Object Type</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="objectType" name="objectType">
                 #foreach($option in $objectTypesMap.keySet())
                     <option value="${option}"
@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Sort</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Sort</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="sort" name="sort">
                 #foreach($option in $sortMap.keySet())
                     <option value="${option}"
@@ -47,7 +47,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/searchform" class="btn">Return</a>
+        <a href="/backoffice/searchform" class="btn btn-default">Return</a>
     </div>
 
 </form>
@@ -67,14 +67,14 @@
             <td>$!f.name</td>
             <td>$f.fieldType</td>
             <td>
-                <a href="$urlResolver.editSearchFormField($f)" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-pencil"></i> </a></td>
+                <a href="$urlResolver.editSearchFormField($f)" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-pencil"></i> </a></td>
         </tr>
     #end
 </table>
 
 <a href="/backoffice/searchform/$form.id/field/create" class="btn btn-xs btn-info">
-    <i class="glyphicon glyphicon-plus"></i> Create Form Field</a>
+    <i class="glyphicon  glyphicon-plus"></i> Create Form Field</a>
 
 
 #parse("/admin/footer.vm")

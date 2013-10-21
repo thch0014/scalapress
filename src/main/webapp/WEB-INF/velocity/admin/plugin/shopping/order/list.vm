@@ -6,26 +6,26 @@
 
 <form method="GET" class="form-horizontal">
 
-    <div class="control-group">
-        <label class="control-label">Order Id</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Order Id</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("form.orderId")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Customer Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Customer Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("form.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Status</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Status</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormSingleSelect("form.status", $orderStatusMap)
         </div>
     </div>
@@ -66,7 +66,7 @@
             }
         })
     </script>
-    <button type="submit" class="btn btn-sm"><i class="glyphicon glyphicon-plus"></i> Create New Order</button>
+    <button type="submit" class="btn btn-sm"><i class="glyphicon  glyphicon-plus"></i> Create New Order</button>
 </form>
 
 #paging($paging)
@@ -88,11 +88,11 @@
             <td>$!o.account.name $!o.account.email</td>
             <td>$o.total()</td>
             <td>
-                <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-pencil"></i> </a>
+                <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-pencil"></i> </a>
 
-                <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-print"></i> </a>
+                <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-print"></i> </a>
             </td>
         </tr>
     #end

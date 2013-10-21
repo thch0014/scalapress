@@ -91,10 +91,10 @@ object FormRenderer {
     }
 
     <div class={cssClass}>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(name)}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value
         .orNull} class={css}/>
         <span class="help-inline">
@@ -118,10 +118,10 @@ object FormRenderer {
     val opts = _renderOptions(field.optionsList)
 
     scala.xml.Utility.trim(<div class={cssClass}>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(field.name)}{star}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         <select name={field.id.toString}>
           {opts}
         </select>
@@ -146,7 +146,7 @@ object FormRenderer {
 
     val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
     <div class={cssClass}>
-      <div class="controls">
+      <div class="col-lg-8">
         <label class="checkbox">
           {Unparsed(field.name)}
         </label>{checks}<span class="help-inline">
@@ -166,7 +166,7 @@ object FormRenderer {
       </label>)
 
     <div class={cssClass}>
-      <div class="controls">
+      <div class="col-lg-8">
         <label class="radio">
           {Unparsed(field.name)}{star}
         </label>{radios}<span class="help-inline">

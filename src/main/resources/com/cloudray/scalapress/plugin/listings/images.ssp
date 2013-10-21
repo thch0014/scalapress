@@ -23,7 +23,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn" aria-hidden="true" data-dismiss="modal">Close</button>
+        <button class="btn btn-default" aria-hidden="true" data-dismiss="modal">Close</button>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
         <br/><br/>
 
         <a href="#listing-image-upload-modal" role='button' class="btn btn-inverse" data-toggle="modal">
-            <i class="icon-upload"></i> Upload Images</a>
-        <a href="/listing/confirmation" role="button" class="btn">Finished with Images</a>
+            <i class="glyphicon glyphicon-upload"></i> Upload Images</a>
+        <a href="/listing/confirmation" role="button" class="btn btn-default">Finished with Images</a>
     </form>
 </div>

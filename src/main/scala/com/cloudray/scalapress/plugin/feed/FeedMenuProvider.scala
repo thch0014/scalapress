@@ -6,5 +6,5 @@ import com.cloudray.scalapress.ScalapressContext
 /** @author Stephen Samuel */
 class FeedMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Option[MenuItem] =
-    Some(MenuLink("Google Base", Some("icon-google-plus"), "/backoffice/feed"))
+    Some(MenuLink("Google Base", Some("glyphicon glyphicon-google-plus"), "/backoffice/feed"))
 }

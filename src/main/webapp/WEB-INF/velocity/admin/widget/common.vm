@@ -1,120 +1,120 @@
-<div class="control-group">
-    <label class="control-label">Name</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Name</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.name")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Visible</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Visible</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.visible")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Location</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Location</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.location")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Container</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Container</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormSingleSelect("widget.container", $widgetContainerMap)
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Container Class</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Container Class</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.containerClass")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Container Id</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Container Id</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.containerId")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Caption</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Caption</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.caption")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Restricted</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Restricted</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.restricted")
     </div>
 </div>
 
 #if ($widget.restricted)
-<div class="control-group">
-    <label class="control-label">Display On All Folders</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Display On All Folders</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.displayOnAllFolders")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Included folders</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Included folders</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.includeFolders", "class='input-xlarge'")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Excluded folders</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Excluded folders</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormInput("widget.excludeFolders", "class='input-xlarge'")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Display On All Objects</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Display On All Objects</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.displayOnAllObjects")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Display On Home</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Display On Home</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.displayOnHome")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Display On Others</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Display On Others</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.displayOnSearchResults")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Display On Others</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Display On Others</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         #springFormCheckbox("widget.displayOnOthers")
     </div>
 </div>

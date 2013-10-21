@@ -16,7 +16,7 @@ object ListingFoldersRenderer {
     <div id="listing-process-folders">
     <p>Please choose the sections of the site where you would like your listing to appear from the dropdown menu below.</p>
       {plugin.foldersPageText}<form method="POST" action="/listing/folder">
-      {selects}<button type="submit" class="btn">Continue</button>
+      {selects}<button type="submit" class="btn btn-default">Continue</button>
     </form>
     </div>
   }

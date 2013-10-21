@@ -25,7 +25,7 @@ object ListingFieldsRenderer {
         <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
         attributeValues)}{_sectionAttributes(
         attributes, attributeValues)}<legend>Main Content</legend>{_content(
-        process.content)}<button type="submit" class="btn">Continue</button>
+        process.content)}<button type="submit" class="btn btn-default">Continue</button>
       </form>
     </div>
   }
@@ -54,19 +54,19 @@ object ListingFieldsRenderer {
 
   private def _title(title: String) =
     <div>
-      <label class="control-label">Title *</label>
-      <div class="controls">
+      <label class="col-lg-2 control-label">Title *</label>
+      <div class="col-lg-8">
         <input type="text" class="input-xlarge" name="title" placeholder="Title" value={title}/>
       </div>
     </div>
 
   private def _content(content: String) =
     <div>
-      <label class="control-label">Content *</label>
+      <label class="col-lg-2 control-label">Content *</label>
       <p>Please enter as much detailed information as you can for the main content section of your listing. There is no limit to the 
       amount of text that you can enter, but please note that you cannot use HTML tags such as <b></b> or any other markup as this is 
       automatically removed.</p>
-      <div class="controls">
+      <div class="col-lg-8">
         <textarea class="input-block-level" rows="12" name="content">
           {content}
         </textarea>
@@ -76,10 +76,10 @@ object ListingFieldsRenderer {
   def _singleSelection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(name)}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         {_select(attr)}
       </div>
     </div>
@@ -101,10 +101,10 @@ object ListingFieldsRenderer {
   def _multipleSelection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(name)}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         {_checkboxes(attr)}
       </div>
     </div>
@@ -122,10 +122,10 @@ object ListingFieldsRenderer {
   def _text(attr: Attribute, size: String, value: Option[String]) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(name)}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         <input type="text" name={"attributeValue_" + attr.id}
                placeholder={attr.placeholder} class={size} value={value.orNull}/>
       </div>
@@ -134,10 +134,10 @@ object ListingFieldsRenderer {
 
   def _yesno(attr: Attribute) =
     <div>
-      <label class="control-label">
+      <label class="col-lg-2 control-label">
         {Unparsed(attr.name)}
       </label>
-      <div class="controls">
+      <div class="col-lg-8">
         <label class="checkbox">
           <input type="checkbox" name={"attributeValue_" + attr.id}/>
         </label>

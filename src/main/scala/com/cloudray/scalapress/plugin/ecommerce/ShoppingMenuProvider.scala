@@ -11,14 +11,14 @@ class ShoppingMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Option[MenuItem] = {
     val item =
-      Menu("Shopping", Some("icon-shopping-cart"), Seq(
-        MenuLink("Show Orders", Some("icon-shopping-cart"), "/backoffice/order"),
-        MenuLink("Create Order", Some("icon-plus"), "/backoffice/order/create"),
+      Menu("Shopping", Some("glyphicon glyphicon-shopping-cart"), Seq(
+        MenuLink("Show Orders", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/order"),
+        MenuLink("Create Order", Some("glyphicon glyphicon-plus"), "/backoffice/order/create"),
         MenuDivider,
-        MenuLink("Delivery Options", Some("icon-truck"), "/backoffice/delivery"),
-        MenuLink("Shopping Settings", Some("icon-shopping-cart"), "/backoffice/plugin/shopping"),
-        MenuLink("Sales Report", Some("icon-list-alt"), "/backoffice/plugin/shopping/salesreport"),
-        MenuLink("Email Report", Some("icon-envelope"), "/backoffice/plugin/ecommerce/report/email")))
+        MenuLink("Delivery Options", Some("glyphicon glyphicon-truck"), "/backoffice/delivery"),
+        MenuLink("Shopping Settings", Some("glyphicon glyphicon-shopping-cart"), "/backoffice/plugin/shopping"),
+        MenuLink("Sales Report", Some("glyphicon glyphicon-list-alt"), "/backoffice/plugin/shopping/salesreport"),
+        MenuLink("Email Report", Some("glyphicon glyphicon-envelope"), "/backoffice/plugin/ecommerce/report/email")))
     Some(item)
   }
 }

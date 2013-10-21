@@ -11,10 +11,10 @@
 
         <div class="modal-body">
 
-            <div class="control-group">
-                <label class="control-label" for="new-object-name">Name</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="new-object-name">Name</label>
 
-                <div class="controls">
+                <div class="col-lg-8">
                     <input type="text" id="new-object-name" name="name" placeholder="New $type.name Name">
                 </div>
             </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Create</button>
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </form>
 </div>
@@ -33,7 +33,8 @@
         <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>
         <h3>Import CSV</h3>
     </div>
-    <form enctype="multipart/form-data" method="POST" action="/backoffice/obj/import?typeId=$type.id" class="form-horizontal">
+    <form enctype="multipart/form-data" method="POST" action="/backoffice/obj/import?typeId=$type.id"
+          class="form-horizontal">
         <div class="modal-body">
             <p>
                 Select file to upload
@@ -42,38 +43,48 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-success">Upload</button>
-            <button class="btn" aria-hidden="true" data-dismiss="modal">Close</button>
+            <button class="btn btn-default" aria-hidden="true" data-dismiss="modal">Close</button>
         </div>
     </form>
 
 </div>
 
 
-<h3>$type.name</h3>
+<div class="page-header">
+    <h2>$type.name</h2>
+</div>
 
 
-<form method="GET" class="form-horizontal">
+<form method="GET" class="form-horizontal" role="form">
     <input type="hidden" name="typeId" value="$type.id"/>
 
-    <div class="control-group">
-        <label class="control-label" for="name">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="name">Name</label>
 
-        <div class="controls">
-            #springFormInput("form.name")
+        <div class="col-lg-6">
+          #springFormInput("form.name", "class='form-control'")
+            <span class="help-block">Enter keywords to search for items</span>
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label" for="inputEmail">Status</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="inputEmail">Status</label>
 
-        <div class="controls">
-            #springFormSingleSelect("form.status", $objectStatusMap)
+        <div class="col-lg-6">
+          #springFormSingleSelect("form.status", $objectStatusMap, "class='form-control'")
+            <span class="help-block">Choose the state of the items to search for</span>
         </div>
     </div>
 
-    <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i> Search</button>
-    <a href="#create-object-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create  $type.name</a>
-
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-search"></i>
+                Search
+            </button>
+            <a href="#create-object-modal" role="button" class="btn btn-info" data-toggle="modal">
+                <i class="icon-plus"></i> Create  $type.name</a>
+        </div>
+    </div>
 
 </form>
 
@@ -88,29 +99,32 @@
         <th>Date Created</th>
         <th></th>
     </tr>
-    #foreach ($o in $objects)
-        <tr>
-            <td><a href="$urlResolver.objectEdit($o)">$o.id</a></td>
-            <td>$o.name</td>
-            <td>$!o.status</td>
-            <td>$!datetool.format($o.dateCreated)</td>
-            <td>
-                <a href="$urlResolver.objectEdit($o)" role="button" class="btn btn-xs"> <i
-                        class="glyphicon glyphicon-pencil"></i></a>
-                <a href="$urlResolver.objectSiteView($o)" role="button" class="btn btn-xs"> <i
-                        class="glyphicon glyphicon-eye-open"></i></a>
-            </td>
-        </tr>
-    #end
+  #foreach ($o in $objects)
+      <tr>
+          <td><a href="$urlResolver.objectEdit($o)">$o.id</a></td>
+          <td>$o.name</td>
+          <td>$!o.status</td>
+          <td>$!datetool.format($o.dateCreated)</td>
+          <td>
+              <a href="$urlResolver.objectEdit($o)" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="$urlResolver.objectSiteView($o)" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-eye-open"></i></a>
+          </td>
+      </tr>
+  #end
 </table>
 
 #paging($paging)
 
 
-<a href="#create-object-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create  $type.name</a>
-<a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-inverse"> <i class="glyphicon glyphicon-download"></i> Export
+<a href="#create-object-modal" role="button" class="btn btn-default" data-toggle="modal">
+    <i class="glyphicon  glyphicon-plus-sign"></i> Create  $type.name</a>
+<a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-inverse">
+    <i class="glyphicon glyphicon-download"></i> Export
     as CSV</a>
-<a href="#import-modal" role='button' class="btn btn-inverse" data-toggle="modal"> <i class="glyphicon glyphicon-upload"></i> Import CSV</a>
+<a href="#import-modal" role='button' class="btn btn-inverse" data-toggle="modal">
+    <i class="glyphicon glyphicon-upload"></i> Import CSV</a>
 
 
 

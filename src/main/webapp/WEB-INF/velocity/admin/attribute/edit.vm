@@ -5,121 +5,121 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Attribute Type</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Attribute Type</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormSingleSelect("attribute.attributeType", $attributeTypeMap)
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Description</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Description</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.description")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Section</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Section</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.section")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Public</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Public</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.public")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">User Editable</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">User Editable</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.userEditable")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Optional</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Optional</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.optional", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Default</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Default</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.default")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Multiple values</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Multiple values</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.multipleValues", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Manual options ordering</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Manual options ordering</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.manualOptionsOrdering", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Facet</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Facet</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("attribute.facet", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Facet Size</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Facet Size</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.facetSize", "class='input-xsmall'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Bcc</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Bcc</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.bcc")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Cc</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Cc</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("attribute.cc")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/type/$attribute.objectType.id" class="btn">Return</a>
+        <a href="/backoffice/type/$attribute.objectType.id" class="btn btn-default">Return</a>
     </div>
 
 </form>
@@ -137,18 +137,18 @@
           <td>$!option.value</td>
           <td>
               <a href="/backoffice/attribute/$attribute.id/option/$option.id" role="button"
-                 class="btn btn-xs">
-                  <i class="glyphicon glyphicon-pencil"></i></a>
+                 class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-pencil"></i></a>
 
               <a href="/backoffice/attribute/$attribute.id/option/$option.id/delete" role="button"
                  class="btn btn-xs btn-danger">
-                  <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                  <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
           </td>
       </tr>
   #end
     <tr>
         <td colspan="2"><a href="/backoffice/attribute/$attribute.id/option/create">
-            <i class="glyphicon glyphicon-plus"></i> Create New Option</a></td>
+            <i class="glyphicon  glyphicon-plus"></i> Create New Option</a></td>
     </tr>
 </table>
 #end

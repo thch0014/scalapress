@@ -7,6 +7,6 @@ import com.cloudray.scalapress.ScalapressContext
 class AccountPluginMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Option[MenuItem] =
-    Some(Menu("Account", Some("icon-user"), Seq(
-      MenuLink("Account Plugin", Some("icon-user"), "/backoffice/plugin/account"))))
+    Some(Menu("Account", Some("glyphicon glyphicon-user"), Seq(
+      MenuLink("Account Plugin", Some("glyphicon glyphicon-user"), "/backoffice/plugin/account"))))
 }

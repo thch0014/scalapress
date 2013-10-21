@@ -7,21 +7,21 @@
       <div class="alert alert-error">${errorMessage}</div>
   #end
 
-    <div class="control-group">
+    <div class="form-group">
         <label for="email">
             Email
         </label>
         <input name="j_username" type="email" placeholder="Email Address"/>
     </div>
-    <div class="control-group">
+    <div class="form-group">
         <label for="password">
             Password
         </label>
         <input name="j_password" type="password" placeholder="Password"/>
     </div>
-    <button type="submit" name="submit" class="btn">Login</button>
+    <button type="submit" name="submit" class="btn btn-default">Login</button>
 
-    <a href="/register" class="btn">Register</a>
-    <a href="/password" class="btn">Forgotten Password</a>
+    <a href="/register" class="btn btn-default">Register</a>
+    <a href="/password" class="btn btn-default">Forgotten Password</a>
 
 </form>

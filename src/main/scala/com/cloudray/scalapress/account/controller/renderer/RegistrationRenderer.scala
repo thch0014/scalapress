@@ -14,7 +14,7 @@ object RegistrationRenderer {
   def renderRegistrationPage(form: RegistrationForm, plugin: AccountPlugin, errors: Errors) = {
     <div class="registration">
       <form class="form-horizontal registration" method="POST">
-        <div class="control-group">
+        <div class="form-group">
           <label for="name">
             Your name
           </label>
@@ -23,7 +23,7 @@ object RegistrationRenderer {
             {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <div class="control-group">
+        <div class="form-group">
           <label for="email">
             Email
           </label>
@@ -32,7 +32,7 @@ object RegistrationRenderer {
             {Option(errors.getFieldError("email")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <div class="control-group">
+        <div class="form-group">
           <label for="password">
             Password
           </label>
@@ -41,7 +41,7 @@ object RegistrationRenderer {
             {Option(errors.getFieldError("password")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-default">Register</button>
       </form>
     </div>
   }

@@ -2,50 +2,50 @@
 
 <h3>Transaction ${tx.transactionId}</h3>
 
-<div class="control-group">
-    <label class="control-label">Transaction Id</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Transaction Id</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("tx.transactionId", "class='input-xxlarge'")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Date</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Date</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       $datetool.format($tx.date)
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Processor</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Processor</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("tx.paymentProcessor", "")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Auth Code</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Auth Code</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("tx.authCode", "")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Amount</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Amount</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       $number.currency($tx.amountDecimal())
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Status</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Status</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("tx.status", "")
     </div>
 </div>

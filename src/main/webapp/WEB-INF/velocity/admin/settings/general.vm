@@ -4,41 +4,41 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Offline</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Offline</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("settings.offline")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Offline Message</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Offline Message</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("settings.offlineMessage")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Max image width</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Max image width</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("settings.maxImageWidth")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Max image height</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Max image height</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("settings.maxImageHeight")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

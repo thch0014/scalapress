@@ -7,8 +7,8 @@ import com.cloudray.scalapress.util.UrlGenerator
 /** @author Stephen Samuel */
 object ListingsRenderer {
 
-  def createListing = <a href="/listing/package" class="btn">
-    <i class="icon-plus"></i>
+  def createListing = <a href="/listing/package" class="btn btn-default">
+    <i class="glyphicon glyphicon-plus"></i>
     Add new listing</a>
 
   def myListings(objects: Iterable[Obj]) = {
@@ -30,7 +30,7 @@ object ListingsRenderer {
           {expiryString}
         </td>
         <td>
-          <a href={"/listing/" + obj.id} class="btn btn-xs">Edit</a>
+          <a href={"/listing/" + obj.id} class="btn btn-xs btn-default">Edit</a>
         </td>
       </tr>
     })

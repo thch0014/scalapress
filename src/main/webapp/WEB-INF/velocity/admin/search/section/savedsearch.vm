@@ -5,26 +5,26 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Visible</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Visible</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("section.visible", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="markup" name="markup">
                 #foreach($option in $markupMap.keySet())
                     <option value="${option}"
@@ -37,18 +37,18 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Search</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Search</label>
 
-        <div class="controls">
-            Edit Saved Search <a href="/backoffice/savedsearch/$section.search.id" class="btn btn-xs">
-            <i class="glyphicon glyphicon-pencil"></i></a>
+        <div class="col-lg-8">
+            Edit Saved Search <a href="/backoffice/savedsearch/$section.search.id" class="btn btn-xs btn-default">
+            <i class="glyphicon  glyphicon-pencil"></i></a>
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
     </div>
 
 </form>

@@ -5,41 +5,41 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("user.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Active</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Active</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("user.active")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Username</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Username</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("user.username")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Change Password</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Change Password</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("user.changePassword")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

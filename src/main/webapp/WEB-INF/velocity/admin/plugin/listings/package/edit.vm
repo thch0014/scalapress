@@ -5,34 +5,34 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.name", "class='input-xxlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Deleted</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Deleted</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("package.deleted")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Description</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Description</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormTextarea("package.description", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Object Type</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Object Type</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="objectType" name="objectType">
                 #foreach($option in $objectTypesMap.keySet())
                     <option value="${option}"
@@ -45,68 +45,68 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Fee</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Fee</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.fee", "class='input-sm'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Duration in days</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Duration in days</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.duration", "class='input-sm'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Max images</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Max images</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.maxImages", "class='input-sm'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Max folders</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Max folders</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.maxFolders", "class='input-sm'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Folders</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Folders</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.folders", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Auto Publish</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Auto Publish</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("package.autoPublish", "")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Labels</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Labels</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("package.labels", "class='input-xlarge'")
         </div>
     </div>
 
 
 ##    #foreach ($folder in $package.folders)
-##        <div class="control-group">
-##            <label class="control-label">Folder</label>
+##        <div class="form-group">
+##            <label class="col-lg-2 control-label">Folder</label>
 ##
-##            <div class="controls">
+##            <div class="col-lg-8">
 ##                <select id="folderIds" name="folderIds" class="input-xxlarge">
 ##                </select>
 ##            </div>
@@ -115,7 +115,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn" href="/backoffice/plugin/listings">Return</a>
+        <a role="button" class="btn btn-default" href="/backoffice/plugin/listings">Return</a>
     </div>
 
 </form>

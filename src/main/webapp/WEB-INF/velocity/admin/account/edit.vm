@@ -9,33 +9,33 @@
     <div class="tab-pane active" id="tab1">
 
         <div class=" control-group">
-            <label class="control-label">Name</label>
+            <label class="col-lg-2 control-label">Name</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
               #springFormInput("form.account.name", "class='input-xxlarge'")
             </div>
         </div>
 
         <div class=" control-group">
-            <label class="control-label">Email</label>
+            <label class="col-lg-2 control-label">Email</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
               #springFormInput("form.account.email", "class='input-xxlarge'")
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="control-label">Status</label>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Status</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
               #springFormSingleSelect("form.account.status", $accountStatusMap, "")
             </div>
         </div>
 
-        <div class="control-group">
-            <label class="control-label">Change Password</label>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Change Password</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
               #springFormInput("form.changePassword")
             </div>
         </div>
@@ -43,10 +43,10 @@
     </div>
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Save changes</button>
+        <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-save"></i> Save changes</button>
         &nbsp;
         <a href="/backoffice/account?accountTypeId=${form.account.accountType.id}" class="btn btn-info">
-            <i class="glyphicon glyphicon-arrow-left"></i> Return to list</a>
+            <i class="glyphicon  glyphicon-arrow-left"></i> Return to list</a>
     </div>
 
 </form>
@@ -68,8 +68,8 @@
           <td>$order.status()</td>
           <td>$order.total()</td>
           <td>
-              <a href="/backoffice/order/$order.id" role="button" class="btn btn-xs">
-                  <i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="/backoffice/order/$order.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon  glyphicon-pencil"></i></a>
           </td>
       </tr>
   #end

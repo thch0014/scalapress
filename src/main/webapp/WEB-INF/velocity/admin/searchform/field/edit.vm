@@ -5,28 +5,28 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("field.name")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Type</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Type</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormSingleSelect("field.fieldType", $attributeTypes)
         </div>
     </div>
 
 
     #if ($field.fieldType == "Attribute")
-        <div class="control-group">
-            <label class="control-label">Attribute</label>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Attribute</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
                 <select id="attribute" name="attribute">
                     #foreach($option in $attributesMap.keySet())
                         <option value="${option}"
@@ -40,19 +40,19 @@
         </div>
     #end
 
-    <div class="control-group">
-        <label class="control-label">Preset</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Preset</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("field.preset")
         </div>
     </div>
 
     #if ($field.preset)
-        <div class="control-group">
-            <label class="control-label">Preset Value</label>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Preset Value</label>
 
-            <div class="controls">
+            <div class="col-lg-8">
                 #springFormInput("field.value")
             </div>
         </div>
@@ -60,7 +60,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn" href="/backoffice/searchform/$field.searchForm.id">Return</a>
+        <a role="button" class="btn btn-default" href="/backoffice/searchform/$field.searchForm.id">Return</a>
     </div>
 
 </form>

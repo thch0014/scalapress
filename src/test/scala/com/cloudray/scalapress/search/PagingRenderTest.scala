@@ -12,6 +12,6 @@ class PagingRenderTest extends FunSuite with MockitoSugar with OneInstancePerTes
     test("pagination renderer happy path") {
         val actual = PagingRenderer.render(paging)
         assert(
-            """<div class="pagination"><ul><li class="disabled"><i class="icon-search">&nbsp;</i>Viewing results</li><li class=""><a href="http://www.google.com:80?pageNumber=1">1</a></li><li class="active"><a href="http://www.google.com:80?pageNumber=2">2</a></li><li class=""><a href="http://www.google.com:80?pageNumber=3">3</a></li><li class=""><a href="http://www.google.com:80?pageNumber=4">4</a></li></ul></div>""" === actual)
+            """<div class="pagination"><ul><li class="disabled"><i class="glyphicon glyphicon-search">&nbsp;</i>Viewing results</li><li class=""><a href="http://www.google.com:80?pageNumber=1">1</a></li><li class="active"><a href="http://www.google.com:80?pageNumber=2">2</a></li><li class=""><a href="http://www.google.com:80?pageNumber=3">3</a></li><li class=""><a href="http://www.google.com:80?pageNumber=4">4</a></li></ul></div>""" === actual)
     }
 }

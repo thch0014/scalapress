@@ -9,10 +9,10 @@
     <form method="GET" action="/backoffice/folder/create" class="form-horizontal">
         <div class="modal-body">
 
-            <div class="control-group">
-                <label class="control-label" for="new-folder-name">Name</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="new-folder-name">Name</label>
 
-                <div class="controls">
+                <div class="col-lg-8">
                     <input type="text" id="new-folder-name" name="name" placeholder="New Folder Name">
                 </div>
             </div>
@@ -20,16 +20,21 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Create</button>
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </form>
 </div>
 
-<h3>Folders</h3>
+<div class="page-header">
+    <h2>Folders</h2>
+</div>
 
-<p>
-    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create Folder</a>
-</p>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="#create-folder-modal" role="button" class="btn btn-primary" data-toggle="modal">
+            <i class="glyphicon glyphicon-plus-sign"></i> Create new folder</a>
+    </div>
+</div>
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -37,22 +42,25 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($f in $folders)
-        <tr>
-            <td>$f.id</td>
-            <td>$f.fullName()</td>
-            <td>
-                <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-xs"> <i
-                        class="glyphicon glyphicon-pencil"></i></a>
-                <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-xs"> <i
-                        class="glyphicon glyphicon-eye-open"></i></a>
-            </td>
-        </tr>
-    #end
+  #foreach ($f in $folders)
+      <tr>
+          <td>$f.id</td>
+          <td>$f.fullName()</td>
+          <td>
+              <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-xs btn-default"> <i
+                      class="glyphicon  glyphicon-pencil"></i></a>
+              <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-xs btn-default"> <i
+                      class="glyphicon  glyphicon-eye-open"></i></a>
+          </td>
+      </tr>
+  #end
 </table>
 
-<p>
-    <a href="#create-folder-modal" role="button" class="btn" data-toggle="modal"><i class="glyphicon glyphicon-plus-sign"></i> Create Folder</a>
-</p>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="#create-folder-modal" role="button" class="btn btn-primary" data-toggle="modal">
+            <i class="glyphicon glyphicon-plus-sign"></i> Create new folder</a>
+    </div>
+</div>
 
 #parse("/admin/footer.vm")

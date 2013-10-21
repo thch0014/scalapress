@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css">
-    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
     <link rel="stylesheet" href="/static/css/scalapress.css">
 

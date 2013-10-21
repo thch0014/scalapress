@@ -17,10 +17,10 @@
             <td>$result.t()</td>
             <td>$result.name()</td>
             <td>
-                <a href="$result.editUrl()" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-pencil"></i></a>
-                <a href="$result.viewUrl()" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-eye-open"></i></a>
+                <a href="$result.editUrl()" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-pencil"></i></a>
+                <a href="$result.viewUrl()" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-eye-open"></i></a>
             </td>
         </tr>
     #end

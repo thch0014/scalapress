@@ -10,7 +10,7 @@ object ProfileRenderer {
   def renderProfilePage(profile: Profile, plugin: AccountPlugin, errors: Errors) = {
     <div class="registration">
       <form class="form-horizontal registration" method="POST">
-        <div class="control-group">
+        <div class="form-group">
           <label for="name">
             Your name
           </label>
@@ -19,7 +19,7 @@ object ProfileRenderer {
             {Option(errors.getFieldError("name")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <div class="control-group">
+        <div class="form-group">
           <label for="email">
             Email
           </label>
@@ -28,7 +28,7 @@ object ProfileRenderer {
             {Option(errors.getFieldError("email")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <div class="control-group">
+        <div class="form-group">
           <label for="password">
             Password
           </label>
@@ -37,7 +37,7 @@ object ProfileRenderer {
             {Option(errors.getFieldError("password")).map(_.getDefaultMessage).getOrElse("")}
           </span>
         </div>
-        <button type="submit" class="btn">Update Account</button>
+        <button type="submit" class="btn btn-default">Update Account</button>
       </form>
     </div>
   }

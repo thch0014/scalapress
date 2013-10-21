@@ -7,10 +7,10 @@
 
     #parse("/admin/section/common.vm")
 
-    <div class="control-group">
-        <label class="control-label">Postcode</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Postcode</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("section.postcode", "class='input-sm'")
         </div>
     </div>

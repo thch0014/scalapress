@@ -21,7 +21,7 @@ object ListingPackageRenderer {
 
         <div class="name lead">
           <a href={"/listing/package/" + pck.id.toString}>
-            <i class="icon-edit"></i>{pck.name}
+            <i class="glyphicon glyphicon-edit"></i>{pck.name}
           </a>
         </div>
 

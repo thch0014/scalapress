@@ -4,7 +4,7 @@
 <h3>Delivery Options</h3>
 
 <a href="/backoffice/delivery/create" role="button" class="btn btn-sm">
-    <i class="glyphicon glyphicon-plus"></i> Create Delivery Option</a>
+    <i class="glyphicon  glyphicon-plus"></i> Create Delivery Option</a>
 
 <table class="table table-condensed table-hover" id="deliveryoptions-table">
     <tr>
@@ -17,11 +17,11 @@
             <td>$o.id</td>
             <td>$!o.name</td>
             <td>
-                <a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-xs">
-                    <i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="$urlResolver.editDeliveryOption($o)" role="button" class="btn btn-xs btn-default">
+                    <i class="glyphicon  glyphicon-pencil"></i></a>
 
                 <a href="/backoffice/delivery/$o.id/delete" role="button" class="btn btn-xs btn-danger">
-                    <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                    <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
             </td>
         </tr>
     #end

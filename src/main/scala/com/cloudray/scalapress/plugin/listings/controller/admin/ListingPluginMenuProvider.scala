@@ -7,6 +7,6 @@ import com.cloudray.scalapress.ScalapressContext
 class ListingPluginMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Option[MenuItem] =
-    Some(Menu("Listings", Some("icon-th-large"), Seq(
-      MenuLink("Listing Packages", Some("icon-th-large"), "/backoffice/plugin/listings"))))
+    Some(Menu("Listings", Some("glyphicon glyphicon-th-large"), Seq(
+      MenuLink("Listing Packages", Some("glyphicon glyphicon-th-large"), "/backoffice/plugin/listings"))))
 }

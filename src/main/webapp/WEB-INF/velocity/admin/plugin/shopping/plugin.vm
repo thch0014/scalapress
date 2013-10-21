@@ -5,10 +5,10 @@
 <form class="form-horizontal" method="POST">
 
     <legend>Basket</legend>
-    <div class="control-group">
-        <label class="control-label">Basket Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Basket Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="basketMarkup" name="basketMarkup">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
@@ -21,10 +21,10 @@
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Basket Line Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Basket Line Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="basketLineMarkup" name="basketLineMarkup">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
@@ -38,34 +38,34 @@
     </div>
 
     <legend>Stock</legend>
-    <div class="control-group">
-        <label class="control-label">Stock Method</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Stock Method</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormSingleSelect("plugin.stockMethod", $stockMethods)
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Default out of stock message</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Default out of stock message</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("plugin.outOfStockMessage")
         </div>
     </div>
 
     <legend>Orders</legend>
-    <div class="control-group">
-        <label class="control-label">Statuses</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Statuses</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.statuses", "rows='8'")
         </div>
     </div>
-    <div class="control-group">
-        <label class="control-label">Invoice Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Invoice Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="invoiceMarkup" name="invoiceMarkup">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
@@ -79,40 +79,40 @@
     </div>
 
     <legend>Email Notifications</legend>
-    <div class="control-group">
-        <label class="control-label">Email Confirmation Text (Customers)</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Email Confirmation Text (Customers)</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.orderConfirmationMessageBody", "class='input-block-level' rows='6'")
         </div>
     </div>
-    <div class="control-group">
-        <label class="control-label">Email Confirmation Recipients (Admin)</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Email Confirmation Recipients (Admin)</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.orderConfirmationRecipients", "class='input-block-level' rows='4'")
         </div>
     </div>
-    <div class="control-group">
-        <label class="control-label">Email Confirmation Bcc</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Email Confirmation Bcc</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormInput("plugin.orderConfirmationBcc", "class='input-xlarge'")
         </div>
     </div>
-    <div class="control-group">
-        <label class="control-label">Order Email Completion Text (Customers)</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Order Email Completion Text (Customers)</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.orderCompletionMessageBody", "class='input-block-level' rows='6'")
         </div>
     </div>
 
     <legend>Invoices</legend>
-    <div class="control-group">
-        <label class="control-label">Invoice Line Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Invoice Line Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="invoiceLineMarkup" name="invoiceLineMarkup">
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
@@ -128,42 +128,42 @@
 
     <legend>Checkout</legend>
 
-    <div class="control-group">
-        <label class="control-label">Checkout Confirmation Page Text</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Checkout Confirmation Page Text</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.checkoutConfirmationText", "class='input-block-level' rows='16'")
         </div>
     </div>
 
 
-    <div class="control-group">
-        <label class="control-label">Checkout Confirmation Scripts</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Checkout Confirmation Scripts</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.checkoutConfirmationScripts", "class='input-block-level' rows='8'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Require terms acceptance</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Require terms acceptance</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormCheckbox("plugin.termsAcceptance")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Terms and Conditions</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Terms and Conditions</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
           #springFormTextarea("plugin.terms", "class='input-block-level' rows='12'")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

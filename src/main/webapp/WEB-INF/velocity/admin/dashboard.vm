@@ -20,22 +20,22 @@
                     </h4>
 
                     <p>
-                        <i class="glyphicon glyphicon-home"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-home"></i>
                         <a href="/backoffice/folder/1">Edit your front page</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-plus-sign"></i>
                         <a href="/backoffice/folder/create">Add a new page</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-cog"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-cog"></i>
                         <a href="/backoffice/settings/installation">Configure site details</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-eye-open"></i>
                         <a href="/">View your site</a>
                     </p>
 
@@ -46,22 +46,22 @@
                     </h4>
 
                     <p>
-                        <i class="glyphicon glyphicon-check"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-check"></i>
                         <a href="/backoffice/submission">View form submissions</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-list-alt"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-list-alt"></i>
                         <a href="/backoffice/widget">Manage widgets</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-search"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-search"></i>
                         <a href="http://www.google.com/search?q=site:$installation.domain">Show Google backlinks</a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-user"></i>
+                        <i class="glyphicon  glyphglyphicon glyphicon-user"></i>
                         <a href="/backoffice/user/$user.id">Change your password</a>
                     </p>
 

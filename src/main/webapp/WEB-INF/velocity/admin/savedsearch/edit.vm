@@ -5,18 +5,18 @@
 
 <form class="form-horizontal" method="POST">
 
-<div class="control-group">
-    <label class="control-label">Name search</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Name search</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("search.name")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Object Type</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Object Type</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         <select id="objectType" name="objectType">
           #foreach($option in $objectTypesMap.keySet())
               <option value="${option}"
@@ -29,51 +29,51 @@
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Keywords search</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Keywords search</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("search.keywords")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Labels search</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Labels search</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("search.labels")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Max Results</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Max Results</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("search.maxResults")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Search in folder</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Search in folder</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormInput("search.searchFolders", "class='input-sm'")
     </div>
 </div>
 
 
-<div class="control-group">
-    <label class="control-label">Images Only</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Images Only</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
       #springFormCheckbox("search.imageOnly", "")
     </div>
 </div>
 
-<div class="control-group">
-    <label class="control-label">Sort</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Sort</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         <select id="sortType" name="sortType">
           #foreach($option in $sortMap.keySet())
               <option value="${option}"
@@ -87,10 +87,10 @@
 
 
   #if ($search.sortType == "Attribute" || $search.sortType == "AttributeDesc")
-  <div class="control-group">
-      <label class="control-label">Sort Attribute</label>
+  <div class="form-group">
+      <label class="col-lg-2 control-label">Sort Attribute</label>
 
-      <div class="controls">
+      <div class="col-lg-8">
           <select id="sortAttribute" name="sortAttribute">
             #foreach($option in $attributesMap.keySet())
                 <option value="${option}"
@@ -104,10 +104,10 @@
   #end
 
 
-<div class="control-group">
-    <label class="control-label">Ignore Past</label>
+<div class="form-group">
+    <label class="col-lg-2 control-label">Ignore Past</label>
 
-    <div class="controls">
+    <div class="col-lg-8">
         <select id="ignorePast" name="ignorePast">
           #foreach($option in $attributesMap.keySet())
               <option value="${option}"
@@ -125,10 +125,10 @@
     #set($a = $attributeWithValues.productElement(0))
     #set($values = $attributeWithValues.productElement(1))
 
-  <div class="control-group">
-      <label class="control-label">$a.name ($a.id)</label>
+  <div class="form-group">
+      <label class="col-lg-2 control-label">$a.name ($a.id)</label>
 
-      <div class="controls">
+      <div class="col-lg-8">
 
         #if ($a.attributeType == "Text" || $a.attributeType == "Link" || $a.attributeType == "Email" )
 
@@ -149,7 +149,7 @@
                    data-date-format="dd-mm-yyyy">
                   <input size="16" type="text" name="attributeValues$a.id"
                          value="$!datetool.format("dd-MM-yyyy", $value)"/>
-                  <span class="add-on"><i class="glyphicon glyphicon-th"></i></span>
+                  <span class="add-on"><i class="glyphicon  glyphicon-th"></i></span>
               </div>
           #end
 
@@ -203,7 +203,7 @@
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
-    <a href="/backoffice/savedsearch" class="btn">Return</a>
+    <a href="/backoffice/savedsearch" class="btn btn-default">Return</a>
 </div>
 
 </form>

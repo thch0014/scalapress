@@ -22,7 +22,7 @@ class PaymentFormRenderer(context: ScalapressContext) {
       val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
       <form method="POST" action={plugin.processor.paymentUrl}>
-        {paramInputs}<button type="submit" class="btn">
+        {paramInputs}<button type="submit" class="btn btn-default">
         {buttonText}
       </button>
       </form>

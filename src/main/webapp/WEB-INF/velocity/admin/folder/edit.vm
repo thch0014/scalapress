@@ -16,19 +16,19 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
 
-                <div class="control-group">
-                    <label class="control-label">Name</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Name</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormInput("folder.name", "class='input-xxlarge'")
                     </div>
                 </div>
 
                 #if ($folder.id > 1)
-                    <div class="control-group">
-                        <label class="control-label">Parent</label>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Parent</label>
 
-                        <div class="controls">
+                        <div class="col-lg-8">
                             <select id="parent" name="parent" class="input-xxlarge">
                                 #foreach($option in $parents.keySet())
                                     <option value="${option}"
@@ -42,18 +42,18 @@
                     </div>
                 #end
 
-                <div class="control-group">
-                    <label class="control-label">Hidden</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Hidden</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormCheckbox("folder.hidden")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Theme</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Theme</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         <select id="theme" name="theme" class="input-xxlarge">
                             #foreach($option in $themesMap.keySet())
                                 <option value="${option}"
@@ -66,21 +66,21 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Subfolder Ordering</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Subfolder Ordering</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
                         #if ($folder.folderOrdering == "Manual")
-                            <a href="/backoffice/folder/$folder.id/suborder" class="btn">Edit Subfolder Order</a>
+                            <a href="/backoffice/folder/$folder.id/suborder" class="btn btn-default">Edit Subfolder Order</a>
                         #end
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Redirect</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Redirect</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormInput("folder.redirect", "class='input-xxlarge'")
                     </div>
                 </div>
@@ -89,26 +89,26 @@
             </div>
             <div class="tab-pane" id="tab2">
 
-                <div class="control-group">
-                    <label class="control-label">Title Tag</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Title Tag</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormInput("folder.titleTag", "class='input-xxlarge'")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Description Tag</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Description Tag</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormInput("folder.descriptionTag", "class='input-xxlarge'")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Keywords Tag</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Keywords Tag</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormInput("folder.keywordsTag", "class='input-xxlarge'")
                     </div>
                 </div>
@@ -130,12 +130,12 @@
                             <td>$!s.name()</td>
                             <td>$s.desc()</td>
                             <td>
-                                <a href="$s.backoffice()" role="button" class="btn btn-xs">
-                                    <i class="glyphicon glyphicon-pencil"></i></a>
+                                <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
+                                    <i class="glyphicon  glyphicon-pencil"></i></a>
 
                                 <a href="$urlResolver.deleteSection($folder, $s)" role="button"
                                    class="btn btn-xs btn-danger">
-                                    <i class="glyphicon glyphicon-trash icon-white"></i></a>
+                                    <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
                             </td>
                         </tr>
                     #end
@@ -146,18 +146,18 @@
             <div class="tab-pane" id="tab4">
 
 
-                <div class="control-group">
-                    <label class="control-label">Header</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Header</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormTextarea("folder.header", "rows='8' class='input-block-level htmleditor'")
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">Footer</label>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Footer</label>
 
-                    <div class="controls">
+                    <div class="col-lg-8">
                         #springFormTextarea("folder.footer", "rows='8' class='input-block-level htmleditor'")
                     </div>
                 </div>
@@ -169,8 +169,8 @@
 
 
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Save changes</button>
-        <a href="/backoffice/folder" class="btn btn-info"><i class="glyphicon glyphicon-arrow-left"></i> Return to list</a>
+        <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-save"></i> Save changes</button>
+        <a href="/backoffice/folder" class="btn btn-info"><i class="glyphicon  glyphicon-arrow-left"></i> Return to list</a>
     </div>
 
 </form>
@@ -183,7 +183,7 @@
             <option value="${class}">${classes.get($class)}</option>
         #end
     </select>
-    <button class="btn btn-success" type="submit"><i class="icon-white glyphicon glyphicon-plus-sign"></i> Add</button>
+    <button class="btn btn-success" type="submit"><i class="glyphicon  glyphicon-white glyphicon  glyphicon-plus-sign"></i> Add</button>
 </form>
 
 

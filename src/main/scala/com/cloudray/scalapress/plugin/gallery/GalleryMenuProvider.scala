@@ -10,9 +10,9 @@ import com.cloudray.scalapress.settings.MenuLink
 class GalleryMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Option[MenuItem] = {
     val item =
-      Menu("Galleries", Some("icon-picture"), Seq(
-        MenuLink("GalleryView", Some("icon-picture"), "/backoffice/gallery"),
-        MenuLink("Masonry", Some("icon-picture"), "/backoffice/plugin/gallery/masonry")
+      Menu("Galleries", Some("glyphicon glyphicon-picture"), Seq(
+        MenuLink("GalleryView", Some("glyphicon glyphicon-picture"), "/backoffice/gallery"),
+        MenuLink("Masonry", Some("glyphicon glyphicon-picture"), "/backoffice/plugin/gallery/masonry")
       ))
     Some(item)
   }

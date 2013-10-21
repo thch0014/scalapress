@@ -4,10 +4,10 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Search Results Markup</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Search Results Markup</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="markup" name="markup">
                 #foreach($option in $markupMap.keySet())
                     <option value="${option}"
@@ -22,7 +22,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn">Cancel</button>
+        <button type="button" class="btn btn-default">Cancel</button>
     </div>
 
 </form>

@@ -5,28 +5,28 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="control-group">
-        <label class="control-label">Name</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">Visible</label>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Visible</label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             #springFormCheckbox("section.visible")
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label">
-            <a href="/backoffice/form/$section.form.id" class="btn btn-xs"><i class="glyphicon glyphicon-pencil"></i></a> Form
+    <div class="form-group">
+        <label class="col-lg-2 control-label">
+            <a href="/backoffice/form/$section.form.id" class="btn btn-xs btn-default"><i class="glyphicon  glyphicon-pencil"></i></a> Form
         </label>
 
-        <div class="controls">
+        <div class="col-lg-8">
             <select id="form" name="form">
                 #foreach($option in $formsMap.keySet())
                     <option value="${option}"
@@ -41,7 +41,7 @@
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn">Return</a>
+        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
     </div>
 
 </form>

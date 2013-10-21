@@ -1,8 +1,8 @@
 <%@ val id: String %>
 <%@ val name: String %>
 
-<div class="control-group">
-    <div class="controls">
+<div class="form-group">
+    <div class="col-lg-8">
         <label class="checkbox">
             <input type="checkbox" name="${id}"/>${name}
         </label>
