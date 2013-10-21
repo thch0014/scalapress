@@ -15,13 +15,11 @@ class LoginControllerTest extends FlatSpec with MockitoSugar with OneInstancePer
   val context = new ScalapressContext
 
   val accountPluginDao = mock[AccountPluginDao]
+  val plugin = new AccountPlugin
   Mockito.when(accountPluginDao.get).thenReturn(plugin)
+  val req = mock[HttpServletRequest]
 
   val controller = new LoginController(themeService, context, accountPluginDao)
-
-  val plugin = new AccountPlugin
-
-  val req = mock[HttpServletRequest]
 
   "a login controller" should "show error message when credentials are incorrect" in {
     Mockito.when(req.getParameter("login_error")).thenReturn("1")

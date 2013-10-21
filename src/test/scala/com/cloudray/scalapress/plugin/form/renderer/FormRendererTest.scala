@@ -12,50 +12,41 @@ import com.cloudray.scalapress.obj.Obj
 /** @author Stephen Samuel */
 class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val field = new FormField
-    field.id = 124
-    field.name = "my field"
+  val field = new FormField
+  field.id = 124
+  field.name = "my field"
 
-    //    test("checkbox rendering happy path") {
-    //        assert(
-    //            "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"124\"></input>my field</label></div></div>" === FormRenderer
-    //              ._renderCheck(field).toString)
-    //    }
+  //    test("checkbox rendering happy path") {
+  //        assert(
+  //            "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"124\"></input>my field</label></div></div>" === FormRenderer
+  //              ._renderCheck(field).toString)
+  //    }
 
-    val form = new Form
-    form.id = 124
-    form.name = "sammyform"
+  val form = new Form
+  form.id = 124
+  form.name = "sammyform"
 
-    val context = new ScalapressContext
-    val sreq = ScalapressRequest(mock[HttpServletRequest], context)
+  val context = new ScalapressContext
+  val sreq = ScalapressRequest(mock[HttpServletRequest], context)
 
-    test("given an object page then the form action includes the object id") {
-        val o = new Obj
-        o.id = 124
-        val action = FormRenderer.action(form, sreq.withObject(o))
-        assert("/form/124?folderId=0&objId=124" === action)
-    }
+  test("given an object page then the form action includes the object id") {
+    val o = new Obj
+    o.id = 124
+    val action = FormRenderer.action(form, sreq.withObject(o))
+    assert("/form/124?folderId=0&objId=124" === action)
+  }
 
-    test("given a folder page then the form action includes the folder id") {
-        val f = new Folder
-        f.id = 23434
-        val action = FormRenderer.action(form, sreq.withFolder(f))
-        assert( "/form/124?folderId=23434&objId=0" === action)
-    }
+  test("given a folder page then the form action includes the folder id") {
+    val f = new Folder
+    f.id = 23434
+    val action = FormRenderer.action(form, sreq.withFolder(f))
+    assert("/form/124?folderId=23434&objId=0" === action)
+  }
 
-    test("options rendering happy path") {
-        assert(
-            Array(<option>coldplay</option>, <option>jethro tull</option>) === FormRenderer
-              ._renderOptions(Array("coldplay", "jethro tull")).toArray)
-    }
+  test("options rendering happy path") {
+    assert(
+      Array(<option>coldplay</option>, <option>jethro tull</option>) === FormRenderer
+        ._renderOptions(Array("coldplay", "jethro tull")).toArray)
+  }
 
-    test("selection rendering happy path") {
-        val req = mock[HttpServletRequest]
-        val context = new ScalapressContext
-        val sreq = ScalapressRequest(req, context)
-        field.options = "coldplay,jethro tull"
-        assert(
-            "<div class=\"control-group\"><label class=\"control-label\">my field </label><div class=\"controls\"><select name=\"124\"><option>coldplay,jethro tull</option></select><span class=\"help-inline\"></span></div></div>" === FormRenderer
-              ._renderSelect(field, sreq).toString)
-    }
 }
