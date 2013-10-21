@@ -1,6 +1,9 @@
 #parse("/admin/header.vm")
 
-<h3>Installation</h3>
+<div class="page-header">
+    <h2>General Settings</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
@@ -8,7 +11,7 @@
         <label class="col-lg-2 control-label">Offline</label>
 
         <div class="col-lg-8">
-          #springFormCheckbox("settings.offline")
+          #springFormCheckbox("settings.offline", "")
         </div>
     </div>
 
@@ -16,7 +19,7 @@
         <label class="col-lg-2 control-label">Offline Message</label>
 
         <div class="col-lg-8">
-          #springFormInput("settings.offlineMessage")
+          #springFormInput("settings.offlineMessage", "class='form-control'")
         </div>
     </div>
 
@@ -24,7 +27,7 @@
         <label class="col-lg-2 control-label">Max image width</label>
 
         <div class="col-lg-8">
-          #springFormInput("settings.maxImageWidth")
+          #springFormInput("settings.maxImageWidth", "class='form-control'")
         </div>
     </div>
 
@@ -32,13 +35,14 @@
         <label class="col-lg-2 control-label">Max image height</label>
 
         <div class="col-lg-8">
-          #springFormInput("settings.maxImageHeight")
+          #springFormInput("settings.maxImageHeight", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>

@@ -10,7 +10,7 @@
         <label class="col-lg-2 control-label">Default page size</label>
 
         <div class="col-lg-8">
-            #springFormInput("settings.pageSize", "class='input-sm'")
+          #springFormInput("settings.pageSize", "class='form-control'")
         </div>
     </div>
 
@@ -18,14 +18,14 @@
         <label class="col-lg-2 control-label">Default Sort</label>
 
         <div class="col-lg-8">
-            <select id="sort" name="sort">
-                #foreach($option in $sortMap.keySet())
-                    <option value="${option}"
-                        #if("$!section.sort" == "$option")
-                            selected="selected"
-                        #end>
-                        ${sortMap.get($option)}</option>
-                #end
+            <select id="sort" name="sort" class="form-control">
+              #foreach($option in $sortMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.sort" == "$option")
+                          selected="selected"
+                    #end>
+                    ${sortMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -33,7 +33,7 @@
         <label class="col-lg-2 control-label">Header</label>
 
         <div class="col-lg-8">
-            #springFormTextarea("settings.header", "rows='8' class='input-block-level htmleditor'")
+          #springFormTextarea("settings.header", "rows='8' class='form-control htmleditor'")
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         <label class="col-lg-2 control-label">Footer</label>
 
         <div class="col-lg-8">
-            #springFormTextarea("settings.footer", "rows='8' class='input-block-level htmleditor'")
+          #springFormTextarea("settings.footer", "rows='8' class='form-control htmleditor'")
         </div>
     </div>
 
@@ -49,20 +49,23 @@
         <label class="col-lg-2 control-label">Subfolder Markup</label>
 
         <div class="col-lg-8">
-            <select id="subfolderMarkup" name="subfolderMarkup">
-                #foreach($option in $markupMap.keySet())
-                    <option value="${option}"
-                        #if("$!settings.subfolderMarkup.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${markupMap.get($option)}</option>
-                #end
+            <select id="subfolderMarkup" name="subfolderMarkup" class="form-control">
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!settings.subfolderMarkup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${markupMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>

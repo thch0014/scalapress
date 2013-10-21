@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Installation</h3>
+<div class="page-header">
+    <h2>Installation</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -8,7 +10,7 @@
         <label class="col-lg-2 control-label">Server</label>
 
         <div class="col-lg-8">
-            $request.localName
+          $request.localName
         </div>
     </div>
 
@@ -16,7 +18,7 @@
         <label class="col-lg-2 control-label">Cdn</label>
 
         <div class="col-lg-8">
-            $assetStore.cdn
+          $assetStore.cdn
         </div>
     </div>
 
@@ -24,7 +26,7 @@
         <label class="col-lg-2 control-label">Domain</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.domain")
+          #springFormInput("installation.domain", "class='form-control'")
         </div>
     </div>
 
@@ -32,7 +34,7 @@
         <label class="col-lg-2 control-label">Admin Email</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.adminEmail")
+          #springFormInput("installation.adminEmail", "class='form-control'")
         </div>
     </div>
 
@@ -40,7 +42,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.name")
+          #springFormInput("installation.name", "class='form-control'")
         </div>
     </div>
 
@@ -48,7 +50,7 @@
         <label class="col-lg-2 control-label">Address</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.address")
+          #springFormInput("installation.address", "class='form-control'")
         </div>
     </div>
 
@@ -56,7 +58,7 @@
         <label class="col-lg-2 control-label">Postcode</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.postcode")
+          #springFormInput("installation.postcode", "class='form-control'")
         </div>
     </div>
 
@@ -64,7 +66,7 @@
         <label class="col-lg-2 control-label">Country</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.country")
+          #springFormInput("installation.country", "class='form-control'")
         </div>
     </div>
 
@@ -72,7 +74,7 @@
         <label class="col-lg-2 control-label">Email</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.email")
+          #springFormInput("installation.email", "class='form-control'")
         </div>
     </div>
 
@@ -80,7 +82,7 @@
         <label class="col-lg-2 control-label">Telephone</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.telephone")
+          #springFormInput("installation.telephone", "class='form-control'")
         </div>
     </div>
 
@@ -88,7 +90,7 @@
         <label class="col-lg-2 control-label">Vat Number</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.vatNumber")
+          #springFormInput("installation.vatNumber", "class='form-control'")
         </div>
     </div>
 
@@ -96,14 +98,14 @@
         <label class="col-lg-2 control-label">Company Number</label>
 
         <div class="col-lg-8">
-            #springFormInput("installation.companyNumber")
+          #springFormInput("installation.companyNumber", "class='form-control'")
         </div>
     </div>
 
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>
