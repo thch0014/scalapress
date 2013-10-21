@@ -9,7 +9,9 @@ import scala.beans.BeanProperty
 @Table(name = "boxes_custom")
 class HtmlWidget extends Widget {
 
-  @BeanProperty var simpleEditor: Boolean = false
+  @BeanProperty
+  var simpleEditor: Boolean = false
+
   override def backoffice = "/backoffice/widget/html/" + id
 
   override def render(req: ScalapressRequest): Option[String] = {

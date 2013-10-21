@@ -40,7 +40,9 @@ class ScriptTag extends ScalapressTag with TagBuilder {
     "/static/js/jquery.eventCalendar.min.js",
     "/static/js/jquery.galleriffic.js",
     "/static/js/jquery.opacityrollover.js",
-    "/static/js/masonry.pkgd.min.js")
+    "/static/js/masonry.pkgd.min.js",
+    "/static/js/ds.js",
+    "/static/js/d3.layout.cloud.js")
 
   def render(request: ScalapressRequest, params: Map[String, String]) = {
     val string = sources.map(src => <script src={src} type="text/javascript"></script>).mkString("\n")
