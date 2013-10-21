@@ -6,35 +6,13 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.name")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("widget.visible")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Location</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.location")
-        </div>
-    </div>
+  #parse("/admin/widget/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Depth</label>
 
         <div class="col-lg-8">
-            #springFormInput("widget.depth")
+          #springFormInput("widget.depth", "class='form-control'")
         </div>
     </div>
 
@@ -42,14 +20,14 @@
         <label class="col-lg-2 control-label">Start folder</label>
 
         <div class="col-lg-8">
-            <select id="start" name="start" class="input-xxlarge">
-                #foreach($option in $foldersMap.keySet())
-                    <option value="${option}"
-                        #if("$widget.start.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${foldersMap.get($option)}</option>
-                #end
+            <select id="start" name="start" class="form-control">
+              #foreach($option in $foldersMap.keySet())
+                  <option value="${option}"
+                    #if("$widget.start.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${foldersMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -58,7 +36,7 @@
         <label class="col-lg-2 control-label">Include Home Page</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("widget.includeHome")
+          #springFormCheckbox("widget.includeHome")
         </div>
     </div>
 
@@ -66,7 +44,7 @@
         <label class="col-lg-2 control-label">Exclude Current Folder</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("widget.excludeCurrent")
+          #springFormCheckbox("widget.excludeCurrent")
         </div>
     </div>
 
@@ -74,114 +52,11 @@
         <label class="col-lg-2 control-label">Exclusions</label>
 
         <div class="col-lg-8">
-            #springFormTextarea("widget.exclusions", "class='input-lg' rows='12'")
+          #springFormTextarea("widget.exclusions", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container</label>
-
-        <div class="col-lg-8">
-            #springFormSingleSelect("widget.container", $widgetContainerMap)
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container Class</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.containerClass")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Container Id</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.containerId")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Caption</label>
-
-        <div class="col-lg-8">
-            #springFormInput("widget.caption")
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Restricted</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("widget.restricted")
-        </div>
-    </div>
-
-    #if ($widget.restricted)
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On All Folders</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnAllFolders")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Included folders</label>
-
-            <div class="col-lg-8">
-                #springFormInput("widget.includeFolders", "class='input-xlarge'")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Excluded folders</label>
-
-            <div class="col-lg-8">
-                #springFormInput("widget.excludeFolders", "class='input-xlarge'")
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On All Objects</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnAllObjects")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Home</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnHome")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Others</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnOthers")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Display On Search Results</label>
-
-            <div class="col-lg-8">
-                #springFormCheckbox("widget.displayOnSearchResults")
-            </div>
-        </div>
-    #end
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  #parse("/admin/widget/buttons.vm")
 
 </form>
 
