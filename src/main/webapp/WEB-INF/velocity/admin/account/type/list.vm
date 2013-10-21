@@ -15,9 +15,9 @@
           <td>$accountType.id</td>
           <td>$accountType.name</td>
           <td>
-              <a href="/backoffice/accounttype/$accountType.id" role="button" class="btn btn-mini">
+              <a href="/backoffice/accounttype/$accountType.id" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
-              <a href="/backoffice/accounttype/$accountType.id/delete" role="button" class="btn btn-danger btn-mini">
+              <a href="/backoffice/accounttype/$accountType.id/delete" role="button" class="btn btn-danger btn-xs">
                   <i class="icon-trash"></i></a>
           </td>
       </tr>

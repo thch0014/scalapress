@@ -37,12 +37,12 @@
       #foreach ($attachment in $section.attachments())
           <tr>
               <td>$attachment.assetKey()
-                  <a class="btn btn-mini" href="/asset/$attachment.assetKey()">
+                  <a class="btn btn-xs" href="/asset/$attachment.assetKey()">
                       <i class="icon-download-alt icon-white"></i> Download</a>
               </td>
               <td><textarea name="desc_$attachment.assetKey()" cols="80" class="input-xlarge"
                             placeholder="enter description of attachment">$!attachment.description()</textarea></td>
-              <td><a class="btn btn-danger btn-mini"
+              <td><a class="btn btn-danger btn-xs"
                      href="/backoffice/plugin/attachment/section/$section.id/delete/$attachment.assetKey()">
                   <i class="icon-trash icon-white"></i> Remove</a>
               </td>

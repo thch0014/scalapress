@@ -84,7 +84,7 @@
           <label class="control-label">Price</label>
 
           <div class="controls">
-            #springFormInput("form.sellPrice", "class='input-small'")
+            #springFormInput("form.sellPrice", "class='input-sm'")
           </div>
       </div>
 
@@ -92,7 +92,7 @@
           <label class="control-label">Cost Price</label>
 
           <div class="controls">
-            #springFormInput("form.costPrice", "class='input-small'")
+            #springFormInput("form.costPrice", "class='input-sm'")
           </div>
       </div>
 
@@ -102,7 +102,7 @@
             <label class="control-label">Vat Rate</label>
 
             <div class="controls">
-              #springFormInput("form.o.vatRate", "class='input-small'")
+              #springFormInput("form.o.vatRate", "class='input-sm'")
             </div>
         </div>
 
@@ -112,7 +112,7 @@
           <label class="control-label">RRP</label>
 
           <div class="controls">
-            #springFormInput("form.rrp", "class='input-small'")
+            #springFormInput("form.rrp", "class='input-sm'")
           </div>
       </div>
 
@@ -120,7 +120,7 @@
           <label class="control-label">Stock Level</label>
 
           <div class="controls">
-            #springFormInput("form.o.stock", "class='input-small'")
+            #springFormInput("form.o.stock", "class='input-sm'")
           </div>
       </div>
 
@@ -156,7 +156,7 @@
           <label class="control-label">Listing Expiry</label>
 
           <div class="controls">
-            #springFormInput("form.o.expiry", "class='input-small'")
+            #springFormInput("form.o.expiry", "class='input-sm'")
           </div>
       </div>
 
@@ -200,7 +200,7 @@
 
       <div class="control-group">
           <label class="control-label">$a.name ($a.id)
-              <a href="/backoffice/attribute/$a.id" class="btn btn-mini">
+              <a href="/backoffice/attribute/$a.id" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
           </label>
 
@@ -215,7 +215,7 @@
             #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
               #foreach ($value in $values)
                   <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
-                         class="input-small"/><br/>
+                         class="input-sm"/><br/>
               #end
 
             #elseif ($a.attributeType == "TextArea")
@@ -362,11 +362,11 @@
               <td>$!s.name()</td>
               <td>$s.desc()</td>
               <td>
-                  <a href="$s.backoffice()" role="button" class="btn btn-mini">
+                  <a href="$s.backoffice()" role="button" class="btn btn-xs">
                       <i class="icon-pencil"></i></a>
 
                   <a href="/backoffice/obj/$form.o.id/section/$s.id/delete" role="button"
-                     class="btn btn-mini btn-danger">
+                     class="btn btn-xs btn-danger">
                       <i class="icon-trash icon-white"></i></a>
               </td>
           </tr>
@@ -393,7 +393,7 @@
               <td>$a.objectType.name</td>
               <td><a href="/backoffice/obj/$a.id">$a.name</a></td>
               <td><a href="/backoffice/obj/$form.o.id/association/$a.id/delete" role="button"
-                     class="btn btn-mini btn-danger">
+                     class="btn btn-xs btn-danger">
                   <i class="icon-trash icon-white"></i></a>
               </td>
           </tr>
@@ -432,7 +432,7 @@
             }
         })
     </script>
-    <button type="submit" class="btn btn-small">Add Association</button>
+    <button type="submit" class="btn btn-sm">Add Association</button>
 
 </div>
 </div>

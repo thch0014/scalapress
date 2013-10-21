@@ -3,7 +3,7 @@
 
 <h3>Markup</h3>
 
-<a href="/backoffice/markup/create" role="button" class="btn btn-small"> <i class="icon-plus"></i> Create New markup</a>
+<a href="/backoffice/markup/create" role="button" class="btn btn-sm"> <i class="icon-plus"></i> Create New markup</a>
 
 
 <table class="table">
@@ -16,7 +16,7 @@
         <tr>
             <td>$m.id</td>
             <td>$!m.name</td>
-            <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
     #end

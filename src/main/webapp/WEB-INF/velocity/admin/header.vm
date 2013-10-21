@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    #set($springHtmlEscape = true)
+  #set($springHtmlEscape = true)
     <title>
         Backoffice - $site.name
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8"/>
 
-    <link rel="stylesheet" href="netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css">
     <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
     <link rel="stylesheet" href="/static/css/scalapress.css">
 
     <script src="/static/js/wysihtml5-0.3.0.js"></script>
-    <script src="ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -66,15 +66,15 @@
 </head>
 <body>
 
-    #parse("/admin/navbar.vm")
+  #parse("/admin/navbar.vm")
 
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span2">
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
 
             <br/>
-            #parse("/admin/navlist.vm")
+          #parse("/admin/sidebar.vm")
 
         </div>
-        <div class="span10">
+        <div class="col-md-10">
 

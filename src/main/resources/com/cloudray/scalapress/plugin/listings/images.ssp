@@ -35,7 +35,7 @@
           #for (key <- images)
             <tr>
                 <td><img src="/images/${key}?w=220&h=180"></td>
-                <td><a href="/listing/image/remove?key=${key}" role="button" class="btn btn-small btn-danger">Remove</a>
+                <td><a href="/listing/image/remove?key=${key}" role="button" class="btn btn-sm btn-danger">Remove</a>
                 </td>
             </tr>
         #end

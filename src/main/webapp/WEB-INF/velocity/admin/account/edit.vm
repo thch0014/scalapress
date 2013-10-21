@@ -68,7 +68,7 @@
           <td>$order.status()</td>
           <td>$order.total()</td>
           <td>
-              <a href="/backoffice/order/$order.id" role="button" class="btn btn-mini">
+              <a href="/backoffice/order/$order.id" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
           </td>
       </tr>

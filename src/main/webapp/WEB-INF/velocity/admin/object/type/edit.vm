@@ -121,7 +121,7 @@
           <td>$a.name</td>
           <td>$!a.attributeType</td>
           <td>
-              <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-mini">
+              <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
           </td>
       </tr>
@@ -164,11 +164,11 @@
           <td>$!s.name()</td>
           <td>$s.desc()</td>
           <td>
-              <a href="$s.backoffice()" role="button" class="btn btn-mini">
+              <a href="$s.backoffice()" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
 
               <a href="/backoffice/type/$type.id/section/$s.id/delete" role="button"
-                 class="btn btn-mini btn-danger">
+                 class="btn btn-xs btn-danger">
                   <i class="icon-trash icon-white"></i></a>
           </td>
       </tr>

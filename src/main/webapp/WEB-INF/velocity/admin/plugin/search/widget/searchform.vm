@@ -12,7 +12,7 @@
         <label class="control-label">Search Form</label>
 
         <div class="controls">
-            Edit Embedded Search Form <a href="/backoffice/searchform/$widget.searchForm.id" class="btn btn-mini">
+            Edit Embedded Search Form <a href="/backoffice/searchform/$widget.searchForm.id" class="btn btn-xs">
             <i class="icon-pencil"></i></a>
         </div>
     </div>

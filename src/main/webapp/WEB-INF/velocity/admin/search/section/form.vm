@@ -25,7 +25,7 @@
         <label class="control-label">Search Form</label>
 
         <div class="controls">
-            Edit Search Form <a href="/backoffice/searchform/$section.searchForm.id" class="btn btn-mini">
+            Edit Search Form <a href="/backoffice/searchform/$section.searchForm.id" class="btn btn-xs">
             <i class="icon-pencil"></i></a>
         </div>
     </div>

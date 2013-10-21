@@ -30,7 +30,7 @@ object ListingsRenderer {
           {expiryString}
         </td>
         <td>
-          <a href={"/listing/" + obj.id} class="btn btn-mini">Edit</a>
+          <a href={"/listing/" + obj.id} class="btn btn-xs">Edit</a>
         </td>
       </tr>
     })

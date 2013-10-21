@@ -4,7 +4,7 @@
 <h3>Forms</h3>
 
 
-<a href="/backoffice/form/create" role="button" class="btn"> <i class="icon-plus"></i> Create Form</a>
+<a href="/backoffice/form/create" role="button" class="btn btn-primary"> <i class="icon-plus"></i> Create Form</a>
 
 
 <table class="table table-condensed table-hover">
@@ -13,14 +13,14 @@
         <th>Name</th>
         <th></th>
     </tr>
-    #foreach ($f in $forms)
-        <tr>
-            <td>$f.id</td>
-            <td>$f.name</td>
-            <td><a href="$urlResolver.editForm($f)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
-            </a></td>
-        </tr>
-    #end
+  #foreach ($f in $forms)
+      <tr>
+          <td>$f.id</td>
+          <td>$f.name</td>
+          <td><a href="$urlResolver.editForm($f)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
+          </a></td>
+      </tr>
+  #end
 </table>
 
 

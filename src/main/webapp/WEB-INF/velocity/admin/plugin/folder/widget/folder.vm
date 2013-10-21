@@ -74,7 +74,7 @@
         <label class="control-label">Exclusions</label>
 
         <div class="controls">
-            #springFormTextarea("widget.exclusions", "class='input-large' rows='12'")
+            #springFormTextarea("widget.exclusions", "class='input-lg' rows='12'")
         </div>
     </div>
 

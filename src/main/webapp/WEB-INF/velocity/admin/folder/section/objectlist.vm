@@ -74,7 +74,7 @@
         <label class="control-label">Page Size</label>
 
         <div class="controls">
-            #springFormInput("section.pageSize", "class='input-small'")
+            #springFormInput("section.pageSize", "class='input-sm'")
         </div>
     </div>
 

@@ -12,7 +12,7 @@
     <div class="controls">
         <span class="input-xlarge uneditable-input">$order.account.name</span>
         <a href="mailto:$order.account.email" class="input-xlarge uneditable-input">$!order.account.email</a>
-        <a href="/backoffice/account/$order.account.id" class="btn btn-small">Edit Account</a>
+        <a href="/backoffice/account/$order.account.id" class="btn btn-sm">Edit Account</a>
     </div>
 </div>
 
@@ -21,7 +21,7 @@
 
     <div class="controls">
         <span class="uneditable-input">$!o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</span>
-        <a href="/backoffice/invoice/$order.id" class="btn btn-small" role="button">Print Invoice</a>
+        <a href="/backoffice/invoice/$order.id" class="btn btn-sm" role="button">Print Invoice</a>
     </div>
 </div>
 
@@ -96,7 +96,7 @@
             <label class="control-label">City</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.deliveryAddress.town</span>
+                <span class="input-lg uneditable-input">$!order.deliveryAddress.town</span>
             </div>
         </div>
         <div class="control-group">
@@ -110,14 +110,14 @@
             <label class="control-label">Country</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.deliveryAddress.country</span>
+                <span class="input-lg uneditable-input">$!order.deliveryAddress.country</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Telephone</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.deliveryAddress.telephone</span>
+                <span class="input-lg uneditable-input">$!order.deliveryAddress.telephone</span>
             </div>
         </div>
         <div class="control-group">
@@ -175,7 +175,7 @@
             <label class="control-label">City</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.billingAddress.town</span>
+                <span class="input-lg uneditable-input">$!order.billingAddress.town</span>
             </div>
         </div>
         <div class="control-group">
@@ -189,14 +189,14 @@
             <label class="control-label">Country</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.billingAddress.country</span>
+                <span class="input-lg uneditable-input">$!order.billingAddress.country</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Telephone</label>
 
             <div class="controls">
-                <span class="input-large uneditable-input">$!order.billingAddress.telephone</span>
+                <span class="input-lg uneditable-input">$!order.billingAddress.telephone</span>
             </div>
         </div>
         <div class="control-group">
@@ -209,7 +209,7 @@
         <div class="control-group">
             <div class="controls">
                 <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=billing"
-                   role="button" class="btn btn-small">Create
+                   role="button" class="btn btn-sm">Create
                     Address</a>
             </div>
         </div>
@@ -241,7 +241,7 @@
             <td>$number.number($l.totalVat()) @ $l.vatRate%</td>
             <td>$number.number($l.totalIncVat())</td>
             <td>
-                <a class="btn btn-small" href="/backoffice/order/$order.id/line/$l.id/remove">
+                <a class="btn btn-sm" href="/backoffice/order/$order.id/line/$l.id/remove">
                     <i class="icon-trash"></i></a>
             </td>
         </tr>
@@ -308,7 +308,7 @@
                     }
                 })
             </script>
-            <button type="submit" class="btn btn-inverse btn-small">Add Item</button>
+            <button type="submit" class="btn btn-inverse btn-sm">Add Item</button>
         </form>
     </div>
 </div>
@@ -316,8 +316,8 @@
     <div class="span12">
         <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
             Description: <input type="text" id="desc" name="desc" value="" class="input-xlarge"/>
-            Price: <input type="text" id="price" name="price" value="0" class="input-small"/>
-            <button type="submit" class="btn btn-inverse btn-small">Add Line</button>
+            Price: <input type="text" id="price" name="price" value="0" class="input-sm"/>
+            <button type="submit" class="btn btn-inverse btn-sm">Add Line</button>
         </form>
     </div>
 </div>
@@ -359,7 +359,7 @@
 
 <form method="POST" action="/backoffice/order/$order.id/comment/add" class="pull-right">
     <textarea name="message" class="input-xxlarge"></textarea>
-    <button type="submit" class="btn btn-small">Add Comment</button>
+    <button type="submit" class="btn btn-sm">Add Comment</button>
 </form>
 
 

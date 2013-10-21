@@ -17,7 +17,7 @@
           <td>$d.id</td>
           <td>$d.objectType.name</td>
           <td>$d.name</td>
-          <td><a href="/backoffice/plugin/variations/dimensions/$d.id" role="button" class="btn btn-mini">
+          <td><a href="/backoffice/plugin/variations/dimensions/$d.id" role="button" class="btn btn-xs">
               <i class="icon-pencil"></i>
           </a></td>
       </tr>

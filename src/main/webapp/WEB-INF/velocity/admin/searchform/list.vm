@@ -17,13 +17,13 @@
             <td>$!f.name</td>
             <td>$f.fields.size()</td>
             <td>
-                <a href="$urlResolver.editSearchForm($f)" role="button" class="btn btn-mini">
+                <a href="$urlResolver.editSearchForm($f)" role="button" class="btn btn-xs">
                     <i class="icon-pencil"></i> </a></td>
         </tr>
     #end
 </table>
 
-<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create Form</a>
+<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create Form</a>
 
 
 #parse("/admin/footer.vm")

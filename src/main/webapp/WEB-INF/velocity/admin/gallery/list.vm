@@ -16,10 +16,10 @@
             <td>$g.name</td>
             <td>$g.images.size()</td>
             <td>
-                <a href="$urlResolver.galleryEdit($g)" role="button" class="btn btn-mini">
+                <a href="$urlResolver.galleryEdit($g)" role="button" class="btn btn-xs">
                     <i class="icon-pencil"></i></a>
 
-                <a href="/backoffice/gallery/$g.id/delete" role="button" class="btn btn-mini btn-danger">
+                <a href="/backoffice/gallery/$g.id/delete" role="button" class="btn btn-xs btn-danger">
                     <i class="icon-trash icon-white"></i></a>
 
             </td>
@@ -27,6 +27,6 @@
     #end
 </table>
 
-<a href="$urlResolver.galleryCreate()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create</a>
+<a href="$urlResolver.galleryCreate()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create</a>
 
 #parse("/admin/footer.vm")

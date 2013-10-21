@@ -166,7 +166,7 @@ object ListingFieldsRenderer {
     attributes.toSeq.sortBy(_.position).map(attr => {
       val value = attributeValues.find(av => av.attribute.id == attr.id).map(_.value)
       attr.attributeType match {
-        case AttributeType.Postcode | AttributeType.Numerical => _text(attr, "input-small", value)
+        case AttributeType.Postcode | AttributeType.Numerical => _text(attr, "input-sm", value)
         case AttributeType.Boolean => _yesno(attr)
         case AttributeType.Selection if attr.multipleValues => _multipleSelection(attr)
         case AttributeType.Selection => _singleSelection(attr)

@@ -49,14 +49,14 @@
         <tr>
             <td>$p.id</td>
             <td>$p.name</td>
-            <td><a href="/backoffice/plugin/listings/package/$p.id" role="button" class="btn btn-mini">
+            <td><a href="/backoffice/plugin/listings/package/$p.id" role="button" class="btn btn-xs">
                 <i class="icon-pencil"></i> </a>
             </td>
         </tr>
     #end
 </table>
 
-<a href="/backoffice/plugin/listings/package/create" role="button" class="btn btn-mini"> <i class="icon-plus"></i>
+<a href="/backoffice/plugin/listings/package/create" role="button" class="btn btn-xs"> <i class="icon-plus"></i>
     Create
     Package</a>
 

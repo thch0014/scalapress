@@ -16,14 +16,14 @@
         #if ($s.folder)
             <td>
               $s.folder.name
-                <a href="/backoffice/folder/$s.folder.id" role="button" class="btn btn-mini">
+                <a href="/backoffice/folder/$s.folder.id" role="button" class="btn btn-xs">
                     <i class="icon-folder-close"></i>
                 </a>
             </td>
         #end
           <td>
             $s.name
-              <a href="/backoffice/plugin/gallery/masonry/section/$s.id" role="button" class="btn btn-mini">
+              <a href="/backoffice/plugin/gallery/masonry/section/$s.id" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i>
               </a>
           </td>

@@ -40,7 +40,7 @@
           <td>$theme.id</td>
           <td>$theme.name</td>
           <td>$theme.default</td>
-          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+          <td><a href="$urlResolver.themeEdit($theme)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
           </a></td>
       </tr>
   #end

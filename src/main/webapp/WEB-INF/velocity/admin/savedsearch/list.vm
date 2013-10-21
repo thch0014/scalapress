@@ -15,15 +15,15 @@
             <td>$s.id</td>
             <td>$!s.name</td>
             <td>
-                <a href="/backoffice/savedsearch/$s.id" class="btn btn-mini">
+                <a href="/backoffice/savedsearch/$s.id" class="btn btn-xs">
                     <i class="icon-pencil"></i> </a>
-                <a href="/search/saved/$s.id" class="btn btn-mini">
+                <a href="/search/saved/$s.id" class="btn btn-xs">
                     <i class="icon-eye-open"></i> </a></td>
         </tr>
     #end
 </table>
 
-<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create Form</a>
+<a href="$urlResolver.createSearchForm()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create Form</a>
 
 
 #parse("/admin/footer.vm")

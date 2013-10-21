@@ -11,7 +11,7 @@
         <label class="control-label">Postcode</label>
 
         <div class="controls">
-            #springFormInput("section.postcode", "class='input-small'")
+            #springFormInput("section.postcode", "class='input-sm'")
         </div>
     </div>
 

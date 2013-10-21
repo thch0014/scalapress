@@ -2,8 +2,8 @@
 
 <h1>&nbsp;</h1>
 
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
         <div class="well">
             <h1>
                 Welcome to Scalapress
@@ -13,73 +13,78 @@
                 We've assembled some links to help you get started
             </p>
 
-            <div class="row-fluid">
-                <div class="span4">
+            <div class="row">
+                <div class="col-md-3">
                     <h4>
                         First steps
                     </h4>
 
                     <p>
-                        <i class="icon-home"></i> &nbsp; <a href="/backoffice/folder/1">Edit your front page</a>
+                        <i class="glyphicon glyphicon-home"></i>
+                        <a href="/backoffice/folder/1">Edit your front page</a>
                     </p>
 
                     <p>
-                        <i class="icon-plus-sign"></i> &nbsp; <a href="/backoffice/folder/create">Add a new page</a>
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        <a href="/backoffice/folder/create">Add a new page</a>
                     </p>
 
                     <p>
-                        <i class="icon-cog"></i> &nbsp; <a href="/backoffice/settings/installation">Configure site
-                        details</a>
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <a href="/backoffice/settings/installation">Configure site details</a>
                     </p>
 
                     <p>
-                        <i class="icon-eye-open"></i> &nbsp; <a href="/">View your site</a>
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <a href="/">View your site</a>
                     </p>
 
                 </div>
-                <div class="span4">
+                <div class="col-md-3">
                     <h4>
                         More actions
                     </h4>
 
                     <p>
-                        <i class="icon-list-alt"></i> &nbsp; <a href="/backoffice/submission">View form submissions</a>
+                        <i class="glyphicon glyphicon-check"></i>
+                        <a href="/backoffice/submission">View form submissions</a>
                     </p>
 
                     <p>
-                        <i class="icon-tasks"></i> &nbsp; <a href="/backoffice/widget">Manage widgets</a>
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                        <a href="/backoffice/widget">Manage widgets</a>
                     </p>
 
                     <p>
-                        <i class="icon-search"></i> &nbsp; <a
-                            href="http://www.google.com/search?q=site:$installation.domain">Show
-                        Google backlinks</a>
+                        <i class="glyphicon glyphicon-search"></i>
+                        <a href="http://www.google.com/search?q=site:$installation.domain">Show Google backlinks</a>
                     </p>
 
                     <p>
-                        <i class="icon-user"></i> &nbsp; <a href="/backoffice/user/$user.id">Change your password</a>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <a href="/backoffice/user/$user.id">Change your password</a>
                     </p>
 
                     <p>
-                        <span class="badge badge-info">$indexed</span> &nbsp; Indexed objects
+                        <span class="label label-default">$indexed</span> Indexed objects
                     </p>
 
                     <p>
-                        <span class="badge badge-info">$folderCount</span> &nbsp; Folders
+                        <span class="label label-default">$folderCount</span> Folders
                     </p>
 
                 </div>
-                <div class="span4">
+                <div class="col-md-6">
                     <h4>
                         Recently created
                     </h4>
 
                   #foreach ($recent in $recentObjects)
                       <p>
-                          <span class="label"
+                          <span class="label label-primary"
                                 style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">$recent.id()</span>
-                          &nbsp; <a
-                              href="/backoffice/object/$recent.id()">$recent.name()</a>
+                          &nbsp; <a style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden"
+                                    href="/backoffice/object/$recent.id()">$recent.name()</a>
                       </p>
                   #end
                 </div>

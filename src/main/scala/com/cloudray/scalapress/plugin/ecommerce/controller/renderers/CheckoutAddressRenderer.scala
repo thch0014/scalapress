@@ -41,7 +41,7 @@ object CheckoutAddressRenderer {
                 errors)}<div class="control-group">
                 <label class="control-label" for="country">Country</label>
                 <div class="controls">
-                    <select name="country" class="input-large">
+                    <select name="country" class="input-lg">
                         {CountrySelectOptions.render}
                     </select>
                 </div>
@@ -72,7 +72,7 @@ object CheckoutAddressRenderer {
                     "Postcode", basket.deliveryAddress.postcode, errors)}<div class="control-group">
                     <label class="control-label" for="country">Country</label>
                     <div class="controls">
-                        <select name="deliveryAddress.country" class="input-large">
+                        <select name="deliveryAddress.country" class="input-lg">
                             {CountrySelectOptions.render}
                         </select>
                     </div>

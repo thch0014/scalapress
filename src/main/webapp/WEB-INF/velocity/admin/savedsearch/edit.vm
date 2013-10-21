@@ -57,7 +57,7 @@
     <label class="control-label">Search in folder</label>
 
     <div class="controls">
-      #springFormInput("search.searchFolders", "class='input-small'")
+      #springFormInput("search.searchFolders", "class='input-sm'")
     </div>
 </div>
 
@@ -139,7 +139,7 @@
         #elseif ($a.attributeType == "Postcode" || $a.attributeType == "Numerical")
           #foreach ($value in $values)
               <input type="text" name="attributeValues$a.id" value="$esc.html($value)"
-                     class="input-small"/><br/>
+                     class="input-sm"/><br/>
           #end
 
         #elseif ($a.attributeType == "Date" ||$a.attributeType == "DateTime")

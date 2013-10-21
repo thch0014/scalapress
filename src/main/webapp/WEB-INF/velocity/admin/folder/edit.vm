@@ -130,11 +130,11 @@
                             <td>$!s.name()</td>
                             <td>$s.desc()</td>
                             <td>
-                                <a href="$s.backoffice()" role="button" class="btn btn-mini">
+                                <a href="$s.backoffice()" role="button" class="btn btn-xs">
                                     <i class="icon-pencil"></i></a>
 
                                 <a href="$urlResolver.deleteSection($folder, $s)" role="button"
-                                   class="btn btn-mini btn-danger">
+                                   class="btn btn-xs btn-danger">
                                     <i class="icon-trash icon-white"></i></a>
                             </td>
                         </tr>

@@ -83,8 +83,8 @@ object FormRenderer {
 
     val cssClass = "control-group" + (if (error.isDefined) " error" else "")
     val css = Option(field.size).getOrElse(Some(FieldSize.Medium)) match {
-      case FieldSize.Small => "input-small"
-      case FieldSize.Large => "input-large"
+      case FieldSize.Small => "input-sm"
+      case FieldSize.Large => "input-lg"
       case FieldSize.XLarge => "input-xlarge"
       case FieldSize.XXLarge => "input-xxlarge"
       case _ => "input-medium"

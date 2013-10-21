@@ -24,9 +24,9 @@
                 #end
           </td>
           <td>
-              <a href="$feed.backoffice()" role="button" class="btn btn-mini">
+              <a href="$feed.backoffice()" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i> </a>
-              <a href="$feed.runUrl()" role="button" class="btn btn-mini">
+              <a href="$feed.runUrl()" role="button" class="btn btn-xs">
                   <i class="icon-play"></i> </a></td>
       </tr>
   #end

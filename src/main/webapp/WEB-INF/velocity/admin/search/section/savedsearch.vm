@@ -41,7 +41,7 @@
         <label class="control-label">Search</label>
 
         <div class="controls">
-            Edit Saved Search <a href="/backoffice/savedsearch/$section.search.id" class="btn btn-mini">
+            Edit Saved Search <a href="/backoffice/savedsearch/$section.search.id" class="btn btn-xs">
             <i class="icon-pencil"></i></a>
         </div>
     </div>

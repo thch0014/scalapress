@@ -42,9 +42,9 @@
             <td>$f.id</td>
             <td>$f.fullName()</td>
             <td>
-                <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-mini"> <i
+                <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-xs"> <i
                         class="icon-pencil"></i></a>
-                <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-mini"> <i
+                <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-xs"> <i
                         class="icon-eye-open"></i></a>
             </td>
         </tr>

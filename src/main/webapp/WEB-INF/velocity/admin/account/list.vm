@@ -73,7 +73,7 @@
           <td>$account.status</td>
           <td>$!datetool.format($account.dateCreated)</td>
           <td>
-              <a href="/backoffice/account/$account.id" role="button" class="btn btn-mini">
+              <a href="/backoffice/account/$account.id" role="button" class="btn btn-xs">
                   <i class="icon-pencil"></i></a>
           </td>
       </tr>

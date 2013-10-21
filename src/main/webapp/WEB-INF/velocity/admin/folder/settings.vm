@@ -8,7 +8,7 @@
         <label class="control-label">Default page size</label>
 
         <div class="controls">
-            #springFormInput("settings.pageSize", "class='input-small'")
+            #springFormInput("settings.pageSize", "class='input-sm'")
         </div>
     </div>
 

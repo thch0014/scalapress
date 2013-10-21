@@ -18,13 +18,13 @@
             <td>$u.name</td>
             <td>$u.username</td>
             <td>$u.active</td>
-            <td><a href="$urlResolver.userEdit($u)" role="button" class="btn btn-mini"> <i class="icon-pencil"></i>
+            <td><a href="$urlResolver.userEdit($u)" role="button" class="btn btn-xs"> <i class="icon-pencil"></i>
             </a></td>
         </tr>
     #end
 </table>
 
-<a href="$urlResolver.createUser()" role="button" class="btn btn-mini"> <i class="icon-plus"></i> Create User</a>
+<a href="$urlResolver.createUser()" role="button" class="btn btn-xs"> <i class="icon-plus"></i> Create User</a>
 
 
 #parse("/admin/footer.vm")

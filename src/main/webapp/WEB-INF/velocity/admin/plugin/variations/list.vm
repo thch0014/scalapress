@@ -15,9 +15,9 @@
       #foreach ($v in $variations)
           <tr>
               <td>$v.name()</td>
-              <td><input type="text" name="price_$v.id" class="input-small" value="$v.price"></td>
-              <td><input type="text" name="stock_$v.id" class="input-small" value="$v.stock"></td>
-              <td><a href="/backoffice/plugin/variations/$v.id/delete" class="btn btn-small btn-danger">
+              <td><input type="text" name="price_$v.id" class="input-sm" value="$v.price"></td>
+              <td><input type="text" name="stock_$v.id" class="input-sm" value="$v.stock"></td>
+              <td><a href="/backoffice/plugin/variations/$v.id/delete" class="btn btn-sm btn-danger">
                   <i class="icon-trash"></i></a></td>
           </tr>
       #end

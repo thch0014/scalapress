@@ -42,10 +42,10 @@ $pagination
                   <div class="assetinfo">$a.filename()</div>
                   <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
 
-                  <a class="btn btn-mini" href="/images/$a.filename()">
+                  <a class="btn btn-xs" href="/images/$a.filename()">
                       <i class="icon-eye-open icon-white"></i> View Original</a>
 
-                  <a class="btn btn-mini btn-danger" href="/backoffice/medialib/delete/$a.filename()">
+                  <a class="btn btn-xs btn-danger" href="/backoffice/medialib/delete/$a.filename()">
                       <i class="icon-trash icon-white"></i> Delete</a>
               </div>
           </li>

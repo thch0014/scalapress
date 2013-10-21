@@ -11,7 +11,7 @@
         <label class="control-label">Brand Attribute</label>
 
         <div class="controls">
-          #springFormInput("feed.brandAttrName", "class='input-large'")
+          #springFormInput("feed.brandAttrName", "class='input-lg'")
         </div>
     </div>
 
@@ -19,7 +19,7 @@
         <label class="control-label">Part Number Attribute</label>
 
         <div class="controls">
-          #springFormInput("feed.partAttrName", "class='input-large'")
+          #springFormInput("feed.partAttrName", "class='input-lg'")
         </div>
     </div>
 
@@ -27,7 +27,7 @@
         <label class="control-label">Shipping Cost</label>
 
         <div class="controls">
-          #springFormInput("feed.shippingCost", "class='input-small'")
+          #springFormInput("feed.shippingCost", "class='input-sm'")
         </div>
     </div>
 
@@ -36,7 +36,7 @@
         <label class="control-label">FTP Hostname</label>
 
         <div class="controls">
-          #springFormInput("feed.ftpHostname", "class='input-large'")
+          #springFormInput("feed.ftpHostname", "class='input-lg'")
         </div>
     </div>
 
@@ -44,7 +44,7 @@
         <label class="control-label">FTP Username</label>
 
         <div class="controls">
-          #springFormInput("feed.ftpUsername", "class='input-large'")
+          #springFormInput("feed.ftpUsername", "class='input-lg'")
         </div>
     </div>
 
@@ -52,7 +52,7 @@
         <label class="control-label">FTP Password</label>
 
         <div class="controls">
-          #springFormInput("feed.ftpPassword", "class='input-large'")
+          #springFormInput("feed.ftpPassword", "class='input-lg'")
         </div>
     </div>
 
@@ -68,7 +68,7 @@
         <label class="control-label">Output Filename</label>
 
         <div class="controls">
-          #springFormInput("feed.ftpFilename", "class='input-large'")
+          #springFormInput("feed.ftpFilename", "class='input-lg'")
         </div>
     </div>
 
