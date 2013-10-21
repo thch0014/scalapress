@@ -1,9 +1,10 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Folder: $folder.name</h3>
+<div class="page-header">
+    <h2>Edit: $folder.name</h2>
+</div>
 
-<legend>Folder Details</legend>
 <form class="form-horizontal" method="POST">
 
     <div class="tabbable">
@@ -20,33 +21,33 @@
                     <label class="col-lg-2 control-label">Name</label>
 
                     <div class="col-lg-8">
-                        #springFormInput("folder.name", "class='input-xxlarge'")
+                      #springFormInput("folder.name", "class='form-control'")
                     </div>
                 </div>
 
-                #if ($folder.id > 1)
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Parent</label>
+              #if ($folder.id > 1)
+                  <div class="form-group">
+                      <label class="col-lg-2 control-label">Parent</label>
 
-                        <div class="col-lg-8">
-                            <select id="parent" name="parent" class="input-xxlarge">
-                                #foreach($option in $parents.keySet())
-                                    <option value="${option}"
-                                        #if("$!folder.parent.id" == "$option")
-                                            selected="selected"
-                                        #end>
-                                        ${parents.get($option)}</option>
-                                #end
-                            </select>
-                        </div>
-                    </div>
-                #end
+                      <div class="col-lg-8">
+                          <select id="parent" name="parent" class="form-control">
+                            #foreach($option in $parents.keySet())
+                                <option value="${option}"
+                                  #if("$!folder.parent.id" == "$option")
+                                        selected="selected"
+                                  #end>
+                                  ${parents.get($option)}</option>
+                            #end
+                          </select>
+                      </div>
+                  </div>
+              #end
 
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Hidden</label>
 
                     <div class="col-lg-8">
-                        #springFormCheckbox("folder.hidden")
+                      #springFormCheckbox("folder.hidden", "")
                     </div>
                 </div>
 
@@ -54,14 +55,14 @@
                     <label class="col-lg-2 control-label">Theme</label>
 
                     <div class="col-lg-8">
-                        <select id="theme" name="theme" class="input-xxlarge">
-                            #foreach($option in $themesMap.keySet())
-                                <option value="${option}"
-                                    #if("$!folder.theme.id" == "$option")
-                                        selected="selected"
-                                    #end>
-                                    ${themesMap.get($option)}</option>
-                            #end
+                        <select id="theme" name="theme" class="form-control">
+                          #foreach($option in $themesMap.keySet())
+                              <option value="${option}"
+                                #if("$!folder.theme.id" == "$option")
+                                      selected="selected"
+                                #end>
+                                ${themesMap.get($option)}</option>
+                          #end
                         </select>
                     </div>
                 </div>
@@ -70,10 +71,7 @@
                     <label class="col-lg-2 control-label">Subfolder Ordering</label>
 
                     <div class="col-lg-8">
-                        #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap)
-                        #if ($folder.folderOrdering == "Manual")
-                            <a href="/backoffice/folder/$folder.id/suborder" class="btn btn-default">Edit Subfolder Order</a>
-                        #end
+                      #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap, "class='form-control'")
                     </div>
                 </div>
 
@@ -81,7 +79,7 @@
                     <label class="col-lg-2 control-label">Redirect</label>
 
                     <div class="col-lg-8">
-                        #springFormInput("folder.redirect", "class='input-xxlarge'")
+                      #springFormInput("folder.redirect", "class='form-control'")
                     </div>
                 </div>
 
@@ -93,7 +91,7 @@
                     <label class="col-lg-2 control-label">Title Tag</label>
 
                     <div class="col-lg-8">
-                        #springFormInput("folder.titleTag", "class='input-xxlarge'")
+                      #springFormInput("folder.titleTag", "class='form-control'")
                     </div>
                 </div>
 
@@ -101,7 +99,7 @@
                     <label class="col-lg-2 control-label">Description Tag</label>
 
                     <div class="col-lg-8">
-                        #springFormInput("folder.descriptionTag", "class='input-xxlarge'")
+                      #springFormInput("folder.descriptionTag", "class='form-control'")
                     </div>
                 </div>
 
@@ -109,7 +107,7 @@
                     <label class="col-lg-2 control-label">Keywords Tag</label>
 
                     <div class="col-lg-8">
-                        #springFormInput("folder.keywordsTag", "class='input-xxlarge'")
+                      #springFormInput("folder.keywordsTag", "class='form-control'")
                     </div>
                 </div>
 
@@ -117,28 +115,26 @@
 
             <div class="tab-pane" id="tab3">
 
-
-                <legend>Sections</legend>
                 <table class="table table-condensed table-hover" id="sections-table">
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
                         <th></th>
                     </tr>
-                    #foreach ($s in $sections)
-                        <tr data-section-id="$s.id" class="section-row">
-                            <td>$!s.name()</td>
-                            <td>$s.desc()</td>
-                            <td>
-                                <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
-                                    <i class="glyphicon  glyphicon-pencil"></i></a>
+                  #foreach ($s in $sections)
+                      <tr data-section-id="$s.id" class="section-row">
+                          <td>$!s.name()</td>
+                          <td>$s.desc()</td>
+                          <td>
+                              <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
+                                  <i class="glyphicon  glyphicon-pencil"></i></a>
 
-                                <a href="$urlResolver.deleteSection($folder, $s)" role="button"
-                                   class="btn btn-xs btn-danger">
-                                    <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
-                            </td>
-                        </tr>
-                    #end
+                              <a href="$urlResolver.deleteSection($folder, $s)" role="button"
+                                 class="btn btn-xs btn-danger">
+                                  <i class="glyphicon  glyphicon-trash glyphicon"></i></a>
+                          </td>
+                      </tr>
+                  #end
                 </table>
 
             </div>
@@ -150,7 +146,7 @@
                     <label class="col-lg-2 control-label">Header</label>
 
                     <div class="col-lg-8">
-                        #springFormTextarea("folder.header", "rows='8' class='input-block-level htmleditor'")
+                      #springFormTextarea("folder.header", "rows='8' class='form-control htmleditor'")
                     </div>
                 </div>
 
@@ -158,7 +154,7 @@
                     <label class="col-lg-2 control-label">Footer</label>
 
                     <div class="col-lg-8">
-                        #springFormTextarea("folder.footer", "rows='8' class='input-block-level htmleditor'")
+                      #springFormTextarea("folder.footer", "rows='8' class='form-control htmleditor'")
                     </div>
                 </div>
 
@@ -168,23 +164,39 @@
     </div>
 
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-save"></i> Save changes</button>
-        <a href="/backoffice/folder" class="btn btn-info"><i class="glyphicon  glyphicon-arrow-left"></i> Return to list</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-save"></i> Save changes
+            </button>
+          #if ($folder.folderOrdering == "Manual")
+              <a href="/backoffice/folder/$folder.id/suborder" class="btn btn-default">
+                  Edit Subfolder Order
+              </a>
+          #end
+            <a href="/backoffice/folder" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to list
+            </a>
+        </div>
     </div>
 
 </form>
 
-
-<form method="POST" action="/backoffice/folder/$folder.id/section/create" class="form-inline">
-    <label>Add Section:</label>
-    <select name="class">
-        #foreach($class in $classes.keySet())
-            <option value="${class}">${classes.get($class)}</option>
-        #end
-    </select>
-    <button class="btn btn-success" type="submit"><i class="glyphicon  glyphicon-white glyphicon  glyphicon-plus-sign"></i> Add</button>
-</form>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="POST" action="/backoffice/folder/$folder.id/section/create" class="form-inline">
+            <label>Add Section:</label>
+            <select name="class">
+              #foreach($class in $classes.keySet())
+                  <option value="${class}">${classes.get($class)}</option>
+              #end
+            </select>
+            <button class="btn btn-success" type="submit"><i
+                    class="glyphicon  glyphicon-white glyphicon  glyphicon-plus-sign"></i> Add
+            </button>
+        </form>
+    </div>
+</div>
 
 
 <script>
@@ -209,5 +221,7 @@
         $("#sections-table tbody").disableSelection();
     });
 </script>
+
+
 
 #parse("/admin/footer.vm")

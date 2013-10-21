@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Folder Settings</h3>
+<div class="page-header">
+    <h2>Folder Settings</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
