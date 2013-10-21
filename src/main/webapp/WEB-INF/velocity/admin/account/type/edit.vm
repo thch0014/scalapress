@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Edit Account Type: $accountType.name</h3>
+<div class="page-header">
+    <h2>Account Type: $accountType.name</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -8,13 +10,17 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-          #springFormInput("accountType.name", "")
+          #springFormInput("accountType.name", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/accounttype" class="btn btn-info"> <i class="glyphicon  glyphicon-arrow-left"></i> Return to list</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a href="/backoffice/accounttype" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to list
+            </a>
+        </div>
     </div>
 
 </form>
