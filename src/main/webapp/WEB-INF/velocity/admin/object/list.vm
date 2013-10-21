@@ -96,7 +96,6 @@
 
 </form>
 
-
 #paging($paging)
 
 <table class="table table-condensed table-hover">
@@ -131,10 +130,10 @@
         <a href="#create-object-modal" role="button" class="btn btn-default" data-toggle="modal">
             <i class="icon-plus"></i> Create  $type.name
         </a>
-        <a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-default">
+        <a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-info">
             <i class="glyphicon glyphicon-download-alt"></i> Export as CSV
         </a>
-        <a href="#import-modal" role='button' class="btn btn-default" data-toggle="modal">
+        <a href="#import-modal" role='button' class="btn btn-info" data-toggle="modal">
             <i class="glyphicon glyphicon-upload-alt"></i> Import CSV
         </a>
     </div>

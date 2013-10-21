@@ -9,7 +9,7 @@ class SearchMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Seq[MenuItem] =
     Seq(
       MenuHeader("Search"),
-      MenuLink("Search Settings", Some("glyphicon glyphicon-search"), "/backoffice/search"),
+      MenuLink("Search Settings", Some("glyphicon glyphicon-search"), "/backoffice/searchsettings"),
       MenuLink("Search Forms", Some("glyphicon glyphicon-align-center"), "/backoffice/searchform"),
       MenuLink("Saved Searches", Some("glyphicon glyphicon-save"), "/backoffice/savedsearch")
     )

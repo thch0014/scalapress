@@ -11,7 +11,7 @@ import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/search"))
+@RequestMapping(Array("backoffice/searchsettings"))
 @Autowired
 class SearchPluginController(val markupDao: MarkupDao,
                              val searchPluginDao: SearchPluginDao,

@@ -1,21 +1,22 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Section</h3>
+<div class="page-header">
+    <h2>GMap Section: $section.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
-    #parse("/admin/section/common.vm")
+  #parse("/admin/section/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Postcode</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.postcode", "class='input-sm'")
+          #springFormInput("section.postcode", "class='form-control'")
         </div>
     </div>
 
-    #parse("/admin/section/actions.vm")
+  #parse("/admin/section/actions.vm")
 
 </form>
 

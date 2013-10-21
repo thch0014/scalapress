@@ -10,7 +10,7 @@ class FormMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Seq[MenuItem] = {
     Seq(MenuHeader("Forms"),
-      MenuLink("Show Forms", Some("glyphicon glyphicon-align-center"), "/backoffice/form"),
+      MenuLink("Forms", Some("glyphicon glyphicon-align-center"), "/backoffice/form"),
       MenuLink("Submissions", Some("glyphicon glyphicon-pencil"), "/backoffice/submission")
     )
   }

@@ -1,8 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Folders Widget</h3>
-
+<div class="page-header">
+    <h2>Folders Widget: $widget.id</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 

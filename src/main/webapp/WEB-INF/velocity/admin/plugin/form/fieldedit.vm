@@ -1,7 +1,10 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Form Field</h3>
+<div class="page-header">
+    <h2>Edit Form Field</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +12,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-          #springFormInput("field.name", "")
+          #springFormInput("field.name", "class='form-control'")
         </div>
     </div>
 
@@ -17,7 +20,7 @@
         <label class="col-lg-2 control-label">Type</label>
 
         <div class="col-lg-8">
-          #springFormSingleSelect("field.fieldType", $typesMap)
+          #springFormSingleSelect("field.fieldType", $typesMap, "class='form-control'")
         </div>
     </div>
 
@@ -26,7 +29,7 @@
           <label class="col-lg-2 control-label">Size</label>
 
           <div class="col-lg-8">
-            #springFormSingleSelect("field.size", $fieldSizesMap)
+            #springFormSingleSelect("field.size", $fieldSizesMap, "class='form-control'")
           </div>
       </div>
   #end
@@ -44,7 +47,7 @@
           <label class="col-lg-2 control-label">Placeholder</label>
 
           <div class="col-lg-8">
-            #springFormInput("field.placeholder", "")
+            #springFormInput("field.placeholder", "class='form-control'")
           </div>
       </div>
   #end
@@ -64,14 +67,16 @@
           <label class="col-lg-2 control-label">Options</label>
 
           <div class="col-lg-8">
-            #springFormTextarea("field.options", "cols='70', rows='18'")
+            #springFormTextarea("field.options", "cols='70', rows='18' class='form-control'")
           </div>
       </div>
   #end
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn btn-default" href="/backoffice/form/$field.form.id">Return</a>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a role="button" class="btn btn-default" href="/backoffice/form/$field.form.id">Return to form</a>
+        </div>
     </div>
 
 </form>

@@ -17,8 +17,10 @@
   #end
 </table>
 
-<div class="form-actions">
-    <a href="/backoffice/folder/$folder.id" class="btn btn-default">Return</a>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/folder/$folder.id" class="btn btn-default">Return to folder</a>
+    </div>
 </div>
 
 

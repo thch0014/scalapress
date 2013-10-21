@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Feeds</h3>
+<div class="page-header">
+    <h2>Google Base Feeds</h2>
+</div>
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -13,9 +15,9 @@
 
   #foreach ($feed in $feeds)
       <tr>
-          <td>$feed.id</td>
-          <td>$feed.ftpHostname</td>
-          <td>$feed.productCategory</td>
+          <td><a href="$feed.backoffice()">$feed.id</a></td>
+          <td>$!feed.ftpHostname</td>
+          <td>$!feed.productCategory</td>
           <td>
             #if($feed.lastRuntime>0)
                  $datetool.format($feed.lastRuntime)
@@ -23,15 +25,21 @@
           </td>
           <td>
               <a href="$feed.backoffice()" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i> </a>
+                  <i class="glyphicon  glyphicon-pencil"></i>
+              </a>
               <a href="$feed.runUrl()" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-play"></i> </a></td>
+                  <i class="glyphicon  glyphicon-play"></i>
+              </a>
+          </td>
       </tr>
   #end
 </table>
 
-<a href="/backoffice/feed/create" role="button" class="btn btn-default"> <i class="glyphicon  glyphicon-plus"></i>
-    Create New Feed</a>
-
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/feed/create" role="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Create New Feed</a>
+    </div>
+</div>
 
 #parse("/admin/footer.vm")

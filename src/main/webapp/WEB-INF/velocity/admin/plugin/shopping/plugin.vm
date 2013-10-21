@@ -129,7 +129,6 @@
 
 
     <legend>Checkout</legend>
-
     <div class="form-group">
         <label class="col-lg-2 control-label">Checkout Confirmation Page Text</label>
 

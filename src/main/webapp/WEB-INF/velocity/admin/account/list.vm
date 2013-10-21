@@ -1,32 +1,35 @@
 #parse("/admin/header.vm")
 
-<div id="create-account-modal" class="modal hide">
-
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create $accountType.name</h3>
-    </div>
-    <form method="GET" action="/backoffice/account/create" class="form-horizontal">
-        <input type="hidden" name="accountTypeId" value="$accountType.id"/>
-
-        <div class="modal-body">
-
-            <div class="form-group">
-                <label class="col-lg-2 control-label" for="new-account-name">Name</label>
-
-                <div class="col-lg-8">
-                    <input type="text" id="new-account-name" name="name" placeholder="New $accountType.name Name">
-                </div>
+<div id="create-account-modal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Create $accountType.name</h3>
             </div>
+            <form method="GET" action="/backoffice/account/create" class="form-horizontal">
+                <input type="hidden" name="accountTypeId" value="$accountType.id"/>
 
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="new-account-name">Name</label>
+
+                        <div class="col-lg-8">
+                            <input type="text" id="new-account-name" name="name" class="form-control"
+                                   placeholder="New $accountType.name Name">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Create</button>
-            <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
-        </div>
-    </form>
+    </div>
 </div>
-
 
 <div class="page-header">
     <h2>$accountType.name</h2>
@@ -53,7 +56,8 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search</button>
+            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search
+            </button>
             <a href="#create-account-modal" role="button" class="btn btn-default" data-toggle="modal">
                 <i class="glyphicon  glyphicon-plus-sign"></i> Create  $accountType.name</a>
         </div>

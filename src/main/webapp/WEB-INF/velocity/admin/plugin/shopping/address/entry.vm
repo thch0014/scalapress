@@ -1,74 +1,78 @@
 #parse("/admin/header.vm")
 
-<h3>Address Entry</h3>
+<div class="page-header">
+    <h2>Address Entry</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
-
 
     <legend>Billing Address</legend>
     <div class="form-group">
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.name") #springShowErrors(",")
+          #springFormInput("address.name", "class='form-control'") #springShowErrors(",")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Company</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.company") #springShowErrors(",")
+          #springFormInput("address.company", "class='form-control'") #springShowErrors(",")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Address</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.address1") #springShowErrors(" ")
+          #springFormInput("address.address1", "class='form-control'") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
 
         <div class="col-lg-8">
-          #springFormInput("address.address2") #springShowErrors(" ")
+          #springFormInput("address.address2", "class='form-control'") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">City</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.town") #springShowErrors(" ")
+          #springFormInput("address.town", "class='form-control'") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Postcode</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.postcode") #springShowErrors(" ")
+          #springFormInput("address.postcode", "class='form-control'") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Country</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.country") #springShowErrors(" ")
+          #springFormInput("address.country", "class='form-control'") #springShowErrors(" ")
         </div>
     </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">Telephone</label>
 
         <div class="col-lg-8">
-          #springFormInput("address.telephone") #springShowErrors(",")
+          #springFormInput("address.telephone", "class='form-control'") #springShowErrors(",")
         </div>
     </div>
 
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default">Cancel</button>
+        </div>
     </div>
 
-  #springFormHiddenInput("orderId")
+  #springFormHiddenInput("orderId", "")
 </form>
 
 #parse("/admin/footer.vm")

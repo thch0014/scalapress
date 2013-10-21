@@ -1,48 +1,35 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Section</h3>
+<div class="page-header">
+    <h2>Form Section $section.id</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Name</label>
-
-        <div class="col-lg-8">
-            #springFormInput("section.name", "class='input-xlarge'")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Visible</label>
-
-        <div class="col-lg-8">
-            #springFormCheckbox("section.visible")
-        </div>
-    </div>
+  #parse("/admin/section/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">
-            <a href="/backoffice/form/$section.form.id" class="btn btn-xs btn-default"><i class="glyphicon  glyphicon-pencil"></i></a> Form
+            <a href="/backoffice/form/$section.form.id" class="btn btn-xs btn-default">
+                <i class="glyphicon glyphicon-pencil"></i></a> Form
         </label>
 
         <div class="col-lg-8">
-            <select id="form" name="form">
-                #foreach($option in $formsMap.keySet())
-                    <option value="${option}"
-                        #if("$!section.form.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${formsMap.get($option)}</option>
-                #end
+            <select id="form" name="form" class="form-control">
+              #foreach($option in $formsMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.form.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${formsMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
-    </div>
+  #parse("/admin/section/actions.vm")
 
 </form>
 

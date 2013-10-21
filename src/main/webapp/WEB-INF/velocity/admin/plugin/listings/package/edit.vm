@@ -1,7 +1,10 @@
 #parse("/admin/header.vm")
 
 
-<h3>Edit Listing Package</h3>
+<div class="page-header">
+    <h2>Edit Listing Package</h2>
+</div>
+
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +12,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.name", "class='input-xxlarge'")
+          #springFormInput("package.name", "class='form-control'")
         </div>
     </div>
 
@@ -17,7 +20,7 @@
         <label class="col-lg-2 control-label">Deleted</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("package.deleted")
+          #springFormCheckbox("package.deleted", "")
         </div>
     </div>
 
@@ -25,7 +28,7 @@
         <label class="col-lg-2 control-label">Description</label>
 
         <div class="col-lg-8">
-            #springFormTextarea("package.description", "class='input-xlarge'")
+          #springFormTextarea("package.description", "class='form-control'")
         </div>
     </div>
 
@@ -33,14 +36,14 @@
         <label class="col-lg-2 control-label">Object Type</label>
 
         <div class="col-lg-8">
-            <select id="objectType" name="objectType">
-                #foreach($option in $objectTypesMap.keySet())
-                    <option value="${option}"
-                        #if("$!package.objectType.id" == "$option")
-                            selected="selected"
-                        #end>
-                        ${objectTypesMap.get($option)}</option>
-                #end
+            <select id="objectType" name="objectType" class="form-control">
+              #foreach($option in $objectTypesMap.keySet())
+                  <option value="${option}"
+                    #if("$!package.objectType.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${objectTypesMap.get($option)}</option>
+              #end
             </select>
         </div>
     </div>
@@ -49,7 +52,7 @@
         <label class="col-lg-2 control-label">Fee</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.fee", "class='input-sm'")
+          #springFormInput("package.fee", "class='form-control'")
         </div>
     </div>
 
@@ -57,7 +60,7 @@
         <label class="col-lg-2 control-label">Duration in days</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.duration", "class='input-sm'")
+          #springFormInput("package.duration", "class='form-control'")
         </div>
     </div>
 
@@ -65,7 +68,7 @@
         <label class="col-lg-2 control-label">Max images</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.maxImages", "class='input-sm'")
+          #springFormInput("package.maxImages", "class='form-control'")
         </div>
     </div>
 
@@ -73,7 +76,7 @@
         <label class="col-lg-2 control-label">Max folders</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.maxFolders", "class='input-sm'")
+          #springFormInput("package.maxFolders", "class='form-control'")
         </div>
     </div>
 
@@ -81,7 +84,7 @@
         <label class="col-lg-2 control-label">Folders</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.folders", "class='input-xlarge'")
+          #springFormInput("package.folders", "class='form-control'")
         </div>
     </div>
 
@@ -89,7 +92,7 @@
         <label class="col-lg-2 control-label">Auto Publish</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("package.autoPublish", "")
+          #springFormCheckbox("package.autoPublish", "")
         </div>
     </div>
 
@@ -97,7 +100,7 @@
         <label class="col-lg-2 control-label">Labels</label>
 
         <div class="col-lg-8">
-            #springFormInput("package.labels", "class='input-xlarge'")
+          #springFormInput("package.labels", "class='form-control'")
         </div>
     </div>
 

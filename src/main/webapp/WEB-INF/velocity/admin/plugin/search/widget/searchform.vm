@@ -1,26 +1,25 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Search Form Widget</h3>
+<div class="page-header">
+    <h2>Search Form Widget</h2>
+</div>
 
 
 <form class="form-horizontal" method="POST">
 
-    #parse("/admin/widget/common.vm")
+  #parse("/admin/widget/common.vm")
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Search Form</label>
 
         <div class="col-lg-8">
-            Edit Embedded Search Form <a href="/backoffice/searchform/$widget.searchForm.id" class="btn btn-xs btn-default">
-            <i class="glyphicon  glyphicon-pencil"></i></a>
+            Edit Embedded Search Form <a href="/backoffice/searchform/$widget.searchForm.id"
+                                         class="btn btn-xs btn-default">
+            <i class="glyphicon glyphicon-pencil"></i></a>
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
-    </div>
+  #parse("/admin/widget/buttons.vm")
 
 </form>
 
