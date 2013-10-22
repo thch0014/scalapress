@@ -11,6 +11,7 @@ abstract class Widget {
 
   final def init(context: ScalapressContext) {
     this.location = "Left"
+    this.name = "new " + getClass.getSimpleName + " widget"
     _init(context)
     context.widgetDao.save(this)
   }

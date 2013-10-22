@@ -12,14 +12,59 @@ class D3CloudWidget extends Widget {
 
   override def backoffice = "/backoffice/widget/" + id
   override def render(req: ScalapressRequest): Option[String] = {
-    Some(D3CloudWidget.script
-      .replace("$WORDS",
-      "Coldplay are a British rock band formed in 1996 by lead vocalist Chris Martin and lead guitarist Jonny Buckland at University College London.[4] After they formed under the name Pectoralz, Guy Berryman joined the group as a bassist and they changed their name to Starfish.[5] Will Champion joined as a drummer, backing vocalist, and multi-instrumentalist, completing the line-up. Manager Phil Harvey is often considered an unofficial fifth member.[6] The band renamed themselves Coldplay in 1998,[7] before recording and releasing three EPs")
-      .split(" ").map('"' + _ + '"').mkString(","))
+    getWords(req) match {
+      case Some(words) =>
+        val array = words.map('"' + _ + '"').mkString(",")
+        Some("<script>" + D3CloudWidget.script.replace("$WORDS", array).replace("$ANGLE", "30") + "</script>")
+      case None => None
+    }
+  }
+
+  def getWords(req: ScalapressRequest) = {
+    req
+      .obj
+      .map(_
+      .content
+      .replaceAll("<.*?>", "")
+      .replace("\"", "\\\"")
+      .split(" ")
+      .filterNot(arg => D3CloudWidget.STOP_WORDS.contains(arg.toLowerCase))
+      .groupBy(e => e)
+      .map(e => e._1 -> e._2.length)
+      .toSeq
+      .sortBy(_._2)
+      .reverse
+      .map(_._1)
+      .take(D3CloudWidget.MAX_WORDS))
   }
 }
 
 object D3CloudWidget {
+  val STOP_WORDS = Array("and",
+    "of",
+    "is",
+    "to",
+    "an",
+    "with",
+    "on",
+    "or",
+    "the",
+    "and",
+    "a",
+    "it",
+    "be",
+    "also",
+    "for",
+    "new",
+    "me",
+    "them",
+    "their",
+    "your",
+    "i",
+    "as",
+    "you",
+    "then")
   val RESOURCE = "/com/cloudray/scalapress/plugin/d3cloud/d3cloud.js"
   val script = IOUtils.toString(getClass.getResourceAsStream(RESOURCE))
+  val MAX_WORDS = 50
 }
