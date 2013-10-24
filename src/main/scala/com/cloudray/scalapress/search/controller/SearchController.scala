@@ -81,11 +81,15 @@ class SearchController extends Logging {
     search.pageNumber = pageNumber
     search.sortType = sort
 
-    Option(t).orElse(Option(objectTypeId)).map(arg => typeDao.find(arg.toLong)) match {
-      case None =>
-      case Some(objectType) =>
-        search.objectType = objectType
-        search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
+    try {
+      Option(t).orElse(Option(objectTypeId)).map(arg => typeDao.find(arg.toLong)) match {
+        case None =>
+        case Some(objectType) =>
+          search.objectType = objectType
+          search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
+      }
+    } catch {
+      case e: Exception => // unparsable number
     }
 
     val result = searchService.search(search)
