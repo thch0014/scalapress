@@ -78,5 +78,6 @@ class GenericDaoImpl[T <: AnyRef, ID <: java.io.Serializable] extends HibernateB
   def searchUnique(search: ISearch): T = {
     _searchUnique(persistentClass, search).asInstanceOf[T]
   }
-
+  def remove(entities: Iterable[T]): Unit = entities.foreach(super._deleteEntity)
+  def save(entities: Iterable[T]): Unit = entities.foreach(super._save)
 }

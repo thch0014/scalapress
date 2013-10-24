@@ -30,6 +30,8 @@ trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
    */
   def save(entity: T): Boolean
 
+  def save(entities: Iterable[T])
+
   /**
    * Remove the specified entity from the datastore.
    *
@@ -37,6 +39,8 @@ trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
    *         removed, <code>false</code> if it is not found.
    */
   def remove(entity: T): Boolean
+
+  def remove(entities: Iterable[T])
 
   /**
    * Remove the entity with the specified type and id from the datastore.

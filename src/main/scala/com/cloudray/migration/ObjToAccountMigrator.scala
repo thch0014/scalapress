@@ -28,14 +28,14 @@ class ObjToAccountMigrator(accountDao: AccountDao,
     }
 
     typeDao.getAccount.foreach(objectType => {
-      val query = new ObjectQuery().withTypeId(objectType.id).withMaxResults(500)
+      val query = new ObjectQuery().withTypeId(objectType.id).withMaxResults(200)
       migrate()
 
       def migrate() {
-        val results = objectDao.search(query).results
-        logger.info("Migrating {} objects into accounts", results.size)
+        val objects = objectDao.search(query).results
+        logger.info("Migrating {} objects into accounts", objects.size)
 
-        results.foreach(obj => {
+       objects.foreach(obj => {
           val account = new Account
           account.id = obj.id
           account.passwordHash = obj.password_deprecated
@@ -46,11 +46,15 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.name = obj.name
           account.registrationIpAddress = obj.ipAddress
           account.accountType = accountType
-
-          accountDao.save(account)
-          objectDao.remove(obj)
+          account
+          try {
+            accountDao.save(account)
+            objectDao.remove(obj)
+          } catch {
+            case e: Exception => logger.error(e.toString)
+          }
         })
-        if (results.size > 0)
+        if (objects.size > 0)
           migrate()
       }
     })

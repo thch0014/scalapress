@@ -16,19 +16,20 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
   def search(query: ObjectQuery): Page[Obj]
   def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]]
   def findByType(id: Long): List[Obj]
+  def removeByType(id: Long)
 }
 
 @Component
 @Transactional
 class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
 
-  def recent(i: Int): Seq[Obj] =
+  override def recent(i: Int): Seq[Obj] =
     search(new Search(classOf[Obj])
       .addFilterEqual("status", Obj.STATUS_LIVE)
       .setMaxResults(i)
       .addSort("id", true))
 
-  def findBulk(longs: Seq[Long]): Seq[Obj] = {
+  override def findBulk(longs: Seq[Long]): Seq[Obj] = {
     if (longs.isEmpty) Nil
     else {
       val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
@@ -74,7 +75,8 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
   override def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]] = {
     getSession
       .createSQLQuery(
-      "select i.id, i.name from items i join items_types it on i.itemtype=it.id where i.name like ? and it.name like ?")
+      "select i.id, i.name from items i join items_types it on i.itemtype=it.id " +
+        "WHERE i.name like ? and it.name like ?")
       .setString(0, query + "%")
       .setString(1, "%" + objectTypeName.getOrElse("") + "%")
       .setMaxResults(20)
@@ -85,6 +87,9 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
       Array(values(0).toString, values(1).toString)
     }).toArray
   }
+  override def removeByType(id: Long): Unit = getSession
+    .createSQLQuery("delete from items where itemtype=" + id)
+    .executeUpdate()
 }
 
 trait TypeDao extends GenericDao[ObjectType, java.lang.Long] {
