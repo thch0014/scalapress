@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.security.SecurityResolver
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder
 import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin, Account, AccountDao}
-import com.cloudray.scalapress.account.controller.{Profile, ProfileController}
 
 /** @author Stephen Samuel */
 class ProfileControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

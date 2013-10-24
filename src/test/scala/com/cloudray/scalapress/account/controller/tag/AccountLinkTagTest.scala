@@ -7,7 +7,6 @@ import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.account.controller.tag.AccountLinkTag
 
 /** @author Stephen Samuel */
 class AccountLinkTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

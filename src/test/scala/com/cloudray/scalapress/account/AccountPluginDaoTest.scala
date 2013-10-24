@@ -3,7 +3,6 @@ package com.cloudray.scalapress.account
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
-import com.cloudray.scalapress.account.AccountPlugin
 
 /** @author Stephen Samuel */
 class AccountPluginDaoTest extends FunSuite with MockitoSugar {
