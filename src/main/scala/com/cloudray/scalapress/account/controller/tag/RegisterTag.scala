@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.tag
+package com.cloudray.scalapress.account.controller.tag
 
 import com.cloudray.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}

@@ -8,8 +8,8 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import com.cloudray.scalapress.plugin.account.controller.renderer.ForgottonPasswordRenderer
 import com.cloudray.scalapress.account.PasswordService
+import com.cloudray.scalapress.account.controller.renderer.ForgottonPasswordRenderer
 
 /** @author Stephen Samuel */
 @Controller

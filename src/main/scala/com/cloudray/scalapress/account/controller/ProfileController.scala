@@ -10,10 +10,10 @@ import org.springframework.validation.Errors
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.security.{SecurityResolver, SpringSecurityResolver}
-import com.cloudray.scalapress.plugin.account.controller.renderer.ProfileRenderer
 import org.apache.commons.lang.StringUtils
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.account.{AccountPluginDao, Account, AccountDao}
+import com.cloudray.scalapress.account.controller.renderer.ProfileRenderer
 
 /** @author Stephen Samuel */
 @Controller

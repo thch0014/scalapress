@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.tag
+package com.cloudray.scalapress.account.controller.tag
 
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
@@ -7,7 +7,7 @@ import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
   *
   *         Used on login pages to render a username input that works with spring security login processors.
   *
-  * */
+  **/
 @Tag("login_email")
 class LoginEmailTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) =

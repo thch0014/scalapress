@@ -16,8 +16,8 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.plugin.account.controller.renderer.RegistrationRenderer
 import com.cloudray.scalapress.account.{AccountPluginDao, Account, AccountTypeDao, AccountDao}
+import com.cloudray.scalapress.account.controller.renderer.RegistrationRenderer
 
 /** @author Stephen Samuel */
 @Controller

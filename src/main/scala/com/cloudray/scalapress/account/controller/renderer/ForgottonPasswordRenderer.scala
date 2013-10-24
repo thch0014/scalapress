@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account.controller.renderer
+package com.cloudray.scalapress.account.controller.renderer
 
 import com.cloudray.scalapress.util.Scalate
 
