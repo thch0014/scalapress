@@ -15,7 +15,7 @@ import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
 import com.cloudray.scalapress.plugin.variations._
-import com.cloudray.scalapress.account.{AccountPluginDaoImpl, AccountPluginDao}
+import com.cloudray.scalapress.account.{AccountDao, AccountDaoImpl, AccountPluginDaoImpl, AccountPluginDao}
 
 /** @author Stephen Samuel */
 object TestDatabaseContext {
@@ -53,6 +53,11 @@ object TestDatabaseContext {
     .getAutowireCapableBeanFactory
     .createBean(classOf[UserDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[UserDao]
+
+  val accountDao = context
+    .getAutowireCapableBeanFactory
+    .createBean(classOf[AccountDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+    .asInstanceOf[AccountDao]
 
   val objectDao = context
     .getAutowireCapableBeanFactory

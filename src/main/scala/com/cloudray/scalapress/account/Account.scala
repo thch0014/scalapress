@@ -3,7 +3,7 @@ package com.cloudray.scalapress.account
 import javax.persistence._
 import scala.beans.BeanProperty
 import org.joda.time.{DateTimeZone, DateTime}
-import org.hibernate.annotations.{NotFoundAction, NotFound, Index}
+import org.hibernate.annotations.{Index, NotFoundAction, NotFound}
 
 /** @author Stephen Samuel */
 @Entity
@@ -11,38 +11,49 @@ import org.hibernate.annotations.{NotFoundAction, NotFound, Index}
 class Account {
 
   @Id
-  @Index(name = "id_index")
-  @BeanProperty var id: java.lang.Long = _
+  @BeanProperty
+  var id: Long = _
 
   @Index(name = "status_index")
-  @BeanProperty var status: String = _
+  @BeanProperty
+  var status: String = _
 
   def isActive = Account.STATUS_ACTIVE == status
 
   @Index(name = "name_index")
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
   @Index(name = "email_index")
-  @BeanProperty var email: String = _
+  @BeanProperty
+  var email: String = _
 
-  @BeanProperty var passwordHash: String = _
+  @BeanProperty
+  var passwordHash: String = _
 
-  @BeanProperty var registrationIpAddress: String = _
+  @BeanProperty
+  var registrationIpAddress: String = _
 
   @ManyToOne
   @JoinColumn(name = "accountType")
   @NotFound(action = NotFoundAction.IGNORE)
-  @Index(name = "accounttype_index")
-  @BeanProperty var accountType: AccountType = _
+  @BeanProperty
+  var accountType: AccountType = _
 
   @Column(name = "dateCreated")
-  @BeanProperty var dateCreated: java.lang.Long = _
+  @BeanProperty
+  var dateCreated: java.lang.Long = _
 
   @Column(name = "dateUpdated")
-  @BeanProperty var dateUpdated: java.lang.Long = _
+  @BeanProperty
+  var dateUpdated: java.lang.Long = _
 
   @PrePersist
-  def updateLastModified(): Unit = dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+  def updatedDateUpdated(): Unit = dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+
+  @PrePersist
+  def updateDateCreated(): Unit = if (dateCreated == null) dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+
   override def toString: String = s"Account [id=$id, status=$status, name=$name]"
 }
 

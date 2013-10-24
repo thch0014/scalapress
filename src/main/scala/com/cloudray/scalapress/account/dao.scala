@@ -28,7 +28,10 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
       s.addFilterEqual("accountType.id", t)
     })
     q.status.filterNot(_.isEmpty).foreach(s.addFilterEqual("status", _))
-    q.name.filterNot(_.isEmpty).foreach(t => s.addFilterLike("name", "%" + t + "%"))
+    q.name
+      .map(_.split(" "))
+      .getOrElse(Array())
+      .foreach(t => s.addFilterLike("name", "%" + t + "%"))
     q.sort match {
       case Some(sort) => sort match {
         case Sort.Name => s.addSortAsc("name")
