@@ -109,6 +109,7 @@ trait TokenGenerator {
   def generate: String
 }
 
+@Component
 class AlphanumericTokenGenerator extends TokenGenerator {
   override def generate = RandomStringUtils.randomAlphanumeric(8)
 }
@@ -117,6 +118,7 @@ trait PasswordGenerator {
   def generate: String
 }
 
+@Component
 class AlphanumericPasswordGenerator extends PasswordGenerator {
   override def generate = RandomStringUtils.randomAlphanumeric(8)
 }

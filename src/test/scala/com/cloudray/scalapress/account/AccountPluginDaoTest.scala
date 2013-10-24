@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.account
+package com.cloudray.scalapress.account
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar

@@ -4,33 +4,35 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import org.springframework.security.authentication.{UsernamePasswordAuthenticationToken, AuthenticationManager}
+import org.springframework.security.authentication.{AuthenticationManager, UsernamePasswordAuthenticationToken}
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
-import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
+import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.account.{AccountPluginDao, Account, AccountTypeDao, AccountDao}
+import com.cloudray.scalapress.account._
 import com.cloudray.scalapress.account.controller.renderer.RegistrationRenderer
+import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("register"))
-class RegistrationController {
+@Autowired
+class RegistrationController(themeService: ThemeService,
+                             accountPluginDao: AccountPluginDao,
+                             accountTypeDao: AccountTypeDao,
+                             accountDao: AccountDao,
+                             passwordEncoder: PasswordEncoder,
+                             context: ScalapressContext,
+                             @Qualifier("authman") authenticationManager: AuthenticationManager) {
 
-  @Autowired var themeDao: ThemeDao = _
-  @Autowired var themeService: ThemeService = _
-  @Autowired var accountPluginDao: AccountPluginDao = _
-  @Autowired var accountTypeDao: AccountTypeDao = _
-  @Autowired var accountDao: AccountDao = _
-  @Autowired var passwordEncoder: PasswordEncoder = _
-  @Autowired var context: ScalapressContext = _
+  //@Qualifier("authman")
 
   @ExceptionHandler
   @ResponseBody
@@ -61,11 +63,14 @@ class RegistrationController {
 
     val plugin = accountPluginDao.get
     val sreq = ScalapressRequest(req, context).withTitle("Registration")
+
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
+
     Option(plugin.registrationPageHeader).foreach(arg => page body arg)
     page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
     Option(plugin.registrationPageFooter).foreach(arg => page body arg)
+
     page
   }
 
@@ -84,38 +89,37 @@ class RegistrationController {
     }
 
     errors.hasErrors match {
-      case true =>
-        showRegistrationPage(req, form, errors)
+      case true => showRegistrationPage(req, form, errors)
       case false =>
 
-        val accountType = accountTypeDao.default
-
-        val user = Account(accountType)
-        user.name = form.name
-        user.email = form.email
-        user.passwordHash = passwordEncoder.encodePassword(form.password, null)
-        accountDao.save(user)
+        val account = createAccount(form)
+        accountDao.save(account)
 
         autologin(req, form.email, form.password)
 
-        Option(new HttpSessionRequestCache().getRequest(req, resp))
-          .flatMap(arg => Option(arg.getRedirectUrl)) match {
+        Option(new HttpSessionRequestCache().getRequest(req, resp)).flatMap(arg => Option(arg.getRedirectUrl)) match {
           case None =>
             val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
             val theme = themeService.default
             val page = ScalapressPage(theme, sreq)
             page.body("<p>Thank you for registering.</p>")
             page
-          case Some(redirect) =>
-            throw new RedirectException(redirect)
+          case Some(redirect) => throw new RedirectException(redirect)
         }
     }
   }
 
-  @ModelAttribute("form") def form = new RegistrationForm
+  def createAccount(form: RegistrationForm): Account = {
+    val accountType = accountTypeDao.default
+    val account = Account(accountType)
+    account.name = form.name
+    account.email = form.email
+    account.passwordHash = passwordEncoder.encodePassword(form.password, null)
+    account
+  }
 
-  @Qualifier("authman")
-  @Autowired var authenticationManager: AuthenticationManager = _
+  @ModelAttribute("form")
+  def form = new RegistrationForm
 
   def autologin(req: HttpServletRequest, email: String, password: String) {
     val token = new UsernamePasswordAuthenticationToken(email, password)
