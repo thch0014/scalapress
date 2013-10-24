@@ -92,7 +92,13 @@ class SearchController extends Logging {
       case e: Exception => // unparsable number
     }
 
-    val result = searchService.search(search)
+    val result = try {
+      searchService.search(search)
+    } catch {
+      case e: Exception =>
+        logger.error(e.getMessage)
+        SearchResult.apply()
+    }
     logger.debug("Search Result {}", result)
     val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
     logger.debug("Loaded {} objects", objects.size)
