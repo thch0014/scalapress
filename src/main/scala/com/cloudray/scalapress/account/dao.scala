@@ -10,6 +10,7 @@ import com.cloudray.scalapress.search.Sort
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.account.controller.Datum
 
 /** @author Stephen Samuel */
 trait AccountDao extends GenericDao[Account, java.lang.Long] {

@@ -8,13 +8,14 @@ import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
+import com.cloudray.scalapress.account.controller.Datum
 
 /** @author Stephen Samuel */
 trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
   def recent(i: Int): Seq[Obj]
   def findBulk(longs: Seq[Long]): Seq[Obj]
   def search(query: ObjectQuery): Page[Obj]
-  def typeAhead(query: String): Array[Array[String]]
+  def typeAhead(query: String): Array[Datum]
   def findByType(id: Long): List[Obj]
   def removeByType(id: Long)
 }
@@ -72,7 +73,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
 
   override def findByType(id: Long): List[Obj] = search(new Search(classOf[Obj]).addFilterEqual("objectType.id", id))
 
-  override def typeAhead(query: String): Array[Array[String]] = {
+  override def typeAhead(query: String): Array[Datum] = {
     getSession
       .createSQLQuery(
       "select a.id, a.name from items a WHERE a.name like ?")
@@ -82,7 +83,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
       .asScala
       .map(arg => {
       val values = arg.asInstanceOf[Array[_]]
-      Array(values(0).toString, values(1).toString)
+      Datum(value = values(1).toString, id = values(0).toString)
     }).toArray
   }
 

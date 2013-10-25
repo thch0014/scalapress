@@ -263,11 +263,21 @@
 </div>
 </form>
 
-<div class="row">
-    <div class="col-lg-12">
-        <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
-            <input type="hidden" id="add-line-id" name="objId"/>
-            <input type="text" class="input-xxlarge" id="add-line-typeahead" value=""/>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <form method="POST" action="/backoffice/order/$order.id/line/add">
+                <input type="hidden" id="add-line-id" name="objId"/>
+
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="add-line-typeahead" value=""
+                           placeholder="Search for products"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">Add Item</button>
+                </div>
+            </form>
             <script>
                 $('#add-line-typeahead').typeahead({
                     remote: '/rest/obj?q=%QUERY',
@@ -278,17 +288,23 @@
                             $('#add-line-id').val(datum.id);
                         })
             </script>
-            <button type="submit" class="btn btn-inverse btn-sm">Add Item</button>
-        </form>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <form method="POST" action="/backoffice/order/$order.id/line/add" class="pull-right">
-            Description: <input type="text" id="desc" name="desc" value="" class="input-xlarge"/>
-            Price: <input type="text" id="price" name="price" value="0" class="input-sm"/>
-            <button type="submit" class="btn btn-inverse btn-sm">Add Line</button>
-        </form>
+        </div>
+
+        <div class="row">
+            <form method="POST" action="/backoffice/order/$order.id/line/add">
+                <div class="col-md-8">
+                    <input type="text" id="desc" name="desc" value="" class="form-control"
+                           placeholder="Enter description"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" id="price" name="price" value="" class="form-control"
+                           placeholder="Enter price"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">Add Line</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

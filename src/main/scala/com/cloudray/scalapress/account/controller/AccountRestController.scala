@@ -1,10 +1,11 @@
-package com.cloudray.scalapress.account
+package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import com.cloudray.scalapress.media.ImageDao
+import com.cloudray.scalapress.account.AccountDao
 
 /** @author Stephen Samuel */
 @Controller
