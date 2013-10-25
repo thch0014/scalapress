@@ -269,33 +269,14 @@
             <input type="hidden" id="add-line-id" name="objId"/>
             <input type="text" class="input-xxlarge" id="add-line-typeahead" value=""/>
             <script>
-                autosep = ":";
                 $('#add-line-typeahead').typeahead({
-                    source: function (query, process) {
-                        return $.ajax({
-                            url: "/rest/obj?objectTypeName=Product",
-                            type: 'GET',
-                            data: {q: query},
-                            dataType: 'json',
-                            success: function (json) {
-                                var arr = [];
-                                for (var i in json) {
-                                    arr.push(json[i][0] + autosep + json[i][1]);
-                                }
-                                process(arr);
-                            }
-                        });
-                    }, highlighter: function (item) {
-                        var parts = item.split(autosep);
-                        parts.shift();
-                        return parts.join(autosep);
-                    }, updater: function (item) {
-                        var parts = item.split(autosep);
-                        var id = parts.shift();
-                        $('#add-line-id').val(id);
-                        return parts.join(autosep);
-                    }
-                })
+                    remote: '/rest/obj?q=%QUERY',
+                    limit: 10
+                }).bind("typeahead:selected",function (dataset, datum) {
+                            $('#add-line-id').val(datum.id);
+                        }).bind("typeahead:autocompleted", function (dataset, datum) {
+                            $('#add-line-id').val(datum.id);
+                        })
             </script>
             <button type="submit" class="btn btn-inverse btn-sm">Add Item</button>
         </form>

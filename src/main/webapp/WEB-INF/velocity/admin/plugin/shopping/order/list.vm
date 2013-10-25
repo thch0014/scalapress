@@ -48,7 +48,6 @@
             <input type="hidden" id="add-account-id" name="accountId"/>
             <input type="text" class="input-xlarge" id="add-account-typeahead" value=""/>
             <script>
-                autosep = ":";
                 $('#add-account-typeahead').typeahead({
                     remote: '/rest/account?q=%QUERY',
                     limit: 10
