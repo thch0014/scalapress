@@ -19,17 +19,22 @@ class ObjectType extends SortedSections with java.io.Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: java.lang.Long = _
+  @BeanProperty
+  var id: java.lang.Long = _
 
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
-  @BeanProperty var deleted: Boolean = false
+  @BeanProperty
+  var deleted: Boolean = false
 
-  @BeanProperty var hidden: Boolean = false
+  @BeanProperty
+  var hidden: Boolean = false
 
-  def searchable: Boolean = !hidden && !name.toLowerCase.contains("account")
+  def searchable: Boolean = !hidden
 
-  @BeanProperty var prices: Boolean = false
+  @BeanProperty
+  var prices: Boolean = false
 
   @BeanProperty var linkGroups: String = _
   def linkGroupsArray = Option(linkGroups)
@@ -38,24 +43,28 @@ class ObjectType extends SortedSections with java.io.Serializable {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
+  @BeanProperty
+  var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
   def sortedAttributes = attributes.asScala.toSeq.sortBy(_.id).sortBy(_.position)
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
   @BatchSize(size = 10)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
+  @BeanProperty
+  var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "listitemmarkup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var objectListMarkup: Markup = _
+  @BeanProperty
+  var objectListMarkup: Markup = _
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "objectViewMarkup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var objectViewMarkup: Markup = _
+  @BeanProperty
+  var objectViewMarkup: Markup = _
 
   def bootIcon = name.toLowerCase match {
     case "listing" | "listings" => "glyphicon glyphicon-list-alt"

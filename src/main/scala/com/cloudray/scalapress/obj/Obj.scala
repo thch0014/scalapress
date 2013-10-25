@@ -26,10 +26,12 @@ class Obj extends SortedSections with java.io.Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Index(name = "id_index")
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @Index(name = "name_index")
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
   @deprecated
   @Column(name = "email")
@@ -41,31 +43,38 @@ class Obj extends SortedSections with java.io.Serializable {
   @Column(name = "passwordHash")
   var password_deprecated: String = _
 
-  @BeanProperty var expiry: Long = 0
-  @BeanProperty var labels: String = _
-  @BeanProperty var prioritized: Boolean = _
+  @BeanProperty
+  var expiry: Long = 0
+  @BeanProperty
+  var labels: String = _
+  @BeanProperty
+  var prioritized: Boolean = _
 
   @Index(name = "owner_index")
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "account")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var account: Account = _
+  @BeanProperty
+  var account: Account = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "listing_package")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var listingPackage: ListingPackage = _
+  @BeanProperty
+  var listingPackage: ListingPackage = _
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SUBSELECT)
-  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  @BeanProperty
+  var images: java.util.List[String] = new util.ArrayList[String]()
   def sortedImages = images.asScala.toSeq
 
   @OneToMany(mappedBy = "obj", fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @Fetch(FetchMode.SELECT)
   @BatchSize(size = 20)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
+  @BeanProperty
+  var attributeValues: java.util.Set[AttributeValue] = new util.HashSet[AttributeValue]()
   def sortedAttributeValues: Seq[AttributeValue] = attributeValues
     .asScala
     .filterNot(_.value == null)
@@ -83,7 +92,8 @@ class Obj extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @Fetch(FetchMode.SELECT)
   @BatchSize(size = 5)
-  @BeanProperty var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
+  @BeanProperty
+  var folders: java.util.Set[Folder] = new util.HashSet[Folder]()
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
   @JoinTable(name = "items_accessories",
@@ -91,7 +101,8 @@ class Obj extends SortedSections with java.io.Serializable {
     inverseJoinColumns = Array(new JoinColumn(name = "accessory"))
   )
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
+  @BeanProperty
+  var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)

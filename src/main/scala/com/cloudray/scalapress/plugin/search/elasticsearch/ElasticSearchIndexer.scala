@@ -81,12 +81,6 @@ class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
     context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterOrEqual("dateUpdated", _since))
   }
 
-  def _basicSearch(offset: Int, pageSize: Int) = new Search(classOf[Obj])
-    .setFirstResult(offset)
-    .setMaxResults(pageSize)
-    .addFilterNotNull("name")
-    .addFilterNotEqual("objectType.name", "Account")
-    .addFilterNotEqual("objectType.name", "account")
-    .addFilterNotEqual("objectType.name", "Accounts")
-    .addFilterNotEqual("objectType.name", "accounts")
+  def _basicSearch(offset: Int, pageSize: Int) =
+    new Search(classOf[Obj]).setFirstResult(offset).setMaxResults(pageSize).addFilterNotNull("name")
 }

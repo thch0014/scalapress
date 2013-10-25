@@ -15,7 +15,7 @@ class ObjectTypesInterceptor(typeDao: TypeDao) extends HandlerInterceptorAdapter
     if (modelAndView != null) {
       val types = typeDao.findAll()
         .filterNot(_.deleted)
-        .filterNot(_.name.toLowerCase.startsWith("account"))
+        .filterNot(_.name.toLowerCase.startsWith("account")) // use this to hide accounts post migration
         .sortBy(_.id)
       modelAndView.getModelMap.put("types", types.asJava)
     }

@@ -20,38 +20,47 @@ class Basket {
   }
 
   @Id
-  @BeanProperty var sessionId: String = _
+  @BeanProperty
+  var sessionId: String = _
 
   // the completed order
   @OneToOne(targetEntity = classOf[com.cloudray.scalapress.plugin.ecommerce.domain.Order])
-  @BeanProperty var order: com.cloudray.scalapress.plugin.ecommerce.domain.Order = _
+  @BeanProperty
+  var order: com.cloudray.scalapress.plugin.ecommerce.domain.Order = _
 
   @NotEmpty
-  @BeanProperty var accountName: String = _
+  @BeanProperty
+  var accountName: String = _
 
-  @BeanProperty var useBillingAddress = false
+  @BeanProperty
+  var useBillingAddress = false
 
   @Email
   @NotEmpty
-  @BeanProperty var accountEmail: String = _
+  @BeanProperty
+  var accountEmail: String = _
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "basket", cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @Fetch(FetchMode.JOIN)
-  @BeanProperty var lines: java.util.List[BasketLine] = new util.ArrayList[BasketLine]()
+  @BeanProperty
+  var lines: java.util.List[BasketLine] = new util.ArrayList[BasketLine]()
 
   @Valid
   @ManyToOne(cascade = Array(CascadeType.ALL))
   @JoinColumn(name = "delivery_address", nullable = true)
-  @BeanProperty var deliveryAddress: Address = _
+  @BeanProperty
+  var deliveryAddress: Address = _
 
   @Valid
   @ManyToOne(cascade = Array(CascadeType.ALL))
   @JoinColumn(name = "billing_address", nullable = true)
-  @BeanProperty var billingAddress: Address = _
+  @BeanProperty
+  var billingAddress: Address = _
 
   @ManyToOne
   @JoinColumn(name = "delivery_option_id", nullable = true)
-  @BeanProperty var deliveryOption: DeliveryOption = _
+  @BeanProperty
+  var deliveryOption: DeliveryOption = _
 
   def linesTotal: Double = {
     var total = 0.0

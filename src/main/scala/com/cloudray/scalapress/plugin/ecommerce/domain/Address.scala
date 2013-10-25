@@ -10,58 +10,71 @@ import scala.beans.BeanProperty
 @Table(name = "addresses")
 class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @BeanProperty var id: Long = _
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @BeanProperty
+  var id: Long = _
 
-    @NotEmpty
-    @Column(name = "contactName")
-    @BeanProperty var name: String = _
+  @NotEmpty
+  @Column(name = "contactName")
+  @BeanProperty
+  var name: String = _
 
-    @Column(name = "companyName")
-    @BeanProperty var company: String = _
+  @Column(name = "companyName")
+  @BeanProperty
+  var company: String = _
 
-    @Column(name = "account")
-    @BeanProperty var account: String = _
+  @Column(name = "account")
+  @BeanProperty
+  var account: String = _
 
-    @NotEmpty
-    @Column(name = "addressLine1")
-    @BeanProperty var address1: String = _
+  @NotEmpty
+  @Column(name = "addressLine1")
+  @BeanProperty
+  var address1: String = _
 
-    @Column(name = "addressLine2")
-    @BeanProperty var address2: String = _
+  @Column(name = "addressLine2")
+  @BeanProperty
+  var address2: String = _
 
-    @NotEmpty
-    @BeanProperty var town: String = _
+  @NotEmpty
+  @BeanProperty
+  var town: String = _
 
-    @NotEmpty
-    @BeanProperty var postcode: String = _
+  @NotEmpty
+  @BeanProperty
+  var postcode: String = _
 
-    @NotEmpty
-    @BeanProperty var telephone: String = _
+  @NotEmpty
+  @BeanProperty
+  var telephone: String = _
 
-    @Column(length = 256)
-    @BeanProperty var country: String = _
+  @Column(length = 256)
+  @BeanProperty
+  var country: String = _
 
-    @BeanProperty var date: Long = _
+  @BeanProperty
+  var date: Long = _
 
-    @Column(name = "instructions", length = 1000)
-    @BeanProperty var instructions: String = _
+  @Column(name = "instructions", length = 1000)
+  @BeanProperty
+  var instructions: String = _
 
-    @BeanProperty var state: String = _
+  @BeanProperty var state: String = _
 
-    @BeanProperty var active: Boolean = _
+  @BeanProperty
+  var active: Boolean = _
 
-    def label = {
-        val sb = new ArrayBuffer[String]()
-        Option(name).foreach(sb append _)
-        Option(company).foreach(sb append _)
-        Option(address1).foreach(sb append _)
-        Option(address2).foreach(sb append _)
-        Option(town).foreach(sb append _)
-        Option(postcode).foreach(sb append _)
-        Option(country).foreach(sb append _)
-        Option(telephone).foreach(sb append _)
-        sb.mkString("<br/>")
-    }
+  def label = {
+    val sb = new ArrayBuffer[String]()
+    Option(name).foreach(sb append _)
+    Option(company).foreach(sb append _)
+    Option(address1).foreach(sb append _)
+    Option(address2).foreach(sb append _)
+    Option(town).foreach(sb append _)
+    Option(postcode).foreach(sb append _)
+    Option(country).foreach(sb append _)
+    Option(telephone).foreach(sb append _)
+    sb.mkString("<br/>")
+  }
 }

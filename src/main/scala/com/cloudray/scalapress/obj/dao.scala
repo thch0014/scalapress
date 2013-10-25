@@ -93,12 +93,14 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
 }
 
 trait TypeDao extends GenericDao[ObjectType, java.lang.Long] {
+  @deprecated
   def getAccount: Option[ObjectType]
 }
 
 @Component
 @Transactional
 class TypeDaoImpl extends GenericDaoImpl[ObjectType, java.lang.Long] with TypeDao {
+  @deprecated
   def getAccount: Option[ObjectType] =
     findAll.find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts")
 }
