@@ -1,7 +1,7 @@
 package com.cloudray.scalapress
 
 import folder.Folder
-import javax.servlet.http.{HttpServletResponse, Cookie, HttpServletRequest}
+import javax.servlet.http.{Cookie, HttpServletRequest}
 import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
@@ -26,8 +26,7 @@ case class ScalapressRequest(request: HttpServletRequest,
                              location: Option[String] = None,
                              paging: Option[Paging] = None,
                              scripts: ListBuffer[String] = new ListBuffer(),
-                             styles: ListBuffer[String] = new ListBuffer(),
-                             response: Option[HttpServletResponse] = None) {
+                             styles: ListBuffer[String] = new ListBuffer()) {
 
   if (request.getAttribute("outgoingCookies") == null) {
     request.setAttribute("outgoingCookies", new ListBuffer[Cookie])
@@ -42,7 +41,10 @@ case class ScalapressRequest(request: HttpServletRequest,
     request.getAttribute(cacheKey).asInstanceOf[Cache]
   }
 
-  def outgoingCookies: ListBuffer[Cookie] = request.getAttribute("outgoingCookies").asInstanceOf[ListBuffer[Cookie]]
+  def outgoingCookies: ListBuffer[Cookie] =
+    Option(request.getAttribute("outgoingCookies"))
+      .map(_.asInstanceOf[ListBuffer[Cookie]])
+      .getOrElse(new ListBuffer[Cookie])
   def shoppingPlugin = cache.shoppingPlugin
   def installation = cache.installation
   def folderSettings = cache.folderSettings

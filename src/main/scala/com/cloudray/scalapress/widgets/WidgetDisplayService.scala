@@ -16,7 +16,12 @@ class WidgetDisplayService extends Logging {
   }
 
   def getOneTimeCookies(widgets: Iterable[Widget]): Iterable[Cookie] = {
-    widgets.filter(_.oneTimeVisible).map(widget => new Cookie(cookieName(widget), "true"))
+    widgets.filter(_.oneTimeVisible).map(widget => {
+      val cookie = new Cookie(cookieName(widget), "true")
+      cookie.setPath("/")
+      cookie.setMaxAge(60 * 60 * 24 * 365)
+      cookie
+    })
   }
 
   def isVisible(widget: Widget, sreq: ScalapressRequest): Boolean =

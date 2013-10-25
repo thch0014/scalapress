@@ -84,6 +84,7 @@ abstract class Widget {
   var restricted: Boolean = _
 
   @Column(name = "oneTimeVisible", nullable = false)
+  @BeanProperty
   var oneTimeVisible: Boolean = _
 
   @BeanProperty
