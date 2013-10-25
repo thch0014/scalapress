@@ -9,17 +9,33 @@ import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 trait AccountDao extends GenericDao[Account, java.lang.Long] {
   def search(query: AccountQuery): Page[Account]
   def byEmail(email: String): Option[Account]
   def findByType(id: Long): List[Account]
+  def typeAhead(query: String): Array[Array[String]]
 }
 
 @Component
 @Transactional
 class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with AccountDao with Logging {
+
+  override def typeAhead(query: String): Array[Array[String]] = {
+    getSession
+      .createSQLQuery(
+      "select a.id, a.name from accounts a WHERE a.name like ?")
+      .setString(0, query + "%")
+      .setMaxResults(20)
+      .list()
+      .asScala
+      .map(arg => {
+      val values = arg.asInstanceOf[Array[_]]
+      Array(values(0).toString, values(1).toString)
+    }).toArray
+  }
 
   override def search(q: AccountQuery): Page[Account] = {
     val s = new Search(classOf[Account]).setMaxResults(q.pageSize).setFirstResult(q.offset)

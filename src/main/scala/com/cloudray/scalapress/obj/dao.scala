@@ -14,7 +14,7 @@ trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
   def recent(i: Int): Seq[Obj]
   def findBulk(longs: Seq[Long]): Seq[Obj]
   def search(query: ObjectQuery): Page[Obj]
-  def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]]
+  def typeAhead(query: String): Array[Array[String]]
   def findByType(id: Long): List[Obj]
   def removeByType(id: Long)
 }
@@ -43,7 +43,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     super.save(obj)
   }
 
-  def search(q: ObjectQuery): Page[Obj] = {
+  override def search(q: ObjectQuery): Page[Obj] = {
     val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset)
     q.typeId.foreach(t => {
       s.addFetch("objectType")
@@ -70,15 +70,13 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
   }
 
-  def findByType(id: Long): List[Obj] = search(new Search(classOf[Obj]).addFilterEqual("objectType.id", id))
+  override def findByType(id: Long): List[Obj] = search(new Search(classOf[Obj]).addFilterEqual("objectType.id", id))
 
-  override def typeAhead(query: String, objectTypeName: Option[String]): Array[Array[String]] = {
+  override def typeAhead(query: String): Array[Array[String]] = {
     getSession
       .createSQLQuery(
-      "select i.id, i.name from items i join items_types it on i.itemtype=it.id " +
-        "WHERE i.name like ? and it.name like ?")
+      "select a.id, a.name from items a WHERE a.name like ?")
       .setString(0, query + "%")
-      .setString(1, "%" + objectTypeName.getOrElse("") + "%")
       .setMaxResults(20)
       .list()
       .asScala
@@ -87,6 +85,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
       Array(values(0).toString, values(1).toString)
     }).toArray
   }
+
   override def removeByType(id: Long): Unit = getSession
     .createSQLQuery("delete from items where itemtype=" + id)
     .executeUpdate()

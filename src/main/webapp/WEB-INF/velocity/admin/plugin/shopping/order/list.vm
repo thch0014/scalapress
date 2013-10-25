@@ -52,7 +52,7 @@
                 $('#add-account-typeahead').typeahead({
                     source: function (query, process) {
                         return $.ajax({
-                            url: "/rest/obj?objectTypeName=Account",
+                            url: "/rest/account",
                             type: 'GET',
                             data: {q: query},
                             dataType: 'json',
