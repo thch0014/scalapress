@@ -36,7 +36,7 @@ class ProfileController {
     val sreq = ScalapressRequest(req, context).withTitle("Your Profile")
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
-    page.body(ProfileRenderer.renderProfilePage(profile, plugin, errors))
+    page.body(new ProfileRenderer().render(profile, errors))
     page
   }
 

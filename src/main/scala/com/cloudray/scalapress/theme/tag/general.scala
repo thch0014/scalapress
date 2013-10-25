@@ -32,7 +32,7 @@ class TitleTag extends ScalapressTag with TagBuilder {
 class ScriptTag extends ScalapressTag with TagBuilder {
 
   val sources = Seq("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js",
-    "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js",
+    "http://www.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js",
     "/static/js/jquery.colorbox-min.js",
     "/static/js/jquery.easing.1.3.js",
     "/static/js/jquery.galleryview-3.0-dev.js",
@@ -54,7 +54,7 @@ class ScriptTag extends ScalapressTag with TagBuilder {
 class CssTag extends ScalapressTag with TagBuilder {
 
   val sources = Seq(
-    "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.css",
+    "http://www.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css",
     "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css",
     "/static/css/jquery.galleryview-3.0-dev.css",
     "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700",
