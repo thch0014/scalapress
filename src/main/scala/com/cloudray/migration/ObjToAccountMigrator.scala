@@ -35,7 +35,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
         val objects = objectDao.search(query).results
         logger.info("Migrating {} objects into accounts", objects.size)
 
-       objects.foreach(obj => {
+        objects.foreach(obj => {
           val account = new Account
           account.id = obj.id
           account.passwordHash = obj.password_deprecated
@@ -46,7 +46,6 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.name = obj.name
           account.registrationIpAddress = obj.ipAddress
           account.accountType = accountType
-          account
           try {
             accountDao.save(account)
             objectDao.remove(obj)
