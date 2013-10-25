@@ -41,6 +41,7 @@ class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInst
   val plugin = new AccountPlugin
   plugin.registrationPageHeader = "superheader"
   plugin.registrationPageFooter = "superfooter"
+  plugin.registrationCompletionHtml = "some wicked registration skillz"
 
   val accountType = new AccountType
 
@@ -75,5 +76,10 @@ class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInst
     val captor = ArgumentCaptor.forClass(classOf[Account])
     Mockito.verify(accountDao).save(captor.capture)
     assert(captor.getValue.passwordHash === "hash123")
+  }
+
+  it should "use registration completion text when set" in {
+    val page = controller.submitRegistrationPage(req, resp, form, errors)
+    assert(page.render.contains("some wicked registration skillz"))
   }
 }

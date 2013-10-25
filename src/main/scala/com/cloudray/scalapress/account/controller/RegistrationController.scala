@@ -98,12 +98,15 @@ class RegistrationController(themeService: ThemeService,
 
         autologin(req, form.email, form.password)
 
+        val text = Option(accountPluginDao.get.registrationCompletionHtml)
+          .getOrElse("<p>Thank you for registering.</p>")
+
         Option(new HttpSessionRequestCache().getRequest(req, resp)).flatMap(arg => Option(arg.getRedirectUrl)) match {
           case None =>
             val sreq = ScalapressRequest(req, context).withTitle("Registration Completed")
             val theme = themeService.default
             val page = ScalapressPage(theme, sreq)
-            page.body("<p>Thank you for registering.</p>")
+            page.body(text)
             page
           case Some(redirect) => throw new RedirectException(redirect)
         }
