@@ -1,7 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Edit Search Form Field</h3>
+<div class="page-header">
+    <h2>Edit Search Form Field</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -9,7 +10,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("field.name")
+          #springFormInput("field.name", "class='form-control'")
         </div>
     </div>
 
@@ -17,50 +18,52 @@
         <label class="col-lg-2 control-label">Type</label>
 
         <div class="col-lg-8">
-            #springFormSingleSelect("field.fieldType", $attributeTypes)
+          #springFormSingleSelect("field.fieldType", $attributeTypes, "class='form-control'")
         </div>
     </div>
 
 
-    #if ($field.fieldType == "Attribute")
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Attribute</label>
+  #if ($field.fieldType == "Attribute")
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Attribute</label>
 
-            <div class="col-lg-8">
-                <select id="attribute" name="attribute">
-                    #foreach($option in $attributesMap.keySet())
-                        <option value="${option}"
-                            #if("$!field.attribute.id" == "$option")
-                                selected="selected"
-                            #end>
-                            ${attributesMap.get($option)}</option>
-                    #end
-                </select>
-            </div>
-        </div>
-    #end
+          <div class="col-lg-8">
+              <select id="attribute" name="attribute" class="form-control">
+                #foreach($option in $attributesMap.keySet())
+                    <option value="${option}"
+                      #if("$!field.attribute.id" == "$option")
+                            selected="selected"
+                      #end>
+                      ${attributesMap.get($option)}</option>
+                #end
+              </select>
+          </div>
+      </div>
+  #end
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Preset</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("field.preset")
+          #springFormCheckbox("field.preset")
         </div>
     </div>
 
-    #if ($field.preset)
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Preset Value</label>
+  #if ($field.preset)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Preset Value</label>
 
-            <div class="col-lg-8">
-                #springFormInput("field.value")
-            </div>
+          <div class="col-lg-8">
+            #springFormInput("field.value", "class='form-control'")
+          </div>
+      </div>
+  #end
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a role="button" class="btn btn-default" href="/backoffice/searchform/$field.searchForm.id">Return</a>
         </div>
-    #end
-
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <a role="button" class="btn btn-default" href="/backoffice/searchform/$field.searchForm.id">Return</a>
     </div>
 
 </form>

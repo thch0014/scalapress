@@ -12,24 +12,31 @@ class SearchForm {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: java.lang.Long = _
+  @BeanProperty
+  var id: java.lang.Long = _
 
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
   @ManyToOne
   @JoinColumn(name = "itemtype", nullable = true)
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty
+  var objectType: ObjectType = _
 
   @Column(name = "resultsperpage")
-  @BeanProperty var pageSize: Int = _
+  @BeanProperty
+  var pageSize: Int = _
 
   @Enumerated(EnumType.STRING)
-  @BeanProperty var sort: Sort = _
+  @BeanProperty
+  var sort: Sort = _
 
-  @BeanProperty var submitLabel: String = _
+  @BeanProperty
+  var submitLabel: String = _
 
   @OneToMany(mappedBy = "searchForm", cascade = Array(CascadeType.ALL))
-  @BeanProperty var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
+  @BeanProperty
+  var fields: java.util.Set[SearchFormField] = new java.util.HashSet[SearchFormField]()
 
   def sortedFields = fields.asScala.toSeq.sortBy(_.name).sortBy(_.position)
 
