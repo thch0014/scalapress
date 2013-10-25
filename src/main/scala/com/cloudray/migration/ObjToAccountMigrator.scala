@@ -48,6 +48,10 @@ class ObjToAccountMigrator(accountDao: AccountDao,
           account.accountType = accountType
           try {
             accountDao.save(account)
+          } catch {
+            case e: Exception => logger.error(e.toString)
+          }
+          try {
             objectDao.remove(obj)
           } catch {
             case e: Exception => logger.error(e.toString)
