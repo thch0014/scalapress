@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.theme.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.theme.{ThemeImporter, ThemeDao, Theme}
 import scala.collection.JavaConverters._
@@ -24,6 +24,12 @@ class ThemeListController(themeDao: ThemeDao,
     val theme = new Theme
     theme.name = "new theme"
     themeDao.save(theme)
+    "redirect:/backoffice/theme"
+  }
+
+  @RequestMapping(value = Array("{id}/delete"))
+  def delete(@PathVariable("id") id: Long): String = {
+    themeDao.removeById(id)
     "redirect:/backoffice/theme"
   }
 

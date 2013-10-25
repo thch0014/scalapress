@@ -20,5 +20,6 @@ class ThemeEditController(themeDao: ThemeDao) {
     edit(theme)
   }
 
-  @ModelAttribute def theme(@PathVariable("id") id: Long) = themeDao.find(id)
+  @ModelAttribute
+  def theme(@PathVariable("id") id: Long) = themeDao.find(id)
 }
