@@ -27,8 +27,11 @@ case class ScalapressRequest(request: HttpServletRequest,
                              paging: Option[Paging] = None,
                              scripts: ListBuffer[String] = new ListBuffer(),
                              styles: ListBuffer[String] = new ListBuffer(),
-                             cookies: ListBuffer[Cookie] = new ListBuffer(),
                              response: Option[HttpServletResponse] = None) {
+
+  if (request.getAttribute("outgoingCookies") == null) {
+    request.setAttribute("outgoingCookies", new ListBuffer[Cookie])
+  }
 
   val cacheKey = "scalapress.cache"
   private val cache = if (request.getAttribute(cacheKey) == null) {
@@ -39,6 +42,7 @@ case class ScalapressRequest(request: HttpServletRequest,
     request.getAttribute(cacheKey).asInstanceOf[Cache]
   }
 
+  def outgoingCookies: ListBuffer[Cookie] = request.getAttribute("outgoingCookies").asInstanceOf[ListBuffer[Cookie]]
   def shoppingPlugin = cache.shoppingPlugin
   def installation = cache.installation
   def folderSettings = cache.folderSettings
@@ -47,7 +51,6 @@ case class ScalapressRequest(request: HttpServletRequest,
   def folderRoot = cache.folderRoot
   def folder(id: Long): Folder = cache.folder(id)
   def attribute(id: Long): Attribute = cache.attribute(id)
-
   def cookie(name: String): Option[Cookie] = request.getCookies.find(_.getName == name)
 
   case class Cache(context: ScalapressContext) {

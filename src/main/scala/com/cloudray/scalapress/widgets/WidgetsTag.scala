@@ -22,7 +22,7 @@ class WidgetsTag extends ScalapressTag with Logging {
 
         val widgets = service.getVisibleWidgets(location, sreq)
         val cookies = service.getOneTimeCookies(widgets)
-        sreq.cookies.appendAll(cookies)
+        sreq.outgoingCookies.appendAll(cookies)
 
         val output = renderer.render(widgets, sep, sreq)
         Option(output)
