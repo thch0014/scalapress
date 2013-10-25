@@ -18,7 +18,7 @@ import javax.xml.transform.Source
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.obj.TypeDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
-import com.cloudray.scalapress.settings.InstallationDao
+import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
 import util.mvc._
 import com.cloudray.scalapress.util.mvc.interceptor._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
@@ -48,6 +48,8 @@ class WebConfig extends WebMvcConfigurationSupport {
   @Autowired var deliveryOptionDao: DeliveryOptionDao = _
   @Autowired var siteDao: InstallationDao = _
   @Autowired var formDao: FormDao = _
+  @Autowired var generalSettingsDao: GeneralSettingsDao = _
+  @Autowired var installationDao: InstallationDao = _
 
   override def addFormatters(registry: FormatterRegistry) {
     registry.addConverter(new StringFolderConverter(folderDao))
@@ -78,6 +80,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     registry.addInterceptor(new AccountTypesInterceptor(accountTypeDao)).addPathPatterns("/backoffice/**")
     registry.addInterceptor(new SiteInterceptor(context))
     registry.addInterceptor(new MenuInterceptor(context)).addPathPatterns("/backoffice/**")
+    registry.addInterceptor(new OfflineInterceptor(generalSettingsDao, installationDao))
   }
 
   override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {
