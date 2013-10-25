@@ -31,9 +31,9 @@ class Obj extends SortedSections with java.io.Serializable {
   @Index(name = "name_index")
   @BeanProperty var name: String = _
 
+  @deprecated
   @Column(name = "email")
   @BeanProperty
-  @deprecated
   var email_deprecated: String = _
 
   @deprecated
@@ -96,38 +96,47 @@ class Obj extends SortedSections with java.io.Serializable {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
+  @BeanProperty
+  var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
   @Index(name = "objecttype_index")
   @ManyToOne
   @JoinColumn(name = "itemType")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty
+  var objectType: ObjectType = _
 
   @Column(length = 10000)
   @BeanProperty var content: String = _
   def content(limit: Int): String = content.take(limit)
 
   @Column(name = "dateCreated")
-  @BeanProperty var dateCreated: java.lang.Long = _
+  @BeanProperty
+  var dateCreated: java.lang.Long = _
 
   @Column(name = "dateUpdated")
-  @BeanProperty var dateUpdated: java.lang.Long = _
+  @BeanProperty
+  var dateUpdated: java.lang.Long = _
 
   @Column(name = "reference", length = 5000)
-  @BeanProperty var exernalReference: String = _
+  @BeanProperty
+  var exernalReference: String = _
 
   @Column(name = "descriptionTag", length = 500)
-  @BeanProperty var descriptionTag: String = _
+  @BeanProperty
+  var descriptionTag: String = _
 
   @Column(name = "titleTag", length = 500)
-  @BeanProperty var titleTag: String = _
+  @BeanProperty
+  var titleTag: String = _
 
   @Column(name = "keywords", length = 500)
-  @BeanProperty var keywordsTag: String = _
+  @BeanProperty
+  var keywordsTag: String = _
 
   @Column(length = 5000)
-  @BeanProperty var summary: String = _
+  @BeanProperty
+  var summary: String = _
 
   def summary(max: Int): Option[String] = {
     Option(content)
@@ -137,36 +146,44 @@ class Obj extends SortedSections with java.io.Serializable {
 
   @Index(name = "sellPrice_index")
   @Column(name = "genericSellPrice")
-  @BeanProperty var price: Int = _
+  @BeanProperty
+  var price: Int = _
 
   @BeanProperty def vat: Int = (price * vatRate / 100.0).toInt
   @BeanProperty def sellPriceInc: Int = price + vat
   @BeanProperty def sellPriceDecimal = "%.2f" format price / 100.0
   def profit = price - costPrice
 
-  @BeanProperty var vatRate: Double = _
+  @BeanProperty
+  var vatRate: Double = _
 
-  @BeanProperty var costPrice: Int = _
+  @BeanProperty
+  var costPrice: Int = _
 
   @Column(name = "rrp")
-  @BeanProperty var rrp: Int = _
+  @BeanProperty
+  var rrp: Int = _
 
   @Index(name = "status_index")
-  @BeanProperty var status: String = _
+  @BeanProperty
+  var status: String = _
 
-  @BeanProperty var inStockMsg: String = _
+  @BeanProperty
+  var inStockMsg: String = _
 
-  @BeanProperty var outStockMsg: String = _
+  @BeanProperty
+  var outStockMsg: String = _
 
   @Column(name = "ourStock")
-  @BeanProperty var stock: Int = _
+  @BeanProperty
+  var stock: Int = _
 
   @Column(name = "brochure")
-  @BeanProperty var orderable: Boolean = false
+  @BeanProperty
+  var orderable: Boolean = false
 
-  @BeanProperty var backorders: Boolean = _
-
-  @BeanProperty var ipAddress: String = _
+  @BeanProperty
+  var backorders: Boolean = _
 
   @PrePersist
   def updateLastModified() {
