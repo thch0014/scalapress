@@ -44,7 +44,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     assert(tx.transactionId === "transactionid6655")
     assert(tx.authCode === "authyauthy2523")
     assert(tx.amount === 156789)
-    assert(tx.paymentProcessor === "SagePayForm")
+    assert(tx.processor === "SagePayForm")
   }
 
   test("the processor is enabled iff the plugin sagePayVendorName is not null") {

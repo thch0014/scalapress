@@ -13,7 +13,6 @@ class TransactionViewController(transactionDao: TransactionDao) {
 
   @RequestMapping
   def search(@PathVariable("id") id: Long, model: ModelMap): String = {
-
     val tx = transactionDao.find(id)
     model.put("tx", tx)
     "admin/tx/view.vm"

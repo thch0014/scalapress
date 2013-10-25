@@ -1,0 +1,100 @@
+#parse("/admin/header.vm")
+
+
+<div class="page-header">
+    <h2>Transaction $tx.id</h2>
+    <h5>Date: $datetool.format($tx.date) Amount: $tx.amountDecimal()</h5>
+</div>
+
+
+<form class="form-horizontal" method="POST">
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Processor Id</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.transactionId", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Processor</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.processor", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Payee Email</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.payeeEmail", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Payee Name</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.payee", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Auth Code</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.authCode", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Status</label>
+
+        <div class="col-lg-8">
+          #springFormInput("tx.status", "class='form-control'")
+        </div>
+    </div>
+
+  #if ($tx.fraudHint)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Card Type</label>
+
+          <div class="col-lg-8">
+            #springFormInput("tx.cardType", "class='form-control'")
+          </div>
+      </div>
+  #end
+
+  #if ($tx.fraudHint)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Security Check</label>
+
+          <div class="col-lg-8">
+            #springFormInput("tx.securityCheck", "class='form-control'")
+          </div>
+      </div>
+  #end
+
+  #if ($tx.fraudHint)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Fraud Hint</label>
+
+          <div class="col-lg-8">
+            #springFormInput("tx.fraudHint", "class='form-control'")
+          </div>
+      </div>
+  #end
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="/backoffice/tx" class="btn btn-default">
+                <i class="icon-arrow-left"></i> Return to transactions
+            </a>
+        </div>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

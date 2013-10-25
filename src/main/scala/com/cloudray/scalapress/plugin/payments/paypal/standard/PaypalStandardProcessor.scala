@@ -65,9 +65,8 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
 
         val tx = Transaction(txid, paymentProcessorName, amount, status)
         tx.currency = params("mc_currency")
-        tx.transactionType = params("payment_type")
         tx.payerStatus = params("payer_status")
-        tx.paymentProcessor = paymentProcessorName
+        tx.processor = paymentProcessorName
         tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
         tx.payeeEmail = params.get("payer_email").orNull
 

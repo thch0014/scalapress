@@ -59,9 +59,10 @@ class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends 
 
           val tx = Transaction(transactionId.getOrElse("unknown"), NAME, (amount.toDouble * 100).toInt, status)
           tx.status = transactionStatus.orNull
-          tx.details = cardType.getOrElse("") + " " + name.getOrElse("")
           tx.authCode = rawAuthCode.orNull
           tx.ipAddress = ipAddress.orNull
+          tx.payee = name.orNull
+          tx.cardType = cardType.orNull
           logger.debug("Created transaction [{}]", tx)
           Some(tx)
 

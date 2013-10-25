@@ -12,8 +12,8 @@ class TxDaoTest extends FunSuite with MockitoSugar {
     val tx = new Transaction
     tx.transactionId = "tx56NBV"
     tx.status = "completed"
-    tx.details = "super payment by visa"
     tx.date = 112256783566l
+    tx.authCode = "authy1"
 
     assert(tx.id == 0)
     TestDatabaseContext.txDao.save(tx)
@@ -22,7 +22,7 @@ class TxDaoTest extends FunSuite with MockitoSugar {
     val t2 = TestDatabaseContext.txDao.find(tx.id)
     assert("tx56NBV" === t2.transactionId)
     assert("completed" === t2.status)
-    assert("super payment by visa" === t2.details)
+    assert("authy1" === t2.authCode)
     assert(112256783566l === t2.date)
   }
 }

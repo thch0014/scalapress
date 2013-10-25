@@ -104,23 +104,27 @@ class AmazonS3AssetStore(val cdnUrl: String,
 
   @PostConstruct
   def loadAssets() {
-    logger.info("Loading assets, be patient S3 is slow...")
+    import scala.concurrent._
+    import ExecutionContext.Implicits.global
+    future {
+      logger.info("Loading assets, be patient S3 is slow...")
 
-    val assets = new ListBuffer[Asset]
+      val assets = new ListBuffer[Asset]
 
-    val req = new ListVersionsRequest
-    req.setBucketName(bucketName)
+      val req = new ListVersionsRequest
+      req.setBucketName(bucketName)
 
-    var listing = getAmazonS3Client.listVersions(req)
-    var versions = listing.getVersionSummaries
-    while (versions != null && versions.size > 0) {
-      assets appendAll versions.asScala.map(toAsset)
-      listing = getAmazonS3Client.listNextBatchOfVersions(listing)
-      versions = listing.getVersionSummaries
+      var listing = getAmazonS3Client.listVersions(req)
+      var versions = listing.getVersionSummaries
+      while (versions != null && versions.size > 0) {
+        assets appendAll versions.asScala.map(toAsset)
+        listing = getAmazonS3Client.listNextBatchOfVersions(listing)
+        versions = listing.getVersionSummaries
+      }
+
+      logger.info("Loaded assets [count: {}]", assets.size)
+      this.assets = assets.toList
     }
-
-    logger.info("Loaded assets [count: {}]", assets.size)
-    this.assets = assets.toList
   }
 
   def getAmazonS3Client: AmazonS3Client = {

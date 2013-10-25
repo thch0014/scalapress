@@ -60,18 +60,25 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
 
   def _createTx(params: Map[String, String]) = {
 
+    val status = params.get("Status").getOrElse("NoStatus")
     val transactionId = params.get("VPSTxId").orNull
     val authCode = params.get("TxAuthNo").orNull
+    val cardType = params.get("CardType").orNull
+    val fraudHint = params.get("FraudResponse").orNull
+    val securityCheck = params.get("AVSCV2").orNull
     val amount: Int = try {
       params.get("Amount").map(_.toDouble).map(_ * 100).map(_.toInt).getOrElse(0)
     } catch {
       case e: Exception => 0
     }
 
-    val payment = Transaction(transactionId, paymentProcessorName, amount, "Completed")
-    payment.transactionId = transactionId
-    payment.authCode = authCode
-    payment
+    val tx = Transaction(transactionId, paymentProcessorName, amount, status)
+    tx.transactionId = transactionId
+    tx.authCode = authCode
+    tx.cardType = cardType
+    tx.securityCheck = securityCheck
+    tx.fraudHint = fraudHint
+    tx
   }
 
   private def sageBasketString(basket: Basket) = {
@@ -195,8 +202,10 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
       params.put("BillingCountry", "GB")
     })
 
-    if (purchase.isInstanceOf[Basket])
-      params.put("Basket", sageBasketString(purchase.asInstanceOf[Basket]))
+    purchase match {
+      case basket: Basket => params.put("Basket", sageBasketString(basket))
+      case _ =>
+    }
 
     logger.debug("Params [{}]", params)
     params.toMap
