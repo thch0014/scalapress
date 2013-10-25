@@ -15,5 +15,7 @@ class AccountRestController(accountDao: AccountDao,
 
   @ResponseBody
   @RequestMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))
-  def typeAhead(@RequestParam("q") q: String): Array[Array[String]] = accountDao.typeAhead(q)
+  def typeAhead(@RequestParam("q") q: String): Array[Datum] = accountDao.typeAhead(q)
 }
+
+case class Datum(value: String, id: String)

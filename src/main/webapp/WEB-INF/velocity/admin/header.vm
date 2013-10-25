@@ -13,13 +13,14 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
     <link rel="stylesheet" href="/static/css/scalapress.css">
+    <link rel="stylesheet" href="/static/css/typeahead.js-bootstrap.css">
 
     <script src="/static/js/wysihtml5-0.3.0.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="/static/js/typeahead.min.js"></script>
     <script src="/static/js/bootbox.min.js"></script>
     <script src="/static/js/bootstrap-wysihtml5.js"></script>
     <script src="/static/js/bootstrap-datepicker.js"></script>

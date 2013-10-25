@@ -16,14 +16,14 @@ trait AccountDao extends GenericDao[Account, java.lang.Long] {
   def search(query: AccountQuery): Page[Account]
   def byEmail(email: String): Option[Account]
   def findByType(id: Long): List[Account]
-  def typeAhead(query: String): Array[Array[String]]
+  def typeAhead(query: String): Array[Datum]
 }
 
 @Component
 @Transactional
 class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with AccountDao with Logging {
 
-  override def typeAhead(query: String): Array[Array[String]] = {
+  override def typeAhead(query: String): Array[Datum] = {
     getSession
       .createSQLQuery(
       "select a.id, a.name from accounts a WHERE a.name like ?")
@@ -33,7 +33,7 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
       .asScala
       .map(arg => {
       val values = arg.asInstanceOf[Array[_]]
-      Array(values(0).toString, values(1).toString)
+      Datum(values(1).toString, values(0).toString)
     }).toArray
   }
 
