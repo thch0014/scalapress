@@ -119,8 +119,7 @@ class ObjectEditController(val assetStore: AssetStore,
       form.o.associations.add(objectDao.find(form.associatedObjectId.trim.toLong))
 
     objectDao.save(form.o)
-    if (!form.o.objectType.name.toLowerCase.contains("account"))
-      searchService.index(Seq(form.o))
+    searchService.index(Seq(form.o))
 
     "redirect:/backoffice/obj/" + form.o.id
   }
