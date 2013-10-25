@@ -3,60 +3,11 @@ package com.cloudray.scalapress.widgets
 import com.cloudray.scalapress.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
-object WidgetRenderer extends Logging {
+class WidgetRenderer extends Logging {
 
-  def render(location: String,
-             sep: String,
-             request: ScalapressRequest): String = {
-
-    logger.debug("Loading widgets for location={}...", location)
-    val widgets = request.widgets.filter(widget => location.equalsIgnoreCase(widget.location))
-    logger.debug("... {} widgets loaded", widgets.size)
-    val allowed = widgets.filter(_.visible) filter (checkWhere(_, request))
-    logger.debug("...and {} are visible on this page", allowed.size)
-    val sorted = allowed.sortBy(_.position)
-    sorted.flatMap(render(_, request)).mkString(sep)
+  def render(widgets: Seq[Widget], sep: String, sreq: ScalapressRequest): String = {
+    widgets.flatMap(render(_, sreq)).mkString(sep)
   }
-
-  def checkWhere(widget: Widget, request: ScalapressRequest) = {
-    widget.restricted match {
-      case false => true
-
-      case true if request.folder.isDefined &&
-        Option(widget.excludeFolders).map(_.split(",").map(_.trim)).getOrElse(Array[String]())
-          .contains(request.folder.get.id.toString) => false
-
-      case true if widget.displayOnAllFolders &&
-        request.folder.isDefined &&
-        request.folder.get.parent != null => true
-
-      case true if request.folder.isDefined &&
-        Option(widget.includeFolders).map(_.split(",").map(_.trim)).getOrElse(Array[String]())
-          .contains(request.folder.get.id.toString) => true
-
-      case true if widget.displayOnHome &&
-        request.folder.isDefined &&
-        request.folder.get.parent == null => true
-
-      case true if !widget.displayOnHome &&
-        request.folder.isDefined &&
-        request.folder.get.parent == null => false
-
-      case true if widget.displayOnAllObjects &&
-        request.obj.isDefined => true
-
-      case true if widget.displayOnSearchResults && request.searchResult.isDefined => true
-
-      case true if widget.displayOnOthers &&
-        request.folder.isEmpty &&
-        request.obj.isEmpty && request.searchResult.isEmpty => true
-
-      case _ => false
-    }
-  }
-
-  def normalizedContainerId(widget: Widget) = Option(widget.containerId).getOrElse("widget" + widget.id)
-  def widgetContainerClass(widget: Widget) = Option(widget.containerClass).getOrElse("") + " widgetcontainer"
 
   def render(widget: Widget, req: ScalapressRequest): Option[String] = {
     logger.debug("Rendering widget {}...", widget)
@@ -75,6 +26,9 @@ object WidgetRenderer extends Logging {
     logger.debug("...completed in {} ms", System.currentTimeMillis() - start)
     result
   }
+
+  def normalizedContainerId(widget: Widget) = Option(widget.containerId).getOrElse("widget" + widget.id)
+  def widgetContainerClass(widget: Widget) = Option(widget.containerClass).getOrElse("") + " widgetcontainer"
 
   def renderDiv(widget: Widget, body: Any): String = {
     val capt = Option(widget.caption).map("<h3>" + _ + "</h3>").getOrElse("")

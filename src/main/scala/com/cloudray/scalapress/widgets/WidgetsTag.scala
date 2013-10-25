@@ -7,15 +7,24 @@ import com.cloudray.scalapress.theme.tag.ScalapressTag
 @Tag("widget")
 class WidgetsTag extends ScalapressTag with Logging {
 
-  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+  var service = new WidgetDisplayService()
+  var renderer = new WidgetRenderer()
+
+  def render(sreq: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
     val sep = params.get("sep").getOrElse("")
     params.get("location") match {
       case None =>
         logger.debug("No location set on widgets tag")
         None
+
       case Some(location) =>
-        val output = WidgetRenderer.render(location, sep, request)
+
+        val widgets = service.getVisibleWidgets(location, sreq)
+        val cookies = service.getOneTimeCookies(widgets)
+        sreq.cookies.appendAll(cookies)
+
+        val output = renderer.render(widgets, sep, sreq)
         Option(output)
     }
   }

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress
 
 import folder.Folder
-import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.{HttpServletResponse, Cookie, HttpServletRequest}
 import obj.Obj
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
@@ -26,7 +26,9 @@ case class ScalapressRequest(request: HttpServletRequest,
                              location: Option[String] = None,
                              paging: Option[Paging] = None,
                              scripts: ListBuffer[String] = new ListBuffer(),
-                             styles: ListBuffer[String] = new ListBuffer()) {
+                             styles: ListBuffer[String] = new ListBuffer(),
+                             cookies: ListBuffer[Cookie] = new ListBuffer(),
+                             response: Option[HttpServletResponse] = None) {
 
   val cacheKey = "scalapress.cache"
   private val cache = if (request.getAttribute(cacheKey) == null) {
@@ -45,6 +47,8 @@ case class ScalapressRequest(request: HttpServletRequest,
   def folderRoot = cache.folderRoot
   def folder(id: Long): Folder = cache.folder(id)
   def attribute(id: Long): Attribute = cache.attribute(id)
+
+  def cookie(name: String): Option[Cookie] = request.getCookies.find(_.getName == name)
 
   case class Cache(context: ScalapressContext) {
     lazy val installation = context.installationDao.get

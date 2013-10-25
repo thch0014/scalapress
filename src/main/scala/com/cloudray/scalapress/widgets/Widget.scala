@@ -20,56 +20,77 @@ abstract class Widget {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
-  @BeanProperty var container: WidgetContainer = WidgetContainer.Table
+  @BeanProperty
+  var container: WidgetContainer = WidgetContainer.Table
 
   @Column(name = "captionText")
-  @BeanProperty var caption: String = _
+  @BeanProperty
+  var caption: String = _
 
   def render(req: ScalapressRequest): Option[String]
   def widgetType: String = getClass.getSimpleName
   def backoffice = "/backoffice/widget/" + id
 
   @Column(name = "cssId")
-  @BeanProperty var containerId: String = _
+  @BeanProperty
+  var containerId: String = _
 
   @Column(name = "cssClass")
-  @BeanProperty var containerClass: String = _
+  @BeanProperty
+  var containerClass: String = _
 
-  @BeanProperty var position: Int = _
+  @BeanProperty
+  var position: Int = _
 
   @Column(name = "content", length = 100000)
-  @BeanProperty var content: String = _
+  @BeanProperty
+  var content: String = _
 
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
-  @BeanProperty var location: String = _
+  @BeanProperty
+  var location: String = _
 
   @Column(name = "visible", nullable = false)
-  @BeanProperty var visible: Boolean = _
+  @BeanProperty
+  var visible: Boolean = _
 
   @Column(name = "displayOnAllCategories")
-  @BeanProperty var displayOnAllFolders: Boolean = _
+  @BeanProperty
+  var displayOnAllFolders: Boolean = _
 
   @Column(name = "displayOnAllItems")
-  @BeanProperty var displayOnAllObjects: Boolean = _
+  @BeanProperty
+  var displayOnAllObjects: Boolean = _
 
   @Column(name = "displayOnHome", nullable = false)
-  @BeanProperty var displayOnHome: Boolean = _
+  @BeanProperty
+  var displayOnHome: Boolean = _
 
   @Column(name = "displayOnOthers", nullable = false)
-  @BeanProperty var displayOnOthers: Boolean = _
+  @BeanProperty
+  var displayOnOthers: Boolean = _
 
   @Column(name = "displayOnSearchResults", nullable = false)
-  @BeanProperty var displayOnSearchResults: Boolean = _
+  @BeanProperty
+  var displayOnSearchResults: Boolean = _
 
   @Column(name = "restricted", nullable = false)
-  @BeanProperty var restricted: Boolean = _
+  @BeanProperty
+  var restricted: Boolean = _
 
-  @BeanProperty var excludeFolders: String = _
+  @Column(name = "oneTimeVisible", nullable = false)
+  var oneTimeVisible: Boolean = _
 
-  @BeanProperty var includeFolders: String = _
+  @BeanProperty
+  var excludeFolders: String = _
+
+  @BeanProperty
+  var includeFolders: String = _
 
   //    @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
   //    @JoinTable(name = "boxes_where",
