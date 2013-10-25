@@ -1,6 +1,8 @@
 #parse("/admin/header.vm")
 
-<h3>Account Plugin Settings</h3>
+<div class="page-header">
+    <h2>Account Plugin Settings</h2>
+</div>
 
 <form class="form-horizontal" method="POST">
 
@@ -10,7 +12,7 @@
         <label class="col-lg-2 control-label">Header</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.accountPageHeader")
+          #springFormTextarea("plugin.accountPageHeader", "class='form-control'")
         </div>
     </div>
 
@@ -18,15 +20,16 @@
         <label class="col-lg-2 control-label">Footer</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.accountPageFooter")
+          #springFormTextarea("plugin.accountPageFooter", "class='form-control'")
         </div>
+
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Markup</label>
 
         <div class="col-lg-8">
-            <select id="accountPageMarkup" name="accountPageMarkup">
+            <select id="accountPageMarkup" name="accountPageMarkup" class='form-control'>
               #foreach($option in $markupMap.keySet())
                   <option value="${option}"
                     #if("$!plugin.accountPageMarkup.id" == "$option")
@@ -39,12 +42,11 @@
     </div>
 
     <legend>Login Page</legend>
-
     <div class="form-group">
         <label class="col-lg-2 control-label">Login Redirect</label>
 
         <div class="col-lg-8">
-          #springFormInput("plugin.loginRedirect")
+          #springFormInput("plugin.loginRedirect", "class='form-control'")
         </div>
     </div>
 
@@ -52,7 +54,7 @@
         <label class="col-lg-2 control-label">Header</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.loginPageHeader")
+          #springFormTextarea("plugin.loginPageHeader", "class='form-control'")
         </div>
     </div>
 
@@ -60,17 +62,16 @@
         <label class="col-lg-2 control-label">Footer</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.loginPageFooter")
+          #springFormTextarea("plugin.loginPageFooter", "class='form-control'")
         </div>
     </div>
 
     <legend>Registration Page</legend>
-
     <div class="form-group">
         <label class="col-lg-2 control-label">Header</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.registrationPageHeader")
+          #springFormTextarea("plugin.registrationPageHeader", "class='form-control'")
         </div>
     </div>
 
@@ -78,13 +79,22 @@
         <label class="col-lg-2 control-label">Footer</label>
 
         <div class="col-lg-8">
-          #springFormTextarea("plugin.registrationPageFooter")
+          #springFormTextarea("plugin.registrationPageFooter", "class='form-control'")
         </div>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Completion Text</label>
+
+        <div class="col-lg-8">
+          #springFormTextarea("plugin.registrationCompletionHtml", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
     </div>
 
 </form>
