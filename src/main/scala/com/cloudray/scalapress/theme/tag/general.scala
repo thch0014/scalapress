@@ -54,7 +54,7 @@ class ScriptTag extends ScalapressTag with TagBuilder {
 class CssTag extends ScalapressTag with TagBuilder {
 
   val sources = Seq(
-    "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js",
+    "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.css",
     "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css",
     "/static/css/jquery.galleryview-3.0-dev.css",
     "http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700",

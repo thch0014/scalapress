@@ -57,12 +57,20 @@ class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInst
     assert(page.render.contains("superfooter"))
   }
 
-  "a registration controller" should "persist new account" in {
+  it should "set error if email exists" in {
+    val account = new Account
+    Mockito.when(accountDao.byEmail("iexist@sammy.com")).thenReturn(Some(account))
+    form.email = "iexist@sammy.com"
+    controller.submitRegistrationPage(req, resp, form, errors)
+    Mockito.verify(errors).rejectValue(Matchers.anyString, Matchers.eq("email.exists"), Matchers.anyString)
+  }
+
+  it should "persist new account" in {
     controller.submitRegistrationPage(req, resp, form, errors)
     Mockito.verify(accountDao).save(Matchers.any[Account])
   }
 
-  "a registration controller" should "set new password on account" in {
+  it should "set new password on account" in {
     controller.submitRegistrationPage(req, resp, form, errors)
     val captor = ArgumentCaptor.forClass(classOf[Account])
     Mockito.verify(accountDao).save(captor.capture)
