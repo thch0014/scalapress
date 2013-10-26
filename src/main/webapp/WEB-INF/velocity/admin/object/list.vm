@@ -108,15 +108,17 @@
     </tr>
   #foreach ($o in $objects)
       <tr>
-          <td><a href="$urlResolver.objectEdit($o)">$o.id</a></td>
+          <td><a href="/backoffice/obj/$o.id">$o.id</a></td>
           <td>$o.name</td>
           <td>$!o.status</td>
           <td>$!datetool.format($o.dateCreated)</td>
           <td>
-              <a href="$urlResolver.objectEdit($o)" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon glyphicon-pencil"></i></a>
-              <a href="$urlResolver.objectSiteView($o)" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon glyphicon-eye-open"></i></a>
+              <a href="/backoffice/obj/$o.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="/object/$o.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-eye-open"></i>
+              </a>
           </td>
       </tr>
   #end

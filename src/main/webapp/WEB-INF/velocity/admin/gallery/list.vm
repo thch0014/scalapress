@@ -1,7 +1,8 @@
 #parse("/admin/header.vm")
 
-
-<h3>Galleries</h3>
+<div class="page-header">
+    <h2>Galleries</h2>
+</div>
 
 <table class="table table-condensed table-hover">
     <tr>
@@ -10,23 +11,28 @@
         <th>Images</th>
         <th></th>
     </tr>
-    #foreach ($g in $galleries)
-        <tr>
-            <td>$g.id</td>
-            <td>$g.name</td>
-            <td>$g.images.size()</td>
-            <td>
-                <a href="$urlResolver.galleryEdit($g)" role="button" class="btn btn-xs btn-default">
-                    <i class="glyphicon  glyphicon-pencil"></i></a>
-
-                <a href="/backoffice/gallery/$g.id/delete" role="button" class="btn btn-xs btn-danger">
-                    <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i></a>
-
-            </td>
-        </tr>
-    #end
+  #foreach ($g in $galleries)
+      <tr>
+          <td>$g.id</td>
+          <td>$g.name</td>
+          <td>$g.images.size()</td>
+          <td>
+              <a href="/backoffice/gallery/$g.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="/backoffice/gallery/$g.id/delete" role="button" class="btn btn-xs btn-danger">
+                  <i class="glyphicon glyphicon-trash glyphicon  glyphicon-white"></i>
+              </a>
+          </td>
+      </tr>
+  #end
 </table>
 
-<a href="$urlResolver.galleryCreate()" role="button" class="btn btn-xs btn-default"> <i class="glyphicon  glyphicon-plus"></i> Create</a>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <a href="/backoffice/gallery/create" role="button" class="btn btn-xs btn-default">
+            <i class="glyphicon  glyphicon-plus"></i> Create
+        </a></div>
+</div>
 
 #parse("/admin/footer.vm")

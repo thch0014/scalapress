@@ -4,7 +4,6 @@ import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.util.mvc.UrlResolver
 
 /** @author Stephen Samuel */
 object GalleryViewRenderer {
@@ -27,7 +26,7 @@ object GalleryViewRenderer {
               <h6>
                 {gallery.name}
               </h6>
-              <a href={UrlResolver.galleryView(gallery)} class="thumbnail">
+              <a href={"/gallery/" + gallery.id} class="thumbnail">
                 <img src={src}/>
               </a>
             </div>

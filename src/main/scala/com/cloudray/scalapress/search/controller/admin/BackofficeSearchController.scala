@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.search.{SavedSearch, SearchService}
 import com.cloudray.scalapress.obj.{ObjectDao, TypeDao}
-import com.cloudray.scalapress.util.mvc.UrlResolver
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -30,8 +29,9 @@ class BackofficeSearchController(service: SearchService,
       SearchResult(ref.id,
         ref.objectType,
         ref.name,
-        UrlResolver.objectEdit(ref.id),
-        UrlResolver.objectSiteView(ref.id))
+        "/backoffice/obj/" + ref.id,
+        "/object/" + ref.id
+      )
     })
 
     model.put("results", results.asJava)

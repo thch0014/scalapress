@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.ecommerce.tags
 
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.util.mvc.UrlResolver
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
@@ -13,7 +12,7 @@ import com.cloudray.scalapress.obj.StockMethod
 class BasketLinkTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    val link = UrlResolver.basket
+    val link = "/basket"
     val text = params.get("text").getOrElse("Basket")
     Some(buildLink(link, text, params))
   }
@@ -196,7 +195,7 @@ class BasketRemoveItemTag extends ScalapressTag with TagBuilder {
 class CheckoutTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    val link = UrlResolver.checkout
+    val link = "/checkout"
     val text = params.get("text").getOrElse("Checkout")
     Some(buildLink(link, text, params))
   }

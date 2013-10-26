@@ -50,10 +50,12 @@
           <td>$f.id</td>
           <td>$f.fullName()</td>
           <td>
-              <a href="$urlResolver.folderEdit($f)" role="button" class="btn btn-xs btn-default"> <i
-                      class="glyphicon  glyphicon-pencil"></i></a>
-              <a href="$urlResolver.folderSiteView($f)" role="button" class="btn btn-xs btn-default"> <i
-                      class="glyphicon  glyphicon-eye-open"></i></a>
+              <a href="/backoffice/folder/$f.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="/folder/$f.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-eye-open"></i>
+              </a>
           </td>
       </tr>
   #end

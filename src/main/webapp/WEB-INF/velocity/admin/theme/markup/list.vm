@@ -25,9 +25,11 @@
       <tr>
           <td>$m.id</td>
           <td>$!m.name</td>
-          <td><a href="$urlResolver.markupEdit($m)" role="button" class="btn btn-xs btn-default">
-              <i class="glyphicon glyphicon-pencil"></i>
-          </a></td>
+          <td>
+              <a href="/backoffice/markup/$m.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+          </td>
       </tr>
   #end
 </table>

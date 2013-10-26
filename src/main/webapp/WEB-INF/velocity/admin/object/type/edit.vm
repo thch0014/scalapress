@@ -131,8 +131,9 @@
           <td>$a.name</td>
           <td>$!a.attributeType</td>
           <td>
-              <a href="$urlResolver.attributeEdit($a)" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i></a>
+              <a href="/backoffice/attribute/$a.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
           </td>
       </tr>
   #end
@@ -141,7 +142,7 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <a href="#create-attributes-modal" role="button" class="btn btn-primary" data-toggle="modal">
-            <i class="glyphicon  glyphicon-plus-sign"></i> Create Attribute
+            <i class="glyphicon glyphicon-plus-sign"></i> Create Attribute
         </a>
     </div>
 </div>

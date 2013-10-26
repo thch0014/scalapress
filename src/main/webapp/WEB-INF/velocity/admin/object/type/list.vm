@@ -17,7 +17,7 @@
           <td>$t.id</td>
           <td>$t.name</td>
           <td>
-              <a href="$urlResolver.typeEdit($t)" role="button" class="btn btn-xs btn-default">
+              <a href="/backoffice/type/$t.id" role="button" class="btn btn-xs btn-default">
                   <i class="glyphicon glyphicon-pencil"></i>
               </a>
               <a href="/backoffice/type/$t.id/delete" role="button" class="btn btn-danger btn-xs">

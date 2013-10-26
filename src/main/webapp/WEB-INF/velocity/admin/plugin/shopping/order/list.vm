@@ -77,17 +77,18 @@
     </tr>
   #foreach ($o in $orders)
       <tr>
-          <td><a href="$urlResolver.orderEdit($o)">$o.id</a></td>
+          <td><a href="/backoffice/order/$o.id">$o.id</a></td>
           <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
           <td>$!o.status</td>
           <td>$!o.account.name $!o.account.email</td>
           <td>$o.total()</td>
           <td>
-              <a href="$urlResolver.orderEdit($o)" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i> </a>
-
-              <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-print"></i> </a>
+              <a href="/backoffice/order/$o.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+              <a href="/backoffice/invoice/$o.id" role="button" class="btn btn-xs btn-info">
+                  <i class="glyphicon glyphicon-print"></i>
+              </a>
           </td>
       </tr>
   #end

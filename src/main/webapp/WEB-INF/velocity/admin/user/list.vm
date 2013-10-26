@@ -20,15 +20,18 @@
           <td>$u.name</td>
           <td>$u.username</td>
           <td>$u.active</td>
-          <td><a href="/backoffice/user/$u.id" role="button" class="btn btn-xs btn-default"> <i
-                  class="glyphicon  glyphicon-pencil"></i>
-          </a></td>
+          <td>
+              <a href="/backoffice/user/$u.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
+              </a>
+          </td>
       </tr>
   #end
 </table>
 
-<a href="$urlResolver.createUser()" role="button" class="btn btn-xs btn-default"> <i
-        class="glyphicon  glyphicon-plus"></i> Create User</a>
+<a href="/backoffice/user/create" role="button" class="btn btn-xs btn-default">
+    <i class="glyphicon glyphicon-plus"></i> Create User
+</a>
 
 
 #parse("/admin/footer.vm")
