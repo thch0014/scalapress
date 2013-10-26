@@ -13,8 +13,7 @@ import com.cloudray.scalapress.util.ComponentClassScanner
 class PaymentCallbackService(context: ScalapressContext) extends Logging {
 
   def callbacks(req: HttpServletRequest) {
-    val params: java.util.Map[String, Array[String]] = req
-      .getParameterMap
+    val params: java.util.Map[String, Array[String]] = req.getParameterMap
       .asInstanceOf[java.util.Map[String, Array[String]]]
     val scala = params.asScala
     val singleString = scala.map(entry => (entry._1, entry._2(0))).toMap

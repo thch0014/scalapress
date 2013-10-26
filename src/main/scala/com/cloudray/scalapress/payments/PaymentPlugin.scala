@@ -15,7 +15,8 @@ abstract class PaymentPlugin {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   def name: String
   def processor: PaymentProcessor
@@ -35,7 +36,8 @@ class PaymentPluginDaoImpl extends GenericDaoImpl[PaymentPlugin, java.lang.Long]
 @Component
 class PaymentPluginValidator {
 
-  @Autowired var paymentPluginDao: PaymentPluginDao = _
+  @Autowired
+  var paymentPluginDao: PaymentPluginDao = _
 
   @PostConstruct
   def ensurePluginsCreated() {

@@ -11,8 +11,7 @@ class PaymentMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Seq[MenuItem] = {
     Seq(
       MenuHeader("Payments"),
-      MenuLink("Paypal Standard",
-        Some("glyphicon glyphicon-credit-card"),
+      MenuLink("Paypal Standard", Some("glyphicon glyphicon-credit-card"),
         "/backoffice/plugin/payment/paypal/standard"),
       MenuLink("Sage Pay", Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform")
     )
