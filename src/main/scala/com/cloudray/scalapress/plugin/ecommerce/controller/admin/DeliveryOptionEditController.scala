@@ -10,11 +10,10 @@ import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/delivery/{id}"))
-class DeliveryOptionEditController {
-
-  @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-  @Autowired var context: ScalapressContext = _
+class DeliveryOptionEditController(deliveryOptionDao: DeliveryOptionDao,
+                                   context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("form") form: Form) = "admin/plugin/shopping/delivery/edit.vm"

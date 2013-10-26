@@ -11,13 +11,11 @@ import com.cloudray.scalapress.obj.attr.Attribute
 /** @author Stephen Samuel */
 class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new CalendarJsonController
   val search = mock[SearchService]
   val context = new ScalapressContext
   context.widgetDao = mock[WidgetDao]
 
-  controller.context = context
-  controller.searchService = search
+  val controller = new CalendarJsonController(search, context)
 
   val widget = new CalendarWidget
   widget.startDateAttribute = new Attribute

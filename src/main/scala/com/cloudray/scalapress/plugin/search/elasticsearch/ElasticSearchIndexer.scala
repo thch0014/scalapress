@@ -17,12 +17,11 @@ trait ElasticSearchIndexer {
 }
 
 @Component
-class ElasticSearchIndexerImpl extends ElasticSearchIndexer with Logging {
+@Autowired
+class ElasticSearchIndexerImpl(service: SearchService,
+                               context: ScalapressContext) extends ElasticSearchIndexer with Logging {
 
   val PAGE_SIZE = 100
-
-  @Autowired var service: SearchService = _
-  @Autowired var context: ScalapressContext = _
 
   @PostConstruct
   def setupIndexes() {

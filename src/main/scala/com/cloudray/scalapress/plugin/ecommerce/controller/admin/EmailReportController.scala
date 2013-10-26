@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/ecommerce/report/email"))
-class EmailReportController {
-
-  @Autowired
-  var dao: OrderDao = _
+class EmailReportController(dao: OrderDao) {
 
   @RequestMapping(produces = Array("text/plain"))
   @ResponseBody

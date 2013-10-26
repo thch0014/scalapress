@@ -8,12 +8,11 @@ import org.apache.commons.io.FilenameUtils
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("/backoffice/tinymce"))
-class TinyMceImageListController {
+class TinyMceImageListController(assetStore: AssetStore) {
 
   val extensions = List("jpg", "jpeg", "png", "gif")
-
-  @Autowired var assetStore: AssetStore = _
 
   @ResponseBody
   @RequestMapping(value = Array("image"), produces = Array("text/javascript"))

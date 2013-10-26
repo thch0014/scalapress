@@ -12,8 +12,8 @@ import com.cloudray.scalapress.util.UrlStrategy
   *
   *         object-51-large-coldplay-tshirt
   *
-  **/
+  * */
 object FriendlyUrlStrategy extends UrlStrategy {
-    def url(obj: Obj): String = "/object-" + obj.id + "-" + normalize(obj.name)
-    def url(folder: Folder): String = "/folder-" + folder.id + "-" + normalize(Option(folder.name).getOrElse(""))
+  def url(obj: Obj): String = "/object-" + obj.id + "-" + normalize(obj.name)
+  def url(folder: Folder): String = "/folder-" + folder.id + "-" + normalize(Option(folder.name).getOrElse(""))
 }

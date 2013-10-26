@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
 @Component
-class ElasticSearchCron extends Runnable with Logging {
-
-  @Autowired var indexer: ElasticSearchIndexer = _
+@Autowired
+class ElasticSearchCron(indexer: ElasticSearchIndexer) extends Runnable with Logging {
 
   var lastRuntime: Long = 0
 

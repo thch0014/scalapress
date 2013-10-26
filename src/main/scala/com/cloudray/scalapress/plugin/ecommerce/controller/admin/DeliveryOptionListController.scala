@@ -11,11 +11,10 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/delivery"))
-class DeliveryOptionListController {
-
-  @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-  @Autowired var context: ScalapressContext = _
+class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
+                                   context: ScalapressContext) {
 
   @RequestMapping
   def list = "admin/plugin/shopping/delivery/list.vm"

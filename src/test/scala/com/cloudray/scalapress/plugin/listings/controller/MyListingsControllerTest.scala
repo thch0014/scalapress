@@ -14,11 +14,12 @@ import com.cloudray.scalapress.account.Account
 /** @author Stephen Samuel */
 class MyListingsControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-  val controller = new MyListingsController
-  controller.context = new ScalapressContext
+  val themeService = mock[ThemeService]
+  val context = new ScalapressContext
+  context.objectDao = mock[ObjectDao]
+
+  val controller = new MyListingsController(context, themeService)
   controller.securityResolver = mock[SecurityResolver]
-  controller.context.objectDao = mock[ObjectDao]
-  controller.themeService = mock[ThemeService]
 
   val req = mock[HttpServletRequest]
   val acc = new Account
@@ -27,10 +28,10 @@ class MyListingsControllerTest extends FunSuite with OneInstancePerTest with Moc
   Mockito.when(controller.securityResolver.getAccount(req)).thenReturn(Some(acc))
 
   test("controller looks up listings by account id") {
-    Mockito.when(controller.context.objectDao.search(Matchers.any[ObjectQuery])).thenReturn(Page.empty[Obj])
+    Mockito.when(context.objectDao.search(Matchers.any[ObjectQuery])).thenReturn(Page.empty[Obj])
     controller.list(req)
     val captor = ArgumentCaptor.forClass(classOf[ObjectQuery])
-    Mockito.verify(controller.context.objectDao).search(captor.capture)
+    Mockito.verify(context.objectDao).search(captor.capture)
     val q = captor.getValue
     assert(53 === q.accountId.get)
   }

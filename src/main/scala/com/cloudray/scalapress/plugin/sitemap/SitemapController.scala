@@ -9,15 +9,14 @@ import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Controller
-class SitemapController {
+@Autowired
+class SitemapController(context: ScalapressContext) {
 
-    @Autowired var context: ScalapressContext = _
-
-    @ResponseBody
-    @RequestMapping(value = Array("sitemap"), produces = Array("text/xml"))
-    def sitemap(resp: HttpServletResponse) {
-        val urls = UrlBuilder.build(context)
-        val sitemap = SitemapWriter.write(urls)
-        IOUtils.write(sitemap, resp.getOutputStream)
-    }
+  @ResponseBody
+  @RequestMapping(value = Array("sitemap"), produces = Array("text/xml"))
+  def sitemap(resp: HttpServletResponse) {
+    val urls = UrlBuilder.build(context)
+    val sitemap = SitemapWriter.write(urls)
+    IOUtils.write(sitemap, resp.getOutputStream)
+  }
 }

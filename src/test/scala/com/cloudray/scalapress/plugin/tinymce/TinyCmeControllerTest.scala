@@ -8,10 +8,10 @@ import org.mockito.{Matchers, Mockito}
 /** @author Stephen Samuel */
 class TinyCmeControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new TinyMceImageListController
-  controller.assetStore = mock[AssetStore]
+  val assetStore = mock[AssetStore]
+  val controller = new TinyMceImageListController(assetStore)
 
-  Mockito.when(controller.assetStore.search(Matchers.any[AssetQuery])).thenReturn(Array(
+  Mockito.when(assetStore.search(Matchers.any[AssetQuery])).thenReturn(Array(
     Asset("coldplay.png", 0, "aws.cdn.com/coldplay.png", null),
     Asset("keane.gif", 0, "aws.cdn.com/keane.gif", null),
     Asset("starsailor.png", 0, "aws.cdn.com/starsailor.png", null),

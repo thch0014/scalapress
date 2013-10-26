@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 class WriteoutCacheProperties {
 
-    @Value("${plugin.writeoutcache.dir:/WEB-INF/cache}") var directory: String = _
-    @Value("${plugin.writeoutcache.enabled:false}") var enabled: Boolean = _
-    @Value("${plugin.writeoutcache.timeout:300}") var timeout: Long = _
+  @Value("${plugin.writeoutcache.dir:/WEB-INF/cache}") var directory: String = _
+  @Value("${plugin.writeoutcache.enabled:false}") var enabled: Boolean = _
+  @Value("${plugin.writeoutcache.timeout:300}") var timeout: Long = _
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller
 @RequestMapping
 class SimpleUrlForwardController {
 
-    @RequestMapping(Array("o{id:\\d+}-{name}"))
-    def obj(@PathVariable("id") id: Int): String = "forward:/object/" + id
+  @RequestMapping(Array("o{id:\\d+}-{name}"))
+  def obj(@PathVariable("id") id: Int): String = "forward:/object/" + id
 
-    @RequestMapping(Array("f{id:\\d+}-{name}"))
-    def folder(@PathVariable("id") id: Int): String = "forward:/folder/" + id
+  @RequestMapping(Array("f{id:\\d+}-{name}"))
+  def folder(@PathVariable("id") id: Int): String = "forward:/folder/" + id
 }
