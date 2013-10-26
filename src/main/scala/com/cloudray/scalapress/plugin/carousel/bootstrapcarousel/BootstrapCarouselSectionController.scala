@@ -9,10 +9,9 @@ import org.springframework.web.multipart.MultipartFile
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/carousel/bootstrapcarousel/section/{id}"))
-class BootstrapCarouselSectionController {
-
-  @Autowired var context: ScalapressContext = _
+class BootstrapCarouselSectionController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("section") section: BootstrapCarouselSection) =
@@ -39,6 +38,7 @@ class BootstrapCarouselSectionController {
     edit(section)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): BootstrapCarouselSection =
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): BootstrapCarouselSection =
     context.sectionDao.find(id).asInstanceOf[BootstrapCarouselSection]
 }

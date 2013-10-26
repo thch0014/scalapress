@@ -8,11 +8,10 @@ import com.cloudray.scalapress.{ScalapressContext, Logging}
 
 /** @author Stephen Samuel */
 @Component
-class OrderCustomerNotificationService extends Logging {
-
-  @Autowired var mailSender: MailSender = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var shoppingPluginDao: ShoppingPluginDao = _
+@Autowired
+class OrderCustomerNotificationService(mailSender: MailSender,
+                                       context: ScalapressContext,
+                                       shoppingPluginDao: ShoppingPluginDao) extends Logging {
 
   def orderConfirmation(order: Order) {
     Option(shoppingPluginDao.get.orderConfirmationMessageBody) match {

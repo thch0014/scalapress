@@ -10,9 +10,9 @@ import com.cloudray.scalapress.plugin.carousel.CarouselSection
 class BootstrapCarouselSection extends CarouselSection {
 
   override def backoffice: String = "/backoffice/plugin/carousel/bootstrapcarousel/section/" + id
-  def desc: String = "Bootstrap Carousel is the built in bootstrap 3 carousel"
+  override def desc: String = "Bootstrap Carousel is the built in bootstrap 3 carousel"
 
-  def render(request: ScalapressRequest): Option[String] = {
+  override def render(request: ScalapressRequest): Option[String] = {
 
     val renderedImages = _images.map(image => {
       val src = request.context.assetStore.link(image)

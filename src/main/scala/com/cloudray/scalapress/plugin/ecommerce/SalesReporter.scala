@@ -6,9 +6,8 @@ import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 
 /** @author Stephen Samuel */
 @Component
-class SalesReporter {
-
-  @Autowired var orderDao: OrderDao = _
+@Autowired
+class SalesReporter(orderDao: OrderDao) {
 
   def generate(status: String, start: Long, end: Long): Seq[ReportLine] = {
 

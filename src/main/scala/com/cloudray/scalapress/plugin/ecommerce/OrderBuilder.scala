@@ -15,11 +15,10 @@ import com.cloudray.scalapress.account.Account
   *
   **/
 @Component
-class OrderBuilder extends Logging {
-
-  @Autowired var orderDao: OrderDao = _
-  @Autowired var basketDao: BasketDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+class OrderBuilder(orderDao: OrderDao,
+                   basketDao: BasketDao,
+                   context: ScalapressContext) extends Logging {
 
   def build(sreq: ScalapressRequest): Order = build(sreq.basket, sreq.request)
   def build(basket: Basket, req: HttpServletRequest): Order = {

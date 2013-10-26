@@ -34,51 +34,66 @@ class ShoppingPlugin {
   var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
 
   @Column(length = 100000)
-  @BeanProperty var outOfStockMessage: String = _
+  @BeanProperty
+  var outOfStockMessage: String = _
 
   @Column(length = 100000)
-  @BeanProperty var orderConfirmationRecipients: String = _
+  @BeanProperty
+  var orderConfirmationRecipients: String = _
 
   @Column(length = 100000)
-  @BeanProperty var orderConfirmationMessageBody: String = _
+  @BeanProperty
+  var orderConfirmationMessageBody: String = _
 
   @Column(length = 100000)
-  @BeanProperty var orderCompletionMessageBody: String = _
+  @BeanProperty
+  var orderCompletionMessageBody: String = _
 
   @Column(length = 1000)
-  @BeanProperty var orderConfirmationBcc: String = _
+  @BeanProperty
+  var orderConfirmationBcc: String = _
 
   @Enumerated(EnumType.STRING)
-  @BeanProperty var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
+  @BeanProperty
+  var checkoutMethod: CheckoutMethod = CheckoutMethod.NO_ACCOUNTS
 
   @ManyToOne
   @JoinColumn(name = "basketLineMarkup")
-  @BeanProperty var basketLineMarkup: Markup = _
+  @BeanProperty
+  var basketLineMarkup: Markup = _
 
   @ManyToOne
   @JoinColumn(name = "invoiceLineMarkup")
-  @BeanProperty var invoiceLineMarkup: Markup = _
+  @BeanProperty
+  var invoiceLineMarkup: Markup = _
 
   @ManyToOne
   @JoinColumn(name = "invoiceMarkup")
-  @BeanProperty var invoiceMarkup: Markup = _
+  @BeanProperty
+  var invoiceMarkup: Markup = _
 
   @Column(length = 10000)
-  @BeanProperty var terms: String = _
+  @BeanProperty
+  var terms: String = _
 
-  @BeanProperty var backorders: Boolean = _
+  @BeanProperty
+  var backorders: Boolean = _
 
   @Column(length = 10000)
-  @BeanProperty var termsAcceptance: Boolean = _
+  @BeanProperty
+  var termsAcceptance: Boolean = _
 
   @Column(name = "checkoutScripts", length = 10000)
-  @BeanProperty var checkoutConfirmationScripts: String = _
+  @BeanProperty
+  var checkoutConfirmationScripts: String = _
 
   @Column(length = 10000)
-  @BeanProperty var checkoutConfirmationText: String = _
+  @BeanProperty
+  var checkoutConfirmationText: String = _
 
   @Column
-  @BeanProperty var emailFormat: String = _
+  @BeanProperty
+  var emailFormat: String = _
 }
 
 object ShoppingPlugin {

@@ -12,11 +12,12 @@ import com.cloudray.scalapress.account.Account
 /** @author Stephen Samuel */
 class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val service = new OrderAdminNotificationService
-  service.mailSender = mock[MailSender]
-  service.context = new ScalapressContext
-  service.context.installationDao = mock[InstallationDao]
-  service.shoppingPluginDao = mock[ShoppingPluginDao]
+  val mailSender = mock[MailSender]
+  val context = new ScalapressContext
+  context.installationDao = mock[InstallationDao]
+
+  val shoppingPluginDao = mock[ShoppingPluginDao]
+  val service = new OrderAdminNotificationService(mailSender, context, shoppingPluginDao)
 
   val installation = new Installation
   installation.domain = "coldplay.com"
@@ -24,8 +25,8 @@ class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with 
 
   val plugin = new ShoppingPlugin
 
-  Mockito.when(service.context.installationDao.get).thenReturn(installation)
-  Mockito.when(service.shoppingPluginDao.get).thenReturn(plugin)
+  Mockito.when(context.installationDao.get).thenReturn(installation)
+  Mockito.when(shoppingPluginDao.get).thenReturn(plugin)
 
   val order = new Order
   order.id = 151
@@ -35,14 +36,14 @@ class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with 
   test("when shopping settings has receipents set then a message is sent via mail sender") {
     plugin.orderConfirmationRecipients = "admin@sammy.com"
     service.orderConfirmed(order)
-    Mockito.verify(service.mailSender).send(Matchers.any[SimpleMailMessage])
+    Mockito.verify(mailSender).send(Matchers.any[SimpleMailMessage])
   }
 
   test("that receipients for the message are taken from the shopping settings") {
     plugin.orderConfirmationRecipients = "admin@sammy.com,gareth@southgate.com"
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     service.orderConfirmed(order)
-    Mockito.verify(service.mailSender).send(captor.capture)
+    Mockito.verify(mailSender).send(captor.capture)
     val msg = captor.getValue
     assert(msg.getTo === Array("admin@sammy.com", "gareth@southgate.com"))
   }
@@ -50,7 +51,7 @@ class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with 
   test("that the email sender uses the recipients") {
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     service._send(Array("admin@sammy.com", "elvis@graceland.com"), order)
-    Mockito.verify(service.mailSender).send(captor.capture)
+    Mockito.verify(mailSender).send(captor.capture)
     val msg = captor.getValue
     assert(msg.getTo === Array("admin@sammy.com", "elvis@graceland.com"))
   }
@@ -58,7 +59,7 @@ class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with 
   test("that the message uses the installation as the sender details") {
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     service._send(Array("admin@sammy.com", "elvis@graceland.com"), order)
-    Mockito.verify(service.mailSender).send(captor.capture)
+    Mockito.verify(mailSender).send(captor.capture)
     val msg = captor.getValue
     assert(msg.getFrom === "big man tshirts <donotreply@coldplay.com>")
   }

@@ -10,7 +10,8 @@ import scala.collection.JavaConverters._
 abstract class CarouselSection extends Section {
 
   @ElementCollection
-  @BeanProperty var images: java.util.Set[String] = new util.HashSet[String]()
+  @BeanProperty
+  var images: java.util.Set[String] = new util.HashSet[String]()
 
   def _images: Iterable[String] = images.asScala
 }

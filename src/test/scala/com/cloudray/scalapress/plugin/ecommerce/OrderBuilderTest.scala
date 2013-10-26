@@ -7,6 +7,8 @@ import com.cloudray.scalapress.obj.Obj
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -21,10 +23,11 @@ class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTes
 
   val account = new Account
   val req = mock[HttpServletRequest]
-  val orderDao = mock[OrderDao]
 
-  val builder = new OrderBuilder
-  builder.orderDao = orderDao
+  val orderDao = mock[OrderDao]
+  val basketDao = mock[BasketDao]
+  val context = new ScalapressContext
+  val builder = new OrderBuilder(orderDao, basketDao, context)
 
   test("creating an order sets the delivery from basket") {
     val order = builder._order(account, basket, req)

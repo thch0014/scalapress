@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.cookiecutter
+package com.cloudray.scalapress.plugin.cookie.cookiecutter
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import com.cloudray.scalapress.{ScalapressRequest, Tag}

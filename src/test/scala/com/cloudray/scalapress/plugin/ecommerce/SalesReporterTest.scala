@@ -13,15 +13,15 @@ import com.cloudray.scalapress.account.Account
 
 class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val reporter = new SalesReporter
-  reporter.orderDao = mock[OrderDao]
+  val orderDao = mock[OrderDao]
+  val reporter = new SalesReporter(orderDao)
 
-  Mockito.when(reporter.orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.empty[Order])
+  Mockito.when(orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.empty[Order])
 
   "a sales report" should "query by date range" in {
     reporter.generate(Obj.STATUS_LIVE, 10000, 20000)
     val captor = ArgumentCaptor.forClass(classOf[OrderQuery])
-    Mockito.verify(reporter.orderDao).search(captor.capture)
+    Mockito.verify(orderDao).search(captor.capture)
     assert(captor.getValue.from.get === 10000)
     assert(captor.getValue.to.get === 20000)
   }
@@ -29,7 +29,7 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
   "a sales report" should "query by status" in {
     reporter.generate("qweqwe", 10000, 20000)
     val captor = ArgumentCaptor.forClass(classOf[OrderQuery])
-    Mockito.verify(reporter.orderDao).search(captor.capture)
+    Mockito.verify(orderDao).search(captor.capture)
     assert(captor.getValue.status.get === "qweqwe")
   }
 
@@ -41,7 +41,7 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     order.account.name = "sammy"
     order.account.email = "sammy@fatty.com"
     order.customerNote = "crappy order"
-    Mockito.when(reporter.orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.apply(Seq(order)))
+    Mockito.when(orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.apply(Seq(order)))
 
     val reports = reporter.generate("qweqwe", 10000, 20000)
     assert(1 === reports.size)
