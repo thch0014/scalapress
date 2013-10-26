@@ -1,13 +1,16 @@
 #parse("/admin/header.vm")
 
+<div class="page-header">
+    <h2>Media Library</h2>
+</div>
 
-<h3>Media Library</h3>
 
 <form class='form-horizontal' method='GET'>
     <input type="text" class=" input-xlarge" placeholder="Search for media" name="q"/>
     <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-search"></i> Search</button>
-    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal"> <i class="glyphicon  glyphicon-upload"></i>
-        Upload Media</a>
+    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal">
+        <i class="glyphicon glyphicon-upload"></i> Upload Media
+    </a>
 </form>
 
 <style>
@@ -43,10 +46,12 @@ $pagination
                   <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
 
                   <a class="btn btn-xs btn-default" href="/images/$a.filename()">
-                      <i class="glyphicon  glyphicon-eye-open glyphicon  glyphicon-white"></i> View Original</a>
+                      <i class="glyphicon glyphicon-eye-open"></i> View Original
+                  </a>
 
                   <a class="btn btn-xs btn-danger" href="/backoffice/medialib/delete/$a.filename()">
-                      <i class="glyphicon  glyphicon-trash glyphicon  glyphicon-white"></i> Delete</a>
+                      <i class="glyphicon glyphicon-trash"></i> Delete
+                  </a>
               </div>
           </li>
       #end
@@ -55,41 +60,46 @@ $pagination
 
 $pagination
 
-<div class="modal hide fade" role="dialog" id="upload-modal">
-    <div class="modal-header">
-        <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button>
-        <h3>Upload Media</h3>
-    </div>
-    <div class="modal-body">
-        <form enctype="multipart/form-data" method="POST" class="form-horizontal"><p>
-            Select file to upload
-        </p>
+<div class="modal" role="dialog" id="upload-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" method="POST" class="form-horizontal">
 
-            <label> Minify CSS / JS Uploads:
-                <input type="checkbox" name="minify" value="true"/>
-            </label>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Upload Media</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Select file to upload </p>
 
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
-            <input type="file" name="upload"/>
+                    <label>Minify CSS / JS Uploads:
+                        <input type="checkbox" name="minify" value="true"/>
+                    </label>
 
-            <button class="btn btn-success" type="submit">
-                Upload File
-            </button>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-default" aria-hidden="true" data-dismiss="modal">Close</button>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+                    <input type="file" name="upload"/>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+
+                    <button class="btn btn-success" type="submit">
+                        Upload File
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
-
 
 
 #parse("/admin/footer.vm")

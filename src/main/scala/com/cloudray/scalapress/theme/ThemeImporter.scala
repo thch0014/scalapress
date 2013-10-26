@@ -18,13 +18,14 @@ class ThemeImporter(assetStore: AssetStore) {
     theme.name = name
 
     val zip = new ZipInputStream(in)
-    val entry = zip.getNextEntry
+    var entry = zip.getNextEntry
     while (entry != null) {
       entry.getName match {
-        case "header.html" => theme.header = IOUtils.toString(zip)
-        case "footer.html" => theme.footer = IOUtils.toString(zip)
+        case "header.html" => theme.header = IOUtils.toString(zip).trim
+        case "footer.html" => theme.footer = IOUtils.toString(zip).trim
         case name: String => assetStore.add(name, zip)
       }
+      entry = zip.getNextEntry
     }
 
     theme

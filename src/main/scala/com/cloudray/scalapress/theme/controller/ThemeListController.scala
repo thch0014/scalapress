@@ -33,7 +33,7 @@ class ThemeListController(themeDao: ThemeDao,
     "redirect:/backoffice/theme"
   }
 
-  @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
+  @RequestMapping(value = Array("upload"), method = Array(RequestMethod.POST))
   def upload(@RequestParam("upload") upload: MultipartFile): String = {
 
     val name = FilenameUtils.getBaseName(upload.getOriginalFilename)
