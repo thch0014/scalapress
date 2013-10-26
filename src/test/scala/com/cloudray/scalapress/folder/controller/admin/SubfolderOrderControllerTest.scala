@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse
 /** @author Stephen Samuel */
 class SubfolderOrderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new SubfolderOrderController
-  controller.folderDao = mock[FolderDao]
+  val folderDao = mock[FolderDao]
   val response = mock[HttpServletResponse]
+  val controller = new SubfolderOrderController(folderDao)
 
   test("subfolder re-ordering persists updated positions") {
 
@@ -30,9 +30,9 @@ class SubfolderOrderControllerTest extends FunSuite with MockitoSugar with OneIn
     folder.subfolders.add(folder3)
 
     controller.reorderSections("6-15-4", folder, response)
-    Mockito.verify(controller.folderDao).save(folder1)
-    Mockito.verify(controller.folderDao).save(folder2)
-    Mockito.verify(controller.folderDao).save(folder3)
+    Mockito.verify(folderDao).save(folder1)
+    Mockito.verify(folderDao).save(folder2)
+    Mockito.verify(folderDao).save(folder3)
     assert(0 === folder2.position)
     assert(1 === folder3.position)
     assert(2 === folder1.position)

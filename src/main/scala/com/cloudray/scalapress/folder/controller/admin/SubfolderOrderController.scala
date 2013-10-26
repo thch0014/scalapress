@@ -2,7 +2,6 @@ package com.cloudray.scalapress.folder.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
-import scala.Array
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 import org.springframework.ui.ModelMap
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,10 +10,9 @@ import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/folder/{id}/suborder"))
-class SubfolderOrderController {
-
-  @Autowired var folderDao: FolderDao = _
+class SubfolderOrderController(folderDao: FolderDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute folder: Folder) = "admin/folder/suborder.vm"
@@ -30,7 +28,8 @@ class SubfolderOrderController {
     response.setStatus(200)
   }
 
-  @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
+  @ModelAttribute
+  def folder(@PathVariable("id") id: Long, map: ModelMap) {
     val folder = folderDao.find(id)
     map.put("folder", folder)
   }

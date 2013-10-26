@@ -25,10 +25,4 @@ class AdminUserDetailsServiceTest extends FunSuite with MockitoSugar with OneIns
     assert(!new AdminUserDetails(user, context).isEnabled)
   }
 
-  test("that an admin user is only enabled if active") {
-    user.active = true
-    assert(new AdminUserDetails(user, context).isEnabled)
-    user.active = false
-    assert(!new AdminUserDetails(user, context).isEnabled)
-  }
 }

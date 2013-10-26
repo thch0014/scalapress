@@ -9,24 +9,16 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/folder"))
-class FolderSearchController {
-
-  @Autowired var folderDao: FolderDao = _
-  @Autowired var context: ScalapressContext = _
+class FolderSearchController(folderDao: FolderDao,
+                             context: ScalapressContext) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/folder/list.vm"
 
   @RequestMapping(value = Array("create"))
-  def create: String = {
-
-    val root = folderDao.root
-    val folder = Folder(root)
-    folderDao.save(folder)
-
-    "redirect:/backoffice/folder"
-  }
+  def create: String = create("new folder")
 
   @RequestMapping(value = Array("create"), params = Array("name"))
   def create(@RequestParam("name") name: String): String = {
@@ -39,7 +31,6 @@ class FolderSearchController {
     "redirect:/backoffice/folder/" + folder.id
   }
 
-  @ModelAttribute("folders") def folders = {
-    folderDao.findAll().sortBy(_.fullName).asJava
-  }
+  @ModelAttribute("folders")
+  def folders = folderDao.findAll().sortBy(_.fullName).asJava
 }

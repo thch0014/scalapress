@@ -69,7 +69,8 @@ class FolderEditController(val assetStore: AssetStore,
     "forward:/backoffice/folder/" + folder.id + "#tab3"
   }
 
-  @ModelAttribute("parents") def parents = {
+  @ModelAttribute("parents")
+  def parents = {
 
     val folders = folderDao.findAll().sortBy(_.id)
 
@@ -85,9 +86,11 @@ class FolderEditController(val assetStore: AssetStore,
     ordered.asJava
   }
 
-  @ModelAttribute("folderOrderingMap") def folderOrdering = populate(FolderOrdering.values)
+  @ModelAttribute("folderOrderingMap")
+  def folderOrdering = populate(FolderOrdering.values)
 
-  @ModelAttribute def folder(@PathVariable("id") id: Long, map: ModelMap) {
+  @ModelAttribute
+  def folder(@PathVariable("id") id: Long, map: ModelMap) {
     val folder = folderDao.find(id)
     val sections = folder.sortedSections.asJava
     map.put("eyeball", UrlGenerator.url(folder))
@@ -95,7 +98,8 @@ class FolderEditController(val assetStore: AssetStore,
     map.put("sections", sections)
   }
 
-  @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
+  @ModelAttribute("classes")
+  def classes: java.util.Map[String, String] = {
 
     val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
 

@@ -9,13 +9,13 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class FolderContentSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new FolderContentSectionController
-  controller.sectionDao = mock[SectionDao]
+  val sectionDao = mock[SectionDao]
+  val controller = new FolderContentSectionController(sectionDao)
 
   val section = new FolderContentSection
 
   test("an updated section is persisted") {
     controller.save(section)
-    Mockito.verify(controller.sectionDao).save(section)
+    Mockito.verify(sectionDao).save(section)
   }
 }
