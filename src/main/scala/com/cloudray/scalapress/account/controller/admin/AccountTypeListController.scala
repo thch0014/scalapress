@@ -30,5 +30,6 @@ class AccountTypeListController(accountTypeDao: AccountTypeDao) {
     "redirect:/backoffice/accounttype"
   }
 
-  @ModelAttribute("accountTypes") def types = accountTypeDao.findAll().sortBy(_.id).asJava
+  @ModelAttribute("accountTypes")
+  def types = accountTypeDao.findAll().sortBy(_.id).asJava
 }

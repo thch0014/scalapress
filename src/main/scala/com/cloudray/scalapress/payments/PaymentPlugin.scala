@@ -34,10 +34,8 @@ class PaymentPluginDaoImpl extends GenericDaoImpl[PaymentPlugin, java.lang.Long]
 }
 
 @Component
-class PaymentPluginValidator {
-
-  @Autowired
-  var paymentPluginDao: PaymentPluginDao = _
+@Autowired
+class PaymentPluginValidator(paymentPluginDao: PaymentPluginDao) {
 
   @PostConstruct
   def ensurePluginsCreated() {
@@ -45,7 +43,6 @@ class PaymentPluginValidator {
       val plugins = paymentPluginDao.findAll()
       if (!plugins.exists(arg => arg.getClass.isAssignableFrom(plugin) || plugin.isAssignableFrom(arg.getClass)))
         paymentPluginDao.save(plugin.newInstance)
-
     })
   }
 }

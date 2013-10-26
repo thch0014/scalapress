@@ -42,10 +42,11 @@ class AccountEditController(accountDao: AccountDao,
     form
   }
 
-  @ModelAttribute("installation") def installation = context.installationDao.get
+  @ModelAttribute("installation")
+  def installation = context.installationDao.get
 
-  @ModelAttribute("orders") def orders(@PathVariable("id") id: Long) =
-    context.orderDao.search(new OrderQuery().withAccountId(id)).java
+  @ModelAttribute("orders")
+  def orders(@PathVariable("id") id: Long) = context.orderDao.search(new OrderQuery().withAccountId(id)).java
 }
 
 class EditForm {

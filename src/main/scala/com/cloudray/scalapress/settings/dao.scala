@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
-
 trait GeneralSettingsDao extends GenericDao[GeneralSettings, java.lang.Long] {
   def get: GeneralSettings
 }
@@ -40,8 +39,9 @@ class InstallationDaoImpl extends GenericDaoImpl[Installation, java.lang.Long] w
 }
 
 @Component
-class InstallationDaoImplValidator {
-  @Autowired var dao: InstallationDao = _
+@Autowired
+class InstallationDaoImplValidator(dao: InstallationDao) {
+
   @PostConstruct def ensureOne() {
     if (dao.findAll().isEmpty) {
       val i = new Installation
