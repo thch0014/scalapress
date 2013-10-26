@@ -15,15 +15,9 @@ class ObjectQuery extends PagedQuery {
   @BeanProperty var minPrice: Option[Int] = None
   @BeanProperty var maxPrice: Option[Int] = None
   @BeanProperty var sort: Option[Sort] = None
-  @BeanProperty var maxResults: Int = 100
 
   def withSort(sort: Sort): ObjectQuery = {
     this.sort = Option(sort)
-    this
-  }
-
-  def withMaxResults(i: Int) = {
-    this.maxResults = i
     this
   }
 

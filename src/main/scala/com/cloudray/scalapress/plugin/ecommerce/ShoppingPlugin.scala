@@ -18,16 +18,20 @@ class ShoppingPlugin {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @ManyToOne
   @JoinColumn(name = "basketMarkup")
-  @BeanProperty var basketMarkup: Markup = _
+  @BeanProperty
+  var basketMarkup: Markup = _
 
-  @BeanProperty var stockMethod: StockMethod = StockMethod.Automatic
+  @BeanProperty
+  var stockMethod: StockMethod = StockMethod.Automatic
 
   @Column(length = 10000)
-  @BeanProperty var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
+  @BeanProperty
+  var statuses: String = ShoppingPlugin.defaultStatuses.mkString("\n")
 
   @Column(length = 100000)
   @BeanProperty var outOfStockMessage: String = _

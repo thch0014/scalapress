@@ -9,6 +9,6 @@ class FeedMenuProvider extends MenuItemProvider {
   def item(context: ScalapressContext): Seq[MenuItem] =
     Seq(
       MenuHeader("Feeds"),
-      MenuLink("Google Base", Some("icon-google-plus"), "/backoffice/feed")
+      MenuLink(" Google Base", Some("icon-google-plus"), "/backoffice/feed")
     )
 }

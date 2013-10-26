@@ -28,7 +28,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
     }
 
     typeDao.getAccount.foreach(objectType => {
-      val query = new ObjectQuery().withTypeId(objectType.id).withMaxResults(200)
+      val query = new ObjectQuery().withTypeId(objectType.id).withPageSize(200)
       migrate()
 
       def migrate() {

@@ -12,12 +12,19 @@ import com.cloudray.scalapress.settings.InstallationDao
 @Component
 class GBaseCron extends CronTask with Logging {
 
-  @Autowired var context: ScalapressContext = _
-  @Autowired var feedDao: GBaseFeedDao = _
-  @Autowired var objectDao: ObjectDao = _
-  @Autowired var installationDao: InstallationDao = _
+  @Autowired
+  var context: ScalapressContext = _
 
-  @Scheduled(cron = "0 0 12,18 * * *")
+  @Autowired
+  var feedDao: GBaseFeedDao = _
+
+  @Autowired
+  var objectDao: ObjectDao = _
+
+  @Autowired
+  var installationDao: InstallationDao = _
+
+  @Scheduled(cron = "0 0 8,10,12,14,16,18 * * *")
   @Transactional
   def run() {
     logger.info("Running Google base cron...")
