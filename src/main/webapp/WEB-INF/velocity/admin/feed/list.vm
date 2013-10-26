@@ -15,20 +15,22 @@
 
   #foreach ($feed in $feeds)
       <tr>
-          <td><a href="$feed.backoffice()">$feed.id</a></td>
+          <td><a href="/backoffice/feed/gbase/$feed.id">$feed.id</a></td>
           <td>$!feed.ftpHostname</td>
           <td>$!feed.productCategory</td>
           <td>
             #if($feed.lastRuntime>0)
-                 $datetool.format($feed.lastRuntime)
-                #end
+              $datetool.format($feed.lastRuntime)
+            #else
+                Never
+            #end
           </td>
           <td>
-              <a href="$feed.backoffice()" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i>
+              <a href="/backoffice/feed/gbase/$feed.id" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-pencil"></i>
               </a>
-              <a href="$feed.runUrl()" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-play"></i>
+              <a href="/backoffice/feed/gbase/$feed.id/run" role="button" class="btn btn-xs btn-default">
+                  <i class="glyphicon glyphicon-play"></i>
               </a>
           </td>
       </tr>

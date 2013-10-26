@@ -79,6 +79,12 @@
             <button type="submit" class="btn btn-primary">
                 <i class="icon-save"></i> Save changes
             </button>
+            <a href="/backoffice/feed" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to feeds
+            </a>
+            <a href="/backoffice/feed/gbase/$feed.id/delete" class="btn btn-danger">
+                <i class="icon-trash"></i> Delete Feed
+            </a>
         </div>
     </div>
 

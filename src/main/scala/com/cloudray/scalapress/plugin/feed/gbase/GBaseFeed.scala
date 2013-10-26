@@ -40,7 +40,4 @@ class GBaseFeed {
   @Column(name = "productType")
   @BeanProperty
   var productCategory: String = _
-
-  def backoffice: String = "/backoffice/feed/gbase/" + id
-  def runUrl: String = "/backoffice/feed/gbase/" + id + "/run"
 }
