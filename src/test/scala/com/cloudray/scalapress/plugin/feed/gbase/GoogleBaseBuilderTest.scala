@@ -148,4 +148,12 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
       "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:14.75 GBP" ===
         row.mkString(","))
   }
+
+  test("builder handles free delivery") {
+    feed.shippingCost = "0"
+    val row = builder.row(feed, obj)
+    assert(
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Free Delivery:0.00 GBP" ===
+        row.mkString(","))
+  }
 }

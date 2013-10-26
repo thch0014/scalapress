@@ -9,6 +9,7 @@ import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.obj.attr.AttributeFuncs
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.util.UrlGenerator
+import java.text.DecimalFormat
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {
@@ -17,7 +18,10 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
   val CONDITION_USED = "used"
   val CONDITION_REFURBISHED = "refurbished"
 
-  val ShippingDesc = "Courier"
+  def shippingDesc(shippingCost: Double) = shippingCost match {
+    case 0d => "Free Delivery"
+    case _ => "Courier"
+  }
 
   def csv(objs: Seq[Obj], feed: GBaseFeed): File = {
 
@@ -99,9 +103,16 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     .replace("\n", "")
     .replace("\r", "")
 
-  def shipping(shippingCost: String): String =
-    "GB::" + ShippingDesc + ":" + Option(shippingCost).getOrElse("10.00") + " GBP"
+  def shipping(shippingCost: String): String = {
+    val costAsDouble = try {
+      shippingCost.toDouble
+    } catch {
+      case e: Exception => 10.00d
+    }
+    val formattedShippingCost = new DecimalFormat("0.00").format(costAsDouble)
+    "GB::" + shippingDesc(costAsDouble) + ":" + formattedShippingCost + " GBP"
 
+  }
   def _condition(obj: Obj) = {
     AttributeFuncs.attributeValue(obj, "condition") match {
       case None => CONDITION_NEW
