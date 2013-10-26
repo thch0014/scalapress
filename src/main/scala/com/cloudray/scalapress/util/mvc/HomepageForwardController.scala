@@ -8,6 +8,6 @@ import org.springframework.stereotype.Controller
 @RequestMapping
 class HomepageForwardController {
 
-    @RequestMapping
-    def homepage = "forward:/folder"
+  @RequestMapping
+  def homepage = "forward:/folder"
 }

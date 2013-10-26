@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping(Array("backoffice-login"))
 class AdminLoginController {
 
-    @RequestMapping
-    def login = "admin/login.vm"
+  @RequestMapping
+  def login = "admin/login.vm"
 }

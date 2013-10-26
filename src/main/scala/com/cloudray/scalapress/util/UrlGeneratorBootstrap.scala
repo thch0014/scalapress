@@ -9,7 +9,8 @@ import com.cloudray.scalapress.Logging
 @Component
 class UrlGeneratorBootstrap extends Logging {
 
-  @Value("${url.strategy:None}") var strategyClassName: String = _
+  @Value("${url.strategy:None}")
+  var strategyClassName: String = _
 
   @PostConstruct
   def setup() {

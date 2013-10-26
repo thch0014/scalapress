@@ -1,0 +1,21 @@
+<%@ val name: String %>
+<%@ val edit: String %>
+
+<div class="navbar navbar-static-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container" style="width: auto; padding: 0 20px;">
+            <a class="brand" href="#">
+              ${name}
+            </a>
+            <ul class="nav">
+                <li>
+                    <a href="/backoffice/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/">Home Page</a>
+                </li>
+              ${edit}
+            </ul>
+        </div>
+    </div>
+</div>

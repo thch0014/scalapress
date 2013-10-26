@@ -12,8 +12,7 @@ import com.cloudray.scalapress.account.AccountPluginDao
 /** @author Stephen Samuel */
 @Component
 @Autowired
-class LoginSuccessHandler( context: ScalapressContext) extends AuthenticationSuccessHandler {
-
+class LoginSuccessHandler(context: ScalapressContext) extends AuthenticationSuccessHandler {
 
   def onAuthenticationSuccess(request: HttpServletRequest,
                               response: HttpServletResponse,

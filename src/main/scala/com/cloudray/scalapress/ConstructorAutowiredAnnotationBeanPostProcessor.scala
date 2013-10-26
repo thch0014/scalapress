@@ -4,6 +4,7 @@ import org.springframework.beans.factory.config.InstantiationAwareBeanPostProces
 import org.springframework.stereotype.Component
 import java.lang.reflect.Constructor
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.Logging
 
 /** @author Stephen Samuel */
 @Component
