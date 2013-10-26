@@ -7,8 +7,8 @@ import com.cloudray.scalapress.theme.{Markup, MarkupDao}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/markup/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/markup/{id}"))
 class MarkupEditController(markupDao: MarkupDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("migration"))
 @Autowired
+@RequestMapping(Array("migration"))
 class MigratorController(migrator: ECImageMigrator) extends Logging {
 
   @RequestMapping(Array("images/{domain}"))

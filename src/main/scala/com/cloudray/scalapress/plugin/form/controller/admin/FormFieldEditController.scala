@@ -10,8 +10,8 @@ import com.cloudray.scalapress.util.EnumPopulator
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/form/{formId}/field/{fieldId}"))
 @Autowired
+@RequestMapping(Array("backoffice/form/{formId}/field/{fieldId}"))
 class FormFieldEditController(context: ScalapressContext) extends EnumPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))

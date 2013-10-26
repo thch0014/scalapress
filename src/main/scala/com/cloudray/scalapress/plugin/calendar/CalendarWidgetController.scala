@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
 @Autowired
-class CalendarWidgetController(val objectTypeDao: TypeDao, widgetDao: WidgetDao)
+@RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
+class CalendarWidgetController(val objectTypeDao: TypeDao,
+                               widgetDao: WidgetDao)
   extends WidgetEditController(widgetDao) with AttributePopulator with ObjectTypePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

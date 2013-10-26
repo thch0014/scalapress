@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/submission"))
 @Autowired
+@RequestMapping(Array("backoffice/submission"))
 class SubmissionListController(submissionDao: SubmissionDao) {
 
   @RequestMapping(produces = Array("text/html"))

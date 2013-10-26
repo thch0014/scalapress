@@ -14,7 +14,7 @@ class GMapSection extends Section {
   @BeanProperty
   var postcode: String = _
 
-  def render(request: ScalapressRequest): Option[String] = {
+  override def render(request: ScalapressRequest): Option[String] = {
 
     Option(postcode)
       .filter(_.trim.length > 0)
@@ -37,6 +37,7 @@ class GMapSection extends Section {
 
   def _iframe(pc: String) = "https://maps.google.co.uk/maps?q=" + pc.replace(" ", "") + "&z=10&output=embed"
   def _href(pc: String) = "https://maps.google.co.uk/maps?q=" + pc.replace(" ", "") + "&z=10"
-  def desc: String = "Google maps embedded iframe"
+
+  override def desc: String = "Google maps embedded iframe"
   override def backoffice: String = "/backoffice/plugin/mapping/section/" + id
 }

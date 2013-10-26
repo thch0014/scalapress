@@ -11,8 +11,8 @@ import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/form/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/form/{id}"))
 class FormEditController(submissionDao: SubmissionDao,
                          formDao: FormDao,
                          context: ScalapressContext) {

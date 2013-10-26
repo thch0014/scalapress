@@ -22,5 +22,6 @@ class GeneralSettingsController(context: ScalapressContext) {
     edit(gsettings, site)
   }
 
-  @ModelAttribute("settings") def g = context.generalSettingsDao.findAll().head
+  @ModelAttribute("settings")
+  def g = context.generalSettingsDao.findAll().head
 }

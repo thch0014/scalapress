@@ -15,19 +15,19 @@ import com.cloudray.scalapress.obj.TypeDao
 @RequestMapping(Array("backoffice/widget/attribute/{id}"))
 class AttributeWidgetEditController extends WidgetContainerMapPopulator with AllAttributesPopulator {
 
-    @Autowired var widgetDao: WidgetDao = _
-    @Autowired var context: ScalapressContext = _
-    @Autowired var objectTypeDao: TypeDao = _
+  @Autowired var widgetDao: WidgetDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var objectTypeDao: TypeDao = _
 
-    @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-    def edit(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = "admin/widget/attribute.vm"
+  @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def edit(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = "admin/widget/attribute.vm"
 
-    @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-    def save(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = {
-        widgetDao.save(w)
-        edit(w, model)
-    }
+  @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
+  def save(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = {
+    widgetDao.save(w)
+    edit(w, model)
+  }
 
-    @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[AttributeWidget]
+  @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[AttributeWidget]
 
 }

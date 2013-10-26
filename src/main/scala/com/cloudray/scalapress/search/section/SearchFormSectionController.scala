@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/search/section/form/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/search/section/form/{id}"))
 class SearchFormSectionController(val markupDao: MarkupDao,
                                   context: ScalapressContext) extends MarkupPopulator with SortPopulator {
 
@@ -24,6 +24,7 @@ class SearchFormSectionController(val markupDao: MarkupDao,
     edit(section)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): SearchFormSection =
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): SearchFormSection =
     context.sectionDao.find(id).asInstanceOf[SearchFormSection]
 }

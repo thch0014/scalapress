@@ -13,7 +13,7 @@ import com.cloudray.scalapress.account.Account
   *
   *         This service will complete a listing process
   *
-  **/
+  * */
 @Component
 class ListingProcessService extends Logging {
 

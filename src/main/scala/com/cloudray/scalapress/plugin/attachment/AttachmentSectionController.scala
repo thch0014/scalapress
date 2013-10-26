@@ -10,8 +10,8 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/attachment/section/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/attachment/section/{id}"))
 class AttachmentSectionController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
@@ -42,6 +42,7 @@ class AttachmentSectionController(context: ScalapressContext) {
     "redirect:/backoffice/plugin/attachment/section/" + section.id
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): AttachmentSection =
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): AttachmentSection =
     context.sectionDao.find(id).asInstanceOf[AttachmentSection]
 }

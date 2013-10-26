@@ -16,15 +16,18 @@ class CalendarWidget extends Widget {
 
   @ManyToOne
   @JoinColumn(name = "objectType")
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty
+  var objectType: ObjectType = _
 
   @ManyToOne
   @JoinColumn(name = "startDateAttribute")
-  @BeanProperty var startDateAttribute: Attribute = _
+  @BeanProperty
+  var startDateAttribute: Attribute = _
 
   @ManyToOne
   @JoinColumn(name = "endDateAttribute")
-  @BeanProperty var endDateAttribute: Attribute = _
+  @BeanProperty
+  var endDateAttribute: Attribute = _
 
   def render(req: ScalapressRequest): Option[String] = {
     val output = Scalate.layout("/com/cloudray/scalapress/plugin/calendar/widget.ssp", Map("id" -> id.toString))

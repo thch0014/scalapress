@@ -14,18 +14,20 @@ import com.cloudray.scalapress.obj.Obj
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging {
 
   @OneToOne
   @JoinColumn(name = "search")
-  @BeanProperty var search: SavedSearch = _
+  @BeanProperty
+  var search: SavedSearch = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "markup")
-  @BeanProperty var markup: Markup = _
+  @BeanProperty
+  var markup: Markup = _
 
   def desc: String = "Shows results of a predefined search"
   override def backoffice: String = "/backoffice/search/section/savedsearch/" + id

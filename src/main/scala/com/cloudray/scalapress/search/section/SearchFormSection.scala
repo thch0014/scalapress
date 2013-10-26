@@ -13,10 +13,12 @@ class SearchFormSection extends Section {
 
   @ManyToOne
   @JoinColumn(name = "search_form")
-  @BeanProperty var searchForm: SearchForm = _
+  @BeanProperty
+  var searchForm: SearchForm = _
 
   @Column(name = "no_results_text", length = 10000)
-  @BeanProperty var noResultsText: String = _
+  @BeanProperty
+  var noResultsText: String = _
 
   def desc: String = "Search form"
 

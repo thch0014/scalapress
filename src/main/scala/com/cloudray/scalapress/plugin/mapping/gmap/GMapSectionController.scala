@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/mapping/section/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/mapping/section/{id}"))
 class GMapSectionController(sectionDao: SectionDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))

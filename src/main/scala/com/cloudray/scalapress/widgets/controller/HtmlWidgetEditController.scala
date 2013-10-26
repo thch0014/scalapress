@@ -8,8 +8,8 @@ import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/widget/html/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/widget/html/{id}"))
 class HtmlWidgetEditController(widgetDao: WidgetDao) extends WidgetContainerMapPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

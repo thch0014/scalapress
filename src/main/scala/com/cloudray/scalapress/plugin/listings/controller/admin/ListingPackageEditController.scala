@@ -11,8 +11,8 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
 class ListingPackageEditController(val objectTypeDao: TypeDao,
                                    listingPackageDao: ListingPackageDao,
                                    context: ScalapressContext) extends ObjectTypePopulator {
@@ -26,5 +26,6 @@ class ListingPackageEditController(val objectTypeDao: TypeDao,
     "redirect:/backoffice/plugin/listings/package/" + p.id
   }
 
-  @ModelAttribute("package") def pck(@PathVariable("id") id: Long) = listingPackageDao.find(id)
+  @ModelAttribute("package")
+  def pck(@PathVariable("id") id: Long) = listingPackageDao.find(id)
 }

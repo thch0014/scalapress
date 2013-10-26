@@ -13,11 +13,11 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRende
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("listing"))
-class MyListingsController {
+class MyListingsController(context: ScalapressContext,
+                           themeService: ThemeService) {
 
-  @Autowired var context: ScalapressContext = _
-  @Autowired var themeService: ThemeService = _
   var securityResolver: SecurityResolver = SpringSecurityResolver
 
   @ResponseBody

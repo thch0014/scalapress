@@ -8,8 +8,8 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/markup"))
 @Autowired
+@RequestMapping(Array("backoffice/markup"))
 class MarkupListController(markupDao: MarkupDao) {
 
   @RequestMapping(produces = Array("text/html"))

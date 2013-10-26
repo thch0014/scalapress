@@ -9,8 +9,8 @@ import com.cloudray.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/search/section/savedsearch/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/search/section/savedsearch/{id}"))
 class SearchResultsSectionController(val markupDao: MarkupDao,
                                      context: ScalapressContext) extends MarkupPopulator {
 
@@ -23,6 +23,7 @@ class SearchResultsSectionController(val markupDao: MarkupDao,
     edit(section)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): SearchResultsSection =
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): SearchResultsSection =
     context.sectionDao.find(id).asInstanceOf[SearchResultsSection]
 }

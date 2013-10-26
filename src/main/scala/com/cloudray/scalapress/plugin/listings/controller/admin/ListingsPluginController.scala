@@ -16,28 +16,28 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/plugin/listings"))
 class ListingsPluginController {
 
-    @Autowired var listingsPluginDao: ListingsPluginDao = _
-    @Autowired var listingPackageDao: ListingPackageDao = _
-    @Autowired var context: ScalapressContext = _
-    @Autowired var markupDao: MarkupDao = _
+  @Autowired var listingsPluginDao: ListingsPluginDao = _
+  @Autowired var listingPackageDao: ListingPackageDao = _
+  @Autowired var context: ScalapressContext = _
+  @Autowired var markupDao: MarkupDao = _
 
-    @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
-    def edit(req: HttpServletRequest) = "admin/plugin/listings/plugin.vm"
+  @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.GET))
+  def edit(req: HttpServletRequest) = "admin/plugin/listings/plugin.vm"
 
-    @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
-    def save(req: HttpServletRequest, @ModelAttribute("plugin") plugin: ListingsPlugin) = {
-        listingsPluginDao.save(plugin)
-        edit(req)
-    }
+  @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
+  def save(req: HttpServletRequest, @ModelAttribute("plugin") plugin: ListingsPlugin) = {
+    listingsPluginDao.save(plugin)
+    edit(req)
+  }
 
-    @RequestMapping(value = Array("package/create"))
-    def create = {
-        val p = new ListingPackage
-        p.name = "new listing package"
-        listingPackageDao.save(p)
-        "redirect:/backoffice/plugin/listings"
-    }
+  @RequestMapping(value = Array("package/create"))
+  def create = {
+    val p = new ListingPackage
+    p.name = "new listing package"
+    listingPackageDao.save(p)
+    "redirect:/backoffice/plugin/listings"
+  }
 
-    @ModelAttribute("plugin") def plugin = listingsPluginDao.get
-    @ModelAttribute("packages") def users = listingPackageDao.findAll().asJava
+  @ModelAttribute("plugin") def plugin = listingsPluginDao.get
+  @ModelAttribute("packages") def users = listingPackageDao.findAll().asJava
 }

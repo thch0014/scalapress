@@ -10,11 +10,11 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("plugin/calendar/event/"))
-class CalendarJsonController {
+class CalendarJsonController(searchService: SearchService,
+                             context: ScalapressContext) {
 
-  @Autowired var searchService: SearchService = _
-  @Autowired var context: ScalapressContext = _
   val mapper = new ObjectMapper
   mapper.registerModule(DefaultScalaModule)
 

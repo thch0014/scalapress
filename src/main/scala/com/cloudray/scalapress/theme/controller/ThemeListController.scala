@@ -11,8 +11,8 @@ import org.apache.commons.io.FilenameUtils
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/theme"))
 @Autowired
+@RequestMapping(Array("backoffice/theme"))
 class ThemeListController(themeDao: ThemeDao,
                           themeImporter: ThemeImporter) {
 

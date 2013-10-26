@@ -11,8 +11,8 @@ import scala.collection.immutable.TreeMap
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/debug"))
 @Autowired
+@RequestMapping(Array("backoffice/debug"))
 class DebugController(searchService: SearchService) {
 
   @RequestMapping

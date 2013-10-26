@@ -7,8 +7,8 @@ import com.cloudray.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/bingmap/section/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/bingmap/section/{id}"))
 class BingMapSectionController(sectionDao: SectionDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
@@ -20,6 +20,7 @@ class BingMapSectionController(sectionDao: SectionDao) {
     edit(section)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): BingMapSection =
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): BingMapSection =
     sectionDao.find(id).asInstanceOf[BingMapSection]
 }

@@ -9,8 +9,8 @@ import com.cloudray.scalapress.settings.Installation
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/settings/installation"))
 @Autowired
+@RequestMapping(Array("backoffice/settings/installation"))
 class InstallationController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))

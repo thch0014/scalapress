@@ -46,13 +46,15 @@ class WidgetListController(context: ScalapressContext) {
     "ok"
   }
 
-  @ModelAttribute("widgets") def widgets = {
+  @ModelAttribute("widgets")
+  def widgets = {
     val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
       .position))
     context.widgetDao.findAll().sorted(ordering).toArray
   }
 
-  @ModelAttribute("classes") def classes = {
+  @ModelAttribute("classes")
+  def classes = {
     val map = new mutable.LinkedHashMap[String, String]
     for ( c <- ComponentClassScanner.widgets.sortBy(_.getSimpleName) ) {
       map += c.getName -> c.getSimpleName

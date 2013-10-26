@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("account"))
 @Autowired
+@RequestMapping(Array("account"))
 class AccountController(themeService: ThemeService,
                         accountPluginDao: AccountPluginDao,
                         context: ScalapressContext) {

@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import com.cloudray.scalapress.plugin.form.{FormDao, Form}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/form"))
 @Autowired
+@RequestMapping(Array("backoffice/form"))
 class FormListController(formDao: FormDao) {
 
   @RequestMapping
@@ -25,8 +26,7 @@ class FormListController(formDao: FormDao) {
     "redirect:/backoffice/form/" + form.id
   }
 
-  import scala.collection.JavaConverters._
-
-  @ModelAttribute("forms") def forms = formDao.findAll().asJava
+  @ModelAttribute("forms")
+  def forms = formDao.findAll().asJava
 
 }

@@ -9,8 +9,8 @@ import org.springframework.ui.ModelMap
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/widget/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/widget/{id}"))
 class WidgetEditController(widgetDao: WidgetDao) extends WidgetContainerMapPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
@@ -22,11 +22,14 @@ class WidgetEditController(widgetDao: WidgetDao) extends WidgetContainerMapPopul
     edit(w, model)
   }
 
-  @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id)
+  @ModelAttribute("widget")
+  def widget(@PathVariable("id") id: Long) = widgetDao.find(id)
 
 }
 
 trait WidgetContainerMapPopulator {
-  @ModelAttribute("widgetContainerMap") def widgetContainerMap: java.util.Map[String, String] =
+
+  @ModelAttribute("widgetContainerMap")
+  def widgetContainerMap: java.util.Map[String, String] =
     WidgetContainer.values().map(wc => (wc.name, wc.name)).toMap.asJava
 }

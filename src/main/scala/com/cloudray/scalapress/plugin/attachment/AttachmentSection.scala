@@ -15,7 +15,8 @@ import scala.collection.JavaConverters._
 class AttachmentSection extends Section {
 
   @ElementCollection
-  @BeanProperty var attachments: java.util.List[Attachment] = new util.ArrayList[Attachment]()
+  @BeanProperty
+  var attachments: java.util.List[Attachment] = new util.ArrayList[Attachment]()
 
   override def desc: String = "Shows attachments for a folder or object"
   override def backoffice: String = "/backoffice/plugin/attachment/section/" + id

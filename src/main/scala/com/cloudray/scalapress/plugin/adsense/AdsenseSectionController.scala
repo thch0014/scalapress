@@ -9,21 +9,21 @@ import com.cloudray.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/adsense/section/{id}"))
-class AdsenseSectionController {
+class AdsenseSectionController(sectionDao: SectionDao,
+                               context: ScalapressContext) {
 
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: AdsenseSection) = "admin/plugin/adsense/section/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: AdsenseSection) = "admin/plugin/adsense/section/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: AdsenseSection) = {
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: AdsenseSection) = {
-        sectionDao.save(section)
-        edit(section)
-    }
-
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): AdsenseSection =
-        sectionDao.find(id).asInstanceOf[AdsenseSection]
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): AdsenseSection =
+    sectionDao.find(id).asInstanceOf[AdsenseSection]
 }

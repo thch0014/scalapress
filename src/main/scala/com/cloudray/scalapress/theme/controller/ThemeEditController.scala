@@ -7,8 +7,8 @@ import com.cloudray.scalapress.theme.{ThemeDao, Theme}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/theme/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/theme/{id}"))
 class ThemeEditController(themeDao: ThemeDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

@@ -51,16 +51,11 @@ class FolderController extends Logging {
       case None =>
     }
 
-    logger.debug("Headers/footers")
     val header = Option(folder.header).orElse(Option(folderPluginDao.head.header))
     val footer = Option(folder.footer).orElse(Option(folderPluginDao.head.footer))
-    logger.debug("Headers/footers completed")
 
-    logger.debug("Creating sreq")
     val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
-    logger.debug("Loading theme")
     val theme = themeService.theme(folder)
-    logger.debug("Creating page")
     val page = ScalapressPage(theme, sreq)
 
     if (SpringSecurityResolver.hasAdminRole(req)) page.toolbar(sreq)

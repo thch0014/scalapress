@@ -12,12 +12,13 @@ import com.cloudray.scalapress.util.Scalate
 @Table(name = "plugin_bingmap_section")
 class BingMapSection extends Section {
 
-  @BeanProperty var postcode: String = _
+  @BeanProperty
+  var postcode: String = _
 
   override def backoffice: String = "/backoffice/plugin/bingmap/section/" + id
-  def desc: String = "Bing maps embedded iframe"
+  override def desc: String = "Bing maps embedded iframe"
 
-  def render(request: ScalapressRequest): Option[String] = {
+  override def render(request: ScalapressRequest): Option[String] = {
 
     Option(postcode)
       .filter(_.trim.length > 0)
