@@ -66,6 +66,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     val cardType = params.get("CardType").orNull
     val fraudHint = params.get("FraudResponse").orNull
     val securityCheck = params.get("AVSCV2").orNull
+    val details = params.get("StatusDetail").orNull
     val amount: Int = try {
       params.get("Amount").map(_.toDouble).map(_ * 100).map(_.toInt).getOrElse(0)
     } catch {
@@ -78,6 +79,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     tx.cardType = cardType
     tx.securityCheck = securityCheck
     tx.fraudHint = fraudHint
+    tx.details = details
     tx
   }
 

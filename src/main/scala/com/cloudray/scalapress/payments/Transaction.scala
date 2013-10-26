@@ -28,6 +28,14 @@ class Transaction {
   @BeanProperty
   var date: Long = _
 
+  /**
+   * Any details regarding the transaction that the provider returned, eg why it was declined.
+   * or
+   */
+  @Column(name = "details", nullable = true)
+  @BeanProperty
+  var details: String = _
+
   @Column(name = "currency", nullable = true)
   @BeanProperty
   var currency: String = _
@@ -109,6 +117,8 @@ class Transaction {
   @Column(name = "ipAddress")
   @BeanProperty
   var ipAddress: String = _
+
+  override def toString: String = s"Transaction [id=$id transactionId=$transactionId processor=$processor date=$date]"
 }
 
 object Transaction {

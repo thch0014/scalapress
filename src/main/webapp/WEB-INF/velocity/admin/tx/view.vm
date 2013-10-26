@@ -57,6 +57,16 @@
         </div>
     </div>
 
+  #if ($tx.details)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Details</label>
+
+          <div class="col-lg-8">
+            #springFormInput("tx.details", "class='form-control'")
+          </div>
+      </div>
+  #end
+
   #if ($tx.fraudHint)
       <div class="form-group">
           <label class="col-lg-2 control-label">Card Type</label>
