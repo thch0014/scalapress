@@ -1,50 +1,178 @@
-html {  height: 100%; }
+html {
+    height: 100%;
+}
 
 body {
-  background: url(/loginbackground) no-repeat center center fixed;
-  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+    background: url(/loginbackground) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
+
 @media (min-width: 979px) {
-  body { padding-top: 80px; }
+    body {
+        padding-top: 80px;
+    }
 }
 
-.blue { color: #447fc8; }
+.blue {
+    color: #447fc8;
+}
 
-.btn-black { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; padding: 5px 20px; background-color: #222222; background-image: none; color: white; text-shadow: none; }
-.btn-black:hover { background: #333333; color: white; }
+.btn-black {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 5px 20px;
+    background: #222222 none;
+    color: white;
+    text-shadow: none;
+}
 
-.navbar .brand { margin-top: 20px; padding-bottom: 8px; max-height: 40px; width: auto; }
-.navbar .navbar-inner { height: 80px; background: white; filter: none; }
-.navbar .nav { margin-top: 20px; }
-.navbar .nav > li > a { padding: 10px 10px 11px; color: #333; text-shadow: none; }
-.navbar .nav > li > a:hover { color: #111; }
-.navbar .nav > li.active > a { background: none; color: #111; }
-.navbar .nav > li.active > a:hover { background: none; color: #111; }
+.btn-black:hover {
+    background: #333333;
+    color: white;
+}
 
-#login-wrapper { -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); position: absolute; top: 50%; left: 50%; display: block; margin-top: -185px; margin-left: -235px; padding: 25px; width: 420px; height: 320px; background: white; text-align: center; }
+.navbar .brand {
+    margin-top: 20px;
+    padding-bottom: 8px;
+    max-height: 40px;
+    width: auto;
+}
 
-.login-form legend { margin-top: 5px; margin-bottom: 30px; padding-bottom: 25px; }
-.login-form .body { padding-bottom: 30px; border-bottom: 1px solid #eeeeee; }
-.login-form .footer { margin-top: 20px; }
-.login-form .footer .checkbox.inline { display: inline; }
-.login-form .footer .checkbox.inline input[type="checkbox"] { float: none; margin-top: -4px; }
-.login-form .footer .btn { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; margin-left: 15px; padding: 7px 25px; background-image: none; }
+.navbar .navbar-inner {
+    height: 80px;
+    background: white;
+    filter: none;
+}
 
-footer.white { padding-top: 10px; height: 60px; background: white; text-align: center; }
+.navbar .nav {
+    margin-top: 20px;
+}
 
-.navbar, .login-form legend, .login-form label, footer.navbar-fixed-bottom { font-family: 'Open Sans', sans-serif; }
-.navbar { font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-.login-form legend { font-size: 36px; font-weight: 300; color: #333; -webkit-font-smoothing: subpixel-antialiased; }
-.login-form label { font-size: 20px; color: #333; font-weight: 300; }
-footer.navbar-fixed-bottom { font-size: 16px; line-height: 18px; font-weight: 400; }
+.navbar .nav > li > a {
+    padding: 10px 10px 11px;
+    color: #333;
+    text-shadow: none;
+}
+
+.navbar .nav > li > a:hover {
+    color: #111;
+}
+
+.navbar .nav > li.active > a {
+    background: none;
+    color: #111;
+}
+
+.navbar .nav > li.active > a:hover {
+    background: none;
+    color: #111;
+}
+
+#login-wrapper {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    margin-top: -185px;
+    margin-left: -235px;
+    padding: 25px;
+    width: 420px;
+    height: 320px;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+.login-form legend {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+}
+
+.login-form .body {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+footer {
+    padding-top: 10px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.navbar, .login-form legend, .login-form label, footer.navbar-fixed-bottom {
+    font-family: 'Ruda', sans-serif;
+}
+
+.navbar {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.login-form legend {
+    font-size: 36px;
+    font-weight: 300;
+    color: #333;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.login-form label {
+    font-size: 20px;
+    color: #333;
+    font-weight: 300;
+}
+
+footer.navbar-fixed-bottom {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+}
 
 @media (max-width: 980px) {
-  .navbar { height: auto; margin-bottom: 0; }
-  .navbar .brand { margin-top: 0; }
-  .navbar .navbar-inner { height: auto; }
-  .navbar .nav > li > a:hover { color: white; }
-  #login-wrapper { position: relative; top: 0; margin-top: 25px; }
+    .navbar {
+        height: auto;
+        margin-bottom: 0;
+    }
+
+    .navbar .brand {
+        margin-top: 0;
+    }
+
+    .navbar .navbar-inner {
+        height: auto;
+    }
+
+    .navbar .nav > li > a:hover {
+        color: white;
+    }
+
+    #login-wrapper {
+        position: relative;
+        top: 0;
+        margin-top: 25px;
+    }
 }
+
 @media (max-width: 495px) {
-  #login-wrapper { width: auto; height: auto; margin-left: 0; margin-right: 0; left: 0; }
+    #login-wrapper {
+        width: auto;
+        height: auto;
+        margin-left: 0;
+        margin-right: 0;
+        left: 0;
+    }
 }
