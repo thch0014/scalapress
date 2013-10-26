@@ -4,7 +4,7 @@ import org.apache.camel.scala.dsl.builder.RouteBuilder
 import org.apache.camel.impl.DefaultCamelContext
 import org.springframework.mail.MailSender
 import org.springframework.beans.factory.annotation.{Value, Autowired}
-import javax.annotation.PreDestroy
+import javax.annotation.{PostConstruct, PreDestroy}
 
 /** @author Stephen Samuel */
 class GBaseResultsMonitor {
@@ -23,11 +23,15 @@ class GBaseResultsMonitor {
 
   val context = new DefaultCamelContext()
   context.setName("GBaseResultsMonitor")
-  context.addRoutes(new MonitorRoute(endpoint, minItems, notifyEmail, mailSender))
-  context.start()
+
+  @PostConstruct
+  def start() {
+    context.addRoutes(new MonitorRoute(endpoint, minItems, notifyEmail, mailSender))
+    context.start()
+  }
 
   @PreDestroy
-  def shutdown(): Unit = context.stop()
+  def stop(): Unit = context.stop()
 }
 
 class MonitorRoute(endpoint: String,
