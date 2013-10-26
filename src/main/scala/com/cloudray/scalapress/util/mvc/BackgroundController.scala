@@ -11,11 +11,13 @@ import org.apache.commons.io.IOUtils
 @RequestMapping(Array("loginbackground"))
 class BackgroundController {
 
-    @ResponseBody
-    @RequestMapping(produces = Array("image/jpeg"))
-    def background(resp: HttpServletResponse) {
-        val random = Random.nextInt(18) + 1
-        val input = getClass.getResourceAsStream("/background/loginbg" + random + ".jpg")
-        IOUtils.copy(input, resp.getOutputStream)
-    }
+  val IMAGE_COUNT = 26
+
+  @ResponseBody
+  @RequestMapping(produces = Array("image/jpeg"))
+  def background(resp: HttpServletResponse) {
+    val random = Random.nextInt(IMAGE_COUNT - 1) + 1
+    val input = getClass.getResourceAsStream("/background/loginbg" + random + ".jpg")
+    IOUtils.copy(input, resp.getOutputStream)
+  }
 }

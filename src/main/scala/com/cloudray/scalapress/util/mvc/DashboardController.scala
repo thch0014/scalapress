@@ -28,17 +28,27 @@ class DashboardController {
   @RequestMapping(produces = Array("text/html"))
   def dashboard = "admin/dashboard.vm"
 
-  @ModelAttribute("orderTotals") def orderTotals: java.util.List[OrderTotal] = {
+  @ModelAttribute("orderTotals")
+  def orderTotals: java.util.List[OrderTotal] = {
     val orders = orderDao.ordersPerDay(365)
     orders.asJava
   }
 
-  @ModelAttribute("installation") def installation = context.installationDao.get
-  @ModelAttribute("indexed") def indexed = context.searchService.count
-  @ModelAttribute("user") def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
-  @ModelAttribute("folderCount") def folderCount = context.folderDao.findAll().size
+  @ModelAttribute("installation")
+  def installation = context.installationDao.get
 
-  @ModelAttribute("recentObjects") def recentObjects: java.util.List[Obj] = context.objectDao.recent(8).asJava
+  @ModelAttribute("indexed")
+  def indexed = context.searchService.count
 
-  @ModelAttribute("buildNumber") def buildNumber = props.get("buildNumber")
+  @ModelAttribute("user")
+  def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
+
+  @ModelAttribute("folderCount")
+  def folderCount = context.folderDao.findAll().size
+
+  @ModelAttribute("recentObjects")
+  def recentObjects: java.util.List[Obj] = context.objectDao.recent(8).asJava
+
+  @ModelAttribute("buildNumber")
+  def buildNumber = props.get("buildNumber")
 }

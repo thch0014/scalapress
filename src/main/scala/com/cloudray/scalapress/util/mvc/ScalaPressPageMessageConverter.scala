@@ -17,11 +17,9 @@ class ScalaPressPageMessageConverter(renderer: ScalapressPageRenderer)
   def supports(clazz: Class[_]) = classOf[ScalapressPage].isAssignableFrom(clazz)
   def readInternal(clazz: Class[_ <: ScalapressPage], inputMessage: HttpInputMessage) = throw new RuntimeException()
 
-  override def canRead(mediaType: MediaType): Boolean = mediaType == MediaType.TEXT_HTML
-  override def canRead(clazz: Class[_], mediaType: MediaType): Boolean = supports(clazz) && mediaType == MediaType
-    .TEXT_HTML
-  override def canWrite(mediaType: MediaType): Boolean = mediaType == MediaType.TEXT_HTML
-  override def canWrite(clazz: Class[_], mediaType: MediaType): Boolean = supports(clazz) && mediaType == MediaType
-    .TEXT_HTML
+  override def canRead(mt: MediaType): Boolean = mt == MediaType.TEXT_HTML
+  override def canRead(clazz: Class[_], mt: MediaType): Boolean = supports(clazz) && mt == MediaType.TEXT_HTML
+  override def canWrite(mt: MediaType): Boolean = mt == MediaType.TEXT_HTML
+  override def canWrite(clazz: Class[_], mt: MediaType): Boolean = supports(clazz) && mt == MediaType.TEXT_HTML
   override def getDefaultContentType(t: ScalapressPage): MediaType = MediaType.TEXT_HTML
 }

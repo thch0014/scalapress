@@ -4,7 +4,6 @@ import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
-import org.springframework.core.`type`.filter.{AnnotationTypeFilter, AssignableTypeFilter}
 import org.elasticsearch.plugins.Plugin
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.section.Section
@@ -39,13 +38,13 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 
   def getSubtypes[T](klass: Class[T]) = {
     val scanner = new ComponentClassScanner
-    scanner.addIncludeFilter(new AssignableTypeFilter(klass))
+    scanner.addIncludeFilter(new org.springframework.core.`type`.filter.AssignableTypeFilter(klass))
     scanner.getComponentClasses(BASE_PACKAGE).map(_.asInstanceOf[Class[T]])
   }
 
   def getAnnotatedClasses[_](annotationType: Class[_ <: Annotation]) = {
     val scanner = new ComponentClassScanner
-    scanner.addIncludeFilter(new AnnotationTypeFilter(annotationType))
+    scanner.addIncludeFilter(new org.springframework.core.`type`.filter.AnnotationTypeFilter(annotationType))
     scanner.getComponentClasses(BASE_PACKAGE)
   }
 }
