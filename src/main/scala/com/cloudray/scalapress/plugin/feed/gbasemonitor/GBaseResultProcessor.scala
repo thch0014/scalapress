@@ -10,11 +10,10 @@ class GBaseResultProcessor(minItems: Int) extends Processor {
 
   def process(exchange: Exchange) {
     val body = exchange.getIn.getBody.toString
-    val result = new GBaseResultEmailParser().parse(body)
-    if (isGoodResult(result)) {
-      exchange.setProperty(Exchange.ROUTE_STOP, "true")
-    } else {
-      exchange.getIn.setBody(result)
+    new GBaseResultEmailParser().parse(body) match {
+      case Some(result) if isGoodResult(result) => exchange.setProperty(Exchange.ROUTE_STOP, "true")
+      case Some(result) => exchange.getIn.setBody(result)
+      case None => exchange.setProperty(Exchange.ROUTE_STOP, "true")
     }
   }
 }

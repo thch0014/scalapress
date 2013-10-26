@@ -7,10 +7,10 @@ class GBaseResultEmailParser extends GBaseResultParser {
 
   val itemsPattern = "(\\d+) of (\\d+) items inserted".r
 
-  def parse(text: String): GBaseResult = {
+  def parse(text: String): Option[GBaseResult] = {
     itemsPattern findFirstIn text match {
-      case Some(itemsPattern(inserted, total)) => GBaseResult(inserted.toInt, total.toInt)
-      case None => GBaseResult(0, 0)
+      case Some(itemsPattern(inserted, total)) => Some(GBaseResult(inserted.toInt, total.toInt))
+      case None => None
     }
   }
 }
