@@ -3,7 +3,7 @@ package com.cloudray.scalapress.section
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import com.cloudray.scalapress.obj.Obj
-import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.folder.{SectionInterceptor, Folder}
 
 /** @author Stephen Samuel */
 object SectionRenderer extends Logging {
@@ -20,7 +20,13 @@ object SectionRenderer extends Logging {
   }
 
   def _render(section: Section, sreq: ScalapressRequest): String = {
+
+    val interceptors = sreq.context.beans[SectionInterceptor]
+
     logger.debug("Rendering section [{}]...", section)
+
+    interceptors.foreach(_.preSection(section))
+
     val start = System.currentTimeMillis()
     val buffer = new ArrayBuffer[String]
     buffer.append("<!-- section " + section.id + ": " + section.getClass + " -->\n")
@@ -31,6 +37,10 @@ object SectionRenderer extends Logging {
     }
     buffer.append("\n<!-- end section -->\n\n")
     logger.debug("...rendered in {} ms", System.currentTimeMillis() - start)
-    buffer.mkString
+    val rendered = buffer.mkString
+
+    interceptors.foreach(_.postSection(section))
+
+    rendered
   }
 }

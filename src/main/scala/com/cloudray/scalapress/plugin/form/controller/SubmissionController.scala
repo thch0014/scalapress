@@ -52,10 +52,8 @@ class SubmissionController extends Logging {
     sreq.hasErrors match {
       case true => {
         logger.debug("Form has errors {}, redirecting to folder {}", sreq.errors, folderId)
-        if (folderId > 0)
-          folderController.view(folderId, req)
-        else
-          folderController.view(req)
+        if (folderId > 0) folderController.view(folderId, req, resp)
+        else folderController.view(req, resp)
       }
       case false => {
 

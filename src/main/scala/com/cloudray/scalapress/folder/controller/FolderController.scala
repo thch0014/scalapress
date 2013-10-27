@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, ExceptionHandler, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
-import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
-import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao, Folder}
+import com.cloudray.scalapress.folder.{FolderInterceptor, FolderPluginDao, FolderDao, Folder}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.security.SpringSecurityResolver
@@ -30,21 +30,24 @@ class FolderController extends Logging {
 
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
-  def view(req: HttpServletRequest): ScalapressPage = view(folderDao.root, req)
+  def view(req: HttpServletRequest, resp: HttpServletResponse): ScalapressPage = view(folderDao.root, req, resp)
 
   @ResponseBody
   @RequestMapping(value = Array("{id:\\d+}"), produces = Array("text/html"))
-  def view(@PathVariable("id") id: Long, req: HttpServletRequest): ScalapressPage = {
+  def view(@PathVariable("id") id: Long, req: HttpServletRequest, resp: HttpServletResponse): ScalapressPage = {
     logger.debug("Folder requested received {}", id)
     Option(folderDao.find(id)) match {
-      case Some(folder) => view(folder, req)
-      case None => view(folderDao.root, req)
+      case Some(folder) => view(folder, req, resp)
+      case None => view(folderDao.root, req, resp)
     }
   }
 
-  def view(folder: Folder, req: HttpServletRequest): ScalapressPage = {
+  def view(folder: Folder, req: HttpServletRequest, resp: HttpServletResponse): ScalapressPage = {
     logger.debug("Folder requested received {}", folder)
     if (folder == null) throw new RedirectException("/")
+
+    val lifecycle = new FolderInterceptorService(context.beans[FolderInterceptor])
+    lifecycle.preHandle(folder, req, resp)
 
     Option(folder.redirect).filter(_.trim.length > 0) match {
       case Some(redirect) => throw new RedirectException(folder.redirect)
@@ -64,6 +67,8 @@ class FolderController extends Logging {
     page.body(SectionRenderer.render(folder, sreq))
     logger.debug("...completed")
     footer.foreach(page body)
+
+    lifecycle.postHandle(folder, req, resp)
     page
   }
 }
