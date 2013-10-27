@@ -12,10 +12,10 @@ class Toolbar(name: String, url: Option[String]) {
       <li>
         <a href={u}>Edit This Page</a>
       </li>
-    })
+    }).mkString
 
     Scalate.layout("/com/cloudray/scalapress/util/mvc/toolbar.ssp",
-      Map("name" -> name, "edit" -> edit.orNull))
+      Map("name" -> name, "edit" -> edit))
   }
 }
 

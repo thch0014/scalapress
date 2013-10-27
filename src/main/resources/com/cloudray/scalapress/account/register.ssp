@@ -1,0 +1,39 @@
+<%@ val siteName: String %>
+<%@ val name: String %>
+<%@ val email: String %>
+<%@ val nameError: String %>
+<%@ val emailError: String %>
+<%@ val passwordError: String %>
+<%@ val nameStyle: String %>
+<%@ val emailStyle: String %>
+<%@ val passwordStyle: String %>
+
+<h1>Registration</h1>
+<div class="well well-large">
+    It's easy to register with <strong>${siteName}</strong>, all we need is an email address and password for your
+    account. Don't worry, we won't share your details with any third parties.
+</div>
+<div class="registration">
+    <form class="form-horizontal registration" method="POST">
+        <div class="control-group ${nameStyle}">
+            <label for="name">Your name</label>
+            <input name="name" placeholder="Your name" type="text" value="${name}">
+            <span class="help-inline">${nameError}</span>
+        </div>
+        <div class="control-group ${emailStyle}">
+            <label for="email">Email</label>
+            <input name="email" placeholder="Email Address" type="email" value="${email}">
+            <span class="help-inline">${emailError}</span>
+        </div>
+        <div class="control-group ${passwordStyle}">
+            <label for="password">Password</label>
+            <input name="password" placeholder="Password" type="password">
+            <span class="help-inline">${passwordError}</span>
+        </div>
+        <button type="submit" class="btn btn-success"><i class="icon-user"></i> Register</button>
+    </form>
+</div>
+<hr>
+<p>Already registered? <strong><a href="/login" title="Login here">Click here</a></strong> to login</p>
+<p>Forgotten your password? <strong><a href="/password" title="Forgotten your password">Click here</a></strong> and
+    we'll reset it for you.</p>

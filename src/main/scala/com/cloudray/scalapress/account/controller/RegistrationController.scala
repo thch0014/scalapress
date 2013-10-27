@@ -62,13 +62,14 @@ class RegistrationController(themeService: ThemeService,
                            errors: Errors): ScalapressPage = {
 
     val plugin = accountPluginDao.get
+    val renderer = new RegistrationRenderer(context.installationDao.get)
     val sreq = ScalapressRequest(req, context).withTitle("Registration")
 
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
     Option(plugin.registrationPageHeader).foreach(arg => page body arg)
-    page.body(RegistrationRenderer.renderRegistrationPage(form, plugin, errors))
+    page.body(renderer.renderRegistrationPage(form, plugin, errors))
     Option(plugin.registrationPageFooter).foreach(arg => page body arg)
 
     page
@@ -136,12 +137,15 @@ class RegistrationController(themeService: ThemeService,
 
 class RegistrationForm {
 
-  @NotEmpty
-  @BeanProperty var name: String = _
+  @NotEmpty(message = "Please enter your name")
+  @BeanProperty
+  var name: String = _
 
-  @NotEmpty
-  @BeanProperty var email: String = _
+  @NotEmpty(message = "Please enter your email address")
+  @BeanProperty
+  var email: String = _
 
-  @NotEmpty
-  @BeanProperty var password: String = _
+  @NotEmpty(message = "A password is needed")
+  @BeanProperty
+  var password: String = _
 }
