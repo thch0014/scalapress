@@ -3,14 +3,14 @@ package com.cloudray.scalapress.plugin.payments.sagepayform
 import javax.persistence.{Entity, Table}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PostConstruct
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.payments.{PaymentProcessor, PaymentPlugin}
+import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */
 @Entity
+@SingleInstance
 @Table(name = "plugins_sagepay")
 class SagepayFormPlugin extends PaymentPlugin {
 
@@ -31,15 +31,4 @@ trait SagepayFormPluginDao extends GenericDao[SagepayFormPlugin, java.lang.Long]
 @Transactional
 class SagepayFormPluginDaoImpl extends GenericDaoImpl[SagepayFormPlugin, java.lang.Long] with SagepayFormPluginDao {
   def get = findAll.head
-}
-
-@Component
-class SagepayFormPluginDaoImplValidator {
-  @Autowired var dao: SagepayFormPluginDao = _
-  @PostConstruct def ensureOne() {
-    if (dao.findAll().size == 0) {
-      val plugin = new SagepayFormPlugin
-      dao.save(plugin)
-    }
-  }
 }

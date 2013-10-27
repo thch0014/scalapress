@@ -30,7 +30,7 @@ class DashboardController {
 
   @ModelAttribute("orderTotals")
   def orderTotals: java.util.List[OrderTotal] = {
-    val orders = orderDao.ordersPerDay(365)
+    val orders = orderDao.ordersPerDay(180)
     orders.asJava
   }
 

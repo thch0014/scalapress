@@ -11,11 +11,11 @@ import javax.persistence.Entity
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PostConstruct
+import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */
 @Entity
+@SingleInstance
 @Table(name = "plugin_security_simplepass")
 class SimplePassPlugin {
 
@@ -48,11 +48,5 @@ trait SimplePassPluginDao extends GenericDao[SimplePassPlugin, java.lang.Long] {
 @Transactional
 class SimplePassPluginDaoImpl extends GenericDaoImpl[SimplePassPlugin, java.lang.Long] with SimplePassPluginDao {
   def get: SimplePassPlugin = findAll.head
-}
-
-@Component
-@Autowired
-class SimplePassPluginValidator(dao: SimplePassPluginDao) {
-  @PostConstruct def ensureOne(): Unit = if (dao.findAll().size == 0) dao.save(new SimplePassPlugin)
 }
 

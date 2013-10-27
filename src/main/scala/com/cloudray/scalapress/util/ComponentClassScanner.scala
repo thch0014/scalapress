@@ -4,13 +4,13 @@ import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
-import org.elasticsearch.plugins.Plugin
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.{Callback, Tag}
 import java.lang.annotation.Annotation
 import com.cloudray.scalapress.payments.PaymentPlugin
 import com.cloudray.scalapress.settings.MenuProvider
+import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -55,7 +55,8 @@ object ComponentClassScanner {
   lazy val menus: Seq[Class[MenuProvider]] = new ComponentClassScanner().getSubtypes(classOf[MenuProvider])
   lazy val paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
   lazy val sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
-  lazy val plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])
+  lazy val singleInstanceClasses: Seq[Class[_]] =
+    new ComponentClassScanner().getAnnotatedClasses(classOf[SingleInstance])
   lazy val widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
   lazy val tags: Seq[Class[_]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Tag])
 }

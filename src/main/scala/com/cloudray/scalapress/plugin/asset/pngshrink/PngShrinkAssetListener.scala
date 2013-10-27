@@ -8,7 +8,7 @@ import com.cloudray.scalapress.Logging
 
 /** @author Stephen Samuel */
 @Component
-class PngShrinkPlugin extends AssetLifecycleListener with Logging {
+class PngShrinkAssetListener extends AssetLifecycleListener with Logging {
 
   def onStore(key: String, input: InputStream): (String, InputStream) = {
 

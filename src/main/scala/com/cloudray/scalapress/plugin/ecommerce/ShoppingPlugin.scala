@@ -3,16 +3,16 @@ package com.cloudray.scalapress.plugin.ecommerce
 import javax.persistence.{EnumType, Enumerated, Column, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PostConstruct
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.cloudray.scalapress.theme.Markup
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.obj.StockMethod
+import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */
 @Entity
+@SingleInstance
 @Table(name = "plugins_shopping")
 class ShoppingPlugin {
 
@@ -111,10 +111,4 @@ trait ShoppingPluginDao extends GenericDao[ShoppingPlugin, java.lang.Long] {
 @Transactional
 class ShoppingPluginDaoImpl extends GenericDaoImpl[ShoppingPlugin, java.lang.Long] with ShoppingPluginDao {
   def get: ShoppingPlugin = findAll.head
-}
-
-@Component
-@Autowired
-class ShoppingPluginValidator(dao: ShoppingPluginDao) {
-  @PostConstruct def ensureOne(): Unit = if (dao.findAll().size == 0) dao.save(new ShoppingPlugin)
 }

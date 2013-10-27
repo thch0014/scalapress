@@ -7,8 +7,6 @@ import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.Logging
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
-import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PostConstruct
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.controller.Datum
 
@@ -93,17 +91,6 @@ trait AccountPluginDao extends GenericDao[AccountPlugin, java.lang.Long] {
 @Transactional
 class AccountPluginDaoImpl extends GenericDaoImpl[AccountPlugin, java.lang.Long] with AccountPluginDao {
   def get = findAll.head
-}
-
-@Component
-class AccountPluginValidator {
-  @Autowired var dao: AccountPluginDao = _
-  @PostConstruct def ensureOne() {
-    if (dao.findAll().size == 0) {
-      val plugin = new AccountPlugin
-      dao.save(plugin)
-    }
-  }
 }
 
 trait PasswordTokenDao extends GenericDao[PasswordToken, java.lang.Long] {

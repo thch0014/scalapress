@@ -12,9 +12,7 @@ class SimplePassMenuProvider extends MenuProvider {
       case 0 => ("Security", Nil)
       case _ =>
         ("Security",
-          Seq(
-            MenuItem(" Simple Pass", Some("glyphicon glyphicon-lock"), "/backoffice/plugin/security/simplepass")
-          ))
+          Seq(MenuItem(" Simple Pass", Some("glyphicon glyphicon-lock"), "/backoffice/plugin/security/simplepass")))
     }
   }
 }

@@ -7,9 +7,9 @@ import com.sksamuel.scrimage.{Format, Image}
 import java.io.ByteArrayInputStream
 
 /** @author Stephen Samuel */
-class PngShrinkPluginTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class PngShrinkAssetListenerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val plugin = new PngShrinkPlugin()
+  val plugin = new PngShrinkAssetListener()
   val input = getClass.getResourceAsStream("/com/cloudray/scalapress/plugin/asset/pngshrink/tux.png")
   val image = Image(input)
   val unoptimized = image.writer(Format.PNG).write()

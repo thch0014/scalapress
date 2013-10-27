@@ -3,9 +3,11 @@ package com.cloudray.scalapress.account
 import javax.persistence._
 import com.cloudray.scalapress.theme.Markup
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */
 @Entity
+@SingleInstance
 @Table(name = "plugins_account")
 class AccountPlugin {
 
