@@ -10,6 +10,7 @@ import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.ThemeService
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import org.springframework.security.authentication.AuthenticationManager
+import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 
 /** @author Stephen Samuel */
 class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
@@ -22,6 +23,10 @@ class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInst
   val accountPluginDao = mock[AccountPluginDao]
   val authenticationManager = mock[AuthenticationManager]
   val context = new ScalapressContext
+  context.installationDao = mock[InstallationDao]
+
+  val installation = new Installation
+  Mockito.when(context.installationDao.get).thenReturn(installation)
 
   val controller = new RegistrationController(themeService,
     accountPluginDao,
