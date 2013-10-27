@@ -2,10 +2,11 @@ package com.cloudray.scalapress.folder.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder, FolderDao}
+import com.cloudray.scalapress.folder._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
 import com.cloudray.scalapress.theme.ThemeService
+import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
 class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -14,6 +15,9 @@ class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePe
   controller.folderDao = mock[FolderDao]
   controller.folderPluginDao = mock[FolderPluginDao]
   controller.themeService = mock[ThemeService]
+  controller.context = mock[ScalapressContext]
+
+  Mockito.when(controller.context.beans[FolderInterceptor]).thenReturn(Nil)
 
   val settings = new FolderSettings
   Mockito.when(controller.folderPluginDao.head).thenReturn(settings)

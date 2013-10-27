@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.settings.upgraders
+package com.cloudray.scalapress.plugin.compatibility
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
@@ -6,6 +6,7 @@ import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.obj.{Obj, ObjectDao}
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import org.mockito.Mockito
+import com.cloudray.scalapress.plugin.compatibility.ECRedirectController
 
 /** @author Stephen Samuel */
 class ECControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

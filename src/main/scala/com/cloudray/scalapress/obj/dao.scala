@@ -74,21 +74,16 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession
-      .createSQLQuery(
-      "select a.id, a.name from items a WHERE a.name like ?")
+      .createSQLQuery("select a.id, a.name from items a WHERE a.name like ?")
       .setString(0, query + "%")
-      .setMaxResults(20)
-      .list()
-      .asScala
-      .map(arg => {
+      .setMaxResults(20).list().asScala.map(arg => {
       val values = arg.asInstanceOf[Array[_]]
       Datum(value = values(1).toString, id = values(0).toString)
     }).toArray
   }
 
   override def removeByType(id: Long): Unit = getSession
-    .createSQLQuery("delete from items where itemtype=" + id)
-    .executeUpdate()
+    .createSQLQuery("delete from items where itemtype=" + id).executeUpdate()
 }
 
 trait TypeDao extends GenericDao[ObjectType, java.lang.Long] {

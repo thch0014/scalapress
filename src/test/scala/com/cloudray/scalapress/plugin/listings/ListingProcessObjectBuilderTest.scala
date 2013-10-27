@@ -46,7 +46,9 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
   test("folders are added by id") {
 
     val folder1 = new Folder
+    folder1.id = 5
     val folder2 = new Folder
+    folder2.id = 7
 
     Mockito.when(context.folderDao.find(5l)).thenReturn(folder1)
     Mockito.when(context.folderDao.find(7l)).thenReturn(folder2)

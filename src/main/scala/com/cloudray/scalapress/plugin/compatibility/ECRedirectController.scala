@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.settings.upgraders
+package com.cloudray.scalapress.plugin.compatibility
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestMapping}
