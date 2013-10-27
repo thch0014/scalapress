@@ -18,7 +18,6 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.account._
 import com.cloudray.scalapress.account.controller.renderer.RegistrationRenderer
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
-import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
@@ -100,7 +99,7 @@ class RegistrationController(themeService: ThemeService,
         autologin(req, form.email, form.password)
 
         val text = Option(accountPluginDao.get.registrationCompletionHtml)
-          .getOrElse("<p>Thank you for registering.</p>")
+          .getOrElse(new DefaultRegistrationCompletionRenderer(context.installationDao.get).render)
 
         Option(new HttpSessionRequestCache().getRequest(req, resp)).flatMap(arg => Option(arg.getRedirectUrl)) match {
           case None =>

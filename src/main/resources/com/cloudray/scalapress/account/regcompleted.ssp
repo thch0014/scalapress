@@ -1,0 +1,7 @@
+<%@ val siteName: String %>
+
+<div class="well">
+    <p class="lead"><i class="icon-thumbs-up"></i> Thank you for registering with <strong>${siteName}</strong>.</p>
+    Now that you are registered, we have automatically logged you in so that you can continue using the website.
+</div>
+
