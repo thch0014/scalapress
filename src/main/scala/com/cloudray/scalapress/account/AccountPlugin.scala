@@ -49,7 +49,7 @@ class AccountPlugin {
   @BeanProperty
   var registrationPageFooter: String = _
 
-  @Column(length = 10000)
+  @Column(name = "registrationCompletionHtml", length = 10000)
   @BeanProperty
   var registrationCompletionHtml: String = _
 

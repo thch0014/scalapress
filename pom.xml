@@ -40,7 +40,7 @@
         <compiler.version.target>1.6</compiler.version.target>
 
         <aspectj.version>1.6.10</aspectj.version>
-        <aws.version>1.6.3</aws.version>
+        <aws.version>1.6.1</aws.version>
 
         <commons.httpcore.version>4.2.5</commons.httpcore.version>
         <commons.httpclient.version>4.2.6</commons.httpclient.version>

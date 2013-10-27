@@ -19,10 +19,14 @@ class SpringPluginPersistenceValidator(pluginPersistence: PluginPersistence) ext
   def run(): Unit = {
 
     ComponentClassScanner.singleInstanceClasses.foreach(singleton => {
-      logger.info("Checking for existing instance of {}", singleton)
-      if (pluginPersistence.findAll(singleton).isEmpty) {
-        logger.info("Creating single instance of {}", singleton)
-        pluginPersistence.save(singleton.newInstance)
+      try {
+        logger.info("Checking for existing instance of {}", singleton)
+        if (pluginPersistence.findAll(singleton).isEmpty) {
+          logger.info("Creating single instance of {}", singleton)
+          pluginPersistence.save(singleton.newInstance)
+        }
+      } catch {
+        case e: Exception => logger.error(e.toString)
       }
     })
   }
