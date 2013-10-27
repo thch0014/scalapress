@@ -12,12 +12,12 @@ import com.cloudray.scalapress.obj.TypeDao
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/widget/attribute/{id}"))
-class AttributeWidgetEditController extends WidgetContainerMapPopulator with AllAttributesPopulator {
-
-  @Autowired var widgetDao: WidgetDao = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var objectTypeDao: TypeDao = _
+class AttributeWidgetEditController(widgetDao: WidgetDao,
+                                    context: ScalapressContext,
+                                    var objectTypeDao: TypeDao)
+  extends WidgetContainerMapPopulator with AllAttributesPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("widget") w: AttributeWidget, model: ModelMap) = "admin/widget/attribute.vm"
@@ -28,6 +28,7 @@ class AttributeWidgetEditController extends WidgetContainerMapPopulator with All
     edit(w, model)
   }
 
-  @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[AttributeWidget]
+  @ModelAttribute("widget")
+  def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[AttributeWidget]
 
 }

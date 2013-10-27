@@ -18,16 +18,17 @@ import scala.collection.mutable.ListBuffer
 class FoldersWidget extends Widget with Logging {
 
   @BeanProperty var depth: Int = _
-  @BeanProperty var includeHome: Boolean = _
   @BeanProperty var excludeCurrent: Boolean = _
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "root")
   @Fetch(FetchMode.JOIN)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var start: Folder = _
+  @BeanProperty
+  var start: Folder = _
 
-  @BeanProperty var exclusions: String = _
+  @BeanProperty
+  var exclusions: String = _
 
   override def backoffice = "/backoffice/plugin/folder/widget/folder/" + id
 
@@ -39,7 +40,7 @@ class FoldersWidget extends Widget with Logging {
   }
 
   def _renderChildren(parent: Folder, level: Int): Node = {
-    _children(parent) match {
+    _folders(parent) match {
       case list if list.isEmpty => null
       case list => _renderChildren(list, level)
     }
@@ -62,8 +63,8 @@ class FoldersWidget extends Widget with Logging {
 
   def _renderFolder(folder: Folder, level: Int): Node = {
 
-    val css = "l" + level
-    val id = "w" + this.id + "_f" + folder.id
+    val css = s"l$level"
+    val id = s"w${this.id}_f${folder.id}"
     val link = Unparsed(UrlGenerator.link(folder))
 
     val xml = <li class={css} id={id}>
@@ -73,8 +74,8 @@ class FoldersWidget extends Widget with Logging {
     Utility.trim(xml)
   }
 
-  def _children(parent: Folder): Seq[Folder] =
-    parent.sortedSubfolders
+  def _folders(parent: Folder): Seq[Folder] =
+    parent.sortedSubfolders.toSeq
       .filterNot(_.hidden)
       .filterNot(_.name == null)
       .filterNot(f => _exclusions.contains(f.id.toString))

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("/backoffice/type"))
 @Autowired
+@RequestMapping(Array("/backoffice/type"))
 class TypeListController(typeDao: TypeDao) {
 
   @RequestMapping(produces = Array("text/html"))

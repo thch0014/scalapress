@@ -15,10 +15,10 @@ class ThumbnailServiceTest extends FlatSpec with MockitoSugar with OneInstancePe
   val image = Scrimage.empty(100, 200)
   val input = new ByteArrayInputStream(image.write)
 
-  val service = new ThumbnailService
-  service.assetStore = mock[AssetStore]
-  Mockito.when(service.assetStore.baseUrl).thenReturn("s3.com")
-  Mockito.when(service.assetStore.link(Matchers.anyString)).thenAnswer(new Answer[String]() {
+  val assetStore = mock[AssetStore]
+  val service = new ThumbnailService(assetStore)
+  Mockito.when(assetStore.baseUrl).thenReturn("s3.com")
+  Mockito.when(assetStore.link(Matchers.anyString)).thenAnswer(new Answer[String]() {
     def answer(invocation: InvocationOnMock): String = "s3.com/" + invocation.getArguments()(0)
   })
 

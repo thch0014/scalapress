@@ -15,8 +15,8 @@ import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/type/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/type/{id}"))
 class TypeEditController(val typeDao: TypeDao,
                          val markupDao: MarkupDao,
                          val sectionDao: SectionDao,

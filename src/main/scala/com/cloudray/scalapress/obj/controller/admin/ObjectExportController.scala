@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("/backoffice/type/{id}/export"))
 @Autowired
+@RequestMapping(Array("/backoffice/type/{id}/export"))
 class ObjectExportController(exporter: ObjectExporter) {
 
   def filename(id: Any) = s"export_objects_$id.csv"

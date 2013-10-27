@@ -15,8 +15,8 @@ import com.cloudray.scalapress.search.PagingRenderer
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/medialib"))
 @Autowired
+@RequestMapping(Array("backoffice/medialib"))
 class MediaLibraryController(assetStore: AssetStore,
                              context: ScalapressContext) {
 

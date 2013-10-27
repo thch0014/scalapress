@@ -9,15 +9,15 @@ import org.mockito.Mockito
 /** @author Stephen Samuel */
 class AssetTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val req = mock[HttpServletRequest]
-    val context = new ScalapressContext
-    val sreq = ScalapressRequest(req, context)
+  val req = mock[HttpServletRequest]
+  val context = new ScalapressContext
+  val sreq = ScalapressRequest(req, context)
 
-    context.assetStore = mock[AssetStore]
-    Mockito.when(context.assetStore.link("superman.png")).thenReturn("http://marvel.com/superman.png")
+  context.assetStore = mock[AssetStore]
+  Mockito.when(context.assetStore.link("superman.png")).thenReturn("http://marvel.com/superman.png")
 
-    test("asset tag uses CDN link from asset store") {
-        val output = new AssetTag().render(sreq, Map("url" -> "superman.png"))
-        assert("http://marvel.com/superman.png" === output.get)
-    }
+  test("asset tag uses CDN link from asset store") {
+    val output = new AssetTag().render(sreq, Map("url" -> "superman.png"))
+    assert("http://marvel.com/superman.png" === output.get)
+  }
 }

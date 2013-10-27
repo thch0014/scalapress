@@ -12,15 +12,19 @@ class AttributeOption extends Ordered[AttributeOption] {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "attribute")
-  @BeanProperty var attribute: Attribute = _
+  @BeanProperty
+  var attribute: Attribute = _
 
-  @BeanProperty var value: String = _
+  @BeanProperty
+  var value: String = _
 
-  @BeanProperty var position: Int = _
+  @BeanProperty
+  var position: Int = _
 
   def compare(that: AttributeOption): Int =
     new NaturalOrderComparator().compare(Option(value).getOrElse(""), Option(that.value).getOrElse(""))

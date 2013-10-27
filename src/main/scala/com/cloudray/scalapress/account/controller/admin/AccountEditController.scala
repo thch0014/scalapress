@@ -14,8 +14,8 @@ import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/account/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/account/{id}"))
 class AccountEditController(accountDao: AccountDao,
                             passwordEncoder: PasswordEncoder,
                             context: ScalapressContext) extends AccountStatusPopulator {

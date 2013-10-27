@@ -13,8 +13,8 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/widget/media/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/widget/media/{id}"))
 class MediaWidgetController(assetStore: AssetStore, widgetDao: WidgetDao) extends WidgetEditController(widgetDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

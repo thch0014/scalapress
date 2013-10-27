@@ -11,8 +11,8 @@ import com.cloudray.scalapress.account.{AccountPluginDao, AccountPlugin}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/account"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/account"))
 class AccountPluginController(val context: ScalapressContext,
                               val markupDao: MarkupDao,
                               val accountPluginDao: AccountPluginDao) extends MarkupPopulator {

@@ -12,13 +12,12 @@ import javax.annotation.PostConstruct
 import java.util.UUID
 
 @Component
-class ThumbnailService extends Logging {
+@Autowired
+class ThumbnailService(assetStore: AssetStore) extends Logging {
 
   val THUMBNAIL_PREFIX = "_thumbnails"
   val THUMBNAIL_QUERY = AssetQuery(THUMBNAIL_PREFIX, 1, 10000)
   val MAX_BYTES = 1024 * 1024 * 10
-
-  @Autowired var assetStore: AssetStore = _
 
   val manager = CacheManager.getInstance()
 

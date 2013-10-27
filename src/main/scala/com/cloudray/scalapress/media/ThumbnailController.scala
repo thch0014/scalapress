@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse
 import com.sksamuel.scrimage.Format
 
 @Controller
-@RequestMapping(Array("thumbnail"))
 @Autowired
+@RequestMapping(Array("thumbnail"))
 class ThumbnailController(thumbnailService: ThumbnailService) extends Logging with OpType {
 
   @deprecated

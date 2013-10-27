@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/obj"))
 @Autowired
+@RequestMapping(Array("backoffice/obj"))
 class ObjectSearchController(objectDao: ObjectDao,
                              typeDao: TypeDao,
                              context: ScalapressContext) extends ObjectStatusPopulator {
