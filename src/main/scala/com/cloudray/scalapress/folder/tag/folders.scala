@@ -26,9 +26,10 @@ object FolderTag extends ScalapressTag with TagBuilder {
   }
 }
 
-object SubfoldersTag extends ScalapressTag with TagBuilder {
-  def render(request: ScalapressRequest, params: Map[String, String]) = {
-    request.folder.map(_.sortedSubfolders.map(UrlGenerator.link).mkString("\n"))
+@Tag("subfolders")
+class SubfoldersTag extends ScalapressTag with TagBuilder {
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
+    request.folder.map(_.sortedSubfolders.map(UrlGenerator.link).mkString("\n")).filterNot(_.isEmpty)
   }
 }
 
