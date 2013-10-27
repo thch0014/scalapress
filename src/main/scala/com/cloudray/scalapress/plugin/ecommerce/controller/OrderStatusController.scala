@@ -10,17 +10,14 @@ import com.cloudray.scalapress.plugin.ecommerce.OrderDao
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.ecommerce.controller.renderers.OrderStatusRenderer
-import com.cloudray.scalapress.payments.TransactionDao
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("orderstatus"))
-class OrderStatusController {
-
-  @Autowired var orderDao: OrderDao = _
-  @Autowired var paymentDao: TransactionDao = _
-  @Autowired var themeService: ThemeService = _
-  @Autowired var context: ScalapressContext = _
+class OrderStatusController(orderDao: OrderDao,
+                            themeService: ThemeService,
+                            context: ScalapressContext) {
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
@@ -35,18 +32,20 @@ class OrderStatusController {
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
-  def post(@RequestParam("orderId") orderId: Long, @RequestParam("email") email: String,
+  def post(@RequestParam("orderId") orderId: Long,
+           @RequestParam("email") email: String,
            req: HttpServletRequest): ScalapressPage = {
 
-    val order = orderDao.find(orderId)
-    if (!order.account.email.toLowerCase.equalsIgnoreCase(email))
-      get(req)
-
-    val sreq = ScalapressRequest(req, context).withTitle("Order Status: " + orderId)
     val theme = themeService.default
-    val page = ScalapressPage(theme, sreq)
-    page.body("Order status: " + order.status)
-    page.body("The status of your order is " + order.status)
-    page
+    val sreq = ScalapressRequest(req, context)
+
+    Option(orderDao.find(orderId)) match {
+      case Some(order) if order.account.email.toLowerCase.equalsIgnoreCase(email) =>
+        val page = ScalapressPage(theme, sreq.withTitle("Order Status: " + orderId))
+        page.body("Order status: " + order.status)
+        page.body("The status of your order is " + order.status)
+        page
+      case _ => get(req)
+    }
   }
 }
