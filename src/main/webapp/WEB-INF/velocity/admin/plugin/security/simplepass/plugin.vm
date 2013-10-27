@@ -1,0 +1,33 @@
+#parse("/admin/header.vm")
+
+<div class="page-header">
+    <h2>SimplePass Plugin Settings</h2>
+</div>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Username</label>
+
+        <div class="col-lg-8">
+          #springFormInput("plugin.username", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Password</label>
+
+        <div class="col-lg-8">
+          #springFormInput("plugin.password", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")

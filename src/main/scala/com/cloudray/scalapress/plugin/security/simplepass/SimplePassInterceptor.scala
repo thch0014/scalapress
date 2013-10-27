@@ -11,6 +11,9 @@ import scala.Predef.String
 @Autowired
 class SimplePassInterceptor(dao: SimplePassPluginDao) extends FolderInterceptor {
 
+  val REQUEST_HEADER_AUTH = "Authorization"
+  val RESPONSE_HEADER_AUTH = "WWW-Authenticate"
+
   /**
    * Intercept the execution of a folder after the folder has been executed.
    *
@@ -18,15 +21,16 @@ class SimplePassInterceptor(dao: SimplePassPluginDao) extends FolderInterceptor 
    * @param resp current HTTP response
    */
   override def preHandle(folder: Folder, req: HttpServletRequest, resp: HttpServletResponse): Boolean = {
-    if (dao.get.getFolders.contains(folder)) authorize(req, resp)
-    else true
+    // if (dao.get.getFolders.contains(folder)) authorize(req, resp)
+    // else true
+    authorize(req, resp)
   }
 
   private def authorize(req: HttpServletRequest, resp: HttpServletResponse): Boolean = {
-    if (isAuthorized(req.getHeader("Authorization"))) {
+    if (isAuthorized(req.getHeader(REQUEST_HEADER_AUTH))) {
       true
     } else {
-      resp.setHeader("WWW-Authenticate", "BASIC realm=\"Login\"")
+      resp.setHeader(RESPONSE_HEADER_AUTH, "BASIC realm=\"SimplePassLogin\"")
       resp.sendError(HttpServletResponse.SC_UNAUTHORIZED)
       false
     }
@@ -39,7 +43,7 @@ class SimplePassInterceptor(dao: SimplePassPluginDao) extends FolderInterceptor 
     }
   }
 
-  private def isBasic(token: String) = token.trim == HttpServletRequest.BASIC_AUTH
+  private def isBasic(token: String) = token.trim.toLowerCase == HttpServletRequest.BASIC_AUTH.toLowerCase
 
   private def isValid(credentials: Credentials): Boolean =
     dao.get.username == credentials.username && dao.get.password == credentials.password

@@ -13,7 +13,7 @@ scala based publishing platform
 * Template upload
 * Migration to Boostrap 3 in backoffice
 * Section and folder interceptors
-* Password plugin for folders
+* Simplepass plugin for security on folders
 
 ##### 0.39
 
