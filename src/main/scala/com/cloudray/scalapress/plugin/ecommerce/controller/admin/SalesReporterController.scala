@@ -17,12 +17,11 @@ import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/shopping/salesreport"))
-class SalesReporterController extends OrderStatusPopulator {
-
-  @Autowired var shoppingPluginDao: ShoppingPluginDao = _
-  @Autowired var reporter: SalesReporter = _
-  @Autowired var context: ScalapressContext = _
+class SalesReporterController(var shoppingPluginDao: ShoppingPluginDao,
+                              reporter: SalesReporter,
+                              context: ScalapressContext) extends OrderStatusPopulator {
 
   @RequestMapping
   def report(model: ModelMap,

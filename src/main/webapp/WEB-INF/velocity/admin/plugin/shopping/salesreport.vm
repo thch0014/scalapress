@@ -1,6 +1,9 @@
 #parse("/admin/header.vm")
 
-<h3>Sales Report $from to $to</h3>
+<div class="page-header">
+    <h2>Sales Report $from to $to</h2>
+</div>
+
 
 <form class="form-horizontal">
 
@@ -8,10 +11,10 @@
         <label class="col-lg-2 control-label">From</label>
 
         <div class="col-lg-8">
-            <select name="from">
-                #foreach ($entry in $months.entrySet())
-                    <option value="$entry.key" #if ($entry.key == $from) selected #end>$entry.value</option>
-                #end
+            <select name="from" class="form-control">
+              #foreach ($entry in $months.entrySet())
+                  <option value="$entry.key" #if ($entry.key == $from) selected #end>$entry.value</option>
+              #end
             </select>
         </div>
     </div>
@@ -20,10 +23,10 @@
         <label class="col-lg-2 control-label">To</label>
 
         <div class="col-lg-8">
-            <select name="to">
-                #foreach ($entry in $months.entrySet())
-                    <option value="$entry.key" #if ($entry.key == $to) selected #end>$entry.value</option>
-                #end
+            <select name="to" class="form-control">
+              #foreach ($entry in $months.entrySet())
+                  <option value="$entry.key" #if ($entry.key == $to) selected #end>$entry.value</option>
+              #end
             </select>
         </div>
     </div>
@@ -32,17 +35,20 @@
         <label class="col-lg-2 control-label">Status</label>
 
         <div class="col-lg-8">
-            <select name="status">
-                #foreach ($entry in $statusMap.entrySet())
-                    <option value="$entry.key" #if ($entry.key == $to) selected #end>$entry.value</option>
-                #end
+            <select name="status" class="form-control">
+              #foreach ($entry in $statusMap.entrySet())
+                  <option value="$entry.key" #if ($entry.key == $to) selected #end>$entry.value</option>
+              #end
             </select>
         </div>
     </div>
 
-    <div class="col-lg-8">
-        <button type="submit" class="btn btn-inverse">Run Report</button>
-        <button type="submit" class="btn btn-info" name="csv" value="csv">Download CSV</button>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">Run Report</button>
+            <button type="submit" class="btn btn-info" name="csv" value="csv">Download CSV</button>
+        </div>
     </div>
 
 </form>
@@ -84,20 +90,20 @@
         <th>Total</th>
     </tr>
 
-    #foreach ($line in $lines)
+  #foreach ($line in $lines)
 
-        <tr>
-            <td><a href="/backoffice/order/$line.orderId()">$line.orderId()</a></td>
-            <td>
-                <a href="/backoffice/plugin/shopping/salesreport">$datetool.format("dd-MMM-yyyy", $line.datePlaced())</a>
-            </td>
-            <td>$line.status()</td>
-            <td>$number.currency($line.subtotal())</td>
-            <td>$number.currency($line.vat())</td>
-            <td>$number.currency($line.total())</td>
-        </tr>
+      <tr>
+          <td><a href="/backoffice/order/$line.orderId()">$line.orderId()</a></td>
+          <td>
+              <a href="/backoffice/plugin/shopping/salesreport">$datetool.format("dd-MMM-yyyy", $line.datePlaced())</a>
+          </td>
+          <td>$line.status()</td>
+          <td>$number.currency($line.subtotal())</td>
+          <td>$number.currency($line.vat())</td>
+          <td>$number.currency($line.total())</td>
+      </tr>
 
-    #end
+  #end
 
 </table>
 
