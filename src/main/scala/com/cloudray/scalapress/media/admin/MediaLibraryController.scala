@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.{AssetQuery, AssetLifecycleListener, AssetStore}
-import java.io._
+import com.cloudray.scalapress.media.{AssetQuery, AssetService, AssetStore}
+import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.{Paging, Page}
-import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.search.PagingRenderer
 
 /** @author Stephen Samuel */
@@ -18,6 +17,7 @@ import com.cloudray.scalapress.search.PagingRenderer
 @Autowired
 @RequestMapping(Array("backoffice/medialib"))
 class MediaLibraryController(assetStore: AssetStore,
+                             assetService: AssetService,
                              context: ScalapressContext) {
 
   val PAGE_SIZE = 36
@@ -33,16 +33,7 @@ class MediaLibraryController(assetStore: AssetStore,
 
   @RequestMapping(produces = Array("text/html"), method = Array(RequestMethod.POST))
   def upload(@RequestParam("upload") uploads: java.util.List[MultipartFile]): String = {
-
-    val listeners = context.beans[AssetLifecycleListener]
-    for ( upload <- uploads.asScala.filter(_ != null).filter(!_.isEmpty) ) {
-      val key = upload.getOriginalFilename
-      val in = upload.getInputStream
-      val start = (key, in)
-      val op = (a: (String, InputStream), b: AssetLifecycleListener) => b.onStore(a._1, a._2)
-      val result = listeners.foldLeft(start)(op)
-      assetStore.put(result._1, result._2)
-    }
+    assetService.upload(uploads.asScala.filter(_ != null))
     "redirect:/backoffice/medialib"
   }
 
