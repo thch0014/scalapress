@@ -9,8 +9,12 @@ import com.cloudray.scalapress.ScalapressContext
 class SimplePassMenuProvider extends MenuItemProvider {
 
   def item(context: ScalapressContext): Seq[MenuItem] = {
-    Seq(MenuHeader("Security"),
-      MenuLink(" Simple Pass", Some("glyphicon glyphicon-lock"), "/backoffice/plugin/security/simplepass")
-    )
+    context.beans[SimplePassInterceptor].size match {
+      case 0 => Nil
+      case _ =>
+        Seq(MenuHeader("Security"),
+          MenuLink(" Simple Pass", Some("glyphicon glyphicon-lock"), "/backoffice/plugin/security/simplepass")
+        )
+    }
   }
 }

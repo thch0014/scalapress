@@ -4,7 +4,7 @@ import com.cloudray.scalapress.folder.{Folder, FolderInterceptor}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import scala.Predef.String
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
@@ -21,9 +21,12 @@ class SimplePassInterceptor(dao: SimplePassPluginDao) extends FolderInterceptor 
    * @param resp current HTTP response
    */
   override def preHandle(folder: Folder, req: HttpServletRequest, resp: HttpServletResponse): Boolean = {
-    // if (dao.get.getFolders.contains(folder)) authorize(req, resp)
-    // else true
-    authorize(req, resp)
+    if (isRestrictedFolder(folder, dao.get.folders.asScala)) authorize(req, resp)
+    else true
+  }
+
+  private def isRestrictedFolder(current: Folder, restricted: Iterable[Folder]): Boolean = {
+    restricted.toSeq.contains(current) || restricted.exists(arg => isRestrictedFolder(current, arg.subfolders.asScala))
   }
 
   private def authorize(req: HttpServletRequest, resp: HttpServletResponse): Boolean = {

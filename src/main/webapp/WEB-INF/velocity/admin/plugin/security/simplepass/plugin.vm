@@ -22,6 +22,22 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Add Folder</label>
+
+        <div class="col-lg-8">
+            <select id="folder" name="folder" class="form-control">
+              #foreach($option in $folders.keySet())
+                  <option value="${option}"
+                    #if("$folderId" == "$option")
+                          selected="selected"
+                    #end>
+                    ${folders.get($option)}</option>
+              #end
+            </select>
+        </div>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -29,5 +45,25 @@
     </div>
 
 </form>
+
+<legend>Secured Folders</legend>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+  #foreach ($f in $plugin.folders())
+      <tr>
+          <td><a href="/backoffice/folder/$f.id">$f.id</a></td>
+          <td>$f.name</td>
+          <td>
+              <a href="/backoffice/plugin/security/simplepass/delete?folder=$f.id" class="btn btn-danger btn-xs">
+                  <i class="icon-trash"></i>
+              </a>
+          </td>
+      </tr>
+  #end
+</table>
 
 #parse("/admin/footer.vm")

@@ -32,7 +32,7 @@ class SimplePassPlugin {
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = Array(CascadeType.ALL))
   @JoinTable(name = "plugin_security_simplepass_folders",
-    joinColumns = Array(new JoinColumn(name = "plugin", unique = true)),
+    joinColumns = Array(new JoinColumn(name = "plugin")),
     inverseJoinColumns = Array(new JoinColumn(name = "folder"))
   )
   @NotFound(action = NotFoundAction.IGNORE)
