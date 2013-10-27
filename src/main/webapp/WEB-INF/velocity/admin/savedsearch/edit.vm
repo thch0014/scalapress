@@ -168,7 +168,7 @@
               #end
 
                 <label class="checkbox inline">
-                    <input type="checkbox" name="attributeValues$a.id" class="form-control"
+                    <input type="checkbox" name="attributeValues$a.id"
                            value="$esc.html($option.value)" $!checked/>
                   $option.value
                 </label>
