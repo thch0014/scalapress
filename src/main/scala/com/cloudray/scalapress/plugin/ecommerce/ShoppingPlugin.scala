@@ -114,12 +114,7 @@ class ShoppingPluginDaoImpl extends GenericDaoImpl[ShoppingPlugin, java.lang.Lon
 }
 
 @Component
-class ShoppingPluginValidator {
-  @Autowired var dao: ShoppingPluginDao = _
-  @PostConstruct def ensureOne() {
-    if (dao.findAll().size == 0) {
-      val plugin = new ShoppingPlugin
-      dao.save(plugin)
-    }
-  }
+@Autowired
+class ShoppingPluginValidator(dao: ShoppingPluginDao) {
+  @PostConstruct def ensureOne(): Unit = if (dao.findAll().size == 0) dao.save(new ShoppingPlugin)
 }

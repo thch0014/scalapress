@@ -7,6 +7,14 @@ scala based publishing platform
 
 ### Release History
 
+##### 0.40
+
+* Added new offline settings
+* Template upload
+* Migration to Boostrap 3 in backoffice
+* Section and folder interceptors
+* Password plugin for folders
+
 ##### 0.39
 
 * Added prioritized tag and prioritizedonly to image, object and attribute tags.

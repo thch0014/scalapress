@@ -27,5 +27,5 @@ trait FolderInterceptor {
    * @param request current HTTP request
    * @param response current HTTP response
    */
-  def postHandle(folder: Folder, request: HttpServletRequest, response: HttpServletResponse)
+  def postHandle(folder: Folder, request: HttpServletRequest, response: HttpServletResponse) {}
 }

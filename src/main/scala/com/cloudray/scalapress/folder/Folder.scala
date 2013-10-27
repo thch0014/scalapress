@@ -101,6 +101,12 @@ class Folder extends SortedSections {
   @Fetch(FetchMode.SELECT)
   @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
+  override def equals(obj: scala.Any): Boolean = obj match {
+    case f: Folder => id == f.id
+    case _ => false
+  }
+
+  override def hashCode(): Int = id.toInt
 }
 
 object Folder {

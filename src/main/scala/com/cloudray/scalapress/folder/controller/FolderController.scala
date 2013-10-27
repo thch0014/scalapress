@@ -24,9 +24,12 @@ class FolderController extends Logging {
   @Autowired var themeService: ThemeService = _
 
   @ExceptionHandler(Array(classOf[RedirectException]))
-  def handleException1(e: RedirectException) = {
+  def handleException1(e: RedirectException): String = {
     "redirect:" + e.url
   }
+
+  @ExceptionHandler(Array(classOf[FolderInterceptorException]))
+  def handleException1(e: FolderInterceptorException): Unit = {}
 
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
@@ -46,8 +49,10 @@ class FolderController extends Logging {
     logger.debug("Folder requested received {}", folder)
     if (folder == null) throw new RedirectException("/")
 
-    val lifecycle = new FolderInterceptorService(context.beans[FolderInterceptor])
-    lifecycle.preHandle(folder, req, resp)
+    val service = new FolderInterceptorService(context.beans[FolderInterceptor])
+    if (!service.preHandle(folder, req, resp)) {
+      throw new FolderInterceptorException()
+    }
 
     Option(folder.redirect).filter(_.trim.length > 0) match {
       case Some(redirect) => throw new RedirectException(folder.redirect)
@@ -68,7 +73,9 @@ class FolderController extends Logging {
     logger.debug("...completed")
     footer.foreach(page body)
 
-    lifecycle.postHandle(folder, req, resp)
+    service.postHandle(folder, req, resp)
     page
   }
 }
+
+class FolderInterceptorException extends RuntimeException
