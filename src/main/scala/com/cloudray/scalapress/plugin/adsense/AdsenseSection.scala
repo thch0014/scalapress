@@ -16,10 +16,10 @@ class AdsenseSection extends Section {
   @BeanProperty var googleAdWidth: String = _
   @BeanProperty var googleAdHeight: String = _
 
-  def desc: String = "Google adsense block"
+  override def desc: String = "Google adsense block"
   override def backoffice: String = "/backoffice/plugin/adsense/section/" + id
 
-  def render(request: ScalapressRequest): Option[String] = {
+  override def render(request: ScalapressRequest): Option[String] = {
     try {
       Option(googleAdClient).filterNot(_.isEmpty).map(arg => {
         Scalate.layout("/com/cloudray/scalapress/plugin/adsense/adsense.ssp",

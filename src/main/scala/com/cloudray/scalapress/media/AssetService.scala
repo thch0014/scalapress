@@ -12,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile
 class AssetService(assetStore: AssetStore,
                    context: ScalapressContext) {
 
+  /** Removes the given key from the asset store, or does nothing if the key does not exist
+    */
+  def delete(key: String): Unit = assetStore.delete(key)
+
   /** Adds the given multipart files to the asset store using the original
     * filenames as the keys. If a key is already in use then it will modify
     * the key so that it is unique.

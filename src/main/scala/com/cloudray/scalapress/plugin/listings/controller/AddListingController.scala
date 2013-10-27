@@ -18,6 +18,7 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 import com.cloudray.scalapress.plugin.listings.controller.renderer._
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.media.AssetService
 
 /** @author Stephen Samuel */
 @Controller
@@ -33,6 +34,7 @@ class AddListingController {
   @Autowired var paymentCallbackService: PaymentCallbackService = _
   @Autowired var listingCallbackProcessor: ListingCallbackProcessor = _
   @Autowired var paymentFormRenderer: PaymentFormRenderer = _
+  @Autowired var assetService: AssetService = _
 
   @ResponseBody
   @RequestMapping(value = Array("package"), produces = Array("text/html"))
@@ -190,10 +192,8 @@ class AddListingController {
                    @RequestParam(value = "upload", required = false) uploads: Array[MultipartFile]): String = {
 
     if (uploads != null) {
-      val uploadedKeys = uploads
-        .filterNot(arg => arg.isEmpty)
-        .map(arg => context.assetStore.add(arg.getOriginalFilename, arg.getInputStream))
-      process.imageKeys = process.imageKeys ++ uploadedKeys
+      val keys = assetService.upload(uploads.filter(_ != null))
+      process.imageKeys = process.imageKeys ++ keys
     }
 
     listingProcessDao.save(process)
@@ -261,10 +261,8 @@ class AddListingController {
   def completed(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
 
     // free listings will not have been shown the payment page and so no callback will ever be issued
-    if (process.listingPackage.fee == 0)
-      listingCallbackProcessor.callback(None, process.listing)
-    else
-      paymentCallbackService.callbacks(req)
+    if (process.listingPackage.fee == 0) listingCallbackProcessor.callback(None, process.listing)
+    else paymentCallbackService.callbacks(req)
 
     val listing = process.listing
     // after this point we cannot use the process anymore
