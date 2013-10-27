@@ -1,49 +1,36 @@
 package com.cloudray.scalapress.settings
 
 import com.cloudray.scalapress.ScalapressContext
-import scala.xml.{Node, Utility, Elem}
+import scala.xml.{Node, Utility}
 
 /** @author Stephen Samuel */
-sealed abstract class MenuItem
-
-case class MenuLink(label: String, icon: Option[String], url: String) extends MenuItem
-case class MenuHeader(label: String) extends MenuItem
-case object MenuDivider extends MenuItem {
-  val label = ""
-}
-
-abstract class MenuItemProvider {
-  def item(context: ScalapressContext): Seq[MenuItem]
+case class MenuItem(label: String, icon: Option[String], url: String)
+abstract class MenuProvider {
+  def menu(context: ScalapressContext): (String, Seq[MenuItem])
 }
 
 abstract class Renderer {
-  def render(items: Seq[MenuItem]): Node
+  def render(menus: Map[String, Seq[MenuItem]]): Node
 }
 
 object BootstrapMenuRenderer extends Renderer {
 
-  def render(items: Seq[MenuItem]): Node = {
+  def render(menus: Map[String, Seq[MenuItem]]): Node = {
     val xml = <ul class="dropdown-menu" role="menu">
-      {items.map(item => _render(item))}
+      {menus.map(arg => renderHeader(arg._1) ++ renderItems(arg._2))}
     </ul>
     Utility.trim(xml)
   }
 
-  private[settings] def _render(item: MenuItem): Elem = item match {
-    case MenuDivider => _renderDivider
-    case link: MenuLink => _renderLink(link)
-    case menu: MenuHeader => renderHeader(menu)
-  }
-
-  private[settings] def renderHeader(header: MenuHeader) = {
+  private def renderHeader(header: String) = {
     <li role="presentation" class="dropdown-header">
-      {header.label}
+      {header}
     </li>
   }
 
-  private[settings] def _renderDivider = <li role="presentation" class="divider"></li>
+  private def renderItems(items: Seq[MenuItem]): Seq[Node] = items.map(renderItem)
 
-  private[settings] def _renderLink(link: MenuLink) = {
+  private def renderItem(link: MenuItem): Node = {
     val icon = link.icon.map(arg => <i class={arg}>
       &nbsp;
     </i>).orNull

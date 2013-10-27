@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView
 import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.settings.BootstrapMenuRenderer
 import com.cloudray.scalapress.ScalapressContext
+import scala.collection.immutable.TreeMap
 
 /** @author Stephen Samuel */
 class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {
@@ -18,7 +19,7 @@ class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdap
                           handler: Any,
                           modelAndView: ModelAndView) {
     if (modelAndView != null) {
-      val menuItems = providers.flatMap(_.item(context))
+      val menuItems = TreeMap(providers.map(_.menu(context)).filterNot(_._2.isEmpty): _*)
       val rendered = renderer.render(menuItems)
       modelAndView.getModelMap.put("pluginMenu", rendered)
     }

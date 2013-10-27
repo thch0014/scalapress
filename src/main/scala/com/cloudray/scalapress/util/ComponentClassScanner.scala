@@ -10,7 +10,7 @@ import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.{Callback, Tag}
 import java.lang.annotation.Annotation
 import com.cloudray.scalapress.payments.PaymentPlugin
-import com.cloudray.scalapress.settings.MenuItemProvider
+import com.cloudray.scalapress.settings.MenuProvider
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -52,7 +52,7 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
 object ComponentClassScanner {
 
   lazy val callbacks: Seq[Class[_]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Callback])
-  lazy val menus: Seq[Class[MenuItemProvider]] = new ComponentClassScanner().getSubtypes(classOf[MenuItemProvider])
+  lazy val menus: Seq[Class[MenuProvider]] = new ComponentClassScanner().getSubtypes(classOf[MenuProvider])
   lazy val paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
   lazy val sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
   lazy val plugins: Seq[Class[Plugin]] = new ComponentClassScanner().getSubtypes(classOf[Plugin])

@@ -2,12 +2,10 @@ package com.cloudray.scalapress.plugin.security.simplepass
 
 import com.cloudray.scalapress.folder.{Folder, FolderInterceptor}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-@Component
 @Autowired
 class SimplePassInterceptor(dao: SimplePassPluginDao) extends FolderInterceptor {
 

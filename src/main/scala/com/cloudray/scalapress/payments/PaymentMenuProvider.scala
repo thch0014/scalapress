@@ -2,18 +2,18 @@ package com.cloudray.scalapress.payments
 
 import com.cloudray.scalapress.settings._
 import scala.Some
-import com.cloudray.scalapress.settings.MenuLink
 import com.cloudray.scalapress.ScalapressContext
 
 /** @author Stephen Samuel */
-class PaymentMenuProvider extends MenuItemProvider {
+class PaymentMenuProvider extends MenuProvider {
 
-  def item(context: ScalapressContext): Seq[MenuItem] = {
-    Seq(
-      MenuHeader("Payments"),
-      MenuLink("Paypal Standard", Some("glyphicon glyphicon-credit-card"),
-        "/backoffice/plugin/payment/paypal/standard"),
-      MenuLink("Sage Pay", Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform")
-    )
+  def menu(context: ScalapressContext): (String, Seq[MenuItem]) = {
+    ("Payments",
+      Seq(
+        MenuItem("Paypal Standard",
+          Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/payment/paypal/standard"),
+        MenuItem("Sage Pay",
+          Some("glyphicon glyphicon-credit-card"), "/backoffice/plugin/sagepayform")
+      ))
   }
 }
