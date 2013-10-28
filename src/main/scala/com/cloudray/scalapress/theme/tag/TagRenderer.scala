@@ -23,36 +23,44 @@ object TagRenderer extends Logging {
       case None => ""
       case _ => {
 
-        mappings.foldLeft(text)((b, a) => {
-          val start = System.currentTimeMillis()
-          require(text != null)
+        try {
 
-          val tagname = a._1
-          val tag = a._2
+          mappings.foldLeft(text)((b, a) => {
+            val start = System.currentTimeMillis()
+            require(text != null)
 
-          require(tagname != null)
+            val tagname = a._1
+            val tag = a._2
 
-          val tt = regex(tagname).r.replaceAllIn(b, m => {
-            require(b != null)
+            require(tagname != null)
 
-            val params = m.groupCount match {
-              case 1 if m.group(1) != null && m.group(1).length > 0 =>
-                parseQueryString(m.group(1).drop(1))
-              case _ => Map.empty[String, String]
-            }
+            val tt = regex(tagname).r.replaceAllIn(b, m => {
+              require(b != null)
 
-            tag.render(request, params) match {
-              case None => ""
-              case Some(value) =>
-                if (value == null) ""
-                else value.replace("$", "\\$")
-            }
+              val params = m.groupCount match {
+                case 1 if m.group(1) != null && m.group(1).length > 0 =>
+                  parseQueryString(m.group(1).drop(1))
+                case _ => Map.empty[String, String]
+              }
+
+              tag.render(request, params) match {
+                case None => ""
+                case Some(value) =>
+                  if (value == null) ""
+                  else value.replace("$", "\\$")
+              }
+            })
+            val time = System.currentTimeMillis() - start
+            if (time > 1)
+              logger.debug("Tag {} took {}ms", a._1, time)
+            tt
           })
-          val time = System.currentTimeMillis() - start
-          if (time > 1)
-            logger.debug("Tag {} took {}ms", a._1, time)
-          tt
-        })
+
+        } catch {
+          case e: Exception =>
+            logger.error(e.toString)
+            ""
+        }
       }
     }
   }
