@@ -10,10 +10,10 @@ object BootstrapHelpers {
     val error = if (hasError) errors.getFieldError(id).getDefaultMessage else ""
     val classes = if (hasError) "control-group error" else "control-group"
     <div class={classes}>
-      <label class="col-lg-2 control-label" for={id}>
+      <label class="control-label" for={id}>
         {label}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         <input type="text" name={id} class="input-xlarge" placeholder={label} value={value}/>
         <span class="help-inline">
           {error}

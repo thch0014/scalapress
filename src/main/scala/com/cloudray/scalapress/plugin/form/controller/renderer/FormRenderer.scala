@@ -91,7 +91,7 @@ object FormRenderer {
     }
 
     <div class={cssClass}>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(name)}
       </label>
       <div class="controls">
@@ -118,7 +118,7 @@ object FormRenderer {
     val opts = _renderOptions(field.optionsList)
 
     scala.xml.Utility.trim(<div class={cssClass}>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(field.name)}{star}
       </label>
       <div class="controls">

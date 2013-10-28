@@ -19,8 +19,12 @@ object ListingFieldsRenderer {
     val attributeValues = process.attributeValues.asScala
 
     <div id="listing-process-details">
-    <p>Please fill in as much detail as you can about your listing. The more information you can enter here the more likely your listing is to get noticed.<br /> 
-    <em>Please note that fields marked with</em> * <em>are mandatory and must be completed or selected from the available options.</em></p>
+      <p>Please fill in as much detail as you can about your listing. The more information you can enter here the more likely your listing is to get noticed.
+        <br/>
+        <em>Please note that fields marked with</em>
+        *
+        <em>are mandatory and must be completed or selected from the available options.</em>
+      </p>
       <form method="POST" action="/listing/field">
         <legend>Details</legend>{_title(process.title)}{_genericAttributes(attributes,
         attributeValues)}{_sectionAttributes(
@@ -54,19 +58,21 @@ object ListingFieldsRenderer {
 
   private def _title(title: String) =
     <div>
-      <label class="col-lg-2 control-label">Title *</label>
-      <div class="col-lg-8">
+      <label class="control-label">Title *</label>
+      <div class="controls">
         <input type="text" class="input-xlarge" name="title" placeholder="Title" value={title}/>
       </div>
     </div>
 
   private def _content(content: String) =
     <div>
-      <label class="col-lg-2 control-label">Content *</label>
-      <p>Please enter as much detailed information as you can for the main content section of your listing. There is no limit to the 
-      amount of text that you can enter, but please note that you cannot use HTML tags such as <b></b> or any other markup as this is 
-      automatically removed.</p>
-      <div class="col-lg-8">
+      <label class="control-label">Content *</label>
+      <p>Please enter as much detailed information as you can for the main content section of your listing. There is no limit to the
+        amount of text that you can enter, but please note that you cannot use HTML tags such as
+        <b></b>
+        or any other markup as this is
+        automatically removed.</p>
+      <div class="controls">
         <textarea class="input-block-level" rows="12" name="content">
           {content}
         </textarea>
@@ -76,10 +82,10 @@ object ListingFieldsRenderer {
   def _singleSelection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(name)}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         {_select(attr)}
       </div>
     </div>
@@ -101,10 +107,10 @@ object ListingFieldsRenderer {
   def _multipleSelection(attr: Attribute) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(name)}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         {_checkboxes(attr)}
       </div>
     </div>
@@ -122,10 +128,10 @@ object ListingFieldsRenderer {
   def _text(attr: Attribute, size: String, value: Option[String]) = {
     val name = attr.name + (if (attr.optional) "" else " *")
     <div>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(name)}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         <input type="text" name={"attributeValue_" + attr.id}
                placeholder={attr.placeholder} class={size} value={value.orNull}/>
       </div>
@@ -134,10 +140,10 @@ object ListingFieldsRenderer {
 
   def _yesno(attr: Attribute) =
     <div>
-      <label class="col-lg-2 control-label">
+      <label class="control-label">
         {Unparsed(attr.name)}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         <label class="checkbox">
           <input type="checkbox" name={"attributeValue_" + attr.id}/>
         </label>
