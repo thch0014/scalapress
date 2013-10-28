@@ -125,7 +125,9 @@ class ElasticSearchService extends SearchService with Logging {
   override def index(objs: Seq[Obj]) {
     require(objs != null)
 
-    val executions = objs.map(obj => Option(obj.status).getOrElse(Obj.STATUS_DELETED).toLowerCase match {
+    val executions = objs
+      .filter(_.objectType != null)
+      .map(obj => Option(obj.status).getOrElse(Obj.STATUS_DELETED).toLowerCase match {
 
       case DELETED | DISABLED =>
         logger.debug("Creating delete operation [id={}]", obj.id)
