@@ -1,0 +1,31 @@
+#parse("/admin/header.vm")
+
+<div class="page-header">
+    <h2>Edit Voucher: $voucher.name</h2>
+</div>
+
+<form class="form-horizontal" method="POST">
+
+    <div class="form-group">
+        <label class="col-lg-3 control-label">Name</label>
+
+        <div class="col-lg-8">
+          #springFormInput("voucher.name", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-save"></i> Save changes
+            </button>
+            <a href="/backoffice/plugin/voucher" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to vouchers
+            </a>
+        </div>
+    </div>
+
+</form>
+
+
+#parse("/admin/footer.vm")

@@ -24,11 +24,4 @@ class ObjectControllerTest extends FlatSpec with MockitoSugar with OneInstancePe
       controller.view(obj, req, resp)
     } should produce[NotFoundException]
   }
-
-  "an object controller" should "throw an exception object types with the name 'account'" in {
-    evaluating {
-      obj.objectType.name = "ACCounT"
-      controller.view(obj, req, resp)
-    } should produce[NotFoundException]
-  }
 }
