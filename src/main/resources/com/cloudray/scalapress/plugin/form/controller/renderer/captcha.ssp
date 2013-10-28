@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="control-group">
     <style>
         .form-horizontal .controls #recaptcha_widget_div {
             margin-left: -160px;

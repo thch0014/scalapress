@@ -1,12 +1,12 @@
 <%@ val name: String %>
 <%@ val star: String %>
 
-<div class="form-group">
-    <label class="col-lg-2 control-label">
+<div class="control-group">
+    <label class="control-label">
       ${name} ${star}
     </label>
 
-    <div class="col-lg-8">
+    <div class="controls">
         <input type="file" name="file"/>
     </div>
 </div>

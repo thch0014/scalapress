@@ -1,11 +1,11 @@
 <div class="forgotton-password-request">
     <form class="form-horizontal registration" method="POST">
-        <div class="form-group">
+        <div class="control-group">
             <label for="Email">
                 Account Email
             </label>
             <input name="email" type="text" placeholder="email"/>
         </div>
-        <button type="submit" class="btn btn-default">Request New Password</button>
+        <button type="submit" class="btn">Request New Password</button>
     </form>
 </div>

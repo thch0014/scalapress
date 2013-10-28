@@ -1,21 +1,21 @@
 <form class="form-horizontal" method="POST">
-    <div class="form-group">
-        <label class="col-lg-2 control-label" for="orderId">Order Id</label>
+    <div class="control-group">
+        <label class="control-label" for="orderId">Order Id</label>
 
-        <div class="col-lg-8">
+        <div class="controls">
             <input type="text" name="orderId" placeholder="Enter order id"/>
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-lg-2 control-label" for="email">Email</label>
+    <div class="control-group">
+        <label class="control-label" for="email">Email</label>
 
-        <div class="col-lg-8">
+        <div class="controls">
             <input type="text" name="email" placeholder="Enter the order email"/>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-8">
-            <button type="submit" class="btn btn-default">Check Status</button>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn">Check Status</button>
         </div>
     </div>
 </form>

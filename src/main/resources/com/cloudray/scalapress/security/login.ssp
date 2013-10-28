@@ -3,21 +3,29 @@
 
 <form action='/j_spring_security_check' method='POST' class="form-horizontal">
 
-  #if (error == 1)
+  #if ($error == 1)
       <div class="alert alert-error">${errorMessage}</div>
   #end
 
-    <div class="form-group">
+    <div class="control-group">
+
         <label for="email">
             Email
         </label>
-        <input name="j_username" type="email" placeholder="Email Address"/>
+
+        <div class="controls">
+            <input name="j_username" type="email" placeholder="Email Address"/>
+        </div>
     </div>
-    <div class="form-group">
+    <div class="control-group">
+
         <label for="password">
             Password
         </label>
-        <input name="j_password" type="password" placeholder="Password"/>
+
+        <div class="controls">
+            <input name="j_password" type="password" placeholder="Password"/>
+        </div>
     </div>
     <button type="submit" name="submit" class="btn btn-default">Login</button>
 

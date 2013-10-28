@@ -38,7 +38,7 @@ object CheckoutAddressRenderer {
               .controlGroup("billingAddress.postcode",
                 "Postcode",
                 basket.billingAddress.postcode,
-                errors)}<div class="form-group">
+                errors)}<div class="control-group">
                 <label class="col-lg-2 control-label" for="country">Country</label>
                 <div class="col-lg-8">
                     <select name="country" class="input-lg">
@@ -50,7 +50,7 @@ object CheckoutAddressRenderer {
                 "Telephone",
                 basket.billingAddress.telephone,
                 errors)}<legend>Delivery Address</legend>
-                <div class="form-group">
+                <div class="control-group">
                     <label class="checkbox">
                         <input type="checkbox" name="useBillingAddress" data-toggle="collapse" data-target="#delivery-address"
                                checked={if (basket.useBillingAddress) "true" else null}/>
@@ -69,7 +69,7 @@ object CheckoutAddressRenderer {
                   .controlGroup("deliveryAddress.town", "City",
                     basket.deliveryAddress.town, errors)}{BootstrapHelpers
                   .controlGroup("deliveryAddress.postcode",
-                    "Postcode", basket.deliveryAddress.postcode, errors)}<div class="form-group">
+                    "Postcode", basket.deliveryAddress.postcode, errors)}<div class="control-group">
                     <label class="col-lg-2 control-label" for="country">Country</label>
                     <div class="col-lg-8">
                         <select name="deliveryAddress.country" class="input-lg">
@@ -78,7 +78,7 @@ object CheckoutAddressRenderer {
                     </div>
                 </div>{BootstrapHelpers
                   .controlGroup("deliveryAddress.telephone", "Telephone", basket.deliveryAddress.telephone,
-                    errors)}<div class="form-group">
+                    errors)}<div class="control-group">
                     <label class="col-lg-2 control-label" for="instructions">Delivery Instructions</label>
                     <div class="col-lg-8">
                         <textarea name="basket.deliveryAddress.instructions">
