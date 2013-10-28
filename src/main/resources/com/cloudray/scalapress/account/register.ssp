@@ -8,10 +8,9 @@
 <%@ val emailStyle: String %>
 <%@ val passwordStyle: String %>
 
-<h1>Registration</h1>
 <div class="well well-large">
     It's easy to register with <strong>${siteName}</strong>, all we need is an email address and password for your
-    account. Don't worry, we won't share your details with any third parties.
+    account. <br/>Don't worry, we won't share your details with any third parties.
 </div>
 <div class="registration">
     <form class="form-horizontal registration" method="POST">
@@ -39,7 +38,12 @@
                 <span class="help-inline">${passwordError}</span>
             </div>
         </div>
-        <button type="submit" class="btn btn-success"><i class="icon-user"></i> Register</button>
+
+        <div class="controls">
+            <button type="submit" class="btn btn-success">
+                <i class="icon-user"></i> Register
+            </button>
+        </div>
     </form>
 </div>
 <hr>
