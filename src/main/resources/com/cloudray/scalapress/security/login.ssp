@@ -3,7 +3,7 @@
 
 <form action='/j_spring_security_check' method='POST' class="form-horizontal">
 
-  #if ($error == 1)
+  #if (error == 1)
       <div class="alert alert-error">${errorMessage}</div>
   #end
 
