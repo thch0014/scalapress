@@ -19,7 +19,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="container">
-                <div class="jumbotron center">
+                <div class="hero-unit center">
                     <h1>Site Unavailable </h1>
 
                     <p>${message}</p>
