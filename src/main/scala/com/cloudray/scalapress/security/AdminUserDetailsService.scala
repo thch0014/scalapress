@@ -35,15 +35,15 @@ class AdminUserDetails(val user: User, context: ScalapressContext) extends Scala
 
         val accountType = context.accountTypeDao.default
 
-        val account = new Account
-        account.name = "admin"
-        account.email = "admin@localhost"
-        account.accountType = accountType
-        context.accountDao.save(account)
+        val acc = new Account
+        acc.name = "admin"
+        acc.email = "admin@localhost"
+        acc.accountType = accountType
+        context.accountDao.save(acc)
 
-        account
+        acc
 
-      case Some(obj) => account
+      case Some(acc) => acc
     }
   }
 }
