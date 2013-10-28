@@ -1,6 +1,7 @@
-package com.cloudray.scalapress.folder
+package com.cloudray.scalapress.folder.controller
 
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 trait FolderInterceptor {

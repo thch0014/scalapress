@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
-import com.cloudray.scalapress.folder.{FolderInterceptor, FolderPluginDao, FolderDao, Folder}
+import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao, Folder}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.security.SpringSecurityResolver

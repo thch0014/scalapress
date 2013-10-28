@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
 import com.cloudray.scalapress.obj.{ObjectDao, Obj}
-import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, NotFoundException}
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.cloudray.scalapress.security.SpringSecurityResolver
@@ -17,7 +16,6 @@ import com.cloudray.scalapress.security.SpringSecurityResolver
 @RequestMapping(Array("object/{id:\\d+}"))
 class ObjectController extends Logging {
 
-  @Autowired var folderDao: FolderDao = _
   @Autowired var objectDao: ObjectDao = _
   @Autowired var themeService: ThemeService = _
   @Autowired var context: ScalapressContext = _
@@ -36,12 +34,16 @@ class ObjectController extends Logging {
 
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
-  def view(@ModelAttribute obj: Obj, req: HttpServletRequest) = {
+  def view(@ModelAttribute obj: Obj, req: HttpServletRequest, resp: HttpServletResponse) = {
 
     if (obj.isDeleted || obj.isDisabled) throw new NotFoundException()
     if (obj.objectType == null) throw new NotFoundException()
-    if (obj.objectType.name.toLowerCase.startsWith("account")) throw new NotFoundException()
     if (obj.objectType.hidden) throw new NotFoundException()
+
+    val service = new ObjectInterceptorService(context.beans[ObjectInterceptor])
+    if (!service.preHandle(obj, req, resp)) {
+      throw new ObjectInterceptorException()
+    }
 
     val sreq = ScalapressRequest(obj, req, context).withTitle(obj.name)
     val theme = themeService.theme(obj)
@@ -60,6 +62,13 @@ class ObjectController extends Logging {
     }
 
     page.body(SectionRenderer.render(obj, sreq))
+
+    service.postHandle(obj, req, resp)
     page
   }
+
+  @ExceptionHandler(Array(classOf[ObjectInterceptorException]))
+  def handleException1(e: ObjectInterceptorException): Unit = {}
 }
+
+class ObjectInterceptorException extends RuntimeException
