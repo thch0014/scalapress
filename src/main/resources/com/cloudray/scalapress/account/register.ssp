@@ -17,18 +17,27 @@
     <form class="form-horizontal registration" method="POST">
         <div class="control-group ${nameStyle}">
             <label for="name">Your name</label>
-            <input name="name" placeholder="Your name" type="text" value="${name}">
-            <span class="help-inline">${nameError}</span>
+
+            <div class="controls">
+                <input name="name" placeholder="Your name" type="text" value="${name}">
+                <span class="help-inline">${nameError}</span>
+            </div>
         </div>
         <div class="control-group ${emailStyle}">
             <label for="email">Email</label>
-            <input name="email" placeholder="Email Address" type="email" value="${email}">
-            <span class="help-inline">${emailError}</span>
+
+            <div class="controls">
+                <input name="email" placeholder="Email Address" type="email" value="${email}">
+                <span class="help-inline">${emailError}</span>
+            </div>
         </div>
         <div class="control-group ${passwordStyle}">
             <label for="password">Password</label>
-            <input name="password" placeholder="Password" type="password">
-            <span class="help-inline">${passwordError}</span>
+
+            <div class="controls">
+                <input name="password" placeholder="Password" type="password">
+                <span class="help-inline">${passwordError}</span>
+            </div>
         </div>
         <button type="submit" class="btn btn-success"><i class="icon-user"></i> Register</button>
     </form>

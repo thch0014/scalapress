@@ -172,7 +172,7 @@ class AddListingController {
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep))
     val form = Scalate.layout(
       "/com/cloudray/scalapress/plugin/listings/images.ssp",
-      Map("headerText" -> listingsPluginDao.get.imagesPageText, "images" -> process.imageKeys)
+      Map("headerText" -> Option(listingsPluginDao.get.imagesPageText).getOrElse(""), "images" -> process.imageKeys)
     )
     page.body(form)
     page
