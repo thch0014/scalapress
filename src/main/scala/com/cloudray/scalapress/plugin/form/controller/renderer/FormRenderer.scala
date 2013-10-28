@@ -83,8 +83,8 @@ object FormRenderer {
 
     val cssClass = "control-group" + (if (error.isDefined) " error" else "")
     val css = Option(field.size).getOrElse(Some(FieldSize.Medium)) match {
-      case FieldSize.Small => "input-sm"
-      case FieldSize.Large => "input-lg"
+      case FieldSize.Small => "input-small"
+      case FieldSize.Large => "input-large"
       case FieldSize.XLarge => "input-xlarge"
       case FieldSize.XXLarge => "input-xxlarge"
       case _ => "input-medium"
@@ -94,7 +94,7 @@ object FormRenderer {
       <label class="col-lg-2 control-label">
         {Unparsed(name)}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         <input type="text" name={field.id.toString} placeholder={field.placeholder} value={value
         .orNull} class={css}/>
         <span class="help-inline">
@@ -121,7 +121,7 @@ object FormRenderer {
       <label class="col-lg-2 control-label">
         {Unparsed(field.name)}{star}
       </label>
-      <div class="col-lg-8">
+      <div class="controls">
         <select name={field.id.toString}>
           {opts}
         </select>
@@ -146,7 +146,7 @@ object FormRenderer {
 
     val cssClass = "control-group" + (if (req.errors.contains(field.id.toString)) " error" else "")
     <div class={cssClass}>
-      <div class="col-lg-8">
+      <div class="controls">
         <label class="checkbox">
           {Unparsed(field.name)}
         </label>{checks}<span class="help-inline">
@@ -166,7 +166,7 @@ object FormRenderer {
       </label>)
 
     <div class={cssClass}>
-      <div class="col-lg-8">
+      <div class="controls">
         <label class="radio">
           {Unparsed(field.name)}{star}
         </label>{radios}<span class="help-inline">
