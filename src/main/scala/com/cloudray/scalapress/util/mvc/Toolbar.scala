@@ -8,11 +8,7 @@ class Toolbar(name: String, url: Option[String]) {
 
   def render: String = {
 
-    val edit = url.map(u => {
-      <li>
-        <a href={u}>Edit This Page</a>
-      </li>
-    }).mkString
+    val edit = url.map(u => s"<li><a href=$u>Edit This Page</a></li>").getOrElse("")
 
     Scalate.layout("/com/cloudray/scalapress/util/mvc/toolbar.ssp",
       Map("name" -> name, "edit" -> edit))
