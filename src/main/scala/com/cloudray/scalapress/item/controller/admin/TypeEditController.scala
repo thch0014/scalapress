@@ -12,6 +12,7 @@ import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.item.{TypeDao, ItemType}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.attr.{AttributeType, Attribute}
+import scala.collection.mutable
 
 /** @author Stephen Samuel */
 @Controller
@@ -110,5 +111,15 @@ class TypeEditController(val typeDao: TypeDao,
   }
 
   @ModelAttribute("classes")
-  def classes = ComponentClassScanner.sections.map(c => (c.getName, c.getSimpleName)).toMap.asJava
+  def classes: java.util.Map[String, String] = {
+
+    val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
+
+    val map = mutable.LinkedHashMap.empty[String, String]
+    sections.foreach(section => {
+      map.put(section.getName, section.getSimpleName)
+    })
+
+    map.asJava
+  }
 }

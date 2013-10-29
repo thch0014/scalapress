@@ -23,7 +23,7 @@ import com.cloudray.scalapress.item.attr.Attribute
 class ObjectListSection extends Section {
 
   def desc = "Show a paginated list of objects that are inside this folder"
-  override def backoffice: String = "/backoffice/section/objectlist/" + id
+  override def backoffice: String = "/backoffice/section/itemlist/" + id
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "sortType")

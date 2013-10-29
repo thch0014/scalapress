@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/section/objectlist/{id}"))
+@RequestMapping(Array("backoffice/section/itemlist/{id}"))
 @Autowired
-class ObjectListSectionController(val markupDao: MarkupDao,
-                                  val sectionDao: SectionDao,
-                                  context: ScalapressContext)
+class ItemListSectionController(val markupDao: MarkupDao,
+                                val sectionDao: SectionDao,
+                                context: ScalapressContext)
   extends MarkupPopulator with SortPopulator with AttributePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
