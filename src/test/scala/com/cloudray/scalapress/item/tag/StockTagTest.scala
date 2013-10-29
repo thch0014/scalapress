@@ -26,14 +26,14 @@ class StockTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
   test("manual stock shows number as is") {
     plugin.stockMethod = StockMethod.Manual
     val sreq = ScalapressRequest(req, context).withItem(obj)
-    val actual = new ObjectStockTag().render(sreq, Map.empty).get
+    val actual = new TagStockTag().render(sreq, Map.empty).get
     assert("25" === actual)
   }
 
   test("InOut stock overrides > 1 to 1") {
     plugin.stockMethod = StockMethod.InOut
     val sreq = ScalapressRequest(req, context).withItem(obj)
-    val actual = new ObjectStockTag().render(sreq, Map.empty).get
+    val actual = new TagStockTag().render(sreq, Map.empty).get
     assert("1" === actual)
   }
 }

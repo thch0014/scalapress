@@ -8,11 +8,11 @@ import com.cloudray.scalapress.item.StockMethod
 object RrpTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.item.flatMap(obj => {
-      obj.rrp match {
+    request.item.flatMap(item => {
+      item.rrp match {
         case 0 => None
         case _ =>
-          val formatted = "&pound;%1.2f".format(obj.rrp / 100.0)
+          val formatted = "&pound;%1.2f".format(item.rrp / 100.0)
           Some(build(formatted, params))
       }
     })
@@ -22,9 +22,9 @@ object RrpTag extends ScalapressTag with TagBuilder {
 object RrpDiscountTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.item.flatMap(obj => {
+    request.item.flatMap(item => {
 
-      val saving = obj.rrp - obj.sellPriceInc
+      val saving = item.rrp - item.sellPriceInc
       saving match {
         case i if i <= 0 => None
         case _ =>
@@ -37,13 +37,13 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
 
 object ItemSellPriceTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
-    request.item.map(obj => {
+    request.item.map(item => {
 
-      val text = if (params.contains("ex")) obj.price
-      else if (params.contains("vat") && request.installation.vatEnabled) obj.vat
+      val text = if (params.contains("ex")) item.price
+      else if (params.contains("vat") && request.installation.vatEnabled) item.vat
       else if (params.contains("vat")) 0
-      else if (request.installation.vatEnabled) obj.sellPriceInc
-      else obj.price
+      else if (request.installation.vatEnabled) item.sellPriceInc
+      else item.price
 
       val textFormatted = "&pound;%1.2f".format(text / 100.0)
       build(textFormatted, params + ("class" -> "price"))
@@ -53,15 +53,15 @@ object ItemSellPriceTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("stock")
-class ObjectStockTag extends ScalapressTag with TagBuilder {
+class TagStockTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.item.map(obj => {
+    request.item.map(item => {
       request.shoppingPlugin.stockMethod match {
-        case StockMethod.Automatic => build(obj.stock.toString, params)
+        case StockMethod.Automatic => build(item.stock.toString, params)
         case StockMethod.InOut =>
-          val stock = if (obj.stock > 0) "1" else "0"
+          val stock = if (item.stock > 0) "1" else "0"
           build(stock, params)
-        case StockMethod.Manual => build(obj.stock.toString, params)
+        case StockMethod.Manual => build(item.stock.toString, params)
         case _ => ""
       }
     })
@@ -69,20 +69,20 @@ class ObjectStockTag extends ScalapressTag with TagBuilder {
 }
 
 @Tag("availability")
-class ObjectAvailabilityTag extends ScalapressTag with TagBuilder {
+class TagAvailabilityTag extends ScalapressTag with TagBuilder {
   def render(sreq: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    sreq.item.flatMap(obj => {
+    sreq.item.flatMap(item => {
       sreq.shoppingPlugin.stockMethod match {
         case StockMethod.Off => None
-        case StockMethod.InOut => obj.stock match {
-          case 0 => Option(obj.outStockMsg).orElse(Option(sreq.shoppingPlugin.outOfStockMessage))
+        case StockMethod.InOut => item.stock match {
+          case 0 => Option(item.outStockMsg).orElse(Option(sreq.shoppingPlugin.outOfStockMessage))
           case _ => Some("In stock")
         }
         case _ =>
-          obj.stock match {
+          item.stock match {
             case 0 =>
-              val outMessage = Option(obj.outStockMsg)
+              val outMessage = Option(item.outStockMsg)
                 .filterNot(_.isEmpty)
                 .getOrElse(sreq.shoppingPlugin.outOfStockMessage)
               Some(build(outMessage, params))

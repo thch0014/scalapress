@@ -28,7 +28,7 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
 
   Mockito.when(variationDao.findByObjectId(12)).thenReturn(Nil)
 
-  val tag = new ObjectAvailabilityTag()
+  val tag = new TagAvailabilityTag()
 
   test("when stock is disabled this tag renders None") {
     plugin.stockMethod = StockMethod.Off
