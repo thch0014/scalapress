@@ -4,6 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.vouchers.{Voucher, VoucherDao, VoucherService}
 import scala.concurrent.duration._
+import org.mockito.Mockito
 
 /** @author Stephen Samuel */
 class VoucherServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -15,7 +16,10 @@ class VoucherServiceTest extends FunSuite with MockitoSugar with OneInstancePerT
   voucher.start = System.currentTimeMillis() - (1 days).toMillis
   voucher.expiry = System.currentTimeMillis() + (1 days).toMillis
 
+  Mockito.when(dao.byCode("abc")).thenReturn(Some(voucher))
+
   test("voucher should be valid if within date range") {
+    assert(service.isValidVoucher("abc"))
     assert(service.isValidVoucher(voucher))
   }
 

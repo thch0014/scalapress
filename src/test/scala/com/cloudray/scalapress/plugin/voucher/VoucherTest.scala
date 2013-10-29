@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.voucher
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.vouchers.Voucher
+import com.cloudray.scalapress.plugin.vouchers.{VoucherCodeGenerator, Voucher}
 
 /** @author Stephen Samuel */
 class VoucherTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -21,4 +21,15 @@ class VoucherTest extends FunSuite with MockitoSugar with OneInstancePerTest {
     val actual = voucher.calculatePrice(1000)
     assert(850 === actual)
   }
+
+  test("created voucher uses generator") {
+
+    val generator = new VoucherCodeGenerator {
+      def generate: String = "1234"
+    }
+    val voucher = Voucher(generator)
+    assert("1234" === voucher.code)
+  }
 }
+
+

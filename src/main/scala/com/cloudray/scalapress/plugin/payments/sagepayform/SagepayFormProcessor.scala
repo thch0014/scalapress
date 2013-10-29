@@ -46,16 +46,14 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
   }
 
   // returns the four params needed by sagepay
-  def params(domain: String, requiresPayment: Purchase): Map[String, String] = {
-
-    val crypt = encryptParams(_cryptParams(requiresPayment, domain))
-
-    val params = Map("VPSProtocol" -> VPSProtocol,
+  def params(domain: String, purchase: Purchase): Map[String, String] = {
+    val crypt = encryptParams(_cryptParams(purchase, domain))
+    Map(
+      "VPSProtocol" -> VPSProtocol,
       "TxType" -> PaymentTypePayment,
       "Vendor" -> plugin.sagePayVendorName,
-      "Crypt" -> crypt)
-
-    params
+      "Crypt" -> crypt
+    )
   }
 
   def _createTx(params: Map[String, String]) = {
@@ -83,7 +81,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     tx
   }
 
-  private def sageBasketString(basket: Basket) = {
+  def sageBasketString(basket: Basket) = {
 
     val count = basket.lines.size + 1
 

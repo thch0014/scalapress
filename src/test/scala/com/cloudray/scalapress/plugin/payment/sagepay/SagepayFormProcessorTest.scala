@@ -3,8 +3,9 @@ package com.cloudray.scalapress.plugin.payment.sagepay
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
-import com.cloudray.scalapress.plugin.ecommerce.domain.Address
+import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, DeliveryOption, Basket, Address}
 import com.cloudray.scalapress.payments.Purchase
+import com.cloudray.scalapress.obj.Obj
 
 /** @author Stephen Samuel */
 class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -140,5 +141,33 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     assert(result.get.callbackInfo === "Order-102727")
     assert(result.get.tx.authCode === "821316448")
     assert(result.get.tx.transactionId === "{6AA6DE3C-B694-7A80-5BAC-96D4EF1A8984}")
+  }
+
+  test("params returns the mandatory parameters") {
+    plugin.sagePayEncryptionPassword = "mypassword"
+    val params = processor.params("coldplaylovers.com", purchase)
+    assert(params.contains("VPSProtocol"))
+    assert(params.contains("TxType"))
+    assert(params.contains("Vendor"))
+    assert(params.contains("Crypt"))
+  }
+
+  test("basket format is valid") {
+
+    val basket = new Basket
+    basket.deliveryOption = new DeliveryOption
+    basket.deliveryOption.charge = 595
+    basket.deliveryOption.name = "delivered by superman"
+
+    val line = new BasketLine
+    line.obj = new Obj
+    line.obj.price = 1999
+    line.obj.vatRate = 20
+    line.obj.name = "coldplay tshirt"
+    line.qty = 2
+    basket.lines.add(line)
+
+    val string = processor.sageBasketString(basket)
+    assert("2:coldplay tshirt:2:19.99:3.99:23.98:47.96:delivered by superman:1:5.95:0.0:5.95:5.95" === string)
   }
 }
