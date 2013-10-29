@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
-class ObjectTypeDaoTest extends FunSuite with MockitoSugar {
+class ItemTypeDaoTest extends FunSuite with MockitoSugar {
 
   test("persisting an item can be retrieved by id") {
 

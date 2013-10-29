@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
-class ObjDaoTest extends FunSuite with MockitoSugar {
+class ItemDaoTest extends FunSuite with MockitoSugar {
 
   test("saving an object sets updated date") {
     val obj = new Item
@@ -35,7 +35,7 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
     assert("super item" === obj2.name)
   }
 
-  test("objects can be loaded by bulk using ids") {
+  test("items can be loaded by bulk using ids") {
 
     val obj1 = new Item
     obj1.name = "coldplay"

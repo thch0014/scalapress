@@ -84,9 +84,9 @@ class SearchController extends Logging {
     try {
       Option(t).orElse(Option(objectTypeId)).map(arg => typeDao.find(arg.toLong)) match {
         case None =>
-        case Some(objectType) =>
-          search.objectType = objectType
-          search.facets = objectType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
+        case Some(itemType) =>
+          search.objectType = itemType
+          search.facets = itemType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
       }
     } catch {
       case e: Exception => // unparsable number
