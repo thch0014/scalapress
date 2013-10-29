@@ -8,14 +8,24 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
+        <th>Code</th>
+        <th>Start</th>
+        <th>Expiry</th>
         <th></th>
     </tr>
   #foreach ($v in $vouchers)
       <tr>
-          <td>$v.id</td>
-          <td>$v.name</td>
           <td>
-              <a href="/backoffice/voucher/$v.id" role="button" class="btn btn-xs btn-default">
+              <a href="/backoffice/plugin/voucher/$v.id">
+                $v.id
+              </a>
+          </td>
+          <td>$v.name</td>
+          <td>$v.code</td>
+          <td>$datetool.format("EEEEE dd-MM-yyyy", $v.start)</td>
+          <td>$datetool.format("EEEEE dd-MM-yyyy",$v.expiry)</td>
+          <td>
+              <a href="/backoffice/plugin/voucher/$v.id" role="button" class="btn btn-xs btn-default">
                   <i class="glyphicon glyphicon-pencil"></i>
               </a>
           </td>
@@ -26,7 +36,7 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <a href="/backoffice/voucher/create" role="button" class="btn btn-primary">
+        <a href="/backoffice/plugin/voucher/create" role="button" class="btn btn-primary">
             <i class="glyphicon glyphicon-plus"></i> Add new voucher</a>
     </div>
 </div>

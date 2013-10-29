@@ -8,20 +8,18 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 @Controller
 @Autowired
-@RequestMapping(Array("backoffice/voucher"))
-class VoucherListController(voucherDao: VoucherDao) {
+@RequestMapping(Array("backoffice/plugin/voucher"))
+class VoucherListController(voucherDao: VoucherDao,
+                            voucherCodeGenerator: VoucherCodeGenerator) {
 
   @RequestMapping
   def list = "admin/plugin/voucher/list.vm"
 
   @RequestMapping(value = Array("create"))
   def create: String = {
-
-    val voucher = new Voucher
-    voucher.name = "new voucher"
+    val voucher = Voucher(voucherCodeGenerator)
     voucherDao.save(voucher)
-
-    "redirect:/backoffice/voucher/" + voucher.id
+    "redirect:/backoffice/plugin/voucher/" + voucher.id
   }
 
   @ModelAttribute("vouchers")
