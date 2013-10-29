@@ -26,7 +26,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
 
   controller.context = new ScalapressContext
   controller.context.folderDao = mock[FolderDao]
-  controller.context.objectDao = mock[ItemDao]
+  controller.context.itemDao = mock[ItemDao]
 
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]
@@ -75,7 +75,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
       .doSubmission(Matchers.any[Form], Matchers.any[ScalapressRequest], Matchers.any[Iterable[MultipartFile]]))
       .thenReturn(submission)
     val o = new Item
-    Mockito.when(controller.context.objectDao.find(6)).thenReturn(o)
+    Mockito.when(controller.context.itemDao.find(6)).thenReturn(o)
     controller.createSubmission(form, sreq, Nil, 0, 6)
     assert(o === submission.obj)
   }

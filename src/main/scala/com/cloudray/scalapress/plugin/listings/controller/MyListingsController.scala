@@ -26,7 +26,7 @@ class MyListingsController(context: ScalapressContext,
 
     val account = securityResolver.getAccount(req)
     val query = new ItemQuery().withAccountId(account.map(_.id).getOrElse(0))
-    val objects = context.objectDao.search(query)
+    val objects = context.itemDao.search(query)
 
     val sreq = ScalapressRequest(req, context).withTitle("My Listings")
     val theme = themeService.default

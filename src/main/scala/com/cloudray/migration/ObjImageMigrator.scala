@@ -21,11 +21,11 @@ class ObjImageMigrator extends Logging {
 
     if (image.item != null) {
 
-      val obj = context.objectDao.find(image.item.toLong)
+      val obj = context.itemDao.find(image.item.toLong)
       if (obj != null) {
         if (!obj.images.contains(image.filename)) {
           obj.images.add(image.filename)
-          context.objectDao.save(obj)
+          context.itemDao.save(obj)
         }
       }
 

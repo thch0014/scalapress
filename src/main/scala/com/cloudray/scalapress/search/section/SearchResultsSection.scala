@@ -64,7 +64,7 @@ class SearchResultsSection extends Section with Logging {
     if (result.refs.isEmpty) Nil
     else {
       val ids = result.refs.map(_.id)
-      val objs = request.context.objectDao
+      val objs = request.context.itemDao
         .findBulk(ids)
         .filter(obj => Item.STATUS_LIVE.equalsIgnoreCase(obj.status))
       _reorder(ids, objs)

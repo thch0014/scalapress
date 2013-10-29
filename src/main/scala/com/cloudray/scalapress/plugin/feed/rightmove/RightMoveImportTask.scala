@@ -26,7 +26,7 @@ class RightMoveImportTask extends Runnable with Logging {
             // see if property already exists
             val q = new ItemQuery
             q.exernalReference = Some(property.id)
-            val objs = context.objectDao.search(q)
+            val objs = context.itemDao.search(q)
 
             val obj = objs.results.headOption.getOrElse(new Item)
 

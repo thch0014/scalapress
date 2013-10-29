@@ -21,7 +21,7 @@ class ECRedirectController(context: ScalapressContext) {
 
   @RequestMapping(Array("item.do"))
   def item(@RequestParam("item") id: Long) = {
-    Option(context.objectDao.find(id)) match {
+    Option(context.itemDao.find(id)) match {
       case None => "redirect:/"
       case Some(obj) => "redirect:" + UrlGenerator.url(obj)
     }

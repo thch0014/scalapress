@@ -16,7 +16,7 @@ class MyListingsControllerTest extends FunSuite with OneInstancePerTest with Moc
 
   val themeService = mock[ThemeService]
   val context = new ScalapressContext
-  context.objectDao = mock[ItemDao]
+  context.itemDao = mock[ItemDao]
 
   val controller = new MyListingsController(context, themeService)
   controller.securityResolver = mock[SecurityResolver]
@@ -28,10 +28,10 @@ class MyListingsControllerTest extends FunSuite with OneInstancePerTest with Moc
   Mockito.when(controller.securityResolver.getAccount(req)).thenReturn(Some(acc))
 
   test("controller looks up listings by account id") {
-    Mockito.when(context.objectDao.search(Matchers.any[ItemQuery])).thenReturn(Page.empty[Item])
+    Mockito.when(context.itemDao.search(Matchers.any[ItemQuery])).thenReturn(Page.empty[Item])
     controller.list(req)
     val captor = ArgumentCaptor.forClass(classOf[ItemQuery])
-    Mockito.verify(context.objectDao).search(captor.capture)
+    Mockito.verify(context.itemDao).search(captor.capture)
     val q = captor.getValue
     assert(53 === q.accountId.get)
   }

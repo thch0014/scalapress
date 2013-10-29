@@ -18,7 +18,7 @@ object UrlBuilder {
   def objects(context: ScalapressContext, domain: String): List[Url] = {
 
     val query = new ItemQuery().withStatus("LIVE").withPageSize(50000)
-    val objects = context.objectDao.search(query).results.filter(_.objectType.searchable)
+    val objects = context.itemDao.search(query).results.filter(_.objectType.searchable)
 
     val urls = new ListBuffer[Url]
     for ( obj <- objects ) {

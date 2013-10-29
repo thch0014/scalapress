@@ -47,7 +47,7 @@ class DashboardController {
   def folderCount = context.folderDao.findAll.size
 
   @ModelAttribute("recentObjects")
-  def recentObjects: java.util.List[Item] = context.objectDao.recent(8).asJava
+  def recentObjects: java.util.List[Item] = context.itemDao.recent(8).asJava
 
   @ModelAttribute("buildNumber")
   def buildNumber = props.get("buildNumber")

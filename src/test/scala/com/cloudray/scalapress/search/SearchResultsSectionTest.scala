@@ -16,7 +16,7 @@ class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstan
   val req = mock[HttpServletRequest]
   val context = new ScalapressContext
   context.searchService = mock[SearchService]
-  context.objectDao = mock[ItemDao]
+  context.itemDao = mock[ItemDao]
   context.sectionDao = mock[SectionDao]
   context.savedSearchDao = mock[SavedSearchDao]
 
@@ -59,7 +59,7 @@ class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstan
     // search returns sorted refs
     Mockito.when(context.searchService.search(section.search)).thenReturn(result)
     // bulk dao method returns them in id order
-    Mockito.when(context.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(sortedObjs)
+    Mockito.when(context.itemDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(sortedObjs)
 
     // test should be that they are re-ordered back to the sorted refs order
     val expected = Seq(obj2, obj3, obj1)

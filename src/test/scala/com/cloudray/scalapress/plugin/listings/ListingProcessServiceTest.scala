@@ -26,7 +26,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
 
   val service = new ListingProcessService
   service.context = new ScalapressContext
-  service.context.objectDao = mock[ItemDao]
+  service.context.itemDao = mock[ItemDao]
   service.context.accountDao = mock[AccountDao]
   service.listingProcessDao = mock[ListingProcessDao]
   service.listingAdminNotificationService = mock[ListingAdminNotificationService]
@@ -49,7 +49,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
 
   test("that the object is persisted") {
     val listing = service.process(process)
-    Mockito.verify(service.context.objectDao, Mockito.atLeastOnce).save(listing)
+    Mockito.verify(service.context.itemDao, Mockito.atLeastOnce).save(listing)
   }
 
   test("cleanup sets all attribute values to be orphaned") {

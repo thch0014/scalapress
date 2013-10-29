@@ -16,7 +16,7 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
     val item = _item(process)
 
     process.attributeValues.asScala.foreach(av => item.attributeValues.add(_av(av, item)))
-    context.objectDao.save(item)
+    context.itemDao.save(item)
     logger.debug("... added {} attribute values", item.attributeValues.size)
 
     process.folders.foreach(folderId => {
@@ -24,13 +24,13 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
       folder.objects.add(item)
       item.folders.add(folder)
     })
-    context.objectDao.save(item)
+    context.itemDao.save(item)
     logger.debug("... set inside {} folders", item.folders.size)
 
     process.imageKeys.foreach(key => item.images add key)
     logger.debug("... added {} images", item.images.size)
 
-    context.objectDao.save(item)
+    context.itemDao.save(item)
 
     item
   }
@@ -45,7 +45,7 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
     item.status = Item.STATUS_DISABLED
     item.expiry = _expiry(process.listingPackage)
     item.labels = process.listingPackage.labels
-    context.objectDao.save(item)
+    context.itemDao.save(item)
     item
   }
 

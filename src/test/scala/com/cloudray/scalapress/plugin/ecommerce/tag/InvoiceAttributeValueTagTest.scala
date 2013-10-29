@@ -29,7 +29,7 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
 
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext()
-    context.objectDao = mock[ItemDao]
+    context.itemDao = mock[ItemDao]
     val sreq = new ScalapressRequest(req, context).withOrderLine(line1)
 
     val av1 = new AttributeValue
@@ -44,7 +44,7 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
     obj.name = "my lovely object"
     obj.attributeValues.add(av1)
 
-    Mockito.doReturn(obj).when(context.objectDao).find(Matchers.anyLong)
+    Mockito.doReturn(obj).when(context.itemDao).find(Matchers.anyLong)
 
     test("tag renders attribute value from parameter id") {
         val actual = tag.render(sreq, Map("id" -> "123"))

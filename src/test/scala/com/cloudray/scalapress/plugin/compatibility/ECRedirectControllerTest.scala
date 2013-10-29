@@ -11,14 +11,14 @@ import org.mockito.Mockito
 class ECRedirectControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val context = new ScalapressContext
-  context.objectDao = mock[ItemDao]
+  context.itemDao = mock[ItemDao]
   context.folderDao = mock[FolderDao]
   val controller = new ECRedirectController(context)
 
   val obj = new Item
   obj.id = 14
   obj.name = "big man tshirts"
-  Mockito.when(context.objectDao.find(14)).thenReturn(obj)
+  Mockito.when(context.itemDao.find(14)).thenReturn(obj)
 
   val f = new Folder
   f.id = 28

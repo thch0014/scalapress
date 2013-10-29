@@ -14,7 +14,7 @@ import com.cloudray.scalapress.folder.{FolderDao, Folder}
 class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
   val context = new ScalapressContext
-  context.objectDao = mock[ItemDao]
+  context.itemDao = mock[ItemDao]
   context.folderDao = mock[FolderDao]
   val builder = new ListingProcessObjectBuilder(context)
   val p = new ListingPackage

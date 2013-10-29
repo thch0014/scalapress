@@ -56,9 +56,9 @@ class ListingEditController {
       }
     }
 
-    context.objectDao.save(item)
+    context.itemDao.save(item)
     "redirect:/listing/"
   }
 
-  @ModelAttribute("item") def listing(@PathVariable("id") id: Long) = context.objectDao.find(id)
+  @ModelAttribute("item") def listing(@PathVariable("id") id: Long) = context.itemDao.find(id)
 }

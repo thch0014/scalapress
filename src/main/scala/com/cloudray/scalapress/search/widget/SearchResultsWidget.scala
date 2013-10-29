@@ -64,7 +64,7 @@ class SearchResultsWidget extends Widget with Logging {
     val result = request.context.searchService.search(search)
     if (result.refs.isEmpty) Nil
     else {
-      val objs = request.context.objectDao
+      val objs = request.context.itemDao
         .findBulk(result.refs.map(_.id))
         .filter(obj => Item.STATUS_LIVE.equalsIgnoreCase(obj.status))
       _reorder(result.refs, objs)

@@ -39,14 +39,14 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     callback.context.installationDao = mock[InstallationDao]
     Mockito.when(callback.context.installationDao.get).thenReturn(installation)
 
-    callback.context.objectDao = mock[ItemDao]
+    callback.context.itemDao = mock[ItemDao]
     callback.orderDao = mock[OrderDao]
     callback.listingCustomerNotificationService = mock[ListingCustomerNotificationService]
 
     test("invoking with a string looks up the listing by id") {
-        Mockito.when(callback.context.objectDao.find(123456)).thenReturn(listing)
+        Mockito.when(callback.context.itemDao.find(123456)).thenReturn(listing)
         callback.callback(tx, "123456")
-        Mockito.verify(callback.context.objectDao).find(123456)
+        Mockito.verify(callback.context.itemDao).find(123456)
     }
 
     test("given a tx then it is added to order") {

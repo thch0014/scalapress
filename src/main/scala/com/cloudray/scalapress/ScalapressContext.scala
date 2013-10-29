@@ -44,8 +44,8 @@ class ScalapressContext extends ServletContextAware {
   @Autowired var attributeValueDao: AttributeValueDao = _
   @Autowired var attributeDao: AttributeDao = _
 
-  @Autowired var objectDao: ItemDao = _
-  @Autowired var typeDao: TypeDao = _
+  @Autowired var itemDao: ItemDao = _
+  @Autowired var itemTypeDao: TypeDao = _
 
   @Autowired var accountDao: AccountDao = _
   @Autowired var accountTypeDao: AccountTypeDao = _

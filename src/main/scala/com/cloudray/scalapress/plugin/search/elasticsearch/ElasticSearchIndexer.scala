@@ -72,12 +72,12 @@ class ElasticSearchIndexerImpl(service: SearchService,
   }
 
   def _loadLive(offset: Int, pageSize: Int): Seq[Item] =
-    context.objectDao.search(_basicSearch(offset, pageSize).addFilterLike("status", Item.STATUS_LIVE))
+    context.itemDao.search(_basicSearch(offset, pageSize).addFilterLike("status", Item.STATUS_LIVE))
 
   def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Item] = {
     // include an extra overlap of 15 minutes to allow for time diffs on different nodes
     val _since = since - Duration(15, TimeUnit.MINUTES).toMillis
-    context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterOrEqual("dateUpdated", _since))
+    context.itemDao.search(_basicSearch(offset, pageSize).addFilterGreaterOrEqual("dateUpdated", _since))
   }
 
   def _basicSearch(offset: Int, pageSize: Int) =

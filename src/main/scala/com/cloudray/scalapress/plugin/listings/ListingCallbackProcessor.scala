@@ -20,7 +20,7 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
   @Autowired var listingCustomerNotificationService: ListingCustomerNotificationService = _
 
   override def callback(tx: Transaction, id: String) {
-    val process = context.objectDao.find(id.toLong)
+    val process = context.itemDao.find(id.toLong)
     callback(Option(tx), process)
   }
 
@@ -30,7 +30,7 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     if (listing.listingPackage.autoPublish) {
       logger.debug("Auto publising listing [{}-{}]", listing.id, listing.name)
       listing.status = Item.STATUS_LIVE
-      context.objectDao.save(listing)
+      context.itemDao.save(listing)
     }
 
     if (listing.listingPackage.fee > 0) {

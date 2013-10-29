@@ -38,7 +38,7 @@ class ListingPaymentController {
                    @PathVariable("listingId") listingId: Long,
                    req: HttpServletRequest): ScalapressPage = {
 
-    listingPayment.obj = context.objectDao.find(listingId)
+    listingPayment.obj = context.itemDao.find(listingId)
     val packages = listingPackageDao.findAll.filterNot(_.deleted)
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_PACKAGE)
