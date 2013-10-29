@@ -153,7 +153,8 @@
           <label class="col-lg-2 control-label">Listing Account</label>
 
           <div class="col-lg-8">
-            #springFormInput("form.o.account.id", "class='form-control'")
+            <input type="text" name="account" class="form-control" value="$!form.o.account.id"/>
+              <a href="/backoffice/account/$form.o.account.id">$!form.o.account.name</a>
           </div>
       </div>
 
@@ -161,7 +162,8 @@
           <label class="col-lg-2 control-label">Listing Expiry</label>
 
           <div class="col-lg-8">
-            #springFormInput("form.o.expiry", "class='form-control'")
+              <input type="text" name="expiry" class="form-control datepicker"
+                     value="$!datetool.format("dd-MM-yyyy", $form.o.expiry)"/>
           </div>
       </div>
 

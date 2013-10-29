@@ -21,8 +21,6 @@ import javax.persistence.Column
 @Table(name = "items")
 class Obj extends SortedSections with java.io.Serializable {
 
-  def available = stock > 0
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Index(name = "id_index")
@@ -188,6 +186,7 @@ class Obj extends SortedSections with java.io.Serializable {
   @Column(name = "ourStock")
   @BeanProperty
   var stock: Int = _
+  def available = stock > 0
 
   @Column(name = "brochure")
   @BeanProperty

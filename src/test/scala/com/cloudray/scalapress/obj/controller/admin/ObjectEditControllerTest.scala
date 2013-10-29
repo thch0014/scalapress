@@ -13,12 +13,14 @@ import com.cloudray.scalapress.media.{ImageDao, AssetStore}
 import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
+import com.cloudray.scalapress.account.AccountDao
 
 /** @author Stephen Samuel */
 class ObjectEditControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
   val objectDao = mock[ObjectDao]
   val folderDao = mock[FolderDao]
+  val accountDao = mock[AccountDao]
   val sectionDao = mock[SectionDao]
   val assetStore = mock[AssetStore]
   val attributeValueDao = mock[AttributeValueDao]
@@ -32,6 +34,7 @@ class ObjectEditControllerTest extends FlatSpec with MockitoSugar with OneInstan
     objectDao,
     folderDao,
     imageDao,
+    accountDao,
     sectionDao,
     context,
     serviceSearch,

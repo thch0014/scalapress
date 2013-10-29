@@ -28,6 +28,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.media.Asset
 import scala.Some
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
+import com.cloudray.scalapress.account.AccountDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -38,6 +39,7 @@ class ObjectEditController(val assetStore: AssetStore,
                            val objectDao: ObjectDao,
                            val folderDao: FolderDao,
                            val imageDao: ImageDao,
+                           val accountDao: AccountDao,
                            val sectionDao: SectionDao,
                            val context: ScalapressContext,
                            val searchService: SearchService,
@@ -79,6 +81,14 @@ class ObjectEditController(val assetStore: AssetStore,
     form.o.price = (form.sellPrice * 100).toInt
     form.o.costPrice = (form.costPrice * 100).toInt
     form.o.rrp = (form.rrp * 100).toInt
+    form.o.expiry = Option(form.expiry)
+      .map(arg => DateTimeFormat.forPattern("dd-MM-yyyy")
+      .parseLocalDate(arg)
+      .toDateTimeAtStartOfDay(DateTimeZone.UTC)
+      .getMillis)
+      .getOrElse(0)
+
+    form.o.account = accountDao.find(form.account)
 
     form.o.folders.asScala.foreach(folder => folder.objects.remove(form.o))
     form.o.folders.clear()
@@ -186,7 +196,8 @@ class ObjectEditController(val assetStore: AssetStore,
     "redirect:/backoffice/obj/" + form.o.id + "#tab5"
   }
 
-  @ModelAttribute("assets") def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
+  @ModelAttribute("assets")
+  def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
     val obj = objectDao.find(id)
     val java = obj.images.asScala.map(img => {
       Asset(img, 0, assetStore.link(img), URLConnection.guessContentTypeFromName(img))
@@ -194,14 +205,17 @@ class ObjectEditController(val assetStore: AssetStore,
     java
   }
 
-  @ModelAttribute("booleanMap") def booleanMap = Map("Yes" -> "Yes", "No" -> "No").asJava
+  @ModelAttribute("booleanMap")
+  def booleanMap = Map("Yes" -> "Yes", "No" -> "No").asJava
 
-  @ModelAttribute("statuses") def statuses =
+  @ModelAttribute("statuses")
+  def statuses =
     Map(Obj.STATUS_LIVE -> Obj.STATUS_LIVE,
       Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED,
       Obj.STATUS_DELETED -> Obj.STATUS_DELETED).asJava
 
-  @ModelAttribute def f(@PathVariable("id") id: Long, model: ModelMap) {
+  @ModelAttribute
+  def f(@PathVariable("id") id: Long, model: ModelMap) {
     val obj = objectDao.find(id)
     val form = new EditForm
     form.o = obj
@@ -222,7 +236,8 @@ class ObjectEditController(val assetStore: AssetStore,
   @ModelAttribute("installation") def installation = context.installationDao.get
   @ModelAttribute("listingsEnabled") def listingsEnabled = context.bean[ListingPackageDao].enabled
 
-  @ModelAttribute("classes") def classes: java.util.Map[String, String] = {
+  @ModelAttribute("classes")
+  def classes: java.util.Map[String, String] = {
     val sections = ComponentClassScanner.sections.sortBy(_.getSimpleName)
 
     val map = mutable.LinkedHashMap.empty[String, String]
@@ -236,10 +251,12 @@ class ObjectEditController(val assetStore: AssetStore,
 
 class EditForm {
   @BeanProperty var associatedObjectId: String = _
+  @BeanProperty var expiry: String = _
   @BeanProperty var sellPrice: Double = _
   @BeanProperty var costPrice: Double = _
   @BeanProperty var rrp: Double = _
   @BeanProperty var o: Obj = _
+  @BeanProperty var account: Long = _
   @BeanProperty var folderIds: Array[Long] = _
   @BeanProperty var upload: MultipartFile = _
 }
