@@ -199,9 +199,8 @@ class AddListingController {
     if (uploads != null) {
       val keys = assetService.upload(uploads.filter(_ != null))
       process.imageKeys = process.imageKeys ++ keys
+      listingProcessDao.save(process)
     }
-
-    listingProcessDao.save(process)
 
     // redirect back to the image page. The use will manually move on from there.
     "redirect:/listing/image"

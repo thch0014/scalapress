@@ -24,9 +24,7 @@ class AssetService(assetStore: AssetStore,
     *
     * @return the keys that the assets were stored under
     */
-  def upload(files: Seq[MultipartFile]): Seq[String] = {
-    for ( file <- files if !file.isEmpty ) yield upload(file)
-  }
+  def upload(files: Seq[MultipartFile]): Seq[String] = files.filterNot(_.isEmpty).map(upload)
 
   /** Adds the given multipart file to the asset store using the original
     * filename as the key. If the key is already in use then it will modify
