@@ -48,7 +48,7 @@ class GallerifficSection extends Section {
   }
 
   def _images: Iterable[String] = images.size match {
-    case 0 => Option(obj).map(_.images.asScala).getOrElse(Nil)
+    case 0 => Option(item).map(_.images.asScala).getOrElse(Nil)
     case _ => images.asScala
   }
 

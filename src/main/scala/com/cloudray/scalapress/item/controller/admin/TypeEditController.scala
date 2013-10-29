@@ -60,7 +60,7 @@ class TypeEditController(val typeDao: TypeDao,
       case None =>
       case Some(section) =>
         t.sections.remove(section)
-        section.obj = null
+        section.item = null
         typeDao.save(t)
     }
     "redirect:/backoffice/type/"

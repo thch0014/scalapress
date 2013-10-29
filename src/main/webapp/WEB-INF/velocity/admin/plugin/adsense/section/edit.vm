@@ -59,8 +59,8 @@
       #if ($section.folder)
           <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
       #end
-      #if ($section.obj)
-          <a href="/backoffice/item/$section.obj.id" class="btn btn-default">Return</a>
+      #if ($section.item)
+          <a href="/backoffice/item/$section.item.id" class="btn btn-default">Return</a>
       #end
     </div>
 

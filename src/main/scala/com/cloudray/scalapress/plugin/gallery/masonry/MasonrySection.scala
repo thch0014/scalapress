@@ -47,7 +47,7 @@ class MasonrySection extends Section {
     * or fetch from the container if applicable.
     */
   def imagesToRender: Iterable[GalleryImage] = images.size match {
-    case 0 => Option(obj).map(_.images.asScala.map(GalleryImage(_, null))).getOrElse(Nil)
+    case 0 => Option(item).map(_.images.asScala.map(GalleryImage(_, null))).getOrElse(Nil)
     case _ => images.asScala
   }
 

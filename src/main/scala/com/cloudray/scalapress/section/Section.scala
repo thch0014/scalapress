@@ -39,7 +39,7 @@ abstract class Section {
   @JoinColumn(name = "ownerItem", nullable = true)
   @Index(name = "object_index")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var obj: Item = _
+  @BeanProperty var item: Item = _
 
   @ManyToOne
   @JoinColumn(name = "ownerItemType", nullable = true)

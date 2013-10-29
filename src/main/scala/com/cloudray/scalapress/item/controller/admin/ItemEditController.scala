@@ -35,15 +35,15 @@ import com.cloudray.scalapress.account.AccountDao
 @RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}", "backoffice/item/{id}"))
 @Autowired
 class ItemEditController(val assetStore: AssetStore,
-                           val attributeValueDao: AttributeValueDao,
-                           val itemDao: ItemDao,
-                           val folderDao: FolderDao,
-                           val imageDao: ImageDao,
-                           val accountDao: AccountDao,
-                           val sectionDao: SectionDao,
-                           val context: ScalapressContext,
-                           val searchService: SearchService,
-                           val passwordEncoder: PasswordEncoder)
+                         val attributeValueDao: AttributeValueDao,
+                         val itemDao: ItemDao,
+                         val folderDao: FolderDao,
+                         val imageDao: ImageDao,
+                         val accountDao: AccountDao,
+                         val sectionDao: SectionDao,
+                         val context: ScalapressContext,
+                         val searchService: SearchService,
+                         val passwordEncoder: PasswordEncoder)
   extends FolderPopulator with AttributeValuesPopulator with EnumPopulator with SectionSorting {
 
   @RequestMapping(Array("clone"))
@@ -88,7 +88,11 @@ class ItemEditController(val assetStore: AssetStore,
       .getMillis)
       .getOrElse(0)
 
-    form.o.account = accountDao.find(form.account)
+    try {
+      form.o.account = accountDao.find(form.account.toLong)
+    } catch {
+      case e: Exception =>
+    }
 
     form.o.folders.asScala.foreach(folder => folder.objects.remove(form.o))
     form.o.folders.clear()
@@ -137,7 +141,7 @@ class ItemEditController(val assetStore: AssetStore,
   @RequestMapping(Array("section/create"))
   def createSection(@ModelAttribute("form") form: EditForm, @RequestParam("class") cls: String) = {
     val section = Class.forName(cls).newInstance.asInstanceOf[Section]
-    section.obj = form.o
+    section.item = form.o
     section.visible = true
     section.init(context)
     form.o.sections.add(section)
@@ -183,7 +187,7 @@ class ItemEditController(val assetStore: AssetStore,
       case None =>
       case Some(section) =>
         form.o.sections.remove(section)
-        section.obj = null
+        section.item = null
         itemDao.save(form.o)
     }
     "redirect:/backoffice/item/" + form.o.id + "#tab3"
@@ -198,8 +202,8 @@ class ItemEditController(val assetStore: AssetStore,
 
   @ModelAttribute("assets")
   def assets(@PathVariable("id") id: Long): java.util.Collection[Asset] = {
-    val obj = itemDao.find(id)
-    val java = obj.images.asScala.map(img => {
+    val item = itemDao.find(id)
+    val java = item.images.asScala.map(img => {
       Asset(img, 0, assetStore.link(img), URLConnection.guessContentTypeFromName(img))
     }).asJava
     java
@@ -216,20 +220,20 @@ class ItemEditController(val assetStore: AssetStore,
 
   @ModelAttribute
   def f(@PathVariable("id") id: Long, model: ModelMap) {
-    val obj = itemDao.find(id)
+    val item = itemDao.find(id)
     val form = new EditForm
-    form.o = obj
+    form.o = item
     form.folderIds = Array()
 
     // fix status so it matches the title case of the selects
-    obj.status = WordUtils.capitalizeFully(obj.status)
+    item.status = WordUtils.capitalizeFully(item.status)
 
     model.put("attributesWithValues",
-      attributeEditMap(obj.objectType.sortedAttributes, obj.attributeValues.asScala.toSeq))
+      attributeEditMap(item.objectType.sortedAttributes, item.attributeValues.asScala.toSeq))
     model.put("form", form)
-    model.put("eyeball", UrlGenerator.url(obj))
+    model.put("eyeball", UrlGenerator.url(item))
 
-    val sections = obj.sections.asScala.toSeq.sortBy(_.position).asJava
+    val sections = item.sections.asScala.toSeq.sortBy(_.position).asJava
     model.put("sections", sections)
   }
 
@@ -256,7 +260,7 @@ class EditForm {
   @BeanProperty var costPrice: Double = _
   @BeanProperty var rrp: Double = _
   @BeanProperty var o: Item = _
-  @BeanProperty var account: Long = _
+  @BeanProperty var account: String = _
   @BeanProperty var folderIds: Array[Long] = _
   @BeanProperty var upload: MultipartFile = _
 }
