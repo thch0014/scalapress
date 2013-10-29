@@ -4,11 +4,11 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder}
 import java.util
-import com.cloudray.scalapress.obj.{ObjectType, Item}
+import com.cloudray.scalapress.item.{ItemType, Item}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
-import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
+import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.Sort
 
@@ -19,7 +19,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
   obj1.name = "coldplay"
   obj1.status = "live"
   obj1.id = 76
-  obj1.objectType = new ObjectType
+  obj1.objectType = new ItemType
   obj1.objectType.id = 1
 
   val obj2 = new Item

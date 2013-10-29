@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
 

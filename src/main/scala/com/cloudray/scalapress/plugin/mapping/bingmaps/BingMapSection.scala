@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.mapping.bingmaps
 import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.section.Section
-import com.cloudray.scalapress.obj.attr.AttributeFuncs
+import com.cloudray.scalapress.item.attr.AttributeFuncs
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.util.Scalate
 
@@ -22,7 +22,7 @@ class BingMapSection extends Section {
 
     Option(postcode)
       .filter(_.trim.length > 0)
-      .orElse(request.obj.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))
+      .orElse(request.item.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))
       .map(arg => {
 
       val pc = arg.replaceAll("\\s", "")

@@ -7,7 +7,7 @@ import scala.Array
 import com.cloudray.scalapress.plugin.form.FormDao
 import com.cloudray.scalapress.plugin.form.section.FormSection
 import com.cloudray.scalapress.section.SectionDao
-import com.cloudray.scalapress.obj.controller.admin.FormPopulator
+import com.cloudray.scalapress.item.controller.admin.FormPopulator
 
 /** @author Stephen Samuel */
 @Controller

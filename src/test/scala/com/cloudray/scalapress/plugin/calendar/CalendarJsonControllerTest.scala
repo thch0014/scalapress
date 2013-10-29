@@ -6,7 +6,7 @@ import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ObjectRef, Sea
 import com.cloudray.scalapress.ScalapressContext
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.widgets.WidgetDao
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.attr.Attribute
 
 /** @author Stephen Samuel */
 class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

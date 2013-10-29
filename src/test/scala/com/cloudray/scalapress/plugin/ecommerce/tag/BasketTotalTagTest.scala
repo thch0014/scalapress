@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketTotalTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressConstants, ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito

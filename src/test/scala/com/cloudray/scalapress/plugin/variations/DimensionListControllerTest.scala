@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.obj.{ObjectType, TypeDao}
+import com.cloudray.scalapress.item.{ItemType, TypeDao}
 import com.cloudray.scalapress.plugin.variations.controller.DimensionListController
 
 /** @author Stephen Samuel */
@@ -25,7 +25,7 @@ class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneIns
 
   it should "delete from the database when the delete method is invoked" in {
     val dimension = new Dimension
-    dimension.objectType = new ObjectType
+    dimension.objectType = new ItemType
     Mockito.when(controller.dimensionDao.find(155)).thenReturn(dimension)
     controller.delete(155)
     Mockito.verify(controller.dimensionDao).remove(dimension)
@@ -33,7 +33,7 @@ class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneIns
 
   it should "forward when deleting" in {
     val dimension = new Dimension
-    dimension.objectType = new ObjectType
+    dimension.objectType = new ItemType
     dimension.objectType.id = 7
     Mockito.when(controller.dimensionDao.find(155)).thenReturn(dimension)
     val redirect = controller.delete(155)

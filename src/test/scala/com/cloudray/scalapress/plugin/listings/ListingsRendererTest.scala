@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRenderer
 
 /** @author Stephen Samuel */

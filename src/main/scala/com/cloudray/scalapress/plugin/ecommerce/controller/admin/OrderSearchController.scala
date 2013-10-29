@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
-import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
+import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.Account
 

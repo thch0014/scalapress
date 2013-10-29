@@ -6,7 +6,7 @@ import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
-import com.cloudray.scalapress.obj.attr.AttributeValueRenderer
+import com.cloudray.scalapress.item.attr.AttributeValueRenderer
 
 /** @author Stephen Samuel */
 @Tag("invoice_account_number")

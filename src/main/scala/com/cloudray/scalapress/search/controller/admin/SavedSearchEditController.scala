@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, P
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.search.{SavedSearch, SavedSearchDao}
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue}
-import com.cloudray.scalapress.obj.controller.admin.{FolderPopulator, MarkupPopulator}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue}
+import com.cloudray.scalapress.item.controller.admin.{FolderPopulator, MarkupPopulator}
 import com.cloudray.scalapress.util.{AttributePopulator, ObjectTypePopulator, SortPopulator}
 import com.cloudray.scalapress.util.mvc.AttributeValuesPopulator
 import java.text.SimpleDateFormat

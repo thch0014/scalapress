@@ -11,7 +11,7 @@ import collection.mutable
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.folder.{FolderOrdering, FolderDao, Folder}
 import com.cloudray.scalapress.theme.ThemeDao
-import com.cloudray.scalapress.obj.controller.admin.ThemePopulator
+import com.cloudray.scalapress.item.controller.admin.ThemePopulator
 import com.cloudray.scalapress.media.AssetStore
 import scala.Some
 import scala.collection.immutable.ListMap

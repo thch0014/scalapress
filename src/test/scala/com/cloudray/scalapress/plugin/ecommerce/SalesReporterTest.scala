@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.mockito.{Matchers, ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 import com.sksamuel.scoot.soa.Page

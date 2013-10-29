@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings.domain
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel
   *

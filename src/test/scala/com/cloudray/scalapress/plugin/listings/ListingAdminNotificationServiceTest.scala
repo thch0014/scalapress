@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
@@ -38,7 +38,7 @@ class ListingAdminNotificationServiceTest extends FunSuite with OneInstancePerTe
     assert(
       "Hello Admin\n\nA new listing has been added to your site:\ncoldplay tshirt\n\n" +
         "The status of this listing is: [Live]\nThe listing was added using: [t-shirt sale]\n\n" +
-        "You can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/obj/34\n\n" +
+        "You can edit the listing in the backoffice:\nhttp://coldplay.com/backoffice/item/34\n\n" +
         "Regards, Scalapress" === captor.getValue.getText)
   }
 

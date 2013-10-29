@@ -11,8 +11,8 @@ import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionD
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.security.SpringSecurityResolver
-import com.cloudray.scalapress.obj.ObjectDao
-import com.cloudray.scalapress.obj.controller.admin.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
+import com.cloudray.scalapress.item.ItemDao
+import com.cloudray.scalapress.item.controller.admin.{AddressPopulator, DeliveryOptionPopulator, OrderStatusPopulator}
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.beans.BeanProperty
 
@@ -24,7 +24,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
   @Autowired var orderDao: OrderDao = _
   @Autowired var addressDao: AddressDao = _
   @Autowired var deliveryOptionDao: DeliveryOptionDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
   @Autowired var context: ScalapressContext = _
   @Autowired var shoppingPluginDao: ShoppingPluginDao = _
   @Autowired var notificationService: OrderCustomerNotificationService = _

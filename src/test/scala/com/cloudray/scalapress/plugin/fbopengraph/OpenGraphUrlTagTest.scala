@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -18,7 +18,7 @@ class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePer
     val sreq = new ScalapressRequest(req, context)
 
     test("tag uses url from object") {
-        val output = new OpenGraphUrlTag().render(sreq.withObject(o), Map.empty)
+        val output = new OpenGraphUrlTag().render(sreq.withItem(o), Map.empty)
         assert("<meta property=\"og:url\" content=\"/object-14-big-shirt\"/>" === output.get)
     }
 

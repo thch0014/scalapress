@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{Item, ObjectType}
+import com.cloudray.scalapress.item.{Item, ItemType}
 import com.cloudray.scalapress.plugin.variations.controller.DimensionEditController
 
 /** @author Stephen Samuel */
@@ -12,7 +12,7 @@ class DimensionEditControllerTest extends FlatSpec with MockitoSugar with OneIns
   controller.dimensionDao = mock[DimensionDao]
 
   val d1 = new Dimension
-  d1.objectType = new ObjectType
+  d1.objectType = new ItemType
   d1.objectType.id = 54
 
   val obj = new Item

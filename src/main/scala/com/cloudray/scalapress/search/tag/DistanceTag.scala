@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search.tag
 
 import com.cloudray.scalapress.{ScalapressRequest, Tag}
-import com.cloudray.scalapress.obj.attr.AttributeFuncs
+import com.cloudray.scalapress.item.attr.AttributeFuncs
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 
@@ -9,7 +9,7 @@ import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 @Tag("distance")
 class DistanceTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.flatMap(AttributeFuncs.locationValue(_).flatMap(Postcode.gps)) match {
+    request.item.flatMap(AttributeFuncs.locationValue(_).flatMap(Postcode.gps)) match {
       case None => None
       case Some(coord1) => {
         request.location.flatMap(Postcode.gps) match {

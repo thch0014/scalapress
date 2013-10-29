@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage, ListingProcess}
 import org.mockito.{Matchers, ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.listings._
-import com.cloudray.scalapress.obj.{ObjectType, Item}
+import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.theme.ThemeService
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.ScalapressContext
@@ -57,7 +57,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com:8080"))
   val process = new ListingProcess
   process.listingPackage = new ListingPackage
-  process.listingPackage.objectType = new ObjectType
+  process.listingPackage.objectType = new ItemType
   process.listingPackage.objectType.id = 4
   process.listingPackage.fee = 1000
   process.listing = new Item

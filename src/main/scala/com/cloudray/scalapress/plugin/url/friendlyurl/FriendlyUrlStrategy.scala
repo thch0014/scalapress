@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.url.friendlyurl
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.util.UrlStrategy
 
@@ -14,6 +14,6 @@ import com.cloudray.scalapress.util.UrlStrategy
   *
   * */
 object FriendlyUrlStrategy extends UrlStrategy {
-  def url(obj: Item): String = "/object-" + obj.id + "-" + normalize(obj.name)
+  def url(item: Item): String = "/item-" + item.id + "-" + normalize(item.name)
   def url(folder: Folder): String = "/folder-" + folder.id + "-" + normalize(Option(folder.name).getOrElse(""))
 }

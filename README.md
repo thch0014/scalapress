@@ -7,6 +7,10 @@ scala based publishing platform
 
 ### Release History
 
+##### 0.41
+
+* Renamed objects to items
+
 ##### 0.40
 
 * Added new offline settings
@@ -14,6 +18,7 @@ scala based publishing platform
 * Migration to Boostrap 3 in backoffice
 * Section and folder interceptors
 * Simplepass plugin for security on folders
+* Vouchers for listings
 
 ##### 0.39
 

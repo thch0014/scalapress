@@ -16,7 +16,7 @@ import org.springframework.http.converter.xml.{SourceHttpMessageConverter, XmlAw
 import java.nio.charset.Charset
 import javax.xml.transform.Source
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
 import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
 import util.mvc._

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.form
 
 import javax.persistence.{FetchType, Column, ElementCollection, CascadeType, OneToMany, JoinColumn, ManyToOne, GenerationType, GeneratedValue, Id, Table, Entity}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFoundAction, NotFound}

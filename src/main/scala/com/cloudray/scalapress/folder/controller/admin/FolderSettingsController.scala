@@ -8,7 +8,7 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.folder.FolderSettings
 import com.cloudray.scalapress.util.SortPopulator
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.theme.MarkupDao
 
 /** @author Stephen Samuel */

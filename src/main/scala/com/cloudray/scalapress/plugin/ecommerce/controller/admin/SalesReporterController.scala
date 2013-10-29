@@ -13,7 +13,7 @@ import org.joda.time.format.DateTimeFormat
 import scala.Predef._
 import org.apache.commons.io.{IOUtils, FileUtils}
 import javax.servlet.http.HttpServletResponse
-import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
+import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
 
 /** @author Stephen Samuel */
 @Controller

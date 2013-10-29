@@ -6,9 +6,9 @@ import com.cloudray.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.{SearchFieldType, SearchFormFieldDao, SearchFormField}
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.{AttributePopulator, EnumPopulator}
-import com.cloudray.scalapress.obj.attr.AttributeDao
+import com.cloudray.scalapress.item.attr.AttributeDao
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.variations
 
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class VariationCreationService(variationDao: VariationDao) {

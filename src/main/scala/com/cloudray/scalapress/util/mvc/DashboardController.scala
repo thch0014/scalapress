@@ -9,7 +9,7 @@ import com.cloudray.scalapress.security.SpringSecurityResolver
 import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
 
 /** @author Stephen Samuel */

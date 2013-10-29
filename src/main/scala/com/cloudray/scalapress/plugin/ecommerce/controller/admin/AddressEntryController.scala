@@ -9,7 +9,7 @@ import org.springframework.validation.Errors
 import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.plugin.ecommerce.dao.AddressDao
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -18,7 +18,7 @@ class AddressEntryController {
 
   @Autowired var context: ScalapressContext = _
   @Autowired var addressDao: AddressDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit = "admin/plugin/shopping/address/entry.vm"

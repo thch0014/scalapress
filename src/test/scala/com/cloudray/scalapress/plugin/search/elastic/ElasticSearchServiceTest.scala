@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.search.elastic
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{ObjectType, Item}
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
+import com.cloudray.scalapress.item.{ItemType, Item}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue, Attribute}
 import com.cloudray.scalapress.search.{Sort, SearchService, SavedSearch}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
@@ -71,7 +71,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj = new Item
   obj.id = 2
   obj.name = "tony mowbray captain bankrupt1986"
-  obj.objectType = new ObjectType
+  obj.objectType = new ItemType
   obj.objectType.id = 1
   obj.status = Item.STATUS_LIVE
   obj.images.add("tony.png")
@@ -85,7 +85,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj2 = new Item
   obj2.id = 4
   obj2.name = "bryan robson captain"
-  obj2.objectType = new ObjectType
+  obj2.objectType = new ItemType
   obj2.objectType.id = 2
   obj2.status = Item.STATUS_LIVE
   obj2.attributeValues.add(av2)
@@ -97,7 +97,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj3 = new Item
   obj3.id = 20
   obj3.name = "steve mclaren"
-  obj3.objectType = new ObjectType
+  obj3.objectType = new ItemType
   obj3.objectType.id = 3
   obj3.status = Item.STATUS_LIVE
   obj3.prioritized = true
@@ -126,7 +126,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj4 = new Item
   obj4.id = 1529
   obj4.name = "zola"
-  obj4.objectType = new ObjectType
+  obj4.objectType = new ItemType
   obj4.objectType.id = 2234
   obj4.status = Item.STATUS_LIVE
   obj4.attributeValues.add(av)
@@ -255,10 +255,10 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(results.size === 4)
 
     assert(20 === results(0).id) // steve mac is prioritized
-    assert(2 === results(1).id) // obj id 2 has value 51454
-    assert(4 === results(2).id) // obj id 4 has value 2142353
+    assert(2 === results(1).id) // item id 2 has value 51454
+    assert(4 === results(2).id) // item id 4 has value 2142353
     assert(1529 === results(3)
-      .id) // obj id 1529 has no value for this attribute so will be last
+      .id) // item id 1529 has no value for this attribute so will be last
   }
 
   test("distance search happy path") {
@@ -377,7 +377,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.id = 199
     obj.name = "null-av-object"
-    obj.objectType = new ObjectType
+    obj.objectType = new ItemType
     obj.objectType.id = 1
     obj.status = "Live"
     obj.attributeValues.add(av)
@@ -398,7 +398,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.id = 5465464
     obj.name = "to be removed"
-    obj.objectType = new ObjectType
+    obj.objectType = new ItemType
     obj.objectType.id = 1
     obj.status = "Live"
 

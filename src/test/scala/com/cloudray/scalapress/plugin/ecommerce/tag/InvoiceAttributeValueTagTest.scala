@@ -6,9 +6,9 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, Order}
 import com.cloudray.scalapress.plugin.ecommerce.tags.InvoiceAttributeValueTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.{Item, ObjectDao}
+import com.cloudray.scalapress.item.{Item, ItemDao}
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute, AttributeValue}
+import com.cloudray.scalapress.item.attr.{AttributeType, Attribute, AttributeValue}
 
 /** @author Stephen Samuel */
 class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -29,7 +29,7 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
 
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext()
-    context.objectDao = mock[ObjectDao]
+    context.objectDao = mock[ItemDao]
     val sreq = new ScalapressRequest(req, context).withOrderLine(line1)
 
     val av1 = new AttributeValue

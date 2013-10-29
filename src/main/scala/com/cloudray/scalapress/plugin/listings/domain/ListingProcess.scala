@@ -4,8 +4,8 @@ import javax.persistence._
 import scala.Array
 import org.hibernate.annotations.{BatchSize, FetchMode, Fetch}
 import java.util
-import com.cloudray.scalapress.obj.attr.AttributeValue
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.attr.AttributeValue
+import com.cloudray.scalapress.item.Item
 import javax.persistence.Column
 import scala.beans.BeanProperty
 
@@ -34,7 +34,7 @@ class ListingProcess {
   var listingPackage: ListingPackage = _
 
   // the completed listing
-  @OneToOne(targetEntity = classOf[com.cloudray.scalapress.obj.Item])
+  @OneToOne(targetEntity = classOf[com.cloudray.scalapress.item.Item])
   @BeanProperty
   var listing: Item = _
 

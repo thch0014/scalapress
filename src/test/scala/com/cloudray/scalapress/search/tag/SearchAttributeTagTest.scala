@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeOption, Attribute, AttributeDao}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeOption, Attribute, AttributeDao}
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */

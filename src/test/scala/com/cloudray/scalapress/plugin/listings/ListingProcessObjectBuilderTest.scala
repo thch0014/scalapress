@@ -5,8 +5,8 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.joda.time.{DateMidnight, DateTimeZone}
-import com.cloudray.scalapress.obj.{ObjectDao, ObjectType, Item}
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.item.{ItemDao, ItemType, Item}
+import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import org.mockito.Mockito
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 
@@ -14,7 +14,7 @@ import com.cloudray.scalapress.folder.{FolderDao, Folder}
 class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
   val context = new ScalapressContext
-  context.objectDao = mock[ObjectDao]
+  context.objectDao = mock[ItemDao]
   context.folderDao = mock[FolderDao]
   val builder = new ListingProcessObjectBuilder(context)
   val p = new ListingPackage
@@ -24,7 +24,7 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
   val process = new ListingProcess
   process.content = "what a lovely mare"
   process.listingPackage = new ListingPackage
-  process.listingPackage.objectType = new ObjectType
+  process.listingPackage.objectType = new ItemType
   process.title = "horse for sale cheap"
 
   test("that the object is assigned labels from the package") {

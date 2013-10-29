@@ -8,7 +8,7 @@ import com.cloudray.scalapress.theme.{Markup, MarkupDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 
 /** @author Stephen Samuel */
 class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -16,7 +16,7 @@ class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInsta
   val sectionDao = mock[SectionDao]
   val markupDao = mock[MarkupDao]
   val assetStore = mock[AssetStore]
-  val objectDao = mock[ObjectDao]
+  val objectDao = mock[ItemDao]
   val context = new ScalapressContext
   val controller = new SectionEditController(assetStore, objectDao, sectionDao, markupDao, context)
 

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings.domain
 
 import javax.persistence.{Column, ManyToOne, Entity, Table, GenerationType, GeneratedValue, Id}
 import collection.mutable.ArrayBuffer
-import com.cloudray.scalapress.obj.ObjectType
+import com.cloudray.scalapress.item.ItemType
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
@@ -18,7 +18,7 @@ class ListingPackage {
   @BeanProperty var maxFolders: Int = _
 
   @ManyToOne
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty var objectType: ItemType = _
 
   @BeanProperty var maxImages: Int = _
 

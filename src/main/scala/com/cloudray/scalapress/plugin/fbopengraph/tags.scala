@@ -9,7 +9,7 @@ import com.cloudray.scalapress.util.UrlGenerator
 class OpenGraphTitleTag extends ScalapressTag {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.map(obj => <meta property="og:title" content={obj.name}/>.toString())
+    request.item.map(obj => <meta property="og:title" content={obj.name}/>.toString())
   }
 }
 
@@ -17,7 +17,7 @@ class OpenGraphTitleTag extends ScalapressTag {
 class OpenGraphUrlTag extends ScalapressTag {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.map(obj => <meta property="og:url" content={UrlGenerator.url(obj)}/>.toString())
+    request.item.map(obj => <meta property="og:url" content={UrlGenerator.url(obj)}/>.toString())
   }
 }
 
@@ -33,7 +33,7 @@ class OpenGraphSiteTag extends ScalapressTag {
 class OpenGraphImageTag extends ScalapressTag {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj
+    request.item
       .filter(_.images.size > 0)
       .map(obj => {
       val imageLink = "http://" + request.installation.domain + "/images/300/300/" + obj.sortedImages(0)

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, RequestParam, Mode
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValueDao, DimensionDao}
 
 /** @author Stephen Samuel */

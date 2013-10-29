@@ -4,7 +4,7 @@ import section.SearchFormSection
 import scala.xml.{Utility, Node, Unparsed, Elem}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search.widget.SearchFormWidget
-import com.cloudray.scalapress.obj.attr.AttributeType
+import com.cloudray.scalapress.item.attr.AttributeType
 
 /** @author Stephen Samuel */
 object SearchFormRenderer {

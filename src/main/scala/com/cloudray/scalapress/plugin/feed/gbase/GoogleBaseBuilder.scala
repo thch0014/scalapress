@@ -5,8 +5,8 @@ import com.csvreader.CsvWriter
 import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.obj.Item
-import com.cloudray.scalapress.obj.attr.AttributeFuncs
+import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.item.attr.AttributeFuncs
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.util.UrlGenerator
 import java.text.DecimalFormat

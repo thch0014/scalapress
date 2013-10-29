@@ -17,11 +17,11 @@ class ObjectUserDetailsServiceTest extends FunSuite with MockitoSugar {
     assert(new AccountUserDetails(acc).isCredentialsNonExpired)
   }
 
-  test("that the password comes from the user obj") {
+  test("that the password comes from the user item") {
     assert("passhash" === new AccountUserDetails(acc).password)
   }
 
-  test("that the username comes from the user obj") {
+  test("that the username comes from the user item") {
     assert("sam@sammy.com" === new AccountUserDetails(acc).username)
   }
 

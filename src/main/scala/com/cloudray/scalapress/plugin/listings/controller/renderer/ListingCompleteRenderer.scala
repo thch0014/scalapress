@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
 
 /** @author Stephen Samuel */

@@ -1,6 +1,6 @@
 package com.cloudray.migration
 
-import com.cloudray.scalapress.obj.{TypeDao, ObjectQuery, ObjectDao}
+import com.cloudray.scalapress.item.{TypeDao, ItemQuery, ItemDao}
 import com.cloudray.scalapress.account.{AccountType, AccountTypeDao, AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct
 @Component
 @Autowired
 class ObjToAccountMigrator(accountDao: AccountDao,
-                           objectDao: ObjectDao,
+                           objectDao: ItemDao,
                            typeDao: TypeDao,
                            accountTypeDao: AccountTypeDao) extends Logging {
 
@@ -28,7 +28,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
     }
 
     typeDao.getAccount.foreach(objectType => {
-      val query = new ObjectQuery().withTypeId(objectType.id).withPageSize(200)
+      val query = new ItemQuery().withTypeId(objectType.id).withPageSize(200)
       migrate()
 
       def migrate() {

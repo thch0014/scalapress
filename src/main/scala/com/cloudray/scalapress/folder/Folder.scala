@@ -4,7 +4,7 @@ import javax.persistence._
 import java.util
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.section.{ObjectListSection, FolderContentSection, SubfolderSection}
 import com.cloudray.scalapress.theme.Theme
 import javax.persistence.Entity

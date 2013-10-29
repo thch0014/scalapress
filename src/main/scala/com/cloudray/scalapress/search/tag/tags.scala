@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search.tag
 
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeOption}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeOption}
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import scala.xml.Utility
 

@@ -17,7 +17,7 @@ class DateCreatedTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
     val format = params.get("format").getOrElse("dd/MM/yyyy")
 
-    val timestamp = request.obj.map(_.dateCreated).orElse(request.folder.map(_.dateCreated))
+    val timestamp = request.item.map(_.dateCreated).orElse(request.folder.map(_.dateCreated))
     timestamp match {
       case None => None
       case Some(t) => {

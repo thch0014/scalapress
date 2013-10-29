@@ -7,7 +7,7 @@ import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.search.{SearchPluginDao, SearchPlugin}
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller

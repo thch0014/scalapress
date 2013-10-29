@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.theme.tag
 
 import com.cloudray.scalapress.plugin.ecommerce.tags._
-import com.cloudray.scalapress.obj.tag._
+import com.cloudray.scalapress.item.tag._
 import com.cloudray.scalapress.folder.tag.{PrimaryFoldersTag, FolderTag}
 import com.cloudray.scalapress.settings.tag.SiteGoogleMapTag
 
@@ -9,8 +9,8 @@ import com.cloudray.scalapress.settings.tag.SiteGoogleMapTag
 object EcreatorCompatibleTagMappings {
 
   val mappings: Map[String, ScalapressTag] = Map(
-    "item" -> ObjectTag,
-    "object" -> ObjectTag,
+    "item" -> ItemTag,
+    "object" -> ItemTag,
     "categories_primary" -> PrimaryFoldersTag,
     "folders_primary" -> PrimaryFoldersTag,
     "scripts" -> new ScriptTag,

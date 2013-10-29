@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
 import com.googlecode.genericdao.search.Search
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}

@@ -14,7 +14,7 @@ class ColorboxTag extends ScalapressTag with TagBuilder with OpType {
     val height = _height(params)
     val width = _width(params)
     val text = params.get("text").getOrElse("")
-    request.obj.map(obj => {
+    request.item.map(obj => {
 
       var count = 0
       val links = obj.sortedImages.map(image => {

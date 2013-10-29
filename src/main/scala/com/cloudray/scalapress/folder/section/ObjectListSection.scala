@@ -10,8 +10,8 @@ import org.hibernate.annotations.{NotFound, NotFoundAction}
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.search.{Sort, PagingRenderer}
-import com.cloudray.scalapress.obj.{ObjectSorter, Item}
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.{ItemSorter, Item}
+import com.cloudray.scalapress.item.attr.Attribute
 
 /** @author Stephen Samuel
   *
@@ -54,7 +54,7 @@ class ObjectListSection extends Section {
     }
 
     val live = objects.filter(_.status.toLowerCase == Item.STATUS_LIVE.toLowerCase)
-    val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
+    val sorted = ItemSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
     sorted
   }
 

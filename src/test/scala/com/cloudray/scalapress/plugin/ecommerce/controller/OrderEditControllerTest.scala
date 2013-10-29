@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.{OrderEditForm, OrderEditController}
 import org.mockito.Mockito
-import com.cloudray.scalapress.obj.{Item, ObjectDao}
+import com.cloudray.scalapress.item.{Item, ItemDao}
 import com.cloudray.scalapress.plugin.ecommerce.{OrderCustomerNotificationService, OrderDao}
 import javax.servlet.http.HttpServletRequest
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest
 class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val controller = new OrderEditController
-    controller.objectDao = mock[ObjectDao]
+    controller.objectDao = mock[ItemDao]
     controller.orderDao = mock[OrderDao]
     controller.notificationService = mock[OrderCustomerNotificationService]
     val order = new Order

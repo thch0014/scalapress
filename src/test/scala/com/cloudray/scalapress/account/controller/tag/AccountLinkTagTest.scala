@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.security.SecurityResolver
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */

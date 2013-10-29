@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search
 
 import javax.persistence._
-import com.cloudray.scalapress.obj.ObjectType
+import com.cloudray.scalapress.item.ItemType
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
 
@@ -21,7 +21,7 @@ class SearchForm {
   @ManyToOne
   @JoinColumn(name = "itemtype", nullable = true)
   @BeanProperty
-  var objectType: ObjectType = _
+  var objectType: ItemType = _
 
   @Column(name = "resultsperpage")
   @BeanProperty

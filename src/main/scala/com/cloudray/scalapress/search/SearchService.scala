@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 trait SearchService {
 
   /**
-   * Index, or reindex, the given obj. In some cases this will cause the given obj to be removed from the index,
-   * for example if the given obj is in deleted state.
+   * Index, or reindex, the given item. In some cases this will cause the given item to be removed from the index,
+   * for example if the given item is in deleted state.
    */
   def index(obj: Item)
 

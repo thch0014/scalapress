@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util.mvc.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.servlet.ModelAndView
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */

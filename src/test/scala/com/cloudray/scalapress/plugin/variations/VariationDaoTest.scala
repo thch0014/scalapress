@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class VariationDaoTest extends FunSuite with MockitoSugar {

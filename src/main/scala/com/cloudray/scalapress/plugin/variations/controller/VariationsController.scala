@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.{Item, ObjectDao}
+import com.cloudray.scalapress.item.{Item, ItemDao}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
@@ -15,14 +15,14 @@ import com.cloudray.scalapress.plugin.variations.{VariationCreationService, Dime
 class VariationsController {
 
   @Autowired var dimensionDao: DimensionDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
   @Autowired var variationDao: VariationDao = _
 
   @RequestMapping(method = Array(RequestMethod.GET), params = Array("objectId"))
   def edit(@RequestParam("objectId") id: Long, model: ModelMap) = {
 
     val obj = objectDao.find(id)
-    model.put("obj", obj)
+    model.put("item", obj)
 
     val variations = variationDao.findByObjectId(id).sortBy(_.name)
     model.put("variations", variations.asJava)

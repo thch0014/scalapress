@@ -31,7 +31,7 @@
 
 
 <div class="page-header">
-    <h2>Object Type: $type.name</h2>
+    <h2>Item Type: $type.name</h2>
 </div>
 
 

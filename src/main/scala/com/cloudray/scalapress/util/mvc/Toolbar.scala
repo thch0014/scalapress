@@ -19,7 +19,7 @@ object Toolbar {
 
   def apply(sreq: ScalapressRequest) = {
     val folderUrl = sreq.folder.map(f => "/backoffice/folder/" + f.id)
-    val objectUrl = sreq.obj.map(o => "/backoffice/object/" + o.id)
+    val objectUrl = sreq.item.map(o => "/backoffice/object/" + o.id)
     val url = folderUrl.orElse(objectUrl)
     new Toolbar(sreq.installation.name, url)
   }

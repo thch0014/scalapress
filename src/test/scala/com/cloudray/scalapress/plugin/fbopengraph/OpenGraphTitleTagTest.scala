@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class OpenGraphTitleTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -17,7 +17,7 @@ class OpenGraphTitleTagTest extends FunSuite with MockitoSugar with OneInstanceP
     val sreq = new ScalapressRequest(req, context)
 
     test("tag uses title from object") {
-        val output = new OpenGraphTitleTag().render(sreq.withObject(o), Map.empty)
+        val output = new OpenGraphTitleTag().render(sreq.withItem(o), Map.empty)
         assert("<meta property=\"og:title\" content=\"big shirt\"/>" === output.get)
     }
 

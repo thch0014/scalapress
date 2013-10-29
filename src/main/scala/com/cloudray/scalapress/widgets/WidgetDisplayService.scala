@@ -60,13 +60,13 @@ class WidgetDisplayService extends Logging {
         sreq.folder.get.parent == null => false
 
       case true if widget.displayOnAllObjects &&
-        sreq.obj.isDefined => true
+        sreq.item.isDefined => true
 
       case true if widget.displayOnSearchResults && sreq.searchResult.isDefined => true
 
       case true if widget.displayOnOthers &&
         sreq.folder.isEmpty &&
-        sreq.obj.isEmpty && sreq.searchResult.isEmpty => true
+        sreq.item.isEmpty && sreq.searchResult.isEmpty => true
 
       case _ => false
     }

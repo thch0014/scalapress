@@ -4,7 +4,7 @@ import java.io.File
 import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.obj.{ObjectQuery, ObjectDao, Item}
+import com.cloudray.scalapress.item.{ItemQuery, ItemDao, Item}
 import com.cloudray.scalapress.settings.Installation
 import com.cloudray.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
@@ -12,7 +12,7 @@ import org.joda.time.{DateTimeZone, DateTime}
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
 
-  def run(objectDao: ObjectDao,
+  def run(objectDao: ItemDao,
           gfeedDao: GBaseFeedDao,
           installation: Installation,
           feed: GBaseFeed,
@@ -34,8 +34,8 @@ object GoogleBaseService extends Logging {
     gfeedDao.save(feed)
   }
 
-  def _objects(objectDao: ObjectDao): Seq[Item] = {
-    val q = new ObjectQuery
+  def _objects(objectDao: ItemDao): Seq[Item] = {
+    val q = new ItemQuery
     q.pageSize = 100000
     q.status = Some(Item.STATUS_LIVE)
     q.minPrice = Some(1)

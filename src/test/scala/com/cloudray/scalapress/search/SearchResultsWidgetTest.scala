@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectDao, Item}
+import com.cloudray.scalapress.item.{ItemDao, Item}
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.search.widget.SearchResultsWidget
 
@@ -15,7 +15,7 @@ class SearchResultsWidgetTest extends FunSuite with MockitoSugar with OneInstanc
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext
     context.searchService = mock[SearchService]
-    context.objectDao = mock[ObjectDao]
+    context.objectDao = mock[ItemDao]
 
     val obj1 = new Item
     obj1.name = "michael"

@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
 import com.cloudray.scalapress.{Callback, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired

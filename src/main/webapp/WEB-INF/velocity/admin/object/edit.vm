@@ -429,7 +429,7 @@
         $('#add-association-typeahead').typeahead({
             source: function (query, process) {
                 return $.ajax({
-                    url: "/rest/obj",
+                    url: "/rest/item",
                     type: 'GET',
                     data: {q: query},
                     dataType: 'json',

@@ -22,7 +22,7 @@ class D3CloudWidget extends Widget {
 
   def getWords(req: ScalapressRequest) = {
     req
-      .obj
+      .item
       .map(_
       .content
       .replaceAll("<.*?>", "")

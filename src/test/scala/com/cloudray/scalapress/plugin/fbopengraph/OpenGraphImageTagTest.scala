@@ -7,7 +7,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -33,7 +33,7 @@ class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstanceP
   o.images.add(image)
 
   test("tag uses site name from installation") {
-    val output = new OpenGraphImageTag().render(sreq.withObject(o), Map.empty)
+    val output = new OpenGraphImageTag().render(sreq.withItem(o), Map.empty)
     assert("<meta property=\"og:image\" content=\"http://coldplay.com/images/300/300/coldplay.png\"/>" === output.get)
   }
 }

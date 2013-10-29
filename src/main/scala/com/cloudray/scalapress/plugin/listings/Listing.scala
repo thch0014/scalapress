@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.joda.time.Duration
 
 /** @author Stephen Samuel */

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.search.{SavedSearch, SearchService}
-import com.cloudray.scalapress.obj.{ObjectDao, TypeDao}
+import com.cloudray.scalapress.item.{ItemDao, TypeDao}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 @RequestMapping(Array("backoffice/search"))
 @Autowired
 class BackofficeSearchController(service: SearchService,
-                                 objectDao: ObjectDao,
+                                 objectDao: ItemDao,
                                  typeDao: TypeDao) {
 
   @RequestMapping
@@ -29,7 +29,7 @@ class BackofficeSearchController(service: SearchService,
       SearchResult(ref.id,
         ref.objectType,
         ref.name,
-        "/backoffice/obj/" + ref.id,
+        "/backoffice/item/" + ref.id,
         "/object/" + ref.id
       )
     })

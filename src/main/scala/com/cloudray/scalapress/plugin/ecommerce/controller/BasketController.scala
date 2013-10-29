@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import scala.Some
@@ -21,7 +21,7 @@ import com.cloudray.scalapress.plugin.variations.VariationDao
 class BasketController {
 
   @Autowired var variationDao: VariationDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
   @Autowired var basketDao: BasketDao = _
   @Autowired var context: ScalapressContext = _
   @Autowired var themeService: ThemeService = _
@@ -42,7 +42,7 @@ class BasketController {
       page.body("<!-- no basket markup set -->")
     } else {
       val obj = Option(req.getParameter("objectId")).flatMap(objId => Option(objectDao.find(objId.toLong)))
-      page.body(MarkupRenderer.render(markup, obj.map(sreq.withObject).getOrElse(sreq)))
+      page.body(MarkupRenderer.render(markup, obj.map(sreq.withItem).getOrElse(sreq)))
     }
 
     page.body("</form>")

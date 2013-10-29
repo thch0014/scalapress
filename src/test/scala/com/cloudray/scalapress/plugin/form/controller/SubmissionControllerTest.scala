@@ -11,7 +11,7 @@ import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.collection.mutable
 import com.cloudray.scalapress.folder.controller.FolderController
-import com.cloudray.scalapress.obj.{ObjectDao, Item}
+import com.cloudray.scalapress.item.{ItemDao, Item}
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 import org.springframework.web.multipart.MultipartFile
 
@@ -26,7 +26,7 @@ class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstan
 
   controller.context = new ScalapressContext
   controller.context.folderDao = mock[FolderDao]
-  controller.context.objectDao = mock[ObjectDao]
+  controller.context.objectDao = mock[ItemDao]
 
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]

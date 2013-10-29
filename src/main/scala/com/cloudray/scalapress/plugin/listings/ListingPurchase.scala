@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.payments.Purchase
 import com.cloudray.scalapress.plugin.vouchers.Voucher
 

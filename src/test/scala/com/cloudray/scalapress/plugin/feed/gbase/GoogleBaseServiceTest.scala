@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.feed.gbase
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */

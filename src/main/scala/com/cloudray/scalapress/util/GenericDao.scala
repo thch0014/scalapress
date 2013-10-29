@@ -59,7 +59,7 @@ trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
 
   /**
    * Search for entities given the search parameters in the specified
-   * <code>ISearch</code> obj.
+   * <code>ISearch</code> item.
    *
    * x
    */
@@ -82,7 +82,7 @@ trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
   def count(search: ISearch): Int
 
   /**
-   * Returns a <code>SearchResult</code> obj that includes both the list of
+   * Returns a <code>SearchResult</code> item that includes both the list of
    * results like <code>search()</code> and the total length like
    * <code>count()</code>.
    *

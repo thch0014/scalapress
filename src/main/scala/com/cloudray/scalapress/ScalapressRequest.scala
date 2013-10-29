@@ -2,21 +2,21 @@ package com.cloudray.scalapress
 
 import folder.Folder
 import javax.servlet.http.{Cookie, HttpServletRequest}
-import obj.Item
+import item.Item
 import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import java.util.UUID
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,
                              context: ScalapressContext,
                              title: Option[String] = None,
-                             obj: Option[Item] = None,
+                             item: Option[Item] = None,
                              order: Option[Order] = None,
                              orderLine: Option[OrderLine] = None,
                              folder: Option[Folder] = None,
@@ -124,7 +124,7 @@ case class ScalapressRequest(request: HttpServletRequest,
   def withTitle(title: String): ScalapressRequest = copy(title = Option(title))
   def withLine(line: BasketLine): ScalapressRequest = copy(line = Option(line))
   def withFolder(f: Folder): ScalapressRequest = copy(folder = Option(f))
-  def withObject(o: Item): ScalapressRequest = copy(obj = Option(o))
+  def withItem(o: Item): ScalapressRequest = copy(item = Option(o))
   def withOrder(o: Order): ScalapressRequest = copy(order = Option(o))
   def withOrderLine(o: OrderLine): ScalapressRequest = copy(orderLine = Option(o))
   def withResult(r: CorpusResult): ScalapressRequest = copy(corpusResult = Option(r))
@@ -145,8 +145,8 @@ object ScalapressRequest {
 
   def apply(request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
     new ScalapressRequest(request, context)
-  def apply(obj: Item, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
-    ScalapressRequest(request, context).withObject(obj)
+  def apply(item: Item, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
+    ScalapressRequest(request, context).withItem(item)
   def apply(folder: Folder, request: HttpServletRequest, context: ScalapressContext): ScalapressRequest =
     ScalapressRequest(request, context).withFolder(folder)
 

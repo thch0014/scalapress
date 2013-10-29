@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.{SearchFieldType, SearchFormDao, SearchFormField, SearchForm}
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.{ObjectTypePopulator, SortPopulator}
 
 /** @author Stephen Samuel */

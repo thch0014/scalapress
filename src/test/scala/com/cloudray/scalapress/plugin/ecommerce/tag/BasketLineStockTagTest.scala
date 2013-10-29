@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketLineStockTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 
@@ -21,7 +21,7 @@ class BasketLineStockTagTest extends FunSuite with MockitoSugar with OneInstance
     val context = mock[ScalapressContext]
     val sreq = new ScalapressRequest(req, context).withLine(line1)
 
-    test("tag shows stock from obj") {
+    test("tag shows stock from item") {
         val actual = tag.render(sreq)
         assert("55" === actual.get)
     }

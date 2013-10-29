@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.feed.gbase
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import org.scalatest.mock.MockitoSugar
 
 /** @author Stephen Samuel */

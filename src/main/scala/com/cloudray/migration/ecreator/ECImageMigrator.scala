@@ -2,7 +2,7 @@ package com.cloudray.migration.ecreator
 
 import com.cloudray.scalapress.Logging
 import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.media.{ImageDao, AssetStore}
 import com.cloudray.scalapress.widgets.{HtmlWidget, WidgetDao}
@@ -24,7 +24,7 @@ class ECImageMigrator extends Logging {
   @Autowired var widgetDao: WidgetDao = _
   @Autowired var imageDao: ImageDao = _
   @Autowired var store: AssetStore = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
 
   private def migrateImage(domain: String, file: String, store: AssetStore) {
     try {
@@ -35,7 +35,7 @@ class ECImageMigrator extends Logging {
       val ba = IOUtils.toByteArray(new URL(url))
       val key = store.put(file, new ByteArrayInputStream(ba))
 
-      logger.debug("Saved obj to key={}", key)
+      logger.debug("Saved item to key={}", key)
 
     } catch {
       case e: Exception => logger.error("{}", e)

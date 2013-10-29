@@ -7,7 +7,7 @@ import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.widgets.controller.WidgetEditController
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */

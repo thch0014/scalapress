@@ -9,7 +9,7 @@ import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
-import com.cloudray.scalapress.obj.{ObjectDao, Item}
+import com.cloudray.scalapress.item.{ItemDao, Item}
 import com.cloudray.scalapress.payments.{Transaction, TransactionDao}
 
 /** @author Stephen Samuel */
@@ -39,7 +39,7 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     callback.context.installationDao = mock[InstallationDao]
     Mockito.when(callback.context.installationDao.get).thenReturn(installation)
 
-    callback.context.objectDao = mock[ObjectDao]
+    callback.context.objectDao = mock[ItemDao]
     callback.orderDao = mock[OrderDao]
     callback.listingCustomerNotificationService = mock[ListingCustomerNotificationService]
 

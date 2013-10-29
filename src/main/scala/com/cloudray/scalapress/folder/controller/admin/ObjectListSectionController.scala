@@ -7,7 +7,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.{AttributePopulator, SortPopulator}
 import com.cloudray.scalapress.folder.section.ObjectListSection
 import org.springframework.ui.ModelMap

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress
 
 import folder.FolderDao
-import obj.TypeDao
+import item.TypeDao
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
@@ -9,7 +9,7 @@ import plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import plugin.form.FormDao
 import search.SearchFormDao
 import theme.{ThemeDao, MarkupDao}
-import com.cloudray.scalapress.obj.attr.AttributeDao
+import com.cloudray.scalapress.item.attr.AttributeDao
 
 /** @author Stephen Samuel */
 class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest {

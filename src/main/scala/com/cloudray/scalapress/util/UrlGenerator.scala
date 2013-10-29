@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.util
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlStrategy

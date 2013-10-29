@@ -5,7 +5,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.obj.StockMethod
+import com.cloudray.scalapress.item.StockMethod
 
 /** @author Stephen Samuel */
 @Tag("basket")
@@ -53,7 +53,7 @@ class AddToBasketTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    request.obj match {
+    request.item match {
       case None => None
       case Some(obj) =>
         obj.available || obj.backorders || request.shoppingPlugin.stockMethod == StockMethod.Off match {
@@ -205,6 +205,6 @@ class CheckoutTag extends ScalapressTag with TagBuilder {
 class BasketFormTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    request.obj.map(obj => s"<form method='GET' action='/basket/add/${obj.id}'>")
+    request.item.map(obj => s"<form method='GET' action='/basket/add/${obj.id}'>")
   }
 }

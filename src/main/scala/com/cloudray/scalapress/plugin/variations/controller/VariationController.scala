@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller
 import com.cloudray.scalapress.plugin.variations.{DimensionDao, VariationDao, Variation}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -16,7 +16,7 @@ class VariationController {
 
   @Autowired var dimensionDao: DimensionDao = _
   @Autowired var variationDao: VariationDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
 
   @ResponseBody
   @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))

@@ -6,7 +6,7 @@ import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.ui.ModelMap
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.obj.controller.admin.FolderPopulator
+import com.cloudray.scalapress.item.controller.admin.FolderPopulator
 import com.cloudray.scalapress.widgets.controller.WidgetEditController
 
 /** @author Stephen Samuel */

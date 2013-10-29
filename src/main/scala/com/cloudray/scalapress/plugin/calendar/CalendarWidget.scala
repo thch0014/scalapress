@@ -4,8 +4,8 @@ import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence._
 import com.cloudray.scalapress.search.{Sort, SavedSearch}
-import com.cloudray.scalapress.obj.ObjectType
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.ItemType
+import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.util.Scalate
 
@@ -17,7 +17,7 @@ class CalendarWidget extends Widget {
   @ManyToOne
   @JoinColumn(name = "objectType")
   @BeanProperty
-  var objectType: ObjectType = _
+  var objectType: ItemType = _
 
   @ManyToOne
   @JoinColumn(name = "startDateAttribute")

@@ -5,7 +5,7 @@ import xml.{Node, Unparsed}
 import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.plugin.form.{FieldSize, FormFieldType, FormField, Form}
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
@@ -14,7 +14,7 @@ object FormRenderer {
   def action(form: Form, folderId: Long, objectId: Long) = s"/form/${form.id}?folderId=$folderId&objId=$objectId"
   def action(form: Form, folder: Option[Folder], obj: Option[Item]): String =
     action(form, folder.map(_.id).getOrElse(0l), obj.map(_.id).getOrElse(0l))
-  def action(form: Form, req: ScalapressRequest): String = action(form, req.folder, req.obj)
+  def action(form: Form, req: ScalapressRequest): String = action(form, req.folder, req.item)
 
   def render(form: Form, req: ScalapressRequest): String = {
     val fields = form.fields.asScala.sortBy(_.position)

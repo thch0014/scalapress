@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Address, DeliveryOption, Basket}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.account.Account

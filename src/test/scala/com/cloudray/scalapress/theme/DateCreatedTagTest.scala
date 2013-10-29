@@ -5,7 +5,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import tag.DateCreatedTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
@@ -22,7 +22,7 @@ class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSu
 
   test("custom format object happy path") {
 
-    val sreq = new ScalapressRequest(req, context).withObject(obj)
+    val sreq = new ScalapressRequest(req, context).withItem(obj)
     val rendered = new DateCreatedTag().render(sreq, Map("format" -> "yyyy!MM!dd"))
     assert("2013!03!24" === rendered.get)
   }

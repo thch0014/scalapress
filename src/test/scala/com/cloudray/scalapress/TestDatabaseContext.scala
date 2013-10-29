@@ -8,12 +8,12 @@ import com.cloudray.scalapress.search.{SearchFormDao, SearchFormDaoImpl, SavedSe
 import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, OrderDaoImpl}
 import com.cloudray.scalapress.plugin.listings.{ListingProcessDao, ListingProcessDaoImpl, ListingPackageDao, ListingPackageDaoImpl}
 import com.cloudray.scalapress.plugin.form.{FormFieldDao, FormFieldDaoImpl, FormDao, FormDaoImpl}
-import com.cloudray.scalapress.obj.{TypeDao, TypeDaoImpl, ObjectDao, ObjectDaoImpl}
+import com.cloudray.scalapress.item.{TypeDao, TypeDaoImpl, ItemDao, ItemDaoImpl}
 import com.cloudray.scalapress.user.{UserDao, UserDaoImpl}
 import com.cloudray.scalapress.folder.{FolderDao, FolderDaoImpl}
 import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
-import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
+import com.cloudray.scalapress.item.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
 import com.cloudray.scalapress.plugin.variations._
 import com.cloudray.scalapress.account.{AccountDao, AccountDaoImpl, AccountPluginDaoImpl, AccountPluginDao}
 
@@ -61,8 +61,8 @@ object TestDatabaseContext {
 
   val objectDao = context
     .getAutowireCapableBeanFactory
-    .createBean(classOf[ObjectDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-    .asInstanceOf[ObjectDao]
+    .createBean(classOf[ItemDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+    .asInstanceOf[ItemDao]
 
   val formDao = context
     .getAutowireCapableBeanFactory

@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.listings
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.joda.time.{DateTimeZone, DateMidnight}
-import com.cloudray.scalapress.obj.Item
-import com.cloudray.scalapress.obj.attr.AttributeValue
+import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */

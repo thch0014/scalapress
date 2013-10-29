@@ -7,7 +7,7 @@ import com.cloudray.scalapress.{Tag, ScalapressRequest}
 class IdTag extends ScalapressTag with TagBuilder {
 
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
-    val objId = request.obj.map(_.id.toString)
+    val objId = request.item.map(_.id.toString)
     val folderId = request.folder.map(_.id.toString)
     objId.orElse(folderId)
   }

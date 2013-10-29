@@ -8,9 +8,9 @@ import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.EnumPopulator
-import com.cloudray.scalapress.obj.StockMethod
+import com.cloudray.scalapress.item.StockMethod
 
 /** @author Stephen Samuel */
 @Controller

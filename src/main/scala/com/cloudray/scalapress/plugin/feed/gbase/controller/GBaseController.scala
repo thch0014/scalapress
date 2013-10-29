@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
 import com.cloudray.scalapress.plugin.feed.gbase.{GBaseFeedDao, GBaseFeed, GoogleBaseService}
 
@@ -15,7 +15,7 @@ class GBaseController {
 
   @Autowired var context: ScalapressContext = _
   @Autowired var feedDao: GBaseFeedDao = _
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
   @Autowired var installationDao: InstallationDao = _
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, R
 import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.util.{ObjectTypePopulator, AttributePopulator}
-import com.cloudray.scalapress.obj.TypeDao
+import com.cloudray.scalapress.item.TypeDao
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */

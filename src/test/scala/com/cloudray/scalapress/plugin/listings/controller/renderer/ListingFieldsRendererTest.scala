@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeOption, Attribute}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeOption, Attribute}
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 

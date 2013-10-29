@@ -280,7 +280,7 @@
             </form>
             <script>
                 $('#add-line-typeahead').typeahead({
-                    remote: '/rest/obj?q=%QUERY',
+                    remote: '/rest/item?q=%QUERY',
                     limit: 10
                 }).bind("typeahead:selected",function (dataset, datum) {
                             $('#add-line-id').val(datum.id);

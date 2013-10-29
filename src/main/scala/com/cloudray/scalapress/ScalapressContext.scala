@@ -2,7 +2,7 @@ package com.cloudray.scalapress
 
 import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao}
 import com.cloudray.scalapress.media.{ImageDao, ThumbnailService, AssetStore}
-import obj.{ObjectDao, TypeDao}
+import item.{ItemDao, TypeDao}
 import search.{SavedSearchDao, SearchFormDao, SearchService}
 import section.SectionDao
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,7 +13,7 @@ import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
 import com.cloudray.scalapress.theme.{ThemeService, MarkupDao}
 import widgets.WidgetDao
 import org.springframework.web.context.support.WebApplicationContextUtils
-import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeDao}
+import com.cloudray.scalapress.item.attr.{AttributeValueDao, AttributeDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.{AccountTypeDao, AccountDao}
@@ -44,7 +44,7 @@ class ScalapressContext extends ServletContextAware {
   @Autowired var attributeValueDao: AttributeValueDao = _
   @Autowired var attributeDao: AttributeDao = _
 
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
   @Autowired var typeDao: TypeDao = _
 
   @Autowired var accountDao: AccountDao = _

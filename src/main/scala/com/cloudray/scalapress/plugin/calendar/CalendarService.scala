@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.calendar
 import org.joda.time.{PeriodType, Period, DateTimeZone, DateMidnight}
 import com.cloudray.scalapress.util.UrlGenerator
 import com.cloudray.scalapress.search.{SavedSearch, SearchService}
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */

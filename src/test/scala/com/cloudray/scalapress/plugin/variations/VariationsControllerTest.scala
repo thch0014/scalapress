@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{Item, ObjectType, ObjectDao}
+import com.cloudray.scalapress.item.{Item, ItemType, ItemDao}
 import org.springframework.ui.ModelMap
 import org.mockito.{Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
@@ -13,11 +13,11 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
 
   val controller = new VariationsController
   controller.dimensionDao = mock[DimensionDao]
-  controller.objectDao = mock[ObjectDao]
+  controller.objectDao = mock[ItemDao]
   controller.variationDao = mock[VariationDao]
 
   val d1 = new Dimension
-  d1.objectType = new ObjectType
+  d1.objectType = new ItemType
   d1.objectType.id = 54
   val d2 = new Dimension
   d2.objectType = d1.objectType
@@ -35,7 +35,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
 
   Mockito.when(controller.objectDao.find(1)).thenReturn(obj)
 
-  "a variations controller" should "set the dimensions from the obj's type in the model" in {
+  "a variations controller" should "set the dimensions from the item's type in the model" in {
     Mockito.when(controller.dimensionDao.findAll).thenReturn(List(d1, d2))
     Mockito.when(controller.variationDao.findByObjectId(Matchers.anyLong())).thenReturn(Nil)
     val model = new ModelMap

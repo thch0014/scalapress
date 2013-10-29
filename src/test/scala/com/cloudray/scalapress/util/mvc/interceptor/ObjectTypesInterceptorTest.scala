@@ -2,7 +2,7 @@ package com.cloudray.scalapress.util.mvc.interceptor
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{ObjectType, TypeDao}
+import com.cloudray.scalapress.item.{ItemType, TypeDao}
 import org.mockito.Mockito
 import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
@@ -21,11 +21,11 @@ class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInst
 
   test("types do not include deleted") {
 
-    val type1 = new ObjectType
+    val type1 = new ItemType
     type1.name = "products"
     type1.deleted = true
 
-    val type2 = new ObjectType
+    val type2 = new ItemType
     type2.name = "listings"
     type2.deleted = false
 
@@ -33,18 +33,18 @@ class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInst
 
     interceptor.postHandle(req, resp, null, model)
 
-    val types = model.getModelMap.get("types").asInstanceOf[util.Collection[ObjectType]].asScala.toSeq
+    val types = model.getModelMap.get("types").asInstanceOf[util.Collection[ItemType]].asScala.toSeq
     assert(1 === types.size)
     assert(type2 === types(0))
   }
 
   test("types do not include accounts") {
 
-    val type1 = new ObjectType
+    val type1 = new ItemType
     type1.name = "products"
     type1.deleted = false
 
-    val type2 = new ObjectType
+    val type2 = new ItemType
     type2.name = "account"
     type2.deleted = false
 
@@ -52,7 +52,7 @@ class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInst
 
     interceptor.postHandle(req, resp, null, model)
 
-    val types = model.getModelMap.get("types").asInstanceOf[util.Collection[ObjectType]].asScala.toSeq
+    val types = model.getModelMap.get("types").asInstanceOf[util.Collection[ItemType]].asScala.toSeq
     assert(1 === types.size)
     assert(type1 === types(0))
   }

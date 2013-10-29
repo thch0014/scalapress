@@ -11,7 +11,7 @@ import java.net.URL
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.security.SpringSecurityResolver
-import com.cloudray.scalapress.obj.attr.AttributeValue
+import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess

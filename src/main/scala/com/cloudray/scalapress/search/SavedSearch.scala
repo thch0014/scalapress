@@ -3,8 +3,8 @@ package com.cloudray.scalapress.search
 import javax.persistence._
 import scala.Array
 import org.hibernate.annotations._
-import com.cloudray.scalapress.obj.ObjectType
-import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.item.ItemType
+import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import javax.persistence.Table
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -55,7 +55,7 @@ class SavedSearch {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "itemType")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty var objectType: ItemType = _
 
   @Column(name = "inStockOnly", nullable = false)
   @BeanProperty var inStockOnly: Boolean = _

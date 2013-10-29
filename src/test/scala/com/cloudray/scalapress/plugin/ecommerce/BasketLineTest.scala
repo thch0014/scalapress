@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.variations.Variation
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
 
 /** @author Stephen Samuel */

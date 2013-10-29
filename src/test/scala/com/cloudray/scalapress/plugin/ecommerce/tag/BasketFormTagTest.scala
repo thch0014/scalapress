@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketFormTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class BasketFormTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
@@ -17,7 +17,7 @@ class BasketFormTagTest extends FlatSpec with MockitoSugar with OneInstancePerTe
 
   val req = mock[HttpServletRequest]
   val context = mock[ScalapressContext]
-  val sreq = new ScalapressRequest(req, context).withObject(obj)
+  val sreq = new ScalapressRequest(req, context).withItem(obj)
 
   "a basket form tag" should "render the correct basket url" in {
     val render = tag.render(sreq)

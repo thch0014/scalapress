@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.transaction.annotation.Transactional
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
 
 /** @author Stephen Samuel */
@@ -19,7 +19,7 @@ class GBaseCron extends CronTask with Logging {
   var feedDao: GBaseFeedDao = _
 
   @Autowired
-  var objectDao: ObjectDao = _
+  var objectDao: ItemDao = _
 
   @Autowired
   var installationDao: InstallationDao = _

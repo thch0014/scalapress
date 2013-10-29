@@ -18,8 +18,8 @@ class DisqusSection extends Section {
 
   def render(request: ScalapressRequest): Option[String] = {
 
-    val title = request.obj.map(_.name).orElse(request.folder.map(_.name)).getOrElse("")
-    val url = request.obj.map(arg => UrlGenerator.url(arg))
+    val title = request.item.map(_.name).orElse(request.folder.map(_.name)).getOrElse("")
+    val url = request.item.map(arg => UrlGenerator.url(arg))
       .orElse(request.folder.map(arg => UrlGenerator.url(arg)))
       .map("http://" + request.installation.domain + _)
       .getOrElse("")

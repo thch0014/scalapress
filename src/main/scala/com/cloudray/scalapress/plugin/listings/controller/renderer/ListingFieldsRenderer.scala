@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.listings.controller.renderer
 import scala.collection.JavaConverters._
 import scala.xml.{Node, Unparsed}
 import collection.Iterable
-import com.cloudray.scalapress.obj.Item
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
+import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue, Attribute}
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 
 /** @author Stephen Samuel */

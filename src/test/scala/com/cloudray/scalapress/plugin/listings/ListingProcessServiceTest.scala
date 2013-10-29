@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.listings
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.{ObjectType, ObjectDao}
+import com.cloudray.scalapress.item.{ItemType, ItemDao}
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
-import com.cloudray.scalapress.obj.attr.AttributeValue
+import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.account.{Account, AccountDao}
 
 /** @author Stephen Samuel */
@@ -16,7 +16,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
   val process = new ListingProcess
   process.content = "what a lovely mare"
   process.listingPackage = new ListingPackage
-  process.listingPackage.objectType = new ObjectType
+  process.listingPackage.objectType = new ItemType
   process.title = "horse for sale cheap"
   process.accountId = "214"
 
@@ -26,7 +26,7 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
 
   val service = new ListingProcessService
   service.context = new ScalapressContext
-  service.context.objectDao = mock[ObjectDao]
+  service.context.objectDao = mock[ItemDao]
   service.context.accountDao = mock[AccountDao]
   service.listingProcessDao = mock[ListingProcessDao]
   service.listingAdminNotificationService = mock[ListingAdminNotificationService]

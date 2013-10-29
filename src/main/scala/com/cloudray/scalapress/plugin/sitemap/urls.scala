@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.sitemap
 import collection.mutable.ListBuffer
 import com.cloudray.scalapress.ScalapressContext
 import org.joda.time.{DateTimeZone, DateTime}
-import com.cloudray.scalapress.obj.ObjectQuery
+import com.cloudray.scalapress.item.ItemQuery
 import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
@@ -17,7 +17,7 @@ object UrlBuilder {
 
   def objects(context: ScalapressContext, domain: String): List[Url] = {
 
-    val query = new ObjectQuery().withStatus("LIVE").withPageSize(50000)
+    val query = new ItemQuery().withStatus("LIVE").withPageSize(50000)
     val objects = context.objectDao.search(query).results.filter(_.objectType.searchable)
 
     val urls = new ListBuffer[Url]

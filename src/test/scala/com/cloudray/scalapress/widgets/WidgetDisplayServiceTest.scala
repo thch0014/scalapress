@@ -6,7 +6,7 @@ import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{Cookie, HttpServletRequest}
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
@@ -28,7 +28,7 @@ class WidgetDisplayServiceTest extends FunSuite with MockitoSugar with OneInstan
     val sreq = new ScalapressRequest(req, context)
     widget.restricted = true
     widget.displayOnAllObjects = true
-    assert(new WidgetDisplayService().isVisible(widget, sreq.withObject(obj)))
+    assert(new WidgetDisplayService().isVisible(widget, sreq.withItem(obj)))
   }
 
   test("given a non root folder page when restricted and display on all folders then widget is visible") {

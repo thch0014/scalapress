@@ -3,9 +3,9 @@ package com.cloudray.scalapress.plugin.calendar
 import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ObjectRef, SearchService}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import org.joda.time.{DateTimeZone, DateTime}
-import com.cloudray.scalapress.obj.attr.Attribute
+import com.cloudray.scalapress.item.attr.Attribute
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */

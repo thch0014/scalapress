@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormRenderer
 import com.cloudray.scalapress.plugin.form.{Form, FormField}
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -32,7 +32,7 @@ class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTes
   test("given an object page then the form action includes the object id") {
     val o = new Item
     o.id = 124
-    val action = FormRenderer.action(form, sreq.withObject(o))
+    val action = FormRenderer.action(form, sreq.withItem(o))
     assert("/form/124?folderId=0&objId=124" === action)
   }
 

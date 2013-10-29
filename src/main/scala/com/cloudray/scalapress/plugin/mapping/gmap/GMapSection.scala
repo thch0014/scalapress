@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.mapping.gmap
 import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.section.Section
-import com.cloudray.scalapress.obj.attr.AttributeFuncs
+import com.cloudray.scalapress.item.attr.AttributeFuncs
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
@@ -18,7 +18,7 @@ class GMapSection extends Section {
 
     Option(postcode)
       .filter(_.trim.length > 0)
-      .orElse(request.obj.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))
+      .orElse(request.item.flatMap(obj => AttributeFuncs.attributeValue(obj, "postcode")))
       .map(pc => {
       val sectionId = "section-" + id
       val html =

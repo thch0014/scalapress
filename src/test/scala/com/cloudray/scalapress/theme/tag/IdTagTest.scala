@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
@@ -22,7 +22,7 @@ class IdTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
     test("given an object page then the id tag renders the id") {
         val o = new Item
         o.id = 5345
-        assert("5345" === new IdTag().render(req.withObject(o)).get)
+        assert("5345" === new IdTag().render(req.withItem(o)).get)
     }
 
     test("given a non object / folder page then the id tag renders nothing") {

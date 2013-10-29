@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.obj.{ObjectType, Item, ObjectDao}
+import com.cloudray.scalapress.item.{ItemType, Item, ItemDao}
 import com.cloudray.scalapress.theme.{Markup, ThemeService}
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.search.SearchResult
@@ -15,7 +15,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
   val controller = new SearchController
   controller.searchService = mock[SearchService]
-  controller.objectDao = mock[ObjectDao]
+  controller.objectDao = mock[ItemDao]
   controller.themeService = mock[ThemeService]
   controller.searchPluginDao = mock[SearchPluginDao]
 
@@ -27,7 +27,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
   val obj = new Item
   obj.id = 4
-  obj.objectType = new ObjectType
+  obj.objectType = new ItemType
   obj.objectType.id = 9
   obj.name = "Parachutes"
   obj.status = Item.STATUS_LIVE

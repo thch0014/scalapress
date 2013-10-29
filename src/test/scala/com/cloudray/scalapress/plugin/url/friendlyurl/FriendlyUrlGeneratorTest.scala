@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.url.friendlyurl
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.util.UrlGenerator
 

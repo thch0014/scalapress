@@ -8,7 +8,7 @@ import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.obj.controller.admin.AccountStatusPopulator
+import com.cloudray.scalapress.item.controller.admin.AccountStatusPopulator
 import com.cloudray.scalapress.account.{AccountQuery, AccountTypeDao, AccountDao, Account}
 
 /** @author Stephen Samuel */

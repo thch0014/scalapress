@@ -7,17 +7,17 @@ import scala.Array
 import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.obj.ObjectDao
+import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.obj.controller.admin.MarkupPopulator
+import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
 @RequestMapping(Array("backoffice/section/{id}"))
 @Autowired
 class SectionEditController(val assetStore: AssetStore,
-                            val objectDao: ObjectDao,
+                            val objectDao: ItemDao,
                             val sectionDao: SectionDao,
                             val markupDao: MarkupDao,
                             context: ScalapressContext) extends MarkupPopulator {

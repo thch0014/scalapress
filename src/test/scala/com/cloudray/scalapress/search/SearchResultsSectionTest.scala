@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search.section.SearchResultsSection
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectDao, Item}
+import com.cloudray.scalapress.item.{ItemDao, Item}
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import com.cloudray.scalapress.section.{SectionDao, Section}
 
@@ -16,7 +16,7 @@ class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstan
   val req = mock[HttpServletRequest]
   val context = new ScalapressContext
   context.searchService = mock[SearchService]
-  context.objectDao = mock[ObjectDao]
+  context.objectDao = mock[ItemDao]
   context.sectionDao = mock[SectionDao]
   context.savedSearchDao = mock[SavedSearchDao]
 

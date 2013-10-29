@@ -8,10 +8,11 @@ import org.springframework.stereotype.Controller
 @RequestMapping
 class FriendlyUrlForwardController {
 
+  @deprecated("backwards compatibility only", "0.41")
   @RequestMapping(Array("object-{id:\\d+}-{name}"))
   def obj(@PathVariable("id") id: Int): String = "forward:/object/" + id
 
-  @RequestMapping(Array("obj-{id:\\d+}-{name}"))
+  @RequestMapping(Array("item-{id:\\d+}-{name}"))
   def obj2(@PathVariable("id") id: Int): String = "forward:/object/" + id
 
   @RequestMapping(Array("folder-{id:\\d+}-{name}"))

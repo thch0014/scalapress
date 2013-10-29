@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class LabelsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -16,7 +16,7 @@ class LabelsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext
-    val sreq = ScalapressRequest(req, context).withObject(o)
+    val sreq = ScalapressRequest(req, context).withItem(o)
 
     test("labels rendering") {
         val actual = new LabelsTag().render(sreq, Map.empty)

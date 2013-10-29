@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeOption, Attribute}
+import com.cloudray.scalapress.item.attr.{AttributeType, AttributeOption, Attribute}
 
 /** @author Stephen Samuel */
 class SearchFormRendererTest extends FunSuite with MockitoSugar {

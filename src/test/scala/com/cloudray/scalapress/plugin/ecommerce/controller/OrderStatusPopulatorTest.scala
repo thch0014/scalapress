@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.controller.admin.OrderStatusPopulator
+import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.mockito.Mockito

@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.{Item, ObjectDao}
+import com.cloudray.scalapress.item.{Item, ItemDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.variations.{DimensionValue, Dimension, VariationDao, Variation}
@@ -15,7 +15,7 @@ class BasketControllerTest extends FunSuite with MockitoSugar with OneInstancePe
 
   val controller = new BasketController
   controller.basketDao = mock[BasketDao]
-  controller.objectDao = mock[ObjectDao]
+  controller.objectDao = mock[ItemDao]
   controller.variationDao = mock[VariationDao]
   controller.context = new ScalapressContext
 

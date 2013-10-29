@@ -9,7 +9,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.{AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.controller.admin.AccountStatusPopulator
+import com.cloudray.scalapress.item.controller.admin.AccountStatusPopulator
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 
 /** @author Stephen Samuel */

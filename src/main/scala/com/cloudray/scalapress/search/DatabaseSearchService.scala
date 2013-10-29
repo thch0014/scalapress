@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.obj._
+import com.cloudray.scalapress.item._
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
 
@@ -10,11 +10,11 @@ import com.googlecode.genericdao.search.Search
   * */
 class DatabaseSearchService extends SearchService {
 
-  @Autowired var objectDao: ObjectDao = _
+  @Autowired var objectDao: ItemDao = _
 
   def search(search: SavedSearch): SearchResult = {
 
-    val q = new ObjectQuery().withStatus(Item.STATUS_LIVE).withName(search.name)
+    val q = new ItemQuery().withStatus(Item.STATUS_LIVE).withName(search.name)
 
     if (search.objectType != null) {
       q.withTypeId(search.objectType.id)

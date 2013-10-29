@@ -4,7 +4,7 @@ import com.cloudray.scalapress.settings.InstallationDao
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.{SimpleMailMessage, MailSender}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.sksamuel.scoot.rest.Logging
 
 /** @author Stephen Samuel
@@ -43,7 +43,7 @@ class ListingAdminNotificationService(mailSender: MailSender,
     sb.append("The status of this listing is: [" + listing.status + "]\n")
     sb.append("The listing was added using: [" + listing.listingPackage.name + "]\n\n")
     sb.append("You can edit the listing in the backoffice:\n")
-    sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + listing.id + "\n\n")
+    sb.append("http://" + installationDao.get.domain + "/backoffice/item/" + listing.id + "\n\n")
 
     sb.append("Regards, Scalapress")
     sb.toString

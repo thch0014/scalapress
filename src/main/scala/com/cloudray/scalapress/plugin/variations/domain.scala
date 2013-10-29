@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.variations
 
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.obj.{ObjectType, Item}
+import com.cloudray.scalapress.item.{ItemType, Item}
 import java.lang.String
 import javax.persistence._
 import java.util
@@ -25,7 +25,7 @@ class Dimension {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "object_type")
-  @BeanProperty var objectType: ObjectType = _
+  @BeanProperty var objectType: ItemType = _
 
   @BeanProperty var name: String = _
 }

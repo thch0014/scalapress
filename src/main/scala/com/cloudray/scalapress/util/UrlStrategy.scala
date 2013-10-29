@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.util
 
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.ObjectType
+import com.cloudray.scalapress.item.ItemType
 
 /** @author Stephen Samuel */
 class VariationTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
@@ -10,7 +10,7 @@ class VariationTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
   val d1 = new Dimension
   d1.name = "color"
   d1.id = 4
-  d1.objectType = new ObjectType
+  d1.objectType = new ItemType
   d1.objectType.id = 54
 
   val d2 = new Dimension

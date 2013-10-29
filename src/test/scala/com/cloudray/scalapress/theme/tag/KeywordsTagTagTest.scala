@@ -4,7 +4,7 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Item
+import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
@@ -23,7 +23,7 @@ class KeywordsTagTagTest extends FunSuite with OneInstancePerTest with MockitoSu
 
 
     test("keywords tag uses desc field of object") {
-        val sreq = new ScalapressRequest(req, context).withObject(obj)
+        val sreq = new ScalapressRequest(req, context).withItem(obj)
         val rendered = new KeywordsTagTag().render(sreq, Map.empty)
         assert("<meta name='keywords' content='I love keywords me'/>" === rendered.get)
     }

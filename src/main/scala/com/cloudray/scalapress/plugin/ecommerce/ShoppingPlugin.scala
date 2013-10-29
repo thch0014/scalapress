@@ -7,7 +7,7 @@ import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.cloudray.scalapress.theme.Markup
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
-import com.cloudray.scalapress.obj.StockMethod
+import com.cloudray.scalapress.item.StockMethod
 import com.cloudray.scalapress.plugin.SingleInstance
 
 /** @author Stephen Samuel */

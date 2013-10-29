@@ -14,7 +14,7 @@
     <cache name="com.cloudray.scalapress.folder.Folder" eternal="false" maxElementsInMemory="500" overflowToDisk="false"
            diskPersistent="false"/>
 
-    <cache name="com.cloudray.scalapress.obj.ObjectType" eternal="false" maxElementsInMemory="50" overflowToDisk="false"
+    <cache name="com.cloudray.scalapress.item.ItemType" eternal="false" maxElementsInMemory="50" overflowToDisk="false"
            diskPersistent="false"/>
 
     <cache name="Theme" eternal="false" maxElementsInMemory="20" overflowToDisk="false" diskPersistent="false"/>
