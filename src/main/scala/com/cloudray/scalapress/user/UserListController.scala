@@ -24,5 +24,5 @@ class UserListController(userDao: UserDao) {
     list
   }
 
-  @ModelAttribute("users") def users = userDao.findAll().asJava
+  @ModelAttribute("users") def users = userDao.findAll.asJava
 }

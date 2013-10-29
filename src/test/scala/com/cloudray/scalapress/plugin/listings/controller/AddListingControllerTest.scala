@@ -65,7 +65,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   package1.name = "gold package"
   val package2 = new ListingPackage
   package2.name = "silver package"
-  Mockito.when(controller.listingPackageDao.findAll()).thenReturn(List(package1, package2))
+  Mockito.when(controller.listingPackageDao.findAll).thenReturn(List(package1, package2))
 
   test("a completed listing invokes payment callbacks") {
     controller.completed(process, req)

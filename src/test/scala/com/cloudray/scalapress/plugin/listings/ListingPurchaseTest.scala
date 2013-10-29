@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.Obj
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.vouchers.Voucher
 
 /** @author Stephen Samuel */
 class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -19,7 +20,7 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
   listing.listingPackage = new ListingPackage
   listing.listingPackage.fee = 6152
 
-  val purchase = new ListingPurchase(listing, "coldplay.com")
+  val purchase = new ListingPurchase(listing, None, "coldplay.com")
 
   test("that purchase uses account details") {
     assert(purchase.accountEmail === listing.account.email)
@@ -52,5 +53,12 @@ class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoS
 
   test("purchase total comes from listing package") {
     assert(6152 === purchase.total)
+  }
+
+  test("total uses voucher discount") {
+    val voucher = new Voucher
+    voucher.fixedDiscount = 2451
+    val purchase = new ListingPurchase(listing, Some(voucher), "coldplay.com")
+    assert(6152 - 2451 === purchase.total)
   }
 }

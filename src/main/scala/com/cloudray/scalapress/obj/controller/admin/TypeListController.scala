@@ -32,5 +32,5 @@ class TypeListController(typeDao: TypeDao) {
   }
 
   @ModelAttribute("types")
-  def types = typeDao.findAll().filterNot(_.deleted).sortBy(_.id).asJava
+  def types = typeDao.findAll.filterNot(_.deleted).sortBy(_.id).asJava
 }

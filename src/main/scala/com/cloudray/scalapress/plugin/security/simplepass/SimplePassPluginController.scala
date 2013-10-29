@@ -37,7 +37,7 @@ class SimplePassPluginController(simplePassPluginDao: SimplePassPluginDao,
 
   @ModelAttribute("folders")
   def parents = {
-    val folders = folderDao.findAll().sortBy(_.id)
+    val folders = folderDao.findAll.sortBy(_.id)
 
     val map = mutable.Map(0l -> "-Default-")
     folders.map(f => {

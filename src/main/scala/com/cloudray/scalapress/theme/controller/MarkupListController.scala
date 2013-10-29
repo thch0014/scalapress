@@ -23,5 +23,6 @@ class MarkupListController(markupDao: MarkupDao) {
     "redirect:/backoffice/markup/" + markup.id
   }
 
-  @ModelAttribute("markups") def markups = markupDao.findAll().asJava
+  @ModelAttribute("markups")
+  def markups = markupDao.findAll.asJava
 }

@@ -43,7 +43,7 @@ class FolderWidgetTest extends FlatSpec with MockitoSugar with OneInstancePerTes
   sunderland.subfolders.add(poyet)
 
   Mockito.when(context.folderDao.root).thenReturn(root)
-  Mockito.when(context.folderDao.findAll()).thenReturn(List(root, boro, sunderland, mogga, poyet))
+  Mockito.when(context.folderDao.findAll).thenReturn(List(root, boro, sunderland, mogga, poyet))
 
   val widget = new FoldersWidget
   widget.id = 299

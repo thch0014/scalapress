@@ -13,7 +13,7 @@ import com.cloudray.scalapress.account.Account
   *
   *         Creates an order from the basket
   *
-  **/
+  * */
 @Component
 @Autowired
 class OrderBuilder(orderDao: OrderDao,
@@ -29,7 +29,7 @@ class OrderBuilder(orderDao: OrderDao,
   }
 
   def _account(basket: Basket) = {
-    val accountType = context.accountTypeDao.findAll().head
+    val accountType = context.accountTypeDao.findAll.head
     val account = Account(accountType)
     account.email = basket.accountEmail
     account.name = basket.accountName

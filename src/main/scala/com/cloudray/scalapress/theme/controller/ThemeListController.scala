@@ -46,5 +46,5 @@ class ThemeListController(themeDao: ThemeDao,
   }
 
   @ModelAttribute("themes")
-  def themes = themeDao.findAll().asJava
+  def themes = themeDao.findAll.asJava
 }

@@ -59,14 +59,14 @@ class FoldersValidator {
   @Autowired var folderDao: FolderDao = _
 
   @PostConstruct def ensureOnePlugin() {
-    if (folderPluginDao.findAll().size == 0) {
+    if (folderPluginDao.findAll.size == 0) {
       val plugin = new FolderSettings
       folderPluginDao.save(plugin)
     }
   }
 
   @PostConstruct def ensureRoot() {
-    if (folderDao.findAll().size == 0) {
+    if (folderDao.findAll.size == 0) {
       val root = Folder(null)
       root.name = "Home Page"
       folderDao.save(root)

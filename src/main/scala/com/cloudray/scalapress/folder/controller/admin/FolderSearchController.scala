@@ -32,5 +32,5 @@ class FolderSearchController(folderDao: FolderDao,
   }
 
   @ModelAttribute("folders")
-  def folders = folderDao.findAll().sortBy(_.fullName).asJava
+  def folders = folderDao.findAll.sortBy(_.fullName).asJava
 }

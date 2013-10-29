@@ -31,7 +31,7 @@ object UrlBuilder {
 
   def folders(context: ScalapressContext, domain: String): List[Url] = {
 
-    val folders = context.folderDao.findAll().filterNot(_.hidden)
+    val folders = context.folderDao.findAll.filterNot(_.hidden)
 
     val urls = new ListBuffer[Url]
     for ( f <- folders ) {

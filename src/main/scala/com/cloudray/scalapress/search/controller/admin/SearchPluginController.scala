@@ -29,5 +29,5 @@ class SearchPluginController(val markupDao: MarkupDao,
 
   @ModelAttribute def req(request: HttpServletRequest) = request
   @ModelAttribute def assetStore = context.assetStore
-  @ModelAttribute("plugin") def plugin = searchPluginDao.findAll().head
+  @ModelAttribute("plugin") def plugin = searchPluginDao.findAll.head
 }

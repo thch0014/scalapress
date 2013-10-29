@@ -13,6 +13,6 @@ class AccountTypesInterceptor(accountTypeDao: AccountTypeDao) extends HandlerInt
                           handler: Any,
                           modelAndView: ModelAndView) {
     if (modelAndView != null)
-      modelAndView.getModelMap.put("accountTypes", accountTypeDao.findAll().sortBy(_.id).asJava)
+      modelAndView.getModelMap.put("accountTypes", accountTypeDao.findAll.sortBy(_.id).asJava)
   }
 }

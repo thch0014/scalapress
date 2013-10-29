@@ -36,7 +36,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
   Mockito.when(controller.objectDao.find(1)).thenReturn(obj)
 
   "a variations controller" should "set the dimensions from the obj's type in the model" in {
-    Mockito.when(controller.dimensionDao.findAll()).thenReturn(List(d1, d2))
+    Mockito.when(controller.dimensionDao.findAll).thenReturn(List(d1, d2))
     Mockito.when(controller.variationDao.findByObjectId(Matchers.anyLong())).thenReturn(Nil)
     val model = new ModelMap
     controller.edit(1, model)
@@ -44,7 +44,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
   }
 
   it should "show the variations for the object" in {
-    Mockito.when(controller.dimensionDao.findAll()).thenReturn(Nil)
+    Mockito.when(controller.dimensionDao.findAll).thenReturn(Nil)
     Mockito.when(controller.variationDao.findByObjectId(1)).thenReturn(List(v1, v2))
     val model = new ModelMap
     controller.edit(1, model)

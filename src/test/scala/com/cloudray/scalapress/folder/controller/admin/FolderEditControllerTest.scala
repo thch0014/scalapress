@@ -86,7 +86,7 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
     f6.name = "Decker"
     f6.parent = f5
 
-    Mockito.when(controller.folderDao.findAll()).thenReturn(List(f1, f2, f3, f4, f5, f6))
+    Mockito.when(controller.folderDao.findAll).thenReturn(List(f1, f2, f3, f4, f5, f6))
 
     val folders = controller.parents
     assert(7 === folders.size)

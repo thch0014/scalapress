@@ -25,7 +25,7 @@ class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInsta
 
   val markup1 = new Markup
   val markup2 = new Markup
-  Mockito.when(controller.markupDao.findAll()).thenReturn(List(markup1, markup2))
+  Mockito.when(controller.markupDao.findAll).thenReturn(List(markup1, markup2))
 
   val model = new ModelMap
 

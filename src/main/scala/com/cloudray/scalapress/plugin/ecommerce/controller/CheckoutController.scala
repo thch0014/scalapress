@@ -89,7 +89,7 @@ class CheckoutController extends Logging {
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    val deliveryOptions = deliveryOptionDao.findAll().filter(_.deleted == 0).sortBy(_.position)
+    val deliveryOptions = deliveryOptionDao.findAll.filter(_.deleted == 0).sortBy(_.position)
     if (deliveryOptions.size == 1) {
 
       val delivery = deliveryOptions.head

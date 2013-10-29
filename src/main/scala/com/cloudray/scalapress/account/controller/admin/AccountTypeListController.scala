@@ -31,5 +31,5 @@ class AccountTypeListController(accountTypeDao: AccountTypeDao) {
   }
 
   @ModelAttribute("accountTypes")
-  def types = accountTypeDao.findAll().sortBy(_.id).asJava
+  def types = accountTypeDao.findAll.sortBy(_.id).asJava
 }

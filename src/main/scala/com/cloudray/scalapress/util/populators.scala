@@ -14,7 +14,7 @@ trait ObjectTypePopulator {
   val objectTypeDao: TypeDao
 
   @ModelAttribute def objectTypes(model: ModelMap) {
-    val objectTypes = objectTypeDao.findAll()
+    val objectTypes = objectTypeDao.findAll
 
     val map = new util.LinkedHashMap[String, String]
     map.put("", "-None-")
@@ -47,7 +47,7 @@ trait AllAttributesPopulator {
     val map = new util.LinkedHashMap[Long, String]
     map.put(0l, "-None-")
 
-    for ( objectType <- objectTypeDao.findAll() )
+    for ( objectType <- objectTypeDao.findAll )
       for ( attribute <- objectType.attributes.asScala )
         map.put(attribute.id, "#" + attribute.id + " " + attribute.name)
     map

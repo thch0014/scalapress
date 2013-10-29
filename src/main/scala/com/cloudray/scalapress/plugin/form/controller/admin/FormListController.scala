@@ -27,6 +27,6 @@ class FormListController(formDao: FormDao) {
   }
 
   @ModelAttribute("forms")
-  def forms = formDao.findAll().asJava
+  def forms = formDao.findAll.asJava
 
 }

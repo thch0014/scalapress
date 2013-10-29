@@ -12,7 +12,7 @@ import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, 
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  * */
+  **/
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {
@@ -47,7 +47,7 @@ class GalleryController {
   @RequestMapping
   def view(req: HttpServletRequest): ScalapressPage = {
 
-    val gallery = galleryDao.findAll()
+    val gallery = galleryDao.findAll
     val theme = themeService.default
 
     val page = ScalapressPage(theme, ScalapressRequest(req, context))

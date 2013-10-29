@@ -25,7 +25,7 @@ class ElasticSearchIndexerImpl(service: SearchService,
 
   @PostConstruct
   def setupIndexes() {
-    val attributes = context.attributeDao.findAll()
+    val attributes = context.attributeDao.findAll
     service match {
       case service: ElasticSearchService => service.setupIndex(attributes)
       case _ =>

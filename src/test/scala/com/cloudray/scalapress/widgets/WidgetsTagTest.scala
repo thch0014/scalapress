@@ -30,7 +30,7 @@ class WidgetsTagTest extends FunSuite with MockitoSugar with OneInstancePerTest 
   widget3.visible = true
   widget3.content = "mcnulty"
 
-  Mockito.when(context.widgetDao.findAll()).thenReturn(List(widget1, widget2, widget3))
+  Mockito.when(context.widgetDao.findAll).thenReturn(List(widget1, widget2, widget3))
 
   val tag = new WidgetsTag()
   val sreq = ScalapressRequest(req, context)

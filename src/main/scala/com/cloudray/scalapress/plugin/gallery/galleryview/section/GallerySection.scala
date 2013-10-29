@@ -21,7 +21,7 @@ class GallerySection extends Section {
 
   def render(request: ScalapressRequest): Option[String] = {
     val render = Option(gallery) match {
-      case None => GalleryViewRenderer.renderCovers(request.context.bean[GalleryDao].findAll())
+      case None => GalleryViewRenderer.renderCovers(request.context.bean[GalleryDao].findAll)
       case Some(g) => GalleryViewRenderer.renderGallery(g, request.context.assetStore)
     }
     Option(render)

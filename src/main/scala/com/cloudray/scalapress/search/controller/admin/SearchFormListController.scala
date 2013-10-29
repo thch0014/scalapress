@@ -27,5 +27,5 @@ class SearchFormListController(searchFormDao: SearchFormDao,
     "redirect:/backoffice/searchform"
   }
 
-  @ModelAttribute("forms") def users = searchFormDao.findAll().asJava
+  @ModelAttribute("forms") def users = searchFormDao.findAll.asJava
 }

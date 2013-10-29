@@ -30,7 +30,7 @@ class DeliveryPopulatorTest extends FunSuite with MockitoSugar with OneInstanceP
     var deliveryOptionDao: DeliveryOptionDao = mock[DeliveryOptionDao]
   }
 
-  Mockito.when(populator.deliveryOptionDao.findAll()).thenReturn(List(d1, d2, d3))
+  Mockito.when(populator.deliveryOptionDao.findAll).thenReturn(List(d1, d2, d3))
 
   test("that delivery options are ordered by name") {
     val model = new ModelMap

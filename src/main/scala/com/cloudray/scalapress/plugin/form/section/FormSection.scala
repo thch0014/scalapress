@@ -24,6 +24,6 @@ class FormSection extends Section {
   }
 
   override def _init(context: ScalapressContext) {
-    form = context.bean[FormDao].findAll().head
+    form = context.bean[FormDao].findAll.head
   }
 }

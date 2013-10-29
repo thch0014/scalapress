@@ -25,5 +25,5 @@ class GBaseListController {
     "redirect:/backoffice/feed"
   }
 
-  @ModelAttribute("feeds") def feeds = feedDao.findAll().asJava
+  @ModelAttribute("feeds") def feeds = feedDao.findAll.asJava
 }

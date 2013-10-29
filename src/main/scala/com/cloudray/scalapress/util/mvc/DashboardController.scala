@@ -44,7 +44,7 @@ class DashboardController {
   def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
 
   @ModelAttribute("folderCount")
-  def folderCount = context.folderDao.findAll().size
+  def folderCount = context.folderDao.findAll.size
 
   @ModelAttribute("recentObjects")
   def recentObjects: java.util.List[Obj] = context.objectDao.recent(8).asJava

@@ -29,7 +29,7 @@ class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInst
     type2.name = "listings"
     type2.deleted = false
 
-    Mockito.when(dao.findAll()).thenReturn(List(type1, type2))
+    Mockito.when(dao.findAll).thenReturn(List(type1, type2))
 
     interceptor.postHandle(req, resp, null, model)
 
@@ -48,7 +48,7 @@ class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInst
     type2.name = "account"
     type2.deleted = false
 
-    Mockito.when(dao.findAll()).thenReturn(List(type1, type2))
+    Mockito.when(dao.findAll).thenReturn(List(type1, type2))
 
     interceptor.postHandle(req, resp, null, model)
 

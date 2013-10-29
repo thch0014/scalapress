@@ -19,6 +19,7 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer._
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.media.AssetService
+import com.cloudray.scalapress.plugin.vouchers.VoucherDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -35,6 +36,7 @@ class AddListingController {
   @Autowired var listingCallbackProcessor: ListingCallbackProcessor = _
   @Autowired var paymentFormRenderer: PaymentFormRenderer = _
   @Autowired var assetService: AssetService = _
+  @Autowired var voucherDao: VoucherDao = _
 
   @ResponseBody
   @RequestMapping(value = Array("package"), produces = Array("text/html"))
@@ -42,7 +44,7 @@ class AddListingController {
                    errors: Errors,
                    req: HttpServletRequest): ScalapressPage = {
 
-    val packages = listingPackageDao.findAll().filterNot(_.deleted)
+    val packages = listingPackageDao.findAll.filterNot(_.deleted)
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_PACKAGE)
     val theme = themeService.default
@@ -249,16 +251,26 @@ class AddListingController {
     val port = new URL(req.getRequestURL.toString).getPort
     val domain = if (port == 8080) host + ":8080" else host
 
-    val purchase = new ListingPurchase(process.listing, domain)
+    val voucher = voucherDao.byCode(process.voucherCode)
+    val purchase = new ListingPurchase(process.listing, voucher, domain)
 
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
-    page.body(paymentFormRenderer.renderPaymentForm(purchase))
+    page.body(paymentFormRenderer.renderPaymentForm(purchase, voucherDao.enabled))
     page
+  }
+
+  @RequestMapping(value = Array("voucher"), method = Array(RequestMethod.POST))
+  def setVoucher(@ModelAttribute("process") process: ListingProcess,
+                 @RequestParam(value = "code", required = false) voucherCode: String): String = {
+    process.voucherCode = voucherCode
+    listingProcessDao.save(process)
+    "redirect:/listing/payment"
   }
 
   @ResponseBody
   @RequestMapping(value = Array("completed"), produces = Array("text/html"))
-  def completed(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
+  def completed(@ModelAttribute("process") process: ListingProcess,
+                req: HttpServletRequest): ScalapressPage = {
 
     // free listings will not have been shown the payment page and so no callback will ever be issued
     if (process.listingPackage.fee == 0) listingCallbackProcessor.callback(None, process.listing)
@@ -277,7 +289,9 @@ class AddListingController {
 
   @ResponseBody
   @RequestMapping(value = Array("payment/failure"), produces = Array("text/html"))
-  def paymentFailure(@ModelAttribute("process") process: ListingProcess, req: HttpServletRequest): ScalapressPage = {
+  def paymentFailure(@ModelAttribute("process")
+                     process: ListingProcess,
+                     req: HttpServletRequest): ScalapressPage = {
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.PAYMENT_ERROR)
     val theme = themeService.default

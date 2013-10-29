@@ -16,7 +16,7 @@ class TypeListControllerTest extends FunSuite with MockitoSugar with OneInstance
     type1.deleted = false
     val type2 = new ObjectType
     type2.deleted = true
-    Mockito.when(dao.findAll()).thenReturn(List(type1, type2))
+    Mockito.when(dao.findAll).thenReturn(List(type1, type2))
     val types = controller.types
     assert(1 === types.size)
     assert(type1 === types.get(0))

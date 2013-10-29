@@ -43,6 +43,8 @@ class Voucher {
   // max number of times a single account can use this voucher, zero for unlimited
   @BeanProperty
   var maxUsesPerAccount: Int = _
+
+  def calculatePrice(base: Int): Int = base - fixedDiscount - (base * percentDiscount / 100d).toInt
 }
 
 object Voucher {

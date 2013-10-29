@@ -11,7 +11,7 @@ class MyListingsAccountLink extends AccountLink {
   def profilePageLinkId: String = "accountlink-mylistings"
   def accountLinkText: String = "View, update and manage your completed listings"
   def accountLinkEnabled(context: ScalapressContext): Boolean =
-    context.bean[ListingPackageDao].findAll().filterNot(_.deleted).size > 0
+    context.bean[ListingPackageDao].findAll.filterNot(_.deleted).size > 0
 }
 
 class AddListingAccountLink extends AccountLink {
@@ -20,5 +20,5 @@ class AddListingAccountLink extends AccountLink {
   def profilePageLinkId: String = "accountlink-addlisting"
   def accountLinkText: String = "Choose a listing package and create a new listing"
   def accountLinkEnabled(context: ScalapressContext): Boolean =
-    context.bean[ListingPackageDao].findAll().filterNot(_.deleted).size > 0
+    context.bean[ListingPackageDao].findAll.filterNot(_.deleted).size > 0
 }

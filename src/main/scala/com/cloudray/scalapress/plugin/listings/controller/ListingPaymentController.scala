@@ -17,7 +17,7 @@ import com.cloudray.scalapress.payments.{PaymentCallbackService, PaymentFormRend
 /** @author Stephen Samuel
   *
   *         Shows the payment pages for a listing and allows a user to update listing plan.
-  **/
+  * */
 @Controller // do not use /payment yet as it will clash with mylistings controller
 @RequestMapping(Array("listing/renewal/{listingId}"))
 @SessionAttributes(Array("listingPayment"))
@@ -39,7 +39,7 @@ class ListingPaymentController {
                    req: HttpServletRequest): ScalapressPage = {
 
     listingPayment.obj = context.objectDao.find(listingId)
-    val packages = listingPackageDao.findAll().filterNot(_.deleted)
+    val packages = listingPackageDao.findAll.filterNot(_.deleted)
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.CHOOSE_PACKAGE)
     val theme = context.themeService.default
@@ -89,7 +89,7 @@ class ListingPaymentController {
     val port = new URL(req.getRequestURL.toString).getPort
     val domain = if (port == 8080) host + ":8080" else host
 
-    val purchase = new ListingPurchase(process.listing, domain)
+    val purchase = new ListingPurchase(process.listing, None, domain)
 
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
     page.body(paymentFormRenderer.renderPaymentForm(purchase))

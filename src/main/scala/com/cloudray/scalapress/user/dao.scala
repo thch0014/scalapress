@@ -28,7 +28,7 @@ class UserDaoInit {
   @Autowired var userDao: UserDao = _
 
   @PostConstruct def ensureAUser() {
-    if (userDao.findAll().size == 0) {
+    if (userDao.findAll.size == 0) {
       val user = defaultUser
       userDao.save(user)
     }

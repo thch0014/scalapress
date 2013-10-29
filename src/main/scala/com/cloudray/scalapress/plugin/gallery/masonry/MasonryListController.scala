@@ -17,6 +17,6 @@ class MasonryListController {
   def edit = "admin/plugin/gallery/masonry/section/list.vm"
 
   @ModelAttribute("sections") def sections: Array[Section] = {
-    context.sectionDao.findAll().filter(_.isInstanceOf[MasonrySection]).toArray
+    context.sectionDao.findAll.filter(_.isInstanceOf[MasonrySection]).toArray
   }
 }

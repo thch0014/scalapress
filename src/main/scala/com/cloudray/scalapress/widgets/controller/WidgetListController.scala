@@ -35,7 +35,7 @@ class WidgetListController(context: ScalapressContext) {
   @RequestMapping(value = Array("order"), method = Array(RequestMethod.POST))
   def reorderWidgets(@RequestBody order: String): String = {
 
-    val widgets = context.widgetDao.findAll()
+    val widgets = context.widgetDao.findAll
     val ids = order.split("-")
     if (ids.size == widgets.size)
       widgets.foreach(w => {
@@ -50,7 +50,7 @@ class WidgetListController(context: ScalapressContext) {
   def widgets = {
     val ordering = Ordering[(String, Int)].on[Widget](x => (Option(x.location).map(_.toLowerCase).getOrElse(""), x
       .position))
-    context.widgetDao.findAll().sorted(ordering).toArray
+    context.widgetDao.findAll.sorted(ordering).toArray
   }
 
   @ModelAttribute("classes")

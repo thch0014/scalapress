@@ -18,7 +18,7 @@ class ObjToAccountMigrator(accountDao: AccountDao,
   @PostConstruct
   def run() {
 
-    val accountType = accountTypeDao.findAll().headOption match {
+    val accountType = accountTypeDao.findAll.headOption match {
       case Some(t) => t
       case None =>
         val accountType = new AccountType

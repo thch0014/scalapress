@@ -21,7 +21,7 @@ trait MarkupPopulator {
   val markupDao: MarkupDao
 
   @ModelAttribute def markups(model: ModelMap) {
-    val markups = markupDao.findAll().sortBy(_.id)
+    val markups = markupDao.findAll.sortBy(_.id)
 
     val map = mutable.LinkedHashMap(0l -> "-None-")
     markups.map(markup => {
@@ -38,7 +38,7 @@ trait FormPopulator {
   val formDao: FormDao
 
   @ModelAttribute def forms(model: ModelMap) {
-    val forms = formDao.findAll()
+    val forms = formDao.findAll
 
     var map = TreeMap(0l -> "-None-")
     forms.map(f => {
@@ -104,7 +104,7 @@ trait ThemePopulator {
   val themeDao: ThemeDao
 
   @ModelAttribute def themes(model: ModelMap) {
-    val themes = themeDao.findAll().sortBy(_.id)
+    val themes = themeDao.findAll.sortBy(_.id)
 
     val map = mutable.LinkedHashMap(0l -> "-None-")
     themes.map(theme => {
@@ -121,7 +121,7 @@ trait FolderPopulator {
   val folderDao: FolderDao
 
   @ModelAttribute def folders(model: ModelMap) {
-    val folders = folderDao.findAll().sortBy(_.id)
+    val folders = folderDao.findAll.sortBy(_.id)
 
     val map = mutable.Map(0l -> "-Default-")
     folders.map(f => {
@@ -142,7 +142,7 @@ trait DeliveryOptionPopulator {
   var deliveryOptionDao: DeliveryOptionDao
 
   @ModelAttribute def deliveryOptions(model: ModelMap) {
-    val opts = deliveryOptionDao.findAll().sortBy(d => Option(d.name).getOrElse(""))
+    val opts = deliveryOptionDao.findAll.sortBy(d => Option(d.name).getOrElse(""))
 
     val map = mutable.LinkedHashMap(0l -> "-Select Delivery-")
     opts.map(o => {

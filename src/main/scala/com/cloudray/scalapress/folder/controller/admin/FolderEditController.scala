@@ -72,7 +72,7 @@ class FolderEditController(val assetStore: AssetStore,
   @ModelAttribute("parents")
   def parents = {
 
-    val folders = folderDao.findAll().sortBy(_.id)
+    val folders = folderDao.findAll.sortBy(_.id)
 
     val map = mutable.Map(0l -> "-Default-")
     folders.map(f => {

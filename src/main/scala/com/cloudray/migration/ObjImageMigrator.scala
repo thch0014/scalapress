@@ -50,7 +50,7 @@ class ObjImageMigrator extends Logging {
   @PostConstruct
   def run() {
     logger.debug("Beginning migration run [{}]", context.installationDao.get.name)
-    val images = context.imageDao.findAll().sortBy(_.id).sortBy(_.position)
+    val images = context.imageDao.  findAll.sortBy(_.id).sortBy(_.position)
     logger.info("Images [{}]", images.size)
     images.foreach(image =>
       try {

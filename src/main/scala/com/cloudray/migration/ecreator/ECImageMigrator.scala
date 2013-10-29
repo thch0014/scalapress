@@ -56,7 +56,7 @@ class ECImageMigrator extends Logging {
   }
 
   def migrateCategories(domain: String, executor: ExecutorService) {
-    val folders = folderDao.findAll()
+    val folders = folderDao.findAll
     logger.info("Migrating {} folders", folders.size)
     folders.foreach(arg => {
       val sections = arg.sections.asScala
@@ -75,7 +75,7 @@ class ECImageMigrator extends Logging {
   }
 
   def migrateImages(domain: String, executor: ExecutorService) {
-    val images = imageDao.findAll()
+    val images = imageDao.findAll
     logger.info("Migrating {} images", images.size)
     images.filter(_.getFilename != null).foreach(arg => {
       executor.submit(new Runnable() {
@@ -87,7 +87,7 @@ class ECImageMigrator extends Logging {
   }
 
   def migrateSideboxes(domain: String, executor: ExecutorService) {
-    val widgets = widgetDao.findAll()
+    val widgets = widgetDao.findAll
     logger.info("Migrating {} widgets", widgets.size)
     widgets.filter(_.isInstanceOf[HtmlWidget])
       .map(_.asInstanceOf[HtmlWidget])
@@ -106,7 +106,7 @@ class ECImageMigrator extends Logging {
   }
 
   def migrateItems(domain: String, executor: ExecutorService) {
-    val objects = objectDao.findAll()
+    val objects = objectDao.findAll
     logger.info("Migrating {} objects", objects.size)
     objects.foreach(arg => {
       executor.submit(new Runnable() {

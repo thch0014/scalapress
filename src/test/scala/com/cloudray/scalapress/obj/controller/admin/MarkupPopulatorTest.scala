@@ -25,7 +25,7 @@ class MarkupPopulatorTest extends FunSuite with MockitoSugar with OneInstancePer
     val markupDao: MarkupDao = mock[MarkupDao]
   }
 
-  Mockito.when(populator.markupDao.findAll()).thenReturn(List(m1, m2, m3))
+  Mockito.when(populator.markupDao.findAll).thenReturn(List(m1, m2, m3))
 
   test("that themes are populated in order") {
     val model = new ModelMap

@@ -31,7 +31,7 @@ class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
   def reorder(@RequestBody order: String): String = {
 
     val ids = order.split("-")
-    deliveryOptionDao.findAll().foreach(d => {
+    deliveryOptionDao.findAll.foreach(d => {
       val pos = ids.indexOf(d.id.toString)
       d.position = pos
       deliveryOptionDao.save(d)
@@ -39,5 +39,5 @@ class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
     "ok"
   }
 
-  @ModelAttribute("options") def options = deliveryOptionDao.findAll().sortBy(_.position).asJava
+  @ModelAttribute("options") def options = deliveryOptionDao.findAll.sortBy(_.position).asJava
 }

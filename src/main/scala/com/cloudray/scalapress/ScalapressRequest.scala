@@ -61,9 +61,9 @@ case class ScalapressRequest(request: HttpServletRequest,
     val _folders = scala.collection.mutable.Map.empty[Long, Folder]
     lazy val shoppingPlugin = context.bean[ShoppingPluginDao].get
     lazy val folderSettings = context.folderSettingsDao.head
-    lazy val widgets = context.widgetDao.findAll()
+    lazy val widgets = context.widgetDao.findAll
     lazy val folders = {
-      val all = context.folderDao.findAll()
+      val all = context.folderDao.findAll
       all.foreach(folder => _folders.put(folder.id, folder))
       all
     }

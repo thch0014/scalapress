@@ -18,5 +18,5 @@ class SavedSearchListController(dao: SavedSearchDao,
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/savedsearch/list.vm"
 
-  @ModelAttribute("searches") def searches = dao.findAll().asJava
+  @ModelAttribute("searches") def searches = dao.findAll.asJava
 }

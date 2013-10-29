@@ -14,7 +14,7 @@ trait DimensionDao extends GenericDao[Dimension, java.lang.Long] {
 @Transactional
 class DimensionDaoImpl extends GenericDaoImpl[Dimension, java.lang.Long] with DimensionDao {
   def findByObjectType(id: Long): Seq[Dimension] =
-    findAll().filterNot(_.objectType == null).filter(_.objectType.id == id)
+    findAll.filterNot(_.objectType == null).filter(_.objectType.id == id)
 }
 
 trait VariationDao extends GenericDao[Variation, java.lang.Long] {

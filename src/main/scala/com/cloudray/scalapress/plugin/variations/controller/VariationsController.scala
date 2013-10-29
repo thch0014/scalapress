@@ -27,9 +27,7 @@ class VariationsController {
     val variations = variationDao.findByObjectId(id).sortBy(_.name)
     model.put("variations", variations.asJava)
 
-    val dimensions = dimensionDao.findAll()
-      .filterNot(_.objectType == null)
-      .filter(_.objectType.id == obj.objectType.id)
+    val dimensions = dimensionDao.findAll.filterNot(_.objectType == null).filter(_.objectType.id == obj.objectType.id)
     model.put("dimensions", dimensions.asJava)
 
     "admin/plugin/variations/list.vm"
@@ -55,7 +53,7 @@ class VariationsController {
   }
 
   def _dimensions(obj: Obj): Iterable[Dimension] = _dimensions(obj.objectType.id)
-  def _dimensions(id: Long): Iterable[Dimension] = dimensionDao.findAll().filter(_.objectType.id == id)
+  def _dimensions(id: Long): Iterable[Dimension] = dimensionDao.findAll.filter(_.objectType.id == id)
 
   @RequestMapping(value = Array("add"), method = Array(RequestMethod.POST), params = Array("objectId"))
   def add(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {

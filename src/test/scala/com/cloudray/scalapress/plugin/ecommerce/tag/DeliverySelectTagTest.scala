@@ -31,7 +31,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
   val context = mock[ScalapressContext]
   val dao = mock[DeliveryOptionDao]
   Mockito.when(context.bean[DeliveryOptionDao]).thenReturn(dao)
-  Mockito.when(dao.findAll()).thenReturn(options)
+  Mockito.when(dao.findAll).thenReturn(options)
   val sreq = new ScalapressRequest(req, context)
 
   val basket = new Basket

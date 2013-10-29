@@ -22,7 +22,7 @@ class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstan
   w3.id = 15
 
   val widgets = List(w1, w2, w3)
-  Mockito.when(context.widgetDao.findAll()).thenReturn(widgets)
+  Mockito.when(context.widgetDao.findAll).thenReturn(widgets)
 
   test("widgets re-ordering returns ok") {
     val result = controller.reorderWidgets("1,2,3")

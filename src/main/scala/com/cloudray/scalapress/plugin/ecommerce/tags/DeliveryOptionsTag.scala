@@ -11,7 +11,7 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.{Basket, DeliveryOption}
 class DeliveryOptionsTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
-    val options = request.context.bean[DeliveryOptionDao].findAll().sortBy(_.position)
+    val options = request.context.bean[DeliveryOptionDao].findAll.sortBy(_.position)
     val currentDeliveryId = Option(request.basket.deliveryOption).map(_.id.toString).orNull
 
     val radios = options.map(opt => {
@@ -50,7 +50,7 @@ class DeliverySelectTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
 
     val current = currentDeliveryId(request.basket)
-    val deliveries = request.context.bean[DeliveryOptionDao].findAll().sortBy(_.position)
+    val deliveries = request.context.bean[DeliveryOptionDao].findAll.sortBy(_.position)
     val options = deliveries.map(delivery2option(_, current))
 
     val select =

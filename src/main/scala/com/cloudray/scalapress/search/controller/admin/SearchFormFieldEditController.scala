@@ -31,8 +31,12 @@ class SearchFormFieldEditController(val markupDao: MarkupDao,
     edit(field)
   }
 
-  @ModelAttribute("attributeTypes") def types = populate(SearchFieldType.values)
-  @ModelAttribute("attributesMap") def attributes(@PathVariable("id") id: Long) =
-    attributesMap(attributeDao.findAll().sortBy(_.id))
-  @ModelAttribute("field") def form(@PathVariable("id") id: Long) = searchFormFieldDao.find(id)
+  @ModelAttribute("attributeTypes")
+  def types = populate(SearchFieldType.values)
+
+  @ModelAttribute("attributesMap")
+  def attributes(@PathVariable("id") id: Long) = attributesMap(attributeDao.findAll.sortBy(_.id))
+
+  @ModelAttribute("field")
+  def form(@PathVariable("id") id: Long) = searchFormFieldDao.find(id)
 }

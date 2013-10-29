@@ -131,14 +131,14 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
   }
 
   test("a single delivery option is automatically set and persisted") {
-    Mockito.when(controller.deliveryOptionDao.findAll()).thenReturn(List(del1))
+    Mockito.when(controller.deliveryOptionDao.findAll).thenReturn(List(del1))
     controller.showDelivery(req, basket, errors)
     assert(basket.deliveryOption === del1)
     Mockito.verify(controller.basketDao).save(basket)
   }
 
   test("all delivery options are not shown") {
-    Mockito.when(controller.deliveryOptionDao.findAll()).thenReturn(List(del1, del2))
+    Mockito.when(controller.deliveryOptionDao.findAll).thenReturn(List(del1, del2))
     val page = controller.showDelivery(req, basket, errors)
     assert(page._body.filter(_.toString.contains("quick delivery")).size > 0)
     assert(page._body.filter(_.toString.contains("slow delivery")).size > 0)
@@ -146,7 +146,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
 
   test("deleted delivery options are not shown") {
     del2.deleted = 1
-    Mockito.when(controller.deliveryOptionDao.findAll()).thenReturn(List(del1, del2))
+    Mockito.when(controller.deliveryOptionDao.findAll).thenReturn(List(del1, del2))
     val page = controller.showDelivery(req, basket, errors)
     assert(page._body.filter(_.toString.contains("quick delivery")).size > 0)
     assert(page._body.filter(_.toString.contains("slow delivery")).size == 0)

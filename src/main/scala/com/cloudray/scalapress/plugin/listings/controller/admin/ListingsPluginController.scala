@@ -39,5 +39,5 @@ class ListingsPluginController {
   }
 
   @ModelAttribute("plugin") def plugin = listingsPluginDao.get
-  @ModelAttribute("packages") def users = listingPackageDao.findAll().asJava
+  @ModelAttribute("packages") def users = listingPackageDao.findAll.asJava
 }

@@ -23,6 +23,6 @@ class VoucherListController(voucherDao: VoucherDao,
   }
 
   @ModelAttribute("vouchers")
-  def forms = voucherDao.findAll().asJava
+  def forms = voucherDao.findAll.asJava
 
 }

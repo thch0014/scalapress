@@ -27,5 +27,5 @@ class GalleryListController {
     "redirect:/backoffice/gallery"
   }
 
-  @ModelAttribute("galleries") def galleries = galleryDao.findAll().asJava
+  @ModelAttribute("galleries") def galleries = galleryDao.findAll.asJava
 }

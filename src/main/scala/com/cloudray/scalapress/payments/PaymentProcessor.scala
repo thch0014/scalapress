@@ -1,6 +1,7 @@
 package com.cloudray.scalapress.payments
 
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
+import com.cloudray.scalapress.plugin.vouchers.Voucher
 
 /** @author Stephen Samuel */
 trait PaymentProcessor {
@@ -30,7 +31,9 @@ case class CallbackResult(tx: Transaction, callbackInfo: String) {
  * A purchase models the data that a processor needs to create the parameters for a payment sreq.
  */
 trait Purchase {
+
   val SPLITTER = "-"
+
   def paymentDescription: String
   def callback: String
   def uniqueIdent: String
@@ -40,6 +43,7 @@ trait Purchase {
   def deliveryAddress: Option[Address] = None
   def accountEmail: String
   def accountName: String
+  def voucher: Option[Voucher] = None
 
   def failureUrl: String
   def successUrl: String
