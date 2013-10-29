@@ -16,6 +16,7 @@ import com.cloudray.scalapress.payments._
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayInputStream
 import com.cloudray.scalapress.media.{AssetService, AssetStore}
+import com.cloudray.scalapress.plugin.vouchers.VoucherDao
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -35,6 +36,8 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   controller.paymentFormRenderer = mock[PaymentFormRenderer]
   controller.context.assetStore = mock[AssetStore]
   controller.assetService = mock[AssetService]
+  controller.voucherDao = mock[VoucherDao]
+
 
   Mockito.when(controller.assetService.upload(Matchers.any[Seq[MultipartFile]])).thenReturn(List("key1", "key2"))
 
