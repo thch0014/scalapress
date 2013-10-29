@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.obj.controller
 
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 trait ObjectInterceptor {
@@ -20,7 +20,7 @@ trait ObjectInterceptor {
    * @return true if the execution chain should proceed with the
    *         next listener or the handler itself. false if the execution should stop after this method.
    */
-  def preHandle(obj: Obj, request: HttpServletRequest, response: HttpServletResponse): Boolean = true
+  def preHandle(obj: Item, request: HttpServletRequest, response: HttpServletResponse): Boolean = true
 
   /**
    * Intercept the execution of a object after the object has been executed.
@@ -28,5 +28,5 @@ trait ObjectInterceptor {
    * @param request current HTTP request
    * @param response current HTTP response
    */
-  def postHandle(obj: Obj, request: HttpServletRequest, response: HttpServletResponse) {}
+  def postHandle(obj: Item, request: HttpServletRequest, response: HttpServletResponse) {}
 }

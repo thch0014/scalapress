@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.controller.admin
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.attr.{AttributeValueDao, AttributeType}
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectDao, Item}
 import org.mockito.Mockito
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.section.SectionDao
@@ -49,7 +49,7 @@ class ObjectEditControllerTest extends FlatSpec with MockitoSugar with OneInstan
   val section3 = new FolderContentSection
   section3.id = 15
 
-  val obj = new Obj
+  val obj = new Item
   obj.sections.add(section1)
   obj.sections.add(section2)
   obj.sections.add(section3)

@@ -14,7 +14,7 @@ import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClassScanner}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectCloner, ObjectDao, Item}
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValueDao, AttributeValue}
 import com.cloudray.scalapress.media._
@@ -210,9 +210,9 @@ class ObjectEditController(val assetStore: AssetStore,
 
   @ModelAttribute("statuses")
   def statuses =
-    Map(Obj.STATUS_LIVE -> Obj.STATUS_LIVE,
-      Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED,
-      Obj.STATUS_DELETED -> Obj.STATUS_DELETED).asJava
+    Map(Item.STATUS_LIVE -> Item.STATUS_LIVE,
+      Item.STATUS_DISABLED -> Item.STATUS_DISABLED,
+      Item.STATUS_DELETED -> Item.STATUS_DELETED).asJava
 
   @ModelAttribute
   def f(@PathVariable("id") id: Long, model: ModelMap) {
@@ -255,7 +255,7 @@ class EditForm {
   @BeanProperty var sellPrice: Double = _
   @BeanProperty var costPrice: Double = _
   @BeanProperty var rrp: Double = _
-  @BeanProperty var o: Obj = _
+  @BeanProperty var o: Item = _
   @BeanProperty var account: Long = _
   @BeanProperty var folderIds: Array[Long] = _
   @BeanProperty var upload: MultipartFile = _

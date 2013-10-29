@@ -5,7 +5,7 @@ import com.csvreader.CsvWriter
 import scala.collection.JavaConverters._
 import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.Logging
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.obj.attr.AttributeFuncs
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.util.UrlGenerator
@@ -23,7 +23,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     case _ => "Courier"
   }
 
-  def csv(objs: Seq[Obj], feed: GBaseFeed): File = {
+  def csv(objs: Seq[Item], feed: GBaseFeed): File = {
 
     val filtered = filter(feed, objs)
     logger.debug("Generating GBASE file for {} objects", filtered.size)
@@ -46,7 +46,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     file
   }
 
-  def filter(feed: GBaseFeed, obj: Seq[Obj]) = {
+  def filter(feed: GBaseFeed, obj: Seq[Item]) = {
     obj
       .filter(AttributeFuncs.attributeValue(_, feed.brandAttrName).isDefined)
       .filter(AttributeFuncs.attributeValue(_, feed.partAttrName).isDefined)
@@ -72,7 +72,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     "mpn",
     "shipping")
 
-  def row(feed: GBaseFeed, obj: Obj): Array[String] = {
+  def row(feed: GBaseFeed, obj: Item): Array[String] = {
 
     val brand = AttributeFuncs.attributeValue(obj, feed.brandAttrName).getOrElse("")
     val mpn = AttributeFuncs.attributeValue(obj, feed.partAttrName).getOrElse("")
@@ -113,7 +113,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
     "GB::" + shippingDesc(costAsDouble) + ":" + formattedShippingCost + " GBP"
 
   }
-  def _condition(obj: Obj) = {
+  def _condition(obj: Item) = {
     AttributeFuncs.attributeValue(obj, "condition") match {
       case None => CONDITION_NEW
       case Some(value) if value.toLowerCase == CONDITION_USED => CONDITION_USED

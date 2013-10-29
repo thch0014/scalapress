@@ -1,12 +1,12 @@
 package com.cloudray.scalapress.plugin.variations
 
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class VariationCreationService(variationDao: VariationDao) {
 
-  def create(obj: Obj, map: Map[Dimension, Seq[String]]): Iterable[Variation] = {
+  def create(obj: Item, map: Map[Dimension, Seq[String]]): Iterable[Variation] = {
     val values = mapToList(map)
     val combinations = combine(List(List()), values.map(_.toList).toList)
 

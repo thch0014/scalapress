@@ -7,8 +7,8 @@ import java.util
 /** @author Stephen Samuel */
 class ObjectCloner {
 
-  def clone(obj: Obj): Obj = {
-    val clone = new Obj
+  def clone(obj: Item): Item = {
+    val clone = new Item
     clone.name = obj.name + " (Copy)"
     clone.objectType = obj.objectType
     clone.price = obj.price

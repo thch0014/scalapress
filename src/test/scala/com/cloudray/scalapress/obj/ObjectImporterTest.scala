@@ -14,7 +14,7 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
   val importer = new ObjectImporter(objectDao, objectType)
   val csv = mock[CsvReader]
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 14
 
   test("importer sets name on obj") {
@@ -24,9 +24,9 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
   }
 
   test("importer sets status on obj") {
-    Mockito.when(csv.get("status")).thenReturn(Obj.STATUS_DELETED)
+    Mockito.when(csv.get("status")).thenReturn(Item.STATUS_DELETED)
     importer.setValues(obj, csv)
-    assert(Obj.STATUS_DELETED === obj.status)
+    assert(Item.STATUS_DELETED === obj.status)
   }
 
   test("importer sets price on obj") {
@@ -54,7 +54,7 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
   }
 
   test("importer processes CSV file and sets values") {
-    val obj = new Obj
+    val obj = new Item
     obj.id = 12
     Mockito.when(objectDao.find(12)).thenReturn(obj)
     val string = "id,name,status,price\n12,coldplay tickets,live,29.99"
@@ -72,7 +72,7 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
 
     objectType.attributes.add(a)
 
-    val obj = new Obj
+    val obj = new Item
     obj.id = 12
     Mockito.when(objectDao.find(12)).thenReturn(obj)
     val string = "id,name,status,brand\n12,galaxy s4,live,samsung"
@@ -82,7 +82,7 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
   }
 
   test("importer persists objects") {
-    val obj = new Obj
+    val obj = new Item
     obj.id = 12
     Mockito.when(objectDao.find(12)).thenReturn(obj)
     val string = "id,name,status,price\n12,coldplay tickets,live,29.99"
@@ -92,11 +92,11 @@ class ObjectImporterTest extends FunSuite with OneInstancePerTest with MockitoSu
 
   test("importer does not change objects not included in the file") {
 
-    val obj = new Obj
+    val obj = new Item
     obj.id = 12
     Mockito.when(objectDao.find(12)).thenReturn(obj)
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.id = 55
     obj2.status = "boo"
     obj2.name = "super name"

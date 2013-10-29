@@ -14,7 +14,7 @@ class DatabaseSearchService extends SearchService {
 
   def search(search: SavedSearch): SearchResult = {
 
-    val q = new ObjectQuery().withStatus(Obj.STATUS_LIVE).withName(search.name)
+    val q = new ObjectQuery().withStatus(Item.STATUS_LIVE).withName(search.name)
 
     if (search.objectType != null) {
       q.withTypeId(search.objectType.id)
@@ -39,13 +39,13 @@ class DatabaseSearchService extends SearchService {
     new SearchResult(refs, Nil, -1)
   }
 
-  def count: Long = objectDao.count(new Search(classOf[Obj]))
+  def count: Long = objectDao.count(new Search(classOf[Item]))
   def contains(id: String): Boolean = objectDao.find(id.toLong) != null
   def typeahead(q: String, limit: Int): Seq[ObjectRef] = Nil
 
   // the following are no-op methods, as there is no "index".
   def remove(id: String): Unit = {}
-  def index(obj: Obj): Unit = {}
+  def index(obj: Item): Unit = {}
   def stats: Map[String, String] = Map.empty
 
 }

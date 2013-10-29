@@ -4,7 +4,7 @@ import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
@@ -14,7 +14,7 @@ class ListingCustomerNotificationService extends Logging {
     @Autowired var context: ScalapressContext = _
     @Autowired var mailSender: MailSender = _
 
-    def send(obj: Obj) {
+    def send(obj: Item) {
 
         val domain = context.installationDao.get.domain
         val body = _message(obj)
@@ -28,7 +28,7 @@ class ListingCustomerNotificationService extends Logging {
         mailSender.send(msg)
     }
 
-    def _message(listing: Obj): String = {
+    def _message(listing: Item): String = {
 
         val domain = context.installationDao.get.domain
         val url = "http://" + domain + UrlGenerator.url(listing)

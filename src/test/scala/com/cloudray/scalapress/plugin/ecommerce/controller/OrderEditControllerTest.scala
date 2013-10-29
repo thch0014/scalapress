@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.{OrderEditForm, OrderEditController}
 import org.mockito.Mockito
-import com.cloudray.scalapress.obj.{Obj, ObjectDao}
+import com.cloudray.scalapress.obj.{Item, ObjectDao}
 import com.cloudray.scalapress.plugin.ecommerce.{OrderCustomerNotificationService, OrderDao}
 import javax.servlet.http.HttpServletRequest
 
@@ -46,7 +46,7 @@ class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstanc
 
     test("adding by id creates an object line and pesists it") {
 
-        val obj = new Obj
+        val obj = new Item
         obj.id = 15
         obj.name = "fullers esb"
         obj.price = 1999

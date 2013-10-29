@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.obj.controller
 
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class ObjectInterceptorService(interceptors: Iterable[ObjectInterceptor]) {
@@ -22,11 +22,11 @@ class ObjectInterceptorService(interceptors: Iterable[ObjectInterceptor]) {
    *         next interceptor or the controller.
    *         false if the execution should stop after this method.
    */
-  def preHandle(obj: Obj, request: HttpServletRequest, response: HttpServletResponse): Boolean = {
+  def preHandle(obj: Item, request: HttpServletRequest, response: HttpServletResponse): Boolean = {
     interceptors.filterNot(_.preHandle(obj, request, response)).isEmpty // failed calls should be 0 to return true
   }
 
-  def postHandle(obj: Obj, request: HttpServletRequest, response: HttpServletResponse) {
+  def postHandle(obj: Item, request: HttpServletRequest, response: HttpServletResponse) {
     interceptors.foreach(_.postHandle(obj, request, response))
   }
 }

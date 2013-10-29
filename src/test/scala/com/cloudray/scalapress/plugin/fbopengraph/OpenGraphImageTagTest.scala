@@ -7,7 +7,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -25,7 +25,7 @@ class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstanceP
 
   Mockito.when(context.assetStore.link("coldplay.png")).thenReturn("http://coldplay.com/coldplay.png")
 
-  val o = new Obj
+  val o = new Item
   o.name = "big shirt"
   val sreq = new ScalapressRequest(req, context)
 

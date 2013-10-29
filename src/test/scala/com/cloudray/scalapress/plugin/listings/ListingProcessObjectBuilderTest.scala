@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.joda.time.{DateMidnight, DateTimeZone}
-import com.cloudray.scalapress.obj.{ObjectDao, ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectDao, ObjectType, Item}
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
 import org.mockito.Mockito
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
@@ -19,7 +19,7 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
   val builder = new ListingProcessObjectBuilder(context)
   val p = new ListingPackage
 
-  val obj = new Obj
+  val obj = new Item
 
   val process = new ListingProcess
   process.content = "what a lovely mare"
@@ -35,7 +35,7 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
 
   test("object status is initially set to disabled") {
     val obj = builder.build(process)
-    assert(Obj.STATUS_DISABLED === obj.status)
+    assert(Item.STATUS_DISABLED === obj.status)
   }
 
   test("object title is taken from the process title") {

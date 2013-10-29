@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, PathVariable, Requ
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import com.cloudray.scalapress.media.ImageDao
-import com.cloudray.scalapress.obj.{Obj, ObjectDao}
+import com.cloudray.scalapress.obj.{Item, ObjectDao}
 import com.cloudray.scalapress.account.controller.Datum
 
 /** @author Stephen Samuel */
@@ -17,7 +17,7 @@ class ObjectRestController(objectDao: ObjectDao,
 
   @ResponseBody
   @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-  def get(@PathVariable("id") id: Long): Obj = objectDao.find(id)
+  def get(@PathVariable("id") id: Long): Item = objectDao.find(id)
 
   @ResponseBody
   @RequestMapping(value = Array("{id}/image"), produces = Array(MediaType.APPLICATION_JSON_VALUE))

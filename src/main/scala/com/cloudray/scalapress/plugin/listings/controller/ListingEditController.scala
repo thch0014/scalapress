@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.obj.attr.AttributeValue
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
@@ -23,7 +23,7 @@ class ListingEditController {
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-  def edit(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): ScalapressPage = {
+  def edit(@ModelAttribute("obj") obj: Item, req: HttpServletRequest): ScalapressPage = {
 
     val account = SpringSecurityResolver.getAccount(req)
     require(account.get.id == obj.account.id)
@@ -36,7 +36,7 @@ class ListingEditController {
   }
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute("obj") obj: Obj, req: HttpServletRequest): String = {
+  def save(@ModelAttribute("obj") obj: Item, req: HttpServletRequest): String = {
 
     obj.name = req.getParameter("title")
     obj.content = req.getParameter("content")

@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketLineVariationTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.variations.{Variation, Dimension, DimensionValue}
@@ -13,7 +13,7 @@ import com.cloudray.scalapress.plugin.variations.{Variation, Dimension, Dimensio
 class BasketLineVariationTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
   val line1 = new BasketLine
-  line1.obj = new Obj
+  line1.obj = new Item
   line1.obj.name = "coldplay tickets riverside stadium"
   line1.obj.stock = 55
 

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.variations
 
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import java.lang.String
 import javax.persistence._
 import java.util
@@ -77,7 +77,7 @@ class Variation {
   @JoinColumn(name = "object", nullable = true)
   @BatchSize(size = 20)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var obj: Obj = _
+  @BeanProperty var obj: Item = _
 
   @OneToMany(mappedBy = "variation", fetch = FetchType.EAGER, cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @BatchSize(size = 200)

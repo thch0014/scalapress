@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.listings
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.payments.Purchase
 import com.cloudray.scalapress.plugin.vouchers.Voucher
 
 /** @author Stephen Samuel */
-class ListingPurchase(listing: Obj, _voucher: Option[Voucher], domain: String) extends Purchase {
+class ListingPurchase(listing: Item, _voucher: Option[Voucher], domain: String) extends Purchase {
 
   def paymentDescription: String = "Listing: " + listing.name
 

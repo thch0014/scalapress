@@ -11,41 +11,41 @@ import com.cloudray.scalapress.search.Sort
 import com.cloudray.scalapress.account.controller.Datum
 
 /** @author Stephen Samuel */
-trait ObjectDao extends GenericDao[Obj, java.lang.Long] {
-  def recent(i: Int): Seq[Obj]
-  def findBulk(longs: Seq[Long]): Seq[Obj]
-  def search(query: ObjectQuery): Page[Obj]
+trait ObjectDao extends GenericDao[Item, java.lang.Long] {
+  def recent(i: Int): Seq[Item]
+  def findBulk(longs: Seq[Long]): Seq[Item]
+  def search(query: ObjectQuery): Page[Item]
   def typeAhead(query: String): Array[Datum]
-  def findByType(id: Long): List[Obj]
+  def findByType(id: Long): List[Item]
   def removeByType(id: Long)
 }
 
 @Component
 @Transactional
-class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao with Logging {
+class ObjectDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ObjectDao with Logging {
 
-  override def recent(i: Int): Seq[Obj] =
-    search(new Search(classOf[Obj])
-      .addFilterEqual("status", Obj.STATUS_LIVE)
+  override def recent(i: Int): Seq[Item] =
+    search(new Search(classOf[Item])
+      .addFilterEqual("status", Item.STATUS_LIVE)
       .setMaxResults(i)
       .addSort("id", true))
 
-  override def findBulk(longs: Seq[Long]): Seq[Obj] = {
+  override def findBulk(longs: Seq[Long]): Seq[Item] = {
     if (longs.isEmpty) Nil
     else {
-      val s = new Search(classOf[Obj]).addFilterIn("id", longs.asJava)
+      val s = new Search(classOf[Item]).addFilterIn("id", longs.asJava)
       val results = search(s)
       results
     }
   }
 
-  override def save(obj: Obj): Boolean = {
+  override def save(obj: Item): Boolean = {
     obj.dateUpdated = System.currentTimeMillis()
     super.save(obj)
   }
 
-  override def search(q: ObjectQuery): Page[Obj] = {
-    val s = new Search(classOf[Obj]).setMaxResults(q.pageSize).setFirstResult(q.offset)
+  override def search(q: ObjectQuery): Page[Item] = {
+    val s = new Search(classOf[Item]).setMaxResults(q.pageSize).setFirstResult(q.offset)
     q.typeId.foreach(t => {
       s.addFetch("objectType")
       s.addFilterEqual("objectType.id", t)
@@ -70,7 +70,7 @@ class ObjectDaoImpl extends GenericDaoImpl[Obj, java.lang.Long] with ObjectDao w
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
   }
 
-  override def findByType(id: Long): List[Obj] = search(new Search(classOf[Obj]).addFilterEqual("objectType.id", id))
+  override def findByType(id: Long): List[Item] = search(new Search(classOf[Item]).addFilterEqual("objectType.id", id))
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession

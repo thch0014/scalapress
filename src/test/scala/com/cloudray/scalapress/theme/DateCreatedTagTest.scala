@@ -5,7 +5,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import tag.DateCreatedTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
@@ -14,7 +14,7 @@ class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSu
   val req = mock[HttpServletRequest]
   val context = mock[ScalapressContext]
 
-  val obj = new Obj
+  val obj = new Item
   obj.dateCreated = 1364122808957l
 
   val f = new Folder

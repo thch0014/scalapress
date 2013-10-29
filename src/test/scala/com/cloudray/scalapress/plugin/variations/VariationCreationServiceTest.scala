@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.variations
 
-import com.cloudray.scalapress.obj.{Obj, ObjectType}
+import com.cloudray.scalapress.obj.{Item, ObjectType}
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
@@ -21,7 +21,7 @@ class VariationCreationServiceTest extends FlatSpec with MockitoSugar with OneIn
   d2.name = "size"
   d2.objectType = d1.objectType
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 1
   obj.objectType = d1.objectType
 

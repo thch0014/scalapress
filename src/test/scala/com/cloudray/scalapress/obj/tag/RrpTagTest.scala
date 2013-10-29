@@ -2,14 +2,14 @@ package com.cloudray.scalapress.obj.tag
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class RrpTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val obj = new Obj
+    val obj = new Item
     obj.price = 1000
     obj.vatRate = 20.00
     obj.rrp = 1566

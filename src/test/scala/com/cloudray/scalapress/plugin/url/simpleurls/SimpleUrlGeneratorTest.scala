@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.url.simpleurls
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.Folder
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
@@ -9,7 +9,7 @@ import org.scalatest.mock.MockitoSugar
 class SimpleUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   test("object friendly url happy path") {
-    val obj = new Obj
+    val obj = new Item
     obj.id = 1234
     obj.name = "boro for the champo"
     assert("/o1234-boro-for-the-champo" === SimpleUrlGeneratorStrategy.url(obj))

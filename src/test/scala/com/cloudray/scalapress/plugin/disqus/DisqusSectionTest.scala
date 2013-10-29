@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressRequest
 import org.mockito.Mockito
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.settings.Installation
 
@@ -15,7 +15,7 @@ class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTe
   section.id = 152
   section.shortname = "sammythebull"
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 34
   obj.name = "coldplay tickets"
 

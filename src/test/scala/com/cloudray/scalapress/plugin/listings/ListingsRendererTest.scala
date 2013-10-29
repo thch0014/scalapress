@@ -2,17 +2,17 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRenderer
 
 /** @author Stephen Samuel */
 class ListingsRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.id = 63
     obj1.name = "coldplay"
     obj1.status = "live"
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.id = 15
     obj2.name = "jethro tull"
     obj2.status = "statto"

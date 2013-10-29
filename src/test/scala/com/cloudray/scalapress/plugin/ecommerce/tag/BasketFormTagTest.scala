@@ -5,12 +5,12 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketFormTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class BasketFormTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 41
 
   val tag = new BasketFormTag()

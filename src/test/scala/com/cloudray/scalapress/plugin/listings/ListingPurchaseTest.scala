@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.plugin.vouchers.Voucher
@@ -10,7 +10,7 @@ import com.cloudray.scalapress.plugin.vouchers.Voucher
 /** @author Stephen Samuel */
 class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-  val listing = new Obj
+  val listing = new Item
   listing.id = 47
   listing.name = "coldplay t shirt"
   listing.account = new Account

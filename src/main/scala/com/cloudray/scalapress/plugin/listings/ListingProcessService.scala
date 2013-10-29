@@ -4,7 +4,7 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
 import com.cloudray.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
 import com.cloudray.scalapress.account.Account
@@ -21,7 +21,7 @@ class ListingProcessService extends Logging {
   @Autowired var listingProcessDao: ListingProcessDao = _
   @Autowired var listingAdminNotificationService: ListingAdminNotificationService = _
 
-  def process(process: ListingProcess): Obj = {
+  def process(process: ListingProcess): Item = {
     logger.debug("Building listing for process [{}]", process)
 
     val account = context.accountDao.find(process.accountId.toLong)

@@ -7,10 +7,10 @@ import com.cloudray.scalapress.search.Sort
 /** @author Stephen Samuel */
 object ObjectSorter {
 
-  def sort(objs: Iterable[Obj],
+  def sort(objs: Iterable[Item],
            sort: Sort,
            sortAttribute: Option[Attribute],
-           seed: Long = System.currentTimeMillis): Seq[Obj] = {
+           seed: Long = System.currentTimeMillis): Seq[Item] = {
     (sort, sortAttribute) match {
 
       case (Sort.Attribute, Some(attribute)) =>

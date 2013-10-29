@@ -4,7 +4,7 @@ import javax.persistence._
 import java.util
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.section.{ObjectListSection, FolderContentSection, SubfolderSection}
 import com.cloudray.scalapress.theme.Theme
 import javax.persistence.Entity
@@ -26,7 +26,7 @@ class Folder extends SortedSections {
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
-  @BeanProperty var objects: java.util.Set[Obj] = new java.util.HashSet[Obj]()
+  @BeanProperty var objects: java.util.Set[Item] = new java.util.HashSet[Item]()
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
   @Fetch(FetchMode.SUBSELECT)

@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 
 /** @author Stephen Samuel */
 class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -29,7 +29,7 @@ class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePer
   }
 
   test("rendered for objects includes sections from item type") {
-    val obj = new Obj
+    val obj = new Item
     obj.sections.add(section1)
 
     obj.objectType = new ObjectType

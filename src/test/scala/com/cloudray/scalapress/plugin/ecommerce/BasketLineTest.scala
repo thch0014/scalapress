@@ -3,13 +3,13 @@ package com.cloudray.scalapress.plugin.ecommerce
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.variations.Variation
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
 
 /** @author Stephen Samuel */
 class BasketLineTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val o = new Obj
+  val o = new Item
   o.price = 1999
 
   val v = new Variation

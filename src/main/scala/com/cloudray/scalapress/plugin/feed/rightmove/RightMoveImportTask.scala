@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import scala.util.Random
 import com.cloudray.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.{Obj, ObjectQuery}
+import com.cloudray.scalapress.obj.{Item, ObjectQuery}
 
 /** @author Stephen Samuel */
 class RightMoveImportTask extends Runnable with Logging {
@@ -28,7 +28,7 @@ class RightMoveImportTask extends Runnable with Logging {
             q.exernalReference = Some(property.id)
             val objs = context.objectDao.search(q)
 
-            val obj = objs.results.headOption.getOrElse(new Obj)
+            val obj = objs.results.headOption.getOrElse(new Item)
 
             obj.exernalReference = property.id
             obj.name = property.address

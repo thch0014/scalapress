@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
 
 /** @author Stephen Samuel */
@@ -20,7 +20,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
         av.attribute = new Attribute
         av.attribute.attributeType = AttributeType.Postcode
 
-        val obj = new Obj
+        val obj = new Item
         obj.attributeValues.add(av)
 
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("TS19")
@@ -35,7 +35,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
         av.attribute = new Attribute
         av.attribute.attributeType = AttributeType.Postcode
 
-        val obj = new Obj
+        val obj = new Item
         obj.attributeValues.add(av)
 
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("rg10")
@@ -45,7 +45,7 @@ class DistanceTagTest extends FunSuite with MockitoSugar {
 
     test("location happy path") {
 
-        val obj = new Obj
+        val obj = new Item
         val sreq = new ScalapressRequest(req, context).withObject(obj).withLocation("TS19")
         val render = new LocationTag().render(sreq, Map.empty)
         assert(render.get === "TS19")

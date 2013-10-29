@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Entity, Table}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.variations.Variation
 import org.hibernate.annotations.{NotFoundAction, NotFound}
@@ -23,7 +23,7 @@ class BasketLine {
 
   @ManyToOne
   @JoinColumn(name = "obj", nullable = true)
-  @BeanProperty var obj: Obj = _
+  @BeanProperty var obj: Item = _
 
   @ManyToOne
   @JoinColumn(name = "variation", nullable = true)

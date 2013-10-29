@@ -3,14 +3,14 @@ package com.cloudray.scalapress.plugin.variations
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class VariationDaoTest extends FunSuite with MockitoSugar {
 
   test("persisting a variation sets relationships") {
 
-    val obj = new Obj
+    val obj = new Item
     obj.name = "dress"
 
     TestDatabaseContext.objectDao.save(obj)
@@ -32,7 +32,7 @@ class VariationDaoTest extends FunSuite with MockitoSugar {
 
   test("find by object") {
 
-    val obj = new Obj
+    val obj = new Item
     obj.name = "dress"
 
     TestDatabaseContext.objectDao.save(obj)

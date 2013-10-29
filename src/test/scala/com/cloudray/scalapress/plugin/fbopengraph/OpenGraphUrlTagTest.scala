@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -12,7 +12,7 @@ class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePer
     val req = mock[HttpServletRequest]
     val context = new ScalapressContext
 
-    val o = new Obj
+    val o = new Item
     o.name = "big shirt"
     o.id = 14
     val sreq = new ScalapressRequest(req, context)

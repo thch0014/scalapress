@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
 import com.googlecode.genericdao.search.Search
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.{Logging, ScalapressContext}
@@ -36,7 +36,7 @@ class ElasticSearchIndexerImpl(service: SearchService,
 
   def incrementalIndex(since: Long): Unit = index(_loadUpdated(_, _, since))
 
-  def index(loader: (Int, Int) => Seq[Obj]) {
+  def index(loader: (Int, Int) => Seq[Item]) {
     service match {
       case service: ElasticSearchService =>
         for ( objs <- iterator(loader) ) {
@@ -54,11 +54,11 @@ class ElasticSearchIndexerImpl(service: SearchService,
 
   // returns an iterator of sequences of objs, that is, each element in the iterator is in fact
   // a sequence of objects that has been loaded in a single hit to the database.
-  def iterator(loader: (Int, Int) => Seq[Obj]): Iterator[Seq[Obj]] = {
-    new Iterator[Seq[Obj]]() {
+  def iterator(loader: (Int, Int) => Seq[Item]): Iterator[Seq[Item]] = {
+    new Iterator[Seq[Item]]() {
       var offset = 0
-      var objs: Seq[Obj] = Nil
-      def next(): Seq[Obj] = objs
+      var objs: Seq[Item] = Nil
+      def next(): Seq[Item] = objs
       def hasNext: Boolean = {
         _load()
         !objs.isEmpty
@@ -71,15 +71,15 @@ class ElasticSearchIndexerImpl(service: SearchService,
     }
   }
 
-  def _loadLive(offset: Int, pageSize: Int): Seq[Obj] =
-    context.objectDao.search(_basicSearch(offset, pageSize).addFilterLike("status", Obj.STATUS_LIVE))
+  def _loadLive(offset: Int, pageSize: Int): Seq[Item] =
+    context.objectDao.search(_basicSearch(offset, pageSize).addFilterLike("status", Item.STATUS_LIVE))
 
-  def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Obj] = {
+  def _loadUpdated(offset: Int, pageSize: Int, since: Long): Seq[Item] = {
     // include an extra overlap of 15 minutes to allow for time diffs on different nodes
     val _since = since - Duration(15, TimeUnit.MINUTES).toMillis
     context.objectDao.search(_basicSearch(offset, pageSize).addFilterGreaterOrEqual("dateUpdated", _since))
   }
 
   def _basicSearch(offset: Int, pageSize: Int) =
-    new Search(classOf[Obj]).setFirstResult(offset).setMaxResults(pageSize).addFilterNotNull("name")
+    new Search(classOf[Item]).setFirstResult(offset).setMaxResults(pageSize).addFilterNotNull("name")
 }

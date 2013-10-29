@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.search.section.SearchFormSection
-import com.cloudray.scalapress.obj.{Obj, ObjectDao, TypeDao}
+import com.cloudray.scalapress.obj.{Item, ObjectDao, TypeDao}
 import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
@@ -100,7 +100,7 @@ class SearchController extends Logging {
         SearchResult.apply()
     }
     logger.debug("Search Result {}", result)
-    val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+    val objects = objectDao.findBulk(result.refs.map(_.id)).filter(obj => Item.STATUS_LIVE.equalsIgnoreCase(obj.status))
     logger.debug("Loaded {} objects", objects.size)
 
     val sreq = ScalapressRequest(req, context)

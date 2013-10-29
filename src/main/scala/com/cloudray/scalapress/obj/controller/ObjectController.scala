@@ -6,7 +6,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectDao, Item}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, NotFoundException}
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.cloudray.scalapress.security.SpringSecurityResolver
@@ -34,7 +34,7 @@ class ObjectController extends Logging {
 
   @ResponseBody
   @RequestMapping(produces = Array("text/html"))
-  def view(@ModelAttribute obj: Obj, req: HttpServletRequest, resp: HttpServletResponse) = {
+  def view(@ModelAttribute obj: Item, req: HttpServletRequest, resp: HttpServletResponse) = {
 
     if (obj.isDeleted || obj.isDisabled) throw new NotFoundException()
     if (obj.objectType == null) throw new NotFoundException()

@@ -6,7 +6,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.search._
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.FacetTerm
 import com.cloudray.scalapress.search.SearchResult
@@ -15,12 +15,12 @@ import com.cloudray.scalapress.search.Facet
 /** @author Stephen Samuel */
 class FacetTagTest extends FunSuite with MockitoSugar {
 
-    val obj = new Obj
+    val obj = new Item
     obj.id = 4
     obj.objectType = new ObjectType
     obj.objectType.id = 9
     obj.name = "Parachutes"
-    obj.status = Obj.STATUS_LIVE
+    obj.status = Item.STATUS_LIVE
     obj.objectType.objectListMarkup = new Markup
 
     val ref = ObjectRef(4, 9, "Parachutes", "Live", Map.empty, Nil)

@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketLineCountTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressConstants, ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
@@ -13,13 +13,13 @@ import org.mockito.Mockito
 class BasketLineCountTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val line1 = new BasketLine
-    line1.obj = new Obj
+    line1.obj = new Item
     line1.qty = 2
     line1.obj.price = 1000
     line1.obj.vatRate = 10.00
 
     val line2 = new BasketLine
-    line2.obj = new Obj
+    line2.obj = new Item
     line2.qty = 1
     line2.obj.price = 2000
     line2.obj.vatRate = 20.00

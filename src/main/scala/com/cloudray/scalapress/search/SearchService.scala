@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 trait SearchService {
@@ -9,13 +9,13 @@ trait SearchService {
    * Index, or reindex, the given obj. In some cases this will cause the given obj to be removed from the index,
    * for example if the given obj is in deleted state.
    */
-  def index(obj: Obj)
+  def index(obj: Item)
 
   /**
    * Batch index operation. Is included for implementations that provide speed increases on batch operations,
    * but by default will simply invoke index multiple times for the contents of the sequence.
    */
-  def index(objs: Seq[Obj]): Unit = objs.foreach(index)
+  def index(objs: Seq[Item]): Unit = objs.foreach(index)
 
   /**
    * Remove the entry with the given id from the index

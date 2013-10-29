@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.security.SecurityResolver
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
@@ -14,7 +14,7 @@ class AccountLinkTagTest extends FlatSpec with MockitoSugar with OneInstancePerT
   val tag = new AccountLinkTag
   tag.securityResolver = mock[SecurityResolver]
   val req = mock[HttpServletRequest]
-  val user = new Obj
+  val user = new Item
   user.name = "sammy"
 
   val sreq = ScalapressRequest(req, new ScalapressContext)

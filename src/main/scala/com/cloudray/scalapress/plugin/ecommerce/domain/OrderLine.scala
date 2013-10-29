@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
 
@@ -61,7 +61,7 @@ object OrderLine {
         l.description = desc
         l
     }
-    def apply(obj: Obj): OrderLine = {
+    def apply(obj: Item): OrderLine = {
         val l = new OrderLine
         l.price = obj.price
         l.obj = obj.id

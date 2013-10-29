@@ -8,7 +8,7 @@ import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import scala._
 import scala.Some
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel
   *
@@ -59,19 +59,19 @@ class SearchResultsSection extends Section with Logging {
     }
   }
 
-  def _objects(request: ScalapressRequest): Seq[Obj] = {
+  def _objects(request: ScalapressRequest): Seq[Item] = {
     val result = request.context.searchService.search(search)
     if (result.refs.isEmpty) Nil
     else {
       val ids = result.refs.map(_.id)
       val objs = request.context.objectDao
         .findBulk(ids)
-        .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+        .filter(obj => Item.STATUS_LIVE.equalsIgnoreCase(obj.status))
       _reorder(ids, objs)
     }
   }
 
-  def _reorder(ids: Seq[Long], objs: Seq[Obj]): Seq[Obj] = {
+  def _reorder(ids: Seq[Long], objs: Seq[Item]): Seq[Item] = {
     objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
   }
 }

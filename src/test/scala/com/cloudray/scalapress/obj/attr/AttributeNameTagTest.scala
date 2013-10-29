@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.obj.tag.AttributeNameTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
@@ -20,7 +20,7 @@ class AttributeNameTagTest extends FunSuite with MockitoSugar {
   av2.attribute.id = 456
   av2.attribute.name = "jethro tull"
 
-  val obj = new Obj
+  val obj = new Item
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
 

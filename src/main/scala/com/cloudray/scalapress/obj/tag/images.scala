@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.media._
 import scala.xml.{Unparsed, Elem}
 import scala.Some
@@ -20,7 +20,7 @@ class ImagesTag extends ScalapressTag with TagBuilder with Logging {
     case _ => Fit
   }
 
-  def _renderImage(i: String, params: Map[String, String], obj: Obj, context: ScalapressContext) = {
+  def _renderImage(i: String, params: Map[String, String], obj: Item, context: ScalapressContext) = {
 
     val opType = _opType(params.get("type"))
     val cssImgClass = params.get("imgclass").getOrElse("")
@@ -48,7 +48,7 @@ class ImagesTag extends ScalapressTag with TagBuilder with Logging {
   def _height(params: Map[String, String]) = params.get("h").orElse(params.get("height")).getOrElse("0").toInt
   def _width(params: Map[String, String]) = params.get("w").orElse(params.get("width")).getOrElse("0").toInt
   def _limit(params: Map[String, String]) = params.get("limit").map(_.toInt).getOrElse(DEFAULT_LIMIT)
-  def _images(obj: Obj, limit: Int): Seq[String] = obj.sortedImages.take(limit)
+  def _images(obj: Item, limit: Int): Seq[String] = obj.sortedImages.take(limit)
 
   def _src(filename: String, w: Int, h: Int, opType: OpType, context: ScalapressContext): String = {
     if (w == 0 || h == 0) context.assetStore.link(filename) // for normal size link directly to CDN

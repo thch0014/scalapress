@@ -7,7 +7,7 @@ import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
 import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel
   *
@@ -60,18 +60,18 @@ class SearchResultsWidget extends Widget with Logging {
     }
   }
 
-  def _objects(request: ScalapressRequest): Seq[Obj] = {
+  def _objects(request: ScalapressRequest): Seq[Item] = {
     val result = request.context.searchService.search(search)
     if (result.refs.isEmpty) Nil
     else {
       val objs = request.context.objectDao
         .findBulk(result.refs.map(_.id))
-        .filter(obj => Obj.STATUS_LIVE.equalsIgnoreCase(obj.status))
+        .filter(obj => Item.STATUS_LIVE.equalsIgnoreCase(obj.status))
       _reorder(result.refs, objs)
     }
   }
 
-  def _reorder(refs: Seq[ObjectRef], objs: Seq[Obj]): Seq[Obj] = {
+  def _reorder(refs: Seq[ObjectRef], objs: Seq[Item]): Seq[Item] = {
     val ids = refs.map(_.id)
     objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
   }

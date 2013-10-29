@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.obj.{ObjectType, Obj, ObjectDao}
+import com.cloudray.scalapress.obj.{ObjectType, Item, ObjectDao}
 import com.cloudray.scalapress.theme.{Markup, ThemeService}
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.search.SearchResult
@@ -25,12 +25,12 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   val req = mock[HttpServletRequest]
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com/hello"))
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 4
   obj.objectType = new ObjectType
   obj.objectType.id = 9
   obj.name = "Parachutes"
-  obj.status = Obj.STATUS_LIVE
+  obj.status = Item.STATUS_LIVE
   obj.objectType.objectListMarkup = new Markup
 
   val ref = ObjectRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
@@ -80,7 +80,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   }
 
   test("search filters any results that are not live") {
-    obj.status = Obj.STATUS_DISABLED
+    obj.status = Item.STATUS_DISABLED
     obj.objectType.objectListMarkup.body = "[object]"
     val result = SearchResult(Seq(ref))
     Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)

@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder}
 import java.util
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
@@ -15,20 +15,20 @@ import com.cloudray.scalapress.search.Sort
 /** @author Stephen Samuel */
 class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val obj1 = new Obj
+  val obj1 = new Item
   obj1.name = "coldplay"
   obj1.status = "live"
   obj1.id = 76
   obj1.objectType = new ObjectType
   obj1.objectType.id = 1
 
-  val obj2 = new Obj
+  val obj2 = new Item
   obj2.name = "jethro tull"
   obj2.status = "disabled"
   obj2.id = 25
   obj2.objectType = obj1.objectType
 
-  val obj3 = new Obj
+  val obj3 = new Item
   obj3.name = "keane"
   obj3.status = "live"
   obj3.id = 11

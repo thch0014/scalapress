@@ -27,7 +27,7 @@ class ObjectExporter {
 
     val q = new ObjectQuery
     q.typeId = Some(objectTypeId)
-    q.status = Some(Obj.STATUS_LIVE)
+    q.status = Some(Item.STATUS_LIVE)
     q.pageSize = Integer.MAX_VALUE
     val objects = objectDao.search(q).results
 
@@ -66,7 +66,7 @@ class ObjectExporter {
     buffer.toArray
   }
 
-  def _row(obj: Obj, attributes: Seq[Attribute], domain: String): Array[String] = {
+  def _row(obj: Item, attributes: Seq[Attribute], domain: String): Array[String] = {
 
     val buffer = new ArrayBuffer[String]
 

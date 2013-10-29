@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.{ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
@@ -24,7 +24,7 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
   installation.name = "coldplay tshirts"
   Mockito.when(service.context.installationDao.get).thenReturn(installation)
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 34
   obj.status = "Live"
   obj.name = "coldplay tshirt"

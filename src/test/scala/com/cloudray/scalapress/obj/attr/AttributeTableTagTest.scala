@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.obj.tag.AttributeTableTag
@@ -43,7 +43,7 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
   av5.value = "buckland"
   av5.attribute.public = true
 
-  val obj = new Obj
+  val obj = new Item
   obj.objectType = new ObjectType
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)

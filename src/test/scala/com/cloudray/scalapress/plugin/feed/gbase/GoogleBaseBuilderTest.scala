@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.feed.gbase
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.obj.attr.{Attribute, AttributeValue}
 import org.scalatest.mock.MockitoSugar
@@ -33,7 +33,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
   val store = mock[AssetStore]
   val builder = new GoogleBaseBuilder("domain.com", "electronics", store)
 
-  val obj = new Obj
+  val obj = new Item
   obj.name = "Coldplay Live"
   obj.content = "brand new cd for the mylo xyloto tour"
   obj.id = 123

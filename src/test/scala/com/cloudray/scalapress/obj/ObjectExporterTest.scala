@@ -18,7 +18,7 @@ class ObjectExporterTest extends FunSuite with OneInstancePerTest with MockitoSu
 
   val attributes = List(attr1, attr2)
 
-  val obj = new Obj
+  val obj = new Item
   obj.name = "coldplay tickets"
   obj.id = 123
   obj.dateCreated = 1365722181000l

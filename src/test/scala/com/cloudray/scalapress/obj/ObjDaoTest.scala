@@ -8,7 +8,7 @@ import com.cloudray.scalapress.TestDatabaseContext
 class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("saving an object sets updated date") {
-    val obj = new Obj
+    val obj = new Item
     val start = System.currentTimeMillis()
     TestDatabaseContext.objectDao.save(obj)
     val end = System.currentTimeMillis()
@@ -18,7 +18,7 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("persisting an obj is assigned id") {
 
-    val obj = new Obj
+    val obj = new Item
     assert(obj.id == 0)
     TestDatabaseContext.objectDao.save(obj)
     assert(obj.id > 0)
@@ -26,7 +26,7 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("persisting an obj can be retrieved by id") {
 
-    val obj = new Obj
+    val obj = new Item
     obj.name = "super obj"
     assert(obj.id == 0)
     TestDatabaseContext.objectDao.save(obj)
@@ -37,10 +37,10 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("objects can be loaded by bulk using ids") {
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.name = "coldplay"
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.name = "playcold"
 
     TestDatabaseContext.objectDao.save(obj1)
@@ -55,21 +55,21 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("recent returns X results in newest id order") {
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.name = "grandfather"
     obj1.objectType = new ObjectType
     obj1.objectType.name = "Object"
-    obj1.status = Obj.STATUS_LIVE
+    obj1.status = Item.STATUS_LIVE
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.name = "father"
     obj2.objectType = obj1.objectType
-    obj2.status = Obj.STATUS_LIVE
+    obj2.status = Item.STATUS_LIVE
 
-    val obj3 = new Obj
+    val obj3 = new Item
     obj3.name = "son"
     obj3.objectType = obj1.objectType
-    obj3.status = Obj.STATUS_LIVE
+    obj3.status = Item.STATUS_LIVE
 
     TestDatabaseContext.typeDao.save(obj1.objectType)
     TestDatabaseContext.objectDao.save(obj1)
@@ -83,21 +83,21 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
 
   test("recent only includes live objects") {
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.name = "grandfather"
     obj1.objectType = new ObjectType
     obj1.objectType.name = "Object"
-    obj1.status = Obj.STATUS_DELETED
+    obj1.status = Item.STATUS_DELETED
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.name = "father"
     obj2.objectType = obj1.objectType
-    obj2.status = Obj.STATUS_DISABLED
+    obj2.status = Item.STATUS_DISABLED
 
-    val obj3 = new Obj
+    val obj3 = new Item
     obj3.name = "son"
     obj3.objectType = obj1.objectType
-    obj3.status = Obj.STATUS_LIVE
+    obj3.status = Item.STATUS_LIVE
 
     TestDatabaseContext.typeDao.save(obj1.objectType)
     TestDatabaseContext.objectDao.save(obj1)
@@ -105,6 +105,6 @@ class ObjDaoTest extends FunSuite with MockitoSugar {
     TestDatabaseContext.objectDao.save(obj3)
 
     val objs = TestDatabaseContext.objectDao.recent(5)
-    assert(!objs.exists(_.status != Obj.STATUS_LIVE))
+    assert(!objs.exists(_.status != Item.STATUS_LIVE))
   }
 }

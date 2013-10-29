@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.search.elastic
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import com.cloudray.scalapress.obj.attr.{AttributeType, AttributeValue, Attribute}
 import com.cloudray.scalapress.search.{Sort, SearchService, SavedSearch}
 import scala.collection.JavaConverters._
@@ -68,12 +68,12 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   date3.attribute = date1.attribute
   date3.value = "999999999999999"
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 2
   obj.name = "tony mowbray captain bankrupt1986"
   obj.objectType = new ObjectType
   obj.objectType.id = 1
-  obj.status = Obj.STATUS_LIVE
+  obj.status = Item.STATUS_LIVE
   obj.images.add("tony.png")
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av4)
@@ -82,24 +82,24 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   obj.labels = "coldplay,jethro tull"
   obj.folders.add(folder2)
 
-  val obj2 = new Obj
+  val obj2 = new Item
   obj2.id = 4
   obj2.name = "bryan robson captain"
   obj2.objectType = new ObjectType
   obj2.objectType.id = 2
-  obj2.status = Obj.STATUS_LIVE
+  obj2.status = Item.STATUS_LIVE
   obj2.attributeValues.add(av2)
   obj2.attributeValues.add(av5)
   obj2.attributeValues.add(date3)
   obj2.labels = "coldplay"
   obj2.folders.add(folder1)
 
-  val obj3 = new Obj
+  val obj3 = new Item
   obj3.id = 20
   obj3.name = "steve mclaren"
   obj3.objectType = new ObjectType
   obj3.objectType.id = 3
-  obj3.status = Obj.STATUS_LIVE
+  obj3.status = Item.STATUS_LIVE
   obj3.prioritized = true
   obj3.attributeValues.add(av3)
   obj3.attributeValues.add(av6)
@@ -123,12 +123,12 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   avWithSlash.id = 8125
   avWithSlash.value = "axel/slash"
 
-  val obj4 = new Obj
+  val obj4 = new Item
   obj4.id = 1529
   obj4.name = "zola"
   obj4.objectType = new ObjectType
   obj4.objectType.id = 2234
-  obj4.status = Obj.STATUS_LIVE
+  obj4.status = Item.STATUS_LIVE
   obj4.attributeValues.add(av)
   obj4.attributeValues.add(avWithSlash)
 
@@ -374,7 +374,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     av.attribute = new Attribute
     av.attribute.id = 9184
 
-    val obj = new Obj
+    val obj = new Item
     obj.id = 199
     obj.name = "null-av-object"
     obj.objectType = new ObjectType
@@ -395,7 +395,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val search = new SavedSearch
     assert(5 === service.search(search).count)
 
-    val obj = new Obj
+    val obj = new Item
     obj.id = 5465464
     obj.name = "to be removed"
     obj.objectType = new ObjectType

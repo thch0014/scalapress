@@ -2,13 +2,13 @@ package com.cloudray.scalapress.section
 
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.{Logging, ScalapressRequest}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.{SectionInterceptor, Folder}
 
 /** @author Stephen Samuel */
 object SectionRenderer extends Logging {
 
-  def render(obj: Obj, sreq: ScalapressRequest): String =
+  def render(obj: Item, sreq: ScalapressRequest): String =
     _render(obj.objectType.sortedSections ++ obj.sortedSections, sreq)
 
   def render(folder: Folder, sreq: ScalapressRequest): String =

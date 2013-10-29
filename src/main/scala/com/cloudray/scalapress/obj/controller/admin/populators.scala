@@ -12,7 +12,7 @@ import com.cloudray.scalapress.plugin.form.FormDao
 import scala.collection.mutable
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
@@ -81,9 +81,9 @@ trait ObjectStatusPopulator {
   @ModelAttribute def objectStatusMap(model: ModelMap) {
     val map = mutable
       .LinkedHashMap("" -> "-Status-",
-      Obj.STATUS_LIVE -> Obj.STATUS_LIVE,
-      Obj.STATUS_DISABLED -> Obj.STATUS_DISABLED,
-      Obj.STATUS_DELETED -> Obj.STATUS_DELETED)
+      Item.STATUS_LIVE -> Item.STATUS_LIVE,
+      Item.STATUS_DISABLED -> Item.STATUS_DISABLED,
+      Item.STATUS_DELETED -> Item.STATUS_DELETED)
     model.put("objectStatusMap", map.asJava)
   }
 }

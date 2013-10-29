@@ -6,9 +6,9 @@ import com.cloudray.scalapress.obj.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.folder.section.{SubfolderSection, ObjectListSection, FolderContentSection}
 
 /** @author Stephen Samuel */
-class ObjTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val obj = new Obj
+  val obj = new Item
 
   val av1 = new AttributeValue
   av1.attribute = new Attribute
@@ -100,7 +100,7 @@ class ObjTest extends FunSuite with MockitoSugar with OneInstancePerTest {
     val section8 = new SubfolderSection
     section8.id = 5
 
-    val obj = new Obj
+    val obj = new Item
     obj.sections.add(section1)
     obj.sections.add(section2)
     obj.sections.add(section3)

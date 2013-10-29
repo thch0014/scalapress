@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.variations._
 import scala.xml.Utility
@@ -17,7 +17,7 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
 
   val tag = new VariationsSelectTag
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 4
   obj.objectType = new ObjectType
   obj.objectType.id = 19

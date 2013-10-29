@@ -6,7 +6,7 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
 import java.util.UUID
 import scala.collection.mutable.ListBuffer
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.obj.attr.{AttributeType, Attribute}
@@ -30,9 +30,9 @@ import scala.concurrent.Await
 /** @author Stephen Samuel */
 class ElasticSearchService extends SearchService with Logging {
 
-  val DELETED = Obj.STATUS_DELETED.toLowerCase
-  val DISABLED = Obj.STATUS_DISABLED.toLowerCase
-  val LIVE = Obj.STATUS_LIVE.toLowerCase
+  val DELETED = Item.STATUS_DELETED.toLowerCase
+  val DISABLED = Item.STATUS_DISABLED.toLowerCase
+  val LIVE = Item.STATUS_LIVE.toLowerCase
 
   val MAX_RESULTS_HARD_LIMIT = 1000
   val DEFAULT_MAX_RESULTS = 200
@@ -121,13 +121,13 @@ class ElasticSearchService extends SearchService with Logging {
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
   def _attributeRestore(value: String): String = value.replace("_", " ")
 
-  override def index(obj: Obj) = index(Seq(obj))
-  override def index(objs: Seq[Obj]) {
+  override def index(obj: Item) = index(Seq(obj))
+  override def index(objs: Seq[Item]) {
     require(objs != null)
 
     val executions = objs
       .filter(_.objectType != null)
-      .map(obj => Option(obj.status).getOrElse(Obj.STATUS_DELETED).toLowerCase match {
+      .map(obj => Option(obj.status).getOrElse(Item.STATUS_DELETED).toLowerCase match {
 
       case DELETED | DISABLED =>
         logger.debug("Creating delete operation [id={}]", obj.id)
@@ -350,7 +350,7 @@ class ElasticSearchService extends SearchService with Logging {
     }).toSeq
   }
 
-  def _source(obj: Obj) = {
+  def _source(obj: Item) = {
     require(obj.id > 0)
 
     val json = XContentFactory

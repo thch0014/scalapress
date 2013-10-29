@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.joda.time.DateTime
 import com.cloudray.scalapress.util.UrlGenerator
 
@@ -11,7 +11,7 @@ object ListingsRenderer {
     <i class="glyphicon glyphicon-plus"></i>
     Add new listing</a>
 
-  def myListings(objects: Iterable[Obj]) = {
+  def myListings(objects: Iterable[Item]) = {
 
     val elems = objects.map(obj => {
 

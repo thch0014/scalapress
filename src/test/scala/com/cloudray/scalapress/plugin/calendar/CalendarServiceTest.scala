@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.calendar
 import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ObjectRef, SearchService}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.obj.attr.Attribute
 import org.mockito.Mockito
@@ -23,13 +23,13 @@ class CalendarServiceTest extends FunSuite with MockitoSugar with OneInstancePer
     val ref1 = ObjectRef(1,
         9,
         "coldplay live in paris",
-        Obj.STATUS_LIVE,
+        Item.STATUS_LIVE,
         Map(4l -> new DateTime(2013, 10, 9, 0, 0, 0, 0, DateTimeZone.UTC).getMillis.toString),
         Nil)
     val ref2 = ObjectRef(2,
         9,
         "jethro tull live in london",
-        Obj.STATUS_LIVE,
+        Item.STATUS_LIVE,
         Map(4l -> new DateTime(2013, 10, 9, 0, 0, 0, 0, DateTimeZone.UTC).getMillis.toString,
             5l -> new DateTime(2013, 10, 12, 0, 0, 0, 0, DateTimeZone.UTC).getMillis.toString), // 3 day event
         Nil)

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{OneInstancePerTest, FunSuite}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -19,7 +19,7 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.attributeType = AttributeType.Postcode
 
-    val obj = new Obj
+    val obj = new Item
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)
 
@@ -39,7 +39,7 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Obj
+    val obj = new Item
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)
 
@@ -58,7 +58,7 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Obj
+    val obj = new Item
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)
 
@@ -77,7 +77,7 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Obj
+    val obj = new Item
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)
 
@@ -97,7 +97,7 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.value = "earl grey"
     av2.attribute = a
 
-    val obj = new Obj
+    val obj = new Item
     obj.attributeValues.add(av1)
     obj.attributeValues.add(av2)
 

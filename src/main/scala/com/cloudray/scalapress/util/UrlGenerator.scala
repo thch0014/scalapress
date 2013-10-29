@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.util
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.ObjectRef
 import com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlStrategy
@@ -12,19 +12,19 @@ object UrlGenerator {
   private[util] var strategy: UrlStrategy = FriendlyUrlStrategy
 
   def url(ref: ObjectRef): String = {
-    val o = new Obj
+    val o = new Item
     o.id = ref.id
     o.name = ref.name
     url(o)
   }
 
   def url(folder: Folder): String = strategy.url(folder)
-  def url(obj: Obj): String = strategy.url(obj)
+  def url(obj: Item): String = strategy.url(obj)
 
   // creates a link that uses the object name as the label
-  def link(obj: Obj): String = link(obj, obj.name)
+  def link(obj: Item): String = link(obj, obj.name)
   // creates a link that uses the specified label
-  def link(obj: Obj, label: String): String =
+  def link(obj: Item, label: String): String =
     Utility.trim(<a href={url(obj)}>
       {label}
     </a>).toString()
@@ -40,5 +40,5 @@ object UrlGenerator {
 
 object DefaultUrlStrategy extends UrlStrategy {
   def url(folder: Folder): String = "/folder/" + folder.id
-  def url(obj: Obj): String = "/object/" + obj.id
+  def url(obj: Item): String = "/object/" + obj.id
 }

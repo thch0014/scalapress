@@ -3,7 +3,7 @@ package com.cloudray.scalapress.section
 import javax.persistence._
 import org.hibernate.annotations.{NotFound, NotFoundAction, Index}
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import com.cloudray.scalapress.folder.Folder
 import scala.beans.BeanProperty
 
@@ -39,7 +39,7 @@ abstract class Section {
   @JoinColumn(name = "ownerItem", nullable = true)
   @Index(name = "object_index")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var obj: Obj = _
+  @BeanProperty var obj: Item = _
 
   @ManyToOne
   @JoinColumn(name = "ownerItemType", nullable = true)

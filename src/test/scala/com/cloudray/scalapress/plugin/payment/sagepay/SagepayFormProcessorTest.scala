@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, DeliveryOption, Basket, Address}
 import com.cloudray.scalapress.payments.Purchase
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -160,7 +160,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     basket.deliveryOption.name = "delivered by superman"
 
     val line = new BasketLine
-    line.obj = new Obj
+    line.obj = new Item
     line.obj.price = 1999
     line.obj.vatRate = 20
     line.obj.name = "coldplay tshirt"

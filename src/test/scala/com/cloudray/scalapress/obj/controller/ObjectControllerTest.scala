@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.controller
 import org.scalatest.{ShouldMatchers, OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.cloudray.scalapress.obj.{ObjectType, Obj}
+import com.cloudray.scalapress.obj.{ObjectType, Item}
 import com.cloudray.scalapress.util.mvc.NotFoundException
 
 /** @author Stephen Samuel */
@@ -12,7 +12,7 @@ class ObjectControllerTest extends FlatSpec with MockitoSugar with OneInstancePe
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]
 
-  val obj = new Obj
+  val obj = new Item
   obj.objectType = new ObjectType
   obj.objectType.name = "products"
 

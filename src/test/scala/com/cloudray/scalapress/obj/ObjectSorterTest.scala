@@ -8,7 +8,7 @@ import com.cloudray.scalapress.search.Sort
 /** @author Stephen Samuel */
 class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val obj1 = new Obj
+  val obj1 = new Item
   obj1.id = 8
   obj1.name = "coldplay"
 
@@ -17,7 +17,7 @@ class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTes
   av1.value = "chris"
   obj1.attributeValues.add(av1)
 
-  val obj2 = new Obj
+  val obj2 = new Item
   obj2.id = 5
   obj2.name = "keane"
 
@@ -26,7 +26,7 @@ class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTes
   av2.value = "tom"
   obj2.attributeValues.add(av2)
 
-  val obj3 = new Obj
+  val obj3 = new Item
   obj3.id = 9
   obj3.name = "cream"
 
@@ -35,7 +35,7 @@ class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTes
   av3.value = "jack"
   obj3.attributeValues.add(av3)
 
-  val obj4 = new Obj
+  val obj4 = new Item
   obj4.id = 1
   obj4.name = "jethro tull"
 
@@ -44,7 +44,7 @@ class ObjectSorterTest extends FunSuite with MockitoSugar with OneInstancePerTes
   av4.value = "ian"
   obj4.attributeValues.add(av4)
 
-  val obj5 = new Obj
+  val obj5 = new Item
   obj5.id = 7
   obj5.name = "elton john"
 

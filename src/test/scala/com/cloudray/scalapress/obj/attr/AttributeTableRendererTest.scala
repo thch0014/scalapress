@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import scala.util.Random
 
 /** @author Stephen Samuel */
@@ -22,7 +22,7 @@ class AttributeTableRendererTest extends FunSuite with MockitoSugar with OneInst
   av2.value = "chris martin"
   av2.attribute.public = true
 
-  val obj = new Obj
+  val obj = new Item
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
 

@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.listings
 
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
 import com.cloudray.scalapress.{Callback, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,12 +24,12 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     callback(Option(tx), process)
   }
 
-  def callback(tx: Option[Transaction], listing: Obj) {
+  def callback(tx: Option[Transaction], listing: Item) {
     logger.debug("Performing listing callback [{}-{}]", listing.id, listing.name)
 
     if (listing.listingPackage.autoPublish) {
       logger.debug("Auto publising listing [{}-{}]", listing.id, listing.name)
-      listing.status = Obj.STATUS_LIVE
+      listing.status = Item.STATUS_LIVE
       context.objectDao.save(listing)
     }
 
@@ -48,13 +48,13 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     _emails(listing)
   }
 
-  def _emails(listing: Obj) {
+  def _emails(listing: Item) {
     logger.debug("Sending email to customer")
     listingCustomerNotificationService.send(listing)
   }
 
   // build an order to hold the details of what the customer purchased
-  def _order(listing: Obj) = {
+  def _order(listing: Item) = {
     logger.debug("Creating order for the listing")
 
     val order = Order("127.0.0.1", listing.account)

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.mockito.{Matchers, ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 import com.sksamuel.scoot.soa.Page
@@ -19,7 +19,7 @@ class SalesReporterTest extends FlatSpec with MockitoSugar with OneInstancePerTe
   Mockito.when(orderDao.search(Matchers.any[OrderQuery])).thenReturn(Page.empty[Order])
 
   "a sales report" should "query by date range" in {
-    reporter.generate(Obj.STATUS_LIVE, 10000, 20000)
+    reporter.generate(Item.STATUS_LIVE, 10000, 20000)
     val captor = ArgumentCaptor.forClass(classOf[OrderQuery])
     Mockito.verify(orderDao).search(captor.capture)
     assert(captor.getValue.from.get === 10000)

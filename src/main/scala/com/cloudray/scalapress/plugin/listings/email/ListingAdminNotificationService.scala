@@ -4,7 +4,7 @@ import com.cloudray.scalapress.settings.InstallationDao
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.{SimpleMailMessage, MailSender}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.sksamuel.scoot.rest.Logging
 
 /** @author Stephen Samuel
@@ -18,7 +18,7 @@ import com.sksamuel.scoot.rest.Logging
 class ListingAdminNotificationService(mailSender: MailSender,
                                       installationDao: InstallationDao) extends Logging {
 
-  def notify(listing: Obj): Unit = {
+  def notify(listing: Item): Unit = {
     Option(installationDao.get.adminEmail) match {
       case Some(to) =>
         val msg = new SimpleMailMessage
@@ -31,7 +31,7 @@ class ListingAdminNotificationService(mailSender: MailSender,
     }
   }
 
-  private def message(listing: Obj): String = {
+  private def message(listing: Item): String = {
     val sb = new StringBuffer("Hello Admin\n\n")
     sb.append("A new listing has been added to your site:\n")
     sb.append(listing.name + "\n\n")

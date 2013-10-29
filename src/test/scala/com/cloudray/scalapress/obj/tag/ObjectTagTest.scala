@@ -4,7 +4,7 @@ import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class ObjectTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -12,7 +12,7 @@ class ObjectTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
   val context = new ScalapressContext()
   val req = mock[HttpServletRequest]
 
-  val obj = new Obj
+  val obj = new Item
   obj.name = "coldplay tickets"
   obj.id = 123
 

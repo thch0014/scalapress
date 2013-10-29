@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.feed.gbase
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.TestDatabaseContext
 
 /** @author Stephen Samuel */
@@ -10,19 +10,19 @@ class GoogleBaseServiceTest extends FunSuite with MockitoSugar {
 
   test("that objects can be retrieved") {
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.name = "grandfather"
-    obj1.status = Obj.STATUS_LIVE
+    obj1.status = Item.STATUS_LIVE
     obj1.price = 10
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.name = "father"
-    obj2.status = Obj.STATUS_DELETED
+    obj2.status = Item.STATUS_DELETED
     obj2.price = 12
 
-    val obj3 = new Obj
+    val obj3 = new Item
     obj3.name = "son"
-    obj3.status = Obj.STATUS_LIVE
+    obj3.status = Item.STATUS_LIVE
     obj3.price = 0
 
     TestDatabaseContext.objectDao.save(obj1)

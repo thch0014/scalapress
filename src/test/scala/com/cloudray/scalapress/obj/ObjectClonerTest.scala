@@ -11,7 +11,7 @@ class ObjectClonerTest extends FunSuite with MockitoSugar with OneInstancePerTes
   val objectType = new ObjectType
   objectType.id = 15
 
-  val obj = new Obj
+  val obj = new Item
   obj.objectType = objectType
   obj.name = "battleship"
   obj.price = 135

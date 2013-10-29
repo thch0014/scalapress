@@ -3,7 +3,7 @@ package com.cloudray.scalapress.obj.tag
 import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 object ObjectTag extends ScalapressTag with TagBuilder {
@@ -12,7 +12,7 @@ object ObjectTag extends ScalapressTag with TagBuilder {
     request.obj.filter(_.prioritized || !ponly).map(_render(_, params))
   }
 
-  def _render(obj: Obj, params: Map[String, String]): String = {
+  def _render(obj: Item, params: Map[String, String]): String = {
     val text = params.get("text").getOrElse(obj.name)
     params.get("link") match {
       case Some(link) if link == "prioritized" && obj.prioritized => buildLink(UrlGenerator.url(obj), text, params)

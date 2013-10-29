@@ -38,7 +38,7 @@ class ObjectImporter(objectDao: ObjectDao, objectType: ObjectType) {
     }
   }
 
-  def setValues(obj: Obj, csv: CsvReader) {
+  def setValues(obj: Item, csv: CsvReader) {
     obj.name = csv.get("name")
     obj.status = csv.get("status")
     try {

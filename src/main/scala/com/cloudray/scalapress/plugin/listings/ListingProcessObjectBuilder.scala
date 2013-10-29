@@ -3,14 +3,14 @@ package com.cloudray.scalapress.plugin.listings
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.joda.time.{DateTimeZone, DateMidnight}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.obj.attr.AttributeValue
 import com.cloudray.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
 class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
 
-  def build(process: ListingProcess): Obj = {
+  def build(process: ListingProcess): Item = {
     logger.debug("Building listing for process [{}]", process)
 
     val obj = _obj(process)
@@ -35,21 +35,21 @@ class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
     obj
   }
 
-  def _obj(process: ListingProcess): Obj = {
-    val obj = Obj(process.listingPackage.objectType)
+  def _obj(process: ListingProcess): Item = {
+    val obj = Item(process.listingPackage.objectType)
     obj.name = process.title
     logger.debug("Set new listing to use name [{}]", obj.name)
 
     obj.listingPackage = process.listingPackage
     obj.content = process.content
-    obj.status = Obj.STATUS_DISABLED
+    obj.status = Item.STATUS_DISABLED
     obj.expiry = _expiry(process.listingPackage)
     obj.labels = process.listingPackage.labels
     context.objectDao.save(obj)
     obj
   }
 
-  def _av(av: AttributeValue, obj: Obj): AttributeValue = {
+  def _av(av: AttributeValue, obj: Item): AttributeValue = {
     val av2 = new AttributeValue
     av2.attribute = av.attribute
     av2.value = av.value

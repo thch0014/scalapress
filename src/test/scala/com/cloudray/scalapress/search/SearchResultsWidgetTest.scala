@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectDao, Item}
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.search.widget.SearchResultsWidget
 
@@ -17,24 +17,24 @@ class SearchResultsWidgetTest extends FunSuite with MockitoSugar with OneInstanc
     context.searchService = mock[SearchService]
     context.objectDao = mock[ObjectDao]
 
-    val obj1 = new Obj
+    val obj1 = new Item
     obj1.name = "michael"
-    obj1.status = Obj.STATUS_LIVE
+    obj1.status = Item.STATUS_LIVE
     obj1.id = 1
 
-    val obj2 = new Obj
+    val obj2 = new Item
     obj2.name = "april"
-    obj2.status = Obj.STATUS_LIVE
+    obj2.status = Item.STATUS_LIVE
     obj2.id = 2
 
-    val obj3 = new Obj
+    val obj3 = new Item
     obj3.name = "devon"
-    obj3.status = Obj.STATUS_LIVE
+    obj3.status = Item.STATUS_LIVE
     obj3.id = 3
 
-    val ref1 = ObjectRef(obj1.id, 55, obj1.name, Obj.STATUS_LIVE, Map.empty, Nil)
-    val ref2 = ObjectRef(obj2.id, 55, obj2.name, Obj.STATUS_LIVE, Map.empty, Nil)
-    val ref3 = ObjectRef(obj3.id, 55, obj3.name, Obj.STATUS_LIVE, Map.empty, Nil)
+    val ref1 = ObjectRef(obj1.id, 55, obj1.name, Item.STATUS_LIVE, Map.empty, Nil)
+    val ref2 = ObjectRef(obj2.id, 55, obj2.name, Item.STATUS_LIVE, Map.empty, Nil)
+    val ref3 = ObjectRef(obj3.id, 55, obj3.name, Item.STATUS_LIVE, Map.empty, Nil)
 
     val sreq = ScalapressRequest(req, context)
     section.search = new SavedSearch

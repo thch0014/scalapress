@@ -6,7 +6,7 @@ import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{Cookie, HttpServletRequest}
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
@@ -22,7 +22,7 @@ class WidgetDisplayServiceTest extends FunSuite with MockitoSugar with OneInstan
   widget.visible = true
   val f = new Folder
 
-  val obj = new Obj
+  val obj = new Item
 
   test("given an object page when restricted and display on all objects then widget is visible") {
     val sreq = new ScalapressRequest(req, context)

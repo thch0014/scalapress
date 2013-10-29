@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.obj.{StockMethod, Obj}
+import com.cloudray.scalapress.obj.{StockMethod, Item}
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import org.mockito.Mockito
 
@@ -18,7 +18,7 @@ class StockTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
   Mockito.when(context.bean[ShoppingPluginDao]).thenReturn(dao)
   Mockito.when(dao.get).thenReturn(plugin)
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 12
   obj.name = "meatballs"
   obj.stock = 25

@@ -4,7 +4,7 @@ import java.lang.String
 import javax.persistence._
 import com.cloudray.scalapress.search.SavedSearch
 import org.hibernate.annotations._
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.persistence.Table
 import javax.persistence.Entity
 import scala.beans.BeanProperty
@@ -32,7 +32,7 @@ class AttributeValue {
   @JoinColumn(name = "item", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty
-  var obj: Obj = _
+  var obj: Item = _
 
   @Index(name = "search_index")
   @ManyToOne(fetch = FetchType.LAZY)

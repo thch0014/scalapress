@@ -44,7 +44,7 @@ class ObjectSearchController(objectDao: ObjectDao,
   def create(@RequestParam("typeId") typeId: java.lang.Long): String = {
 
     val t = typeDao.find(typeId)
-    val obj = Obj(t)
+    val obj = Item(t)
     objectDao.save(obj)
 
     "redirect:/backoffice/obj/" + obj.id
@@ -54,7 +54,7 @@ class ObjectSearchController(objectDao: ObjectDao,
   def create(@RequestParam("typeId") typeId: java.lang.Long, @RequestParam("name") name: String): String = {
 
     val t = typeDao.find(typeId)
-    val obj = Obj(t)
+    val obj = Item(t)
     obj.name = name
     objectDao.save(obj)
 

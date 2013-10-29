@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Address, DeliveryOption, Basket}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.account.Account
@@ -50,13 +50,13 @@ class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTes
 
     val bl1 = new BasketLine
     bl1.qty = 4
-    bl1.obj = new Obj
+    bl1.obj = new Item
     bl1.obj.id = 523
     bl1.obj.price = 4500
 
     val bl2 = new BasketLine
     bl2.qty = 1
-    bl2.obj = new Obj
+    bl2.obj = new Item
     bl2.obj.id = 98
     bl2.obj.price = 1999
 

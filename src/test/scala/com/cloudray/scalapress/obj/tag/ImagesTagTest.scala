@@ -6,7 +6,7 @@ import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.media._
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
@@ -18,7 +18,7 @@ class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
 
   val i = "jtull_large.png"
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 14
   obj.images.add(i)
 

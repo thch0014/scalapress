@@ -10,7 +10,7 @@ import org.hibernate.annotations.{NotFound, NotFoundAction}
 import com.sksamuel.scoot.soa.{Paging, Page}
 import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.search.{Sort, PagingRenderer}
-import com.cloudray.scalapress.obj.{ObjectSorter, Obj}
+import com.cloudray.scalapress.obj.{ObjectSorter, Item}
 import com.cloudray.scalapress.obj.attr.Attribute
 
 /** @author Stephen Samuel
@@ -45,7 +45,7 @@ class ObjectListSection extends Section {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty var markup: Markup = _
 
-  def _objects(sreq: ScalapressRequest): Seq[Obj] = {
+  def _objects(sreq: ScalapressRequest): Seq[Item] = {
 
     val objects = try {
       folder.objects.asScala.toSeq
@@ -53,7 +53,7 @@ class ObjectListSection extends Section {
       case e: Exception => Nil
     }
 
-    val live = objects.filter(_.status.toLowerCase == Obj.STATUS_LIVE.toLowerCase)
+    val live = objects.filter(_.status.toLowerCase == Item.STATUS_LIVE.toLowerCase)
     val sorted = ObjectSorter.sort(live, _sort(sreq.context), Option(sortAttribute), sreq.sessionId.hashCode)
     sorted
   }

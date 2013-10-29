@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.obj.{Obj, ObjectDao}
+import com.cloudray.scalapress.obj.{Item, ObjectDao}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
@@ -52,7 +52,7 @@ class VariationsController {
     "redirect:/backoffice/plugin/variations?objectId=" + objectId
   }
 
-  def _dimensions(obj: Obj): Iterable[Dimension] = _dimensions(obj.objectType.id)
+  def _dimensions(obj: Item): Iterable[Dimension] = _dimensions(obj.objectType.id)
   def _dimensions(id: Long): Iterable[Dimension] = dimensionDao.findAll.filter(_.objectType.id == id)
 
   @RequestMapping(value = Array("add"), method = Array(RequestMethod.POST), params = Array("objectId"))

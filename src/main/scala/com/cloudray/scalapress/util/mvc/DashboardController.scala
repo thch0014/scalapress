@@ -9,7 +9,7 @@ import com.cloudray.scalapress.security.SpringSecurityResolver
 import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
 
 /** @author Stephen Samuel */
@@ -47,7 +47,7 @@ class DashboardController {
   def folderCount = context.folderDao.findAll.size
 
   @ModelAttribute("recentObjects")
-  def recentObjects: java.util.List[Obj] = context.objectDao.recent(8).asJava
+  def recentObjects: java.util.List[Item] = context.objectDao.recent(8).asJava
 
   @ModelAttribute("buildNumber")
   def buildNumber = props.get("buildNumber")

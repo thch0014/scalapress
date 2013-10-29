@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.obj.tag.AttributeSectionTag
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 
 /** @author Stephen Samuel */
 class AttributeSectionTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -21,7 +21,7 @@ class AttributeSectionTagTest extends FunSuite with MockitoSugar with OneInstanc
   av2.attribute.name = "jethro tull"
   av2.attribute.section = "my section"
 
-  val obj = new Obj
+  val obj = new Item
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
 

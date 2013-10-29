@@ -19,7 +19,7 @@ import javax.persistence.Column
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items")
-class Obj extends SortedSections with java.io.Serializable {
+class Item extends SortedSections with java.io.Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -100,7 +100,7 @@ class Obj extends SortedSections with java.io.Serializable {
   )
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty
-  var associations: java.util.Set[Obj] = new util.HashSet[Obj]()
+  var associations: java.util.Set[Item] = new util.HashSet[Item]()
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "obj", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
@@ -201,11 +201,11 @@ class Obj extends SortedSections with java.io.Serializable {
   }
   override def toString: String = s"Obj [id=$id, name=$name, status=$status]"
 
-  def isDeleted = Obj.STATUS_DELETED.equalsIgnoreCase(status)
-  def isDisabled = Obj.STATUS_DISABLED.equalsIgnoreCase(status)
+  def isDeleted = Item.STATUS_DELETED.equalsIgnoreCase(status)
+  def isDisabled = Item.STATUS_DISABLED.equalsIgnoreCase(status)
 }
 
-object Obj {
+object Item {
   val STATUS_DELETED = "Deleted"
   val STATUS_LIVE = "Live"
   val STATUS_DISABLED = "Disabled"
@@ -213,7 +213,7 @@ object Obj {
   def apply(t: ObjectType) = {
     require(t != null)
 
-    val obj = new Obj
+    val obj = new Item
     obj.objectType = t
     obj.name = "new object"
     obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis

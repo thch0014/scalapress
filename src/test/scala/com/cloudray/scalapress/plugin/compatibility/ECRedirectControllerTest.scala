@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.compatibility
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.ScalapressContext
-import com.cloudray.scalapress.obj.{Obj, ObjectDao}
+import com.cloudray.scalapress.obj.{Item, ObjectDao}
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import org.mockito.Mockito
 
@@ -15,7 +15,7 @@ class ECRedirectControllerTest extends FunSuite with MockitoSugar with OneInstan
   context.folderDao = mock[FolderDao]
   val controller = new ECRedirectController(context)
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 14
   obj.name = "big man tshirts"
   Mockito.when(context.objectDao.find(14)).thenReturn(obj)

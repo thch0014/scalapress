@@ -9,7 +9,7 @@ import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
-import com.cloudray.scalapress.obj.{ObjectDao, Obj}
+import com.cloudray.scalapress.obj.{ObjectDao, Item}
 import com.cloudray.scalapress.payments.{Transaction, TransactionDao}
 
 /** @author Stephen Samuel */
@@ -18,9 +18,9 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     val tx = new Transaction
     tx.id = 12
 
-    val listing = new Obj
+    val listing = new Item
     listing.id = 96
-    listing.status = Obj.STATUS_DISABLED
+    listing.status = Item.STATUS_DISABLED
     listing.name = "big horse for sale"
     listing.listingPackage = new ListingPackage
     listing.listingPackage.id = 5472
@@ -70,13 +70,13 @@ class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with
     test("if listing package is auto publish then change listing status to live") {
         listing.listingPackage.autoPublish = true
         callback.callback(None, listing)
-        assert(listing.status == Obj.STATUS_LIVE)
+        assert(listing.status == Item.STATUS_LIVE)
     }
 
     test("if listing package is not auto publish then do not change listing status") {
         listing.listingPackage.autoPublish = false
         callback.callback(None, listing)
-        assert(listing.status == Obj.STATUS_DISABLED)
+        assert(listing.status == Item.STATUS_DISABLED)
     }
 
     test("order status is updated to paid") {

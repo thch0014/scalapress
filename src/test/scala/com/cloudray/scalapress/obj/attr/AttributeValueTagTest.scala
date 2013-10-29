@@ -2,7 +2,7 @@ package com.cloudray.scalapress.obj.attr
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.Obj
+import com.cloudray.scalapress.obj.Item
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.obj.tag.AttributeValueTag
@@ -23,7 +23,7 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
   av2.attribute.name = "jethro tull"
   av2.value = "aqualung"
 
-  val obj = new Obj
+  val obj = new Item
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
 
@@ -70,7 +70,7 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
 
   test("that no value renders None") {
     val r = mock[ScalapressRequest]
-    Mockito.when(r.obj).thenReturn(Option(new Obj))
+    Mockito.when(r.obj).thenReturn(Option(new Item))
     val rendered = new AttributeValueTag().render(r, Map("id" -> "6666", "prefix" -> "don't want this"))
     assert(rendered.isEmpty)
   }

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.obj.{Obj, ObjectType, ObjectDao}
+import com.cloudray.scalapress.obj.{Item, ObjectType, ObjectDao}
 import org.springframework.ui.ModelMap
 import org.mockito.{Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
@@ -27,7 +27,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
   val v2 = new Variation
   v2.id = 9
 
-  val obj = new Obj
+  val obj = new Item
   obj.id = 1
   obj.objectType = d1.objectType
 
