@@ -14,35 +14,38 @@ import com.sksamuel.scoot.rest.Logging
   *
   **/
 @Component
-class ListingAdminNotificationService extends Logging {
+@Autowired
+class ListingAdminNotificationService(mailSender: MailSender,
+                                      installationDao: InstallationDao) extends Logging {
 
-    @Autowired var mailSender: MailSender = _
-    @Autowired var installationDao: InstallationDao = _
-
-    def notify(listing: Obj) {
+  def notify(listing: Obj): Unit = {
+    Option(installationDao.get.adminEmail) match {
+      case Some(to) =>
         val msg = new SimpleMailMessage
-        msg.setTo(installationDao.get.adminEmail)
+        msg.setTo(to)
         msg.setFrom("donotreply@" + installationDao.get.domain)
-        msg.setText(_message(listing))
+        msg.setText(message(listing))
         msg.setSubject("Listing: " + listing.name)
         mailSender.send(msg)
+      case _ =>
+    }
+  }
+
+  private def message(listing: Obj): String = {
+    val sb = new StringBuffer("Hello Admin\n\n")
+    sb.append("A new listing has been added to your site:\n")
+    sb.append(listing.name + "\n\n")
+
+    if (listing.listingPackage.fee > 0) {
+      sb.append("** This is a paid listing. You should verify that a payment was been made for this listing **\n\n")
     }
 
-    def _message(listing: Obj): String = {
-        val sb = new StringBuffer("Hello Admin\n\n")
-        sb.append("A new listing has been added to your site:\n")
-        sb.append(listing.name + "\n\n")
+    sb.append("The status of this listing is: [" + listing.status + "]\n")
+    sb.append("The listing was added using: [" + listing.listingPackage.name + "]\n\n")
+    sb.append("You can edit the listing in the backoffice:\n")
+    sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + listing.id + "\n\n")
 
-        if (listing.listingPackage.fee > 0) {
-            sb.append("** This is a paid listing. You should verify that a payment was been made for this listing **\n\n")
-        }
-
-        sb.append("The status of this listing is: [" + listing.status + "]\n")
-        sb.append("The listing was added using: [" + listing.listingPackage.name + "]\n\n")
-        sb.append("You can edit the listing in the backoffice:\n")
-        sb.append("http://" + installationDao.get.domain + "/backoffice/obj/" + listing.id + "\n\n")
-
-        sb.append("Regards, Scalapress")
-        sb.toString
-    }
+    sb.append("Regards, Scalapress")
+    sb.toString
+  }
 }

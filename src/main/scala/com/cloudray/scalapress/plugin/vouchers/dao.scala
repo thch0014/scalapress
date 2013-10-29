@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 
 /** @author Stephen Samuel */
-trait VoucherDao extends GenericDao[Voucher, Long]
+trait VoucherDao extends GenericDao[Voucher, java.lang.Long]
 
 @Component
 @Transactional
