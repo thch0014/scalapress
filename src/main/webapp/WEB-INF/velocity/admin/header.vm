@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
+    <link rel="stylesheet" href="/static/css/datepicker.css">
     <link rel="stylesheet" href="/static/css/scalapress.css">
     <link rel="stylesheet" href="/static/css/typeahead.js-bootstrap.css">
 
@@ -92,8 +93,8 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-sm-3 col-md-2">
           #parse("/admin/sidebar.vm")
         </div>
-        <div class="col-md-10">
+        <div class="col-sm-9 col-md-10">
 
