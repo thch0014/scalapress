@@ -67,7 +67,7 @@ class ListingCallbackProcessor extends PaymentCallback with Logging {
     order.lines.add(orderLine)
 
     val comment = OrderComment(order,
-      "This order was created for <a href='/backoffice/object/" + listing.id + "'>Listing #" + listing
+      "This order was created for <a href='/backoffice/item/" + listing.id + "'>Listing #" + listing
         .id + "</a>")
     order.comments.add(comment)
 

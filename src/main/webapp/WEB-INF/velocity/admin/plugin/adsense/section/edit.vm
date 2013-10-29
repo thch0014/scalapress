@@ -9,7 +9,7 @@
         <label class="col-lg-2 control-label">Name</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.name", "class='input-xlarge'")
+          #springFormInput("section.name", "class='input-xlarge'")
         </div>
     </div>
 
@@ -17,7 +17,7 @@
         <label class="col-lg-2 control-label">Visible</label>
 
         <div class="col-lg-8">
-            #springFormCheckbox("section.visible", "")
+          #springFormCheckbox("section.visible", "")
         </div>
     </div>
 
@@ -25,7 +25,7 @@
         <label class="col-lg-2 control-label">Google Ad Client</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.googleAdClient", "")
+          #springFormInput("section.googleAdClient", "")
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         <label class="col-lg-2 control-label">Google Ad Slot</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.googleAdSlot", "")
+          #springFormInput("section.googleAdSlot", "")
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         <label class="col-lg-2 control-label">google_ad_width</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.googleAdWidth", "")
+          #springFormInput("section.googleAdWidth", "")
         </div>
     </div>
 
@@ -49,19 +49,19 @@
         <label class="col-lg-2 control-label">google_ad_height</label>
 
         <div class="col-lg-8">
-            #springFormInput("section.googleAdHeight", "")
+          #springFormInput("section.googleAdHeight", "")
         </div>
     </div>
 
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save changes</button>
 
-        #if ($section.folder)
-            <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
-        #end
-        #if ($section.obj)
-            <a href="/backoffice/obj/$section.obj.id" class="btn btn-default">Return</a>
-        #end
+      #if ($section.folder)
+          <a href="/backoffice/folder/$section.folder.id" class="btn btn-default">Return</a>
+      #end
+      #if ($section.obj)
+          <a href="/backoffice/item/$section.obj.id" class="btn btn-default">Return</a>
+      #end
     </div>
 
 </form>

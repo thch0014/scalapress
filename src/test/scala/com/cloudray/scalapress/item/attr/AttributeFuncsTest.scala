@@ -19,11 +19,11 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.attributeType = AttributeType.Postcode
 
-    val obj = new Item
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    assert("SW10" === AttributeFuncs.locationValue(obj).get)
+    assert("SW10" === AttributeFuncs.locationValue(item).get)
 
   }
 
@@ -39,11 +39,11 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Item
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    assert("earl grey" === AttributeFuncs.attributeValue(obj, "tea").get)
+    assert("earl grey" === AttributeFuncs.attributeValue(item, "tea").get)
   }
 
   test("that multiple attribute values are looked up by name") {
@@ -58,11 +58,11 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Item
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    assert(Set("earl grey", "lady grey") === AttributeFuncs.attributeValues(obj, "tea").toSet)
+    assert(Set("earl grey", "lady grey") === AttributeFuncs.attributeValues(item, "tea").toSet)
   }
 
   test("that no matching attribute name returns none") {
@@ -77,11 +77,11 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
 
-    val obj = new Item
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    assert(AttributeFuncs.attributeValue(obj, "car").isEmpty)
+    assert(AttributeFuncs.attributeValue(item, "car").isEmpty)
   }
 
   test("that setting an attribute removes old attribute values and sets new") {
@@ -97,15 +97,15 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     av2.value = "earl grey"
     av2.attribute = a
 
-    val obj = new Item
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    assert(obj.attributeValues.size == 2)
-    AttributeFuncs.setAttributeValue(obj, a, "new value")
-    assert(obj.attributeValues.size == 1)
-    assert(obj.sortedAttributeValues(0).value === "new value")
-    assert(obj.sortedAttributeValues(0).attribute === a)
-    assert(obj.sortedAttributeValues(0).obj === obj)
+    assert(item.attributeValues.size == 2)
+    AttributeFuncs.setAttributeValue(item, a, "new value")
+    assert(item.attributeValues.size == 1)
+    assert(item.sortedAttributeValues(0).value === "new value")
+    assert(item.sortedAttributeValues(0).attribute === a)
+    assert(item.sortedAttributeValues(0).item === item)
   }
 }

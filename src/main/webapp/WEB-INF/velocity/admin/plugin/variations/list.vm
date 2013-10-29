@@ -46,7 +46,7 @@
 </form>
 
 <div class="form-actions">
-    <a href="/backoffice/obj/$obj.id" class="btn btn-default">Return to $obj.name</a>
+    <a href="/backoffice/item/$obj.id" class="btn btn-default">Return to $obj.name</a>
 </div>
 
 

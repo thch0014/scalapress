@@ -71,7 +71,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-lg-3 control-label">Object List Markup</label>
+        <label class="col-lg-3 control-label">Item List Markup</label>
 
         <div class="col-lg-8">
             <select id="objectListMarkup" name="objectListMarkup" class="form-control">
@@ -87,7 +87,7 @@
     </div>
 
     <div class="form-group">
-        <label class="col-lg-3 control-label">Object View Markup</label>
+        <label class="col-lg-3 control-label">Item View Markup</label>
 
         <div class="col-lg-8">
             <select id="objectViewMarkup" name="objectViewMarkup" class="form-control">

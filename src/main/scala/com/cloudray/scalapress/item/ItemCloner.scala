@@ -24,7 +24,7 @@ class ItemCloner {
     clone.attributeValues = obj.attributeValues.asScala.map(av => {
       val copy = new AttributeValue
       copy.attribute = av.attribute
-      copy.obj = clone
+      copy.item = clone
       copy.value = av.value
       copy
     }).asJava

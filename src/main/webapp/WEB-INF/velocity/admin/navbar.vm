@@ -31,10 +31,10 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li role="presentation" class="dropdown-header">Objects</li>
+                        <li role="presentation" class="dropdown-header">Items</li>
                         <li>
                             <a href="/backoffice/type">
-                                <i class="glyphicon glyphicon-th"></i> All Object Types
+                                <i class="glyphicon glyphicon-th"></i> All Item Types
                             </a>
                         </li>
                       #foreach ($type in $types)

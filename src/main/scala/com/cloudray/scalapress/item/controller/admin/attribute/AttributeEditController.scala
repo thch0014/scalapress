@@ -12,12 +12,11 @@ import com.cloudray.scalapress.util.EnumPopulator
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/attribute/{id}"))
-class AttributeEditController extends EnumPopulator {
-
-  @Autowired var attributeOptionDao: AttributeOptionDao = _
-  @Autowired var attributeDao: AttributeDao = _
-  @Autowired var context: ScalapressContext = _
+class AttributeEditController(attributeOptionDao: AttributeOptionDao,
+                              attributeDao: AttributeDao,
+                              context: ScalapressContext) extends EnumPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute a: Attribute) = "admin/attribute/edit.vm"

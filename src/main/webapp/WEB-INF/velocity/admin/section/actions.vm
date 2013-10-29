@@ -6,7 +6,7 @@
           <a href="/backoffice/folder/$section.folder.id#tab3" class="btn btn-default">Return</a>
       #end
       #if ($section.obj)
-          <a href="/backoffice/obj/$section.obj.id#tab3" class="btn btn-default">Return</a>
+          <a href="/backoffice/item/$section.obj.id#tab3" class="btn btn-default">Return</a>
       #end
     </div>
 </div>

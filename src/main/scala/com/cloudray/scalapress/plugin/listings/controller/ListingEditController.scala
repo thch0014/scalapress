@@ -36,13 +36,13 @@ class ListingEditController {
   }
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute("item") obj: Item, req: HttpServletRequest): String = {
+  def save(@ModelAttribute("item") item: Item, req: HttpServletRequest): String = {
 
-    obj.name = req.getParameter("title")
-    obj.content = req.getParameter("content")
+    item.name = req.getParameter("title")
+    item.content = req.getParameter("content")
 
-    obj.attributeValues.clear()
-    for ( a <- obj.objectType.attributes.asScala ) {
+    item.attributeValues.clear()
+    for ( a <- item.objectType.attributes.asScala ) {
 
       val values = req.getParameterValues("attributeValue_" + a.id)
       if (values != null) {
@@ -50,13 +50,13 @@ class ListingEditController {
           val av = new AttributeValue
           av.attribute = a
           av.value = value
-          av.obj = obj
-          obj.attributeValues.add(av)
+          av.item = item
+          item.attributeValues.add(av)
         })
       }
     }
 
-    context.objectDao.save(obj)
+    context.objectDao.save(item)
     "redirect:/listing/"
   }
 

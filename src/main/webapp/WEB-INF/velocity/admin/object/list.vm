@@ -1,22 +1,22 @@
 #parse("/admin/header.vm")
 
-<div id="create-object-modal" class="modal">
+<div id="create-item-modal" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Create $type.name</h3>
             </div>
-            <form method="GET" action="/backoffice/obj/create" class="form-horizontal">
+            <form method="GET" action="/backoffice/item/create" class="form-horizontal">
                 <input type="hidden" name="typeId" value="$type.id"/>
 
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label" for="new-object-name">Name</label>
+                        <label class="col-lg-2 control-label" for="new-item-name">Name</label>
 
                         <div class="col-lg-8">
-                            <input type="text" id="new-object-name" name="name" placeholder="New $type.name Name"
+                            <input type="text" id="new-item-name" name="name" placeholder="New $type.name Name"
                                    class="form-control">
                         </div>
                     </div>
@@ -36,11 +36,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3>Import CSV</h3>
             </div>
             <form enctype="multipart/form-data" method="POST"
-                  action="/backoffice/obj/import?typeId=$type.id" class="form-horizontal">
+                  action="/backoffice/item/import?typeId=$type.id" class="form-horizontal">
                 <div class="modal-body">
                     <p>
                         Select file to upload
@@ -49,7 +49,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Upload</button>
-                    <button class="btn btn-default" aria-hidden="true" data-dismiss="modal">Close</button>
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -88,7 +88,7 @@
             <button type="submit" class="btn btn-primary">
                 <i class="glyphicon glyphicon-search"></i> Search
             </button>
-            <a href="#create-object-modal" role="button" class="btn btn-default" data-toggle="modal">
+            <a href="#create-item-modal" role="button" class="btn btn-default" data-toggle="modal">
                 <i class="icon-plus"></i> Create  $type.name
             </a>
         </div>
@@ -108,15 +108,15 @@
     </tr>
   #foreach ($o in $objects)
       <tr>
-          <td><a href="/backoffice/obj/$o.id">$o.id</a></td>
+          <td><a href="/backoffice/item/$o.id">$o.id</a></td>
           <td>$o.name</td>
           <td>$!o.status</td>
           <td>$!datetool.format($o.dateCreated)</td>
           <td>
-              <a href="/backoffice/obj/$o.id" role="button" class="btn btn-xs btn-default">
+              <a href="/backoffice/item/$o.id" role="button" class="btn btn-xs btn-default">
                   <i class="glyphicon glyphicon-pencil"></i>
               </a>
-              <a href="/object/$o.id" role="button" class="btn btn-xs btn-default">
+              <a href="/item/$o.id" role="button" class="btn btn-xs btn-default">
                   <i class="glyphicon glyphicon-eye-open"></i>
               </a>
           </td>
@@ -129,7 +129,7 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        <a href="#create-object-modal" role="button" class="btn btn-default" data-toggle="modal">
+        <a href="#create-item-modal" role="button" class="btn btn-default" data-toggle="modal">
             <i class="icon-plus"></i> Create  $type.name
         </a>
         <a href="/backoffice/type/$type.id/export/csv" role="button" class="btn btn-info">

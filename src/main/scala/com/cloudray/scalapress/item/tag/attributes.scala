@@ -85,24 +85,24 @@ class AttributeTableTag extends ScalapressTag with TagBuilder {
 
     request.item match {
       case None => None
-      case Some(obj) => {
+      case Some(item) => {
 
         // add in default values
-        for ( attr <- obj.objectType.attributes.asScala ) {
+        for ( attr <- item.objectType.attributes.asScala ) {
           Option(attr.default).foreach(default => {
-            val qqq = AttributeFuncs.attributeValue(obj, attr)
+            val qqq = AttributeFuncs.attributeValue(item, attr)
 
             if (qqq.isEmpty) {
               val av = new AttributeValue
               av.attribute = attr
-              av.obj = obj
+              av.item = item
               av.value = default
-              obj.attributeValues.add(av)
+              item.attributeValues.add(av)
             }
           })
         }
 
-        val avs = obj.sortedAttributeValues
+        val avs = item.sortedAttributeValues
           .filter(_.attribute.public)
           .filterNot(av => excludes.contains(av.attribute.id.toString))
           .filter(av => includes.isEmpty || includes.contains(av.attribute.id.toString))

@@ -82,7 +82,7 @@
                           <span class="label label-primary"
                                 style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">$recent.id()</span>
                           &nbsp; <a style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden"
-                                    href="/backoffice/object/$recent.id()">$recent.name()</a>
+                                    href="/backoffice/item/$recent.id()">$recent.name()</a>
                       </p>
                   #end
                 </div>

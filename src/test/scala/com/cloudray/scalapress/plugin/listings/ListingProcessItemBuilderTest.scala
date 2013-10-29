@@ -11,7 +11,7 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 
 /** @author Stephen Samuel */
-class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
   val context = new ScalapressContext
   context.objectDao = mock[ItemDao]
@@ -19,7 +19,7 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
   val builder = new ListingProcessObjectBuilder(context)
   val p = new ListingPackage
 
-  val obj = new Item
+  val item = new Item
 
   val process = new ListingProcess
   process.content = "what a lovely mare"
@@ -34,8 +34,8 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
   }
 
   test("object status is initially set to disabled") {
-    val obj = builder.build(process)
-    assert(Item.STATUS_DISABLED === obj.status)
+    val item = builder.build(process)
+    assert(Item.STATUS_DISABLED === item.status)
   }
 
   test("object title is taken from the process title") {
@@ -53,22 +53,22 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
     Mockito.when(context.folderDao.find(5l)).thenReturn(folder1)
     Mockito.when(context.folderDao.find(7l)).thenReturn(folder2)
     process.folders = Array(5l, 7l)
-    val obj = builder.build(process)
-    assert(obj.folders.size === 2)
-    assert(obj.folders.contains(folder1))
-    assert(obj.folders.contains(folder2))
+    val item = builder.build(process)
+    assert(item.folders.size === 2)
+    assert(item.folders.contains(folder1))
+    assert(item.folders.contains(folder2))
   }
 
   test("object content is taken from the process content") {
     assert("what a lovely mare" === process.content)
-    val obj = builder.build(process)
-    assert("what a lovely mare" === obj.content)
+    val item = builder.build(process)
+    assert("what a lovely mare" === item.content)
   }
 
   test("object expiry is set to the future if duration > 0") {
     process.listingPackage.duration = 10
-    val obj = builder.build(process)
-    assert(obj.expiry > System.currentTimeMillis())
+    val item = builder.build(process)
+    assert(item.expiry > System.currentTimeMillis())
   }
 
   test("attribute values are copied") {
@@ -84,8 +84,8 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
     process.attributeValues.add(av1)
     process.attributeValues.add(av2)
 
-    val obj = builder.build(process)
-    assert(2 === obj.attributeValues.size)
+    val item = builder.build(process)
+    assert(2 === item.attributeValues.size)
   }
 
   test("given a package with a duration then the expiry date") {
@@ -110,10 +110,10 @@ class ListingProcessObjectBuilderTest extends FunSuite with OneInstancePerTest w
     av.attribute = attribute
     av.value = "smithy"
 
-    val av2 = builder._av(av, obj)
+    val av2 = builder._av(av, item)
 
     assert("smithy" === av2.value)
     assert(attribute === av2.attribute)
-    assert(obj === av2.obj)
+    assert(item === av2.item)
   }
 }
