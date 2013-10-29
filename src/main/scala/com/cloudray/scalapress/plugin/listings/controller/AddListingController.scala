@@ -251,7 +251,7 @@ class AddListingController {
     val port = new URL(req.getRequestURL.toString).getPort
     val domain = if (port == 8080) host + ":8080" else host
 
-    val voucher = voucherDao.byCode(process.voucherCode)
+    val voucher = Option(process.voucherCode).flatMap(voucherDao.byCode)
     val purchase = new ListingPurchase(process.listing, voucher, domain)
 
     page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))

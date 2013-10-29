@@ -5,6 +5,7 @@ import com.cloudray.scalapress.account.controller.RegistrationForm
 import com.cloudray.scalapress.account.AccountPlugin
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.settings.Installation
+import scala.xml.Unparsed
 
 /** @author Stephen Samuel */
 class RegistrationRenderer(installation: Installation) {
@@ -23,7 +24,7 @@ class RegistrationRenderer(installation: Installation) {
 
     Scalate.layout("/com/cloudray/scalapress/account/register.ssp",
       Map("nameError" -> nameError,
-        "emailError" -> emailError,
+        "emailError" -> Unparsed(emailError),
         "passwordError" -> passwordError,
         "name" -> Option(form.name).getOrElse(""),
         "email" -> Option(form.email).getOrElse(""),

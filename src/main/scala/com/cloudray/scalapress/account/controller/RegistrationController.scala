@@ -85,8 +85,8 @@ class RegistrationController(themeService: ThemeService,
       errors
         .rejectValue("email",
         "email.exists",
-        "Email address already in use, please register another&lt;p&gt;" +
-          "If you are already registered you can &lt;a href='/login' title='Login'&gt;login here&lt;/a&gt;&lt;/p&gt;")
+        "Email address already in use, please choose another. " +
+          "If you are already registered you can <a href='/login' title='Login'>login here</a>.")
     }
 
     errors.hasErrors match {

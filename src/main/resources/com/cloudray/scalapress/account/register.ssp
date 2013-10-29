@@ -2,7 +2,7 @@
 <%@ val name: String %>
 <%@ val email: String %>
 <%@ val nameError: String %>
-<%@ val emailError: String %>
+<%@ val emailError: scala.xml.Node %>
 <%@ val passwordError: String %>
 <%@ val nameStyle: String %>
 <%@ val emailStyle: String %>
