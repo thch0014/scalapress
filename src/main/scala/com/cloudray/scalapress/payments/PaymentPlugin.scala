@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.payments
 
-import javax.persistence.{InheritanceType, Inheritance, Entity, GenerationType, GeneratedValue, Id}
+import javax.persistence._
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
-@Entity
+@MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class PaymentPlugin {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
   @BeanProperty
-  var id: Long = _
+  protected var id: Long = _
 
   def name: String
   def processor: PaymentProcessor
@@ -30,7 +30,7 @@ trait PaymentPluginDao extends GenericDao[PaymentPlugin, java.lang.Long] {
 @Component
 @Transactional
 class PaymentPluginDaoImpl extends GenericDaoImpl[PaymentPlugin, java.lang.Long] with PaymentPluginDao {
-  def enabled: Seq[PaymentPlugin] = findAll.filter(p => p.enabled)
+  def enabled: Seq[PaymentPlugin] = findAll(classOf[PaymentPlugin]).filter(p => p.enabled)
 }
 
 @Component
@@ -40,7 +40,7 @@ class PaymentPluginValidator(paymentPluginDao: PaymentPluginDao) {
   @PostConstruct
   def ensurePluginsCreated() {
     ComponentClassScanner.paymentPlugins.foreach(plugin => {
-      val plugins = paymentPluginDao.findAll
+      val plugins = paymentPluginDao.findAll(classOf[PaymentPlugin])
       if (!plugins.exists(arg => arg.getClass.isAssignableFrom(plugin) || plugin.isAssignableFrom(arg.getClass)))
         paymentPluginDao.save(plugin.newInstance)
     })

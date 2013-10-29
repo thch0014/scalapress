@@ -54,7 +54,7 @@ trait GenericDao[T <: AnyRef, ID <: java.io.Serializable] {
    * Get a list of all the objects of the specified type.
    */
   def findAll: List[T]
-
+  def findAll(klass: Class[T]): List[T]
   def findAll(limit: Int): List[T]
 
   /**

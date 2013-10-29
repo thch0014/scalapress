@@ -6,7 +6,8 @@ import com.googlecode.genericdao.dao.DAOUtil
 import scala.collection.JavaConverters._
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
-import org.hibernate.SessionFactory
+import org.hibernate.{Criteria, SessionFactory}
+import org.hibernate.criterion.CriteriaSpecification
 
 /** @author Stephen Samuel */
 /**
@@ -29,42 +30,28 @@ class GenericDaoImpl[T <: AnyRef, ID <: java.io.Serializable] extends HibernateB
 
   def count: Int = _count(persistentClass, new Search)
 
-  def count(search: ISearch): Int = {
-    _count(persistentClass, search)
-  }
+  def count(search: ISearch): Int = _count(persistentClass, search)
 
-  def find(id: ID): T = {
-    _get(persistentClass, id)
-  }
-
-  def findAll: List[T] = {
-    _all(persistentClass).asScala.toList
-  }
+  def find(id: ID): T = _get(persistentClass, id)
+  def findAll: List[T] = _all(persistentClass).asScala.toList
+  def findAll(klass: Class[T]): List[T] = getSession
+    .createCriteria(klass)
+    .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+    .list.asScala.toList.asInstanceOf[List[T]]
 
   def update(entity: T) = super._saveOrUpdate(entity)
 
   def merge(entity: T) = super._merge(entity)
 
-  def findAll(limit: Int): List[T] = {
-    search(new Search(persistentClass).setMaxResults(limit))
-  }
+  def findAll(limit: Int): List[T] = search(new Search(persistentClass).setMaxResults(limit))
 
-  def remove(entity: T): Boolean = {
-    _deleteEntity(entity)
-  }
+  def remove(entity: T): Boolean = _deleteEntity(entity)
+  def removeById(id: ID): Boolean = _deleteById(persistentClass, id)
 
-  def removeById(id: ID): Boolean = {
-    _deleteById(persistentClass, id)
-  }
+  def save(entity: T): Boolean = _saveOrUpdateIsNew(entity)
 
-  def save(entity: T): Boolean = {
-    _saveOrUpdateIsNew(entity)
-  }
-
-  def search(search: ISearch): List[T] = {
-    _search(persistentClass, search).asScala.toList.asInstanceOf[List[T]]
-  }
-
+  def search(search: ISearch): List[T] = _search(persistentClass, search).asScala.toList.asInstanceOf[List[T]]
+  def searchUnique(search: ISearch): T = _searchUnique(persistentClass, search).asInstanceOf[T]
   def searchAndCount(search: ISearch): SearchResult[T] = {
     if (search == null) {
       val result: SearchResult[T] = new SearchResult[T]
@@ -75,9 +62,6 @@ class GenericDaoImpl[T <: AnyRef, ID <: java.io.Serializable] extends HibernateB
     _searchAndCount(persistentClass, search).asInstanceOf[SearchResult[T]]
   }
 
-  def searchUnique(search: ISearch): T = {
-    _searchUnique(persistentClass, search).asInstanceOf[T]
-  }
   def remove(entities: Iterable[T]): Unit = entities.foreach(super._deleteEntity)
   def save(entities: Iterable[T]): Unit = entities.foreach(super._save)
 }

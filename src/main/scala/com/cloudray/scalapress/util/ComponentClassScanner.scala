@@ -11,6 +11,7 @@ import java.lang.annotation.Annotation
 import com.cloudray.scalapress.payments.PaymentPlugin
 import com.cloudray.scalapress.settings.MenuProvider
 import com.cloudray.scalapress.plugin.SingleInstance
+import java.lang.reflect.Modifier
 
 /** @author Stephen Samuel */
 class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(false) {
@@ -53,7 +54,9 @@ object ComponentClassScanner {
 
   lazy val callbacks: Seq[Class[_]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Callback])
   lazy val menus: Seq[Class[MenuProvider]] = new ComponentClassScanner().getSubtypes(classOf[MenuProvider])
-  lazy val paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner().getSubtypes(classOf[PaymentPlugin])
+  lazy val paymentPlugins: Seq[Class[PaymentPlugin]] = new ComponentClassScanner()
+    .getSubtypes(classOf[PaymentPlugin])
+    .filterNot(arg => Modifier.isAbstract(arg.getModifiers))
   lazy val sections: Seq[Class[Section]] = new ComponentClassScanner().getSubtypes(classOf[Section])
   lazy val singleInstanceClasses: Seq[Class[_]] =
     new ComponentClassScanner().getAnnotatedClasses(classOf[SingleInstance])

@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.payments.paypal.standard
 
-import javax.persistence.{Entity, Table}
+import javax.persistence._
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
@@ -12,9 +12,11 @@ import com.cloudray.scalapress.payments.{PaymentProcessor, PaymentPlugin}
 @Table(name = "plugins_paypal_standard")
 class PaypalStandardPlugin extends PaymentPlugin {
 
-  @BeanProperty var accountEmail: String = _
+  @BeanProperty
+  var accountEmail: String = _
 
-  @BeanProperty var production: Boolean = _
+  @BeanProperty
+  var production: Boolean = _
 
   //  def backofffice = "backoffice/plugin/payment/paypal/standard"
   def name: String = "Paypal"
