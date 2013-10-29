@@ -2,6 +2,8 @@ package com.cloudray.scalapress.plugin.listings.controller
 
 /** @author Stephen Samuel */
 object ListingTitles {
+
+  val VOUCHER = "Listing - Voucher"
   val PAYMENT_ERROR = "Listing - Transaction Not Completed"
   val PAYMENT = "Listing - Payment"
   val DETAILS = "Listing - Details"

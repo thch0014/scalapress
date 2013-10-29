@@ -1,0 +1,32 @@
+<%@ val code: Option[String] %>
+<%@ val name : Option[String] %>
+<%@ val description : Option[String] %>
+
+<div class="voucher">
+    <legend>
+        Voucher
+    </legend>
+    <p> If you have a voucher code please enter it here: </p>
+
+    <form method="POST" action="/listing/voucher">
+
+        <input type="text" name="voucherCode" class="form-control" size="12"/>
+        <button type="submit" class="btn btn-default">Use voucher</button>
+
+    </form>
+
+  #if (code.isDefined)
+      <form method="POST" action="/listing/voucher">
+          <div class="current-voucher">
+              <p>Your current voucher is ${description}$ (Code: ${name})</p>
+              <a href="/listing/voucher/remove" class="btn btn-info">Remove voucher</a>
+          </div>
+      </form>
+      <hr/>
+      <a href="/listing/payment" class="btn btn-default b">Continue</a>
+  #else
+      <hr/>
+      <a href="/listing/payment" class="btn btn-default">Continue without voucher</a>
+  #end
+
+</div>

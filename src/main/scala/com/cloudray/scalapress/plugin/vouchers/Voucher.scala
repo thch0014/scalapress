@@ -44,7 +44,12 @@ class Voucher {
   @BeanProperty
   var maxUsesPerAccount: Int = _
 
-  def calculatePrice(base: Int): Int = base - fixedDiscount - (base * percentDiscount / 100d).toInt
+  def calculatePrice(base: Int): Int = {
+    val adjusted = base - fixedDiscount - (base * percentDiscount / 100d).toInt
+    Math.max(adjusted, 0)
+  }
+
+  def description = if (fixedDiscount > 0) "%.2f".format(fixedDiscount / 100d) else percentDiscount + "%"
 }
 
 object Voucher {

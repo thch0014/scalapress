@@ -91,7 +91,7 @@ class ListingPaymentController {
 
     val purchase = new ListingPurchase(process.listing, None, domain)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
+    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep, false))
     page.body(paymentFormRenderer.renderPaymentForm(purchase))
     page
   }

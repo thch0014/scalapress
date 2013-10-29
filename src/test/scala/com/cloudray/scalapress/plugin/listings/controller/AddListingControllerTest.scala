@@ -197,7 +197,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
   test("payment page uses purchase with callback of http://domain.com:8080/listing/completed") {
     val plugin1 = new MockPaymentPlugin("superpay", true, Map.empty)
     Mockito.when(controller.context.paymentPluginDao.enabled).thenReturn(Seq(plugin1))
-    controller.showPayments(process, errors, req)
+    controller.payments(process, errors, req)
     val captor = ArgumentCaptor.forClass(classOf[Purchase])
     Mockito.verify(controller.paymentFormRenderer).renderPaymentForm(captor.capture)
     assert("http://domain.com:8080/listing/completed" === captor.getValue.successUrl)

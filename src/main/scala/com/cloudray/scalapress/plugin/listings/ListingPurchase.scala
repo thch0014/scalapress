@@ -5,7 +5,7 @@ import com.cloudray.scalapress.payments.Purchase
 import com.cloudray.scalapress.plugin.vouchers.Voucher
 
 /** @author Stephen Samuel */
-class ListingPurchase(listing: Obj, voucher: Option[Voucher], domain: String) extends Purchase {
+class ListingPurchase(listing: Obj, _voucher: Option[Voucher], domain: String) extends Purchase {
 
   def paymentDescription: String = "Listing: " + listing.name
 
@@ -18,6 +18,8 @@ class ListingPurchase(listing: Obj, voucher: Option[Voucher], domain: String) ex
       case None => base
     }
   }
+
+  override def voucher: Option[Voucher] = _voucher
 
   def successUrl: String = "http://" + domain + "/listing/completed"
   def failureUrl: String = "http://" + domain + "/listing/payment/failure"

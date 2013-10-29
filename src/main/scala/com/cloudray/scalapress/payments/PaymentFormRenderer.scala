@@ -1,25 +1,25 @@
 package com.cloudray.scalapress.payments
 
 import com.cloudray.scalapress.ScalapressContext
-import scala.xml.{Unparsed, Elem}
+import scala.xml.Elem
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.util.Scalate
 
 /** @author Stephen Samuel */
 @Component
 @Autowired
 class PaymentFormRenderer(context: ScalapressContext) {
 
-  val PAY_WITH_CARD = "Pay with debit or credit card"
+  val PAY_WITH_CARD = "Pay £%.2f with debit or credit card"
+  val PAY_WITH_PROCESSOR = "Pay £%.2f with %s"
 
-  def renderPaymentForm(purchase: Purchase): Elem = renderPaymentForm(purchase, false)
-  def renderPaymentForm(purchase: Purchase, vouchersEnabled: Boolean): Elem = {
+  def renderPaymentForm(purchase: Purchase): Elem = {
 
     val payments = context.paymentPluginDao.enabled
     val forms = payments.map(plugin => {
 
-      val buttonText = if (payments.size == 1) PAY_WITH_CARD else s"Pay with ${plugin.name}"
+      val buttonText = if (payments.size == 1) PAY_WITH_CARD.format(purchase.total / 100d)
+      else PAY_WITH_PROCESSOR.format(purchase.total / 100d, plugin.name)
       val params = plugin.processor.params(context.installationDao.get.domain, purchase)
       val paramInputs = params.map(arg => <input type="hidden" name={arg._1} value={arg._2}/>)
 
@@ -31,19 +31,10 @@ class PaymentFormRenderer(context: ScalapressContext) {
 
     })
 
-    val v = if (vouchersEnabled) Unparsed(voucher(purchase)) else Unparsed("")
-
     <div id="payment-form">
-      <div class="payments">
-        <legend>
-          Proceed with Payment
-        </legend>{forms}
-      </div>{v}
+      <legend>
+        Proceed with Payment
+      </legend>{forms}
     </div>
   }
-
-  def voucher(purchase: Purchase) = Scalate.layout(
-    "/com/cloudray/scalapress/plugin/listings/voucher-input.ssp",
-    Map("code" -> purchase.voucher.getOrElse(""))
-  )
 }

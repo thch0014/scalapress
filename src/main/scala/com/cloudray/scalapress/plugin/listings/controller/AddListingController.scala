@@ -101,7 +101,7 @@ class AddListingController {
                 val tree = context.folderDao.tree
                 val filtered = if (folders.isEmpty) tree else tree.filter(f => folders.contains(f.id))
 
-                page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep))
+                page.body(ListingWizardRenderer.render(lp, ListingWizardRenderer.FoldersStep, voucherDao.enabled))
                 page.body(ListingFoldersRenderer.render(process, listingsPluginDao.get, filtered))
                 page
             }
@@ -129,7 +129,8 @@ class AddListingController {
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.DetailsStep))
+    page
+      .body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.DetailsStep, voucherDao.enabled))
     page.body(ListingFieldsRenderer.render(process))
     page
   }
@@ -171,7 +172,9 @@ class AddListingController {
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep))
+    page.body(
+      ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ImagesStep, voucherDao.enabled)
+    )
     val form = Scalate.layout(
       "/com/cloudray/scalapress/plugin/listings/images.ssp",
       Map("headerText" -> Option(listingsPluginDao.get.imagesPageText).getOrElse(""), "images" -> process.imageKeys)
@@ -216,7 +219,8 @@ class AddListingController {
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ConfirmationStep))
+    page.body(ListingWizardRenderer
+      .render(process.listingPackage, ListingWizardRenderer.ConfirmationStep, voucherDao.enabled))
     page.body(confRenderer.render(process))
     page
   }
@@ -231,17 +235,16 @@ class AddListingController {
     process.listing = listing
     listingProcessDao.save(process)
 
-    if (process.listingPackage.fee == 0)
-      completed(process, req)
-    else
-      showPayments(process, errors, req)
+    if (process.listingPackage.fee == 0) completed(process, req)
+    else if (voucherDao.enabled) voucher(process, errors, req)
+    else payments(process, errors, req)
   }
 
   @ResponseBody
   @RequestMapping(value = Array("payment"), method = Array(RequestMethod.GET), produces = Array("text/html"))
-  def showPayments(@ModelAttribute("process") process: ListingProcess,
-                   errors: Errors,
-                   req: HttpServletRequest): ScalapressPage = {
+  def payments(@ModelAttribute("process") process: ListingProcess,
+               errors: Errors,
+               req: HttpServletRequest): ScalapressPage = {
 
     val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.PAYMENT)
     val theme = themeService.default
@@ -254,17 +257,62 @@ class AddListingController {
     val voucher = Option(process.voucherCode).flatMap(voucherDao.byCode)
     val purchase = new ListingPurchase(process.listing, voucher, domain)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.PaymentStep))
-    page.body(paymentFormRenderer.renderPaymentForm(purchase, voucherDao.enabled))
+    page.body(
+      ListingWizardRenderer.render(process.listingPackage,
+        ListingWizardRenderer.PaymentStep,
+        voucherDao.enabled)
+    )
+    page.body(paymentFormRenderer.renderPaymentForm(purchase))
     page
+  }
+
+  @ResponseBody
+  @RequestMapping(value = Array("voucher"), method = Array(RequestMethod.GET), produces = Array("text/html"))
+  def voucher(@ModelAttribute("process") process: ListingProcess,
+              errors: Errors,
+              req: HttpServletRequest): ScalapressPage = {
+
+    voucherDao.enabled match {
+      case true =>
+
+        val sreq = ScalapressRequest(req, context).withTitle(ListingTitles.VOUCHER)
+        val theme = themeService.default
+        val page = ScalapressPage(theme, sreq)
+
+        val voucher = Option(process.voucherCode).flatMap(voucherDao.byCode)
+        val purchase = new ListingPurchase(process.listing, voucher, null)
+        val renderer = new VoucherFormRenderer
+
+        page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.VoucherStep, true))
+        page.body(renderer.render(purchase, errors))
+        page
+
+      case false => payments(process, errors, req)
+    }
   }
 
   @RequestMapping(value = Array("voucher"), method = Array(RequestMethod.POST))
   def setVoucher(@ModelAttribute("process") process: ListingProcess,
-                 @RequestParam(value = "code", required = false) voucherCode: String): String = {
-    process.voucherCode = voucherCode
+                 @RequestParam(value = "voucherCode", required = false) voucherCode: String,
+                 errors: Errors,
+                 req: HttpServletRequest): String = {
+    if (new VoucherService(voucherDao).isValidVoucher(voucherCode)) {
+      process.voucherCode = voucherCode
+      listingProcessDao.save(process)
+      "redirect:/listing/voucher"
+    } else {
+      errors.rejectValue("voucherCode", "voucher.invalid", "Invalid voucher code")
+      "redirect:/listing/voucher"
+    }
+  }
+
+  @RequestMapping(value = Array("voucher/remove"))
+  def removeVoucher(@ModelAttribute("process") process: ListingProcess,
+                    errors: Errors,
+                    req: HttpServletRequest): String = {
+    process.voucherCode = null
     listingProcessDao.save(process)
-    "redirect:/listing/payment"
+    "redirect:/listing/voucher"
   }
 
   @ResponseBody
@@ -297,7 +345,8 @@ class AddListingController {
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
 
-    page.body(ListingWizardRenderer.render(process.listingPackage, ListingWizardRenderer.ConfirmationStep))
+    page.body(ListingWizardRenderer
+      .render(process.listingPackage, ListingWizardRenderer.ConfirmationStep, voucherDao.enabled))
     page.body(<p>There was an error with payment.</p>)
     page.body(<p>Please
       <a href='/listing/payment'>click here</a>
