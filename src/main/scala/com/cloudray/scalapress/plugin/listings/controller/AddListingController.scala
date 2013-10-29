@@ -19,7 +19,7 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer._
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.media.AssetService
-import com.cloudray.scalapress.plugin.vouchers.VoucherDao
+import com.cloudray.scalapress.plugin.vouchers.{VoucherService, VoucherDao}
 
 /** @author Stephen Samuel */
 @Controller
