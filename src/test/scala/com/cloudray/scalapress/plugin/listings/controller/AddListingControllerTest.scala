@@ -126,7 +126,7 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
 
   test("completed page contains a correct link to the object") {
     val page = controller.completed(process, req)
-    assert(page._body.filter(_.toString.contains("coldplay.com/object-454-horse4sale")).size > 0)
+    assert(page._body.filter(_.toString.contains("coldplay.com/item-454-horse4sale")).size > 0)
   }
 
   test("selecting package sets package on process") {

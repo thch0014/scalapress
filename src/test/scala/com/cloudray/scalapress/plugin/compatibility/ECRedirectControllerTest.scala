@@ -30,9 +30,9 @@ class ECRedirectControllerTest extends FunSuite with MockitoSugar with OneInstan
     assert("redirect:/folder-28-big-man-tshirts" === url)
   }
 
-  test("item.do redirects to object page") {
+  test("item.do redirects to item page") {
     val url = controller.item(14)
-    assert("redirect:/object-14-big-man-tshirts" === url)
+    assert("redirect:/item-14-big-man-tshirts" === url)
   }
 
   test("invalid category id redirects to home page") {

@@ -9,22 +9,22 @@ import com.cloudray.scalapress.item.Item
 /** @author Stephen Samuel */
 class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val req = mock[HttpServletRequest]
-    val context = new ScalapressContext
+  val req = mock[HttpServletRequest]
+  val context = new ScalapressContext
 
-    val o = new Item
-    o.name = "big shirt"
-    o.id = 14
-    val sreq = new ScalapressRequest(req, context)
+  val o = new Item
+  o.name = "big shirt"
+  o.id = 14
+  val sreq = new ScalapressRequest(req, context)
 
-    test("tag uses url from object") {
-        val output = new OpenGraphUrlTag().render(sreq.withItem(o), Map.empty)
-        assert("<meta property=\"og:url\" content=\"/object-14-big-shirt\"/>" === output.get)
-    }
+  test("tag uses url from item") {
+    val output = new OpenGraphUrlTag().render(sreq.withItem(o), Map.empty)
+    assert("<meta property=\"og:url\" content=\"/item-14-big-shirt\"/>" === output.get)
+  }
 
-    test("tag returns none for sreq with no object") {
-        val output = new OpenGraphTitleTag().render(sreq, Map.empty)
-        assert(output.isEmpty)
-    }
+  test("tag returns none for sreq with no item") {
+    val output = new OpenGraphTitleTag().render(sreq, Map.empty)
+    assert(output.isEmpty)
+  }
 
 }

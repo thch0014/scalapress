@@ -51,10 +51,10 @@ class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTe
     assert(section.render(req).get.contains( """var disqus_title = "live events";"""))
   }
 
-  test("given an object sreq then the page url is the url of the object") {
+  test("given an item sreq then the page url is the url of the object") {
     Mockito.when(req.item).thenReturn(Option(obj))
     Mockito.when(req.folder).thenReturn(None)
-    assert(section.render(req).get.contains( """var disqus_url = "http://buffet.com/object-34-coldplay-tickets";"""))
+    assert(section.render(req).get.contains( """var disqus_url = "http://buffet.com/item-34-coldplay-tickets";"""))
   }
 
   test("given a folder sreq then the page url is the url of the folder") {

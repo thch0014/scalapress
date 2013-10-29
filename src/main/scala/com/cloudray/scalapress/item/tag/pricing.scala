@@ -35,7 +35,7 @@ object RrpDiscountTag extends ScalapressTag with TagBuilder {
   }
 }
 
-object ObjectSellPriceTag extends ScalapressTag with TagBuilder {
+object ItemSellPriceTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]) = {
     request.item.map(obj => {
 

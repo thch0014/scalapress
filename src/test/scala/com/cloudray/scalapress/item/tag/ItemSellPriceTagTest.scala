@@ -9,7 +9,7 @@ import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
-class ObjectSellPriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemSellPriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val obj = new Item
   obj.price = 2000
@@ -26,29 +26,29 @@ class ObjectSellPriceTagTest extends FunSuite with MockitoSugar with OneInstance
   val sreq = ScalapressRequest(req, context).withItem(obj)
 
   test("that including ex param sets price to ex vat") {
-    val rendered = ObjectSellPriceTag.render(sreq, Map("ex" -> "1"))
+    val rendered = ItemSellPriceTag.render(sreq, Map("ex" -> "1"))
     assert("&pound;20.00" === rendered.get)
   }
 
   test("given param of vat then shows the vat when vat is enabled") {
-    val actual = ObjectSellPriceTag.render(sreq, Map("vat" -> "1"))
+    val actual = ItemSellPriceTag.render(sreq, Map("vat" -> "1"))
     assert("&pound;4.00" === actual.get)
   }
 
   test("given param of vat then shows no vat when vat is disabled") {
     installation.vatNumber = null
-    val actual = ObjectSellPriceTag.render(sreq, Map("vat" -> "1"))
+    val actual = ItemSellPriceTag.render(sreq, Map("vat" -> "1"))
     assert("&pound;0.00" === actual.get)
   }
 
   test("that by default the price is inc vat") {
-    val rendered = ObjectSellPriceTag.render(sreq, Map.empty)
+    val rendered = ItemSellPriceTag.render(sreq, Map.empty)
     assert("&pound;24.00" === rendered.get)
   }
 
   test("tag does not add VAT when vat is disabled") {
     installation.vatNumber = null
-    val actual = ObjectSellPriceTag.render(sreq, Map.empty)
+    val actual = ItemSellPriceTag.render(sreq, Map.empty)
     assert("&pound;20.00" === actual.get)
   }
 }

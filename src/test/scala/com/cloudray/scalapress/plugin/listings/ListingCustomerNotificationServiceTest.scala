@@ -41,9 +41,9 @@ class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePe
     assert(msg.contains("http://coldplay.com/account"))
   }
 
-  test("message body contains object link") {
+  test("message body contains item link") {
     val msg = service._message(obj)
-    assert(msg.contains("http://coldplay.com/object-34-coldplay-tshirt"))
+    assert(msg.contains("http://coldplay.com/item-34-coldplay-tshirt"))
   }
 
   test("email is sent to account email address") {

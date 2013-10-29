@@ -86,7 +86,7 @@ class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: Asse
       content(obj.content),
       googleCategory,
       folder,
-      "http://" + domain + "/" + UrlGenerator.url(obj),
+      "http://" + domain + UrlGenerator.url(obj),
       "http://" + domain + "/images/" + obj.images.asScala.head,
       _condition(obj),
       formattedPrice + " GBP",

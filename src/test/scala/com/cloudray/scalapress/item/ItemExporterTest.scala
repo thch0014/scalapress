@@ -18,16 +18,16 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
 
   val attributes = List(attr1, attr2)
 
-  val obj = new Item
-  obj.name = "coldplay tickets"
-  obj.id = 123
-  obj.dateCreated = 1365722181000l
-  obj.price = 599
-  obj.costPrice = 450
-  obj.status = "super status"
-  obj.stock = 5
-  obj.rrp = 1999
-  obj.vatRate = 10.00
+  val item = new Item
+  item.name = "coldplay tickets"
+  item.id = 123
+  item.dateCreated = 1365722181000l
+  item.price = 599
+  item.costPrice = 450
+  item.status = "super status"
+  item.stock = 5
+  item.rrp = 1999
+  item.vatRate = 10.00
 
   val av1 = new AttributeValue
   av1.attribute = attr1
@@ -37,8 +37,8 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   av2.attribute = attr2
   av2.value = "GalaxyS"
 
-  obj.attributeValues.add(av1)
-  obj.attributeValues.add(av2)
+  item.attributeValues.add(av1)
+  item.attributeValues.add(av2)
 
   test("header happy path") {
 
@@ -61,28 +61,28 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
 
   test("row happy path") {
 
-    val row = new ItemExporter()._row(obj, attributes, "mysite.com")
+    val row = new ItemExporter()._row(item, attributes, "mysite.com")
     assert(Array[String]("123",
       "11-04-2013",
       "coldplay tickets",
       "super status",
-      "http://mysite.com/object-123-coldplay-tickets", "5.99", "10.0", "6.58", "19.99", "4.50", "1.49", "5",
+      "http://mysite.com/item-123-coldplay-tickets", "5.99", "10.0", "6.58", "19.99", "4.50", "1.49", "5",
       "Samsung",
       "GalaxyS") === row)
   }
 
   test("row handles zeros for pricing") {
 
-    obj.price = 0
-    obj.costPrice = 0
-    obj.stock = 0
-    obj.rrp = 0
+    item.price = 0
+    item.costPrice = 0
+    item.stock = 0
+    item.rrp = 0
 
-    val row = new ItemExporter()._row(obj, attributes, "mysite.com")
+    val row = new ItemExporter()._row(item, attributes, "mysite.com")
     assert(Array[String]("123",
       "11-04-2013",
       "coldplay tickets", "super status",
-      "http://mysite.com/object-123-coldplay-tickets", "0.00", "10.0", "0.00", "0.00", "0.00", "0.00", "0",
+      "http://mysite.com/item-123-coldplay-tickets", "0.00", "10.0", "0.00", "0.00", "0.00", "0.00", "0",
       "Samsung",
       "GalaxyS") === row)
   }
@@ -92,9 +92,9 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     val av3 = new AttributeValue
     av3.attribute = attr1
     av3.value = "Apple"
-    obj.attributeValues.add(av3)
+    item.attributeValues.add(av3)
 
-    val row = new ItemExporter()._row(obj, attributes, "mysite.com")
+    val row = new ItemExporter()._row(item, attributes, "mysite.com")
     assert("Apple|Samsung" === row(12))
   }
 }

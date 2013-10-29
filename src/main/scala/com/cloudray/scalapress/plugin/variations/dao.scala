@@ -25,7 +25,7 @@ trait VariationDao extends GenericDao[Variation, java.lang.Long] {
 @Transactional
 class VariationDaoImpl extends GenericDaoImpl[Variation, java.lang.Long] with VariationDao {
   def findByObjectId(l: Long): Seq[Variation] = {
-    search(new Search(classOf[Variation]).addFilterEqual("item.id", l))
+    search(new Search(classOf[Variation]).addFilterEqual("obj.id", l))
   }
 }
 

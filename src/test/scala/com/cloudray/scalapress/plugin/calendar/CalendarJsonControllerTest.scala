@@ -34,9 +34,9 @@ class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInst
     val events = controller.events(4)
     assert(3 === events.size)
 
-    assert("/object-1-coldplay" === events(0).url)
-    assert("/object-2-jethro-tull" === events(1).url)
-    assert("/object-3-keane" === events(2).url)
+    assert("/item-1-coldplay" === events(0).url)
+    assert("/item-2-jethro-tull" === events(1).url)
+    assert("/item-3-keane" === events(2).url)
 
     assert("coldplay" === events(0).title)
     assert("jethro tull" === events(1).title)

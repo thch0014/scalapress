@@ -33,15 +33,15 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
   val store = mock[AssetStore]
   val builder = new GoogleBaseBuilder("domain.com", "electronics", store)
 
-  val obj = new Item
-  obj.name = "Coldplay Live"
-  obj.content = "brand new cd for the mylo xyloto tour"
-  obj.id = 123
-  obj.images.add(image)
-  obj.price = 1999
-  obj.folders.add(folder)
-  obj.attributeValues.add(av1)
-  obj.attributeValues.add(av2)
+  val item = new Item
+  item.name = "Coldplay Live"
+  item.content = "brand new cd for the mylo xyloto tour"
+  item.id = 123
+  item.images.add(image)
+  item.price = 1999
+  item.folders.add(folder)
+  item.attributeValues.add(av1)
+  item.attributeValues.add(av2)
 
   test("headers happy path") {
     assert(
@@ -50,64 +50,64 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
         .mkString(","))
   }
 
-  test("objects with no image are filtered out") {
-    obj.images.clear()
-    assert(builder.filter(feed, Array(obj)).size == 0)
-    obj.images.add(image)
-    assert(builder.filter(feed, Array(obj)).size == 1)
+  test("items with no image are filtered out") {
+    item.images.clear()
+    assert(builder.filter(feed, Array(item)).size == 0)
+    item.images.add(image)
+    assert(builder.filter(feed, Array(item)).size == 1)
   }
 
-  test("objects with no folder are filtered out") {
-    obj.folders.clear()
-    assert(builder.filter(feed, Array(obj)).size == 0)
-    obj.folders.add(folder)
-    assert(builder.filter(feed, Array(obj)).size == 1)
+  test("items with no folder are filtered out") {
+    item.folders.clear()
+    assert(builder.filter(feed, Array(item)).size == 0)
+    item.folders.add(folder)
+    assert(builder.filter(feed, Array(item)).size == 1)
   }
 
-  test("objects with no content are filtered out") {
-    obj.content = ""
-    assert(builder.filter(feed, Array(obj)).size == 0)
-    obj.content = "brand new cd for the mylo xyloto tour"
-    assert(builder.filter(feed, Array(obj)).size == 1)
+  test("items with no content are filtered out") {
+    item.content = ""
+    assert(builder.filter(feed, Array(item)).size == 0)
+    item.content = "brand new cd for the mylo xyloto tour"
+    assert(builder.filter(feed, Array(item)).size == 1)
   }
 
-  test("given an available object then the availability field shows in stock") {
+  test("given an available item then the availability field shows in stock") {
 
-    obj.stock = 100
+    item.stock = 100
 
-    obj.images.clear()
-    obj.images.add(image)
+    item.images.clear()
+    item.images.add(image)
 
-    obj.folders.clear()
-    obj.folders.add(folder)
+    item.folders.clear()
+    item.folders.add(folder)
 
-    obj.attributeValues.clear()
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    item.attributeValues.clear()
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    val row = builder.row(feed, obj)
+    val row = builder.row(feed, item)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,in stock,Sony,BB66,GB::Courier:10.00 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com/item-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,in stock,Sony,BB66,GB::Courier:10.00 GBP" ===
         row.mkString(","))
   }
 
-  test("given an unavailable object then the availability field shows out of stock") {
+  test("given an unavailable item then the availability field shows out of stock") {
 
-    obj.stock = 0
+    item.stock = 0
 
-    obj.images.clear()
-    obj.images.add(image)
+    item.images.clear()
+    item.images.add(image)
 
-    obj.folders.clear()
-    obj.folders.add(folder)
+    item.folders.clear()
+    item.folders.add(folder)
 
-    obj.attributeValues.clear()
-    obj.attributeValues.add(av1)
-    obj.attributeValues.add(av2)
+    item.attributeValues.clear()
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
 
-    val row = builder.row(feed, obj)
+    val row = builder.row(feed, item)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com/item-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
         row.mkString(","))
   }
 
@@ -116,16 +116,16 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
     val av = new AttributeValue
     av.attribute = new Attribute
     av.attribute.name = "CONDition"
-    obj.attributeValues.add(av)
+    item.attributeValues.add(av)
 
     av.value = "Used"
-    assert(builder.CONDITION_USED === builder._condition(obj))
+    assert(builder.CONDITION_USED === builder._condition(item))
 
     av.value = "nEW"
-    assert(builder.CONDITION_NEW === builder._condition(obj))
+    assert(builder.CONDITION_NEW === builder._condition(item))
 
     av.value = "refurbished"
-    assert(builder.CONDITION_REFURBISHED === builder._condition(obj))
+    assert(builder.CONDITION_REFURBISHED === builder._condition(item))
   }
 
   test("a builder should use attribute condition if present") {
@@ -134,26 +134,26 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
     av.attribute = new Attribute
     av.attribute.name = "CONDition"
     av.value = "Used"
-    obj.attributeValues.add(av)
-    val row = builder.row(feed, obj)
+    item.attributeValues.add(av)
+    val row = builder.row(feed, item)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,used,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com/item-123-coldplay-live,http://domain.com/images/coldplay.png,used,19.99 GBP,out of stock,Sony,BB66,GB::Courier:10.00 GBP" ===
         row.mkString(","))
   }
 
   test("builder uses shipping cost from feed") {
     feed.shippingCost = "14.75"
-    val row = builder.row(feed, obj)
+    val row = builder.row(feed, item)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:14.75 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com/item-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Courier:14.75 GBP" ===
         row.mkString(","))
   }
 
   test("builder handles free delivery") {
     feed.shippingCost = "0"
-    val row = builder.row(feed, obj)
+    val row = builder.row(feed, item)
     assert(
-      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com//object-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Free Delivery:0.00 GBP" ===
+      "123,Coldplay Live,brand new cd for the mylo xyloto tour,electronics,,http://domain.com/item-123-coldplay-live,http://domain.com/images/coldplay.png,new,19.99 GBP,out of stock,Sony,BB66,GB::Free Delivery:0.00 GBP" ===
         row.mkString(","))
   }
 }

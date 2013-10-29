@@ -9,7 +9,7 @@ import org.mockito.Mockito
 import java.io.File
 
 /** @author Stephen Samuel */
-class ObjectExportControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemExportControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val exporter = mock[ItemExporter]
   val resp = mock[HttpServletResponse]
@@ -26,7 +26,7 @@ class ObjectExportControllerTest extends FunSuite with MockitoSugar with OneInst
 
   test("controller sets disposition header") {
     controller.export(14, resp)
-    Mockito.verify(resp).setHeader("Content-Disposition", "attachment; filename=export_objects_14.csv")
+    Mockito.verify(resp).setHeader("Content-Disposition", "attachment; filename=export_items_14.csv")
   }
 
 }

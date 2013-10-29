@@ -30,7 +30,7 @@ class VariationDaoTest extends FunSuite with MockitoSugar {
     assert(v.obj.id === v2.obj.id)
   }
 
-  test("find by object") {
+  test("find by item") {
 
     val obj = new Item
     obj.name = "dress"
