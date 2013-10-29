@@ -4,7 +4,6 @@ import scala.xml.{Node, Unparsed}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
-import com.cloudray.scalapress.media.Fit
 
 /** @author Stephen Samuel */
 class ListingConfirmationRenderer(context: ScalapressContext) {
@@ -79,7 +78,7 @@ class ListingConfirmationRenderer(context: ScalapressContext) {
     process.imageKeys.size match {
       case 0 => Seq(Unparsed("None uploaded - <a href='/listing/image'>Upload image</a>"))
       case _ =>
-        val links = process.imageKeys.map(key => context.thumbnailService.link(key, 160, 120, Fit))
+        val links = process.imageKeys.map(key => s"/images/$key?width=160&height=120")
         links.map(link => <img src={link}/>)
         Seq(Unparsed("<div><strong><a href='/listing/image'>Add additional image</a></strong></div>"))
     }
