@@ -3,7 +3,8 @@
 
 <div class="page-header">
     <h2>Transaction $tx.id</h2>
-    <h5>Date: $datetool.format($tx.date) Amount: $tx.amountDecimal()</h5>
+    <h5>Date: $datetool.format($tx.date) &nbsp; &nbsp; Amount: $tx.amountDecimal() &nbsp; &nbsp;
+        Currency: $!tx.currency()</h5>
 </div>
 
 

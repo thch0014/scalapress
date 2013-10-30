@@ -23,9 +23,6 @@ class Transaction {
   var authCode: String = _
 
   @BeanProperty
-  var payerStatus: String = _
-
-  @BeanProperty
   var date: Long = _
 
   /**

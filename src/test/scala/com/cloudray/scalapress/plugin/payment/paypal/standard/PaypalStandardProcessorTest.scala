@@ -36,7 +36,27 @@ class PaypalStandardProcessorTest extends FunSuite with MockitoSugar with OneIns
     assert(tx.amount === 2000)
     assert(tx.currency === "GBP")
     assert(tx.status === "Completed")
-    assert(tx.payerStatus === "unverified")
+    assert(tx.securityCheck === "Payer not verified")
+  }
+
+  test("Security check is set to not verified when payer_status is not verified") {
+    val params = Map("payment_status" -> "Completed",
+      "payer_status" -> "unverified",
+      "txn_id" -> "739653939S128390K",
+      "custom" -> "0a1d74c2-f809-4815-a53b-60a28e8da6a0")
+
+    val tx = processor._createTx(params).get
+    assert(tx.securityCheck === "Payer not verified")
+  }
+
+  test("Security check is set to verified when payer_status is verified") {
+    val params = Map("payment_status" -> "Completed",
+      "payer_status" -> "verified",
+      "txn_id" -> "739653939S128390K",
+      "custom" -> "0a1d74c2-f809-4815-a53b-60a28e8da6a0")
+
+    val tx = processor._createTx(params).get
+    assert(tx.securityCheck === "Payer Verified")
   }
 
   test("the processor is enabled iff the plugin account email is not null") {

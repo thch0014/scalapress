@@ -56,22 +56,26 @@ class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProce
   def _createTx(params: Map[String, String]): Option[Transaction] = {
     logger.debug("Creating Tx from Params [{}]", params)
 
-    params.get("txn_id") match {
-      case None => None
+    params.get("custom").flatMap(customer => {
+      params.get("txn_id").map(txnId => {
 
-      case Some(txid) =>
         val amount = (params.get("mc_gross").filter(_.trim.length > 0).getOrElse("0").toDouble * 100).toInt
         val status = params("payment_status")
 
-        val tx = Transaction(txid, paymentProcessorName, amount, status)
-        tx.currency = params("mc_currency")
-        tx.payerStatus = params("payer_status")
+        val tx = Transaction(txnId, paymentProcessorName, amount, status)
+        tx.currency = params.get("mc_currency").orNull
+        tx.securityCheck = params
+          .get("payer_status")
+          .filter(_.toLowerCase == "verified")
+          .map(_ => "Payer Verified")
+          .getOrElse("Payer not verified")
         tx.processor = paymentProcessorName
         tx.payee = (params.get("first_name").getOrElse("") + " " + params.get("last_name").getOrElse("")).trim
         tx.payeeEmail = params.get("payer_email").orNull
 
-        Some(tx)
-    }
+        tx
+      })
+    })
   }
 
   def callback(params: Map[String, String]): Option[CallbackResult] = {
