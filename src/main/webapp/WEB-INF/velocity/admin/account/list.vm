@@ -59,7 +59,7 @@
             <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Search
             </button>
             <a href="#create-account-modal" role="button" class="btn btn-default" data-toggle="modal">
-                <i class="glyphicon  glyphicon-plus-sign"></i> Create  $accountType.name</a>
+                <i class="icon-plus"></i> Create  $accountType.name</a>
         </div>
     </div>
 
@@ -84,7 +84,7 @@
           <td>$!datetool.format($account.dateCreated)</td>
           <td>
               <a href="/backoffice/account/$account.id" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphglyphicon glyphicon-pencil"></i></a>
+                  <i class="glyphicon glyphglyphicon glyphicon-pencil"></i></a>
           </td>
       </tr>
   #end

@@ -15,11 +15,11 @@
           <i class="glyphicon glyphicon-user"></i> $accountType.name</a>
   #end
     <a class="list-group-item" href="/backoffice/form">
-        <i class="glyphicon glyphicon-align-center"></i> Forms
+        <i class="glyphicon glyphicon-list-alt"></i> Forms
     </a>
 
     <a class="list-group-item" href="/backoffice/submission">
-        <i class="glyphicon glyphicon-pencil"></i> Submissions</a>
+        <i class="glyphicon glyphicon-check"></i> Submissions</a>
 
     <a class="list-group-item" href="/backoffice/medialib">
         <i class="glyphicon glyphicon-camera"></i> Media Library</a>

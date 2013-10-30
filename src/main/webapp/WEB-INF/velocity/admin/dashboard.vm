@@ -33,6 +33,11 @@
                     </p>
 
                     <p>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <a href="/backoffice/user/$user.id">Change your password</a>
+                    </p>
+
+                    <p>
                         <i class="glyphicon glyphicon-eye-open"></i>
                         <a href="/">View your site</a>
                     </p>
@@ -55,26 +60,36 @@
 
                     <p>
                         <i class="glyphicon glyphicon-search"></i>
-                        <a href="http://www.google.com/search?q=site:$installation.domain">Show Google backlinks</a>
+                        <a href="http://www.google.com/search?q=site:$installation.domain" target="_blank">
+                            Show Google backlinks
+                        </a>
                     </p>
 
                     <p>
-                        <i class="glyphicon glyphicon-user"></i>
-                        <a href="/backoffice/user/$user.id">Change your password</a>
+                        <i class="glyphicon glyphicon-check"></i>
+                        <a href="http://www.woorank.com/en/www/$installation.domain" target="_blank">
+                            Run woo rank report
+                        </a>
                     </p>
 
                     <p>
-                        <span class="label label-default">$indexed</span> Indexed objects
+                        <span class="label label-default">$indexed</span> Searchable items
                     </p>
 
                     <p>
                         <span class="label label-default">$folderCount</span> Folders
                     </p>
 
+                  #if ($orderCount >0)
+                      <p>
+                          <span class="label label-default">$orderCount</span> Orders
+                      </p>
+                  #end
+
                 </div>
                 <div class="col-md-6">
                     <h4>
-                        Recently created
+                        Recently created items
                     </h4>
 
                   #foreach ($recent in $recentObjects)

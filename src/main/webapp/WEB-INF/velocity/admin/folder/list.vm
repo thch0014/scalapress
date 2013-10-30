@@ -13,14 +13,14 @@
                         <label class="col-lg-2 control-label" for="new-folder-name">Name</label>
 
                         <div class="col-lg-8">
-                            <input type="text" id="new-folder-name" name="name" placeholder="New Folder Name"
-                                   class="form-control">
+                            <input type="text" id="new-folder-name" name="name"
+                                   placeholder="New Folder Name" class="form-control">
                             <span class="help-block">Enter the name of the folder to create</span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
@@ -47,7 +47,11 @@
     </tr>
   #foreach ($f in $folders)
       <tr>
-          <td>$f.id</td>
+          <td>
+              <a href="/backoffice/folder/$f.id">
+                $f.id
+              </a>
+          </td>
           <td>$f.fullName()</td>
           <td>
               <a href="/backoffice/folder/$f.id" role="button" class="btn btn-xs btn-default">

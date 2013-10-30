@@ -11,6 +11,9 @@ import java.util.Properties
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
+import com.cloudray.scalapress.plugin.ecommerce.domain.Order
+import com.googlecode.genericdao.search.Search
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 @Controller
@@ -44,7 +47,10 @@ class DashboardController {
   def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
 
   @ModelAttribute("folderCount")
-  def folderCount = context.folderDao.findAll.size
+  def folderCount = context.folderDao.count(new Search(classOf[Folder]))
+
+  @ModelAttribute("orderCount")
+  def orderCount = context.orderDao.count(new Search(classOf[Order]))
 
   @ModelAttribute("recentObjects")
   def recentObjects: java.util.List[Item] = context.itemDao.recent(8).asJava

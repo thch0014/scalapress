@@ -74,14 +74,6 @@
                         </li>
                         <li class="divider"></li>
 
-                        <li role="presentation" class="dropdown-header">Templates</li>
-                        <li>
-                            <a href="/backoffice/folder/settings">
-                                <i class="glyphicon glyphicon-folder-close"></i> Folder Settings
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-
                         <li role="presentation" class="dropdown-header">Admin</li>
                         <li>
                             <a href="/backoffice/user">
@@ -96,6 +88,11 @@
                         <li>
                             <a href="/backoffice/settings/general">
                                 <i class="glyphicon glyphicon-cog"></i> Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/backoffice/folder/settings">
+                                <i class="glyphicon glyphicon-folder-close"></i> Folder Settings
                             </a>
                         </li>
                         <li>
