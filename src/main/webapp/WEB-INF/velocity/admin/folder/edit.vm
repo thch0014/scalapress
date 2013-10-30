@@ -17,6 +17,8 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
 
+                <br/>
+
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Name</label>
 
@@ -87,6 +89,8 @@
             </div>
             <div class="tab-pane" id="tab2">
 
+                <br/>
+
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Title Tag</label>
 
@@ -115,6 +119,8 @@
 
             <div class="tab-pane" id="tab3">
 
+                <br/>
+
                 <table class="table table-condensed table-hover" id="sections-table">
                     <tr>
                         <th>Name</th>
@@ -141,6 +147,7 @@
 
             <div class="tab-pane" id="tab4">
 
+                <br/>
 
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Header</label>
