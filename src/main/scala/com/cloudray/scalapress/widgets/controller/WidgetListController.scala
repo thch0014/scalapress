@@ -12,8 +12,8 @@ import scala.collection.mutable
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/widget"))
 @Autowired
+@RequestMapping(Array("backoffice/widget"))
 class WidgetListController(context: ScalapressContext) {
 
   @RequestMapping

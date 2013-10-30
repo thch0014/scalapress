@@ -12,22 +12,21 @@ import com.cloudray.scalapress.folder.section.SubfolderSection
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/folder/subfolder/section/{id}"))
-class SubfolderSectionController extends EnumPopulator {
+class SubfolderSectionController(markupDao: MarkupDao,
+                                 sectionDao: SectionDao,
+                                 context: ScalapressContext) extends EnumPopulator {
 
-    @Autowired var markupDao: MarkupDao = _
-    @Autowired var sectionDao: SectionDao = _
-    @Autowired var context: ScalapressContext = _
+  @RequestMapping(method = Array(RequestMethod.GET))
+  def edit(@ModelAttribute("section") section: SubfolderSection) = "admin/plugin/folder/subfolder/section/edit.vm"
 
-    @RequestMapping(method = Array(RequestMethod.GET))
-    def edit(@ModelAttribute("section") section: SubfolderSection) = "admin/plugin/folder/subfolder/section/edit.vm"
+  @RequestMapping(method = Array(RequestMethod.POST))
+  def save(@ModelAttribute("section") section: SubfolderSection) = {
+    sectionDao.save(section)
+    edit(section)
+  }
 
-    @RequestMapping(method = Array(RequestMethod.POST))
-    def save(@ModelAttribute("section") section: SubfolderSection) = {
-        sectionDao.save(section)
-        edit(section)
-    }
-
-    @ModelAttribute("section") def section(@PathVariable("id") id: Long): SubfolderSection =
-        sectionDao.find(id).asInstanceOf[SubfolderSection]
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): SubfolderSection = sectionDao.find(id).asInstanceOf[SubfolderSection]
 }

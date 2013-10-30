@@ -27,5 +27,6 @@ class FolderSettingsController(val markupDao: MarkupDao,
     edit(req)
   }
 
-  @ModelAttribute("settings") def settings = context.folderSettingsDao.head
+  @ModelAttribute("settings")
+  def settings = context.folderSettingsDao.head
 }

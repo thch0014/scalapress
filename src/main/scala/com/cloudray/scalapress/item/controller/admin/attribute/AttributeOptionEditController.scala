@@ -9,11 +9,10 @@ import com.cloudray.scalapress.item.attr.{AttributeOptionDao, AttributeOption}
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/attribute/{attributeId}/option/{optid}"))
-class AttributeOptionEditController {
-
-  @Autowired var attributeOptionDao: AttributeOptionDao = _
-  @Autowired var context: ScalapressContext = _
+class AttributeOptionEditController(attributeOptionDao: AttributeOptionDao,
+                                    context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit = "admin/attribute/option.vm"
@@ -30,5 +29,6 @@ class AttributeOptionEditController {
     "redirect:/backoffice/attribute/" + option.attribute.id
   }
 
-  @ModelAttribute("option") def att(@PathVariable("optid") id: Long) = attributeOptionDao.find(id)
+  @ModelAttribute("option")
+  def att(@PathVariable("optid") id: Long) = attributeOptionDao.find(id)
 }

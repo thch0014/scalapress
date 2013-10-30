@@ -13,8 +13,8 @@ import com.cloudray.scalapress.account.{AccountQuery, AccountTypeDao, AccountDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/account"))
 @Autowired
+@RequestMapping(Array("backoffice/account"))
 class AccountSearchController(accountDao: AccountDao,
                               accountTypeDao: AccountTypeDao,
                               context: ScalapressContext) extends AccountStatusPopulator {

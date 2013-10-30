@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/accounttype/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/accounttype/{id}"))
 class AccountTypeEditController(accountTypeDao: AccountTypeDao,
                                 markupDao: MarkupDao,
                                 sectionDao: SectionDao,

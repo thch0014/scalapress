@@ -21,6 +21,7 @@ class HtmlWidgetEditController(widgetDao: WidgetDao) extends WidgetContainerMapP
     edit(w, model)
   }
 
-  @ModelAttribute("widget") def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[HtmlWidget]
+  @ModelAttribute("widget")
+  def widget(@PathVariable("id") id: Long) = widgetDao.find(id).asInstanceOf[HtmlWidget]
 
 }

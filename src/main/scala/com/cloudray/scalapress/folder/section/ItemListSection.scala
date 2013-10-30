@@ -17,7 +17,7 @@ import com.cloudray.scalapress.item.attr.Attribute
   *
   *         Shows a list of objects inside a folder.
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_items")
 class ItemListSection extends Section {
@@ -27,23 +27,28 @@ class ItemListSection extends Section {
 
   @Enumerated(value = EnumType.STRING)
   @Column(name = "sortType")
-  @BeanProperty var sort: Sort = _
+  @BeanProperty
+  var sort: Sort = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "sortAttribute")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var sortAttribute: Attribute = _
+  @BeanProperty
+  var sortAttribute: Attribute = _
 
   @Column(name = "itemsPerPage")
-  @BeanProperty var pageSize: Int = ItemListSection.PAGE_SIZE_DEFAULT
+  @BeanProperty
+  var pageSize: Int = ItemListSection.PAGE_SIZE_DEFAULT
 
   @Column(name = "includeSubcategoryItems")
-  @BeanProperty var includeSubfolderObjects: Boolean = false
+  @BeanProperty
+  var includeSubfolderObjects: Boolean = false
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "listMarkup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var markup: Markup = _
+  @BeanProperty
+  var markup: Markup = _
 
   def _objects(sreq: ScalapressRequest): Seq[Item] = {
 

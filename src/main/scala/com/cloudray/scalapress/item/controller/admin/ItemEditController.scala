@@ -32,8 +32,8 @@ import com.cloudray.scalapress.account.AccountDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}", "backoffice/item/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/obj/{id}", "backoffice/object/{id}", "backoffice/item/{id}"))
 class ItemEditController(val assetStore: AssetStore,
                          val attributeValueDao: AttributeValueDao,
                          val itemDao: ItemDao,

@@ -16,7 +16,8 @@ class SubfolderSection extends Section {
   @ManyToOne
   @JoinColumn(name = "markup", nullable = true)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var markup: Markup = _
+  @BeanProperty
+  var markup: Markup = _
 
   def render(request: ScalapressRequest): Option[String] = {
     Option(folder).map(folder => {

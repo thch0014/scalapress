@@ -50,8 +50,12 @@ class AttributeEditController(attributeOptionDao: AttributeOptionDao,
     "redirect:/backoffice/type/" + a.objectType.id
   }
 
-  @ModelAttribute def attr(@PathVariable("id") id: Long) = attributeDao.find(id)
-  @ModelAttribute("options") def options(@PathVariable("id") id: Long) =
-    attributeDao.find(id).options.asScala.sortBy(_.position).asJava
-  @ModelAttribute("attributeTypeMap") def types = populate(AttributeType.values)
+  @ModelAttribute
+  def attr(@PathVariable("id") id: Long) = attributeDao.find(id)
+
+  @ModelAttribute("options")
+  def options(@PathVariable("id") id: Long) = attributeDao.find(id).options.asScala.sortBy(_.position).asJava
+
+  @ModelAttribute("attributeTypeMap")
+  def types = populate(AttributeType.values)
 }

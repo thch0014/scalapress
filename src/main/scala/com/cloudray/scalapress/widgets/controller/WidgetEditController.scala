@@ -30,6 +30,5 @@ class WidgetEditController(widgetDao: WidgetDao) extends WidgetContainerMapPopul
 trait WidgetContainerMapPopulator {
 
   @ModelAttribute("widgetContainerMap")
-  def widgetContainerMap: java.util.Map[String, String] =
-    WidgetContainer.values().map(wc => (wc.name, wc.name)).toMap.asJava
+  def containerMap: java.util.Map[String, String] = WidgetContainer.values().map(wc => (wc.name, wc.name)).toMap.asJava
 }

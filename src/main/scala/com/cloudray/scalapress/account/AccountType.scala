@@ -12,8 +12,10 @@ class AccountType {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Index(name = "id_index")
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @Index(name = "name_index")
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 }

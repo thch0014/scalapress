@@ -15,6 +15,8 @@
         <div class="tab-content">
             <div class="tab-pane active" id="tab1">
 
+                <br/>
+
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Name</label>
 

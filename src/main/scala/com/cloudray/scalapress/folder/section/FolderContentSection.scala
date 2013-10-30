@@ -11,7 +11,8 @@ import scala.beans.BeanProperty
 class FolderContentSection extends Section {
 
   @Column(name = "content", length = 100000)
-  @BeanProperty var content: String = _
+  @BeanProperty
+  var content: String = _
 
   override def desc = "Edit and then display a section of content when viewing this object"
   override def backoffice = "/backoffice/folder/section/content/" + id
