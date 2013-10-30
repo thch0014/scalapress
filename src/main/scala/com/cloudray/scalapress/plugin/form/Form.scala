@@ -20,24 +20,27 @@ class Form {
   @BeanProperty var submitButtonText: String = _
 
   // text used on the web page
-  @Column(name = "submissionmessage")
+  @Column(name = "submissionmessage", length = 10000)
   @BeanProperty var submissionText: String = _
 
   @OneToMany(mappedBy = "form", cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @BeanProperty var fields: java.util.List[FormField] = new java.util.ArrayList[FormField]
 
   // redirect on completion
-  @Column(name = "submissionforward")
+  @Column(name = "submissionforward", length = 1000)
   @BeanProperty var submissionRedirect: String = _
 
   // shows in email
-  @Column(name = "submissionEmailMessage")
+  @Column(name = "submissionEmailMessage", length = 10000)
   @BeanProperty var submissionEmailBody: String = _
+
+  @Column(name = "submissionEmailSubject", length = 1000)
   @BeanProperty var submissionEmailSubject: String = _
 
+  @Column(name = "submissionScript", length = 10000)
   @BeanProperty var submissionScript: String = _
 
-  @Column(name = "emails")
+  @Column(name = "emails", length = 1000)
   @BeanProperty var recipients: String = _
 
   @BeanProperty var cssId: String = _
