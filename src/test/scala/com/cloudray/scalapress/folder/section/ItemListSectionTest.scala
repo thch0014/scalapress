@@ -13,7 +13,7 @@ import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.Sort
 
 /** @author Stephen Samuel */
-class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val obj1 = new Item
   obj1.name = "coldplay"
@@ -34,7 +34,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
   obj3.id = 11
   obj3.objectType = obj1.objectType
 
-  val section = new ObjectListSection()
+  val section = new ItemListSection()
   section.folder = new Folder
   section.markup = new Markup
   section.folder.objects = new util.HashSet()
@@ -109,7 +109,7 @@ class ObjectListSectionTest extends FunSuite with MockitoSugar with OneInstanceP
     section.pageSize = 0
     settings.pageSize = 0
     val pageSize = section._pageSize(context)
-    assert(ObjectListSection.PAGE_SIZE_DEFAULT === pageSize)
+    assert(ItemListSection.PAGE_SIZE_DEFAULT === pageSize)
   }
 
   test("section uses sort from folder settings if not specified in section") {

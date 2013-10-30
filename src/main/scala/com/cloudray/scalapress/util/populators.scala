@@ -9,7 +9,7 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 
-trait ObjectTypePopulator {
+trait ItemTypePopulator {
 
   val objectTypeDao: TypeDao
 

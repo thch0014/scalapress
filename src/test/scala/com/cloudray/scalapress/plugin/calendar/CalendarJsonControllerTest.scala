@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.calendar
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ObjectRef, SearchService}
+import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ItemRef, SearchService}
 import com.cloudray.scalapress.ScalapressContext
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.widgets.WidgetDao
@@ -21,9 +21,9 @@ class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInst
   widget.startDateAttribute = new Attribute
   widget.startDateAttribute.id = 200
 
-  val ref1 = new ObjectRef(1, 12, "coldplay", "live", Map(200l -> "1336025005000"), Nil)
-  val ref2 = new ObjectRef(2, 12, "jethro tull", "live", Map(200l -> "1336053300000"), Nil)
-  val ref3 = new ObjectRef(3, 13, "keane", "disabled", Map(200l -> "1335660004000"), Nil)
+  val ref1 = new ItemRef(1, 12, "coldplay", "live", Map(200l -> "1336025005000"), Nil)
+  val ref2 = new ItemRef(2, 12, "jethro tull", "live", Map(200l -> "1336053300000"), Nil)
+  val ref3 = new ItemRef(3, 13, "keane", "disabled", Map(200l -> "1335660004000"), Nil)
 
   Mockito.when(context.widgetDao.find(Matchers.anyLong)).thenReturn(widget)
 

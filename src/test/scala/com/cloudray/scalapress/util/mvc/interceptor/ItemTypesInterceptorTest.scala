@@ -10,10 +10,10 @@ import java.util
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
-class ObjectTypesInterceptorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemTypesInterceptorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val dao = mock[TypeDao]
-  val interceptor = new ObjectTypesInterceptor(dao)
+  val interceptor = new ItemTypesInterceptor(dao)
 
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]

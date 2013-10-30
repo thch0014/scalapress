@@ -8,7 +8,7 @@ import com.cloudray.scalapress.item.TypeDao
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
-import com.cloudray.scalapress.util.{ObjectTypePopulator, SortPopulator}
+import com.cloudray.scalapress.util.{ItemTypePopulator, SortPopulator}
 
 /** @author Stephen Samuel */
 @Controller
@@ -17,7 +17,7 @@ import com.cloudray.scalapress.util.{ObjectTypePopulator, SortPopulator}
 class SearchFormEditController(val objectTypeDao: TypeDao,
                                val markupDao: MarkupDao,
                                val searchFormDao: SearchFormDao)
-  extends MarkupPopulator with ObjectTypePopulator with SortPopulator {
+  extends MarkupPopulator with ItemTypePopulator with SortPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("form") form: SearchForm) = "admin/searchform/edit.vm"

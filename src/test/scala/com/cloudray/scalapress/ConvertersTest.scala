@@ -22,7 +22,7 @@ class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest 
 
   test("string to object type happy path") {
     val objectTypeDao = mock[TypeDao]
-    new StringObjectTypeConverter(objectTypeDao).convert("2")
+    new StringItemTypeConverter(objectTypeDao).convert("2")
     Mockito.verify(objectTypeDao).find(2)
   }
 

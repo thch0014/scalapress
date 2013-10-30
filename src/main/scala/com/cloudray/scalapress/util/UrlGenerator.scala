@@ -2,7 +2,7 @@ package com.cloudray.scalapress.util
 
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.search.ObjectRef
+import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.plugin.url.friendlyurl.FriendlyUrlStrategy
 import scala.xml.Utility
 
@@ -11,7 +11,7 @@ object UrlGenerator {
 
   private[util] var strategy: UrlStrategy = FriendlyUrlStrategy
 
-  def url(ref: ObjectRef): String = {
+  def url(ref: ItemRef): String = {
     val o = new Item
     o.id = ref.id
     o.name = ref.name

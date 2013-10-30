@@ -9,7 +9,7 @@ import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.{AttributePopulator, SortPopulator}
-import com.cloudray.scalapress.folder.section.ObjectListSection
+import com.cloudray.scalapress.folder.section.ItemListSection
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 
@@ -23,7 +23,7 @@ class ItemListSectionController(val markupDao: MarkupDao,
   extends MarkupPopulator with SortPopulator with AttributePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
+  def edit(@ModelAttribute("section") section: ItemListSection, model: ModelMap, req: HttpServletRequest) = {
     val objects = section._objects(ScalapressRequest(req, context))
     if (objects.size > 0)
       model.put("attributesMap", attributesMap(objects.head.objectType.sortedAttributes))
@@ -31,11 +31,11 @@ class ItemListSectionController(val markupDao: MarkupDao,
   }
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute("section") section: ObjectListSection, model: ModelMap, req: HttpServletRequest) = {
+  def save(@ModelAttribute("section") section: ItemListSection, model: ModelMap, req: HttpServletRequest) = {
     sectionDao.save(section)
     edit(section, model, req)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): ObjectListSection =
-    sectionDao.find(id).asInstanceOf[ObjectListSection]
+  @ModelAttribute("section") def section(@PathVariable("id") id: Long): ItemListSection =
+    sectionDao.find(id).asInstanceOf[ItemListSection]
 }

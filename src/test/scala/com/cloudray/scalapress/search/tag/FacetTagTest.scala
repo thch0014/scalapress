@@ -23,7 +23,7 @@ class FacetTagTest extends FunSuite with MockitoSugar {
     obj.status = Item.STATUS_LIVE
     obj.objectType.objectListMarkup = new Markup
 
-    val ref = ObjectRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
+    val ref = ItemRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
 
     val facet = Facet("facety", field = "facety", terms = Seq(FacetTerm("chelsea", 4), FacetTerm("kensington", 2)))
     val r = SearchResult(Seq(ref), Seq(facet))

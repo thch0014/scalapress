@@ -3,7 +3,7 @@ package com.cloudray.scalapress.search.widget
 import javax.persistence._
 import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.search.{ObjectRef, SavedSearch}
+import com.cloudray.scalapress.search.{ItemRef, SavedSearch}
 import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -71,7 +71,7 @@ class SearchResultsWidget extends Widget with Logging {
     }
   }
 
-  def _reorder(refs: Seq[ObjectRef], objs: Seq[Item]): Seq[Item] = {
+  def _reorder(refs: Seq[ItemRef], objs: Seq[Item]): Seq[Item] = {
     val ids = refs.map(_.id)
     objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
   }

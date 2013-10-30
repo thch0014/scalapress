@@ -51,7 +51,7 @@ class ListingProcessService extends Logging {
 
   // build the listing object
   def _listing(account: Account, process: ListingProcess) = {
-    val obj = new ListingProcessObjectBuilder(context).build(process)
+    val obj = new ListingProcessItemBuilder(context).build(process)
     obj.account = account
     context.itemDao.save(obj)
     obj

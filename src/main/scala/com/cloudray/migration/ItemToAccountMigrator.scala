@@ -10,10 +10,10 @@ import javax.annotation.PostConstruct
 /** @author Stephen Samuel */
 @Component
 @Autowired
-class ObjToAccountMigrator(accountDao: AccountDao,
-                           objectDao: ItemDao,
-                           typeDao: TypeDao,
-                           accountTypeDao: AccountTypeDao) extends Logging {
+class ItemToAccountMigrator(accountDao: AccountDao,
+                            objectDao: ItemDao,
+                            typeDao: TypeDao,
+                            accountTypeDao: AccountTypeDao) extends Logging {
 
   @PostConstruct
   def run() {

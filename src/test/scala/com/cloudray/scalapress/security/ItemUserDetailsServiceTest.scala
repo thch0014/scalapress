@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.account.Account
 
 /** @author Stephen Samuel */
-class ObjectUserDetailsServiceTest extends FunSuite with MockitoSugar {
+class ItemUserDetailsServiceTest extends FunSuite with MockitoSugar {
 
   val acc = new Account
   acc.name = "sammy"

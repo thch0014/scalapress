@@ -54,7 +54,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
   override def addFormatters(registry: FormatterRegistry) {
     registry.addConverter(new StringFolderConverter(folderDao))
-    registry.addConverter(new StringObjectTypeConverter(typeDao))
+    registry.addConverter(new StringItemTypeConverter(typeDao))
     registry.addConverter(new StringMarkupConverter(markupDao))
     registry.addConverter(new StringSearchFormConverter(searchFormDao))
     registry.addConverter(new StringDeliveryOptionConverter(deliveryOptionDao))
@@ -76,7 +76,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     registry.addInterceptor(webContentInterceptor).addPathPatterns("/asset/**", "/asset/")
 
     registry.addInterceptor(SessionInterceptor)
-    registry.addInterceptor(new ObjectTypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
+    registry.addInterceptor(new ItemTypesInterceptor(typeDao)).addPathPatterns("/backoffice/**")
     registry.addInterceptor(new AccountTypesInterceptor(accountTypeDao)).addPathPatterns("/backoffice/**")
     registry.addInterceptor(new SiteInterceptor(context))
     registry.addInterceptor(new MenuInterceptor(context)).addPathPatterns("/backoffice/**")

@@ -76,7 +76,7 @@ trait OrderStatusPopulator {
   }
 }
 
-trait ObjectStatusPopulator {
+trait ItemStatusPopulator {
 
   @ModelAttribute def objectStatusMap(model: ModelMap) {
     val map = mutable

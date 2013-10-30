@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 import com.cloudray.scalapress.item.TypeDao
-import com.cloudray.scalapress.util.ObjectTypePopulator
+import com.cloudray.scalapress.util.ItemTypePopulator
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 
 /** @author Stephen Samuel */
@@ -15,7 +15,7 @@ import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 @RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
 class ListingPackageEditController(val objectTypeDao: TypeDao,
                                    listingPackageDao: ListingPackageDao,
-                                   context: ScalapressContext) extends ObjectTypePopulator {
+                                   context: ScalapressContext) extends ItemTypePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("package") p: ListingPackage) = "admin/plugin/listings/package/edit.vm"

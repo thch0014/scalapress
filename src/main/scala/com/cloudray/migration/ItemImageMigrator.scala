@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 /** @author Stephen Samuel */
 @Component
-class ObjImageMigrator extends Logging {
+class ItemImageMigrator extends Logging {
 
   @Autowired var context: ScalapressContext = _
   @Autowired var galleryDao: GalleryDao = _
@@ -50,7 +50,7 @@ class ObjImageMigrator extends Logging {
   @PostConstruct
   def run() {
     logger.debug("Beginning migration run [{}]", context.installationDao.get.name)
-    val images = context.imageDao.  findAll.sortBy(_.id).sortBy(_.position)
+    val images = context.imageDao.findAll.sortBy(_.id).sortBy(_.position)
     logger.info("Images [{}]", images.size)
     images.foreach(image =>
       try {

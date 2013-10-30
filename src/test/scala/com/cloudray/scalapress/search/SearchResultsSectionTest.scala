@@ -35,9 +35,9 @@ class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstan
   obj3.status = Item.STATUS_LIVE
   obj3.id = 3
 
-  val ref1 = ObjectRef(obj1.id, 55, obj1.name, Item.STATUS_LIVE, Map.empty, Nil)
-  val ref2 = ObjectRef(obj2.id, 55, obj2.name, Item.STATUS_LIVE, Map.empty, Nil)
-  val ref3 = ObjectRef(obj3.id, 55, obj3.name, Item.STATUS_LIVE, Map.empty, Nil)
+  val ref1 = ItemRef(obj1.id, 55, obj1.name, Item.STATUS_LIVE, Map.empty, Nil)
+  val ref2 = ItemRef(obj2.id, 55, obj2.name, Item.STATUS_LIVE, Map.empty, Nil)
+  val ref3 = ItemRef(obj3.id, 55, obj3.name, Item.STATUS_LIVE, Map.empty, Nil)
 
   val sreq = ScalapressRequest(req, context)
   section.search = new SavedSearch

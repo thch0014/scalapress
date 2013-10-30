@@ -5,7 +5,7 @@ import java.util
 import org.hibernate.annotations._
 import com.cloudray.scalapress.section.{SortedSections, Section}
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.folder.section.{ObjectListSection, FolderContentSection, SubfolderSection}
+import com.cloudray.scalapress.folder.section.{ItemListSection, FolderContentSection, SubfolderSection}
 import com.cloudray.scalapress.theme.Theme
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -126,7 +126,7 @@ object Folder {
     section2.folder = folder
     section2.visible = true
 
-    val section3 = new ObjectListSection
+    val section3 = new ItemListSection
     section3.name = "objects"
     section3.folder = folder
     section3.visible = true

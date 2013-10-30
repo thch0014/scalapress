@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
 import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.util.{ObjectTypePopulator, AttributePopulator}
+import com.cloudray.scalapress.util.{ItemTypePopulator, AttributePopulator}
 import com.cloudray.scalapress.item.TypeDao
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 @RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
 class CalendarWidgetController(val objectTypeDao: TypeDao,
                                widgetDao: WidgetDao)
-  extends WidgetEditController(widgetDao) with AttributePopulator with ObjectTypePopulator {
+  extends WidgetEditController(widgetDao) with AttributePopulator with ItemTypePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {

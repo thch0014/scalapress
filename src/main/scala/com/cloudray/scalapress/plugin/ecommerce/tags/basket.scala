@@ -131,7 +131,7 @@ class BasketDeliveryDescTag extends ScalapressTag {
 }
 
 @Tag("basket_line_item")
-class BasketLineObjectTag extends ScalapressTag {
+class BasketLineItemTag extends ScalapressTag {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.line.map(line => {
       params.contains("link") match {

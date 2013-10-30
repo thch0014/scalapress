@@ -38,7 +38,7 @@ trait SearchService {
   def search(search: SavedSearch): SearchResult
 
   @deprecated
-  def typeahead(q: String, limit: Int): Seq[ObjectRef]
+  def typeahead(q: String, limit: Int): Seq[ItemRef]
 
   /**
    * Returns runtime/debug information on the search system. Is allowed to return Map.empty if no such
@@ -51,13 +51,13 @@ object SearchService {
   val FACET_TAGS = "tags"
 }
 
-case class SearchResult(refs: Seq[ObjectRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
+case class SearchResult(refs: Seq[ItemRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
 case class Facet(name: String, field: String, terms: Seq[FacetTerm])
 case class FacetTerm(term: String, count: Int)
-case class ObjectRef(id: Long,
-                     objectType: Long,
-                     name: String,
-                     status: String,
-                     attributes: Map[Long, String],
-                     folders: Seq[Long],
-                     prioritized: Boolean = false)
+case class ItemRef(id: Long,
+                   objectType: Long,
+                   name: String,
+                   status: String,
+                   attributes: Map[Long, String],
+                   folders: Seq[Long],
+                   prioritized: Boolean = false)

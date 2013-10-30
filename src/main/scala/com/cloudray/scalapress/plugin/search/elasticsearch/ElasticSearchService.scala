@@ -23,7 +23,7 @@ import javax.annotation.PreDestroy
 import com.cloudray.scalapress.search.Facet
 import scala.Some
 import com.cloudray.scalapress.search.FacetTerm
-import com.cloudray.scalapress.search.ObjectRef
+import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.search.SearchResult
 import scala.concurrent.Await
 
@@ -176,7 +176,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
   }
 
-  override def typeahead(q: String, limit: Int): Seq[ObjectRef] = {
+  override def typeahead(q: String, limit: Int): Seq[ItemRef] = {
     val resp = client.sync.execute {
       select in INDEX -> TYPE prefix FIELD_NAME -> q
         .toLowerCase size limit searchType QueryAndFetch
@@ -333,7 +333,7 @@ class ElasticSearchService extends SearchService with Logging {
     }
   }
 
-  def _resp2ref(resp: SearchResponse): Seq[ObjectRef] = {
+  def _resp2ref(resp: SearchResponse): Seq[ItemRef] = {
     resp.getHits.asScala.map(arg => {
       val id = arg.id.toLong
       val objectType = arg.getSource.get(FIELD_OBJECT_TYPE).toString.toLong
@@ -346,7 +346,7 @@ class ElasticSearchService extends SearchService with Logging {
         val value = _attributeRestore(field._2.toString)
         (id, value)
       }).toMap
-      new ObjectRef(id, objectType, n, status, attributes, Nil, prioritized)
+      new ItemRef(id, objectType, n, status, attributes, Nil, prioritized)
     }).toSeq
   }
 

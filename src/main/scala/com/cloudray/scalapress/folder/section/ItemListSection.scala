@@ -17,12 +17,12 @@ import com.cloudray.scalapress.item.attr.Attribute
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
-class ObjectListSection extends Section {
+class ItemListSection extends Section {
 
-  def desc = "Show a paginated list of objects that are inside this folder"
+  def desc = "Show a paginated list of items that are inside this folder"
   override def backoffice: String = "/backoffice/section/itemlist/" + id
 
   @Enumerated(value = EnumType.STRING)
@@ -35,7 +35,7 @@ class ObjectListSection extends Section {
   @BeanProperty var sortAttribute: Attribute = _
 
   @Column(name = "itemsPerPage")
-  @BeanProperty var pageSize: Int = ObjectListSection.PAGE_SIZE_DEFAULT
+  @BeanProperty var pageSize: Int = ItemListSection.PAGE_SIZE_DEFAULT
 
   @Column(name = "includeSubcategoryItems")
   @BeanProperty var includeSubfolderObjects: Boolean = false
@@ -107,12 +107,12 @@ class ObjectListSection extends Section {
       if (settingsPageSize > 0)
         settingsPageSize
       else
-        ObjectListSection.PAGE_SIZE_DEFAULT
+        ItemListSection.PAGE_SIZE_DEFAULT
     }
   }
 
 }
 
-object ObjectListSection {
+object ItemListSection {
   val PAGE_SIZE_DEFAULT = 50
 }

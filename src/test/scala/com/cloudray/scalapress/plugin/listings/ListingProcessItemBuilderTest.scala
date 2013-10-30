@@ -16,7 +16,7 @@ class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest wit
   val context = new ScalapressContext
   context.itemDao = mock[ItemDao]
   context.folderDao = mock[FolderDao]
-  val builder = new ListingProcessObjectBuilder(context)
+  val builder = new ListingProcessItemBuilder(context)
   val p = new ListingPackage
 
   val item = new Item

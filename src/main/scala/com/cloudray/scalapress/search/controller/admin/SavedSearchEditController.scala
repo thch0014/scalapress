@@ -9,7 +9,7 @@ import com.cloudray.scalapress.item.TypeDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue}
 import com.cloudray.scalapress.item.controller.admin.{FolderPopulator, MarkupPopulator}
-import com.cloudray.scalapress.util.{AttributePopulator, ObjectTypePopulator, SortPopulator}
+import com.cloudray.scalapress.util.{AttributePopulator, ItemTypePopulator, SortPopulator}
 import com.cloudray.scalapress.util.mvc.AttributeValuesPopulator
 import java.text.SimpleDateFormat
 import scala.collection.JavaConverters._
@@ -27,7 +27,7 @@ class SavedSearchEditController(val objectTypeDao: TypeDao,
   extends MarkupPopulator with SortPopulator with FolderPopulator
   with AttributePopulator
   with AttributeValuesPopulator with
-  ObjectTypePopulator {
+  ItemTypePopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("search") search: SavedSearch, model: ModelMap) = {

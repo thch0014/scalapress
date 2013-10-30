@@ -15,9 +15,9 @@ import org.springframework.web.multipart.MultipartFile
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/item"))
-class ObjectSearchController(objectDao: ItemDao,
+class ItemSearchController(objectDao: ItemDao,
                              typeDao: TypeDao,
-                             context: ScalapressContext) extends ObjectStatusPopulator {
+                             context: ScalapressContext) extends ItemStatusPopulator {
 
   @RequestMapping
   def search(@ModelAttribute("form") form: SearchForm,

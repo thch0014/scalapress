@@ -8,7 +8,7 @@ import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
 
 /** @author Stephen Samuel */
-class ListingProcessObjectBuilder(context: ScalapressContext) extends Logging {
+class ListingProcessItemBuilder(context: ScalapressContext) extends Logging {
 
   def build(process: ListingProcess): Item = {
     logger.debug("Building listing for process [{}]", process)

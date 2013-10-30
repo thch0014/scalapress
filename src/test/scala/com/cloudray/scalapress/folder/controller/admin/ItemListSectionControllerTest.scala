@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.section.SectionDao
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.folder.section.ObjectListSection
+import com.cloudray.scalapress.folder.section.ItemListSection
 import org.mockito.Mockito
 import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao}
@@ -22,7 +22,7 @@ class ItemListSectionControllerTest extends FunSuite with MockitoSugar with OneI
   val controller = new ItemListSectionController(markupDao, sectionDao, context)
   Mockito.when(context.folderSettingsDao.head).thenReturn(new FolderSettings)
 
-  val section = new ObjectListSection
+  val section = new ItemListSection
 
   test("an updated section is persisted") {
     controller.save(section, new ModelMap, mock[HttpServletRequest])

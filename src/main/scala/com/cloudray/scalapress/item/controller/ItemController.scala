@@ -13,12 +13,11 @@ import com.cloudray.scalapress.security.SpringSecurityResolver
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("object/{id:\\d+}", "item/{id:\\d+}"))
-class ObjectController extends Logging {
-
-  @Autowired var itemDao: ItemDao = _
-  @Autowired var themeService: ThemeService = _
-  @Autowired var context: ScalapressContext = _
+class ItemController(itemDao: ItemDao,
+                     themeService: ThemeService,
+                     context: ScalapressContext) extends Logging {
 
   @ResponseBody
   @ExceptionHandler(Array(classOf[NotFoundException]))

@@ -8,7 +8,7 @@ import com.cloudray.scalapress.item.{ItemType, Item, ItemDao}
 import com.cloudray.scalapress.theme.{Markup, ThemeService}
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.search.ObjectRef
+import com.cloudray.scalapress.search.ItemRef
 
 /** @author Stephen Samuel */
 class SearchControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -33,7 +33,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   obj.status = Item.STATUS_LIVE
   obj.objectType.objectListMarkup = new Markup
 
-  val ref = ObjectRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
+  val ref = ItemRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
 
   Mockito.when(controller.objectDao.find(4)).thenReturn(obj)
 

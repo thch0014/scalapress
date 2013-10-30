@@ -2,7 +2,7 @@ package com.cloudray.scalapress.item
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.folder.section.{SubfolderSection, ObjectListSection, FolderContentSection}
+import com.cloudray.scalapress.folder.section.{SubfolderSection, ItemListSection, FolderContentSection}
 import com.cloudray.scalapress.item.attr.Attribute
 
 /** @author Stephen Samuel */
@@ -38,7 +38,7 @@ class ItemTypeTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
     val section1 = new FolderContentSection
     section1.id = 6
-    val section2 = new ObjectListSection
+    val section2 = new ItemListSection
     section2.id = 2
     val section3 = new FolderContentSection
     section3.id = 1
@@ -46,7 +46,7 @@ class ItemTypeTest extends FunSuite with MockitoSugar with OneInstancePerTest {
     section4.id = 4
     val section5 = new FolderContentSection
     section5.id = 7
-    val section6 = new ObjectListSection
+    val section6 = new ItemListSection
     section6.id = 8
     val section7 = new FolderContentSection
     section7.id = 3
