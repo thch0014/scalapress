@@ -26,6 +26,7 @@
 
     <context:component-scan base-package="com.cloudray.scalapress"/>
     <context:component-scan base-package="com.cloudray.migration"/>
+    <context:component-scan base-package="com.cloudray.thirdparty"/>
 
 
     <bean id="searchService" class="${search.service.implementation}"/>

@@ -61,15 +61,6 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>search</servlet-name>
-        <servlet-class>com.sksamuel.searchkit.ElasticKitServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>search</servlet-name>
-        <url-pattern>/k_search</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>mvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
@@ -82,6 +73,5 @@
         <servlet-name>mvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
 
 </web-app>
