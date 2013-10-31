@@ -12,7 +12,7 @@ class SimpleUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstance
     val obj = new Item
     obj.id = 1234
     obj.name = "boro for the champo"
-    assert("/o1234-boro-for-the-champo" === SimpleUrlGeneratorStrategy.url(obj))
+    assert("/i1234-boro-for-the-champo" === SimpleUrlGeneratorStrategy.url(obj))
   }
 
   test("folder friendly url happy path") {
