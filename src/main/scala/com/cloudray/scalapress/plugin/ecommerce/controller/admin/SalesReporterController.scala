@@ -85,7 +85,8 @@ class SalesReporterController(var shoppingPluginDao: ShoppingPluginDao,
     IOUtils.closeQuietly(input)
   }
 
-  @ModelAttribute("months") def months: java.util.Map[String, String] = {
+  @ModelAttribute("months")
+  def months: java.util.Map[String, String] = {
     val map = mutable.LinkedHashMap[String, String]()
     val now = new DateMidnight(DateTimeZone.UTC).withDayOfMonth(1)
     for ( i <- 0 to 36 )

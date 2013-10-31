@@ -14,8 +14,8 @@ import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/section/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/section/{id}"))
 class SectionEditController(val assetStore: AssetStore,
                             val objectDao: ItemDao,
                             val sectionDao: SectionDao,
@@ -32,7 +32,8 @@ class SectionEditController(val assetStore: AssetStore,
     edit(section)
   }
 
-  @ModelAttribute def populateSection(@PathVariable("id") id: Long, model: ModelMap) {
+  @ModelAttribute
+  def populateSection(@PathVariable("id") id: Long, model: ModelMap) {
     val section = sectionDao.find(id)
     model.put("section", section)
   }

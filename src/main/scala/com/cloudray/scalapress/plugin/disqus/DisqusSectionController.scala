@@ -7,8 +7,8 @@ import com.cloudray.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/disqus/section/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/disqus/section/{id}"))
 class DisqusSectionController(sectionDao: SectionDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
@@ -20,6 +20,6 @@ class DisqusSectionController(sectionDao: SectionDao) {
     edit(section)
   }
 
-  @ModelAttribute("section") def section(@PathVariable("id") id: Long): DisqusSection =
-    sectionDao.find(id).asInstanceOf[DisqusSection]
+  @ModelAttribute("section")
+  def section(@PathVariable("id") id: Long): DisqusSection = sectionDao.find(id).asInstanceOf[DisqusSection]
 }

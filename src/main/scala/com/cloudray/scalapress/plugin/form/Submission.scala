@@ -14,26 +14,39 @@ class Submission {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @OneToMany(mappedBy = "submission", cascade = Array(CascadeType.ALL))
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var data: java.util.List[SubmissionKeyValue] = new java.util.ArrayList[SubmissionKeyValue]
+  @BeanProperty
+  var data: java.util.List[SubmissionKeyValue] = new java.util.ArrayList[SubmissionKeyValue]
 
   @Column(name = "name")
-  @BeanProperty var formName: String = _
+  @BeanProperty
+  var formName: String = _
 
-  @BeanProperty var date: Long = _
+  @BeanProperty
+  var date: Long = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var folder: Folder = _
+  @BeanProperty
+  var folder: Folder = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "item")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var obj: Item = _
+  @BeanProperty
+  var obj: Item = _
+
+  @BeanProperty
+  var ipAddress: String = _
+
+  @ElementCollection
+  @BeanProperty
+  var attachments: java.util.Set[String] = new java.util.HashSet[String]
 
   def page: Option[Page] = {
     if (obj != null)
@@ -43,9 +56,4 @@ class Submission {
     else
       None
   }
-
-  @BeanProperty var ipAddress: String = _
-
-  @ElementCollection
-  @BeanProperty var attachments: java.util.Set[String] = new java.util.HashSet[String]
 }

@@ -14,7 +14,8 @@ class FormSection extends Section {
 
   @ManyToOne
   @JoinColumn(name = "form")
-  @BeanProperty var form: Form = _
+  @BeanProperty
+  var form: Form = _
 
   def desc: String = "For showing a form on a folder or object page"
   override def backoffice: String = "/backoffice/plugin/form/section/" + id

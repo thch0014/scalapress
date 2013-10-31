@@ -9,12 +9,12 @@ import com.cloudray.scalapress.util.UrlStrategy
   *         Examples
   *
   *         www.countryshowguide.co.uk/f13-castles-in-wales
-  *         www.countryshowguide.co.uk/o58-caerphilly-castle
+  *         www.countryshowguide.co.uk/i58-caerphilly-castle
   *
-  * */
+  **/
 object SimpleUrlGeneratorStrategy extends UrlStrategy {
 
   def url(folder: Folder): String = "/f" + folder.id + "-" + normalize(folder.name)
-  def url(obj: Item): String = "/o" + obj.id + "-" + normalize(obj.name)
+  def url(item: Item): String = "/i" + item.id + "-" + normalize(item.name)
 }
 

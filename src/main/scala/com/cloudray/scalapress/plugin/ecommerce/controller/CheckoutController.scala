@@ -225,7 +225,8 @@ class CheckoutController extends Logging {
     page
   }
 
-  @ModelAttribute("basket") def basket(req: HttpServletRequest) = ScalapressRequest(req, context).basket
+  @ModelAttribute("basket")
+  def basket(req: HttpServletRequest) = ScalapressRequest(req, context).basket
 
   @ModelAttribute def ensureBasketFields(req: HttpServletRequest) {
     val basket = ScalapressRequest(req, context).basket

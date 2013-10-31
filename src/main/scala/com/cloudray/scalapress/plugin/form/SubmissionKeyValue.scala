@@ -11,12 +11,14 @@ class SubmissionKeyValue {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @ManyToOne
   @JoinColumn(name = "submission")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var submission: Submission = _
+  @BeanProperty
+  var submission: Submission = _
 
   @Column(name = "name")
   @BeanProperty var key: String = _

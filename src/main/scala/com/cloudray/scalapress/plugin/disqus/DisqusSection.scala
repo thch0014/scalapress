@@ -11,7 +11,8 @@ import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
 @Table(name = "plugin_disqus_section")
 class DisqusSection extends Section {
 
-  @BeanProperty var shortname: String = _
+  @BeanProperty
+  var shortname: String = _
 
   override def backoffice: String = "/backoffice/plugin/disqus/section/" + id
   def desc: String = "Disqus commenting system"

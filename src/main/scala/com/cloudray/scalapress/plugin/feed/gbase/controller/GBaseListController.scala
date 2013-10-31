@@ -9,11 +9,10 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/feed"))
-class GBaseListController {
-
-  @Autowired var feedDao: GBaseFeedDao = _
-  @Autowired var context: ScalapressContext = _
+class GBaseListController(feedDao: GBaseFeedDao,
+                          context: ScalapressContext) {
 
   @RequestMapping
   def list = "admin/feed/list.vm"
@@ -25,5 +24,6 @@ class GBaseListController {
     "redirect:/backoffice/feed"
   }
 
-  @ModelAttribute("feeds") def feeds = feedDao.findAll.asJava
+  @ModelAttribute("feeds")
+  def feeds = feedDao.findAll.asJava
 }
