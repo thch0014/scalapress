@@ -6,11 +6,19 @@
 
 
 <form class='form-horizontal' method='GET'>
-    <input type="text" class=" input-xlarge" placeholder="Search for media" name="q"/>
-    <button type="submit" class="btn btn-primary"><i class="glyphicon  glyphicon-search"></i> Search</button>
-    <a href="#upload-modal" role='button' class="btn btn-inverse" data-toggle="modal">
-        <i class="glyphicon glyphicon-upload"></i> Upload Media
-    </a>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Search for media" name="q"/>
+        </div>
+        <div class="col-md-9">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> Search
+            </button>
+            <a href="#upload-modal" role='button' class="btn btn-default" data-toggle="modal">
+                <i class="glyphicon glyphicon-upload"></i> Upload Media
+            </a>
+        </div>
+    </div>
 </form>
 
 <style>
@@ -76,21 +84,22 @@ $pagination
                         <input type="checkbox" name="minify" value="true"/>
                     </label>
 
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
-                    <input type="file" name="upload"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
+                    <input type="file" name="upload" class="form-control"/>
 
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" data-dismiss="modal">Close</button>
-
                     <button class="btn btn-success" type="submit">
                         Upload File
                     </button>
