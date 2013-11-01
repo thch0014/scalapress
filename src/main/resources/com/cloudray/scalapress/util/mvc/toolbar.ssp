@@ -1,5 +1,6 @@
 <%@ val name: String %>
-<%@ val edit: String %>
+<%@ val editUrl: String %>
+<%@ val editLabel: String %>
 
 <div class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-inner">
@@ -14,7 +15,9 @@
                 <li>
                     <a href="/">Home Page</a>
                 </li>
-              ${edit}
+                <li>
+                    <a href="${editUrl}">${editLabel}</a>
+                </li>
             </ul>
         </div>
     </div>

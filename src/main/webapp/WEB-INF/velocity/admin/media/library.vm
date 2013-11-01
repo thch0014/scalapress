@@ -35,10 +35,10 @@
 
 $pagination
 
-<div class="row-fluid">
+<div class="row">
     <ul class="thumbnails">
       #foreach ($a in $assets)
-          <li class="span2">
+          <li class="col-md-2">
               <div class="thumbnail">
                   <img data-src="holder.js/300x200" src="/images/$a.filename()?width=128&height=128">
 

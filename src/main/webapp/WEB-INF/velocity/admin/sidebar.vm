@@ -12,17 +12,20 @@
   #end
   #foreach ($accountType in $accountTypes)
       <a class="list-group-item" href="/backoffice/account?accountTypeId=$accountType.id">
-          <i class="glyphicon glyphicon-user"></i> $accountType.name</a>
+          <i class="glyphicon glyphicon-user"></i> $accountType.name
+      </a>
   #end
     <a class="list-group-item" href="/backoffice/form">
         <i class="glyphicon glyphicon-list-alt"></i> Forms
     </a>
 
     <a class="list-group-item" href="/backoffice/submission">
-        <i class="glyphicon glyphicon-check"></i> Submissions</a>
+        <i class="glyphicon glyphicon-check"></i> Submissions
+    </a>
 
     <a class="list-group-item" href="/backoffice/medialib">
-        <i class="glyphicon glyphicon-camera"></i> Media Library</a>
+        <i class="glyphicon glyphicon-camera"></i> Media Library
+    </a>
 
     <a class="list-group-item" href="/backoffice/order">
         <i class="glyphicon glyphicon-shopping-cart"></i> Orders
