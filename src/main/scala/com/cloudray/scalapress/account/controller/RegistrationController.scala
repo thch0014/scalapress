@@ -68,7 +68,7 @@ class RegistrationController(themeService: ThemeService,
     val page = ScalapressPage(theme, sreq)
 
     Option(plugin.registrationPageHeader).foreach(arg => page body arg)
-    page.body(renderer.renderRegistrationPage(form, plugin, errors))
+    page.body(renderer.renderRegistrationPage(form, plugin, errors, context))
     Option(plugin.registrationPageFooter).foreach(arg => page body arg)
 
     page
