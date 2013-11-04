@@ -63,6 +63,9 @@ class Item extends SortedSections with java.io.Serializable {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SUBSELECT)
+  @CollectionTable(name = "Obj_images",
+    joinColumns = Array(new JoinColumn(name = "Obj_id"))
+  )
   @BeanProperty
   var images: java.util.List[String] = new util.ArrayList[String]()
   def sortedImages = images.asScala.toSeq
