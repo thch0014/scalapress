@@ -17,7 +17,7 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
   *
   *         Shows a list of objects inside a folder.
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_items")
 class ItemListSection extends Section {
@@ -76,7 +76,9 @@ class ItemListSection extends Section {
     val renderedObjects = page.results.size match {
       case 0 => "<!-- No objects in folder -->"
       case _ => {
-        val objectTypeMarkup = Option(page.results.head.objectType.objectListMarkup)
+        val objectTypeMarkup = page.results
+          .find(obj => obj.objectType != null && obj.objectType.objectListMarkup != null)
+          .map(_.objectType.objectListMarkup)
         val markupToUse = Option(markup).orElse(objectTypeMarkup)
         markupToUse match {
           case Some(m) => MarkupRenderer.renderObjects(page.results, m, sreq.withPaging(paging))
