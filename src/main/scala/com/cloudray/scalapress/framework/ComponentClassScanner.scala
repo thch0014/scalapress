@@ -35,6 +35,12 @@ class ComponentClassScanner extends ClassPathScanningCandidateComponentProvider(
     buffer.toList
   }
 
+  def getSubtypes[T] = {
+    val scanner = new ComponentClassScanner
+    scanner.addIncludeFilter(new org.springframework.core.`type`.filter.AssignableTypeFilter(manifest.runtimeClass))
+    scanner.getComponentClasses(BASE_PACKAGE).map(_.asInstanceOf[Class[T]])
+  }
+
   def getSubtypes[T](klass: Class[T]) = {
     val scanner = new ComponentClassScanner
     scanner.addIncludeFilter(new org.springframework.core.`type`.filter.AssignableTypeFilter(klass))
@@ -60,4 +66,7 @@ object ComponentClassScanner {
     new ComponentClassScanner().getAnnotatedClasses(classOf[SingleInstance])
   lazy val widgets: Seq[Class[Widget]] = new ComponentClassScanner().getSubtypes(classOf[Widget])
   lazy val tags: Seq[Class[_]] = new ComponentClassScanner().getAnnotatedClasses(classOf[Tag])
+
+  lazy val registrationLinks: Seq[RegistrationLinkProvider] =
+    new ComponentClassScanner().getSubtypes[RegistrationLinkProvider].map(_.newInstance)
 }
