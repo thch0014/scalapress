@@ -23,14 +23,16 @@ object PagingRenderer {
 
     val range = 5
     val pages = _renderPages(paging, range)
-    val xml = <ul class="pagination">
-      <li class="disabled">
-        <i class="glyphicon glyphicon-search">
-          &nbsp;
-        </i>
-        Viewing results
-      </li>{pages}
-    </ul>
+    val xml = <div class="pagination">
+      <ul>
+        <li class="disabled">
+          <i class="icon-search">
+            &nbsp;
+          </i>
+          Viewing results
+        </li>{pages}
+      </ul>
+    </div>
     val trimmed = Utility.trim(xml)
     trimmed.toString()
   }
