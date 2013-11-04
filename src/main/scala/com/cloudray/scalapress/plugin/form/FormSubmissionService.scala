@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.plugin.form
 
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
@@ -9,6 +8,7 @@ import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.cloudray.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
 import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

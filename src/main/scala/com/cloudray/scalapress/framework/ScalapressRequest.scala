@@ -1,9 +1,6 @@
-package com.cloudray.scalapress
+package com.cloudray.scalapress.framework
 
-import folder.Folder
 import javax.servlet.http.{Cookie, HttpServletRequest}
-import item.Item
-import plugin.ecommerce.domain.{OrderLine, Order, BasketLine, Basket}
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
@@ -11,6 +8,9 @@ import java.util.UUID
 import com.cloudray.scalapress.plugin.ecommerce.ShoppingPluginDao
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.plugin.ecommerce.domain.{Basket, BasketLine, OrderLine, Order}
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,

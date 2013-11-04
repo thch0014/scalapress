@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.theme.tag
 
-import com.cloudray.scalapress.ScalapressRequest
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 trait ScalapressTag {

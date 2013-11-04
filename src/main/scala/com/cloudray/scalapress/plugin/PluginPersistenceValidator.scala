@@ -4,11 +4,10 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import org.hibernate.SessionFactory
 import org.springframework.transaction.annotation.Transactional
-import com.cloudray.scalapress.Logging
 import javax.annotation.PostConstruct
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.util.ComponentClassScanner
 import org.hibernate.criterion.CriteriaSpecification
+import com.cloudray.scalapress.framework.{Logging, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Component

@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.search.section
 
-import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import javax.persistence._
 import com.cloudray.scalapress.search.SavedSearch
 import com.cloudray.scalapress.section.Section
@@ -9,6 +8,7 @@ import scala.beans.BeanProperty
 import scala._
 import scala.Some
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

@@ -6,11 +6,11 @@ import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao, Folder}
 import java.util
 import com.cloudray.scalapress.item.{ItemType, Item}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.Sort
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

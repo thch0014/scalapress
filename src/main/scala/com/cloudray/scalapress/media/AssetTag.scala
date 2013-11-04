@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.media
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest, Logging}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("asset")

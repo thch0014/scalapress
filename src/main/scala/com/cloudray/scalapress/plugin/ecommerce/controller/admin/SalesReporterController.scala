@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPluginDao, SalesReportCsvWriter, SalesReporter}
-import com.cloudray.scalapress.ScalapressContext
 import org.joda.time.{DateTime, DateTimeZone, DateMidnight}
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
@@ -14,6 +13,7 @@ import scala.Predef._
 import org.apache.commons.io.{IOUtils, FileUtils}
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

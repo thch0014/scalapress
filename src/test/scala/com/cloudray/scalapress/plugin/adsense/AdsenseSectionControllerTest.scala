@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.section.SectionDao
 import org.mockito.Mockito
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class AdsenseSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

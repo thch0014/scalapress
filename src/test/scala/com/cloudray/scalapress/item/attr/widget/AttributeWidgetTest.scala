@@ -3,9 +3,9 @@ package com.cloudray.scalapress.item.attr.widget
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.attr.{AttributeOption, Attribute}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.ItemType
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class AttributeWidgetTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

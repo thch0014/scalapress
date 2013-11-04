@@ -2,7 +2,6 @@ package com.cloudray.scalapress.account.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
-import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import org.springframework.security.authentication.encoding.PasswordEncoder
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.account.{AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.controller.admin.AccountStatusPopulator
 import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

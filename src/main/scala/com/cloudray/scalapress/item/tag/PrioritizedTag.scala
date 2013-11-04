@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.item.tag
 
-import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.theme.tag.ScalapressTag
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("prioritised")

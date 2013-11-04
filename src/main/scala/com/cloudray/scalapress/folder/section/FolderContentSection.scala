@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.folder.section
 
 import javax.persistence.{Column, Table, Entity}
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.payments.sagepayform
 
 import org.apache.commons.codec.binary.Base64
-import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.plugin.ecommerce.domain.Basket
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor with Logging {

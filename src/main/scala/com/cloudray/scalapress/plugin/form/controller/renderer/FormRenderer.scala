@@ -2,11 +2,11 @@ package com.cloudray.scalapress.plugin.form.controller.renderer
 
 import scala.collection.JavaConverters._
 import xml.{Node, Unparsed}
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.plugin.form.{FieldSize, FormFieldType, FormField, Form}
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 object FormRenderer {

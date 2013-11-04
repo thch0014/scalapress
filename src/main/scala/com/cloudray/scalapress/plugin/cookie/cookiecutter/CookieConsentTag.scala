@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.cookie.cookiecutter
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
-import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 @Tag("cookiecontent")
 class CookieConsentTag extends ScalapressTag {

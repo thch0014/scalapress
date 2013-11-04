@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.widgets
 
 import javax.persistence.{Table, Entity}
-import com.cloudray.scalapress.ScalapressRequest
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

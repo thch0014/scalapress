@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.plugin.gallery.masonry
 
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{ElementCollection, Entity, Table}
 import com.cloudray.scalapress.section.Section
 import java.util
@@ -9,6 +8,7 @@ import com.cloudray.scalapress.plugin.gallery.GalleryImage
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.media.AssetStore
 import org.apache.commons.io.IOUtils
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

@@ -3,11 +3,11 @@ package com.cloudray.scalapress.search
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search.section.SearchResultsSection
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.{ItemDao, Item}
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import com.cloudray.scalapress.section.{SectionDao, Section}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

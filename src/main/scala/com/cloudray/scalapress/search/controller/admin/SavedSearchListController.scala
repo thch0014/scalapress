@@ -3,10 +3,10 @@ package com.cloudray.scalapress.search.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search.SavedSearchDao
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

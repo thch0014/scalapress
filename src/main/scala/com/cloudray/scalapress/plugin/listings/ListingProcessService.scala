@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.plugin.listings
 
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
-import com.cloudray.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.item.Item
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel
   *

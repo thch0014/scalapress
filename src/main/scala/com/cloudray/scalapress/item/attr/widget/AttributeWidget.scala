@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.item.attr.widget
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
 import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.attr.Attribute
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

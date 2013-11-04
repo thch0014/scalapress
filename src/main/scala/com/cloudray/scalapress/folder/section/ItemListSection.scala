@@ -2,7 +2,6 @@ package com.cloudray.scalapress.folder.section
 
 import javax.persistence.{EnumType, Enumerated, ManyToOne, JoinColumn, FetchType, Column, Table, Entity}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -12,6 +11,7 @@ import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.search.{Sort, PagingRenderer}
 import com.cloudray.scalapress.item.{ItemSorter, Item}
 import com.cloudray.scalapress.item.attr.Attribute
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

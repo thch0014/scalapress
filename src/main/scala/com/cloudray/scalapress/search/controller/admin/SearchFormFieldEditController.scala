@@ -2,7 +2,6 @@ package com.cloudray.scalapress.search.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.{SearchFieldType, SearchFormFieldDao, SearchFormField}
 import com.cloudray.scalapress.theme.MarkupDao
@@ -10,6 +9,7 @@ import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
 import com.cloudray.scalapress.util.{AttributePopulator, EnumPopulator}
 import com.cloudray.scalapress.item.attr.AttributeDao
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

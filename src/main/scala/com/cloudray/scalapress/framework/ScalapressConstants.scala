@@ -1,4 +1,4 @@
-package com.cloudray.scalapress
+package com.cloudray.scalapress.framework
 
 /** @author Stephen Samuel */
 object ScalapressConstants {

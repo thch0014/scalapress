@@ -3,7 +3,6 @@ package com.cloudray.scalapress.search.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search._
@@ -16,6 +15,7 @@ import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.sksamuel.scoot.soa.{Paging, Page}
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.search.widget.SearchFormWidget
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.cloudray.scalapress.{ScalapressContext, Logging, ScalapressRequest}
 import org.springframework.web.multipart.MultipartFile
 import com.cloudray.scalapress.plugin.form.{RecaptchaClient, Form, FormSubmissionService, FormDao, SubmissionDao}
 import com.cloudray.scalapress.theme.{ThemeService, ThemeDao}
@@ -13,6 +12,7 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormSubmissionTextRenderer
 import org.apache.http.impl.client.DefaultHttpClient
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

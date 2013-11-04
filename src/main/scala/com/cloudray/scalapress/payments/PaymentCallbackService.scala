@@ -4,8 +4,7 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.{Logging, Callback, ScalapressContext}
-import com.cloudray.scalapress.util.ComponentClassScanner
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Component

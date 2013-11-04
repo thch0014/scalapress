@@ -4,9 +4,9 @@ import org.springframework.security.core.userdetails.{UsernameNotFoundException,
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.user.{User, UserDao}
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Component

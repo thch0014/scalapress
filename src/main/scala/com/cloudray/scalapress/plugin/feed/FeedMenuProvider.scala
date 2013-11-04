@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.plugin.feed
 
-import com.cloudray.scalapress.settings.{MenuItem, MenuProvider}
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 
 /** @author Stephen Samuel */
 class FeedMenuProvider extends MenuProvider {

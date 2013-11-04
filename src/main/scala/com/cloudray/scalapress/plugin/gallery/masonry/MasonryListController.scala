@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.gallery.masonry
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.section.Section
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

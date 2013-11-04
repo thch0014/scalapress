@@ -3,9 +3,9 @@ package com.cloudray.scalapress.util.geo.mvc
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.util.mvc.{ScalapressPageRenderer, ScalapressPage}
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.Theme
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ScalapressPageRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

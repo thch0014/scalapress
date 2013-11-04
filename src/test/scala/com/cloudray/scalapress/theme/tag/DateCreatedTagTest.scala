@@ -2,10 +2,10 @@ package com.cloudray.scalapress.theme.tag
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import org.joda.time.{DateTimeZone, DateMidnight, DateTime}
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

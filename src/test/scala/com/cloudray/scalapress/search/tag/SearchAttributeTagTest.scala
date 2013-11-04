@@ -2,10 +2,10 @@ package com.cloudray.scalapress.search.tag
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.attr.{AttributeType, AttributeOption, Attribute, AttributeDao}
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SearchAttributeTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

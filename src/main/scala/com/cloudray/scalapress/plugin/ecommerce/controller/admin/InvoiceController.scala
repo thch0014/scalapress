@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.ecommerce.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPluginDao, OrderDao}
 import com.cloudray.scalapress.theme.MarkupRenderer
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

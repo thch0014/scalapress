@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.folder.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("folders_nested")

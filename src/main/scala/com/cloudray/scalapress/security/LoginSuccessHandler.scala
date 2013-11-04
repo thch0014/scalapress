@@ -4,10 +4,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import com.cloudray.scalapress.account.AccountPluginDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Component

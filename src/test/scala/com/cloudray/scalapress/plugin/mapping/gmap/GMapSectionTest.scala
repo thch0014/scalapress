@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.mapping.gmap
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class GMapSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

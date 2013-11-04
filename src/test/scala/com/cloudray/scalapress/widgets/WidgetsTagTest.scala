@@ -3,9 +3,9 @@ package com.cloudray.scalapress.widgets
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{Cookie, HttpServletRequest}
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class WidgetsTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

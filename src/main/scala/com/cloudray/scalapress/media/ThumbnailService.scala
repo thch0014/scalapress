@@ -5,11 +5,11 @@ import com.sksamuel.scrimage.{Image => Scrimage, Format}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.ByteArrayInputStream
-import com.cloudray.scalapress.Logging
 import net.sf.ehcache.{CacheManager, Element, Cache}
 import net.sf.ehcache.config.CacheConfiguration
 import javax.annotation.PostConstruct
 import java.util.UUID
+import com.cloudray.scalapress.framework.Logging
 
 @Component
 @Autowired

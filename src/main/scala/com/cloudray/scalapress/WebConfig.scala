@@ -30,6 +30,7 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.cloudray.scalapress.account.AccountTypeDao
 import com.cloudray.scalapress.widgets.WidgetOneTimeCookieInterceptor
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

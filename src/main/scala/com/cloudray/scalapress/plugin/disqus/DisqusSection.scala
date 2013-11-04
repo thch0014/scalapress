@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.disqus
 
 import com.cloudray.scalapress.section.Section
 import javax.persistence.{Table, Entity}
-import com.cloudray.scalapress.ScalapressRequest
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

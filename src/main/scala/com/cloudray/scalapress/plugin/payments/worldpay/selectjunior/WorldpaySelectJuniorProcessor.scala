@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.payments.worldpay.selectjunior
 
-import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class WorldpaySelectJuniorProcessor(plugin: WorldpaySelectJuniorPlugin) extends PaymentProcessor with Logging {

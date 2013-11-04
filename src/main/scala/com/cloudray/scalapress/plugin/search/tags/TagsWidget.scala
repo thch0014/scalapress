@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.search.tags
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.search.{SearchService, SavedSearch}
 import scala.xml.Utility
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Table(name = "plugin_tagswidget")

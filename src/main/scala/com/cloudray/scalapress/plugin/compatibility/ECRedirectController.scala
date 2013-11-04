@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.compatibility
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestMapping}
 import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

@@ -3,8 +3,8 @@ package com.cloudray.scalapress.media
 import java.io.InputStream
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Component

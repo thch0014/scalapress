@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.attachment
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

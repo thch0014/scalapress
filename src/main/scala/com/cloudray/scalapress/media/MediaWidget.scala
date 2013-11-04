@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.media
 
 import javax.persistence._
-import com.cloudray.scalapress.ScalapressRequest
 import java.util
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.widgets.Widget
@@ -9,6 +8,7 @@ import scala.beans.BeanProperty
 import javax.persistence.Table
 import scala.Some
 import javax.persistence.Entity
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 

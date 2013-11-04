@@ -5,13 +5,13 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce._
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, ScalapressConstants}
 import com.cloudray.scalapress.plugin.ecommerce.domain._
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.plugin.ecommerce.dao.{DeliveryOptionDao, BasketDao}
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.payments.{Purchase, PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, ScalapressConstants}
 
 /** @author Stephen Samuel */
 class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

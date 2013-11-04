@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.search.widget
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.ScalapressRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.{SavedSearch, Facet, SearchService}
 import com.cloudray.scalapress.folder.Folder
@@ -9,6 +8,7 @@ import javax.persistence.{Column, Transient, Table, Entity}
 import com.cloudray.scalapress.util.Scalate
 import javax.servlet.http.HttpServletRequest
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel
   *

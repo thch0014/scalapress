@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.mapping.gmap
 
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Entity, Table}
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.item.attr.AttributeFuncs
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

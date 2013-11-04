@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.search.{SearchFormDao, SearchForm}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

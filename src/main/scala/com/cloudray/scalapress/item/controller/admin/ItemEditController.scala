@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.ui.ModelMap
@@ -12,7 +11,7 @@ import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator, ComponentClassScanner}
+import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.{ItemCloner, ItemDao, Item}
 import com.cloudray.scalapress.folder.FolderDao
@@ -29,6 +28,7 @@ import com.cloudray.scalapress.media.Asset
 import scala.Some
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 import com.cloudray.scalapress.account.AccountDao
+import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Controller

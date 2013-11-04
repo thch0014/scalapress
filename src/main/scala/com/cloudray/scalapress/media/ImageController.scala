@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.apache.commons.io.IOUtils
-import com.cloudray.scalapress.Logging
 import javax.servlet.http.HttpServletResponse
 import java.net.URLConnection
 import com.sksamuel.scrimage.Format
+import com.cloudray.scalapress.framework.Logging
 
 @Controller
 @RequestMapping(Array("images"))

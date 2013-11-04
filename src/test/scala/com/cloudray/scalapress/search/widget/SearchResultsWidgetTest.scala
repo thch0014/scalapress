@@ -2,9 +2,9 @@ package com.cloudray.scalapress.search.widget
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.search.SavedSearchDao
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class SearchResultsWidgetTest extends FunSuite with OneInstancePerTest with MockitoSugar {

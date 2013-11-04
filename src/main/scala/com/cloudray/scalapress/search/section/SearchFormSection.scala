@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.search.section
 
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{Column, JoinColumn, ManyToOne, Table, Entity}
 import com.cloudray.scalapress.search.{SearchFormRenderer, SearchForm}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Entity

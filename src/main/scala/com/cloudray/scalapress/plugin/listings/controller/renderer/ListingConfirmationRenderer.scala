@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import scala.xml.{Node, Unparsed}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingConfirmationRenderer(context: ScalapressContext) {

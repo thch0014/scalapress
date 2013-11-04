@@ -2,7 +2,6 @@ package com.cloudray.scalapress.item.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, ModelAttribute, PathVariable, ResponseBody, RequestMapping}
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
@@ -10,6 +9,7 @@ import com.cloudray.scalapress.item.{ItemDao, Item}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, NotFoundException}
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.cloudray.scalapress.security.SpringSecurityResolver
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

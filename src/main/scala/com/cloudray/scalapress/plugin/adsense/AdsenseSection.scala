@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.adsense
 
 import javax.persistence.{Table, Entity}
 import com.cloudray.scalapress.section.Section
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.util.Scalate
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

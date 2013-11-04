@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.security.simplepass
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class SimplePassMenuProviderTest extends FunSuite with OneInstancePerTest with MockitoSugar {

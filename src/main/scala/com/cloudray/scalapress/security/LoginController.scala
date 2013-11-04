@@ -3,7 +3,6 @@ package com.cloudray.scalapress.security
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import scala.Array
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.account.AccountPluginDao
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

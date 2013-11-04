@@ -9,7 +9,6 @@ import com.cloudray.scalapress.plugin.listings._
 import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.theme.ThemeService
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
 import com.cloudray.scalapress.payments._
@@ -17,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayInputStream
 import com.cloudray.scalapress.media.{AssetService, AssetStore}
 import com.cloudray.scalapress.plugin.vouchers.VoucherDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class AddListingControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {

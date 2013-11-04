@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.account.controller
 
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.account.AccountLink
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 object AccountRenderer {

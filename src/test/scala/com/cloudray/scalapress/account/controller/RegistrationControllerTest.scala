@@ -6,11 +6,11 @@ import org.springframework.validation.Errors
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.account._
 import org.springframework.security.authentication.encoding.PasswordEncoder
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.ThemeService
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import org.springframework.security.authentication.AuthenticationManager
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.widgets
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class WidgetOneTimeCookieInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {

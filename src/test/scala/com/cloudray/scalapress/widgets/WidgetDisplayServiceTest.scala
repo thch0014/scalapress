@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.widgets
 
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{Cookie, HttpServletRequest}
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.item.Item
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class WidgetDisplayServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

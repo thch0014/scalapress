@@ -3,13 +3,13 @@ package com.cloudray.scalapress.plugin.listings.controller
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.security.{SecurityResolver, SpringSecurityResolver}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.item.ItemQuery
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRenderer
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

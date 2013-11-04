@@ -1,4 +1,4 @@
-package com.cloudray.scalapress
+package com.cloudray.scalapress.framework
 
 import org.slf4j.LoggerFactory
 import javax.persistence.Transient

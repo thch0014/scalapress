@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.listings.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import org.mockito.{Matchers, ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.item.{ItemDao, Item, ItemQuery}
@@ -10,6 +9,7 @@ import com.cloudray.scalapress.security.SecurityResolver
 import com.cloudray.scalapress.theme.ThemeService
 import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class MyListingsControllerTest extends FunSuite with OneInstancePerTest with MockitoSugar {

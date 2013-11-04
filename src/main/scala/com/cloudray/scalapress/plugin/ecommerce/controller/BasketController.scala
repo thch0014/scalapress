@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.ecommerce.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
@@ -14,6 +13,7 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import scala.Some
 import com.cloudray.scalapress.plugin.variations.VariationDao
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

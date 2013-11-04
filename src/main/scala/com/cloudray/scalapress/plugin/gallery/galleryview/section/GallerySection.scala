@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.gallery.galleryview.section
 
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao, Gallery}
 import org.hibernate.annotations.{NotFoundAction, NotFound}
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

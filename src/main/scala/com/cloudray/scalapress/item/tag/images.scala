@@ -7,6 +7,7 @@ import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.media._
 import scala.xml.{Unparsed, Elem}
 import scala.Some
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext, Tag}
 
 /** @author Stephen Samuel */
 @Tag("images")

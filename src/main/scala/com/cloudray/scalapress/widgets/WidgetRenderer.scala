@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.widgets
 
-import com.cloudray.scalapress.{Logging, ScalapressRequest}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
 class WidgetRenderer extends Logging {

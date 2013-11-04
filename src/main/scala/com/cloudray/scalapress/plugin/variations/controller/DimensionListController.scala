@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.variations.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.TypeDao
 import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValueDao, DimensionDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

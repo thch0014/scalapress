@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.account.controller.admin
 
-import com.cloudray.scalapress.settings.{MenuProvider, MenuItem}
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 
 /** @author Stephen Samuel */
 class AccountPluginMenuProvider extends MenuProvider {

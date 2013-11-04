@@ -3,10 +3,10 @@ package com.cloudray.scalapress.search
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search.controller.CorpusSearchController
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.theme.ThemeService
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class CorpusSearchControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

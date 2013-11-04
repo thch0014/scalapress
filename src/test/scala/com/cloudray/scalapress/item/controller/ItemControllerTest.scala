@@ -6,7 +6,7 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.item.{ItemDao, ItemType, Item}
 import com.cloudray.scalapress.util.mvc.NotFoundException
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ItemControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest with ShouldMatchers {

@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.variations.tag
 
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.plugin.variations.{Dimension, Variation, DimensionDao, VariationDao}
 import scala.collection.JavaConverters._
 import scala.xml.{Utility, Node}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("variations_select")

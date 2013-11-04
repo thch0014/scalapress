@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.listings
 
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.joda.time.{DateTimeZone, DateMidnight}
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.plugin.listings.domain.{ListingPackage, ListingProcess}
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ListingProcessItemBuilder(context: ScalapressContext) extends Logging {

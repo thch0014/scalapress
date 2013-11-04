@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.listings.email
 
 import org.springframework.mail.{SimpleMailMessage, MailSender}
-import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

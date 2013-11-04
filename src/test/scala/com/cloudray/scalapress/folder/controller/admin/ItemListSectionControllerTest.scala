@@ -7,9 +7,9 @@ import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.folder.section.ItemListSection
 import org.mockito.Mockito
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.folder.{FolderSettings, FolderPluginDao}
 import com.cloudray.scalapress.theme.MarkupDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ItemListSectionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

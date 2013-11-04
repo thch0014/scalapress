@@ -2,13 +2,13 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.joda.time.{DateMidnight, DateTimeZone}
 import com.cloudray.scalapress.item.{ItemDao, ItemType, Item}
 import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import org.mockito.Mockito
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest with MockitoSugar {

@@ -5,9 +5,9 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.InvoiceDeliveryChargeTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class InvoiceDeliveryChargeTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.plugin.d3cloud
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{Table, Entity}
 import org.apache.commons.io.IOUtils
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

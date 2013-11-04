@@ -4,9 +4,9 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.settings.{InstallationDao, Installation}
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ItemSellPriceTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

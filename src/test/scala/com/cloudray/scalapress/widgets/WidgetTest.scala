@@ -2,7 +2,7 @@ package com.cloudray.scalapress.widgets
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressRequest
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 class WidgetTest extends FunSuite with MockitoSugar with OneInstancePerTest {

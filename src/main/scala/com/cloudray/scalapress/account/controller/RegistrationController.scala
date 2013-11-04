@@ -2,7 +2,6 @@ package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
@@ -18,6 +17,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.account._
 import com.cloudray.scalapress.account.controller.renderer.RegistrationRenderer
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

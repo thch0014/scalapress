@@ -2,12 +2,12 @@ package com.cloudray.scalapress.plugin.form.renderer
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormRenderer
 import com.cloudray.scalapress.plugin.form.{Form, FormField}
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

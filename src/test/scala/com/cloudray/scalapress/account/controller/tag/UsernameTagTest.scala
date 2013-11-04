@@ -5,8 +5,8 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.security.SecurityResolver
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class UsernameTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

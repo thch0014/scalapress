@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.fbopengraph
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

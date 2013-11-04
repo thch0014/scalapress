@@ -3,12 +3,12 @@ package com.cloudray.scalapress.item.attr.widget
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.widgets.WidgetDao
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.widgets.controller.WidgetContainerMapPopulator
 import com.cloudray.scalapress.util.AllAttributesPopulator
 import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

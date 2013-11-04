@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.item.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.item.StockMethod
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 object RrpTag extends ScalapressTag with TagBuilder {

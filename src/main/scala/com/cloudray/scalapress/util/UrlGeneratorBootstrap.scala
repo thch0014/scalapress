@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Value
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.Logging
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

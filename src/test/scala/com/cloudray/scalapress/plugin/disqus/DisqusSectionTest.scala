@@ -2,11 +2,11 @@ package com.cloudray.scalapress.plugin.disqus
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.settings.Installation
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 class DisqusSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

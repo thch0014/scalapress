@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.search.widget
 
 import javax.persistence._
-import com.cloudray.scalapress.{Logging, ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.search.{ItemRef, SavedSearch}
 import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

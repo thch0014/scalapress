@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import scala.Array
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

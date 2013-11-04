@@ -3,7 +3,7 @@ package com.cloudray.scalapress.security
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.user.User
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class AdminUserDetailsServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

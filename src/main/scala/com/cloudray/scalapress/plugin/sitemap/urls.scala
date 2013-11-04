@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.sitemap
 
 import collection.mutable.ListBuffer
-import com.cloudray.scalapress.ScalapressContext
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.item.ItemQuery
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 object UrlBuilder {

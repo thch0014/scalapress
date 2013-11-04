@@ -1,12 +1,12 @@
 package com.cloudray.scalapress.folder.section
 
 import javax.persistence.{ManyToOne, JoinColumn, Table, Entity}
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFound, NotFoundAction}
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.widgets
 
-import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.ScalapressTag
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("widget")

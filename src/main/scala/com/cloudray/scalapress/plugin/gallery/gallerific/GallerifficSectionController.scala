@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.gallery.gallerific
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.web.multipart.MultipartFile
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

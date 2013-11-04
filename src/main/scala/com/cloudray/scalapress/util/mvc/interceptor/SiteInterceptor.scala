@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util.mvc.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.servlet.ModelAndView
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SiteInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {

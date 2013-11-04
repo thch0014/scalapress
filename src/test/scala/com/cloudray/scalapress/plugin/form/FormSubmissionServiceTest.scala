@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.form
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import org.joda.time.{DateTime, DateTimeZone}
 import org.mockito.{Matchers, ArgumentCaptor, Mockito}
@@ -10,6 +9,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FormSubmissionServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

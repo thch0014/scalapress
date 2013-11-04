@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.listings.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, PathVariable, ResponseBody, RequestMapping}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.Item
@@ -12,6 +11,7 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.security.SpringSecurityResolver
 import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingFieldsRenderer
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

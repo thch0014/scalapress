@@ -7,8 +7,8 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.theme.{Markup, MarkupDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.item.ItemDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class SectionEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

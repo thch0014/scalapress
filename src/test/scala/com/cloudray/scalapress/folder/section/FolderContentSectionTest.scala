@@ -2,10 +2,10 @@ package com.cloudray.scalapress.folder.section
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.media.AssetStore
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FolderContentSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {

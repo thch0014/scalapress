@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.lightbox.colorbox
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ColorboxTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

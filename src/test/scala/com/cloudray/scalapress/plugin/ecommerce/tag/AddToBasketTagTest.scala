@@ -3,9 +3,9 @@ package com.cloudray.scalapress.plugin.ecommerce.tag
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.tags.AddToBasketTag
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class AddToBasketTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

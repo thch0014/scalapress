@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.theme.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("id")

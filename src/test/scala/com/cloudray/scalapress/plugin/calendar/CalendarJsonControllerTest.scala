@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.calendar
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ItemRef, SearchService}
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.item.attr.Attribute
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

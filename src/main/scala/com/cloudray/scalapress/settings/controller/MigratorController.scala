@@ -2,9 +2,9 @@ package com.cloudray.scalapress.settings.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, PathVariable, RequestMapping}
-import com.cloudray.scalapress.Logging
 import com.cloudray.migration.ecreator.ECImageMigrator
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Controller

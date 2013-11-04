@@ -4,9 +4,10 @@ import javax.persistence._
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao, ComponentClassScanner}
+import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.ComponentClassScanner
 
 /** @author Stephen Samuel */
 @MappedSuperclass

@@ -3,9 +3,9 @@ package com.cloudray.scalapress.folder.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

@@ -3,7 +3,6 @@ package com.cloudray.scalapress.util.mvc
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.security.SpringSecurityResolver
 import javax.servlet.http.HttpServletRequest
@@ -14,6 +13,7 @@ import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

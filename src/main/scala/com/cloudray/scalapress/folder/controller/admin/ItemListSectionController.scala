@@ -3,7 +3,6 @@ package com.cloudray.scalapress.folder.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.theme.MarkupDao
@@ -12,6 +11,7 @@ import com.cloudray.scalapress.util.{AttributePopulator, SortPopulator}
 import com.cloudray.scalapress.folder.section.ItemListSection
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

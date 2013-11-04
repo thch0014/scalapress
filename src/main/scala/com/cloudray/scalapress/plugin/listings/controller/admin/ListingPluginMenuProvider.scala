@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.listings.controller.admin
 
 import com.cloudray.scalapress.settings._
-import com.cloudray.scalapress.ScalapressContext
 import scala.Some
+import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 
 /** @author Stephen Samuel */
 class ListingPluginMenuProvider extends MenuProvider {

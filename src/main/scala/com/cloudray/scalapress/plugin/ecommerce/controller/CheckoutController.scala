@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.ecommerce.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{Logging, ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce._
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, Basket}
@@ -15,6 +14,7 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.ecommerce.controller.renderers._
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

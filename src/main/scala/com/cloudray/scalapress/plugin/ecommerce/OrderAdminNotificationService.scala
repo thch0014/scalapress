@@ -4,7 +4,7 @@ import domain.Order
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.{ScalapressContext, Logging}
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.account.controller.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("register")

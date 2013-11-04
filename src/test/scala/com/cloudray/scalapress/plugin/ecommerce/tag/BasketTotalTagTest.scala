@@ -6,8 +6,8 @@ import com.cloudray.scalapress.plugin.ecommerce.tags.BasketTotalTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressConstants, ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, ScalapressConstants}
 
 /** @author Stephen Samuel */
 class BasketTotalTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

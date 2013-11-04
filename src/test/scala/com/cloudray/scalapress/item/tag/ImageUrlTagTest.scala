@@ -2,9 +2,9 @@ package com.cloudray.scalapress.item.tag
 
 import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ImageUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

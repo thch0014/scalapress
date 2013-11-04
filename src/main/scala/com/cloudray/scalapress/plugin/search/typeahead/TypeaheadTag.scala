@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.search.typeahead
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import java.util.UUID
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("typeahead")

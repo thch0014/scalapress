@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.form.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.form._
 import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import scala.Some
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

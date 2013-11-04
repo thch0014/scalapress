@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
-import com.cloudray.scalapress.Logging
 import scala.collection.JavaConverters._
 import org.elasticsearch.common.settings.ImmutableSettings
 import java.io.File
@@ -26,6 +25,7 @@ import com.cloudray.scalapress.search.FacetTerm
 import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.search.SearchResult
 import scala.concurrent.Await
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class ElasticSearchService extends SearchService with Logging {

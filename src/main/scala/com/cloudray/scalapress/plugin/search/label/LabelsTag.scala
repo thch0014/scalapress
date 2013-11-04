@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.search.label
 
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import com.cloudray.scalapress.{ScalapressRequest, Tag}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("labels")

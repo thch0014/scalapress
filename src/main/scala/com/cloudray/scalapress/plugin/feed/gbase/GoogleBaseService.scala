@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.feed.gbase
 import java.io.File
 import org.apache.commons.io.{FileUtils, IOUtils}
 import com.enterprisedt.net.ftp.FTPClient
-import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.item.{ItemQuery, ItemDao, Item}
 import com.cloudray.scalapress.settings.Installation
 import com.cloudray.scalapress.media.AssetStore
 import org.joda.time.{DateTimeZone, DateTime}
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {

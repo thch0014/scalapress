@@ -2,10 +2,10 @@ package com.cloudray.scalapress.section
 
 import javax.persistence._
 import org.hibernate.annotations.{NotFound, NotFoundAction, Index}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.folder.Folder
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Entity

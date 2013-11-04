@@ -3,13 +3,13 @@ package com.cloudray.scalapress.item.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.sksamuel.scoot.soa.Paging
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item._
 import scala.beans.BeanProperty
 import org.springframework.web.multipart.MultipartFile
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

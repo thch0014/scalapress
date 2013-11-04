@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.ecommerce.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
@@ -12,6 +11,7 @@ import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, ShoppingPluginDao}
 import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

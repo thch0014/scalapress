@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.item
 
 import javax.persistence.{Table, Entity, Column}
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.section.Section
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

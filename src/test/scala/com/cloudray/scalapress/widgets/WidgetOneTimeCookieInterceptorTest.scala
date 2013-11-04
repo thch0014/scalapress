@@ -2,10 +2,10 @@ package com.cloudray.scalapress.widgets
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.{Cookie, HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
 import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class WidgetOneTimeCookieInterceptorTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

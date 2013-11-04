@@ -4,11 +4,11 @@ import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.item.Item
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
 import com.cloudray.scalapress.search.SearchService
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 trait ElasticSearchIndexer {

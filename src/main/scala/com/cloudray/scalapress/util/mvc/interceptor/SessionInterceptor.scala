@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util.mvc.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{Cookie, HttpServletResponse, HttpServletRequest}
 import java.util.UUID
-import com.cloudray.scalapress.ScalapressConstants
+import com.cloudray.scalapress.framework.ScalapressConstants
 
 /** @author Stephen Samuel */
 object SessionInterceptor extends HandlerInterceptorAdapter {

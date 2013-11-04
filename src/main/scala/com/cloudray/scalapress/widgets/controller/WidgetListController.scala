@@ -3,12 +3,11 @@ package com.cloudray.scalapress.widgets.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.widgets.Widget
 import scala.Array
-import com.cloudray.scalapress.util.ComponentClassScanner
 import scala.collection.JavaConverters._
 import scala.collection.mutable
+import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Controller

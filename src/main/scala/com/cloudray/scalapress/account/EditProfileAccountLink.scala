@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.account
 
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class EditProfileAccountLink extends AccountLink {

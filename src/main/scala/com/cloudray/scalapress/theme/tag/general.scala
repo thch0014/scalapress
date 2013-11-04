@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.theme.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import org.joda.time.DateTime
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("home")

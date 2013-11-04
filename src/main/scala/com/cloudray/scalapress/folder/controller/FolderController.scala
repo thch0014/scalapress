@@ -3,13 +3,13 @@ package com.cloudray.scalapress.folder.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ResponseBody, ExceptionHandler, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext, Logging}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.cloudray.scalapress.section.SectionRenderer
 import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao, Folder}
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.security.SpringSecurityResolver
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /**
  * @author sks 09-Feb-2006 13:48:13

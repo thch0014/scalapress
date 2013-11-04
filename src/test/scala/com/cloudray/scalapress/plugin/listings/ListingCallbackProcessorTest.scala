@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce._
 import org.mockito.{ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.plugin.listings.email.ListingCustomerNotification
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 import com.cloudray.scalapress.item.{ItemDao, Item}
 import com.cloudray.scalapress.payments.{Transaction, TransactionDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingCallbackProcessorTest extends FunSuite with OneInstancePerTest with MockitoSugar {

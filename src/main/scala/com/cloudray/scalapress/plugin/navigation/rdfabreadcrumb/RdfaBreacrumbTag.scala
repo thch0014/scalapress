@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.navigation.rdfabreadcrumb
 
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.mutable.{ListBuffer, ArrayBuffer}
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("rdfa_breadcrumb")

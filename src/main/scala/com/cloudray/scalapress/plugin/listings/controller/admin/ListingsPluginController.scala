@@ -3,13 +3,13 @@ package com.cloudray.scalapress.plugin.listings.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.listings.{ListingsPluginDao, ListingPackageDao}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.plugin.listings.domain.{ListingsPlugin, ListingPackage}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.item.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("associations")

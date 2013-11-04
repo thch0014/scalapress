@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.util.mvc
 
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.tag.TagRenderer
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ScalapressPageRenderer(context: ScalapressContext) {

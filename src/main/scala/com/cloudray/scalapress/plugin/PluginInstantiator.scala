@@ -3,9 +3,9 @@ package com.cloudray.scalapress.plugin
 import org.springframework.beans.factory.annotation.Value
 import javax.annotation.PostConstruct
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.Logging
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import org.springframework.context.{ApplicationContext, ApplicationContextAware}
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

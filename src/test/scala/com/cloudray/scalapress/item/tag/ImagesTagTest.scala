@@ -2,11 +2,11 @@ package com.cloudray.scalapress.item.tag
 
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.media._
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ImagesTagTest extends FlatSpec with OneInstancePerTest with MockitoSugar {

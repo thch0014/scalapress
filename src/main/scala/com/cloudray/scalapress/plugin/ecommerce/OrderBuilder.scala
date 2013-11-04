@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.ecommerce
 import domain.{OrderLine, Basket, Order}
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.{ScalapressRequest, Logging, ScalapressContext}
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

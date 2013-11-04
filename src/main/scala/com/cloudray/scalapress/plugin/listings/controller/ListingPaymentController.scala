@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.listings.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.plugin.listings.controller.renderer._
@@ -13,6 +12,7 @@ import org.springframework.validation.Errors
 import java.net.URL
 import com.cloudray.scalapress.plugin.listings._
 import com.cloudray.scalapress.payments.{PaymentCallbackService, PaymentFormRenderer}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

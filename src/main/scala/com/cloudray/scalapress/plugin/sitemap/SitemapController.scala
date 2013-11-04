@@ -2,10 +2,10 @@ package com.cloudray.scalapress.plugin.sitemap
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletResponse
 import org.apache.commons.io.IOUtils
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

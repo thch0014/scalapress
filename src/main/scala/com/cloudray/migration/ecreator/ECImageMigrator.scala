@@ -1,6 +1,5 @@
 package com.cloudray.migration.ecreator
 
-import com.cloudray.scalapress.Logging
 import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
 import com.cloudray.scalapress.item.ItemDao
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +14,7 @@ import scala.concurrent._
 import com.cloudray.scalapress.folder.section.FolderContentSection
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.springframework.stereotype.Component
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

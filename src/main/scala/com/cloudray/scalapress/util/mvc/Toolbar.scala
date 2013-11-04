@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.util.mvc
 
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 class Toolbar(name: String, url: Option[String]) {

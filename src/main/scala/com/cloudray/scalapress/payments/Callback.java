@@ -1,4 +1,4 @@
-package com.cloudray.scalapress;
+package com.cloudray.scalapress.payments;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -11,6 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  */
 @Target(TYPE)
 @Retention(RUNTIME)
-public @interface Tag {
+public @interface Callback {
     String value();
 }

@@ -4,7 +4,7 @@ import java.io.{ByteArrayInputStream, InputStream}
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.media.AssetLifecycleListener
 import com.sksamuel.scrimage.{Format, Image}
-import com.cloudray.scalapress.Logging
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

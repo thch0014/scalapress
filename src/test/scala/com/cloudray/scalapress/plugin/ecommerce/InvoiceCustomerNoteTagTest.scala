@@ -2,10 +2,10 @@ package com.cloudray.scalapress.plugin.ecommerce
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.tags.InvoiceCustomerNoteTag
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class InvoiceCustomerNoteTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

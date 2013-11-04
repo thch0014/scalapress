@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.search.widget
 
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import com.cloudray.scalapress.search.{SearchFormRenderer, SearchForm}
 import scala.beans.BeanProperty
 import javax.persistence._
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
   *

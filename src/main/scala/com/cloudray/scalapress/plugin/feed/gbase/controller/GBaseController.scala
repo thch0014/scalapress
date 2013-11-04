@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.feed.gbase.controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
 import com.cloudray.scalapress.plugin.feed.gbase.{GBaseFeedDao, GBaseFeed, GoogleBaseService}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

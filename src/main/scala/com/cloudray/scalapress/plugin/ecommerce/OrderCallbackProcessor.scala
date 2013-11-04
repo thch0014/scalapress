@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.ecommerce
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{Callback, Logging, ScalapressContext}
-import com.cloudray.scalapress.payments.{Transaction, PaymentCallback}
+import com.cloudray.scalapress.payments.{Callback, Transaction, PaymentCallback}
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.search.elasticsearch
 
-import com.cloudray.scalapress.Logging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.settings.InstallationDao
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

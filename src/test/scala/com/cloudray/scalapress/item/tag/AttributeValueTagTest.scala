@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.attr.{AttributeType, Attribute, AttributeValue}
 import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

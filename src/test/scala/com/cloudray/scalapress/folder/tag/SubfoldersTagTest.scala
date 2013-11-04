@@ -3,8 +3,8 @@ package com.cloudray.scalapress.folder.tag
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SubfoldersTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

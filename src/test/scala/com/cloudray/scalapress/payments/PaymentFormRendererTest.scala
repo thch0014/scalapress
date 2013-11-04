@@ -2,9 +2,9 @@ package com.cloudray.scalapress.payments
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class PaymentFormRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

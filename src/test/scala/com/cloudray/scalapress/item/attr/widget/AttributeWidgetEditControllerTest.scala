@@ -5,8 +5,8 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import com.cloudray.scalapress.widgets.WidgetDao
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class AttributeWidgetEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

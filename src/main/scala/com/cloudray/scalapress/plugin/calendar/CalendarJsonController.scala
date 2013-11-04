@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMapping, PathVariable, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.SearchService
-import com.cloudray.scalapress.ScalapressContext
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

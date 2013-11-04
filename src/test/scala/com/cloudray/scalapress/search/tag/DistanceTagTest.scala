@@ -2,10 +2,10 @@ package com.cloudray.scalapress.search.tag
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue, Attribute}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class DistanceTagTest extends FunSuite with MockitoSugar {

@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.form.section
 
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import javax.persistence.{ManyToOne, Entity, Table, JoinColumn}
 import com.cloudray.scalapress.plugin.form.{FormDao, Form}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormRenderer
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Entity

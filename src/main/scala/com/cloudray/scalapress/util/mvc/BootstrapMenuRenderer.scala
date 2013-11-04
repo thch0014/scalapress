@@ -1,19 +1,10 @@
-package com.cloudray.scalapress.settings
+package com.cloudray.scalapress.util.mvc
 
-import com.cloudray.scalapress.ScalapressContext
 import scala.xml.{Node, Utility}
+import com.cloudray.scalapress.framework.{MenuItem, MenuRenderer}
 
 /** @author Stephen Samuel */
-case class MenuItem(label: String, icon: Option[String], url: String)
-abstract class MenuProvider {
-  def menu(context: ScalapressContext): (String, Seq[MenuItem])
-}
-
-abstract class Renderer {
-  def render(menus: Map[String, Seq[MenuItem]]): Node
-}
-
-object BootstrapMenuRenderer extends Renderer {
+object BootstrapMenuRenderer extends MenuRenderer {
 
   def render(menus: Map[String, Seq[MenuItem]]): Node = {
     val xml = <ul class="dropdown-menu" role="menu">

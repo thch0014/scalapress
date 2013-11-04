@@ -1,13 +1,13 @@
 package com.cloudray.scalapress.plugin.attachment
 
 import javax.persistence.{ElementCollection, Table, Entity}
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.util.Scalate
 import scala.beans.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

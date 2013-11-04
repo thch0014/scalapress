@@ -6,7 +6,7 @@ import com.cloudray.scalapress.folder._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

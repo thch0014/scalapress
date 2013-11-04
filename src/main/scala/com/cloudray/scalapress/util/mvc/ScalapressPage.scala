@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.util.mvc
 
 import collection.mutable.ListBuffer
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.theme.Theme
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {

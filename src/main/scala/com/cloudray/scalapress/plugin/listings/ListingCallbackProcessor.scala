@@ -2,12 +2,12 @@ package com.cloudray.scalapress.plugin.listings
 
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderComment, OrderLine, Order}
-import com.cloudray.scalapress.{Callback, ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.plugin.listings.email.ListingCustomerNotificationService
 import com.cloudray.scalapress.plugin.ecommerce.OrderDao
-import com.cloudray.scalapress.payments.{Transaction, PaymentCallback}
+import com.cloudray.scalapress.payments.{Callback, Transaction, PaymentCallback}
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

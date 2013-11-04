@@ -1,4 +1,4 @@
-package com.cloudray.scalapress
+package com.cloudray.scalapress.framework
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.{Configuration, Bean}

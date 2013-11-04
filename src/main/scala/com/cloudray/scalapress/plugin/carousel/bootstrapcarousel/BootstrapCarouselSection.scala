@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.carousel.bootstrapcarousel
 
 import javax.persistence._
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.plugin.carousel.CarouselSection
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

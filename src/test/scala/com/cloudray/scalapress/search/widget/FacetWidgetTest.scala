@@ -3,7 +3,6 @@ package com.cloudray.scalapress.search.widget
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search._
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.folder.Folder
 import javax.servlet.http.HttpServletRequest
 import org.mockito.{ArgumentCaptor, Mockito, Matchers}
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.Facet
 import org.apache.commons.io.IOUtils
 import scala.xml.{XML, Utility}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FacetWidgetTest extends FlatSpec with OneInstancePerTest with MockitoSugar {

@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.widgets
 
 import javax.servlet.http.Cookie
-import com.cloudray.scalapress.{Logging, ScalapressRequest}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
 class WidgetDisplayService extends Logging {

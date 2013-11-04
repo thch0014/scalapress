@@ -8,12 +8,12 @@ import java.util.Collections
 import com.cloudray.scalapress.plugin.form.controller.renderer.FormSubmissionTextRenderer
 import com.cloudray.scalapress.theme.ThemeService
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.collection.mutable
 import com.cloudray.scalapress.folder.controller.FolderController
 import com.cloudray.scalapress.item.{ItemDao, Item}
 import com.cloudray.scalapress.folder.{FolderDao, Folder}
 import org.springframework.web.multipart.MultipartFile
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SubmissionControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

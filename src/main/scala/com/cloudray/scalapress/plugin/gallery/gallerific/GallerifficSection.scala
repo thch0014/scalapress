@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.gallery.gallerific
 
-import com.cloudray.scalapress.ScalapressRequest
 import javax.persistence.{ElementCollection, Entity, Table}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
 import java.util
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

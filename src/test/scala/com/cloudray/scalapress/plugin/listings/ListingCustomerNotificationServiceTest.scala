@@ -7,9 +7,9 @@ import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.{ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import com.cloudray.scalapress.plugin.listings.email.ListingCustomerNotificationService
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.mail.{MailSender, SimpleMailMessage}
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingCustomerNotificationServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {

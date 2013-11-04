@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.item.attr._
 import com.cloudray.scalapress.util.EnumPopulator
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

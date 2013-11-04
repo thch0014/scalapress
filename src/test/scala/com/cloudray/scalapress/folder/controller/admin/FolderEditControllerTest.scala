@@ -7,9 +7,9 @@ import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSe
 import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.theme.ThemeDao
 import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

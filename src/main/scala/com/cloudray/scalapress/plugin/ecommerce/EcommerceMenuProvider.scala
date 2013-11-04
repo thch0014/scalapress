@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce
 
 import com.cloudray.scalapress.settings._
 import scala.Some
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 
 /** @author Stephen Samuel */
 class EcommerceMenuProvider extends MenuProvider {

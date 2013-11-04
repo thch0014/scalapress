@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.util
+package com.cloudray.scalapress.framework
 
 import org.springframework.util.ClassUtils
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
@@ -6,10 +6,8 @@ import collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
 import com.cloudray.scalapress.widgets.Widget
 import com.cloudray.scalapress.section.Section
-import com.cloudray.scalapress.{Callback, Tag}
 import java.lang.annotation.Annotation
-import com.cloudray.scalapress.payments.PaymentPlugin
-import com.cloudray.scalapress.settings.MenuProvider
+import com.cloudray.scalapress.payments.{Callback, PaymentPlugin}
 import com.cloudray.scalapress.plugin.SingleInstance
 import java.lang.reflect.Modifier
 

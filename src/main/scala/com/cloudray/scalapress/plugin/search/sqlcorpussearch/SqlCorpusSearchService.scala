@@ -2,11 +2,11 @@ package com.cloudray.scalapress.plugin.search.sqlcorpussearch
 
 import com.cloudray.scalapress.search.{CorpusResult, CorpusSearchService}
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.folder.section.FolderContentSection
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel
   *

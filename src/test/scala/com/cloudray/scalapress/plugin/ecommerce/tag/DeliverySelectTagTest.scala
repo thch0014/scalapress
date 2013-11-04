@@ -4,11 +4,11 @@ import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.DeliverySelectTag
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressConstants, ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.dao.DeliveryOptionDao
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.ecommerce.domain.{Basket, DeliveryOption}
 import scala.xml.Utility
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, ScalapressConstants}
 
 /** @author Stephen Samuel */
 class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.widgets
 
 import javax.persistence._
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Entity

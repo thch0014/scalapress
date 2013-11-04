@@ -6,11 +6,11 @@ import com.amazonaws.auth.BasicAWSCredentials
 import org.apache.commons.io.{FilenameUtils, IOUtils}
 import com.amazonaws.services.s3.model._
 import java.net.URLConnection
-import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.media.{AssetQuery, MimeTools, AssetStore, Asset}
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
 import javax.annotation.PostConstruct
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class AmazonS3AssetStore(val cdnUrl: String,

@@ -3,8 +3,8 @@ package com.cloudray.scalapress.folder.controller.admin
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.{Matchers, Mockito}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class FolderSearchControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

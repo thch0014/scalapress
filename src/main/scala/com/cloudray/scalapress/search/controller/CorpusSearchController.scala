@@ -7,7 +7,7 @@ import com.cloudray.scalapress.search.CorpusSearchService
 import com.cloudray.scalapress.theme.{Markup, ThemeService, MarkupRenderer}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
-import com.cloudray.scalapress.{ScalapressContext, ScalapressRequest}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 

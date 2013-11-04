@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.tags
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("order_status")

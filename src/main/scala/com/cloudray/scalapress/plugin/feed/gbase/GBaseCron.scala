@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.feed.gbase
 import org.springframework.stereotype.Component
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.{Logging, ScalapressContext}
 import org.springframework.transaction.annotation.Transactional
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

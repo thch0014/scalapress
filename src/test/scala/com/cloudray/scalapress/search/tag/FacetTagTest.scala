@@ -2,7 +2,6 @@ package com.cloudray.scalapress.search.tag
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.search._
@@ -11,6 +10,7 @@ import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.FacetTerm
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.Facet
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class FacetTagTest extends FunSuite with MockitoSugar {

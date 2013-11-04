@@ -4,11 +4,11 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import com.sksamuel.scoot.soa.Page
-import com.cloudray.scalapress.Logging
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.controller.Datum
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 trait AccountDao extends GenericDao[Account, java.lang.Long] {

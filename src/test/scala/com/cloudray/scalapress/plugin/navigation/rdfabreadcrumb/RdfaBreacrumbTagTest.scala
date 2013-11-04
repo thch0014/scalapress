@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.navigation.rdfabreadcrumb
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class RdfaBreacrumbTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

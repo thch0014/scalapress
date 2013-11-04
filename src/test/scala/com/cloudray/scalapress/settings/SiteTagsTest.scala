@@ -3,9 +3,9 @@ package com.cloudray.scalapress.settings
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import org.mockito.Mockito
 import tag._
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SiteTagsTest extends FunSuite with MockitoSugar with OneInstancePerTest {

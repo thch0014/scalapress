@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.search.tag
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import java.net.URLDecoder
 import com.cloudray.scalapress.search.controller.FacetRenderer
 import com.github.theon.uri.Uri._
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("facets")

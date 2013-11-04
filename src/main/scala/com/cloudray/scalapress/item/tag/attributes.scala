@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.item.tag
 
-import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
 import com.cloudray.scalapress.item.attr.{AttributeValue, AttributeFuncs, AttributeValueRenderer, AttributeTableRenderer}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("attribute_value")

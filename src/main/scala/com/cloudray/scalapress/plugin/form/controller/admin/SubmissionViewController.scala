@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, ModelAttribute, PathVariable, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import java.util.zip.{ZipEntry, ZipOutputStream}
 import com.cloudray.scalapress.plugin.form.{SubmissionDao, Submission}
 import scala.collection.JavaConverters._
 import java.io.ByteArrayOutputStream
 import org.apache.commons.io.IOUtils
 import javax.servlet.http.HttpServletResponse
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

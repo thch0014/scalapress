@@ -4,8 +4,8 @@ import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.beans.factory.config.BeanPostProcessor
 import scala.collection.JavaConverters._
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-import com.cloudray.scalapress.Logging
 import org.springframework.stereotype.Component
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel
   *

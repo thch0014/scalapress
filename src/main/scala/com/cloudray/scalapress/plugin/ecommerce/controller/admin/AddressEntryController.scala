@@ -6,10 +6,10 @@ import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import scala.Array
 import javax.validation.Valid
 import org.springframework.validation.Errors
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.plugin.ecommerce.dao.AddressDao
 import com.cloudray.scalapress.item.ItemDao
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

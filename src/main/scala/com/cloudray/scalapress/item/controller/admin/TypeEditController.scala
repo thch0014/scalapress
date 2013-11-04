@@ -4,15 +4,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.ScalapressContext
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.util.ComponentClassScanner
 import com.cloudray.scalapress.item.{TypeDao, ItemType}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.attr.{AttributeType, Attribute}
 import scala.collection.mutable
+import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Controller

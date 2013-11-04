@@ -4,12 +4,12 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Res
 import org.springframework.stereotype.Controller
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import scala.Array
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.account.PasswordService
 import com.cloudray.scalapress.account.controller.renderer.ForgottonPasswordRenderer
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller

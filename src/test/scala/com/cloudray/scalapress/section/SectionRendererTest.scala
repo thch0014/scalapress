@@ -2,9 +2,9 @@ package com.cloudray.scalapress.section
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.{ItemType, Item}
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {

@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.theme
 
-import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, BasketLine}
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import tag.TagRenderer
 import com.cloudray.scalapress.search.CorpusResult
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
 object MarkupRenderer extends Logging {

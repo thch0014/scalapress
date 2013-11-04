@@ -4,9 +4,9 @@ import javax.servlet._
 import javax.servlet.http.{HttpServletResponse, HttpServletResponseWrapper, HttpServletRequest}
 import java.io.{ByteArrayOutputStream, File}
 import org.apache.commons.io.{FilenameUtils, FileUtils, IOUtils}
-import com.cloudray.scalapress.Logging
 import org.apache.commons.io.output.TeeOutputStream
 import org.springframework.web.context.support.WebApplicationContextUtils
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class WriteoutCacheFilter extends Filter with Logging {

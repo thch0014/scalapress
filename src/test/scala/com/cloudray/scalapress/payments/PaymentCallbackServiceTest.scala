@@ -2,8 +2,8 @@ package com.cloudray.scalapress.payments
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{Callback, ScalapressContext}
 import org.mockito.{Matchers, Mockito}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class PaymentCallbackServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

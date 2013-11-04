@@ -4,8 +4,8 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.widgets.{Widget, HtmlWidget, WidgetDao}
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.ScalapressContext
 import scala.collection.mutable.ListBuffer
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class WidgetListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

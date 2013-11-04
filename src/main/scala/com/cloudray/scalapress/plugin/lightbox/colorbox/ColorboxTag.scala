@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.plugin.lightbox.colorbox
 
-import com.cloudray.scalapress.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
 import com.cloudray.scalapress.media.OpType
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("colorbox")

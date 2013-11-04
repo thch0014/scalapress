@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.plugin.ecommerce.dao.BasketDao
-import com.cloudray.scalapress.ScalapressContext
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTest {

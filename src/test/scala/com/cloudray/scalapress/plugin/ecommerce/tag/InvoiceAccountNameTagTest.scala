@@ -4,9 +4,9 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.tags.InvoiceAccountNameTag
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class InvoiceAccountNameTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

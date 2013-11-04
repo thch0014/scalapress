@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.theme.tag
 
-import com.cloudray.scalapress.{Tag, Logging, ScalapressRequest}
-import com.cloudray.scalapress.util.ComponentClassScanner
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Tag, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 object TagRenderer extends Logging {

@@ -4,8 +4,8 @@ import com.cloudray.scalapress.item.{TypeDao, ItemQuery, ItemDao}
 import com.cloudray.scalapress.account.{AccountType, AccountTypeDao, AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.Logging
 import javax.annotation.PostConstruct
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Component

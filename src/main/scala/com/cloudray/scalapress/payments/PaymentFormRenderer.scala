@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.payments
 
-import com.cloudray.scalapress.ScalapressContext
 import scala.xml.Elem
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Component

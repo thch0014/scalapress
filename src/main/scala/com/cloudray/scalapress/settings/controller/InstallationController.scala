@@ -3,9 +3,9 @@ package com.cloudray.scalapress.settings.controller
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.ScalapressContext
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.settings.Installation
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller

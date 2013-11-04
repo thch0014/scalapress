@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.feed.rightmove
 
 import org.springframework.scheduling.annotation.Scheduled
 import scala.util.Random
-import com.cloudray.scalapress.{ScalapressContext, Logging}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.{Item, ItemQuery}
+import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 class RightMoveImportTask extends Runnable with Logging {

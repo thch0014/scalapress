@@ -5,10 +5,10 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.media.admin.MediaLibraryController
 import com.cloudray.scalapress.media.{AssetService, AssetStore, AssetLifecycleListener}
 import java.io.{ByteArrayInputStream, File, InputStream}
-import com.cloudray.scalapress.ScalapressContext
 import org.mockito.Mockito
 import org.springframework.web.multipart.MultipartFile
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class MediaLibraryControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

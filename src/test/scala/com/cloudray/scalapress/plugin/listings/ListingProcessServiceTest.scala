@@ -2,13 +2,13 @@ package com.cloudray.scalapress.plugin.listings
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.ScalapressContext
 import com.cloudray.scalapress.item.{ItemType, ItemDao}
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
 import com.cloudray.scalapress.item.attr.AttributeValue
 import com.cloudray.scalapress.account.{Account, AccountDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with MockitoSugar {

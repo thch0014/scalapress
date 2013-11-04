@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.settings.tag
 
-import com.cloudray.scalapress.{Tag, ScalapressRequest}
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.theme.tag.{TagBuilder, ScalapressTag}
+import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("comp_address")

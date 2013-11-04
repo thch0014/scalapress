@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.plugin.calendar
 
-import com.cloudray.scalapress.ScalapressRequest
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence._
 import com.cloudray.scalapress.search.{Sort, SavedSearch}
@@ -8,6 +7,7 @@ import com.cloudray.scalapress.item.ItemType
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 @Entity

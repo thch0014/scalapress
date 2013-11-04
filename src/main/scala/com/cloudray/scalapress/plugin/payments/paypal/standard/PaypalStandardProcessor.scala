@@ -1,11 +1,11 @@
 package com.cloudray.scalapress.plugin.payments.paypal.standard
 
-import com.cloudray.scalapress.Logging
 import com.cloudray.scalapress.payments.{Transaction, Purchase, CallbackResult, PaymentProcessor}
 import org.apache.http.params.BasicHttpParams
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.util.EntityUtils
+import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 class PaypalStandardProcessor(plugin: PaypalStandardPlugin) extends PaymentProcessor with Logging {

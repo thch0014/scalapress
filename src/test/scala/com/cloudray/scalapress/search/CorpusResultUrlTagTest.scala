@@ -2,11 +2,11 @@ package com.cloudray.scalapress.search
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.{ScalapressRequest, ScalapressContext}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.tag.CorpusResultUrlTag
 import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class CorpusResultUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

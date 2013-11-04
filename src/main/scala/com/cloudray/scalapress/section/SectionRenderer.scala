@@ -1,9 +1,9 @@
 package com.cloudray.scalapress.section
 
 import collection.mutable.ArrayBuffer
-import com.cloudray.scalapress.{Logging, ScalapressRequest}
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.{SectionInterceptor, Folder}
+import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
 object SectionRenderer extends Logging {
