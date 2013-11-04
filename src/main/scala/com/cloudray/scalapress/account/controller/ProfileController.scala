@@ -52,7 +52,7 @@ class ProfileController {
         }
         accountDao.save(account)
       }
-    "redirect:account"
+    "redirect:profile"
   }
 
   @ModelAttribute def profile(req: HttpServletRequest) = Profile(securityResolver.getAccount(req).get)

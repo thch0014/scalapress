@@ -14,7 +14,11 @@ class ProfileRenderer {
     val passwordError = Option(errors.getFieldError("password")).map(_.getDefaultMessage).getOrElse("")
 
     Scalate.layout("/com/cloudray/scalapress/account/profile.ssp",
-      Map("name" -> profile.name, "email" -> profile.email, "nameError" -> nameError,
-        "emailError" -> emailError, "passwordError" -> passwordError))
+      Map("name" -> profile.name,
+        "email" -> profile.email,
+        "nameError" -> nameError,
+        "emailError" -> emailError,
+        "passwordError" -> passwordError)
+    )
   }
 }

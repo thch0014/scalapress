@@ -1,3 +1,9 @@
+<%@ val name: String %>
+<%@ val email: String %>
+<%@ val nameError: String %>
+<%@ val emailError: scala.xml.Node %>
+<%@ val passwordError: String %>
+
 <div class="registration">
     <form class="form-horizontal registration" method="POST">
         <div class="control-group">
