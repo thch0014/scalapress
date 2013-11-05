@@ -29,7 +29,6 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.cloudray.scalapress.account.AccountTypeDao
-import com.cloudray.scalapress.widgets.WidgetOneTimeCookieInterceptor
 import com.cloudray.scalapress.framework.ScalapressContext
 
 /**
@@ -82,7 +81,6 @@ class WebConfig extends WebMvcConfigurationSupport {
     registry.addInterceptor(new SiteInterceptor(context))
     registry.addInterceptor(new MenuInterceptor(context)).addPathPatterns("/backoffice/**")
     registry.addInterceptor(new OfflineInterceptor(generalSettingsDao, installationDao))
-    registry.addInterceptor(new WidgetOneTimeCookieInterceptor(context))
   }
 
   override def configureMessageConverters(converters: java.util.List[HttpMessageConverter[_]]) {

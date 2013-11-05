@@ -37,7 +37,7 @@ class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDa
   override def findTopLevel: Array[Folder] = root.subfolders.asScala.toArray
 
   override def root: Folder = {
-    getSession.createCriteria(classOf[Folder]).add(Restrictions.isNull("parent")).list().asScala match {
+    getSession.createCriteria(classOf[Folder]).add(Restrictions.isNull("parent")).list().asScala.toList match {
       case Nil =>
         val root = Folder(null)
         root.name = "Home Page"
