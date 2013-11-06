@@ -41,7 +41,10 @@ case class ScalapressRequest(request: HttpServletRequest,
     request.getAttribute(cacheKey).asInstanceOf[Cache]
   }
 
-  def outgoingCookies: ListBuffer[Cookie] = request.getAttribute("outgoingCookies").asInstanceOf[ListBuffer[Cookie]]
+  def outgoingCookies: ListBuffer[Cookie] =
+    Option(request.getAttribute("outgoingCookies"))
+      .map(_.asInstanceOf[ListBuffer[Cookie]])
+      .getOrElse(new ListBuffer[Cookie])
   def shoppingPlugin = cache.shoppingPlugin
   def installation = cache.installation
   def folderSettings = cache.folderSettings
