@@ -72,7 +72,7 @@ class FoldersValidator {
   }
 
   @PostConstruct def ensureRoot() {
-    if (folderDao.findAll.size == 0) {
+    if (folderDao.findAll.filter(_.parent == null).isEmpty) {
       val root = Folder(null)
       root.name = "Home Page"
       folderDao.save(root)
