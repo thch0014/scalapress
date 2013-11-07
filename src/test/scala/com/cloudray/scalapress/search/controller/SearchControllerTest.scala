@@ -27,11 +27,11 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
   val obj = new Item
   obj.id = 4
-  obj.objectType = new ItemType
-  obj.objectType.id = 9
+  obj.itemType = new ItemType
+  obj.itemType.id = 9
   obj.name = "Parachutes"
   obj.status = Item.STATUS_LIVE
-  obj.objectType.objectListMarkup = new Markup
+  obj.itemType.objectListMarkup = new Markup
 
   val ref = ItemRef(4, 9, "Parachutes", "Live", Map.empty, Nil)
 
@@ -58,7 +58,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   }
 
   test("if object type has no markup then no results are rendered") {
-    obj.objectType.objectListMarkup = null
+    obj.itemType.objectListMarkup = null
     val result = SearchResult(Seq(ref))
     Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
@@ -69,7 +69,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   }
 
   test("if object type has markup then results are rendered") {
-    obj.objectType.objectListMarkup.body = "[object]"
+    obj.itemType.objectListMarkup.body = "[object]"
     val result = SearchResult(Seq(ref))
     Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
@@ -81,7 +81,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
   test("search filters any results that are not live") {
     obj.status = Item.STATUS_DISABLED
-    obj.objectType.objectListMarkup.body = "[object]"
+    obj.itemType.objectListMarkup.body = "[object]"
     val result = SearchResult(Seq(ref))
     Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))

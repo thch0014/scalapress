@@ -12,7 +12,7 @@ class ItemClonerTest extends FunSuite with MockitoSugar with OneInstancePerTest 
   itemType.id = 15
 
   val item = new Item
-  item.objectType = itemType
+  item.itemType = itemType
   item.name = "battleship"
   item.price = 135
   item.content = "super content"
@@ -79,8 +79,8 @@ class ItemClonerTest extends FunSuite with MockitoSugar with OneInstancePerTest 
     assert("ext-124" === cloner.clone(item).exernalReference)
   }
   test("item clone copies object type reference") {
-    assert(item.objectType.id > 0)
-    assert(item.objectType.id === cloner.clone(item).objectType.id)
+    assert(item.itemType.id > 0)
+    assert(item.itemType.id === cloner.clone(item).itemType.id)
   }
 
   test("item clone includes content") {

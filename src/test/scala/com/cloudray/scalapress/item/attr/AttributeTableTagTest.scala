@@ -44,7 +44,7 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
   av5.attribute.public = true
 
   val obj = new Item
-  obj.objectType = new ItemType
+  obj.itemType = new ItemType
   obj.attributeValues.add(av1)
   obj.attributeValues.add(av2)
   obj.attributeValues.add(av3)
@@ -97,10 +97,10 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
     a.name = "attribute_with_default"
     a.default = "sammy_default"
     a.public = true
-    a.objectType = obj.objectType
+    a.objectType = obj.itemType
 
-    obj.objectType.attributes.add(a)
-    require(obj.objectType.attributes.size > 0)
+    obj.itemType.attributes.add(a)
+    require(obj.itemType.attributes.size > 0)
 
     val actual = new AttributeTableTag().render(sreq, Map.empty).get
     assert(actual.contains("attribute_with_default"))

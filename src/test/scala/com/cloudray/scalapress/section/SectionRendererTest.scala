@@ -32,8 +32,8 @@ class SectionRendererTest extends FunSuite with MockitoSugar with OneInstancePer
     val obj = new Item
     obj.sections.add(section1)
 
-    obj.objectType = new ItemType
-    obj.objectType.sections.add(section2)
+    obj.itemType = new ItemType
+    obj.itemType.sections.add(section2)
 
     val output = SectionRenderer.render(obj, sreq)
     assert(output.contains("kirk"))

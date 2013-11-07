@@ -15,8 +15,8 @@ class ItemControllerTest extends FlatSpec with MockitoSugar with OneInstancePerT
   val resp = mock[HttpServletResponse]
 
   val obj = new Item
-  obj.objectType = new ItemType
-  obj.objectType.name = "products"
+  obj.itemType = new ItemType
+  obj.itemType.name = "products"
 
   val itemDao = mock[ItemDao]
   val themeService = mock[ThemeService]

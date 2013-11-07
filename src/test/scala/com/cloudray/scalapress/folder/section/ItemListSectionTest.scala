@@ -19,20 +19,20 @@ class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePer
   obj1.name = "coldplay"
   obj1.status = "live"
   obj1.id = 76
-  obj1.objectType = new ItemType
-  obj1.objectType.id = 1
+  obj1.itemType = new ItemType
+  obj1.itemType.id = 1
 
   val obj2 = new Item
   obj2.name = "jethro tull"
   obj2.status = "disabled"
   obj2.id = 25
-  obj2.objectType = obj1.objectType
+  obj2.itemType = obj1.objectType
 
   val obj3 = new Item
   obj3.name = "keane"
   obj3.status = "live"
   obj3.id = 11
-  obj3.objectType = obj1.objectType
+  obj3.itemType = obj1.objectType
 
   val section = new ItemListSection()
   section.folder = new Folder

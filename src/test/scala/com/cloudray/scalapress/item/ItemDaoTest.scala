@@ -57,21 +57,21 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
 
     val obj1 = new Item
     obj1.name = "grandfather"
-    obj1.objectType = new ItemType
-    obj1.objectType.name = "Object"
+    obj1.itemType = new ItemType
+    obj1.itemType.name = "Object"
     obj1.status = Item.STATUS_LIVE
 
     val obj2 = new Item
     obj2.name = "father"
-    obj2.objectType = obj1.objectType
+    obj2.itemType = obj1.itemType
     obj2.status = Item.STATUS_LIVE
 
     val obj3 = new Item
     obj3.name = "son"
-    obj3.objectType = obj1.objectType
+    obj3.itemType = obj1.itemType
     obj3.status = Item.STATUS_LIVE
 
-    TestDatabaseContext.typeDao.save(obj1.objectType)
+    TestDatabaseContext.typeDao.save(obj1.itemType)
     TestDatabaseContext.objectDao.save(obj1)
     TestDatabaseContext.objectDao.save(obj2)
     TestDatabaseContext.objectDao.save(obj3)
@@ -85,18 +85,18 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
 
     val obj1 = new Item
     obj1.name = "grandfather"
-    obj1.objectType = new ItemType
-    obj1.objectType.name = "Object"
+    obj1.itemType = new ItemType
+    obj1.itemType.name = "Object"
     obj1.status = Item.STATUS_DELETED
 
     val obj2 = new Item
     obj2.name = "father"
-    obj2.objectType = obj1.objectType
+    obj2.itemType = obj1.itemType
     obj2.status = Item.STATUS_DISABLED
 
     val obj3 = new Item
     obj3.name = "son"
-    obj3.objectType = obj1.objectType
+    obj3.itemType = obj1.itemType
     obj3.status = Item.STATUS_LIVE
 
     TestDatabaseContext.typeDao.save(obj1.objectType)
@@ -106,5 +106,50 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
 
     val objs = TestDatabaseContext.objectDao.recent(5)
     assert(!objs.exists(_.status != Item.STATUS_LIVE))
+  }
+
+  test("search by min price") {
+
+    val obj1 = new Item
+    obj1.name = "iphone"
+    obj1.price = 50
+    obj1.itemType = new ItemType
+    obj1.itemType.name = "Object"
+
+    val obj2 = new Item
+    obj2.name = "galaxy s3"
+    obj2.price = 100
+    obj2.itemType = obj1.itemType
+
+    val obj3 = new Item
+    obj3.name = "blackberry"
+    obj3.price = 0
+    obj3.itemType = obj1.itemType
+
+    TestDatabaseContext.typeDao.save(obj1.itemType)
+    TestDatabaseContext.objectDao.save(obj1)
+    TestDatabaseContext.objectDao.save(obj2)
+    TestDatabaseContext.objectDao.save(obj3)
+
+    val q1 = new ItemQuery
+    q1.pageSize = 10
+    q1.minPrice = Some(1)
+
+    val objs1 = TestDatabaseContext.objectDao.search(q1)
+    assert(objs1.results.size === 2)
+
+    val q2 = new ItemQuery
+    q2.pageSize = 10
+    q2.minPrice = Some(50)
+
+    val objs2 = TestDatabaseContext.objectDao.search(q2)
+    assert(objs2.results.size === 2)
+
+    val q3 = new ItemQuery
+    q3.pageSize = 10
+    q3.minPrice = Some(51)
+
+    val objs3 = TestDatabaseContext.objectDao.search(q3)
+    assert(objs3.results.size === 1)
   }
 }

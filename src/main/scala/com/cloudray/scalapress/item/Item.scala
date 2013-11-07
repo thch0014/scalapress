@@ -116,7 +116,12 @@ class Item extends SortedSections with java.io.Serializable {
   @JoinColumn(name = "itemType")
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty
-  var objectType: ItemType = _
+  var itemType: ItemType = _
+
+  @deprecated
+  def objectType = itemType
+  @deprecated
+  def getObjectType = itemType
 
   @Column(length = 10000)
   @BeanProperty var content: String = _
@@ -217,7 +222,7 @@ object Item {
     require(t != null)
 
     val obj = new Item
-    obj.objectType = t
+    obj.itemType = t
     obj.name = "new object"
     obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
     obj.dateUpdated = obj.dateCreated

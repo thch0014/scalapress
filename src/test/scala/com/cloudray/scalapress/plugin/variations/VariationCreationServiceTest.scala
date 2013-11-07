@@ -23,7 +23,7 @@ class VariationCreationServiceTest extends FlatSpec with MockitoSugar with OneIn
 
   val obj = new Item
   obj.id = 1
-  obj.objectType = d1.objectType
+  obj.itemType = d1.objectType
 
   val v11 = new DimensionValue
   v11.dimension = d1

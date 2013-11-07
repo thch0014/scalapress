@@ -19,8 +19,8 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
 
   val obj = new Item
   obj.id = 4
-  obj.objectType = new ItemType
-  obj.objectType.id = 19
+  obj.itemType = new ItemType
+  obj.itemType.id = 19
 
   val d1 = new Dimension
   d1.id = 2

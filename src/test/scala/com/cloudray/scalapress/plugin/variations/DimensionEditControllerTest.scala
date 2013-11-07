@@ -17,7 +17,7 @@ class DimensionEditControllerTest extends FlatSpec with MockitoSugar with OneIns
 
   val obj = new Item
   obj.id = 1
-  obj.objectType = d1.objectType
+  obj.itemType = d1.objectType
 
   "a dimension edit controller" should "redirect to the dimensions list page after saving" in {
     val redirect = controller.save(d1)

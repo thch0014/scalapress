@@ -71,8 +71,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj = new Item
   obj.id = 2
   obj.name = "tony mowbray captain bankrupt1986"
-  obj.objectType = new ItemType
-  obj.objectType.id = 1
+  obj.itemType = new ItemType
+  obj.itemType.id = 1
   obj.status = Item.STATUS_LIVE
   obj.images.add("tony.png")
   obj.attributeValues.add(av1)
@@ -85,8 +85,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj2 = new Item
   obj2.id = 4
   obj2.name = "bryan robson captain"
-  obj2.objectType = new ItemType
-  obj2.objectType.id = 2
+  obj2.itemType = new ItemType
+  obj2.itemType.id = 2
   obj2.status = Item.STATUS_LIVE
   obj2.attributeValues.add(av2)
   obj2.attributeValues.add(av5)
@@ -97,8 +97,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj3 = new Item
   obj3.id = 20
   obj3.name = "steve mclaren"
-  obj3.objectType = new ItemType
-  obj3.objectType.id = 3
+  obj3.itemType = new ItemType
+  obj3.itemType.id = 3
   obj3.status = Item.STATUS_LIVE
   obj3.prioritized = true
   obj3.attributeValues.add(av3)
@@ -126,8 +126,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   val obj4 = new Item
   obj4.id = 1529
   obj4.name = "zola"
-  obj4.objectType = new ItemType
-  obj4.objectType.id = 2234
+  obj4.itemType = new ItemType
+  obj4.itemType.id = 2234
   obj4.status = Item.STATUS_LIVE
   obj4.attributeValues.add(av)
   obj4.attributeValues.add(avWithSlash)
@@ -377,8 +377,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.id = 199
     obj.name = "null-av-object"
-    obj.objectType = new ItemType
-    obj.objectType.id = 1
+    obj.itemType = new ItemType
+    obj.itemType.id = 1
     obj.status = "Live"
     obj.attributeValues.add(av)
 
@@ -398,8 +398,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.id = 5465464
     obj.name = "to be removed"
-    obj.objectType = new ItemType
-    obj.objectType.id = 1
+    obj.itemType = new ItemType
+    obj.itemType.id = 1
     obj.status = "Live"
 
     service.index(Seq(obj))
