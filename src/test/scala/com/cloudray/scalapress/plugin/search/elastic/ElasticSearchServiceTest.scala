@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.item.attr.{AttributeDao, AttributeType, AttributeValue, Attribute}
-import com.cloudray.scalapress.search.{AttributeFacetField, Sort, SavedSearch}
+import com.cloudray.scalapress.search.{Sort, SavedSearch}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
@@ -467,42 +467,42 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(!service.contains("44"))
   }
 
-  test("facets returned happy path") {
-    val q = new SavedSearch
-    q.facets = Seq(AttributeFacetField(av4.attribute.id))
-    val results = service.search(q)
-    assert(1 === results.facets.size)
-    assert(2 === results.facets(0).terms.size)
-    assert(2 === results.facets(0).terms(0).count)
-    assert(1 === results.facets(0).terms(1).count)
-    assert("SW10" === results.facets(0).terms(0).term)
-    assert("TS19" === results.facets(0).terms(1).term)
-    assert(2 === results.facets(0).terms.size)
-    assert("2" === results.facets(0).field) // should be id of the attribute
-  }
+  //  test("facets returned happy path") {
+  //    val q = new SavedSearch
+  //    q.facets = Seq(AttributeFacetField(av4.attribute.id))
+  //    val results = service.search(q)
+  //    assert(1 === results.facets.size)
+  //    assert(2 === results.facets(0).terms.size)
+  //    assert(2 === results.facets(0).terms(0).count)
+  //    assert(1 === results.facets(0).terms(1).count)
+  //    assert("SW10" === results.facets(0).terms(0).term)
+  //    assert("TS19" === results.facets(0).terms(1).term)
+  //    assert(2 === results.facets(0).terms.size)
+  //    assert("2" === results.facets(0).field) // should be id of the attribute
+  //  }
 
-  test("facets should not include specified fields") {
-    val av1 = new AttributeValue
-    av1.attribute = av4.attribute
-    av1.value = "SW10"
+  //  test("facets should not include specified fields") {
+  //    val av1 = new AttributeValue
+  //    av1.attribute = av4.attribute
+  //    av1.value = "SW10"
+  //
+  //    val q = new SavedSearch
+  //    q.attributeValues = Set(av1).asJava
+  //    q.facets = Seq(AttributeFacetField(av4.attribute.id))
+  //    val results = service.search(q)
+  //    assert(0 === results.facets.size)
+  //  }
 
-    val q = new SavedSearch
-    q.attributeValues = Set(av1).asJava
-    q.facets = Seq(AttributeFacetField(av4.attribute.id))
-    val results = service.search(q)
-    assert(0 === results.facets.size)
-  }
-
-  test("facets should be restored with spaces") {
-    val av1 = new AttributeValue
-    av1.attribute = av7.attribute
-    av1.value = "attribute with space"
-
-    val q = new SavedSearch
-    q.facets = Seq(AttributeFacetField(av7.attribute.id))
-    val results = service.search(q)
-    assert("attribute with space" === results.facets(0).terms(0).term)
-  }
+  //  test("facets should be restored with spaces") {
+  //    val av1 = new AttributeValue
+  //    av1.attribute = av7.attribute
+  //    av1.value = "attribute with space"
+  //
+  //    val q = new SavedSearch
+  //    q.facets = Seq(AttributeFacetField(av7.attribute.id))
+  //    val results = service.search(q)
+  //    assert("attribute with space" === results.facets(0).terms(0).term)
+  //  }
 
   test("a service for folders should match objects with multiple folders") {
     val q = new SavedSearch
