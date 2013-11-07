@@ -66,7 +66,7 @@ class FolderEditController(val assetStore: AssetStore,
         section.folder = null
         folderDao.save(folder)
     }
-    "forward:/backoffice/folder/" + folder.id + "#tab3"
+    "redirect:/backoffice/folder/" + folder.id + "#tab3"
   }
 
   @ModelAttribute("parents")
