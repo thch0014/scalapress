@@ -3,6 +3,7 @@ package com.cloudray.scalapress.widgets
 import javax.persistence.{Table, Entity}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.media.ImageResolver
 
 /** @author Stephen Samuel */
 @Entity
@@ -15,13 +16,6 @@ class HtmlWidget extends Widget {
   override def backoffice = "/backoffice/widget/html/" + id
 
   override def render(req: ScalapressRequest): Option[String] = {
-    Option(content) match {
-      case None => None
-      case Some(c) =>
-        val replaced = c
-          .replace("src=\"/images/", "src=\"" + req.context.assetStore.baseUrl + "/")
-          .replace("src=\"images/", "src=\"" + req.context.assetStore.baseUrl + "/")
-        Some(replaced)
-    }
+    Option(content).map(new ImageResolver(req.context).resolve)
   }
 }

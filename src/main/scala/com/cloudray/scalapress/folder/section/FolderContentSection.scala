@@ -4,6 +4,7 @@ import javax.persistence.{Column, Table, Entity}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.media.ImageResolver
 
 /** @author Stephen Samuel */
 @Entity
@@ -17,11 +18,5 @@ class FolderContentSection extends Section {
   override def desc = "Edit and then display a section of content when viewing this object"
   override def backoffice = "/backoffice/folder/section/content/" + id
 
-  def render(request: ScalapressRequest): Option[String] = {
-    Option(content)
-      .map(c => {
-      c.replace("src=\"/images/", "src=\"" + request.context.assetStore.baseUrl + "/")
-        .replace("src=\"images/", "src=\"" + request.context.assetStore.baseUrl + "/")
-    })
-  }
+  def render(req: ScalapressRequest): Option[String] = Option(content).map(new ImageResolver(req.context).resolve)
 }

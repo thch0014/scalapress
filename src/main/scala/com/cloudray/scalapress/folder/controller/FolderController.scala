@@ -10,6 +10,7 @@ import com.cloudray.scalapress.util.mvc.{ScalapressPage, RedirectException}
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.security.SpringSecurityResolver
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.media.ImageResolver
 
 /**
  * @author sks 09-Feb-2006 13:48:13
@@ -59,8 +60,13 @@ class FolderController extends Logging {
       case None =>
     }
 
-    val header = Option(folder.header).orElse(Option(folderPluginDao.head.header))
-    val footer = Option(folder.footer).orElse(Option(folderPluginDao.head.footer))
+    val header = Option(folder.header)
+      .orElse(Option(folderPluginDao.head.header))
+      .map(new ImageResolver(context).resolve)
+
+    val footer = Option(folder.footer)
+      .orElse(Option(folderPluginDao.head.footer))
+      .map(new ImageResolver(context).resolve)
 
     val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
     val theme = themeService.theme(folder)

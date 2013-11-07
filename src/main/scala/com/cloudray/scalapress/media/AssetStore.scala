@@ -1,7 +1,6 @@
 package com.cloudray.scalapress.media
 
 import java.io.InputStream
-import scala.deprecated
 
 /** @author Stephen Samuel */
 trait AssetStore {
@@ -47,10 +46,9 @@ trait AssetStore {
 
   /** Returns an externally accessible base URL for this asset store.
     */
-  @deprecated("not all images might have the same base url, find a way around this for future", "0.39")
   def baseUrl: String
 
-  /** Returns an externally accessible base URL for the given asset key
+  /** Returns an externally accessible URL for the given asset key.
     */
   def link(key: String): String
 

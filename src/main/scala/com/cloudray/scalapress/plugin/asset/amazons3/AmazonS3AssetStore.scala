@@ -38,8 +38,8 @@ class AmazonS3AssetStore(val cdnUrl: String,
     }
   }
 
-  override def baseUrl = cdnUrl
-  override def link(key: String) = "http://" + cdnUrl.replace("http://", "") + "/" + key
+  override def baseUrl = "http://" + cdnUrl.replace("http://", "")
+  override def link(key: String) = baseUrl + "/" + key
 
   override def get(key: String): Option[InputStream] = {
     try {

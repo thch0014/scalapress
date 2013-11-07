@@ -21,7 +21,7 @@ class FolderContentSectionTest extends FunSuite with MockitoSugar with OneInstan
 
   test("section changes image urls to use asset baseUrl") {
 
-    Mockito.when(context.assetStore.baseUrl).thenReturn("http://mycdn.com/media/")
+    Mockito.when(context.assetStore.baseUrl).thenReturn("mycdn.com/media/") // http should be added
 
     section.content = <p>
       <img src="/images/coldplay.png"/>

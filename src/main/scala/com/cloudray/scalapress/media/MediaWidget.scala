@@ -6,7 +6,6 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.widgets.Widget
 import scala.beans.BeanProperty
 import javax.persistence.Table
-import scala.Some
 import javax.persistence.Entity
 import com.cloudray.scalapress.framework.ScalapressRequest
 
@@ -14,13 +13,14 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 
 @Entity
 @Table(name = "boxes_images")
-class
-MediaWidget extends Widget {
+class MediaWidget extends Widget {
 
-  @BeanProperty var url: String = _
+  @BeanProperty
+  var url: String = _
 
   @ElementCollection(fetch = FetchType.EAGER)
-  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
+  @BeanProperty
+  var images: java.util.List[String] = new util.ArrayList[String]()
   def sortedImages = images.asScala.toSeq
 
   override def backoffice = "/backoffice/widget/media/" + id
