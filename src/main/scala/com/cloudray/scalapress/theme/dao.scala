@@ -14,7 +14,10 @@ trait ThemeDao extends GenericDao[Theme, java.lang.Long] {
 @Transactional
 class ThemeDaoImpl extends GenericDaoImpl[Theme, java.lang.Long] with ThemeDao {
   val NO_THEME = new Theme
-  def findDefault: Theme = findAll.find(_.default).getOrElse(NO_THEME)
+  def findDefault: Theme = {
+    val all = findAll
+    all.find(_.default).orElse(all.headOption).getOrElse(NO_THEME)
+  }
 }
 
 trait MarkupDao extends GenericDao[Markup, java.lang.Long] {
@@ -27,11 +30,6 @@ class MarkupDaoImpl extends GenericDaoImpl[Markup, java.lang.Long] with MarkupDa
 
   @Transactional
   def byName(name: String): Markup = {
-    getSession
-      .createCriteria(classOf[Markup])
-      .setCacheable(true)
-      .add(Restrictions.eq("name", name))
-      .uniqueResult()
-      .asInstanceOf[Markup]
+    getSession.createCriteria(classOf[Markup]).add(Restrictions.eq("name", name)).uniqueResult().asInstanceOf[Markup]
   }
 }
