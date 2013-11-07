@@ -64,6 +64,13 @@
             width: "100%",
             height: "500px"
         });
+
+        $(document).ready(function () {
+            if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+            return $('a[data-toggle="tab"]').on('shown', function (e) {
+                return location.hash = $(e.target).attr('href').substr(1);
+            });
+        });
     </script>
     <style>
         @media (min-width:1200px) {
