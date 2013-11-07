@@ -52,11 +52,32 @@ object SearchService {
 
 case class SearchResult(refs: Seq[ItemRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
 case class Facet(name: String, field: FacetField, terms: Seq[FacetTerm])
-sealed trait FacetField
-case object UnknownFacetField extends FacetField
-case object TagsFacetField extends FacetField
-case class AttributeFacetField(id: Long) extends FacetField
+sealed trait FacetField {
+  def field: String
+}
+object FacetField {
+
+  val AttributeFacetFieldRegEx = "attr_facet_(\\d+)".r
+
+  def apply(field: String): FacetField = field match {
+    case "tags" => TagsFacetField
+    case AttributeFacetFieldRegEx(id) => AttributeFacetField(id.toLong)
+    case _ => UnknownFacetField
+  }
+}
+case object UnknownFacetField extends FacetField {
+  def field: String = ""
+}
+case object TagsFacetField extends FacetField {
+  def field: String = "tags"
+}
+case class AttributeFacetField(id: Long) extends FacetField {
+  def field: String = "attr_facet_" + id
+}
 case class FacetTerm(term: String, count: Int)
+
+case class SelectedFacet(field: FacetField, value: String)
+
 case class ItemRef(id: Long,
                    objectType: Long,
                    name: String,

@@ -20,14 +20,14 @@ import org.elasticsearch.search.facet.terms.TermsFacet
 import scala.concurrent.Await
 import com.cloudray.scalapress.framework.Logging
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.search.AttributeFacetField
-import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.search.Facet
 import scala.Some
 import com.cloudray.scalapress.search.FacetTerm
-import com.cloudray.scalapress.search.SearchResult
 import org.elasticsearch.common.xcontent.XContentFactory
 import javax.annotation.PreDestroy
+import com.cloudray.scalapress.search.AttributeFacetField
+import com.cloudray.scalapress.search.ItemRef
+import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 @Autowired
@@ -248,6 +248,13 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
       .filter(_.value.trim.length > 0)
       .filterNot(_.value.trim.toLowerCase == "any")
       .foreach(av => queries.append(field(_attrField(av.attribute.id), _attributeNormalize(av.value))))
+
+    search.selectedFacets.foreach(facet => facet.field match {
+      case AttributeFacetField(id) =>
+        queries.append(field(_attrField(id), _attributeNormalize(facet.value)))
+      case TagsFacetField =>
+      case _ =>
+    })
 
     Option(search.hasAttributes)
       .filter(_.trim.length > 0)

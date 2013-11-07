@@ -88,6 +88,8 @@ class SavedSearch {
 
   // facets we wish to return
   @Transient var facets: Iterable[FacetField] = Nil
+  // selected facets
+  @Transient var selectedFacets: Iterable[SelectedFacet] = Nil
 
   @Transient var pageNumber: Int = 1
 }
