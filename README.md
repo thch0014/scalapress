@@ -7,10 +7,6 @@ scala based publishing platform
 
 ### Release History
 
-##### 0.41
-
-* Renamed objects to items
-
 ##### 0.40
 
 * Added new offline settings
@@ -19,6 +15,7 @@ scala based publishing platform
 * Section and folder interceptors
 * Simplepass plugin for security on folders
 * Vouchers for listings
+* Renamed objects to items
 
 ##### 0.39
 

@@ -47,8 +47,8 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
   override def search(q: ItemQuery): Page[Item] = {
     val s = new Search(classOf[Item]).setMaxResults(q.pageSize).setFirstResult(q.offset)
     q.typeId.foreach(t => {
-      s.addFetch("objectType")
-      s.addFilterEqual("objectType.id", t)
+      s.addFetch("itemType")
+      s.addFilterEqual("itemType.id", t)
     })
     q.accountId.foreach(t => s.addFilterEqual("account.id", t))
     q.status.filterNot(_.isEmpty).foreach(s.addFilterEqual("status", _))
@@ -70,7 +70,7 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
     Page(result.getResult, q.pageNumber, q.pageSize, result.getTotalCount)
   }
 
-  override def findByType(id: Long): List[Item] = search(new Search(classOf[Item]).addFilterEqual("objectType.id", id))
+  override def findByType(id: Long): List[Item] = search(new Search(classOf[Item]).addFilterEqual("itemType.id", id))
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession
@@ -83,7 +83,7 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
   }
 
   override def removeByType(id: Long): Unit = getSession
-    .createSQLQuery("delete from items where itemtype=" + id).executeUpdate()
+    .createSQLQuery("delete from items where itemType=" + id).executeUpdate()
 }
 
 trait TypeDao extends GenericDao[ItemType, java.lang.Long] {
