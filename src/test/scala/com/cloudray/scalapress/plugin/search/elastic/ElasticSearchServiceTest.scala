@@ -163,7 +163,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   test("indexing and retrieval by object type happy path") {
 
     val search = new SavedSearch
-    search.objectType = obj2.objectType
+    search.objectType = obj2.itemType
     val results = service.search(search).refs
     assert(results.size === 1)
     assert(results(0).id === 4)
