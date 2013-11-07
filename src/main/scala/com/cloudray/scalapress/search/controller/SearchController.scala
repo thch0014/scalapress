@@ -52,7 +52,7 @@ class SearchController extends Logging {
              @RequestParam(value = "widgetId", required = false) widgetId: String,
              @RequestParam(value = "q", required = false) q: String,
              @RequestParam(value = "type", required = false) t: String,
-             @RequestParam(value = "objectType", required = false) objectTypeId: String,
+             @RequestParam(value = "objectType", required = false) itemTypeId: String,
              @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
              @RequestParam(value = "location", required = false) location: String,
              @RequestParam(value = "pageSize", required = false, defaultValue = "20") pageSize: Int,
@@ -82,11 +82,10 @@ class SearchController extends Logging {
     search.sortType = sort
 
     try {
-      Option(t).orElse(Option(objectTypeId)).map(arg => typeDao.find(arg.toLong)) match {
+      Option(t).orElse(Option(itemTypeId)).map(arg => typeDao.find(arg.toLong)) match {
         case None =>
         case Some(itemType) =>
           search.objectType = itemType
-          search.facets = itemType.attributes.asScala.filter(_.facet).map(_.id.toString).toSeq
       }
     } catch {
       case e: Exception => // unparsable number

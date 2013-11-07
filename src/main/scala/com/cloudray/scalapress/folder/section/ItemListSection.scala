@@ -74,7 +74,7 @@ class ItemListSection extends Section {
     val paging = Paging(sreq.request, page)
 
     val renderedObjects = page.results.size match {
-      case 0 => "<!-- No objects in folder -->"
+      case 0 => "<!-- No items in folder -->"
       case _ => {
         val objectTypeMarkup = page.results
           .find(obj => obj.objectType != null && obj.objectType.objectListMarkup != null)

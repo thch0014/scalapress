@@ -1,0 +1,10 @@
+<%@ val name: String %>
+<%@ val field: String %>
+
+<div class="search-facet">
+    <h3>${name} ${field}</h3>
+    <dl>
+        <dt></dt>
+        <dd></dd>
+    </dl>
+</div>

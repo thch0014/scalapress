@@ -8,27 +8,30 @@ import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.util.geo.Postcode
 import com.cloudray.scalapress.search._
-import com.cloudray.scalapress.item.attr.{AttributeType, Attribute}
+import com.cloudray.scalapress.item.attr.{AttributeDao, AttributeType, Attribute}
 import com.sksamuel.elastic4s._
-import ElasticDsl._
+import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.FieldType._
 import com.sksamuel.elastic4s.SearchType.QueryAndFetch
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.common.unit.DistanceUnit
 import org.elasticsearch.search.sort.SortOrder
 import org.elasticsearch.search.facet.terms.TermsFacet
-import org.elasticsearch.common.xcontent.XContentFactory
-import javax.annotation.PreDestroy
+import scala.concurrent.Await
+import com.cloudray.scalapress.framework.Logging
+import org.springframework.beans.factory.annotation.Autowired
+import com.cloudray.scalapress.search.AttributeFacetField
+import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.search.Facet
 import scala.Some
 import com.cloudray.scalapress.search.FacetTerm
-import com.cloudray.scalapress.search.ItemRef
 import com.cloudray.scalapress.search.SearchResult
-import scala.concurrent.Await
-import com.cloudray.scalapress.framework.Logging
+import org.elasticsearch.common.xcontent.XContentFactory
+import javax.annotation.PreDestroy
 
 /** @author Stephen Samuel */
-class ElasticSearchService extends SearchService with Logging {
+@Autowired
+class ElasticSearchService(attributeDao: AttributeDao) extends SearchService with Logging {
 
   val DELETED = Item.STATUS_DELETED.toLowerCase
   val DISABLED = Item.STATUS_DISABLED.toLowerCase
@@ -119,7 +122,7 @@ class ElasticSearchService extends SearchService with Logging {
 
   def _attributeNormalize(value: String): String = value.replace("!", "").replace(" ", "_").replace("/", "_")
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
-  def _attributeRestore(value: String): String = value.replace("_", " ")
+  def _attributeUnescape(value: String): String = value.replace("_", " ")
 
   override def index(obj: Item) = index(Seq(obj))
   override def index(objs: Seq[Item]) {
@@ -201,7 +204,7 @@ class ElasticSearchService extends SearchService with Logging {
   override def search(search: SavedSearch): SearchResult = {
     val resp = _search(search)
     val refs = _resp2ref(resp)
-    val facets = _resp2facets(resp, Option(search.objectType).map(_.attributes.asScala).getOrElse(Nil))
+    val facets = resp2facets(resp)
     val count = _count(search)
     logger.debug("Search returned {} refs", refs.size)
     SearchResult(refs, facets, count)
@@ -284,8 +287,7 @@ class ElasticSearchService extends SearchService with Logging {
     val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
 
     val facets = filteredFacets.map {
-      case id if id.forall(_.isDigit) => facet terms id fields FIELD_ATTRIBUTE + id size 20
-      case name => facet terms name fields name
+      case AttributeFacetField(id) => facet terms id.toString fields _attrField(id) size 20
     }
 
     val prioritized = by field FIELD_PRIORITIZED order SortOrder.DESC
@@ -313,24 +315,26 @@ class ElasticSearchService extends SearchService with Logging {
     case _ => by field FIELD_OBJECT_ID order SortOrder.DESC
   }
 
-  def _resp2facets(resp: SearchResponse,
-                   attributes: Iterable[Attribute]): Seq[com.cloudray.scalapress.search.Facet] = {
+  def resp2facets(resp: SearchResponse): Seq[Facet] = {
     Option(resp.getFacets) match {
       case None => Nil
-      case Some(facets) =>
-        facets.facets().asScala
-          .filter(_.isInstanceOf[TermsFacet])
-          .map(_.asInstanceOf[TermsFacet])
-          .map(facet => {
-          val terms = facet.getEntries.asScala
-            .map(entry => FacetTerm(_attributeRestore(entry.getTerm.string()), entry.getCount)).toSeq
-          val name = facet.getName match {
-            case id if id.forall(_.isDigit) => attributes.find(_.id.toString == id).map(_.name).getOrElse("error")
-            case n => n
-          }
-          Facet(name, facet.getName, terms)
-        })
+      case Some(facets) => {
+        val attributes = attributeDao.findAll
+        val termFacets = facets.asScala.filter(_.isInstanceOf[TermsFacet]).map(_.asInstanceOf[TermsFacet])
+        termFacets.map(facet => {
+          val name = attributes.filter(_.id == facet.getName.toLong).head.name
+          val field = AttributeFacetField(attributes.filter(_.id == facet.getName.toLong).head.id)
+          val terms = facetTerms(facet)
+          Facet(name, field, terms)
+        }).toSeq
+      }
     }
+  }
+
+  def facetTerms(facet: TermsFacet): Seq[FacetTerm] = {
+    facet.getEntries.asScala
+      .map(entry => FacetTerm(_attributeUnescape(entry.getTerm.string()), entry.getCount))
+      .toSeq
   }
 
   def _resp2ref(resp: SearchResponse): Seq[ItemRef] = {
@@ -343,7 +347,7 @@ class ElasticSearchService extends SearchService with Logging {
       val attributes = arg.getSource.asScala.filter(_._2 != null).filter(_._1.startsWith(FIELD_ATTRIBUTE))
         .map(field => {
         val id = field._1.drop(FIELD_ATTRIBUTE.length).toLong
-        val value = _attributeRestore(field._2.toString)
+        val value = _attributeUnescape(field._2.toString)
         (id, value)
       }).toMap
       new ItemRef(id, objectType, n, status, attributes, Nil, prioritized)

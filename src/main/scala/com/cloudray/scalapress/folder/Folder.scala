@@ -127,7 +127,7 @@ object Folder {
     section2.visible = true
 
     val section3 = new ItemListSection
-    section3.name = "objects"
+    section3.name = "items"
     section3.folder = folder
     section3.visible = true
 

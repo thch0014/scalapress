@@ -35,8 +35,8 @@ class FacetWidgetTest extends FlatSpec with OneInstancePerTest with MockitoSugar
 
   "a facet widget" should "render all facets" in {
 
-    val facet1 = Facet("teams", "places", Seq(FacetTerm("Boro", 4), FacetTerm("Toon", 2)))
-    val facet2 = Facet("Colours", "places", Seq(FacetTerm("red", 10), FacetTerm("blue", 20)))
+    val facet1 = Facet("teams", AttributeFacetField(1), Seq(FacetTerm("Boro", 4), FacetTerm("Toon", 2)))
+    val facet2 = Facet("Colours", AttributeFacetField(2), Seq(FacetTerm("red", 10), FacetTerm("blue", 20)))
 
     val result = new SearchResult(facets = Seq(facet1, facet2))
     Mockito.when(widget.service.search(Matchers.any[SavedSearch])).thenReturn(result)

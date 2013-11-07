@@ -48,11 +48,14 @@ trait SearchService {
 }
 
 object SearchService {
-  val FACET_TAGS = "tags"
 }
 
 case class SearchResult(refs: Seq[ItemRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
-case class Facet(name: String, field: String, terms: Seq[FacetTerm])
+case class Facet(name: String, field: FacetField, terms: Seq[FacetTerm])
+sealed trait FacetField
+case object UnknownFacetField extends FacetField
+case object TagsFacetField extends FacetField
+case class AttributeFacetField(id: Long) extends FacetField
 case class FacetTerm(term: String, count: Int)
 case class ItemRef(id: Long,
                    objectType: Long,
