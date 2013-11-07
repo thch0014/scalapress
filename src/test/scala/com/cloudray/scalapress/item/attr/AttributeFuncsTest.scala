@@ -84,6 +84,37 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     assert(AttributeFuncs.attributeValue(item, "car").isEmpty)
   }
 
+  test("that adding an attribute ignores existing values") {
+
+    val a1 = new Attribute
+    a1.name = "tea"
+    a1.id = 4
+
+    val a2 = new Attribute
+    a2.name = "tea2"
+    a1.id = 8
+
+    val av1 = new AttributeValue
+    av1.value = "assam"
+    av1.attribute = a1
+
+    val av2 = new AttributeValue
+    av2.value = "earl grey"
+    av2.attribute = a1
+
+    val item = new Item
+    item.attributeValues.add(av1)
+    item.attributeValues.add(av2)
+
+    assert(item.attributeValues.size == 2)
+    AttributeFuncs.addAttributeValue(item, a1, "earl grey") // same value, same attribute
+    assert(item.attributeValues.size == 2)
+    AttributeFuncs.addAttributeValue(item, a1, "darjeeling") // diff value, same attribute
+    assert(item.attributeValues.size == 3)
+    AttributeFuncs.addAttributeValue(item, a2, "earl grey") // same value, diff attribute
+    assert(item.attributeValues.size == 4)
+  }
+
   test("that setting an attribute removes old attribute values and sets new") {
 
     val a = new Attribute

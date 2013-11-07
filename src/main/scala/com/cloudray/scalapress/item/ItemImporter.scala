@@ -61,6 +61,9 @@ class ItemImporter(objectDao: ItemDao, objectType: ItemType) {
     } catch {
       case e: Exception =>
     }
+
+    obj.attributeValues.clear()
+
     for ( attribute <- objectType.sortedAttributes ) {
       val values = Option(csv.get(attribute.name))
       values.foreach(_.split('|').foreach(AttributeFuncs.addAttributeValue(obj, attribute, _)))
