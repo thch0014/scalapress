@@ -7,6 +7,7 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
 class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -17,6 +18,9 @@ class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePe
   controller.themeService = mock[ThemeService]
   controller.context = mock[ScalapressContext]
 
+  val assetStore = mock[AssetStore]
+  Mockito.when(controller.context.assetStore).thenReturn(assetStore)
+  Mockito.when(assetStore.baseUrl).thenReturn("baseurl.com")
   Mockito.when(controller.context.beans[FolderInterceptor]).thenReturn(Nil)
 
   val settings = new FolderSettings

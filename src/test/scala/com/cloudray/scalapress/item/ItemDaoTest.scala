@@ -133,7 +133,7 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
 
     val q1 = new ItemQuery
     q1.pageSize = 10
-    q1.minPrice = Some(1)
+    q1.minPrice = Some(49)
 
     val objs1 = TestDatabaseContext.objectDao.search(q1)
     assert(objs1.results.size === 2)
