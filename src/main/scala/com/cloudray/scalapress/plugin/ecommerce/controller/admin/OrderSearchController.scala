@@ -32,12 +32,10 @@ class OrderSearchController extends OrderStatusPopulator {
       .map(_.replaceAll("\\D", ""))
       .filterNot(_.isEmpty)
       .map(_.toLong)
-      .map(orderDao.find(_))
+      .flatMap(id => Option(orderDao.find(id)))
 
     order match {
-      case Some(o) =>
-        "redirect:/backoffice/order/" + o.id
-
+      case Some(o) => "redirect:/backoffice/order/" + o.id
       case None =>
 
         val query = new OrderQuery
