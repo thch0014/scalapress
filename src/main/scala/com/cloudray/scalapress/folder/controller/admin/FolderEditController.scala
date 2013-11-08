@@ -80,7 +80,7 @@ class FolderEditController(val assetStore: AssetStore,
     })
 
     val ordered = ListMap(map.toList.sortBy {
-      _._2
+      _._2.toLowerCase
     }: _*)
 
     ordered.asJava
