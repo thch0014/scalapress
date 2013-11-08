@@ -49,8 +49,7 @@ class ItemController(itemDao: ItemDao,
     val theme = themeService.theme(item)
     val page = ScalapressPage(theme, sreq)
 
-    if (SpringSecurityResolver.hasAdminRole(req))
-      page.toolbar(sreq)
+    if (SpringSecurityResolver.hasAdminRole(req)) page.toolbar(sreq)
 
     Option(item.objectType.objectViewMarkup) match {
       case None =>

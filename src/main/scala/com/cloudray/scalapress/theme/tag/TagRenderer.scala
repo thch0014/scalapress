@@ -57,7 +57,7 @@ object TagRenderer extends Logging {
 
         } catch {
           case e: Exception =>
-            logger.error(e.toString)
+            logger.error(e.getStackTraceString)
             ""
         }
       }
