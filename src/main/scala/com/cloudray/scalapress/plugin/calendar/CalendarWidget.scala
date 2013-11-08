@@ -35,7 +35,7 @@ class CalendarWidget extends Widget {
   }
 
   def search = Search(
-    itemType = Option(objectType),
+    itemTypeId = Option(objectType).map(_.id),
     status = Option(Item.STATUS_LIVE),
     maxResults = 1000,
     sort = Sort.AttributeDesc,

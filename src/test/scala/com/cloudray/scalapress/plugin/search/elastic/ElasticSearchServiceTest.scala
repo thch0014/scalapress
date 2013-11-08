@@ -4,8 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.item.attr.{AttributeDao, AttributeType, AttributeValue, Attribute}
-import com.cloudray.scalapress.search.{Search, Sort, SavedSearch}
-import scala.collection.JavaConverters._
+import com.cloudray.scalapress.search.{Search, Sort}
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
 
@@ -160,7 +159,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   test("indexing and retrieval by object type happy path") {
 
-    val search = Search(itemType = Option(obj2.itemType))
+    val search = Search(itemTypeId = Option(obj2.itemType.id.toLong))
     val results = service.search(search).refs
     assert(results.size === 1)
     assert(results(0).id === 4)

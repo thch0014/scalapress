@@ -179,14 +179,6 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }
   }
 
-  override def typeahead(q: String, limit: Int): Seq[ItemRef] = {
-    val resp = client.sync.execute {
-      select in INDEX -> TYPE prefix FIELD_NAME -> q
-        .toLowerCase size limit searchType QueryAndFetch
-    }
-    _resp2ref(resp)
-  }
-
   override def count: Long = {
     client.sync.execute {
       countall from INDEX
@@ -220,8 +212,8 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     val queries = new ListBuffer[QueryDefinition]
     val filters = new ListBuffer[FilterDefinition]
 
-    search.itemType.map(_.id.toString).map(termQuery(FIELD_OBJECT_TYPE, _)).foreach(queries append _)
-    search.folders.map(_.toString).map(termQuery(FIELD_FOLDERS, _)).foreach(queries append _)
+    search.itemTypeId.map(termQuery(FIELD_OBJECT_TYPE, _)).foreach(queries append _)
+    search.folders.map(termQuery(FIELD_FOLDERS, _)).foreach(queries append _)
 
     search.name
       .map(_.replace("+", " ").replace("\\", "").trim)

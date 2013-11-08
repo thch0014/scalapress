@@ -37,10 +37,9 @@ trait SearchService {
    * Executes a search and returns a SearchResult
    */
   def search(search: Search): SearchResult
+}
 
-  @deprecated
-  def typeahead(q: String, limit: Int): Seq[ItemRef]
-
+trait SearchStats {
   /**
    * Returns runtime/debug information on the search system. Is allowed to return Map.empty if no such
    * information is applicable or available.
@@ -51,7 +50,10 @@ trait SearchService {
 object SearchService {
 }
 
-case class SearchResult(refs: Seq[ItemRef] = Nil, facets: Seq[Facet] = Nil, count: Long = 0)
+case class SearchResult(refs: Seq[ItemRef] = Nil,
+                        facets: Seq[Facet] = Nil,
+                        count: Long = 0)
+
 case class Facet(name: String, field: FacetField, terms: Seq[FacetTerm])
 sealed trait FacetField {
   def field: String

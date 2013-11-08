@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.item.ItemType
 import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search
@@ -9,7 +8,7 @@ import com.cloudray.scalapress.search
 case class Search(status: Option[String] = None,
                   name: Option[String] = None,
                   prefix: Option[String] = None,
-                  itemType: Option[ItemType] = None,
+                  itemTypeId: Option[Long] = None,
                   folders: Iterable[Any] = Nil,
                   attributeValues: Iterable[AttributeValue] = Nil,
                   hasAttributes: Iterable[Any] = Nil,
@@ -39,7 +38,7 @@ object Search {
     search.Search(Option(saved.status),
       Option(saved.name),
       Option(saved.prefix),
-      Option(saved.objectType),
+      Option(saved.objectType).map(_.id),
       Option(saved.searchFolders).getOrElse("").split(","),
       saved.attributeValues.asScala,
       Option(saved.hasAttributes).getOrElse("").split(","),

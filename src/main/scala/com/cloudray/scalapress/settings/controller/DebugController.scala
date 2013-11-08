@@ -20,7 +20,7 @@ class DebugController(searchService: SearchService) {
 
   @ModelAttribute("properties")
   def properties(request: HttpServletRequest): java.util.Map[String, String] = {
-    val properties = Debug.map ++ searchService.stats ++ System.getProperties.asScala ++ System.getenv().asScala
+    val properties = Debug.map ++ System.getProperties.asScala ++ System.getenv().asScala
     val http = Map("sreq.http.cookies" -> request.getCookies.mkString(","),
       "sreq.http.headers" -> request.getHeaderNames.toString)
     val sorted = TreeMap[String, String]() ++ properties ++ http

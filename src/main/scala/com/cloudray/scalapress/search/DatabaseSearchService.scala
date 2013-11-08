@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 /** @author Stephen Samuel
   *
   *         An implementation of SearchService that simply defers to the backing database.
-  * */
+  **/
 class DatabaseSearchService extends SearchService {
 
   @Autowired
@@ -17,7 +17,7 @@ class DatabaseSearchService extends SearchService {
     val q = new ItemQuery().withStatus(Item.STATUS_LIVE)
 
     search.name.foreach(q.withName)
-    search.itemType.foreach(itemType => q.withTypeId(itemType.id))
+    search.itemTypeId.foreach(id => q.withTypeId(id.toString.toLong))
 
     q.withPageSize(search.maxResults)
 
