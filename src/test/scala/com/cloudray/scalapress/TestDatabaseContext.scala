@@ -21,6 +21,7 @@ import com.cloudray.scalapress.account.{AccountDao, AccountDaoImpl, AccountPlugi
 object TestDatabaseContext {
 
   val context = new ClassPathXmlApplicationContext("/spring-db-test.xml")
+  val sf = context.getBean(classOf[SessionFactory])
 
   val attributeDao = context
     .getAutowireCapableBeanFactory
@@ -42,7 +43,6 @@ object TestDatabaseContext {
     .createBean(classOf[FolderDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[FolderDao]
 
-  val sf = context.getBean(classOf[SessionFactory])
 
   val typeDao = context
     .getAutowireCapableBeanFactory

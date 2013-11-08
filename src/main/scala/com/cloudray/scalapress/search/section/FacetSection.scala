@@ -9,12 +9,9 @@ import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{Markup, MarkupRenderer}
 import com.cloudray.scalapress.item.{Item, ItemDao}
 import scala.xml.Node
-import com.github.theon.uri.Uri._
-import java.net.URLDecoder
 import com.github.theon.uri.Uri
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
-import scala.Some
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.SelectedFacet
 
@@ -39,14 +36,8 @@ class FacetSection extends Section {
 
   private def render(folder: Folder, sreq: ScalapressRequest): String = {
 
-    var uri = parseUri(sreq.request.getRequestURL.toString)
-    Option(sreq.request.getQueryString).foreach(_.split("&").foreach(param => {
-      val kv = URLDecoder.decode(param).split("=")
-      if (kv.size == 2)
-        uri = uri.param(kv(0) -> kv(1))
-    }))
-
-    val selectedFacets = uri.query.params.map(param => SelectedFacet(FacetField(param._1), param._2.head)).toSeq
+    val uri = SelectedFacetUrlParser.parse(sreq)
+    val selectedFacets = SelectedFacetUrlParser.selectedFacets(sreq)
 
     val result = search(folder, sreq, uri)
     val selected = renderSelectedFacets(selectedFacets, uri)
