@@ -120,7 +120,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     resp.isExists
   }
 
-  def _attributeNormalize(value: String): String = value.replace("!", "").replace(" ", "_").replace("/", "_")
+  def attributeNormalize(value: String): String = value.replace("!", "").replace(" ", "_").replace("/", "_")
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
   def _attributeUnescape(value: String): String = value.replace("_", " ")
 
@@ -157,7 +157,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
           .filterNot(_.value == null)
           .filterNot(_.value.isEmpty)
           .foreach(av => {
-          _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> _attributeNormalize(av.value))
+          _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> attributeNormalize(av.value))
           _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
           if (av.attribute.attributeType == AttributeType.Postcode) {
             Postcode.gps(av.value).foreach(gps => {
@@ -193,7 +193,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }.getCount
   }
 
-  def _count(search: SavedSearch): Long = {
+  def _count(search: Search): Long = {
     client.sync.execute {
       countall from INDEX query {
         _query(search)
@@ -201,7 +201,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }.getCount
   }
 
-  override def search(search: SavedSearch): SearchResult = {
+  override def search(search: Search): SearchResult = {
     val resp = _search(search)
     val refs = _resp2ref(resp)
     val facets = resp2facets(resp)
@@ -210,17 +210,20 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     SearchResult(refs, facets, count)
   }
 
-  def _maxResults(search: SavedSearch) =
+  def _maxResults(search: Search) =
     if (search.maxResults < 1) DEFAULT_MAX_RESULTS
     else if (search.maxResults > MAX_RESULTS_HARD_LIMIT) MAX_RESULTS_HARD_LIMIT
     else search.maxResults
 
-  def _query(search: SavedSearch): QueryDefinition = {
+  def _query(search: Search): QueryDefinition = {
 
     val queries = new ListBuffer[QueryDefinition]
     val filters = new ListBuffer[FilterDefinition]
 
-    Option(search.name).orElse(Option(search.keywords))
+    search.itemType.map(_.id.toString).map(termQuery(FIELD_OBJECT_TYPE, _)).foreach(queries append _)
+    search.folders.map(_.toString).map(termQuery(FIELD_FOLDERS, _)).foreach(queries append _)
+
+    search.name
       .map(_.replace("+", " ").replace("\\", "").trim)
       .filterNot(_.isEmpty)
       .foreach(_
@@ -230,40 +233,30 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
       .foreach(value => queries.append(field("name", value)))
     )
 
-    Option(search.objectType).map(_.id.toString).foreach(id => filters.append(termFilter(FIELD_OBJECT_TYPE, id)))
-
-    Option(search.labels).map(labels =>
-      labels.split(",")
-        .filterNot(_.isEmpty)
-        .filterNot(_.toLowerCase == "random")
-        .filterNot(_.toLowerCase == "latest")
-        .foreach(tag => filters.append(termFilter(FIELD_TAGS, tag))))
-
-    Option(search.searchFolders)
-      .filter(_.trim.length > 0)
-      .map(_.replaceAll("\\D", ""))
-      .foreach(_.split(",").foreach(f => filters.append(termFilter(FIELD_FOLDERS, f))))
-
-    search.attributeValues.asScala
-      .filter(_.value.trim.length > 0)
+    search.attributeValues
       .filterNot(_.value.trim.toLowerCase == "any")
-      .foreach(av => queries.append(field(_attrField(av.attribute.id), _attributeNormalize(av.value))))
+      .map(av => termFilter(attrField(av.attribute), attributeNormalize(av.value)))
+      .foreach(filters append _)
 
-    search.selectedFacets.foreach(facet => facet.field match {
-      case AttributeFacetField(id) =>
-        queries.append(field(_attrField(id), _attributeNormalize(facet.value)))
-      case TagsFacetField =>
-      case _ =>
-    })
+    search.hasAttributes.foreach(arg => filters.append(termFilter("has_attribute_" + arg, "1")))
 
-    Option(search.hasAttributes)
-      .filter(_.trim.length > 0)
-      .foreach(arg => filters.append(termFilter("has_attribute_" + arg, "1")))
+    search.tags
+      .filterNot(_.isEmpty)
+      .filterNot(_.toLowerCase == "random")
+      .filterNot(_.toLowerCase == "latest")
+      .foreach(tag => filters.append(termFilter(FIELD_TAGS, tag)))
 
-    Option(search.ignorePast)
-      .foreach(attr => filters.append(numericRangeFilter(_attrField(attr.id)).gte(System.currentTimeMillis())))
+    search.ignorePast
+      .foreach(attr => filters.append(numericRangeFilter(attrField(attr)).gte(System.currentTimeMillis())))
 
-    if (search.imageOnly) filters.append(termFilter(FIELD_HAS_IMAGE, "true"))
+    if (search.imagesOnly) filters.append(termFilter(FIELD_HAS_IMAGE, "true"))
+
+    //    search.selectedFacets.foreach(facet => facet.field match {
+    //      case AttributeFacetField(id) =>
+    //        queries.append(termFilter(_attrField(id), _attributeNormalize(facet.value)))
+    //      case TagsFacetField =>
+    //      case _ =>
+    //    })
 
     val q = queries.size match {
       case 0 => query("*:*")
@@ -277,9 +270,9 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     filteredQuery.filter(filter).query(q)
   }
 
-  def _search(search: SavedSearch): SearchResponse = {
+  def _search(search: Search): SearchResponse = {
 
-    val filter = Option(search.location).flatMap(Postcode.gps).map(gps => {
+    val filter = search.location.flatMap(Postcode.gps).map(gps => {
       geoDistance(FIELD_LOCATION).point(gps.lat, gps.lon).distance(search.distance, DistanceUnit.MILES)
     })
 
@@ -290,12 +283,13 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
 
     val limit = _maxResults(search)
 
-    val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
-    val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
+    // val triggeredFacets = search.attributeValues.asScala.map(_.attribute.id.toString).toSeq
+    //    val filteredFacets = search.facets.filterNot(facet => triggeredFacets.contains(facet))
 
-    val facets = filteredFacets.map {
-      case AttributeFacetField(id) => facet terms id.toString fields _attrField(id) size 20
-    }
+    val facets = Nil
+    //    val facets = filteredFacets.map {
+    //    case AttributeFacetField(id) => facet terms id.toString fields attrField(id) size 20
+    //  }
 
     val prioritized = by field FIELD_PRIORITIZED order SortOrder.DESC
     val sort = _sort(search)
@@ -308,15 +302,16 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }
   }
 
-  def _attrField(obj: Any) = FIELD_ATTRIBUTE + obj.toString
+  def attrField(attribute: Attribute): String = attrField(attribute.id)
+  def attrField(obj: Any): String = FIELD_ATTRIBUTE + obj.toString
 
-  def _sort(search: SavedSearch) = search.sortType match {
+  def _sort(search: Search) = search.sort match {
 
     case Sort.Random => by script "Math.random()" as "number" order SortOrder.ASC
-    case Sort.Attribute if search.sortAttribute != null =>
-      by field _attrField(search.sortAttribute.id) order SortOrder.ASC missing "_last"
-    case Sort.AttributeDesc if search.sortAttribute != null =>
-      by field _attrField(search.sortAttribute.id) order SortOrder.DESC missing "_last"
+    case Sort.Attribute if search.sortAttribute.isDefined =>
+      by field attrField(search.sortAttribute.get.id) order SortOrder.ASC missing "_last"
+    case Sort.AttributeDesc if search.sortAttribute.isDefined =>
+      by field attrField(search.sortAttribute.get.id) order SortOrder.DESC missing "_last"
     case Sort.Name => by field FIELD_NAME_NOT_ANALYSED order SortOrder.ASC
     case Sort.Oldest => by field FIELD_OBJECT_ID order SortOrder.ASC
     case _ => by field FIELD_OBJECT_ID order SortOrder.DESC
@@ -390,7 +385,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
       .foreach(av => {
       json
         .field(FIELD_ATTRIBUTE + av.attribute.id.toString,
-        _attributeNormalize(av.value))
+        attributeNormalize(av.value))
       json.field("has_attribute_" + av.attribute.id.toString, "1")
       if (av.attribute.attributeType == AttributeType.Postcode) {
         Postcode.gps(av.value).foreach(gps => {

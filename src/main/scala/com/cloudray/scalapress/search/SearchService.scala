@@ -7,35 +7,36 @@ trait SearchService {
 
   /**
    * Index, or reindex, the given item. In some cases this will cause the given item to be removed from the index,
-   * for example if the given item is in deleted state.
+   * for example if the given item is an invalid state.
    */
-  def index(obj: Item)
+  def index(item: Item)
 
   /**
-   * Batch index operation. Is included for implementations that provide speed increases on batch operations,
-   * but by default will simply invoke index multiple times for the contents of the sequence.
+   * Batch index operation. Implementations can optionally override this to provide faster
+   * performance for indexing multiple items at once.
    */
-  def index(objs: Seq[Item]): Unit = objs.foreach(index)
+  def index(items: Seq[Item]): Unit = items.foreach(index)
 
   /**
-   * Remove the entry with the given id from the index
+   * Remove the item with the given id from the index.
    */
   def remove(id: String)
 
   /**
-   * Returns true if the index contains an entry with the given id.
+   * Returns true if the index contains an item with the given id.
    */
   def contains(id: String): Boolean
 
   /**
-   * Returns the total number (or best estimate in the case of distributed search systems) of entries in the index.
+   * Returns the total number (or best estimate in the case of distributed search systems)
+   * of items in the index.
    */
   def count: Long
 
   /**
-   * Perform a search.
+   * Executes a search and returns a SearchResult
    */
-  def search(search: SavedSearch): SearchResult
+  def search(search: Search): SearchResult
 
   @deprecated
   def typeahead(q: String, limit: Int): Seq[ItemRef]

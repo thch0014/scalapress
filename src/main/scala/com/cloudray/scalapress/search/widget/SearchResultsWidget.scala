@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search.widget
 
 import javax.persistence._
 import com.cloudray.scalapress.widgets.Widget
-import com.cloudray.scalapress.search.{ItemRef, SavedSearch}
+import com.cloudray.scalapress.search.{Search, ItemRef, SavedSearch}
 import org.hibernate.annotations.{Fetch, FetchMode}
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -13,7 +13,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Scalapress
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget with Logging {
@@ -61,7 +61,7 @@ class SearchResultsWidget extends Widget with Logging {
   }
 
   def _objects(request: ScalapressRequest): Seq[Item] = {
-    val result = request.context.searchService.search(search)
+    val result = request.context.searchService.search(Search(search))
     if (result.refs.isEmpty) Nil
     else {
       val objs = request.context.itemDao

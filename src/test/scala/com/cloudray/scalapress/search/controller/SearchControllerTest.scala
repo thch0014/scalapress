@@ -39,7 +39,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
   test("pagination does not display if total pages is 1") {
     val result = SearchResult(Seq(ref))
-    Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
+    Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
     val page = controller.search(req, null, null, null, "coldplay", null, null, 0, null, 20, 1)
@@ -50,7 +50,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
 
     val result = SearchResult(Seq(ref).padTo(50, ref), count = 200)
     assert(50 === result.refs.size)
-    Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
+    Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj).padTo(20, obj))
 
     val page = controller.search(req, null, null, null, "coldplay", null, null, 0, null, 20, 1)
@@ -60,7 +60,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   test("if object type has no markup then no results are rendered") {
     obj.itemType.objectListMarkup = null
     val result = SearchResult(Seq(ref))
-    Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
+    Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
     val page = controller.search(req, null, null, null, "coldplay", null, null, 0, null, 20, 1)
@@ -71,7 +71,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
   test("if object type has markup then results are rendered") {
     obj.itemType.objectListMarkup.body = "[object]"
     val result = SearchResult(Seq(ref))
-    Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
+    Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
     val page = controller.search(req, null, null, null, "coldplay", null, null, 0, null, 20, 1)
@@ -83,7 +83,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     obj.status = Item.STATUS_DISABLED
     obj.itemType.objectListMarkup.body = "[object]"
     val result = SearchResult(Seq(ref))
-    Mockito.when(controller.searchService.search(Matchers.any[SavedSearch])).thenReturn(result)
+    Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
     val page = controller.search(req, null, null, null, "coldplay", null, null, 0, null, 20, 1)

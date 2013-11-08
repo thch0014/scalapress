@@ -57,7 +57,7 @@ class SearchResultsSectionTest extends FunSuite with MockitoSugar with OneInstan
     val result = SearchResult(sortedRefs)
 
     // search returns sorted refs
-    Mockito.when(context.searchService.search(section.search)).thenReturn(result)
+    Mockito.when(context.searchService.search(Search(section.search))).thenReturn(result)
     // bulk dao method returns them in id order
     Mockito.when(context.itemDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(sortedObjs)
 

@@ -2,11 +2,13 @@ package com.cloudray.scalapress.plugin.calendar
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.search.{SearchResult, SavedSearch, ItemRef, SearchService}
+import com.cloudray.scalapress.search._
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.item.attr.Attribute
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.search.ItemRef
+import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -28,7 +30,7 @@ class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInst
   Mockito.when(context.widgetDao.find(Matchers.anyLong)).thenReturn(widget)
 
   val result = new SearchResult(Seq(ref1, ref2, ref3), Nil, 0)
-  Mockito.when(search.search(Matchers.any[SavedSearch])).thenReturn(result)
+  Mockito.when(search.search(Matchers.any[Search])).thenReturn(result)
 
   test("calendar json happy path") {
     val events = controller.events(4)

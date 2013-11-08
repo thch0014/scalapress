@@ -4,9 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.search.{SavedSearch, SearchService}
+import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.item.{ItemDao, TypeDao}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.search
 
 /** @author Stephen Samuel */
 @Controller
@@ -19,10 +20,7 @@ class BackofficeSearchController(service: SearchService,
   @RequestMapping
   def test(@RequestParam("q") q: String, model: ModelMap) = {
 
-    val s = new SavedSearch
-    s.name = q
-    s.maxResults = 50
-
+    val s = search.Search(name = Option(q), maxResults = 50)
     val result = service.search(s)
     val results = result.refs.map(ref => {
 

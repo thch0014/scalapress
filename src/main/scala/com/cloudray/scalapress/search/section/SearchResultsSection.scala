@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search.section
 
 import javax.persistence._
-import com.cloudray.scalapress.search.SavedSearch
+import com.cloudray.scalapress.search.{Search, SavedSearch}
 import com.cloudray.scalapress.section.Section
 import com.cloudray.scalapress.theme.{MarkupRenderer, Markup}
 import scala.beans.BeanProperty
@@ -14,7 +14,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Scalapress
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging {
@@ -60,7 +60,7 @@ class SearchResultsSection extends Section with Logging {
   }
 
   def _objects(request: ScalapressRequest): Seq[Item] = {
-    val result = request.context.searchService.search(search)
+    val result = request.context.searchService.search(Search(search))
     if (result.refs.isEmpty) Nil
     else {
       val ids = result.refs.map(_.id)

@@ -2,14 +2,14 @@ package com.cloudray.scalapress.plugin.calendar
 
 import org.joda.time.{PeriodType, Period, DateTimeZone, DateMidnight}
 import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.search.{SavedSearch, SearchService}
+import com.cloudray.scalapress.search.{Search, SearchService}
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 class CalendarService(searchService: SearchService) {
 
-  def events(search: SavedSearch,
+  def events(search: Search,
              startDateAttribute: Attribute,
              endDateAttribute: Option[Attribute] = None): Seq[Event] = {
 

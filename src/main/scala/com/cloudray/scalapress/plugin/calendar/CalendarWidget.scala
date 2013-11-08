@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.calendar
 
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence._
-import com.cloudray.scalapress.search.{Sort, SavedSearch}
-import com.cloudray.scalapress.item.ItemType
+import com.cloudray.scalapress.search.{Search, Sort}
+import com.cloudray.scalapress.item.{Item, ItemType}
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.util.Scalate
@@ -34,16 +34,14 @@ class CalendarWidget extends Widget {
     Some(output)
   }
 
-  def search = {
-    val search = new SavedSearch
-    search.objectType = objectType
-    search.status = "Live"
-    search.maxResults = 1000
-    search.sortType = Sort.AttributeDesc
-    search.sortAttribute = startDateAttribute
-    search.hasAttributes = startDateAttribute.id.toString
-    search
-  }
+  def search = Search(
+    itemType = Option(objectType),
+    status = Option(Item.STATUS_LIVE),
+    maxResults = 1000,
+    sort = Sort.AttributeDesc,
+    sortAttribute = Option(startDateAttribute),
+    hasAttributes = List(startDateAttribute.id.toString)
+  )
 
   override def backoffice = "/backoffice/plugin/calendar/widget/" + id
 }

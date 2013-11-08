@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.search.tags
 
 import com.cloudray.scalapress.widgets.Widget
 import javax.persistence.{Entity, Table}
-import com.cloudray.scalapress.search.SavedSearch
+import com.cloudray.scalapress.search.Search
 import scala.xml.Utility
 import com.cloudray.scalapress.framework.ScalapressRequest
 
@@ -13,7 +13,7 @@ class TagsWidget extends Widget {
 
   def render(req: ScalapressRequest): Option[String] = {
 
-    val search = new SavedSearch
+    val search = new Search
     //search.facets = Seq(SearchService.FACET_TAGS)
 
     val result = req.context.searchService.search(search)

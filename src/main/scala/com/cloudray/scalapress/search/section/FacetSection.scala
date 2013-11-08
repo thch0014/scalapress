@@ -113,11 +113,10 @@ class FacetSection extends Section {
 
   private def _createSearch(folder: Folder,
                             facets: Iterable[FacetField],
-                            selectedFacets: Iterable[SelectedFacet]): SavedSearch = {
-    val search = new SavedSearch
-    search.searchFolders = folder.id.toString
-    search.facets = facets.filterNot(facet => selectedFacets.exists(_.field == facet))
-    search.selectedFacets = selectedFacets
+                            selectedFacets: Iterable[SelectedFacet]): Search = {
+    val search = Search(folders = List(folder.id))
+    //search.facets = facets.filterNot(facet => selectedFacets.exists(_.field == facet))
+    //search.selectedFacets = selectedFacets
     search
   }
 

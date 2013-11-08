@@ -92,7 +92,7 @@ class SearchController extends Logging {
     }
 
     val result = try {
-      searchService.search(search)
+      searchService.search(Search(search))
     } catch {
       case e: Exception =>
         logger.error(e.getMessage)
@@ -152,8 +152,8 @@ class SearchController extends Logging {
   @ResponseBody
   @RequestMapping(Array("saved/{id}"))
   def savedSearch(@PathVariable("id") id: Long) = {
-    val savedSearch = savedSearchDao.find(id)
-    val response = searchService.search(savedSearch)
+    val saved = savedSearchDao.find(id)
+    val response = searchService.search(Search(saved))
     response.toString
   }
 }

@@ -2,7 +2,6 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.item._
 import org.springframework.beans.factory.annotation.Autowired
-import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel
   *
@@ -10,28 +9,27 @@ import com.googlecode.genericdao.search.Search
   * */
 class DatabaseSearchService extends SearchService {
 
-  @Autowired var objectDao: ItemDao = _
+  @Autowired
+  var objectDao: ItemDao = _
 
-  def search(search: SavedSearch): SearchResult = {
+  def search(search: Search): SearchResult = {
 
-    val q = new ItemQuery().withStatus(Item.STATUS_LIVE).withName(search.name)
+    val q = new ItemQuery().withStatus(Item.STATUS_LIVE)
 
-    if (search.objectType != null) {
-      q.withTypeId(search.objectType.id)
-    }
+    search.name.foreach(q.withName)
+    search.itemType.foreach(itemType => q.withTypeId(itemType.id))
 
-    if (search.objectType != null) {
-      q.withPageSize(search.maxResults)
-    }
+    q.withPageSize(search.maxResults)
 
     if (search.minPrice > 0) {
       q.withMinPrice(search.minPrice)
     }
+
     if (search.maxPrice > 0) {
       q.withMaxPrice(search.maxPrice)
     }
 
-    q.withSort(search.sortType)
+    q.withSort(search.sort)
 
     val objs = objectDao.search(q)
     val refs = objs.results.map(obj =>
@@ -39,7 +37,7 @@ class DatabaseSearchService extends SearchService {
     new SearchResult(refs, Nil, -1)
   }
 
-  def count: Long = objectDao.count(new Search(classOf[Item]))
+  def count: Long = objectDao.count(new com.googlecode.genericdao.search.Search(classOf[Item]))
   def contains(id: String): Boolean = objectDao.find(id.toLong) != null
   def typeahead(q: String, limit: Int): Seq[ItemRef] = Nil
 
