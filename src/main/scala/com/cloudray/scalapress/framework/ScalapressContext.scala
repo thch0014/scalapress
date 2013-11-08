@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.framework
 
 import com.cloudray.scalapress.folder.{FolderPluginDao, FolderDao}
-import com.cloudray.scalapress.media.{ImageDao, ThumbnailService, AssetStore}
+import com.cloudray.scalapress.media.{ThumbnailService, AssetStore}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.context.ServletContextAware
@@ -22,8 +22,6 @@ import com.cloudray.scalapress.widgets.WidgetDao
 /** @author Stephen Samuel */
 @Component
 class ScalapressContext extends ServletContextAware {
-
-  @Autowired var imageDao: ImageDao = _
 
   @Autowired var assetStore: AssetStore = _
   @Autowired var thumbnailService: ThumbnailService = _

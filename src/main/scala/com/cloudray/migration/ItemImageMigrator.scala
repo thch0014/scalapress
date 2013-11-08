@@ -1,19 +1,25 @@
 package com.cloudray.migration
 
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.media.{MediaWidget, Image}
+import com.cloudray.scalapress.media.MediaWidget
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
-import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
+import com.cloudray.scalapress.framework.Logging
+import com.cloudray.scalapress.widgets.WidgetDao
+import com.cloudray.scalapress.item.ItemDao
+import com.cloudray.scalapress.settings.InstallationDao
 
 /** @author Stephen Samuel */
 @Component
 class ItemImageMigrator extends Logging {
 
-  @Autowired var context: ScalapressContext = _
+  @Autowired var widgetDao: WidgetDao = _
+  @Autowired var imageDao: ImageDao = _
+  @Autowired var itemDao: ItemDao = _
   @Autowired var galleryDao: GalleryDao = _
+  @Autowired var installationDao: InstallationDao = _
 
   @Transactional
   def migrate(image: Image) {
@@ -21,20 +27,20 @@ class ItemImageMigrator extends Logging {
 
     if (image.item != null) {
 
-      val obj = context.itemDao.find(image.item.toLong)
-      if (obj != null) {
-        if (!obj.images.contains(image.filename)) {
-          obj.images.add(image.filename)
-          context.itemDao.save(obj)
+      val item = itemDao.find(image.item.toLong)
+      if (item != null) {
+        if (!item.images.contains(image.filename)) {
+          item.images.add(image.filename)
+          itemDao.save(item)
         }
       }
 
     } else if (image.imageBox != null) {
 
-      val widget = context.widgetDao.find(image.imageBox.toLong).asInstanceOf[MediaWidget]
+      val widget = widgetDao.find(image.imageBox.toLong).asInstanceOf[MediaWidget]
       if (widget != null) {
         widget.images.add(image.filename)
-        context.widgetDao.save(widget)
+        widgetDao.save(widget)
       }
 
     } else if (image.gallery != null) {
@@ -49,8 +55,8 @@ class ItemImageMigrator extends Logging {
 
   @PostConstruct
   def run() {
-    logger.debug("Beginning migration run [{}]", context.installationDao.get.name)
-    val images = context.imageDao.findAll.sortBy(_.id).sortBy(_.position)
+    logger.debug("Beginning migration run [{}]", installationDao.get.name)
+    val images = imageDao.findAll.sortBy(_.id).sortBy(_.position)
     logger.info("Images [{}]", images.size)
     images.foreach(image =>
       try {
@@ -58,6 +64,6 @@ class ItemImageMigrator extends Logging {
       } catch {
         case e: Exception =>
       })
-    images.foreach(context.imageDao.remove)
+    images.foreach(imageDao.remove)
   }
 }

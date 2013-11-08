@@ -3,7 +3,7 @@ package com.cloudray.migration.ecreator
 import java.util.concurrent.{TimeUnit, Executors, ExecutorService}
 import com.cloudray.scalapress.item.ItemDao
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.media.{ImageDao, AssetStore}
+import com.cloudray.scalapress.media.{AssetStore}
 import com.cloudray.scalapress.widgets.{HtmlWidget, WidgetDao}
 import com.cloudray.scalapress.folder.FolderDao
 import java.io.ByteArrayInputStream
@@ -15,6 +15,7 @@ import com.cloudray.scalapress.folder.section.FolderContentSection
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.Logging
+import com.cloudray.migration.ImageDao
 
 /** @author Stephen Samuel */
 @Component

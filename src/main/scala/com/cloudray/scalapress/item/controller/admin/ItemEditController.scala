@@ -29,6 +29,7 @@ import scala.Some
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 import com.cloudray.scalapress.account.AccountDao
 import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
+import com.cloudray.migration.ImageDao
 
 /** @author Stephen Samuel */
 @Controller

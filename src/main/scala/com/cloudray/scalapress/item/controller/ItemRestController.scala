@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMapping, ResponseBody}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
-import com.cloudray.scalapress.media.ImageDao
 import com.cloudray.scalapress.item.{Item, ItemDao}
 import com.cloudray.scalapress.account.controller.Datum
 
@@ -12,8 +11,7 @@ import com.cloudray.scalapress.account.controller.Datum
 @Controller
 @Autowired
 @RequestMapping(Array("rest/obj", "rest/item"))
-class ItemRestController(itemDao: ItemDao,
-                         imageDao: ImageDao) {
+class ItemRestController(itemDao: ItemDao) {
 
   @ResponseBody
   @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))

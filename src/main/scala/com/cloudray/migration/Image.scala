@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.media
+package com.cloudray.migration
 
 import javax.persistence._
 import scala.beans.BeanProperty

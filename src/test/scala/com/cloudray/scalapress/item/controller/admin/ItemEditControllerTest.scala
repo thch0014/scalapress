@@ -9,11 +9,12 @@ import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.folder.section.{SubfolderSection, FolderContentSection}
-import com.cloudray.scalapress.media.{ImageDao, AssetStore}
+import com.cloudray.scalapress.media.{AssetStore}
 import com.cloudray.scalapress.search.SearchService
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.account.AccountDao
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.migration.ImageDao
 
 /** @author Stephen Samuel */
 class ItemEditControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

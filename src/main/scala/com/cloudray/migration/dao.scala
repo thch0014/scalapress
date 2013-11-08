@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.media
+package com.cloudray.migration
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
