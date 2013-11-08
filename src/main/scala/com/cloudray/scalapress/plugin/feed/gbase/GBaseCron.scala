@@ -28,7 +28,7 @@ class GBaseCron extends CronTask with Logging {
   @Transactional
   def run() {
     logger.info("Running Google base cron...")
-    feedDao.findAll.foreach(g => {
+    feedDao.findAll.filter(_.enabled).foreach(g => {
       logger.info("Processing feed [{}]", g)
       GoogleBaseService.run(objectDao, feedDao, installationDao.get, g, context.assetStore)
     })

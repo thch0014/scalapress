@@ -8,6 +8,14 @@
 
 <form class="form-horizontal" method="POST">
 
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Disabled</label>
+
+        <div class="col-lg-8">
+          #springFormCheckbox("section.disabled", "")
+        </div>
+    </div>
+
     <legend>Attributes</legend>
     <div class="form-group">
         <label class="col-lg-2 control-label">Brand Attribute</label>
