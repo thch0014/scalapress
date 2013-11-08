@@ -2,6 +2,7 @@ package com.cloudray.scalapress.plugin.gallery.galleryview
 
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{FlatSpec, OneInstancePerTest}
+import com.cloudray.scalapress.plugin.gallery.base.Gallery
 
 /** @author Stephen Samuel */
 class GalleryViewRendererTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

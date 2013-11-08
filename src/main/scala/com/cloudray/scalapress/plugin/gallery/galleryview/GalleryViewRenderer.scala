@@ -4,6 +4,7 @@ import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.plugin.gallery.base.Gallery
 
 /** @author Stephen Samuel */
 object GalleryViewRenderer {

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gallery.galleryview
+package com.cloudray.scalapress.plugin.gallery.base
 
 import javax.persistence._
 import java.util
@@ -12,16 +12,23 @@ class Gallery {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
   @Column(length = 2000)
-  @BeanProperty var description: String = null
+  @BeanProperty
+  var description: String = _
 
-  @BeanProperty var params: String = null
+  @BeanProperty
+  @deprecated
+  var params: String = _
 
-  @BeanProperty var showDateUploaded: Boolean = _
+  @BeanProperty
+  @deprecated
+  var showDateUploaded: Boolean = _
 
   @ElementCollection(fetch = FetchType.EAGER)
   @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()

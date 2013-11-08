@@ -3,14 +3,15 @@ package com.cloudray.scalapress.plugin.gallery.galleryview.section
 import javax.persistence.{FetchType, JoinColumn, Entity, Table, ManyToOne}
 import com.cloudray.scalapress.section.Section
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao, Gallery}
+import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao}
 import org.hibernate.annotations.{NotFoundAction, NotFound}
 import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.plugin.gallery.base.Gallery
 
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "blocks_galleries")
-class GallerySection extends Section {
+class GalleryViewSection extends Section {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "gallery")

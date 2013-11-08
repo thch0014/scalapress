@@ -4,17 +4,16 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
-import com.cloudray.scalapress.plugin.gallery.GalleryImage
 import javax.servlet.http.HttpServletRequest
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.media.Image
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/gallery/masonry/section/{id}"))
-class MasonrySectionController {
-
-  @Autowired var context: ScalapressContext = _
+class MasonrySectionController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("section") section: MasonrySection) = "admin/plugin/gallery/masonry/section/edit.vm"
@@ -25,13 +24,13 @@ class MasonrySectionController {
 
     section.images = section.images.asScala.map(img => {
       val desc = req.getParameter("desc_" + img.key)
-      GalleryImage(img.key, desc)
+      Image(img.key, desc)
     }).asJava
 
     if (upload != null && !upload.isEmpty) {
       val key = context.assetStore.add(upload.getOriginalFilename, upload.getInputStream)
       if (key != null) {
-        section.images.add(GalleryImage(key, null))
+        section.images.add(Image(key, null))
       }
     }
 

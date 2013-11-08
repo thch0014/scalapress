@@ -4,9 +4,8 @@ import javax.persistence.{ElementCollection, Entity, Table}
 import com.cloudray.scalapress.section.Section
 import java.util
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.plugin.gallery.GalleryImage
 import com.cloudray.scalapress.util.Scalate
-import com.cloudray.scalapress.media.AssetStore
+import com.cloudray.scalapress.media.{Image, AssetStore}
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.framework.ScalapressRequest
 
@@ -20,7 +19,7 @@ class MasonrySection extends Section {
   private val CONTAINER_END = "</div>"
 
   @ElementCollection
-  var images: java.util.Set[GalleryImage] = new util.HashSet[GalleryImage]()
+  var images: java.util.Set[Image] = new util.HashSet[Image]()
   var script: String = _
 
   override def desc: String = "A section showing a gallery using masonry"
@@ -38,7 +37,7 @@ class MasonrySection extends Section {
 
   /** Renders the HTML for a single image
     */
-  def imageHtml(assetStore: AssetStore, image: GalleryImage): String = {
+  def imageHtml(assetStore: AssetStore, image: Image): String = {
     val url = assetStore.link(image.key)
     Scalate.layout(SSP_RESOURCE, Map("caption" -> Option(image.description), "imageUrl" -> url))
   }
@@ -46,8 +45,8 @@ class MasonrySection extends Section {
   /** Returns the images that this section should render. Will use images set on the section
     * or fetch from the container if applicable.
     */
-  def imagesToRender: Iterable[GalleryImage] = images.size match {
-    case 0 => Option(item).map(_.images.asScala.map(GalleryImage(_, null))).getOrElse(Nil)
+  def imagesToRender: Iterable[Image] = images.size match {
+    case 0 => Option(item).map(_.images.asScala.map(Image(_, null))).getOrElse(Nil)
     case _ => images.asScala
   }
 

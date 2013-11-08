@@ -1,20 +1,16 @@
-package com.cloudray.scalapress.plugin.gallery.galleryview.controller.admin
+package com.cloudray.scalapress.plugin.gallery.base
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import scala.Array
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryDao, Gallery}
-import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/gallery"))
-class GalleryListController {
-
-  @Autowired var galleryDao: GalleryDao = _
-  @Autowired var context: ScalapressContext = _
+@Autowired
+@RequestMapping(Array("backoffice/plugin/gallery"))
+class GalleryListController(galleryDao: GalleryDao) {
 
   @RequestMapping
   def list = "admin/gallery/list.vm"
@@ -27,5 +23,6 @@ class GalleryListController {
     "redirect:/backoffice/gallery"
   }
 
-  @ModelAttribute("galleries") def galleries = galleryDao.findAll.asJava
+  @ModelAttribute("galleries")
+  def galleries = galleryDao.findAll.asJava
 }
