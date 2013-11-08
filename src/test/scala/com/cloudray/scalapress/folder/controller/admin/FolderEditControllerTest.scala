@@ -96,8 +96,8 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
     assert("Enemies > Decker" === it.next().getValue)
     assert("Members" === it.next().getValue)
     assert("Members > Face man" === it.next().getValue)
-    assert("Members > Murdock" === it.next().getValue)
     assert("Members > hannibal" === it.next().getValue)
+    assert("Members > Murdock" === it.next().getValue)
   }
 
   test("a new section is set to visible") {
