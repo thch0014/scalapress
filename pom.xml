@@ -40,7 +40,7 @@
         <compiler.version.target>1.6</compiler.version.target>
 
         <aspectj.version>1.6.10</aspectj.version>
-        <aws.version>1.6.1</aws.version>
+        <aws.version>1.6.4</aws.version>
 
         <commons.httpcore.version>4.2.5</commons.httpcore.version>
         <commons.httpclient.version>4.2.6</commons.httpclient.version>
@@ -59,7 +59,7 @@
         <edtftpj.version>1.5.3</edtftpj.version>
         <ehcache.version>2.6.6</ehcache.version>
         <elasticsearch.version>0.90.5</elasticsearch.version>
-        <elastic4s.version>0.90.5.5</elastic4s.version>
+        <elastic4s.version>0.90.6.0</elastic4s.version>
 
         <google.guava.version>13.0.1</google.guava.version>
         <googlecode.htmlcompressor.version>1.5.2</googlecode.htmlcompressor.version>
@@ -88,7 +88,7 @@
 
         <log4j.version>1.2.17</log4j.version>
 
-        <mysql.version>5.1.26</mysql.version>
+        <mysql.version>5.1.27</mysql.version>
         <mockito.version>1.9.5</mockito.version>
 
         <rome.version>1.0</rome.version>
@@ -97,7 +97,7 @@
         <slf4j.version>1.6.6</slf4j.version>
         <scala.test.version>2.0.RC2</scala.test.version>
         <scala.version>2.10.3</scala.version>
-        <spring.version>3.2.4.RELEASE</spring.version>
+        <spring.version>3.2.5.RELEASE</spring.version>
         <spring.security.version>3.1.4.RELEASE</spring.security.version>
 
         <xmlunit.version>1.3</xmlunit.version>
