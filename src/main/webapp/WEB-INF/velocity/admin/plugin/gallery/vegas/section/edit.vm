@@ -1,0 +1,31 @@
+#parse("/admin/header.vm")
+
+<h3>Vegas Section</h3>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+  #parse("/admin/section/common.vm")
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Gallery</label>
+
+        <div class="col-lg-8">
+            <select id="start" name="gallery" class="form-control">
+                <option value="0">-Select Gallery-</option>
+              #foreach($option in $galleries)
+                  <option value="${option.id}"
+                    #if("$section.gallery.id" == "$option.id")
+                          selected="selected"
+                    #end>
+                    ${option.id} ${option.name}</option>
+              #end
+            </select>
+        </div>
+    </div>
+
+  #parse("/admin/section/actions.vm")
+
+</form>
+
+
+#parse("/admin/footer.vm")
