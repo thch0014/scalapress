@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gallery.galleryview
+package com.cloudray.scalapress.plugin.gallery.base
 
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component

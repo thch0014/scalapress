@@ -26,11 +26,8 @@ class Gallery {
   @deprecated
   var params: String = _
 
-  @BeanProperty
-  @deprecated
-  var showDateUploaded: Boolean = _
-
+  @CollectionTable(name = "Gallery_images")
   @ElementCollection(fetch = FetchType.EAGER)
-  @BeanProperty var images: java.util.List[String] = new util.ArrayList[String]()
-  def sortedImages = images.asScala.toSeq
+  @BeanProperty var images: java.util.List[Image] = new util.ArrayList[Image]()
+  def sortedImages: Seq[Image] = images.asScala.toSeq
 }

@@ -1,18 +1,16 @@
 package com.cloudray.migration
 
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.media.MediaWidget
+import com.cloudray.scalapress.media.{MediaWidget}
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.Logging
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
+import com.cloudray.scalapress.plugin.gallery.base.{GalleryDao, Image}
 
 /** @author Stephen Samuel */
-@Component
 class ItemImageMigrator extends Logging {
 
   @Autowired var widgetDao: WidgetDao = _
@@ -47,7 +45,7 @@ class ItemImageMigrator extends Logging {
 
       val gallery = galleryDao.find(image.gallery.toLong)
       if (gallery != null) {
-        gallery.images.add(image.filename)
+        gallery.images.add(Image(image.filename, null))
         galleryDao.save(gallery)
       }
     }

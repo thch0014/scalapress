@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
+import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -13,7 +13,7 @@ import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryDao
 class GalleryListController(galleryDao: GalleryDao) {
 
   @RequestMapping
-  def list = "admin/gallery/list.vm"
+  def list = "admin/plugin/gallery/list.vm"
 
   @RequestMapping(value = Array("create"))
   def create = {

@@ -100,6 +100,7 @@ class AmazonS3AssetStore(val cdnUrl: String,
   def extension(key: String): String = FilenameUtils.getExtension(key)
   def contentType(filename: String): String = URLConnection.guessContentTypeFromName(filename)
 
+  def toAsset(key: String) = Asset(key, -1, link(key), contentType(key))
   def toAsset(arg: S3VersionSummary) = Asset(arg.getKey, arg.getSize, link(arg.getKey), contentType(arg.getKey))
 
   @PostConstruct

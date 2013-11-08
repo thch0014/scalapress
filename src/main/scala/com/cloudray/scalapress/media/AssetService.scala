@@ -16,6 +16,10 @@ class AssetService(assetStore: AssetStore,
     */
   def delete(key: String): Unit = assetStore.delete(key)
 
+  /** Returns an Asset class for the given key.
+    */
+  def asset(key: String): Asset = assetStore.toAsset(key)
+
   /** Adds the given multipart files to the asset store using the original
     * filenames as the keys. If a key is already in use then it will modify
     * the key so that it is unique.

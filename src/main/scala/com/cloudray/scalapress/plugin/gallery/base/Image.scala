@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.media
+package com.cloudray.scalapress.plugin.gallery.base
 
 import javax.persistence.Embeddable
 
@@ -8,6 +8,6 @@ import javax.persistence.Embeddable
  *
  * @author Stephen Samuel */
 @Embeddable
-case class Image(var key: String, var description: String) {
-  def this() = this(null, null)
+case class Image(key: String, description: String, date: Long = System.currentTimeMillis) {
+  def this() = this(null, null, System.currentTimeMillis)
 }

@@ -16,6 +16,8 @@ trait AssetStore {
     */
   def exists(key: String): Boolean
 
+  def toAsset(key: String): Asset
+
   /** Adds the given stream under a unique key. The given key is used as a hint and may
     * not be the actual key used. This method guarantees not to overwrite any existing asset.
     *

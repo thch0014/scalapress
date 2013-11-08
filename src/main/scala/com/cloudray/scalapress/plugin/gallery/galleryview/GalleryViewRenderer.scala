@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.gallery.galleryview
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.plugin.gallery.base.Gallery
+import com.cloudray.scalapress.media.{AssetStore}
+import com.cloudray.scalapress.plugin.gallery.base.{Image, Gallery}
 
 /** @author Stephen Samuel */
 object GalleryViewRenderer {
@@ -46,10 +46,10 @@ object GalleryViewRenderer {
     sb.mkString("\n")
   }
 
-  def _renderImages(images: Seq[String], assetStore: AssetStore): String = {
+  def _renderImages(images: Seq[Image], assetStore: AssetStore): String = {
     val sb = new ArrayBuffer[String]
     for ( image <- images ) {
-      val src = assetStore.link(image)
+      val src = assetStore.link(image.key)
       sb.append("<li><img data-frame='" + src + "' src='" + src + "' title='" + image + "'/></li>")
     }
     sb.mkString("\n")

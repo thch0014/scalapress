@@ -44,26 +44,24 @@
 $pagination
 
 <div class="row">
-    <ul class="thumbnails">
-      #foreach ($a in $assets)
-          <li class="col-md-2">
-              <div class="thumbnail">
-                  <img data-src="holder.js/300x200" src="/images/$a.filename()?width=128&height=128">
+  #foreach ($a in $assets)
+      <div class="col-md-2">
+          <div class="thumbnail">
+              <img data-src="holder.js/300x200" src="/images/$a.filename()?width=128&height=128">
 
-                  <div class="assetinfo">$a.filename()</div>
-                  <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
+              <div class="assetinfo">$a.filename()</div>
+              <div class="assetinfo">$a.size() bytes &nbsp; $a.contentType()</div>
 
-                  <a class="btn btn-xs btn-default" href="/images/$a.filename()">
-                      <i class="glyphicon glyphicon-eye-open"></i> View Original
-                  </a>
+              <a class="btn btn-xs btn-default" href="/images/$a.filename()">
+                  <i class="glyphicon glyphicon-eye-open"></i> View Original
+              </a>
 
-                  <a class="btn btn-xs btn-danger" href="/backoffice/medialib/delete/$a.filename()">
-                      <i class="glyphicon glyphicon-trash"></i> Delete
-                  </a>
-              </div>
-          </li>
-      #end
-    </ul>
+              <a class="btn btn-xs btn-danger" href="/backoffice/medialib/delete/$a.filename()">
+                  <i class="glyphicon glyphicon-trash"></i> Delete
+              </a>
+          </div>
+      </div>
+  #end
 </div>
 
 $pagination

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.gallery.galleryview.controller
+package com.cloudray.scalapress.plugin.gallery.galleryview
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ExceptionHandler, PathVariable, ResponseBody, RequestMapping}
@@ -6,8 +6,9 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.gallery.galleryview.{GalleryViewRenderer, GalleryDao}
+import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryViewRenderer
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
 
 /** @author Stephen Samuel
   *

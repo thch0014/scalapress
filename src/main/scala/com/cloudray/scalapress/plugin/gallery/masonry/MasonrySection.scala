@@ -1,13 +1,16 @@
 package com.cloudray.scalapress.plugin.gallery.masonry
 
-import javax.persistence.{ElementCollection, Entity, Table}
+import javax.persistence._
 import com.cloudray.scalapress.section.Section
-import java.util
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.util.Scalate
-import com.cloudray.scalapress.media.{Image, AssetStore}
+import com.cloudray.scalapress.media.AssetStore
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.plugin.gallery.base.{Gallery, Image}
+import scala.Some
+import org.hibernate.annotations.{NotFoundAction, NotFound}
+import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
 @Entity
@@ -18,11 +21,12 @@ class MasonrySection extends Section {
   private val CONTAINER_START = "<div class=\"masonry-container\">"
   private val CONTAINER_END = "</div>"
 
-  @ElementCollection
-  var images: java.util.Set[Image] = new util.HashSet[Image]()
-  var script: String = _
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "gallery")
+  @NotFound(action = NotFoundAction.IGNORE)
+  @BeanProperty var gallery: Gallery = _
 
-  override def desc: String = "A section showing a gallery using masonry"
+  override def desc: String = "Showing a gallery using Masonry plugin"
   override def backoffice: String = "/backoffice/plugin/gallery/masonry/section/" + id
 
   override def render(request: ScalapressRequest): Option[String] = {
@@ -45,11 +49,10 @@ class MasonrySection extends Section {
   /** Returns the images that this section should render. Will use images set on the section
     * or fetch from the container if applicable.
     */
-  def imagesToRender: Iterable[Image] = images.size match {
-    case 0 => Option(item).map(_.images.asScala.map(Image(_, null))).getOrElse(Nil)
-    case _ => images.asScala
+  def imagesToRender: Iterable[Image] = gallery.images.size match {
+    case 0 => Option(item).map(_.images.asScala.map(Image(_, null, 0))).getOrElse(Nil)
+    case _ => gallery.images.asScala
   }
-
 }
 
 object MasonrySection {

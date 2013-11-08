@@ -1,0 +1,80 @@
+#parse("/admin/header.vm")
+
+<div class="page-header">
+    <h2>Edit Gallery</h2>
+</div>
+
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Name</label>
+
+        <div class="col-lg-8">
+          #springFormInput("gallery.name", "class='form-control'")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Initialization Params (deprecated)</label>
+
+        <div class="col-lg-8">
+          #springFormInput("gallery.params", "class='form-control'") Eg panel_width: 462, panel_height: 320
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Upload</label>
+
+        <div class="col-lg-8">
+            <input type="file" name="upload" class="form-control"/>
+        </div>
+    </div>
+
+    <style>
+        .assetinfo {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+    <div class="row">
+      #foreach ($image in $images)
+          <div class="col-md-2">
+              <div class="thumbnail">
+                  <div class="assetinfo">$image.key()</div>
+                  <img data-src="holder.js/300x200" src="/images/$image.key()?width=128&height=128">
+
+                  <div class="well well-sm">
+
+                      <textarea name="desc_$image.key()" placeholder="enter caption"
+                                class="form-control">$!image.description()</textarea>
+
+                      <a class="btn btn-xs btn-default" href="/images/$image.key()">
+                          <i class="glyphicon glyphicon-eye-open"></i> View Original
+                      </a>
+
+                      <a class="btn btn-xs btn-danger"
+                         href="/backoffice/plugin/gallery/$gallery.id/delete/$image.key()">
+                          <i class="glyphicon glyphicon-trash"></i> Delete
+                      </a>
+                  </div>
+              </div>
+          </div>
+      #end
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-save"></i> Save changes
+            </button>
+            <a href="/backoffice/plugin/gallery" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> Return to galleries
+            </a>
+        </div>
+    </div>
+
+</form>
+
+#parse("/admin/footer.vm")
