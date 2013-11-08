@@ -27,6 +27,10 @@
         <i class="glyphicon glyphicon-camera"></i> Media Library
     </a>
 
+    <a class="list-group-item" href="/backoffice/plugin/gallery">
+        <i class="glyphicon glyphicon-picture"></i> Galleries
+    </a>
+
     <a class="list-group-item" href="/backoffice/order">
         <i class="glyphicon glyphicon-shopping-cart"></i> Orders
     </a>

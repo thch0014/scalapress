@@ -9,6 +9,7 @@ import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
 import search.{SearchFormDao, SearchForm}
 import theme.{Theme, Markup, MarkupDao, ThemeDao}
+import com.cloudray.scalapress.plugin.gallery.base.{Gallery, GalleryDao}
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {
@@ -21,6 +22,12 @@ class StringItemTypeConverter(objectTypeDao: TypeDao) extends Converter[String, 
   def convert(source: String): ItemType =
     if (source == null || source.trim.isEmpty || source == "0") null
     else objectTypeDao.find(source.toLong)
+}
+
+class StringToGalleryConverter(galleryDao: GalleryDao) extends Converter[String, Gallery] {
+  def convert(source: String): Gallery =
+    if (source == null || source.trim.isEmpty || source == "0") null
+    else galleryDao.find(source.toLong)
 }
 
 class StringToAttributeConvertor(attributeDao: AttributeDao) extends Converter[String, Attribute] {

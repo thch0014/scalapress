@@ -30,6 +30,7 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.cloudray.scalapress.account.AccountTypeDao
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
 
 /**
  * @author Stephen K Samuel 14 Oct 2012
@@ -49,6 +50,7 @@ class WebConfig extends WebMvcConfigurationSupport {
   @Autowired var deliveryOptionDao: DeliveryOptionDao = _
   @Autowired var siteDao: InstallationDao = _
   @Autowired var formDao: FormDao = _
+  @Autowired var galleryDao: GalleryDao = _
   @Autowired var generalSettingsDao: GeneralSettingsDao = _
   @Autowired var installationDao: InstallationDao = _
 
@@ -62,6 +64,7 @@ class WebConfig extends WebMvcConfigurationSupport {
     registry.addConverter(new StringToAddressConverter(addressDao))
     registry.addConverter(new StringFormConverter(formDao))
     registry.addConverter(new StringToAttributeConvertor(context.attributeDao))
+    registry.addConverter(new StringToGalleryConverter(galleryDao))
   }
 
   override def addResourceHandlers(registry: ResourceHandlerRegistry) {
