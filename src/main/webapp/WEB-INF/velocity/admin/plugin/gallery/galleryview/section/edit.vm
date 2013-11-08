@@ -1,16 +1,16 @@
 #parse("/admin/header.vm")
 
-<h3>Masonry Section</h3>
+<h3>GalleryView Section</h3>
 
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
 
   #parse("/admin/section/common.vm")
 
     <div class="form-group">
-        <label class="col-lg-2 control-label">Number of columns</label>
+        <label class="col-lg-2 control-label">Initialization Params</label>
 
         <div class="col-lg-8">
-          #springFormInput("section.cols", "class='form-control'")
+          #springFormInput("section.params", "class='form-control'") Eg panel_width: 462, panel_height: 320
         </div>
     </div>
 

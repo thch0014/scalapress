@@ -8,7 +8,7 @@
 }
 
 .masonry-image {
-    width: 32%;
+    width: COLWIDTH%;
     margin-right: 1%;
     margin-bottom: 1%;
     position: relative;

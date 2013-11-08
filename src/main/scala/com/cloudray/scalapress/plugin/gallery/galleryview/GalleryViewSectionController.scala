@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, Pat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
-import scala.collection.JavaConverters._
+import com.cloudray.scalapress.plugin.gallery.base.{AbstractGallerySectionController, GalleryDao}
 import com.cloudray.scalapress.section.SectionDao
 
 /** @author Stephen Samuel */
@@ -14,7 +13,8 @@ import com.cloudray.scalapress.section.SectionDao
 @Autowired
 @RequestMapping(Array("backoffice/plugin/gallery/galleryview/section/{id}"))
 class GalleryViewSectionController(sectionDao: SectionDao,
-                                   galleryDao: GalleryDao) {
+                                   galleryDao: GalleryDao)
+  extends AbstractGallerySectionController(galleryDao: GalleryDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("section") section: GalleryViewSection) = "admin/plugin/gallery/galleryview/section/edit.vm"
@@ -28,7 +28,4 @@ class GalleryViewSectionController(sectionDao: SectionDao,
 
   @ModelAttribute("section")
   def section(@PathVariable("id") id: Long): GalleryViewSection = sectionDao.find(id).asInstanceOf[GalleryViewSection]
-
-  @ModelAttribute("galleries")
-  def galleries = galleryDao.findAll.asJava
 }

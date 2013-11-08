@@ -24,18 +24,29 @@ class MasonrySection extends Section {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "gallery")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var gallery: Gallery = _
+  @BeanProperty
+  var gallery: Gallery = _
 
-  override def desc: String = "Showing a gallery using Masonry plugin"
+  @BeanProperty
+  var cols: Int = 3
+
+  override def desc: String = "Showing a gallery using the 'Masonry Plugin' (" + Option(gallery)
+    .map(_.name)
+    .getOrElse("-No Gallery Set-") + ")"
   override def backoffice: String = "/backoffice/plugin/gallery/masonry/section/" + id
 
   override def render(request: ScalapressRequest): Option[String] = {
     val assetStore = request.context.bean[AssetStore]
     val rows = imagesToRender.map(imageHtml(assetStore, _)).mkString("\n")
-    val js = IOUtils.toString(getClass.getResourceAsStream(MasonrySection.JS_RESOURCE))
-    val css = IOUtils.toString(getClass.getResourceAsStream(MasonrySection.CSS_RESOURCE))
 
-    val components = List("<script>", js, "</script><style>", css, "</style>", CONTAINER_START, rows, CONTAINER_END)
+    val components = List("<script>",
+      MasonrySection.js,
+      "</script><style>",
+      MasonrySection.css.replace("COLWIDTH", (100 / cols - 1).toString),
+      "</style>",
+      CONTAINER_START,
+      rows,
+      CONTAINER_END)
     Some(components.mkString("\n"))
   }
 

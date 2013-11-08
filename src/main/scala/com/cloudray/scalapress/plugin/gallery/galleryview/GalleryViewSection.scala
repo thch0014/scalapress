@@ -15,9 +15,17 @@ class GalleryViewSection extends Section {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "gallery")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var gallery: Gallery = _
+  @BeanProperty
+  var gallery: Gallery = _
 
-  def desc: String = "For showing an image gallery/slideshow by http://spaceforaname.com/galleryview"
+  @BeanProperty
+  var params: String = _
+
+  override def desc: String = "Showing a gallery using the 'GalleryView Plugin' (" + Option(gallery)
+    .map(_.name)
+    .getOrElse("-No Gallery Set-") + ")"
+
+  override def backoffice: String = "/backoffice/plugin/gallery/galleryview/section/" + id
 
   def render(request: ScalapressRequest): Option[String] = {
     val render = Option(gallery) match {
