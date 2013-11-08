@@ -6,23 +6,6 @@ import com.cloudray.scalapress.item.Item
 trait SearchService {
 
   /**
-   * Index, or reindex, the given item. In some cases this will cause the given item to be removed from the index,
-   * for example if the given item is an invalid state.
-   */
-  def index(item: Item)
-
-  /**
-   * Batch index operation. Implementations can optionally override this to provide faster
-   * performance for indexing multiple items at once.
-   */
-  def index(items: Seq[Item]): Unit = items.foreach(index)
-
-  /**
-   * Remove the item with the given id from the index.
-   */
-  def remove(id: String)
-
-  /**
    * Returns true if the index contains an item with the given id.
    */
   def contains(id: String): Boolean
@@ -32,6 +15,24 @@ trait SearchService {
    * of items in the index.
    */
   def count: Long
+
+  /**
+   * Index, or reindex, the given item. In some cases this will cause the given item to be removed from the index,
+   * for example if the given item is an invalid state.
+   */
+  def index(item: Item)
+
+  /**
+   * Batch index operation. Implementations can optionally override this to provide faster
+   * performance for indexing multiple items at once; otherwise default implementation is to simply
+   * call index(item) for each item in the sequence.
+   */
+  def index(items: Seq[Item]): Unit = items.foreach(index)
+
+  /**
+   * Remove the item with the given id from the index.
+   */
+  def remove(id: String)
 
   /**
    * Executes a search and returns a SearchResult
@@ -47,44 +48,47 @@ trait SearchStats {
   def stats: Map[String, String]
 }
 
-object SearchService {
-}
-
 case class SearchResult(refs: Seq[ItemRef] = Nil,
                         facets: Seq[Facet] = Nil,
                         count: Long = 0)
 
+case class ItemRef(id: Long,
+                   itemType: Long,
+                   name: String,
+                   status: String,
+                   attributes: Map[Long, String],
+                   folders: Seq[Long],
+                   prioritized: Boolean = false) {
+  @deprecated
+  def objectType = itemType
+}
+
 case class Facet(name: String, field: FacetField, terms: Seq[FacetTerm])
+
 sealed trait FacetField {
   def field: String
 }
+
 object FacetField {
-
   val AttributeFacetFieldRegEx = "attr_facet_(\\d+)".r
-
   def apply(field: String): FacetField = field match {
     case "tags" => TagsFacetField
     case AttributeFacetFieldRegEx(id) => AttributeFacetField(id.toLong)
     case _ => UnknownFacetField
   }
 }
+
 case object UnknownFacetField extends FacetField {
   def field: String = ""
 }
 case object TagsFacetField extends FacetField {
-  def field: String = "tags"
+  def field: String = "tags_facet"
 }
 case class AttributeFacetField(id: Long) extends FacetField {
   def field: String = "attr_facet_" + id
 }
+
 case class FacetTerm(term: String, count: Int)
 
 case class SelectedFacet(field: FacetField, value: String)
 
-case class ItemRef(id: Long,
-                   objectType: Long,
-                   name: String,
-                   status: String,
-                   attributes: Map[Long, String],
-                   folders: Seq[Long],
-                   prioritized: Boolean = false)
