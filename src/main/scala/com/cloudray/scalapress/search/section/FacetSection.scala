@@ -59,7 +59,7 @@ class FacetSection extends Section {
   }
 
   private def renderSelectedFacet(selected: SelectedFacet, uri: Uri): String = {
-    val removed = uri.removeParams(selected.field.field)
+    val removed = uri.removeParams(selected.field.key)
     "<div class='search-selected-facet'>" +
       field2name(selected.field) + ":" + selected.value + " <a href=" + removed + ">x</a>" +
       "</div>"
@@ -78,8 +78,8 @@ class FacetSection extends Section {
     val terms = facet.terms.map(term =>
       <dl>
         <dt>
-          <a href={uri.param(facet.field.field -> term.term)}>
-            {term.term}
+          <a href={uri.param(facet.field.key -> term.value)}>
+            {term.value}
           </a>
         </dt>
         <dd>
@@ -106,7 +106,7 @@ class FacetSection extends Section {
   }
 
   private def search(folder: Folder, sreq: ScalapressRequest, uri: Uri): SearchResult = {
-    val selectedFacets = uri.query.params.map(param => SelectedFacet(FacetField(param._1), param._2.head))
+    val selectedFacets = uri.query.params.map(param => SelectedFacet(FacetField(param._1).get, param._2.head))
     val searchService = sreq.context.bean[SearchService]
     searchService.search(_createSearch(folder, facetFields, selectedFacets))
   }

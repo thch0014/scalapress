@@ -24,8 +24,7 @@ object SelectedFacetUrlParser {
   def selectedFacets(sreq: ScalapressRequest): Seq[SelectedFacet] = selectedFacets(parse(sreq))
   def selectedFacets(uri: Uri): Seq[SelectedFacet] = {
     uri.query.params
-      .map(param => SelectedFacet(FacetField(param._1), param._2.head))
-      .filterNot(_ == UnknownFacetField)
+      .map(param => SelectedFacet(FacetField(param._1).get, param._2.head))
       .toSeq
   }
 }
