@@ -49,7 +49,7 @@ class MediaLibraryController(assetStore: AssetStore,
     val paging = Paging(req, page)
     model.put("paging", paging)
 
-    val pagination = PagingRenderer.render(paging, 10)
+    val pagination = PagingRenderer.renderBootstrap3(paging, 10)
     model.put("pagination", pagination)
   }
 }

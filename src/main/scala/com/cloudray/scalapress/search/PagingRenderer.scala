@@ -36,4 +36,15 @@ object PagingRenderer {
     val trimmed = Utility.trim(xml)
     trimmed.toString()
   }
+
+  def renderBootstrap3(paging: Paging, range: Int): String = {
+
+    val range = 5
+    val pages = _renderPages(paging, range)
+    val xml = <ul class="pagination">
+      {pages}
+    </ul>
+    val trimmed = Utility.trim(xml)
+    trimmed.toString()
+  }
 }
