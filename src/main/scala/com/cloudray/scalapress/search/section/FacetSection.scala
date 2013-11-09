@@ -13,7 +13,7 @@ import com.github.theon.uri.Uri
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.search.SelectedFacet
+import com.cloudray.scalapress.util.UrlParser
 
 /** @author Stephen Samuel */
 @Entity
@@ -36,29 +36,28 @@ class FacetSection extends Section {
 
   private def render(folder: Folder, sreq: ScalapressRequest): String = {
 
-    val uri = SelectedFacetUrlParser.parse(sreq)
-    val selectedFacets = SelectedFacetUrlParser.selectedFacets(sreq)
+    val uri = UrlParser.parse(sreq)
+    val selectedFacets = FacetValueUrlParser.parse(sreq)
 
     val result = search(folder, sreq, uri)
-    val selected = renderSelectedFacets(selectedFacets, uri)
     val facets = renderFacets(result, uri)
     val items = renderItems(result, sreq)
-    selected + "\n" + facets + "\n" + items
+    facets + "\n" + items
   }
 
-  private def renderSelectedFacets(selected: Seq[SelectedFacet], uri: Uri): String = {
+  private def renderSelectedFacets(selected: Seq[FacetValue], uri: Uri): String = {
     "<div class='search-selected-facets'>" +
       selected.map(renderSelectedFacet(_, uri)).mkString("\n") +
       "</div>"
   }
 
   private def field2name(field: FacetField): String = field match {
-    case AttributeFacetField(id) => "Attribute Name Here"
+    case AttributeFacetField(_) => "Attribute Name Here"
     case TagsFacetField => "Tags"
     case _ => ""
   }
 
-  private def renderSelectedFacet(selected: SelectedFacet, uri: Uri): String = {
+  private def renderSelectedFacet(selected: FacetValue, uri: Uri): String = {
     val removed = uri.removeParams(selected.field.key)
     "<div class='search-selected-facet'>" +
       field2name(selected.field) + ":" + selected.value + " <a href=" + removed + ">x</a>" +
@@ -106,14 +105,14 @@ class FacetSection extends Section {
   }
 
   private def search(folder: Folder, sreq: ScalapressRequest, uri: Uri): SearchResult = {
-    val selectedFacets = uri.query.params.map(param => SelectedFacet(FacetField(param._1).get, param._2.head))
+    val selectedFacets = uri.query.params.map(param => FacetValue(FacetField(param._1).get, param._2.head))
     val searchService = sreq.context.bean[SearchService]
     searchService.search(_createSearch(folder, facetFields, selectedFacets))
   }
 
   private def _createSearch(folder: Folder,
                             facets: Iterable[FacetField],
-                            selectedFacets: Iterable[SelectedFacet]): Search = {
+                            selectedFacets: Iterable[FacetValue]): Search = {
     val search = Search(folders = List(folder.id))
     //search.facets = facets.filterNot(facet => selectedFacets.exists(_.field == facet))
     //search.selectedFacets = selectedFacets

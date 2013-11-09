@@ -21,13 +21,13 @@ object FacetField {
 }
 
 case object TagsFacetField extends FacetField {
-  def key: String = "tags_facet"
+  val key: String = "tags_facet"
 }
 case class AttributeFacetField(id: Long) extends FacetField {
-  def key: String = "attr_facet_" + id
+  val key: String = "attr_facet_" + id
 }
 
 /** A facet term is a value in the facet along with the number of occurances.
   */
 case class FacetTerm(value: String, count: Int)
-case class SelectedFacet(field: FacetField, value: String)
+case class FacetValue(field: FacetField, value: String)
