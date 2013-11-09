@@ -56,8 +56,7 @@ class SearchController extends Logging {
              @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
              @RequestParam(value = "location", required = false) location: String,
              @RequestParam(value = "pageSize", required = false, defaultValue = "20") pageSize: Int,
-             @RequestParam(value = "pageNumber",
-               required = false,
+             @RequestParam(value = "pageNumber", required = false,
                defaultValue = "1") pageNumber: Int): ScalapressPage = {
 
     val attributeValues = req.getParameterMap.asScala
@@ -72,27 +71,19 @@ class SearchController extends Logging {
       av
     })
 
-    val search = new SavedSearch
-    search.attributeValues = attributeValues.toSet.asJava
-    search.keywords = q
-    search.distance = distance
-    search.location = location
-    search.maxResults = pageSize
-    search.pageNumber = pageNumber
-    search.sortType = sort
-
-    try {
-      Option(t).orElse(Option(itemTypeId)).map(arg => typeDao.find(arg.toLong)) match {
-        case None =>
-        case Some(itemType) =>
-          search.objectType = itemType
-      }
-    } catch {
-      case e: Exception => // unparsable number
-    }
+    val search = Search(
+      attributeValues = attributeValues,
+      name = Option(q),
+      itemTypeId = Option(itemTypeId).map(_.toLong),
+      distance = distance,
+      location = Option(location),
+      maxResults = pageSize,
+      pageNumber = pageNumber,
+      sort = sort
+    )
 
     val result = try {
-      searchService.search(Search(search))
+      searchService.search(search)
     } catch {
       case e: Exception =>
         logger.error(e.getMessage)
