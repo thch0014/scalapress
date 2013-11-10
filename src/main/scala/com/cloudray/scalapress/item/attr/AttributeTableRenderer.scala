@@ -22,7 +22,11 @@ object AttributeTableRenderer {
 
     // convert to set to remove duplicates
     val groupedByAttribute = attributeValues.groupBy(_.attribute)
-      .map(entry => (entry._1, entry._2.toSet.toSeq.sortBy(_.value)))
+      .map(entry => {
+      val noDups = entry._2.toSet
+      val seq = noDups.toSeq.sortBy(_.value)
+      (entry._1, seq)
+    })
 
     val ordering = new Ordering[Attribute] {
       def compare(x: Attribute, y: Attribute): Int = {
