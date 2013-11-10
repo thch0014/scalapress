@@ -1,7 +1,7 @@
 package com.cloudray.migration
 
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.media.{MediaWidget}
+import com.cloudray.scalapress.media.MediaWidget
 import javax.annotation.PostConstruct
 import org.springframework.transaction.annotation.Transactional
 import com.cloudray.scalapress.framework.Logging

@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.gallery.galleryview
 import collection.mutable.ArrayBuffer
 import xml.Elem
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.media.{AssetStore}
+import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.plugin.gallery.base.{Image, Gallery}
 
 /** @author Stephen Samuel */

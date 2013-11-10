@@ -6,14 +6,13 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.util.mvc.{ScalapressPage, HttpStatusException}
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.gallery.galleryview.GalleryViewRenderer
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
 
 /** @author Stephen Samuel
   *
   *         Special controller for showing a single gallery
-  **/
+  * */
 @Controller
 @RequestMapping(Array("gallery"))
 class GalleryController {
