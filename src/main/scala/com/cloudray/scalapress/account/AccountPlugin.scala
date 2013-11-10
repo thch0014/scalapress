@@ -56,4 +56,6 @@ class AccountPlugin {
   @BeanProperty
   var loginRedirect: String = _
 
+  @BeanProperty
+  var registrationRedirect: String = _
 }
