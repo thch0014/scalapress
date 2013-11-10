@@ -17,8 +17,8 @@ trait SearchService {
   def count: Long
 
   /**
-   * Index, or reindex, the given item. In some cases this will cause the given item to be removed from the index,
-   * for example if the given item is an invalid state.
+   * Index, or reindex, the given item. In some cases this will cause the given item to be
+   * removed from the index, for example if the given item is an invalid state.
    */
   def index(item: Item)
 
