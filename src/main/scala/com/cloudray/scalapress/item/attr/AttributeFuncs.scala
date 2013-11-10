@@ -56,15 +56,13 @@ object AttributeFuncs {
 
   /**
    * Adds an attribute value to this item, unless the value for that attribute already exists
-   * in which case this is a no-op.
    */
   def addAttributeValue(item: Item, attribute: Attribute, value: String) {
-    if (!item.attributeValues.asScala.exists(av => av.attribute.id == attribute.id && av.value == value)) {
-      val av = new AttributeValue
-      av.value = value
-      av.attribute = attribute
-      av.item = item
+    val av = new AttributeValue
+    av.value = value
+    av.attribute = attribute
+    av.item = item
+    if (!item.attributeValues.contains(av))
       item.attributeValues.add(av)
-    }
   }
 }

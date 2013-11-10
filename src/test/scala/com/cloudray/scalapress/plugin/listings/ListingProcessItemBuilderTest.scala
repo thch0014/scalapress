@@ -74,10 +74,12 @@ class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest wit
   test("attribute values are copied") {
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.attribute = new Attribute
     av1.value = "smithy"
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.attribute = new Attribute
     av2.value = "jones"
 
@@ -105,7 +107,10 @@ class ListingProcessItemBuilderTest extends FunSuite with OneInstancePerTest wit
   }
 
   test("attribute values are cloned") {
+
     val av = new AttributeValue
+    av.id = 3
+
     val attribute = new Attribute
     av.attribute = attribute
     av.value = "smithy"

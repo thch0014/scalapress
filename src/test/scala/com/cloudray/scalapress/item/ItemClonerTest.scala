@@ -25,16 +25,16 @@ class ItemClonerTest extends FunSuite with MockitoSugar with OneInstancePerTest 
   item.id = 5435
 
   val av1 = new AttributeValue
+  av1.id = 1
   av1.attribute = new Attribute
   av1.attribute.id = 1
   av1.value = "mackams"
-  av1.id = 345
 
   val av2 = new AttributeValue
+  av2.id = 2
   av2.attribute = new Attribute
   av2.attribute.id = 2
   av2.value = "middlesbrough"
-  av2.id = 555
 
   item.attributeValues.add(av1)
   item.attributeValues.add(av2)

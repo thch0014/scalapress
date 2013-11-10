@@ -17,11 +17,13 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
   folder.id = 12
 
   val av1 = new AttributeValue
+  av1.id = 1
   av1.attribute = new Attribute
   av1.attribute.name = "Part Number"
   av1.value = "BB66"
 
   val av2 = new AttributeValue
+  av2.id = 2
   av2.attribute = new Attribute
   av2.attribute.name = "Manuf"
   av2.value = "Sony"
@@ -114,6 +116,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
   test("condition method should use condition attribute for value") {
 
     val av = new AttributeValue
+    av.id = 3
     av.attribute = new Attribute
     av.attribute.name = "CONDition"
     item.attributeValues.add(av)
@@ -131,6 +134,7 @@ class GoogleBaseBuilderTest extends FunSuite with MockitoSugar with OneInstanceP
   test("a builder should use attribute condition if present") {
 
     val av = new AttributeValue
+    av.id = 3
     av.attribute = new Attribute
     av.attribute.name = "CONDition"
     av.value = "Used"

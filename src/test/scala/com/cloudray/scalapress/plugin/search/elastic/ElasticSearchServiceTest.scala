@@ -20,20 +20,24 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   folder2.id = 19
 
   val av1 = new AttributeValue
+  av1.id = 1
   av1.attribute = new Attribute
   av1.attribute.name = "team"
   av1.attribute.id = 1
   av1.value = "mackams"
 
   val av2 = new AttributeValue
+  av2.id = 2
   av2.attribute = av1.attribute
   av2.value = "middlesbrough"
 
   val av3 = new AttributeValue
+  av3.id = 3
   av3.attribute = av1.attribute
   av3.value = "barcodes"
 
   val av4 = new AttributeValue
+  av4.id = 4
   av4.attribute = new Attribute
   av4.attribute.name = "postcode"
   av4.attribute.id = 2
@@ -41,14 +45,17 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   av4.value = "SW10"
 
   val av5 = new AttributeValue
+  av5.id = 5
   av5.attribute = av4.attribute
   av5.value = "SW10"
 
   val av6 = new AttributeValue
+  av6.id = 6
   av6.attribute = av4.attribute
   av6.value = "TS19"
 
   val av7 = new AttributeValue
+  av7.id = 7
   av7.attribute = new Attribute
   av7.attribute.id = 62
   av7.value = "attribute with space"

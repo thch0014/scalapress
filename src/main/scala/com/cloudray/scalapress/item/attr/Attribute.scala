@@ -109,4 +109,11 @@ class Attribute {
   @Column(name = "default")
   @BeanProperty var default: String = _
   override def toString: String = s"Attribute [name=$name, id=$id, position=$position]"
+
+  override def equals(obj: scala.Any): Boolean = obj match {
+    case other: Attribute => other.name == name && other.attributeType == attributeType
+    case _ => false
+  }
+  override def hashCode(): Int =
+    Option(name).getOrElse("").hashCode * Option(attributeType).getOrElse(AttributeType.Text).hashCode
 }

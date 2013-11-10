@@ -11,26 +11,31 @@ class ItemTest extends FunSuite with MockitoSugar with OneInstancePerTest {
   val obj = new Item
 
   val av1 = new AttributeValue
+  av1.id = 1
   av1.attribute = new Attribute
   av1.attribute.name = "band"
   av1.value = "coldplay"
 
   val av2 = new AttributeValue
+  av2.id = 2
   av2.attribute = new Attribute
   av2.attribute.name = "singer"
   av2.value = "martin"
 
   val av3 = new AttributeValue
+  av3.id = 3
   av3.attribute = new Attribute
   av3.attribute.name = "drummer"
   av3.value = "champion"
 
   val av4 = new AttributeValue
+  av4.id = 4
   av4.attribute = new Attribute
   av4.attribute.name = "bassist"
   av4.value = "berryman"
 
   val av5 = new AttributeValue
+  av5.id = 5
   av5.attribute = new Attribute
   av5.attribute.name = "guitar"
   av5.value = "buckland"

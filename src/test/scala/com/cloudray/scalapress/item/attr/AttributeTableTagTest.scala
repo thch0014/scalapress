@@ -11,36 +11,43 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val av1 = new AttributeValue
-  av1.attribute = new Attribute
-  av1.attribute.id = 123
-  av1.attribute.name = "name"
+  av1.id = 1
   av1.value = "coldplay"
+  av1.attribute = new Attribute
+  av1.attribute.id = 1
+  av1.attribute.name = "name"
   av1.attribute.public = true
 
   val av2 = new AttributeValue
-  av2.attribute = new Attribute
-  av2.attribute.id = 456
-  av2.attribute.name = "lead singer"
+  av2.id = 2
   av2.value = "chris martin"
+  av2.attribute = new Attribute
+  av2.attribute.id = 2
+  av2.attribute.name = "lead singer"
   av2.attribute.public = true
 
   val av3 = new AttributeValue
-  av3.attribute = new Attribute
-  av3.attribute.id = 63
-  av3.attribute.name = "drummer"
+  av3.id = 3
   av3.value = "will champion"
+  av3.attribute = new Attribute
+  av3.attribute.id = 3
+  av3.attribute.name = "drummer"
   av3.attribute.public = false
 
   val av4 = new AttributeValue
-  av4.attribute = new Attribute
-  av4.attribute.name = "bassist"
+  av4.id = 4
   av4.value = "berryman"
+  av4.attribute = new Attribute
+  av4.attribute.id = 4
+  av4.attribute.name = "bassist"
   av4.attribute.public = true
 
   val av5 = new AttributeValue
-  av5.attribute = new Attribute
-  av5.attribute.name = "guitar"
+  av5.id = 5
   av5.value = "buckland"
+  av5.attribute = new Attribute
+  av5.attribute.id = 5
+  av5.attribute.name = "guitar"
   av5.attribute.public = true
 
   val obj = new Item
@@ -66,7 +73,7 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
   }
 
   test("exclude param removes attributes") {
-    val actual = new AttributeTableTag().render(sreq, Map("exclude" -> "456")).get
+    val actual = new AttributeTableTag().render(sreq, Map("exclude" -> "2")).get
     assert(actual.contains("name"))
     assert(actual.contains("coldplay"))
     assert(!actual.contains("lead singer"))
@@ -74,7 +81,7 @@ class AttributeTableTagTest extends FunSuite with MockitoSugar with OneInstanceP
   }
 
   test("include param implicitly excludes anything not included") {
-    val actual = new AttributeTableTag().render(sreq, Map("include" -> "456")).get
+    val actual = new AttributeTableTag().render(sreq, Map("include" -> "2")).get
     assert(!actual.contains("name"))
     assert(!actual.contains("coldplay"))
     assert(actual.contains("singer"))

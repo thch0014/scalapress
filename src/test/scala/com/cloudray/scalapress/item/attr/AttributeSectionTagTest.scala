@@ -11,11 +11,13 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 class AttributeSectionTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val av1 = new AttributeValue
+  av1.id = 4
   av1.attribute = new Attribute
   av1.attribute.id = 123
   av1.attribute.name = "coldplay"
 
   val av2 = new AttributeValue
+  av2.id = 8
   av2.attribute = new Attribute
   av2.attribute.id = 456
   av2.attribute.name = "jethro tull"

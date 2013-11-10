@@ -13,14 +13,17 @@ class ItemTypeTest extends FunSuite with MockitoSugar with OneInstancePerTest {
     val a1 = new Attribute
     a1.id = 1
     a1.position = 3
+    a1.name = "attribute 1"
 
     val a2 = new Attribute
     a2.id = 2
     a2.position = 2
+    a2.name = "attribute 2"
 
     val a3 = new Attribute
     a3.id = 3
     a3.position = 3
+    a3.name = "attribute 3"
 
     val t = new ItemType
     t.attributes.add(a1)

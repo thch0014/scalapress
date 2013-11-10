@@ -10,11 +10,13 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
   test("that a postcode attribute is used for location value") {
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "TS19"
     av1.attribute = new Attribute
     av1.attribute.attributeType = AttributeType.Text
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "SW10"
     av2.attribute = new Attribute
     av2.attribute.attributeType = AttributeType.Postcode
@@ -30,11 +32,13 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
   test("that an attribute is looked up by name") {
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "pizza"
     av1.attribute = new Attribute
     av1.attribute.name = "food"
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "earl grey"
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
@@ -49,11 +53,13 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
   test("that multiple attribute values are looked up by name") {
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "lady grey"
     av1.attribute = new Attribute
     av1.attribute.name = "tea"
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "earl grey"
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
@@ -68,11 +74,13 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
   test("that no matching attribute name returns none") {
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "pizza"
     av1.attribute = new Attribute
     av1.attribute.name = "food"
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "earl grey"
     av2.attribute = new Attribute
     av2.attribute.name = "tea"
@@ -87,18 +95,16 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
   test("that adding an attribute ignores existing values") {
 
     val a1 = new Attribute
+    a1.id = 1
     a1.name = "tea"
-    a1.id = 4
-
-    val a2 = new Attribute
-    a2.name = "tea2"
-    a1.id = 8
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "assam"
     av1.attribute = a1
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "earl grey"
     av2.attribute = a1
 
@@ -107,10 +113,17 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     item.attributeValues.add(av2)
 
     assert(item.attributeValues.size == 2)
+
     AttributeFuncs.addAttributeValue(item, a1, "earl grey") // same value, same attribute
     assert(item.attributeValues.size == 2)
+
     AttributeFuncs.addAttributeValue(item, a1, "darjeeling") // diff value, same attribute
     assert(item.attributeValues.size == 3)
+
+    val a2 = new Attribute
+    a2.id = 2
+    a2.name = "tea2"
+
     AttributeFuncs.addAttributeValue(item, a2, "earl grey") // same value, diff attribute
     assert(item.attributeValues.size == 4)
   }
@@ -121,10 +134,12 @@ class AttributeFuncsTest extends FunSuite with MockitoSugar with OneInstancePerT
     a.name = "tea"
 
     val av1 = new AttributeValue
+    av1.id = 1
     av1.value = "assam"
     av1.attribute = a
 
     val av2 = new AttributeValue
+    av2.id = 2
     av2.value = "earl grey"
     av2.attribute = a
 

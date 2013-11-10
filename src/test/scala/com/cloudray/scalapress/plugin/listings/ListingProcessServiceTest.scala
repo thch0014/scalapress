@@ -6,7 +6,7 @@ import com.cloudray.scalapress.item.{ItemType, ItemDao}
 import com.cloudray.scalapress.plugin.listings.domain.{ListingProcess, ListingPackage}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.listings.email.ListingAdminNotificationService
-import com.cloudray.scalapress.item.attr.AttributeValue
+import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import com.cloudray.scalapress.account.{Account, AccountDao}
 import com.cloudray.scalapress.framework.ScalapressContext
 
@@ -53,10 +53,19 @@ class ListingProcessServiceTest extends FunSuite with OneInstancePerTest with Mo
   }
 
   test("cleanup sets all attribute values to be orphaned") {
+
     val av1 = new AttributeValue
+    av1.id = 1
     av1.listingProcess = process
+    av1.attribute = new Attribute
+    av1.attribute.name = "attribute 1"
+
     val av2 = new AttributeValue
+    av2.id = 2
     av2.listingProcess = process
+    av2.attribute = new Attribute
+    av2.attribute.name = "attribute 2"
+
     process.attributeValues.add(av1)
     process.attributeValues.add(av2)
     assert(2 === process.attributeValues.size)

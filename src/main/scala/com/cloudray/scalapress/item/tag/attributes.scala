@@ -56,9 +56,7 @@ class AttributeNameTag extends ScalapressTag with TagBuilder with Logging {
 @Tag("attribute_section")
 class AttributeSectionTag extends ScalapressTag with TagBuilder with Logging {
 
-  def render(request: ScalapressRequest,
-
-             params: Map[String, String]): Option[String] = {
+  def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     params.get("id") match {
       case None => None
       case Some(id) => {

@@ -12,12 +12,14 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val av1 = new AttributeValue
+  av1.id = 7
   av1.attribute = new Attribute
   av1.attribute.id = 123
   av1.attribute.name = "coldplay"
   av1.value = "violet hill"
 
   val av2 = new AttributeValue
+  av2.id = 8
   av2.attribute = new Attribute
   av2.attribute.id = 456
   av2.attribute.name = "jethro tull"
@@ -43,6 +45,7 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
   test("that multiple attributes are all rendered with the seperator") {
 
     val av3 = new AttributeValue
+    av3.id = 4
     av3.id = 11
     av3.attribute = new Attribute
     av3.attribute.id = 456
@@ -57,6 +60,7 @@ class AttributeValueTagTest extends FunSuite with MockitoSugar with OneInstanceP
   test("that multiple attributes are all rendered with the default seperator when not specified") {
 
     val av3 = new AttributeValue
+    av3.id = 4
     av3.id = 11
     av3.attribute = new Attribute
     av3.attribute.id = 456

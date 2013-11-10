@@ -30,10 +30,12 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   item.vatRate = 10.00
 
   val av1 = new AttributeValue
+  av1.id = 1
   av1.attribute = attr1
   av1.value = "Samsung"
 
   val av2 = new AttributeValue
+  av2.id = 2
   av2.attribute = attr2
   av2.value = "GalaxyS"
 
@@ -90,6 +92,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   test("multi valued attributes are pipe delimited") {
 
     val av3 = new AttributeValue
+    av3.id = 3
     av3.attribute = attr1
     av3.value = "Apple"
     item.attributeValues.add(av3)
