@@ -8,7 +8,7 @@ import com.cloudray.scalapress.framework.Logging
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.settings.InstallationDao
-import com.cloudray.scalapress.plugin.gallery.base.{GalleryDao, Image}
+import com.cloudray.scalapress.plugin.gallery.base.{GalleryDao, Image => GImage}
 
 /** @author Stephen Samuel */
 class ItemImageMigrator extends Logging {
@@ -45,7 +45,7 @@ class ItemImageMigrator extends Logging {
 
       val gallery = galleryDao.find(image.gallery.toLong)
       if (gallery != null) {
-        gallery.images.add(Image(image.filename, null))
+        gallery.images.add(GImage(image.filename, null))
         galleryDao.save(gallery)
       }
     }

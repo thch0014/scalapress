@@ -417,9 +417,9 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("acceptable search max results is used") {
-    val search = Search(maxResults = 35)
+    val search = Search(maxResults = 7)
     val max = service._maxResults(search)
-    assert(34 === max)
+    assert(7 === max)
   }
 
   test("search escapes invalid characters in attribute values") {
