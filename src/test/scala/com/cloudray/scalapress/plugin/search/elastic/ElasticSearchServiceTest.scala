@@ -482,7 +482,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   //  }
 
   test("a service for folders should match objects with multiple folders") {
-    val q = Search(folders = List(4))
+    val q = Search(folders = List("4"))
     val results = service.search(q)
     assert(2 === results.refs.size)
     assert(results.refs.map(_.id).contains(obj2.id))
@@ -490,7 +490,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("a service for folders should match objects with single folders") {
-    val q = Search(folders = List(4))
+    val q = Search(folders = List("4"))
     val results = service.search(q)
     assert(results.refs.map(_.id).contains(20))
   }

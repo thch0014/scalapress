@@ -17,7 +17,7 @@
 </div>
 
 <div class="form-group">
-    <label class="col-lg-3 control-label">Object Type</label>
+    <label class="col-lg-3 control-label">Item Type</label>
 
     <div class="col-lg-8">
         <select id="objectType" name="objectType" class="form-control">

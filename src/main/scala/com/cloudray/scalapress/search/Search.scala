@@ -2,16 +2,15 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.search
 
 /** @author Stephen Samuel */
 case class Search(status: Option[String] = None,
                   name: Option[String] = None,
                   prefix: Option[String] = None,
                   itemTypeId: Option[Long] = None,
-                  folders: Iterable[Any] = Nil,
+                  folders: Iterable[String] = Nil,
                   attributeValues: Iterable[AttributeValue] = Nil,
-                  hasAttributes: Iterable[Any] = Nil,
+                  hasAttributes: Iterable[String] = Nil,
                   imagesOnly: Boolean = false,
                   tags: Iterable[String] = Nil,
                   location: Option[String] = None,
@@ -34,27 +33,43 @@ object Search {
   def apply(name: String): Search = Search(name = Option(name))
 
   def apply(saved: SavedSearch): Search = {
-    search.Search(Option(saved.status),
-      Option(saved.name),
-      Option(saved.prefix),
-      Option(saved.objectType).map(_.id),
-      Option(saved.searchFolders).getOrElse("").split(","),
-      saved.attributeValues.asScala,
-      Option(saved.hasAttributes).getOrElse("").split(","),
-      saved.imageOnly,
-      Option(saved.labels).getOrElse("").split(","),
-      Option(saved.location),
-      saved.distance,
-      saved.inStockOnly,
-      saved.minPrice,
-      saved.maxPrice,
-      Option(saved.ignorePast),
-      saved.newerThanTimestamp,
-      Nil,
-      Option(saved.sortType).getOrElse(Sort.Name),
-      Option(saved.sortAttribute),
+
+    val folders = Option(saved.searchFolders).map(_.trim).filterNot(_.isEmpty) match {
+      case None => Nil
+      case Some(ids) => ids.split(",").map(_.trim).toSeq
+    }
+
+    val hasAttributes = Option(saved.hasAttributes).map(_.trim).filterNot(_.isEmpty) match {
+      case None => Nil
+      case Some(ids) => ids.split(",").map(_.trim).toSeq
+    }
+
+    val tags = Option(saved.labels).map(_.trim).filterNot(_.isEmpty) match {
+      case None => Nil
+      case Some(ids) => ids.split(",").map(_.trim).toSeq
+    }
+
+    new Search(status = Option(saved.status),
+      name = Option(saved.name).map(_.trim).filterNot(_.isEmpty),
+      prefix = Option(saved.prefix).filterNot(_.trim.isEmpty),
+      itemTypeId = Option(saved.objectType).map(_.id),
+      folders = folders,
+      attributeValues = saved.attributeValues.asScala,
+      hasAttributes = hasAttributes,
+      imagesOnly = saved.imageOnly,
+      tags = tags,
+      location = Option(saved.location).map(_.trim).filterNot(_.isEmpty),
+      distance = saved.distance,
+      inStockOnly = saved.inStockOnly,
+      minPrice = saved.minPrice,
+      maxPrice = saved.maxPrice,
+      ignorePast = Option(saved.ignorePast),
+      newerThanTimestamp = saved.newerThanTimestamp,
+      facets = Nil,
+      sort = Option(saved.sortType).getOrElse(Sort.Name),
+      sortAttribute = Option(saved.sortAttribute),
       pageNumber = 1,
-      if (saved.maxResults == 0) DEFAULT_MAX_RESULTS else saved.maxResults
+      maxResults = if (saved.maxResults <= 0) DEFAULT_MAX_RESULTS else saved.maxResults
     )
   }
 }

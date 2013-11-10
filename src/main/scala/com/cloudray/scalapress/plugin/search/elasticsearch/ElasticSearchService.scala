@@ -40,7 +40,6 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
   val MAX_RESULTS_HARD_LIMIT = 1000
   val DEFAULT_MAX_RESULTS = 200
 
-  val FIELD_ATTRIBUTE = "attribute_"
   val FIELD_ATTRIBUTE_SINGLE = "attribute_single_"
   val FIELD_TAGS = "tags"
   val FIELD_LOCATION = "location"
@@ -48,8 +47,8 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
   val FIELD_NAME = "name"
   val FIELD_NAME_NOT_ANALYSED = "name_raw"
   val FIELD_FOLDERS = "folders"
-  val FIELD_OBJECT_ID = "objectid"
-  val FIELD_OBJECT_TYPE = "objectType"
+  val FIELD_ITEM_ID = "itemid"
+  val FIELD_ITEM_TYPE_ID = "itemType"
   val FIELD_PRIORITIZED = "prioritized"
   val FIELD_HAS_IMAGE = "hasImage"
 
@@ -85,20 +84,20 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
 
     val fields = new ListBuffer[FieldDefinition]
     fields.append(id typed StringType index "not_analyzed" store true)
-    fields.append(FIELD_OBJECT_ID typed IntegerType index "not_analyzed" store true)
-    fields.append(FIELD_OBJECT_TYPE typed IntegerType index "not_analyzed" store true)
+    fields.append(FIELD_ITEM_ID typed IntegerType index "not_analyzed" store true)
+    fields.append(FIELD_ITEM_TYPE_ID typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_NAME typed StringType analyzer WhitespaceAnalyzer store true)
     fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
     fields.append(FIELD_TAGS typed StringType analyzer KeywordAnalyzer)
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
     fields.append("location" typed GeoPointType)
-    attributes.foreach(attr => {
-      val t = attr.attributeType match {
+    attributes.foreach(attribute => {
+      val t = attribute.attributeType match {
         case AttributeType.Numerical => DoubleType
         case AttributeType.Date | AttributeType.DateTime => LongType
         case _ => StringType
       }
-      fields.append(FIELD_ATTRIBUTE + attr.id typed t index "not_analyzed")
+      fields.append(attrField(attribute) typed t index "not_analyzed")
     })
 
     logger.debug("Creating INDEX {}->{}", INDEX, TYPE)
@@ -124,40 +123,40 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
   def _normalize(value: String): String = value.replace("!", "").replace("/", "_").toLowerCase
   def _attributeUnescape(value: String): String = value.replace("_", " ")
 
-  override def index(obj: Item) = index(Seq(obj))
-  override def index(objs: Seq[Item]) {
-    require(objs != null)
+  override def index(item: Item) = index(Seq(item))
+  override def index(items: Seq[Item]) {
+    require(items != null)
 
-    val executions = objs
-      .filter(_.objectType != null)
-      .map(obj => Option(obj.status).getOrElse(Item.STATUS_DELETED).toLowerCase match {
+    val executions = items
+      .filter(_.itemType != null)
+      .map(item => Option(item.status).getOrElse(Item.STATUS_DELETED).toLowerCase match {
 
       case DELETED | DISABLED =>
-        logger.debug("Creating delete operation [id={}]", obj.id)
-        new DeleteByIdDefinition(INDEX, TYPE, obj.id.toString)
+        logger.debug("Creating delete operation [id={}]", item.id)
+        new DeleteByIdDefinition(INDEX, TYPE, item.id.toString)
 
       case LIVE =>
         val _fields = ListBuffer[(String, Any)](
-          FIELD_OBJECT_ID -> obj.id,
-          FIELD_OBJECT_TYPE -> obj.objectType.id.toString,
-          FIELD_NAME -> _normalize(obj.name),
-          FIELD_NAME_NOT_ANALYSED -> obj.name,
-          FIELD_STATUS -> obj.status,
-          FIELD_PRIORITIZED -> (if (obj.prioritized) 1 else 0)
+          FIELD_ITEM_ID -> item.id,
+          FIELD_ITEM_TYPE_ID -> item.itemType.id.toString,
+          FIELD_NAME -> _normalize(item.name),
+          FIELD_NAME_NOT_ANALYSED -> item.name,
+          FIELD_STATUS -> item.status,
+          FIELD_PRIORITIZED -> (if (item.prioritized) 1 else 0)
         )
 
-        Option(obj.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
+        Option(item.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))
 
-        val hasImage = obj.images.size > 0
+        val hasImage = item.images.size > 0
         _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-        obj.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
+        item.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
 
-        obj.attributeValues.asScala
+        item.attributeValues.asScala
           .filterNot(_.value == null)
           .filterNot(_.value.isEmpty)
           .foreach(av => {
-          _fields.append(FIELD_ATTRIBUTE + av.attribute.id.toString -> attributeNormalize(av.value))
+          _fields.append(attrField(av.attribute) -> attributeNormalize(av.value))
           _fields.append("has_attribute_" + av.attribute.id.toString -> "1")
           if (av.attribute.attributeType == AttributeType.Postcode) {
             Postcode.gps(av.value).foreach(gps => {
@@ -166,7 +165,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
           }
         })
 
-        insert into INDEX -> TYPE id obj.id fields _fields
+        insert into INDEX -> TYPE id item.id fields _fields
     })
 
     import scala.concurrent.duration._
@@ -212,7 +211,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     val queries = new ListBuffer[QueryDefinition]
     val filters = new ListBuffer[FilterDefinition]
 
-    search.itemTypeId.map(termQuery(FIELD_OBJECT_TYPE, _)).foreach(queries append _)
+    search.itemTypeId.map(termQuery(FIELD_ITEM_TYPE_ID, _)).foreach(queries append _)
     search.folders.map(termQuery(FIELD_FOLDERS, _)).foreach(queries append _)
 
     search.name
@@ -294,19 +293,21 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }
   }
 
-  def attrField(attribute: Attribute): String = attrField(attribute.id)
-  def attrField(obj: Any): String = FIELD_ATTRIBUTE + obj.toString
+  val FIELD_ATTRIBUTE = "attribute_"
+  def attrField(attribute: Attribute): String = {
+    FIELD_ATTRIBUTE + attribute.id.toString
+  }
 
   def _sort(search: Search) = search.sort match {
 
     case Sort.Random => by script "Math.random()" as "number" order SortOrder.ASC
     case Sort.Attribute if search.sortAttribute.isDefined =>
-      by field attrField(search.sortAttribute.get.id) order SortOrder.ASC missing "_last"
+      by field attrField(search.sortAttribute.get) order SortOrder.ASC missing "_last"
     case Sort.AttributeDesc if search.sortAttribute.isDefined =>
-      by field attrField(search.sortAttribute.get.id) order SortOrder.DESC missing "_last"
+      by field attrField(search.sortAttribute.get) order SortOrder.DESC missing "_last"
     case Sort.Name => by field FIELD_NAME_NOT_ANALYSED order SortOrder.ASC
-    case Sort.Oldest => by field FIELD_OBJECT_ID order SortOrder.ASC
-    case _ => by field FIELD_OBJECT_ID order SortOrder.DESC
+    case Sort.Oldest => by field FIELD_ITEM_ID order SortOrder.ASC
+    case _ => by field FIELD_ITEM_ID order SortOrder.DESC
   }
 
   def resp2facets(resp: SearchResponse): Seq[Facet] = {
@@ -334,7 +335,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
   def _resp2ref(resp: SearchResponse): Seq[ItemRef] = {
     resp.getHits.asScala.map(arg => {
       val id = arg.id.toLong
-      val objectType = arg.getSource.get(FIELD_OBJECT_TYPE).toString.toLong
+      val itemTypeId = arg.getSource.get(FIELD_ITEM_TYPE_ID).toString.toLong
       val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == 1 || arg.getSource.get(FIELD_PRIORITIZED) == "1"
       val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
       val status = arg.getSource.get(FIELD_STATUS).toString
@@ -344,40 +345,38 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
         val value = _attributeUnescape(field._2.toString)
         (id, value)
       }).toMap
-      new ItemRef(id, objectType, n, status, attributes, Nil, prioritized)
+      new ItemRef(id, itemTypeId, n, status, attributes, Nil, prioritized)
     }).toSeq
   }
 
-  def _source(obj: Item) = {
-    require(obj.id > 0)
+  def _source(item: Item) = {
+    require(item.id > 0)
 
     val json = XContentFactory
       .jsonBuilder()
       .startObject()
-      .field(FIELD_OBJECT_ID, obj.id)
-      .field(FIELD_OBJECT_TYPE, obj.objectType.id.toString)
-      .field(FIELD_NAME, _normalize(obj.name))
-      .field(FIELD_NAME_NOT_ANALYSED, obj.name)
-      .field(FIELD_STATUS, obj.status)
+      .field(FIELD_ITEM_ID, item.id)
+      .field(FIELD_ITEM_TYPE_ID, item.itemType.id.toString)
+      .field(FIELD_NAME, _normalize(item.name))
+      .field(FIELD_NAME_NOT_ANALYSED, item.name)
+      .field(FIELD_STATUS, item.status)
 
-    Option(obj.labels)
+    Option(item.labels)
       .foreach(tags => tags
       .split(",")
       .foreach(tag => json.field(FIELD_TAGS, tag)))
 
-    val hasImage = obj.images.size > 0
+    val hasImage = item.images.size > 0
     json.field(FIELD_HAS_IMAGE, hasImage.toString)
 
-    val folderIds = obj.folders.asScala.map(_.id.toString)
+    val folderIds = item.folders.asScala.map(_.id.toString)
     json.field(FIELD_FOLDERS, folderIds.toSeq: _*)
 
-    obj.attributeValues.asScala
+    item.attributeValues.asScala
       .filterNot(_.value == null)
       .filterNot(_.value.isEmpty)
       .foreach(av => {
-      json
-        .field(FIELD_ATTRIBUTE + av.attribute.id.toString,
-        attributeNormalize(av.value))
+      json.field(attrField(av.attribute), attributeNormalize(av.value))
       json.field("has_attribute_" + av.attribute.id.toString, "1")
       if (av.attribute.attributeType == AttributeType.Postcode) {
         Postcode.gps(av.value).foreach(gps => {
