@@ -52,4 +52,10 @@ class AttributeValue {
   var value: String = _
 
   override def toString: String = s"AttributeValue [item=$item attribute=$attribute value=$value]"
+
+  override def hashCode: Int = id.toInt
+  override def equals(obj: scala.Any): Boolean = obj match {
+    case other: AttributeValue => other.id == id
+    case _ => false
+  }
 }
