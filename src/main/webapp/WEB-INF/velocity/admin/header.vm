@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap-wysihtml5.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-tag.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <link rel="stylesheet" href="/static/css/scalapress.css">
     <link rel="stylesheet" href="/static/css/typeahead.js-bootstrap.css">
@@ -25,7 +25,7 @@
     <script src="/static/js/bootbox.min.js"></script>
     <script src="/static/js/bootstrap-wysihtml5.js"></script>
     <script src="/static/js/bootstrap-datepicker.js"></script>
-    <script src="/static/js/bootstrap-tag.js"></script>
+    <script src="/static/js/bootstrap-tagsinput.min.js"></script>
 
     <script type="text/javascript" src="/static/tiny_mce/tiny_mce.js"></script>
 

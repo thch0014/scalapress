@@ -2,7 +2,7 @@
 
 
 <div class="page-header">
-    <h2>$form.o.objectType.name: $form.o.name</h2>
+    <h2>$form.o.itemType.name: $form.o.name</h2>
     <h5>ID: $form.o.id &nbsp; Created: $datetool.format($form.o.dateCreated)</h5>
 </div>
 
@@ -70,7 +70,7 @@
         <label class="col-lg-2 control-label">Tags</label>
 
         <div class="col-lg-8">
-          #springFormInput("form.o.labels", "data-provide='tag' class='form-control'")
+          #springFormInput("form.o.labels", "data-role='tagsinput' class='form-control'")
         </div>
     </div>
 
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-  #if ($form.o.objectType.prices)
+  #if ($form.o.itemType.prices)
 
       <div class="form-group">
           <label class="col-lg-2 control-label">Price</label>
@@ -411,7 +411,7 @@
       #foreach ($a in $form.o.associations)
           <tr data-section-id="$a.id" class="section-row">
               <td>$a.id</td>
-              <td>$a.objectType.name</td>
+              <td>$a.itemType.name</td>
               <td><a href="/backoffice/item/$a.id">$a.name</a></td>
               <td><a href="/backoffice/item/$form.o.id/association/$a.id/delete" role="button"
                      class="btn btn-xs btn-danger">
@@ -464,7 +464,7 @@
     <div class="panel-body">
         <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Save changes</button>
         &nbsp;
-        <a href="/backoffice/item?typeId=${form.o.objectType.id}" class="btn btn-default">
+        <a href="/backoffice/item?typeId=${form.o.itemType.id}" class="btn btn-default">
             <i class="glyphicon glyphicon-arrow-left"></i> Return to list</a>
         &nbsp;
         <a href="/backoffice/item/${form.o.id}/clone" class="btn btn-default">
