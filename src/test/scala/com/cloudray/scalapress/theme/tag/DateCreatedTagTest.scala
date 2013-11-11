@@ -10,15 +10,15 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 /** @author Stephen Samuel */
 class DateCreatedTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
-    val f = new Folder
-    f.id = 342
-    f.dateCreated = new DateMidnight(DateTimeZone.UTC).getMillis
+  val f = new Folder
+  f.id = 342
+  f.dateCreated = new DateMidnight(DateTimeZone.UTC).getMillis
 
-    val context = new ScalapressContext
-    val req = ScalapressRequest(mock[HttpServletRequest], context)
+  val context = new ScalapressContext
+  val req = ScalapressRequest(mock[HttpServletRequest], context)
 
-    test("date created is formatted using the format param") {
-        assert(new DateTime(DateTimeZone.UTC).getYear.toString + new DateTime(DateTimeZone.UTC).getMonthOfYear
-          === new DateCreatedTag().render(req.withFolder(f), Map("format" -> "yyyyM")).get)
-    }
+  test("date created is formatted using the format param") {
+    assert(new DateTime(DateTimeZone.UTC).getYear.toString + new DateTime(DateTimeZone.UTC).getMonthOfYear
+      === new DateCreatedTag().render(req.withFolder(f), Map("format" -> "yyyyM")).get)
+  }
 }
