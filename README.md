@@ -7,6 +7,13 @@ scala based publishing platform
 
 ### Release History
 
+##### 0.41
+
+Removed images from the codebase
+Improved galleries and introduced a new common gallery system for plugins to follow
+Fixed tags in bootstrap 3
+Fixes galore around the object->item conversion
+
 ##### 0.40
 
 * Added new offline settings
