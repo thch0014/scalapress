@@ -14,7 +14,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Scalapress
   *
   *         Shows the results of a saved search
   *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging {
@@ -52,8 +52,11 @@ class SearchResultsSection extends Section with Logging {
             Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
               case None => Some("<!-- no search results markup -->")
               case Some(m) =>
-                val rendered = MarkupRenderer.renderObjects(objects, m, request)
-                Some(rendered)
+                Some(
+                  SearchResultsSection.CONTAINER_START +
+                    MarkupRenderer.renderObjects(objects, m, request) +
+                    SearchResultsSection.CONTAINER_END
+                )
             }
         }
     }
@@ -74,4 +77,9 @@ class SearchResultsSection extends Section with Logging {
   def _reorder(ids: Seq[Long], objs: Seq[Item]): Seq[Item] = {
     objs.sortWith((a, b) => ids.indexOf(a.id) < ids.indexOf(b.id))
   }
+}
+
+object SearchResultsSection {
+  val CONTAINER_START = "<div class=\"search-results-section\">"
+  val CONTAINER_END = "</div>"
 }
