@@ -10,12 +10,12 @@ import com.cloudray.scalapress.framework.ScalapressContext
 /** @author Stephen Samuel */
 @Controller
 @Autowired
-@RequestMapping(Array("backoffice/search/section/facet/{id}"))
+@RequestMapping(Array("backoffice/plugin/search/section/facet/{id}"))
 class FacetSectionController(val markupDao: MarkupDao,
                              context: ScalapressContext) extends MarkupPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute("section") section: FacetSection) = "admin/search/section/facet.vm"
+  def edit(@ModelAttribute("section") section: FacetSection) = "admin/plugin/search/facet/section.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("section") section: FacetSection) = {

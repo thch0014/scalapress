@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.search.facet
+package com.cloudray.scalapress.plugin.search.wizard
 
 import com.cloudray.scalapress.framework.ScalapressRequest
 import javax.persistence._
@@ -11,23 +11,23 @@ import scala.xml.{Unparsed, Node}
 import com.github.theon.uri.Uri
 import com.cloudray.scalapress.util.{Scalate, UrlParser}
 import com.cloudray.scalapress.search.section.SearchResultsSection
-import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
-import scala.Some
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.FacetSelection
+import java.util
 
 /** @author Stephen Samuel */
 @Entity
-@Table(name = "plugin_search_facet_section")
-class FacetSection extends SearchResultsSection {
+@Table(name = "plugin_search_wizard_section")
+class WizardSection extends SearchResultsSection {
 
-  override def desc: String = "Facet based search section"
-  override def backoffice: String = "/backoffice/plugin/search/section/facet/" + id
+  override def desc: String = "Wizard based search results section"
+  override def backoffice: String = "/backoffice/plugin/search/section/wizard/" + id
 
-  @Column(name = "attributes")
+  @CollectionTable(name = "plugin_search_wizard_section_steps")
+  @ElementCollection(fetch = FetchType.EAGER)
   @BeanProperty
-  var attributes: String = _
+  var steps: java.util.List[WizardStep] = new util.ArrayList[WizardStep]()
 
   override def render(sreq: ScalapressRequest): Option[String] = sreq.folder.map(folder => render(folder, sreq))
 
@@ -35,9 +35,9 @@ class FacetSection extends SearchResultsSection {
 
     val uri = UrlParser.parse(sreq)
     val selections = FacetSelectionParser.parse(sreq)
-    val search = createSearch(folder, selections, facetFields)
 
     val searchService = sreq.context.bean[SearchService]
+    val search = createSearch
     val result = searchService.search(search)
 
     val items = getItems(result, sreq.context.itemDao)
@@ -48,19 +48,14 @@ class FacetSection extends SearchResultsSection {
       renderItems(items, sreq)
   }
 
+  def createSearch = Search.empty
+
   def getItems(result: SearchResult, dao: ItemDao): Seq[Item] = dao.findBulk(result.refs.map(_.id))
 
   private def createSearch(folder: Folder,
                            selections: Iterable[FacetSelection],
                            facets: Iterable[FacetField]): Search = {
     FacetSelections.selections2search(selections, Search(search)).copy(facets = facets)
-  }
-
-  private def facetFields: Seq[FacetField] = {
-    Option(attributes) match {
-      case None => Nil
-      case Some(ids) => ids.split(",").filterNot(_.isEmpty).map(id => AttributeFacetField(id.toLong))
-    }
   }
 
   private def renderSelectedFacets(selected: Seq[FacetSelection], uri: Uri): String = {
@@ -100,4 +95,9 @@ class FacetSection extends SearchResultsSection {
     val m = Option(markup).getOrElse(item.itemType.objectListMarkup)
     "<div class='search-item'>" + MarkupRenderer.render(item, m, sreq) + "</div>"
   }
+}
+
+@Embeddable
+case class WizardStep(title: String, text: String, attribute: String) {
+  def this() = this(null, null, null)
 }

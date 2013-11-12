@@ -15,6 +15,7 @@ import com.sksamuel.scoot.soa.{Paging, Page}
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.search.widget.SearchFormWidget
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.item.attr.AttributeSelection
 
 /** @author Stephen Samuel */
 @Controller

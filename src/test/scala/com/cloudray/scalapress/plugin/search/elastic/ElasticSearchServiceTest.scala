@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.search.elastic
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.{ItemType, Item}
-import com.cloudray.scalapress.item.attr.{AttributeDao, AttributeType, AttributeValue, Attribute}
-import com.cloudray.scalapress.search.{AttributeSelection, Search, Sort}
+import com.cloudray.scalapress.item.attr._
+import com.cloudray.scalapress.search.{Search, Sort}
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
 
