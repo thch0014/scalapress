@@ -17,14 +17,25 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
   order.id = 51
   order.vatable = true
 
+  val av1 = new AttributeValue
+  av1.attribute = new Attribute
+  av1.attribute.id = 123
+  av1.attribute.attributeType = AttributeType.Text
+  av1.attribute.name = "band"
+  av1.value = "coldplay"
+
+  val item = new Item
+  item.id = 66
+  item.name = "my lovely object"
+  item.attributeValues.add(av1)
+
   val line1 = new OrderLine
   line1.description = "big tshirt"
   line1.qty = 2
   line1.price = 1000
   line1.vatRate = 15.00
   line1.order = order
-  line1.item = new Item
-  line1.item.id = 66
+  line1.item = item
 
   val tag = new InvoiceAttributeValueTag()
 
@@ -33,19 +44,7 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
   context.itemDao = mock[ItemDao]
   val sreq = new ScalapressRequest(req, context).withOrderLine(line1)
 
-  val av1 = new AttributeValue
-  av1.attribute = new Attribute
-  av1.attribute.id = 123
-  av1.attribute.attributeType = AttributeType.Text
-  av1.attribute.name = "band"
-  av1.value = "coldplay"
-
-  val obj = new Item
-  obj.id = 66
-  obj.name = "my lovely object"
-  obj.attributeValues.add(av1)
-
-  Mockito.doReturn(obj).when(context.itemDao).find(Matchers.anyLong)
+  Mockito.doReturn(item).when(context.itemDao).find(Matchers.anyLong)
 
   test("tag renders attribute value from parameter id") {
     val actual = tag.render(sreq, Map("id" -> "123"))

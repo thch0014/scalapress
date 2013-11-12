@@ -491,7 +491,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("searching for slash in attribute") {
-    val q = Search(attributeValues = List(AttributeSelection(avWithSlash.id, "axel/slash")))
+    val q = Search(attributeValues = List(AttributeSelection(avWithSlash.attribute.id, "axel/slash")))
     val results = service.search(q)
     assert("zola" === results.refs(0).name)
   }

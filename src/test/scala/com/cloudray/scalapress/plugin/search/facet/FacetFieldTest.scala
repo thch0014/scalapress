@@ -9,7 +9,7 @@ class FacetFieldTest extends FunSuite with MockitoSugar with OneInstancePerTest 
 
   test("facet field apply") {
     assert(TagsFacetField === FacetField("tags").get)
-    assert(AttributeFacetField(4) === FacetField("attr_facet_4").get)
+    assert(AttributeFacetField(4) === FacetField("afacet_4").get)
     assert(None === FacetField("asqew"))
   }
 
