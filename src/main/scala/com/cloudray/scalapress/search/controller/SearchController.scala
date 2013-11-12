@@ -9,7 +9,6 @@ import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.search.section.SearchFormSection
 import com.cloudray.scalapress.item.{Item, ItemDao, TypeDao}
-import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.sksamuel.scoot.soa.{Paging, Page}
@@ -63,13 +62,8 @@ class SearchController extends Logging {
       .filter(arg => _isAttributeParameter(arg._1.toString))
       .filter(arg => arg._2.asInstanceOf[Array[String]].length > 0)
       .filter(arg => arg._2.asInstanceOf[Array[String]].head.trim.length > 0)
-      .map(arg => {
-      val av = new AttributeValue
-      av.attribute = new Attribute
-      av.attribute.id = arg._1.toString.drop("attr_".length).toLong
-      av.value = arg._2.asInstanceOf[Array[String]].head
-      av
-    })
+      .map(arg => AttributeSelection(arg._1.toString.drop("attr_".length), arg._2.asInstanceOf[Array[String]].head
+    ))
 
     val search = Search(
       attributeValues = attributeValues,
@@ -124,7 +118,7 @@ class SearchController extends Logging {
       val p = Page(objects, pageNumber, pageSize, result.count.toInt)
       val paging = Paging(req, p)
 
-      Option(objects.head.objectType.objectListMarkup) match {
+      Option(objects.head.itemType.objectListMarkup) match {
         case None =>
           logger.debug("No markup available")
           page.body("<!-- search results: no object list markup found -->")

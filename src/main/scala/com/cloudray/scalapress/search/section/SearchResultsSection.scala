@@ -29,7 +29,7 @@ class SearchResultsSection extends Section with Logging {
   @BeanProperty
   var markup: Markup = _
 
-  def desc: String = "Shows results of a predefined search"
+  override def desc: String = "Shows results of a predefined search"
   override def backoffice: String = "/backoffice/search/section/savedsearch/" + id
 
   override def _init(context: ScalapressContext) {

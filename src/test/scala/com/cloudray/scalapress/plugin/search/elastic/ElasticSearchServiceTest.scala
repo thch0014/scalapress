@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.{ItemType, Item}
 import com.cloudray.scalapress.item.attr.{AttributeDao, AttributeType, AttributeValue, Attribute}
-import com.cloudray.scalapress.search.{Search, Sort}
+import com.cloudray.scalapress.search.{AttributeSelection, Search, Sort}
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
 
@@ -296,14 +296,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
 
   test("attribute search with spaces") {
 
-    val searchav = new AttributeValue
-    searchav.attribute = new Attribute
-    searchav.attribute.id = 62
-    searchav.value = "attribute with space"
-
-
+    val searchav = AttributeSelection(62, "attribute with space")
     val search = Search(attributeValues = List(searchav))
-
     val results = service.search(search).refs
     assert(results.size === 1)
     assert(2 === results(0).id)
@@ -323,14 +317,8 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("attribute search returns query based count") {
-
-    val searchav = new AttributeValue
-    searchav.attribute = new Attribute
-    searchav.attribute.id = 62
-    searchav.value = "attribute with space"
-
+    val searchav = AttributeSelection(62, "attribute with space")
     val search = Search(attributeValues = List(searchav))
-
     val count = service.search(search).count
     assert(1 === count)
   }
@@ -430,7 +418,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("search escapes invalid characters in attribute values") {
-    val q = new Search(attributeValues = List(av))
+    val q = new Search(attributeValues = List(AttributeSelection(9184, "red!!!!")))
     val results = service.search(q)
     assert(1 === results.refs.size)
     assert(1529 === results.refs(0).id)
@@ -503,11 +491,7 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("searching for slash in attribute") {
-    val av = new AttributeValue
-    av.attribute = avWithSlash.attribute
-    av.value = "axel/slash"
-
-    val q = Search(attributeValues = List(av))
+    val q = Search(attributeValues = List(AttributeSelection(avWithSlash.id, "axel/slash")))
     val results = service.search(q)
     assert("zola" === results.refs(0).name)
   }
