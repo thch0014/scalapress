@@ -31,6 +31,9 @@ class Order {
   def deliveryVat: Double = if (vatable) deliveryEx * deliveryVatRate / 100.0 else 0
   def deliveryInc: Double = deliveryEx + deliveryVat
 
+  def description: Option[String] = descriptions.headOption
+  def descriptions: Seq[String] = sortedLines.map(_.description)
+
   @Column(name = "deliveryDetails")
   @BeanProperty var deliveryDetails: String = _
 

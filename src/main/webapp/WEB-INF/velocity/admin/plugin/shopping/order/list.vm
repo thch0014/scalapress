@@ -72,6 +72,7 @@
         <th>Date Placed</th>
         <th>Status</th>
         <th>Customer</th>
+        <th>Details</th>
         <th>Total</th>
         <th></th>
     </tr>
@@ -81,6 +82,7 @@
           <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
           <td>$!o.status</td>
           <td>$!o.account.name $!o.account.email</td>
+          <td>$!o.description.get</td>
           <td>$o.total()</td>
           <td>
               <a href="/backoffice/order/$o.id" role="button" class="btn btn-xs btn-default">
