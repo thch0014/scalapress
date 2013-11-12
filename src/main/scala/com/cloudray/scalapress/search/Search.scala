@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.item.attr.{Attribute, AttributeValue}
+import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -9,7 +9,7 @@ case class Search(status: Option[String] = None,
                   prefix: Option[String] = None,
                   itemTypeId: Option[Long] = None,
                   folders: Iterable[String] = Nil,
-                  attributeValues: Iterable[AttributeValue] = Nil,
+                  attributeValues: Iterable[AttributeSelection] = Nil,
                   hasAttributes: Iterable[String] = Nil,
                   imagesOnly: Boolean = false,
                   tags: Iterable[String] = Nil,
@@ -26,9 +26,16 @@ case class Search(status: Option[String] = None,
                   pageNumber: Int = 1,
                   maxResults: Int = Search.DEFAULT_MAX_RESULTS)
 
+case class AttributeSelection(id: String, value: String)
+object AttributeSelection {
+  def apply(id: Long, value: String): AttributeSelection = apply(id.toString, value)
+}
+
 object Search {
 
   val DEFAULT_MAX_RESULTS = 100
+
+  def empty: Search = new Search
 
   def apply(name: String): Search = Search(name = Option(name))
 
@@ -54,7 +61,7 @@ object Search {
       prefix = Option(saved.prefix).filterNot(_.trim.isEmpty),
       itemTypeId = Option(saved.objectType).map(_.id),
       folders = folders,
-      attributeValues = saved.attributeValues.asScala,
+      attributeValues = saved.attributeValues.asScala.map(av => AttributeSelection(av.id.toString, av.value)),
       hasAttributes = hasAttributes,
       imagesOnly = saved.imageOnly,
       tags = tags,
