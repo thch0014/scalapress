@@ -32,8 +32,12 @@ class WizardSectionController(val markupDao: MarkupDao,
   def buildStep(req: HttpServletRequest, n: Int): Option[WizardStep] = {
     val title = req.getParameter("wizardStepTitle_" + n)
     val text = req.getParameter("wizardStepText_" + n)
-    val attribute = req.getParameter("wizardStepAttributeId_" + n)
-    if (title != null && title.trim.length > 0) Some(WizardStep(title, text, attribute))
+    val attribute = try {
+      req.getParameter("wizardStepAttributeId_" + n).toLong
+    } catch {
+      case e: Exception => 0l
+    }
+    if (title != null && title.trim.length > 0 && attribute > 0) Some(WizardStep(title, text, attribute))
     else None
   }
 

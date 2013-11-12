@@ -15,6 +15,7 @@ import com.cloudray.scalapress.search.Facet
 import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.FacetSelection
 import java.util
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Entity
@@ -37,41 +38,30 @@ class WizardSection extends SearchResultsSection {
     val selections = FacetSelectionParser.parse(sreq)
 
     val searchService = sreq.context.bean[SearchService]
-    val search = createSearch
+    val search = createSearch(selections)
     val result = searchService.search(search)
 
     val items = getItems(result, sreq.context.itemDao)
-    val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
+    // only render one facet at time for wizards, which is the first non-single term attribute facet
+    val facet = result.facets.filter(_.field.isInstanceOf[AttributeFacetField]).find(_.terms.size > 1)
+    val step = facet
+      .flatMap(f => steps.asScala.find(_.attribute == f.field.asInstanceOf[AttributeFacetField].id))
 
-    renderSelectedFacets(selections, uri) +
-      renderFacets(facetsWithMultipleTerms, uri) +
-      renderItems(items, sreq)
+    val sb = new StringBuilder
+    if (facet.isDefined && step.isDefined) sb append renderStep(facet.get, step.get, uri)
+    if (selections.size > 0) sb append renderItems(items, sreq)
+    sb.mkString
   }
 
-  def createSearch = Search.empty
+  private def facets: Seq[FacetField] = steps.asScala.map(step => AttributeFacetField(step.attribute))
 
-  def getItems(result: SearchResult, dao: ItemDao): Seq[Item] = dao.findBulk(result.refs.map(_.id))
-
-  private def createSearch(folder: Folder,
-                           selections: Iterable[FacetSelection],
-                           facets: Iterable[FacetField]): Search = {
+  private def createSearch(selections: Iterable[FacetSelection]): Search = {
     FacetSelections.selections2search(selections, Search(search)).copy(facets = facets)
   }
 
-  private def renderSelectedFacets(selected: Seq[FacetSelection], uri: Uri): String = {
-    "<div class='search-selected-facets'>" + selected.map(renderSelectedFacet(_, uri)).mkString("\n") + "</div>"
-  }
+  private def getItems(result: SearchResult, dao: ItemDao): Seq[Item] = dao.findBulk(result.refs.map(_.id))
 
-  private def renderSelectedFacet(selected: FacetSelection, uri: Uri): String = {
-    val urlWithFacetRemoved = uri.removeParams(selected.field.key)
-    "<div class='search-selected-facet'>" + selected.value + " <a href=\"" + urlWithFacetRemoved + "\">x</a>" + "</div>"
-  }
-
-  private def renderFacets(facets: Iterable[Facet], uri: Uri): String = {
-    "<div class='search-facets'>" + facets.map(renderFacet(_, uri)).mkString("\n") + "</div>"
-  }
-
-  private def renderFacet(facet: Facet, uri: Uri): Node = {
+  private def renderStep(facet: Facet, step: WizardStep, uri: Uri): Node = {
     val terms = facet.terms.map(term =>
       Scalate.layout(
         "/com/cloudray/scalapress/search/section/facetterm.ssp",
@@ -80,9 +70,9 @@ class WizardSection extends SearchResultsSection {
           "url" -> uri.replaceParams(facet.field.key, term.value).toString())
       )
     )
-    <div class="search-facet">
+    <div class="search-wizard-step">
       <h6>
-        {facet.name}
+        {step.title}{step.text}
       </h6>{Unparsed(terms.mkString("\n"))}
     </div>
   }
@@ -98,6 +88,6 @@ class WizardSection extends SearchResultsSection {
 }
 
 @Embeddable
-case class WizardStep(title: String, text: String, attribute: String) {
-  def this() = this(null, null, null)
+case class WizardStep(title: String, text: String, attribute: Long) {
+  def this() = this(null, null, 0l)
 }
