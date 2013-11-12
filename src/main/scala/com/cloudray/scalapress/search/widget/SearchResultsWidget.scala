@@ -13,7 +13,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Scalapress
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "boxes_highlighted_items")
 class SearchResultsWidget extends Widget with Logging {
@@ -49,7 +49,7 @@ class SearchResultsWidget extends Widget with Logging {
           Some("<!-- search widget #" + id + ": no results (search #" + search.id + ") -->")
 
         else {
-          Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
+          Option(markup).orElse(Option(objects.head.itemType.objectListMarkup)) match {
             case None =>
               Some("<!-- search widget #" + id + ": no markup -->")
             case Some(m) =>

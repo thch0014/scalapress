@@ -36,7 +36,7 @@ object ListingFieldsRenderer {
 
   def render(obj: Item) = {
 
-    val attributes = obj.objectType.attributes.asScala
+    val attributes = obj.itemType.attributes.asScala
     val attributeValues = obj.attributeValues.asScala
 
     <div id="listing-edit-fields">

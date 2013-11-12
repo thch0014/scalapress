@@ -9,7 +9,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 object SectionRenderer extends Logging {
 
   def render(obj: Item, sreq: ScalapressRequest): String =
-    _render(obj.objectType.sortedSections ++ obj.sortedSections, sreq)
+    _render(obj.itemType.sortedSections ++ obj.sortedSections, sreq)
 
   def render(folder: Folder, sreq: ScalapressRequest): String =
     _render(folder.sortedSections, sreq)

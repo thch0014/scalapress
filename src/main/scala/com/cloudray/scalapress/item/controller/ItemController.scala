@@ -37,8 +37,8 @@ class ItemController(itemDao: ItemDao,
   def view(@ModelAttribute item: Item, req: HttpServletRequest, resp: HttpServletResponse) = {
 
     if (item.isDeleted || item.isDisabled) throw new NotFoundException()
-    if (item.objectType == null) throw new NotFoundException()
-    if (item.objectType.hidden) throw new NotFoundException()
+    if (item.itemType == null) throw new NotFoundException()
+    if (item.itemType.hidden) throw new NotFoundException()
 
     val service = new ItemInterceptorService(context.beans[ItemInterceptor])
     if (!service.preHandle(item, req, resp)) {
@@ -51,7 +51,7 @@ class ItemController(itemDao: ItemDao,
 
     if (SpringSecurityResolver.hasAdminRole(req)) page.toolbar(sreq)
 
-    Option(item.objectType.objectViewMarkup) match {
+    Option(item.itemType.objectViewMarkup) match {
       case None =>
       case Some(m) =>
         val main = MarkupRenderer.render(item, m, sreq)

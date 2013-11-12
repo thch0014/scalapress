@@ -26,7 +26,7 @@ class ItemListSectionController(val markupDao: MarkupDao,
   def edit(@ModelAttribute("section") section: ItemListSection, model: ModelMap, req: HttpServletRequest) = {
     val objects = section._objects(ScalapressRequest(req, context))
     if (objects.size > 0)
-      model.put("attributesMap", attributesMap(objects.head.objectType.sortedAttributes))
+      model.put("attributesMap", attributesMap(objects.head.itemType.sortedAttributes))
     "admin/folder/section/objectlist.vm"
   }
 

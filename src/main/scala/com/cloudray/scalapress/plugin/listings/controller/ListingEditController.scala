@@ -42,7 +42,7 @@ class ListingEditController {
     item.content = req.getParameter("content")
 
     item.attributeValues.clear()
-    for ( a <- item.objectType.attributes.asScala ) {
+    for ( a <- item.itemType.attributes.asScala ) {
 
       val values = req.getParameterValues("attributeValue_" + a.id)
       if (values != null) {

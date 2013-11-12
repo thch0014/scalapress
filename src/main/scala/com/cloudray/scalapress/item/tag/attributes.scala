@@ -86,7 +86,7 @@ class AttributeTableTag extends ScalapressTag with TagBuilder {
       case Some(item) => {
 
         // add in default values
-        for ( attr <- item.objectType.attributes.asScala ) {
+        for ( attr <- item.itemType.attributes.asScala ) {
           Option(attr.default).foreach(default => {
             val qqq = AttributeFuncs.attributeValue(item, attr)
 

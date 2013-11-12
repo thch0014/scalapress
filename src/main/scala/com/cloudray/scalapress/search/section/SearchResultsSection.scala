@@ -14,7 +14,7 @@ import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, Scalapress
   *
   *         Shows the results of a saved search
   *
-  * */
+  **/
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging {
@@ -49,7 +49,7 @@ class SearchResultsSection extends Section with Logging {
         objects.size match {
           case 0 => Some("<!-- no search results (search #" + search.id + ") -->")
           case _ =>
-            Option(markup).orElse(Option(objects.head.objectType.objectListMarkup)) match {
+            Option(markup).orElse(Option(objects.head.itemType.objectListMarkup)) match {
               case None => Some("<!-- no search results markup -->")
               case Some(m) =>
                 Some(
