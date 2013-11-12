@@ -4,6 +4,7 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 import com.cloudray.scalapress.util.UrlParser
 import javax.servlet.http.HttpServletRequest
 import com.github.theon.uri.Uri
+import com.cloudray.scalapress.item.attr.AttributeSelection
 
 /** A facet consists of a logical name, used for human reference, and the field that generates
   * the facet, along with a collection of terms that occur in that facet.

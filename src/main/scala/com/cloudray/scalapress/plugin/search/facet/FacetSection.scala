@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.search.section
+package com.cloudray.scalapress.plugin.search.facet
 
 import com.cloudray.scalapress.framework.ScalapressRequest
 import javax.persistence._
@@ -9,10 +9,13 @@ import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.item.{Item, ItemDao}
 import scala.xml.{Unparsed, Node}
 import com.github.theon.uri.Uri
+import com.cloudray.scalapress.util.{Scalate, UrlParser}
+import com.cloudray.scalapress.search.section.SearchResultsSection
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
+import scala.Some
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.util.{Scalate, UrlParser}
+import com.cloudray.scalapress.search.FacetSelection
 
 /** @author Stephen Samuel */
 @Entity

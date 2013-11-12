@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.item.attr
 
-import java.lang.String
 import javax.persistence._
 import com.cloudray.scalapress.search.SavedSearch
 import org.hibernate.annotations._
@@ -9,6 +8,7 @@ import javax.persistence.Table
 import javax.persistence.Entity
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.plugin.listings.domain.ListingProcess
+import scala.Predef._
 
 /** @author Stephen Samuel */
 @Entity
@@ -59,4 +59,9 @@ class AttributeValue {
     case other: AttributeValue => other.attribute == attribute && other.value == value
     case _ => false
   }
+}
+
+case class AttributeSelection(id: String, value: String)
+object AttributeSelection {
+  def apply(id: Long, value: String): AttributeSelection = apply(id.toString, value)
 }

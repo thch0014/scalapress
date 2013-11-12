@@ -1,7 +1,8 @@
-package com.cloudray.scalapress.search
+package com.cloudray.scalapress.plugin.search.facet
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
+import com.cloudray.scalapress.search.{AttributeFacetField, FacetField, TagsFacetField}
 
 /** @author Stephen Samuel */
 class FacetFieldTest extends FunSuite with MockitoSugar with OneInstancePerTest {

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.search.section
+package com.cloudray.scalapress.plugin.search.facet
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMethod, RequestMapping}

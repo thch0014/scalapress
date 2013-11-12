@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.search
 
-import com.cloudray.scalapress.item.attr.Attribute
+import com.cloudray.scalapress.item.attr.{AttributeSelection, Attribute}
 import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
@@ -25,11 +25,6 @@ case class Search(status: Option[String] = None,
                   sortAttribute: Option[Attribute] = None,
                   pageNumber: Int = 1,
                   maxResults: Int = Search.DEFAULT_MAX_RESULTS)
-
-case class AttributeSelection(id: String, value: String)
-object AttributeSelection {
-  def apply(id: Long, value: String): AttributeSelection = apply(id.toString, value)
-}
 
 object Search {
 
