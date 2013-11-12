@@ -12,7 +12,7 @@ import com.github.theon.uri.Uri
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
 import com.cloudray.scalapress.search.SearchResult
-import com.cloudray.scalapress.util.UrlParser
+import com.cloudray.scalapress.util.{Scalate, UrlParser}
 
 /** @author Stephen Samuel */
 @Entity
@@ -53,10 +53,8 @@ class FacetSection extends SearchResultsSection {
   }
 
   private def renderSelectedFacet(selected: FacetSelection, uri: Uri): String = {
-    val urlWithParameterRemoved = uri.removeParams(selected.field.key)
-    "<div class='search-selected-facet'>" +
-      field2name(selected.field) + ":" + selected.value + " <a href=" + urlWithParameterRemoved + ">x</a>" +
-      "</div>"
+    val urlWithFacetRemoved = uri.removeParams(selected.field.key)
+    "<div class='search-selected-facet'>" + selected.value + " <a href=" + urlWithFacetRemoved + ">x</a>" + "</div>"
   }
 
   private def renderFacets(result: SearchResult, uri: Uri): String = {
@@ -65,21 +63,15 @@ class FacetSection extends SearchResultsSection {
   }
 
   private def renderFacet(facet: Facet, uri: Uri): Node = {
-    val terms = facet.terms.map(term => {
-      <dl>
-        <dt>
-          <a href={uri.replaceParams(facet.field.key, term.value)}>
-            {term.value}
-          </a>
-        </dt>
-        <dd>
-          (
-          {term.count}
-          )
-        </dd>
-      </dl>
-    })
-
+    val terms = facet.terms.map(term =>
+      Scalate.layout(
+        "/com/cloudray/scalapress/search/section/facetterm.ssp",
+        Map("count" -> term.count,
+          "value" -> term.value,
+          "uri" -> uri.replaceParams(facet.field.key, term.value)
+        )
+      )
+    )
     <div class="search-facet">
       <h6>
         {facet.name}
