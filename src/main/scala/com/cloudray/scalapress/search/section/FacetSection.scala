@@ -60,12 +60,8 @@ class FacetSection extends SearchResultsSection {
   }
 
   private def renderFacets(result: SearchResult, uri: Uri): String = {
-    "<div class='search-facets'>" + result
-      .facets
-      .filterNot(_.terms.isEmpty)
-      .map(renderFacet(_, uri))
-      .mkString("\n") +
-      "</div>"
+    val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
+    "<div class='search-facets'>" + facetsWithMultipleTerms.map(renderFacet(_, uri)).mkString("\n") + "</div>"
   }
 
   private def renderFacet(facet: Facet, uri: Uri): Node = {
