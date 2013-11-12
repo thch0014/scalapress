@@ -24,7 +24,7 @@ class VariationsController {
     val obj = objectDao.find(id)
     model.put("item", obj)
 
-    val variations = variationDao.findByObjectId(id).sortBy(_.name)
+    val variations = variationDao.findByItemId(id).sortBy(_.name)
     model.put("variations", variations.asJava)
 
     val dimensions = dimensionDao.findAll.filterNot(_.objectType == null).filter(_.objectType.id == obj.itemType.id)
@@ -35,7 +35,7 @@ class VariationsController {
 
   @RequestMapping(method = Array(RequestMethod.POST), params = Array("objectId"))
   def save(@RequestParam("objectId") id: Long, req: HttpServletRequest) = {
-    val variations = variationDao.findByObjectId(id)
+    val variations = variationDao.findByItemId(id)
     for ( variation <- variations ) {
       variation.stock = Option(req.getParameter("stock_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt
       variation.price = Option(req.getParameter("price_" + variation.id)).filterNot(_.isEmpty).getOrElse("0").toInt

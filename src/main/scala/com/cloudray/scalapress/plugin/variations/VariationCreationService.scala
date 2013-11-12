@@ -21,7 +21,7 @@ class VariationCreationService(variationDao: VariationDao) {
       v
     }
 
-    val existing = variationDao.findByObjectId(obj.id)
+    val existing = variationDao.findByItemId(obj.id)
     variations.filterNot(v => exists(v, existing))
   }
 

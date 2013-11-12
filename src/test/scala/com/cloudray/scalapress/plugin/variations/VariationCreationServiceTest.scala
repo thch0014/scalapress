@@ -46,7 +46,7 @@ class VariationCreationServiceTest extends FlatSpec with MockitoSugar with OneIn
   v22.value = "large"
 
   "a variation creation service" should "set the object on all created variations" in {
-    Mockito.when(dao.findByObjectId(1)).thenReturn(Nil)
+    Mockito.when(dao.findByItemId(1)).thenReturn(Nil)
     val map = Map(d1 -> List("green", "red", "blue"), d2 -> List("small", "large"))
     val variations = service.create(obj, map)
     assert(variations.forall(_.obj == obj))
@@ -81,7 +81,7 @@ class VariationCreationServiceTest extends FlatSpec with MockitoSugar with OneIn
     v2.dimensionValues.add(v13)
     v2.dimensionValues.add(v22)
 
-    Mockito.when(dao.findByObjectId(1)).thenReturn(List(v1, v2))
+    Mockito.when(dao.findByItemId(1)).thenReturn(List(v1, v2))
     val map = Map(d1 -> List("green", "red", "blue"), d2 -> List("small", "large"))
     val variations = service.create(obj, map)
     assert(4 === variations.size)

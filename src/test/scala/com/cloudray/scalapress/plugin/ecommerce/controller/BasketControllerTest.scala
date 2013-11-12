@@ -62,7 +62,7 @@ class BasketControllerTest extends FunSuite with MockitoSugar with OneInstancePe
   v2.dimensionValues.add(dv21)
   Mockito.when(controller.variationDao.find(7l)).thenReturn(v2)
 
-  Mockito.when(controller.variationDao.findByObjectId(15)).thenReturn(Seq(v1, v2))
+  Mockito.when(controller.variationDao.findByItemId(15)).thenReturn(Seq(v1, v2))
 
   test("adding object to a basket persists basket with basketline") {
     assert(basket.lines.isEmpty)

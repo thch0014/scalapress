@@ -7,24 +7,24 @@ import com.googlecode.genericdao.search.Search
 
 /** @author Stephen Samuel */
 trait DimensionDao extends GenericDao[Dimension, java.lang.Long] {
-  def findByObjectType(id: Long): Seq[Dimension]
+  def findByItemTypeId(id: Long): Seq[Dimension]
 }
 
 @Component
 @Transactional
 class DimensionDaoImpl extends GenericDaoImpl[Dimension, java.lang.Long] with DimensionDao {
-  def findByObjectType(id: Long): Seq[Dimension] =
+  def findByItemTypeId(id: Long): Seq[Dimension] =
     findAll.filterNot(_.objectType == null).filter(_.objectType.id == id)
 }
 
 trait VariationDao extends GenericDao[Variation, java.lang.Long] {
-  def findByObjectId(l: Long): Seq[Variation]
+  def findByItemId(l: Long): Seq[Variation]
 }
 
 @Component
 @Transactional
 class VariationDaoImpl extends GenericDaoImpl[Variation, java.lang.Long] with VariationDao {
-  def findByObjectId(l: Long): Seq[Variation] = {
+  def findByItemId(l: Long): Seq[Variation] = {
     search(new Search(classOf[Variation]).addFilterEqual("obj.id", l))
   }
 }

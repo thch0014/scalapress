@@ -37,7 +37,7 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
 
   "a variations controller" should "set the dimensions from the item's type in the model" in {
     Mockito.when(controller.dimensionDao.findAll).thenReturn(List(d1, d2))
-    Mockito.when(controller.variationDao.findByObjectId(Matchers.anyLong())).thenReturn(Nil)
+    Mockito.when(controller.variationDao.findByItemId(Matchers.anyLong())).thenReturn(Nil)
     val model = new ModelMap
     controller.edit(1, model)
     assert(2 === model.get("dimensions").asInstanceOf[java.util.Collection[Dimension]].size)
@@ -45,14 +45,14 @@ class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstan
 
   it should "show the variations for the object" in {
     Mockito.when(controller.dimensionDao.findAll).thenReturn(Nil)
-    Mockito.when(controller.variationDao.findByObjectId(1)).thenReturn(List(v1, v2))
+    Mockito.when(controller.variationDao.findByItemId(1)).thenReturn(List(v1, v2))
     val model = new ModelMap
     controller.edit(1, model)
     assert(2 === model.get("variations").asInstanceOf[java.util.Collection[Variation]].size)
   }
 
   it should "update stock and prices for all variations from sreq parameters" in {
-    Mockito.when(controller.variationDao.findByObjectId(1)).thenReturn(List(v1, v2))
+    Mockito.when(controller.variationDao.findByItemId(1)).thenReturn(List(v1, v2))
     Mockito.when(req.getParameter("price_" + v1.id)).thenReturn("425")
     Mockito.when(req.getParameter("stock_" + v1.id)).thenReturn("44")
     Mockito.when(req.getParameter("price_" + v2.id)).thenReturn("1999")

@@ -46,7 +46,7 @@ class VariationDaoTest extends FunSuite with MockitoSugar {
     TestDatabaseContext.variationDao.save(v)
     assert(v.id > 0)
 
-    val v2 = TestDatabaseContext.variationDao.findByObjectId(obj.id)
+    val v2 = TestDatabaseContext.variationDao.findByItemId(obj.id)
     assert(1 === v2.size)
     assert(v.id === v2(0).id)
   }

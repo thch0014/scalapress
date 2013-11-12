@@ -26,7 +26,7 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
   obj.name = "meatballs"
   obj.stock = 25
 
-  Mockito.when(variationDao.findByObjectId(12)).thenReturn(Nil)
+  Mockito.when(variationDao.findByItemId(12)).thenReturn(Nil)
 
   val tag = new TagAvailabilityTag()
 
@@ -39,7 +39,7 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
 
   test("when object has variations then availability should not render") {
     obj.id = 15
-    Mockito.when(variationDao.findByObjectId(15)).thenReturn(Seq(new Variation))
+    Mockito.when(variationDao.findByItemId(15)).thenReturn(Seq(new Variation))
     val sreq = ScalapressRequest(req, context).withItem(obj)
     val actual = tag.render(sreq, Map.empty)
 //    assert(actual.isEmpty)

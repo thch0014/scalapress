@@ -42,8 +42,8 @@ class VariationsSelectTag extends ScalapressTag with TagBuilder {
   def render(request: ScalapressRequest, params: Map[String, String]): Option[String] = {
     request.item.flatMap(obj => {
 
-      val variations = request.context.bean[VariationDao].findByObjectId(obj.id)
-      val dimensions = request.context.bean[DimensionDao].findByObjectType(obj.itemType.id)
+      val variations = request.context.bean[VariationDao].findByItemId(obj.id)
+      val dimensions = request.context.bean[DimensionDao].findByItemTypeId(obj.itemType.id)
 
       variations.size match {
         case 0 => None

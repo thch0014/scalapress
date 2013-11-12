@@ -47,5 +47,5 @@ class DimensionListController {
   @ModelAttribute("objectTypeId") def objectTypeId(@RequestParam("objectTypeId") objectTypeId: Long) = objectTypeId
 
   @ModelAttribute("dimensions") def dimensions(@RequestParam("objectTypeId") objectTypeId: Long) =
-    dimensionDao.findByObjectType(objectTypeId).asJava
+    dimensionDao.findByItemTypeId(objectTypeId).asJava
 }

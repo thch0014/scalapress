@@ -73,16 +73,16 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   Mockito.when(context.bean[VariationDao]).thenReturn(variationDao)
 
   "a variation select tag" should "render a select tag per dimension" in {
-    Mockito.when(variationDao.findByObjectId(4)).thenReturn(List(v1, v2))
-    Mockito.when(dimensionDao.findByObjectType(19)).thenReturn(Seq(d1, d2))
+    Mockito.when(variationDao.findByItemId(4)).thenReturn(List(v1, v2))
+    Mockito.when(dimensionDao.findByItemTypeId(19)).thenReturn(Seq(d1, d2))
     val render = tag.render(sreq, Map.empty).get
     assert(render.contains("<select name=\"dimension_2\">"))
     assert(render.contains("<select name=\"dimension_6\">"))
   }
 
   "a variation select tag" should "not render a select tag for an empty dimension" in {
-    Mockito.when(variationDao.findByObjectId(4)).thenReturn(List(v1, v2))
-    Mockito.when(dimensionDao.findByObjectType(19)).thenReturn(Seq(d1, d2))
+    Mockito.when(variationDao.findByItemId(4)).thenReturn(List(v1, v2))
+    Mockito.when(dimensionDao.findByItemTypeId(19)).thenReturn(Seq(d1, d2))
     dv12.value = ""
     dv11.value = ""
     val render = tag.render(sreq, Map.empty).get
@@ -112,7 +112,7 @@ class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstance
   }
 
   it should "render all none when no variations" in {
-    Mockito.when(variationDao.findByObjectId(4)).thenReturn(Nil)
+    Mockito.when(variationDao.findByItemId(4)).thenReturn(Nil)
     val render = tag.render(sreq, Map.empty)
     assert(render.isEmpty)
   }

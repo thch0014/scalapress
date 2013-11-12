@@ -76,7 +76,7 @@ class BasketController {
 
     line.variation =
       variationDao
-        .findByObjectId(id)
+        .findByItemId(id)
         .find(_.dimensionValues.asScala
         .filterNot(_.value == null)
         .filterNot(_.value.isEmpty)
