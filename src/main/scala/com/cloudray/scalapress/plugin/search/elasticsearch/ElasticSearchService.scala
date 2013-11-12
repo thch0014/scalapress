@@ -31,7 +31,7 @@ import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 @Autowired
-class ElasticSearchService(attributeDao: AttributeDao) extends SearchService with Logging {
+class ElasticSearchService(attributeDao: AttributeDao) extends IndexedSearchService with Logging {
 
   val DELETED = Item.STATUS_DELETED.toLowerCase
   val DISABLED = Item.STATUS_DISABLED.toLowerCase
@@ -112,7 +112,7 @@ class ElasticSearchService(attributeDao: AttributeDao) extends SearchService wit
     }
   }
 
-  override def contains(_id: String): Boolean = {
+  override def exists(_id: String): Boolean = {
     val resp = client.sync.execute {
       get id _id from INDEX -> TYPE
     }

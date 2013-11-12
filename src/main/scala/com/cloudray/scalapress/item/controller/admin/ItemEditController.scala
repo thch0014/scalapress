@@ -106,7 +106,7 @@ class ItemEditController(val assetStore: AssetStore,
     }
 
     form.o.attributeValues.clear()
-    for ( a <- form.o.objectType.attributes.asScala ) {
+    for ( a <- form.o.itemType.attributes.asScala ) {
       val values = req.getParameterValues("attributeValues" + a.id)
       if (values != null) {
         values.map(_.trim)
@@ -134,7 +134,7 @@ class ItemEditController(val assetStore: AssetStore,
       form.o.associations.add(itemDao.find(form.associatedObjectId.trim.toLong))
 
     itemDao.save(form.o)
-    searchService.index(Seq(form.o))
+    //searchService.index(Seq(form.o))
 
     "redirect:/backoffice/item/" + form.o.id
   }
@@ -230,7 +230,7 @@ class ItemEditController(val assetStore: AssetStore,
     item.status = WordUtils.capitalizeFully(item.status)
 
     model.put("attributesWithValues",
-      attributeEditMap(item.objectType.sortedAttributes, item.attributeValues.asScala.toSeq))
+      attributeEditMap(item.itemType.sortedAttributes, item.attributeValues.asScala.toSeq))
     model.put("form", form)
     model.put("eyeball", UrlGenerator.url(item))
 

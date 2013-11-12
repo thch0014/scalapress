@@ -6,33 +6,15 @@ import com.cloudray.scalapress.item.Item
 trait SearchService {
 
   /**
-   * Returns true if the index contains an item with the given id.
+   * Returns true if an item exists with the given id
    */
-  def contains(id: String): Boolean
+  def exists(id: String): Boolean
 
   /**
    * Returns the total number (or best estimate in the case of distributed search systems)
    * of items in the index.
    */
   def count: Long
-
-  /**
-   * Index, or reindex, the given item. In some cases this will cause the given item to be
-   * removed from the index, for example if the given item is an invalid state.
-   */
-  def index(item: Item)
-
-  /**
-   * Batch index operation. Implementations can optionally override this to provide faster
-   * performance for indexing multiple items at once; otherwise default implementation is to simply
-   * call index(item) for each item in the sequence.
-   */
-  def index(items: Seq[Item]): Unit = items.foreach(index)
-
-  /**
-   * Remove the item with the given id from the index.
-   */
-  def remove(id: String)
 
   /**
    * Executes a search and returns a SearchResult
@@ -48,5 +30,30 @@ trait SearchStats {
   def stats: Map[String, String]
 }
 
+/**
+ * A specialization of the SearchService for services that require items to be explicity indexed.
+ * For example when using an indexing search like Solr.
+ */
+trait IndexedSearchService extends SearchService {
 
+  /**
+   * Remove the item with the given id from the index.
+   */
+  def remove(id: String)
+
+  /**
+   * Index, or reindex, the given item. In some cases this will cause the given item to be
+   * removed from the index, for example if the given item is an invalid state.
+   *
+   * Some implementations may render this operation as a no-op, if they do not use an indexing step.
+   */
+  def index(item: Item)
+
+  /**
+   * Batch index operation. Implementations can optionally override this to provide faster
+   * performance for indexing multiple items at once; otherwise default implementation is to simply
+   * call index(item) for each item in the sequence.
+   */
+  def index(items: Seq[Item]): Unit = items.foreach(index)
+}
 
