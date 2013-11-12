@@ -42,8 +42,13 @@ class WizardSection extends SearchResultsSection {
     val result = searchService.search(search)
 
     val items = getItems(result, sreq.context.itemDao)
-    // only render one facet at time for wizards, which is the first non-single term attribute facet
-    val facet = result.facets.filter(_.field.isInstanceOf[AttributeFacetField]).find(_.terms.size > 1)
+
+    // only render one facet at time for wizards, which is the first non-selected single term attribute facet
+    val facet = result.facets
+      .filter(_.field.isInstanceOf[AttributeFacetField])
+      .filterNot(facet => selections.map(_.field).contains(facet.field))
+      .find(_.terms.size > 1)
+
     val step = facet
       .flatMap(f => steps.asScala.find(_.attribute == f.field.asInstanceOf[AttributeFacetField].id))
 
