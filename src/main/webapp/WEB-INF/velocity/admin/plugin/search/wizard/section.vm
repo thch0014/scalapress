@@ -1,0 +1,79 @@
+#parse("/admin/header.vm")
+
+<div class="page-header">
+    <h2>Wizard Section: $section.id</h2>
+</div>
+
+<form class="form-horizontal" method="POST">
+
+  #parse("/admin/section/common.vm")
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Markup</label>
+
+        <div class="col-lg-8">
+            <select id="markup" name="markup" class="form-control">
+              #foreach($option in $markupMap.keySet())
+                  <option value="${option}"
+                    #if("$!section.markup.id" == "$option")
+                          selected="selected"
+                    #end>
+                    ${markupMap.get($option)}</option>
+              #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Search</label>
+
+        <div class="col-lg-8">
+            Edit Saved Search <a href="/backoffice/savedsearch/$section.search.id" class="btn btn-xs btn-default">
+            <i class="glyphicon glyphicon-pencil"></i></a>
+        </div>
+    </div>
+
+    <legend>Steps</legend>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Attribute Id</th>
+        </tr>
+      #foreach ($step in $section.steps())
+          <tr>
+              <td>
+                  <input type="text" name="wizardStepTitle_$velocityCount" value="$step.title()"
+                         class="form-control" placeholder="title"/>
+              </td>
+              <td>
+                  <input type="text" name="wizardStepText_$velocityCount" value="$!step.text()"
+                         class="form-control" placeholder="text"/>
+              </td>
+              <td>
+                  <input type="text" name="wizardStepAttributeId_$velocityCount" value="$!step.attribute()"
+                         class="form-control" placeholder="attribute id"/>
+              </td>
+          </tr>
+      #end
+        <tr>
+            <td>
+                <input type="text" name="wizardStepTitle_30"
+                       class="form-control" placeholder="title"/>
+            </td>
+            <td>
+                <input type="text" name="wizardStepTtext_30"
+                       class="form-control" placeholder="text"/>
+            </td>
+            <td>
+                <input type="text" name="wizardStepAttributeId_30"
+                       class="form-control" placeholder="attribute id"/>
+            </td>
+        </tr>
+    </table>
+
+  #parse("/admin/section/actions.vm")
+
+</form>
+
+#parse("/admin/footer.vm")

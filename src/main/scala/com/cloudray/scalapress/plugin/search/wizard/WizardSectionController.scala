@@ -27,13 +27,13 @@ class WizardSectionController(val markupDao: MarkupDao,
     edit(section)
   }
 
-  def buildSteps(req: HttpServletRequest): Seq[WizardStep] = (for ( n <- 1 to 30 ) yield buildStep(req, n)).flatten
+  def buildSteps(req: HttpServletRequest): Seq[WizardStep] = (for ( n <- 0 to 30 ) yield buildStep(req, n)).flatten
 
   def buildStep(req: HttpServletRequest, n: Int): Option[WizardStep] = {
     val title = req.getParameter("wizardStepTitle_" + n)
     val text = req.getParameter("wizardStepText_" + n)
     val attribute = req.getParameter("wizardStepAttributeId_" + n)
-    if (title != null) Some(WizardStep(title, text, attribute))
+    if (title != null && title.trim.length > 0) Some(WizardStep(title, text, attribute))
     else None
   }
 
