@@ -13,7 +13,7 @@ class GBaseFeed {
   @BeanProperty
   var id: Long = _
 
-  @Column(name = "disabled")
+  @Column(name = "disabled", nullable = false)
   @BeanProperty
   var disabled = false
   def enabled = !disabled
