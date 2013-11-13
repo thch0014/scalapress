@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.folder.controller
 
-import org.scalatest.{OneInstancePerTest, FunSuite}
+import org.scalatest._
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
@@ -10,7 +10,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.media.AssetStore
 
 /** @author Stephen Samuel */
-class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class FolderControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest with ShouldMatchers {
 
   val folderDao = mock[FolderDao]
   val folderPluginDao = mock[FolderPluginDao]
@@ -29,31 +29,59 @@ class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePe
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]
 
-  test("the rendered page includes the header") {
-    val folder = new Folder
-    folder.header = "lovely header"
+  val folder = new Folder
+  folder.header = "lovely header"
+  folder.footer = "big feet"
+
+  settings.header = "super header"
+  settings.footer = "general bigfoot"
+
+  val interceptor1 = mock[FolderInterceptor]
+  val interceptor2 = mock[FolderInterceptor]
+  Mockito.when(interceptor1.preHandle(folder, req, resp)).thenReturn(true)
+  Mockito.when(interceptor2.preHandle(folder, req, resp)).thenReturn(true)
+
+  val interceptors = List(interceptor1, interceptor2)
+  Mockito.when(context.beans[FolderInterceptor]).thenReturn(interceptors)
+
+  "a folder controller" should "include the header in the page" in {
     val page = controller.view(folder, req, resp)
     assert(page.render.contains("lovely head"))
   }
 
-  test("the rendered page includes the footer") {
-    val folder = new Folder
-    folder.footer = "big feet"
+  it should "include the footer in the page" in {
     val page = controller.view(folder, req, resp)
     assert(page.render.contains("big feet"))
   }
 
-  test("the rendered page includes the header from settings if folder header is null") {
-    val folder = new Folder
-    settings.header = "super header"
+  it should "include the header from settings if folder header is null" in {
+    folder.header = null
     val page = controller.view(folder, req, resp)
     assert(page.render.contains("super header"))
   }
 
-  test("the rendered page includes the footer from settings if folder footer is null") {
-    val folder = new Folder
-    settings.footer = "general bigfoot"
+  it should "include the footer from settings if folder footer is null" in {
+    folder.footer = null
     val page = controller.view(folder, req, resp)
     assert(page.render.contains("general bigfoot"))
+  }
+
+  it should "call all pre handling interceptors" in {
+    controller.view(folder, req, resp)
+    Mockito.verify(interceptor1).preHandle(folder, req, resp)
+    Mockito.verify(interceptor2).preHandle(folder, req, resp)
+  }
+
+  it should "call all post handling interceptors" in {
+    controller.view(folder, req, resp)
+    Mockito.verify(interceptor1).postHandle(folder, req, resp)
+    Mockito.verify(interceptor2).postHandle(folder, req, resp)
+  }
+
+  it should "stop execution if an interceptor pre call returns false" in {
+    Mockito.when(interceptor1.preHandle(folder, req, resp)).thenReturn(false)
+    evaluating {
+      controller.view(folder, req, resp)
+    } should produce[FolderInterceptorException]
   }
 }

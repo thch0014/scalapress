@@ -27,6 +27,7 @@ class ItemControllerTest extends FlatSpec with MockitoSugar with OneInstancePerT
   val interceptor2 = mock[ItemInterceptor]
   Mockito.when(interceptor1.preHandle(item, req, resp)).thenReturn(true)
   Mockito.when(interceptor2.preHandle(item, req, resp)).thenReturn(true)
+
   val interceptors = List(interceptor1, interceptor2)
   Mockito.when(context.beans[ItemInterceptor]).thenReturn(interceptors)
 
