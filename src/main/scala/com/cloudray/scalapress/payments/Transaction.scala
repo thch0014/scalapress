@@ -115,7 +115,7 @@ class Transaction {
   @BeanProperty
   var ipAddress: String = _
 
-  override def toString: String = s"Transaction [id=$id transactionId=$transactionId processor=$processor date=$date]"
+  override def toString: String = s"Transaction [transactionId=$transactionId amount=$amount processor=$processor date=$date]"
 }
 
 object Transaction {
