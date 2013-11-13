@@ -97,4 +97,11 @@ class WidgetDisplayServiceTest extends FunSuite with MockitoSugar with OneInstan
     Mockito.when(req.getCookies).thenReturn(Array[Cookie]())
     assert(new WidgetDisplayService().isVisible(widget, sreq.withSearchResult(r)))
   }
+
+  test("folder override should stop displaying of a widget") {
+    widget.restricted = false
+    widget.displayOnSearchResults = true
+    f.hideWidgets = true
+    assert(!new WidgetDisplayService().isVisible(widget, sreq.withFolder(f)))
+  }
 }

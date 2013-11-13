@@ -2,6 +2,7 @@ package com.cloudray.scalapress.widgets
 
 import javax.servlet.http.Cookie
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 class WidgetDisplayService extends Logging {
@@ -25,7 +26,10 @@ class WidgetDisplayService extends Logging {
   }
 
   def isVisible(widget: Widget, sreq: ScalapressRequest): Boolean =
-    widget.visible && checkWhere(widget, sreq) && checkOneTime(widget, sreq)
+    widget.visible && checkWhere(widget, sreq) && checkOneTime(widget, sreq) && !isFolderOverride(sreq)
+
+  def isFolderOverride(sreq: ScalapressRequest): Boolean = sreq.folder.exists(isFolderOverride)
+  def isFolderOverride(folder: Folder): Boolean = folder.hideWidgets
 
   private def checkOneTime(widget: Widget, sreq: ScalapressRequest): Boolean = {
     widget.oneTimeVisible match {
