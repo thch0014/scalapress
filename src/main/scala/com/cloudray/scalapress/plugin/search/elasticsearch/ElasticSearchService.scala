@@ -57,13 +57,15 @@ class ElasticSearchService(attributeDao: AttributeDao)
 
     val fields = new ListBuffer[FieldDefinition]
     fields.append(id typed StringType index "not_analyzed" store true)
+    fields.append(FIELD_FOLDERS typed StringType index "not_analyzed" store true)
     fields.append(FIELD_ITEM_ID typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_ITEM_TYPE_ID typed IntegerType index "not_analyzed" store true)
     fields.append(FIELD_NAME typed StringType analyzer WhitespaceAnalyzer store true)
     fields.append(FIELD_NAME_NOT_ANALYSED typed StringType index "not_analyzed" store true)
     fields.append(FIELD_TAGS typed StringType analyzer KeywordAnalyzer)
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
-    fields.append("location" typed GeoPointType)
+    fields.append(FIELD_LOCATION typed GeoPointType)
+
     attributes.foreach(attribute => {
       val t = attribute.attributeType match {
         case AttributeType.Numerical => DoubleType

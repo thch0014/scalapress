@@ -41,7 +41,7 @@ object ElasticsearchIndexBuilder extends ElasticsearchUtils with Logging {
           val hasImage = item.images.size > 0
           _fields.append(FIELD_HAS_IMAGE -> hasImage.toString)
 
-          item.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id))
+          item.folders.asScala.foreach(folder => _fields.append(FIELD_FOLDERS -> folder.id.toString))
 
           item.attributeValues.asScala
             .filterNot(_.value == null)
