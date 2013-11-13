@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.payments
 
-import com.cloudray.scalapress.settings._
 import scala.Some
 import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 

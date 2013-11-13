@@ -10,11 +10,10 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/invoice/{id}"))
-class InvoiceController {
-
-  @Autowired var orderDao: OrderDao = _
-  @Autowired var context: ScalapressContext = _
+class InvoiceController(orderDao: OrderDao,
+                        context: ScalapressContext) {
 
   @ResponseBody
   @RequestMapping

@@ -10,8 +10,8 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/tx"))
 @Autowired
+@RequestMapping(Array("backoffice/tx"))
 class TransactionListController(transactionDao: TransactionDao) {
 
   @RequestMapping

@@ -8,8 +8,8 @@ import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("payment/callback"))
 @Autowired
+@RequestMapping(Array("payment/callback"))
 class PaymentCallbackController(paymentCallbackService: PaymentCallbackService) extends Logging {
 
   @ResponseBody

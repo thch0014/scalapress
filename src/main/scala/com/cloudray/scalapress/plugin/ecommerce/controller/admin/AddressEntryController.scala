@@ -13,12 +13,11 @@ import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/plugin/shopping/address/{id}"))
-class AddressEntryController {
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var addressDao: AddressDao = _
-  @Autowired var objectDao: ItemDao = _
+class AddressEntryController(context: ScalapressContext,
+                             addressDao: AddressDao,
+                             objectDao: ItemDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit = "admin/plugin/shopping/address/entry.vm"

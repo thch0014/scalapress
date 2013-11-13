@@ -15,12 +15,11 @@ import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice/order"))
-class OrderSearchController extends OrderStatusPopulator {
-
-  @Autowired var shoppingPluginDao: ShoppingPluginDao = _
-  @Autowired var orderDao: OrderDao = _
-  @Autowired var context: ScalapressContext = _
+class OrderSearchController(var shoppingPluginDao: ShoppingPluginDao,
+                            orderDao: OrderDao,
+                            context: ScalapressContext) extends OrderStatusPopulator {
 
   @RequestMapping
   def search(@ModelAttribute("form") form: SearchForm,

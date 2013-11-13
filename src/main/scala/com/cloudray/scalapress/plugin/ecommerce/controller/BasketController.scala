@@ -36,7 +36,6 @@ class BasketController {
     val page = ScalapressPage(theme, sreq)
     val markup = shoppingPluginDao.get.basketMarkup
 
-
     page.body("<form method='POST'>")
     if (markup == null) {
       page.body("<!-- no basket markup set -->")
