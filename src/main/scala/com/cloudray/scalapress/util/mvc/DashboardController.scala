@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.plugin.ecommerce.{OrderTotal, OrderDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderTotal, OrderDao}
 
 /** @author Stephen Samuel */
 @Controller

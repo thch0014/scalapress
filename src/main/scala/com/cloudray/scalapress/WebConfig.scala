@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao, BasketDao}
 import com.cloudray.scalapress.plugin.form.FormDao
 import com.cloudray.scalapress.search.SearchFormDao
 import org.springframework.http.converter.xml.{SourceHttpMessageConverter, XmlAwareFormHttpMessageConverter}
@@ -31,6 +30,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.cloudray.scalapress.account.AccountTypeDao
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{DeliveryOptionDao, AddressDao, BasketDao}
 
 /**
  * @author Stephen K Samuel 14 Oct 2012

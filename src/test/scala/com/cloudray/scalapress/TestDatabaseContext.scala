@@ -5,7 +5,6 @@ import com.cloudray.scalapress.payments.{TransactionDao, TransactionDaoImpl}
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import com.cloudray.scalapress.theme.{MarkupDao, MarkupDaoImpl, ThemeDao, ThemeDaoImpl}
 import com.cloudray.scalapress.search.{SearchFormDao, SearchFormDaoImpl, SavedSearchDao, SavedSearchDaoImpl}
-import com.cloudray.scalapress.plugin.ecommerce.{OrderDao, OrderDaoImpl}
 import com.cloudray.scalapress.plugin.listings.{ListingProcessDao, ListingProcessDaoImpl, ListingPackageDao, ListingPackageDaoImpl}
 import com.cloudray.scalapress.plugin.form.{FormFieldDao, FormFieldDaoImpl, FormDao, FormDaoImpl}
 import com.cloudray.scalapress.item.{TypeDao, TypeDaoImpl, ItemDao, ItemDaoImpl}
@@ -16,6 +15,7 @@ import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.item.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
 import com.cloudray.scalapress.plugin.variations._
 import com.cloudray.scalapress.account.{AccountDao, AccountDaoImpl, AccountPluginDaoImpl, AccountPluginDao}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDaoImpl, OrderDao}
 
 /** @author Stephen Samuel */
 object TestDatabaseContext {
@@ -42,7 +42,6 @@ object TestDatabaseContext {
     .getAutowireCapableBeanFactory
     .createBean(classOf[FolderDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[FolderDao]
-
 
   val typeDao = context
     .getAutowireCapableBeanFactory

@@ -4,10 +4,10 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.{StockMethod, Item}
-import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
 import org.mockito.Mockito
 import com.cloudray.scalapress.plugin.variations.{Variation, VariationDao}
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
 
 /** @author Stephen Samuel */
 class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

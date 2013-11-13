@@ -9,8 +9,8 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.account.{AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.controller.admin.AccountStatusPopulator
-import com.cloudray.scalapress.plugin.ecommerce.controller.admin.OrderQuery
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderQuery
 
 /** @author Stephen Samuel */
 @Controller

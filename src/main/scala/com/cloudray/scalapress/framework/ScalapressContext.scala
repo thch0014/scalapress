@@ -13,11 +13,11 @@ import com.cloudray.scalapress.item.attr.{AttributeValueDao, AttributeDao}
 import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.{AccountTypeDao, AccountDao}
-import com.cloudray.scalapress.plugin.ecommerce.OrderDao
 import com.cloudray.scalapress.search.{SavedSearchDao, SearchFormDao, SearchService}
 import com.cloudray.scalapress.item.{TypeDao, ItemDao}
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.widgets.WidgetDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
 
 /** @author Stephen Samuel */
 @Component

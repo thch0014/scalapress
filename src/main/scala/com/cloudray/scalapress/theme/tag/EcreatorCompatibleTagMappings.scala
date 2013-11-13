@@ -4,6 +4,7 @@ import com.cloudray.scalapress.plugin.ecommerce.tags._
 import com.cloudray.scalapress.item.tag._
 import com.cloudray.scalapress.folder.tag.{PrimaryFoldersTag, FolderTag}
 import com.cloudray.scalapress.settings.tag.SiteGoogleMapTag
+import com.cloudray.scalapress.plugin.ecommerce.shopping.tags.DeliveryOptionsTag
 
 /** @author Stephen Samuel */
 object EcreatorCompatibleTagMappings {

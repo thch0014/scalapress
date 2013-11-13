@@ -25,8 +25,7 @@ object SectionRenderer extends Logging {
 
     logger.debug("Rendering section [{}]...", section)
 
-    if (interceptors != null)
-      interceptors.foreach(_.preSection(section))
+    if (interceptors != null) interceptors.foreach(_.preSection(section))
 
     val start = System.currentTimeMillis()
     val buffer = new ArrayBuffer[String]
@@ -40,8 +39,7 @@ object SectionRenderer extends Logging {
     logger.debug("...rendered in {} ms", System.currentTimeMillis() - start)
     val rendered = buffer.mkString
 
-    if (interceptors != null)
-      interceptors.foreach(_.postSection(section))
+    if (interceptors != null) interceptors.foreach(_.postSection(section))
 
     rendered
   }

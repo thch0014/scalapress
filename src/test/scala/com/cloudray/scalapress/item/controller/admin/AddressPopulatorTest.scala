@@ -4,9 +4,9 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{Matchers, Mockito}
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.plugin.ecommerce.dao.AddressDao
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.ISearch
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.AddressDao
 
 /** @author Stephen Samuel */
 class AddressPopulatorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

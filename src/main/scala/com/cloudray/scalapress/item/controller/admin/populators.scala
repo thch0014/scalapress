@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import scala.collection.immutable.{ListMap, TreeMap}
-import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPlugin, ShoppingPluginDao}
-import com.cloudray.scalapress.plugin.ecommerce.dao.{AddressDao, DeliveryOptionDao}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.plugin.form.FormDao
@@ -14,6 +12,8 @@ import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{DeliveryOptionDao, AddressDao}
 
 /** @author Stephen Samuel */
 trait MarkupPopulator {
