@@ -10,11 +10,14 @@ class PasswordToken {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: java.lang.Long = _
+  @BeanProperty
+  var id: java.lang.Long = _
 
   @Column(name = "email")
-  @BeanProperty var email: String = _
+  @BeanProperty
+  var email: String = _
 
   @Column(name = "token")
-  @BeanProperty var token: String = _
+  @BeanProperty
+  var token: String = _
 }

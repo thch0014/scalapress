@@ -2,16 +2,23 @@ package com.cloudray.scalapress.account.controller.renderer
 
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.account.controller.RegistrationForm
-import com.cloudray.scalapress.account.AccountPlugin
+import com.cloudray.scalapress.account.{AccountTypeDao, AccountPlugin}
 import com.cloudray.scalapress.util.Scalate
 import com.cloudray.scalapress.settings.Installation
 import scala.xml.Unparsed
 import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
-class RegistrationRenderer(installation: Installation) {
+class RegistrationRenderer(installation: Installation,
+                           accountTypeDao: AccountTypeDao) {
 
-  def renderChooseAccountType(plugin: AccountPlugin) = <div class="container-fluid">Choose Account Type</div>
+  def renderChooseAccountType(plugin: AccountPlugin) = {
+    val accountTypes = accountTypeDao.findRegistration
+    Scalate.layout(
+      "/com/cloudray/scalapress/account/register-account-type.ssp",
+      Map("" -> "")
+    )
+  }
 
   def renderRegistrationPage(form: RegistrationForm,
                              plugin: AccountPlugin,

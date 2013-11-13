@@ -18,4 +18,7 @@ class AccountType {
   @Index(name = "name_index")
   @BeanProperty
   var name: String = _
+
+  @BeanProperty
+  var registration: Boolean = false
 }

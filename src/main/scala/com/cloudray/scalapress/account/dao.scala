@@ -75,12 +75,14 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
 
 trait AccountTypeDao extends GenericDao[AccountType, java.lang.Long] {
   def default: AccountType
+  def findRegistration: Seq[AccountType]
 }
 
 @Component
 @Transactional
 class AccountTypeDaoImpl extends GenericDaoImpl[AccountType, java.lang.Long] with AccountTypeDao {
   def default = findAll.head
+  def findRegistration: Seq[AccountType] = findAll.filter(_.registration)
 }
 
 trait AccountPluginDao extends GenericDao[AccountPlugin, java.lang.Long] {

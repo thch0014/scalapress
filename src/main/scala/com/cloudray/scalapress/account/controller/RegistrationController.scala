@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.account.controller
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{ExceptionHandler, ResponseBody, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import org.hibernate.validator.constraints.NotEmpty
@@ -18,6 +18,7 @@ import com.cloudray.scalapress.account._
 import com.cloudray.scalapress.account.controller.renderer.RegistrationRenderer
 import org.springframework.beans.factory.annotation.{Qualifier, Autowired}
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
@@ -39,29 +40,29 @@ class RegistrationController(themeService: ThemeService,
     resp.sendRedirect(e.url)
   }
 
-  //
-  // @ResponseBody
-  // @RequestMapping(Array("type"))
-  //    def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalapressPage = {
-  //
-  //        val plugin = accountPluginDao.get
-  //        val sreq = ScalapressRequest(req).withTitle("Registration")
-  //        val theme = themeService.default
-  //        val page = ScalapressPage(theme, sreq)
-  //
-  //        page.body("<h1>Choose Account Type</h1>")
-  //        page.body(RegistrationRenderer.renderChooseAccountType(plugin))
-  //        page
-  //    }
+  @ResponseBody
+  @RequestMapping(Array("type"))
+  def showAccountTypes(req: HttpServletRequest, @ModelAttribute("form") form: RegistrationForm): ScalapressPage = {
+
+    val plugin = accountPluginDao.get
+    val sreq = ScalapressRequest(req, context).withTitle("Registration")
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    val renderer = new RegistrationRenderer(context.installationDao.get, accountTypeDao)
+
+    page.body(renderer.renderChooseAccountType(plugin))
+    page
+  }
 
   @ResponseBody
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def showRegistrationPage(req: HttpServletRequest,
+                           @RequestParam(value = "accountTypeId", required = false) accountTypeId: String,
                            @ModelAttribute("form") form: RegistrationForm,
                            errors: Errors): ScalapressPage = {
 
     val plugin = accountPluginDao.get
-    val renderer = new RegistrationRenderer(context.installationDao.get)
+    val renderer = new RegistrationRenderer(context.installationDao.get, accountTypeDao)
     val sreq = ScalapressRequest(req, context).withTitle("Registration")
 
     val theme = themeService.default

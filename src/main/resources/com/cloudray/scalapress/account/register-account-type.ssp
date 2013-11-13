@@ -1,0 +1,12 @@
+<div class="registration-choose-account-type">
+
+    <h3>Account Type</h3>
+
+    <div class="account-type">$accountType</div>
+    <div>
+        <a href="">
+
+        </a>
+    </div>
+</div>
+
