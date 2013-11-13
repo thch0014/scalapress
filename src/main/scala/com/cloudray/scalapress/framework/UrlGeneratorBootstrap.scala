@@ -1,9 +1,10 @@
-package com.cloudray.scalapress.util
+package com.cloudray.scalapress.framework
 
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Value
 import javax.annotation.PostConstruct
-import com.cloudray.scalapress.framework.Logging
+import com.cloudray.scalapress.framework.{UrlGenerator, Logging}
+import com.cloudray.scalapress.util.UrlStrategy
 
 /** @author Stephen Samuel */
 @Component

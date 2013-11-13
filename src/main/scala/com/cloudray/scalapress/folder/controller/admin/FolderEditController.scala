@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator}
+import com.cloudray.scalapress.util.{EnumPopulator}
 import collection.mutable
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.folder.{FolderOrdering, FolderDao, Folder}
@@ -15,7 +15,7 @@ import com.cloudray.scalapress.media.AssetStore
 import scala.Some
 import scala.collection.immutable.ListMap
 import javax.servlet.http.HttpServletResponse
-import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext, ComponentClassScanner}
 
 /** @author Stephen Samuel */
 @Controller

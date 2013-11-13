@@ -7,10 +7,9 @@ import javax.persistence.Table
 import javax.persistence.Entity
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.util.UrlGenerator
 import scala.xml.{Unparsed, Utility, Node}
 import scala.collection.mutable.ListBuffer
-import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
+import com.cloudray.scalapress.framework.{UrlGenerator, Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */
 @Table(name = "categories_boxes")

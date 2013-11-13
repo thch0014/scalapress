@@ -4,8 +4,7 @@ import org.springframework.mail.{SimpleMailMessage, MailSender}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
+import com.cloudray.scalapress.framework.{UrlGenerator, Logging, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Component

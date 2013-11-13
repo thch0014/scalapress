@@ -49,11 +49,8 @@ class Submission {
   var attachments: java.util.Set[String] = new java.util.HashSet[String]
 
   def page: Option[Page] = {
-    if (obj != null)
-      Some(Page(obj))
-    else if (folder != null)
-      Some(Page(folder))
-    else
-      None
+    if (obj != null) Some(Page(obj))
+    else if (folder != null) Some(Page(folder))
+    else None
   }
 }

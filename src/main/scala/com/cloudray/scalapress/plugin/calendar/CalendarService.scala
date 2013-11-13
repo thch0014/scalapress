@@ -1,10 +1,10 @@
 package com.cloudray.scalapress.plugin.calendar
 
 import org.joda.time.{PeriodType, Period, DateTimeZone, DateMidnight}
-import com.cloudray.scalapress.util.UrlGenerator
 import com.cloudray.scalapress.search.{Search, SearchService}
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
+import com.cloudray.scalapress.framework.UrlGenerator
 
 /** @author Stephen Samuel */
 class CalendarService(searchService: SearchService) {

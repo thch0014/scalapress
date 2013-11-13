@@ -1,8 +1,8 @@
 package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
-import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.util.{Scalate}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext}
 
 /** @author Stephen Samuel */
 object ListingCompleteRenderer {

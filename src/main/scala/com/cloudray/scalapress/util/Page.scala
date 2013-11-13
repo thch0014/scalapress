@@ -2,6 +2,7 @@ package com.cloudray.scalapress.util
 
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.framework.UrlGenerator
 
 /** @author Stephen Samuel */
 case class Page(id: Long, name: String, url: String)

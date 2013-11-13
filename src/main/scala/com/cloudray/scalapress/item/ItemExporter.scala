@@ -9,7 +9,7 @@ import com.csvreader.CsvWriter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.settings.InstallationDao
-import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.UrlGenerator
 
 /** @author Stephen Samuel */
 @Component

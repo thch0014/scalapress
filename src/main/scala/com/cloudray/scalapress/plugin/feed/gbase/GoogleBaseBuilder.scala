@@ -7,9 +7,8 @@ import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.item.attr.AttributeFuncs
 import com.cloudray.scalapress.media.AssetStore
-import com.cloudray.scalapress.util.UrlGenerator
 import java.text.DecimalFormat
-import com.cloudray.scalapress.framework.Logging
+import com.cloudray.scalapress.framework.{UrlGenerator, Logging}
 
 /** @author Stephen Samuel */
 class GoogleBaseBuilder(domain: String, googleCategory: String, assetStore: AssetStore) extends Logging {

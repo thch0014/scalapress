@@ -11,7 +11,7 @@ import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.util.{UrlGenerator, EnumPopulator}
+import com.cloudray.scalapress.util.{EnumPopulator}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.{ItemCloner, ItemDao, Item}
 import com.cloudray.scalapress.folder.FolderDao
@@ -28,7 +28,7 @@ import com.cloudray.scalapress.media.Asset
 import scala.Some
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 import com.cloudray.scalapress.account.AccountDao
-import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext, ComponentClassScanner}
 import com.cloudray.migration.ImageDao
 
 /** @author Stephen Samuel */

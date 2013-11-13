@@ -1,8 +1,7 @@
 package com.cloudray.scalapress.plugin.meta.fbopengraph
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
-import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 @Tag("og_title")

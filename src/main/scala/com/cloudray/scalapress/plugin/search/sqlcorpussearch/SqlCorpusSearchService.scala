@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.folder.section.FolderContentSection
-import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext}
 
 /** @author Stephen Samuel
   *

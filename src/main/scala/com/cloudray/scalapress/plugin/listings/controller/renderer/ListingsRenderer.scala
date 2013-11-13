@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings.controller.renderer
 
 import com.cloudray.scalapress.item.Item
 import org.joda.time.DateTime
-import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.UrlGenerator
 
 /** @author Stephen Samuel */
 object ListingsRenderer {

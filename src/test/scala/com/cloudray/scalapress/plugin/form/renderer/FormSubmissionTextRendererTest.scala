@@ -8,10 +8,10 @@ import com.cloudray.scalapress.plugin.form.Submission
 /** @author Stephen Samuel */
 class FormSubmissionTextRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val submission = new Submission
+  val submission = new Submission
 
-    test("if no text is set then use the default") {
-        val rendered = FormSubmissionTextRenderer.render(null, submission)
-        assert("<p>Thank you for your submission. We will respond as soon as possible.</p>" === rendered)
-    }
+  test("if no text is set then use the default") {
+    val rendered = FormSubmissionTextRenderer.render(null, submission)
+    assert("<p>Thank you for your submission. We will respond as soon as possible.</p>" === rendered)
+  }
 }

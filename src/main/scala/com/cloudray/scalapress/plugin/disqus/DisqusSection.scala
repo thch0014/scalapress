@@ -3,8 +3,8 @@ package com.cloudray.scalapress.plugin.disqus
 import com.cloudray.scalapress.section.Section
 import javax.persistence.{Table, Entity}
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.util.{Scalate, UrlGenerator}
-import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.util.{Scalate}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressRequest}
 
 /** @author Stephen Samuel */
 @Entity

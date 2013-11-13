@@ -2,12 +2,12 @@ package com.cloudray.scalapress.item.tag
 
 import com.cloudray.scalapress._
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.util.UrlGenerator
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.media._
 import scala.xml.{Unparsed, Elem}
 import scala.Some
-import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext, Tag}
+import com.cloudray.scalapress.framework._
+import scala.Some
 
 /** @author Stephen Samuel */
 @Tag("images")

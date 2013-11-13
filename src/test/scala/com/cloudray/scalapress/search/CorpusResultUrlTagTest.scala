@@ -5,8 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search.tag.CorpusResultUrlTag
-import com.cloudray.scalapress.util.UrlGenerator
-import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class CorpusResultUrlTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {

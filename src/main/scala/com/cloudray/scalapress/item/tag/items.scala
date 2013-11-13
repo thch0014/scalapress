@@ -1,9 +1,8 @@
 package com.cloudray.scalapress.item.tag
 
 import com.cloudray.scalapress.theme.tag.{ScalapressTag, TagBuilder}
-import com.cloudray.scalapress.util.UrlGenerator
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
+import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressRequest, Tag}
 
 /** @author Stephen Samuel */
 object ItemTag extends ScalapressTag with TagBuilder {

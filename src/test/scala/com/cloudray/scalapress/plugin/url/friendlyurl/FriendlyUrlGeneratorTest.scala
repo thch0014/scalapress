@@ -4,7 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.util.UrlGenerator
+import com.cloudray.scalapress.framework.UrlGenerator
 
 /** @author Stephen Samuel */
 class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
