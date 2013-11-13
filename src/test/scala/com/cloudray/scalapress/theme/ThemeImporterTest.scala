@@ -18,19 +18,19 @@ class ThemeImporterTest extends FlatSpec with OneInstancePerTest with MockitoSug
     assert(theme.header === "sammy")
   }
 
-  "a theme importer" should "handle theme name" in {
+  it should "handle theme name" in {
     val in = getClass.getResourceAsStream("/com/cloudray/scalapress/theme/theme1.zip")
     val theme = importer.importTheme("somename", in)
     assert(theme.name === "somename")
   }
 
-  "a theme importer" should "handle footer" in {
+  it should "handle footer" in {
     val in = getClass.getResourceAsStream("/com/cloudray/scalapress/theme/theme1.zip")
     val theme = importer.importTheme("sammy", in)
     assert(theme.footer === "bobby")
   }
 
-  "a theme importer" should "write assets to the asset store" in {
+  it should "write assets to the asset store" in {
     val in = getClass.getResourceAsStream("/com/cloudray/scalapress/theme/theme1.zip")
     val theme = importer.importTheme("sammy", in)
     Mockito.verify(assetStore).add(Matchers.eq("cpsongs.jpg"), Matchers.any[InputStream])

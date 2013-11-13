@@ -26,6 +26,7 @@ class BreadcrumbTagTest extends FunSuite with MockitoSugar with OneInstancePerTe
 
     val actual = new BreadcrumbsTag().render(sreq, Map.empty).get.replaceAll("\\s{2,}", "").replace("\n", "")
     assert(
-      "<ul class='breadcrumb'><li><a href=\"/folder-15-tea\">tea</a> <span class='divider'>/</span></li><li class='active'>Earl Grey</li></ul>" === actual)
+      "<ul class='breadcrumb'><li><a href=\"/folder-15-tea\">tea</a> <span class='divider'>/</span></li>" +
+        "<li class='active'>Earl Grey</li></ul>" === actual)
   }
 }

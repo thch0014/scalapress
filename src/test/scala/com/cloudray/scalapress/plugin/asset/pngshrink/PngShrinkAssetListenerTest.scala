@@ -28,7 +28,7 @@ class PngShrinkAssetListenerTest extends FunSuite with MockitoSugar with OneInst
 
   test("error while optimizing results in original stream") {
     val input = new ByteArrayInputStream(Array[Byte](1, 2, 3, 4)) //invalid png
-    val (key, optimized) = plugin.onStore("tux.jpg", input)
+    val (key, optimized) = plugin.onStore("tux.png", input)
     assert(optimized === input)
   }
 }

@@ -48,4 +48,9 @@ class CalendarJsonControllerTest extends FunSuite with MockitoSugar with OneInst
     assert("03/05/2012" === events(1).dateString)
     assert("29/04/2012" === events(2).dateString)
   }
+
+  test("calender events are marshalled to json") {
+    val json = controller.json(4)
+    assert( """[{"date":"1336003200000","dateString":"03/05/2012","type":"meeting","title":"coldplay","description":"","url":"/item-1-coldplay"},{"date":"1336003200000","dateString":"03/05/2012","type":"meeting","title":"jethro tull","description":"","url":"/item-2-jethro-tull"},{"date":"1335657600000","dateString":"29/04/2012","type":"meeting","title":"keane","description":"","url":"/item-3-keane"}]""" === json)
+  }
 }

@@ -44,7 +44,7 @@ class SubfoldersTagTest extends FlatSpec with MockitoSugar with OneInstancePerTe
     assert(rendered.contains("English Breakfast"))
   }
 
-  "a subfolders tag" should "render none for no subfolders" in {
+  it should "render none for no subfolders" in {
     assert(tag.render(sreq.withFolder(folder3), Map.empty).isEmpty)
   }
 }

@@ -52,50 +52,50 @@ class PasswordServiceTest extends FlatSpec with MockitoSugar with OneInstancePer
     assert("sammy@sam.com" === captor.getValue.getTo()(0))
   }
 
-  "a password service" should "include the generated token string parameter in the request email" in {
+  it should "include the generated token string parameter in the request email" in {
     service.request(account)
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     Mockito.verify(mailSender).send(captor.capture)
     assert(captor.getValue.getText.contains("token=" + tokenString))
   }
 
-  "a password service" should "include the account email parameter in the request email" in {
+  it should "include the account email parameter in the request email" in {
     service.request(account)
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     Mockito.verify(mailSender).send(captor.capture)
     assert(captor.getValue.getText.contains("email=" + account.email))
   }
 
-  "a password service" should "update the password and persist it on a reset" in {
+  it should "update the password and persist it on a reset" in {
     service.reset(tokenString, "sammy@sam.com")
     val captor = ArgumentCaptor.forClass(classOf[Account])
     Mockito.verify(accountDao).save(captor.capture)
     assert(captor.getValue.passwordHash === "hash123")
   }
 
-  "a password service" should "send an email with the updated password" in {
+  it should "send an email with the updated password" in {
     service.reset(tokenString, "sammy@sam.com")
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     Mockito.verify(mailSender).send(captor.capture)
     assert(captor.getValue.getText.contains("simplepass"))
   }
 
-  "a password service" should "send no emails for invalid token" in {
+  it should "send no emails for invalid token" in {
     service.reset("invalidtoken", "sammy@sam.com")
     Mockito.verify(mailSender, Mockito.never).send(Matchers.any[SimpleMailMessage])
   }
 
-  "a password service" should "persist nothing for invalid token" in {
+  it should "persist nothing for invalid token" in {
     service.reset("invalidtoken", "sammy@sam.com")
     Mockito.verify(accountDao, Mockito.never).save(Matchers.any[Account])
   }
 
-  "a password service" should "send no emails for invalid email" in {
+  it should "send no emails for invalid email" in {
     service.reset(tokenString, "samm22222y@sam.com")
     Mockito.verify(mailSender, Mockito.never).send(Matchers.any[SimpleMailMessage])
   }
 
-  "a password service" should "persist nothing for invalid email" in {
+  it should "persist nothing for invalid email" in {
     service.reset(tokenString, "sammy2222@sam.com")
     Mockito.verify(accountDao, Mockito.never).save(Matchers.any[Account])
   }
