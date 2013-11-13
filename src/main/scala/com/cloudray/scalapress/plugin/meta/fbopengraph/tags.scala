@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.fbopengraph
+package com.cloudray.scalapress.plugin.meta.fbopengraph
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import com.cloudray.scalapress.util.UrlGenerator
