@@ -91,7 +91,7 @@ class RegistrationController(themeService: ThemeService,
     }
 
     errors.hasErrors match {
-      case true => showRegistrationPage(req, form, errors)
+      case true => showRegistrationPage(req, null, form, errors)
       case false =>
 
         val account = createAccount(form)
