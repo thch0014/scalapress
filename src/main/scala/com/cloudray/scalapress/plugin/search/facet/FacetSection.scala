@@ -64,12 +64,14 @@ class FacetSection extends SearchResultsSection {
   }
 
   private def renderSelectedFacets(selected: Seq[FacetSelection], uri: Uri): String = {
-    "<div class='search-selected-facets'>" + selected.map(renderSelectedFacet(_, uri)).mkString("\n") + "</div>"
+    "<div class='search-selected-facets clearfix'>" + selected.map(renderSelectedFacet(_, uri)).mkString("\n") + "</div>"
   }
 
   private def renderSelectedFacet(selected: FacetSelection, uri: Uri): String = {
     val urlWithFacetRemoved = uri.removeParams(selected.field.key)
-    "<div class='search-selected-facet'>" + selected.value + " <a href=\"" + urlWithFacetRemoved + "\">x</a>" + "</div>"
+    "<div class='search-selected-facet'>" +
+      selected.value + " <a href=\"" + urlWithFacetRemoved + "\">x</a>" +
+      "</div>"
   }
 
   private def renderFacets(facets: Iterable[Facet], uri: Uri): String = {
@@ -85,7 +87,7 @@ class FacetSection extends SearchResultsSection {
           "url" -> uri.replaceParams(facet.field.key, term.value).toString())
       )
     )
-    <div class="search-facet">
+    <div class="search-facet clearfix">
       <h6>
         {facet.name}
       </h6>{Unparsed(terms.mkString("\n"))}
