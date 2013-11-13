@@ -19,8 +19,8 @@ import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScann
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/folder/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/folder/{id}"))
 class FolderEditController(val assetStore: AssetStore,
                            val folderDao: FolderDao,
                            val themeDao: ThemeDao,

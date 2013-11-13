@@ -13,8 +13,8 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("password"))
 @Autowired
+@RequestMapping(Array("password"))
 class ForgottonPasswordController(themeService: ThemeService,
                                   passwordService: PasswordService,
                                   context: ScalapressContext) {

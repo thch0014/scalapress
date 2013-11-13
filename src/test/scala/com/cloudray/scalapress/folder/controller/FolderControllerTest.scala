@@ -12,19 +12,19 @@ import com.cloudray.scalapress.media.AssetStore
 /** @author Stephen Samuel */
 class FolderControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val controller = new FolderController
-  controller.folderDao = mock[FolderDao]
-  controller.folderPluginDao = mock[FolderPluginDao]
-  controller.themeService = mock[ThemeService]
-  controller.context = mock[ScalapressContext]
+  val folderDao = mock[FolderDao]
+  val folderPluginDao = mock[FolderPluginDao]
+  val themeService = mock[ThemeService]
+  val context = mock[ScalapressContext]
+  val controller = new FolderController(folderDao, folderPluginDao, context, themeService)
 
   val assetStore = mock[AssetStore]
-  Mockito.when(controller.context.assetStore).thenReturn(assetStore)
+  Mockito.when(context.assetStore).thenReturn(assetStore)
   Mockito.when(assetStore.baseUrl).thenReturn("baseurl.com")
-  Mockito.when(controller.context.beans[FolderInterceptor]).thenReturn(Nil)
+  Mockito.when(context.beans[FolderInterceptor]).thenReturn(Nil)
 
   val settings = new FolderSettings
-  Mockito.when(controller.folderPluginDao.head).thenReturn(settings)
+  Mockito.when(folderPluginDao.head).thenReturn(settings)
 
   val req = mock[HttpServletRequest]
   val resp = mock[HttpServletResponse]

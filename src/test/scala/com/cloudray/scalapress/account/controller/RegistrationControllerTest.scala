@@ -58,7 +58,7 @@ class RegistrationControllerTest extends FlatSpec with MockitoSugar with OneInst
   Mockito.when(accountPluginDao.get).thenReturn(plugin)
 
   "a registration controller" should "include registration plugin headers and footers" in {
-    val page = controller.showRegistrationPage(req, form, errors)
+    val page = controller.showRegistrationPage(req, null, form, errors)
     assert(page.render.contains("superheader"))
     assert(page.render.contains("superfooter"))
   }

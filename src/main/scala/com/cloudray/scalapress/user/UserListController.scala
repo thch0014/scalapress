@@ -8,8 +8,8 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/user"))
 @Autowired
+@RequestMapping(Array("backoffice/user"))
 class UserListController(userDao: UserDao) {
 
   @RequestMapping(produces = Array("text/html"))

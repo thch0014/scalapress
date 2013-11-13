@@ -16,13 +16,12 @@ import com.cloudray.scalapress.media.ImageResolver
  * @author sks 09-Feb-2006 13:48:13
  */
 @Controller
+@Autowired
 @RequestMapping(Array("folder"))
-class FolderController extends Logging {
-
-  @Autowired var folderDao: FolderDao = _
-  @Autowired var folderPluginDao: FolderPluginDao = _
-  @Autowired var context: ScalapressContext = _
-  @Autowired var themeService: ThemeService = _
+class FolderController(folderDao: FolderDao,
+                       folderPluginDao: FolderPluginDao,
+                       context: ScalapressContext,
+                       themeService: ThemeService) extends Logging {
 
   @ExceptionHandler(Array(classOf[RedirectException]))
   def handleException1(e: RedirectException): String = {

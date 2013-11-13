@@ -15,8 +15,8 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/section/itemlist/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/section/itemlist/{id}"))
 class ItemListSectionController(val markupDao: MarkupDao,
                                 val sectionDao: SectionDao,
                                 context: ScalapressContext)

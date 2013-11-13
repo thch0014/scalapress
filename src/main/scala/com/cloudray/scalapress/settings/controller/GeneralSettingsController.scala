@@ -8,8 +8,8 @@ import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/settings/general"))
 @Autowired
+@RequestMapping(Array("backoffice/settings/general"))
 class GeneralSettingsController(context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

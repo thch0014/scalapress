@@ -10,7 +10,6 @@ import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
-
 @Controller
 @RequestMapping(Array("corpus"))
 class CorpusSearchController {

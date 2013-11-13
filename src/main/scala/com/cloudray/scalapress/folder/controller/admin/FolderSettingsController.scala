@@ -13,8 +13,8 @@ import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/folder/settings"))
 @Autowired
+@RequestMapping(Array("backoffice/folder/settings"))
 class FolderSettingsController(val markupDao: MarkupDao,
                                context: ScalapressContext) extends SortPopulator with MarkupPopulator {
 

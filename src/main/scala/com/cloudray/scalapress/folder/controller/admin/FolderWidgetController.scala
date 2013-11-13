@@ -11,8 +11,8 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/plugin/folder/widget/folder/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/plugin/folder/widget/folder/{id}"))
 class FolderWidgetController(val folderDao: FolderDao, widgetDao: WidgetDao)
   extends WidgetEditController(widgetDao) with FolderPopulator {
 

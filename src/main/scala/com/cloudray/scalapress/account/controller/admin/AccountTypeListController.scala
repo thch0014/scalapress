@@ -8,8 +8,8 @@ import com.cloudray.scalapress.account.{AccountType, AccountTypeDao}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("/backoffice/accounttype"))
 @Autowired
+@RequestMapping(Array("/backoffice/accounttype"))
 class AccountTypeListController(accountTypeDao: AccountTypeDao) {
 
   @RequestMapping(produces = Array("text/html"))

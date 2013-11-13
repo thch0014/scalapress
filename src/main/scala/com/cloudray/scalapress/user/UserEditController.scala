@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("backoffice/user/{id}"))
 @Autowired
+@RequestMapping(Array("backoffice/user/{id}"))
 class UserEditController(userDao: UserDao,
                          passwordEncoder: PasswordEncoder) {
 

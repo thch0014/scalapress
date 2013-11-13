@@ -22,8 +22,8 @@ import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("register"))
 @Autowired
+@RequestMapping(Array("register"))
 class RegistrationController(themeService: ThemeService,
                              accountPluginDao: AccountPluginDao,
                              accountTypeDao: AccountTypeDao,
