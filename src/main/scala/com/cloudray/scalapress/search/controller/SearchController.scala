@@ -51,6 +51,7 @@ class SearchController extends Logging {
              @RequestParam(value = "sectionId", required = false) sectionId: String,
              @RequestParam(value = "widgetId", required = false) widgetId: String,
              @RequestParam(value = "q", required = false) q: String,
+             @RequestParam(value = "name", required = false) name: String,
              @RequestParam(value = "type", required = false) t: String,
              @RequestParam(value = "objectType", required = false) itemTypeId: String,
              @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
@@ -68,7 +69,7 @@ class SearchController extends Logging {
 
     val search = Search(
       attributeValues = attributeValues,
-      name = Option(q),
+      name = Option(q).orElse(Option(name)),
       itemTypeId = Option(itemTypeId).map(_.toLong),
       distance = distance,
       location = Option(location),
