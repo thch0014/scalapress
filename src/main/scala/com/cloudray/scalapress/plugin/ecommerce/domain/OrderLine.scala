@@ -22,7 +22,7 @@ class OrderLine {
 
   @NotFound(action = NotFoundAction.IGNORE)
   @Column(name = "item")
-  @BeanProperty var item: Item = _
+  @BeanProperty var item: Long = _
 
   @Column(name = "salePrice")
   @BeanProperty var price: Int = _
@@ -66,7 +66,7 @@ object OrderLine {
   def apply(item: Item): OrderLine = {
     val l = new OrderLine
     l.price = item.price
-    l.item = item
+    l.item = item.id
     l.qty = 1
     l.description = item.name
     l.date = new DateTime(DateTimeZone.UTC).getMillis

@@ -3,7 +3,6 @@ package com.cloudray.scalapress.plugin.ecommerce
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, Order}
-import com.cloudray.scalapress.item.Item
 
 /** @author Stephen Samuel */
 class OrderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -14,8 +13,7 @@ class OrderTest extends FunSuite with MockitoSugar with OneInstancePerTest {
   val line = new OrderLine
   line.price = 2000
   line.vatRate = 10.00
-  line.item = new Item
-  line.item.id = 54
+  line.item = 54
   line.qty = 1
   line.order = order
 

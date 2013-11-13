@@ -35,7 +35,7 @@ class InvoiceAttributeValueTagTest extends FunSuite with MockitoSugar with OneIn
   line1.price = 1000
   line1.vatRate = 15.00
   line1.order = order
-  line1.item = item
+  line1.item = item.id
 
   val tag = new InvoiceAttributeValueTag()
 

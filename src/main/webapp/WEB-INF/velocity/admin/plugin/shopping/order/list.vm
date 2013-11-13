@@ -81,7 +81,7 @@
           <td><a href="/backoffice/order/$o.id">$o.id</a></td>
           <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
           <td>$!o.status</td>
-          <td>$!o.account.name $!o.account.email</td>
+          <td>$!o.account.name</td>
           <td>$!o.description.get</td>
           <td>$o.total()</td>
           <td>

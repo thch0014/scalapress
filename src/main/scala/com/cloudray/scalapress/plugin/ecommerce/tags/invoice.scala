@@ -69,7 +69,7 @@ class InvoiceAttributeValueTag extends ScalapressTag with TagBuilder {
     params.get("id") match {
       case None => Some("<!-- no id specified for attribute tag -->")
       case Some(id) => {
-        request.orderLine.flatMap(line => Option(line.item)).flatMap(obj => {
+        request.orderLine.flatMap(line => Option(request.context.itemDao.find(line.item))).flatMap(obj => {
           obj.attributeValues.asScala.find(_.attribute.id == id.trim.toLong) match {
             case None => None
             case Some(av) => Some(build(AttributeValueRenderer.renderValue(av), params))
