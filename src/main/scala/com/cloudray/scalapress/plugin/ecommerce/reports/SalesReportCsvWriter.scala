@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.shopping
+package com.cloudray.scalapress.plugin.ecommerce.reports
 
 import java.io.ByteArrayOutputStream
 import com.csvreader.CsvWriter

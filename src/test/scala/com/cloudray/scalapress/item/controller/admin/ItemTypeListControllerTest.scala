@@ -6,10 +6,10 @@ import com.cloudray.scalapress.item.{ItemType, TypeDao}
 import org.mockito.Mockito
 
 /** @author Stephen Samuel */
-class TypeListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
+class ItemTypeListControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   val dao = mock[TypeDao]
-  val controller = new TypeListController(dao)
+  val controller = new ItemTypeListController(dao)
 
   test("types do not include deleted") {
     val type1 = new ItemType

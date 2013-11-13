@@ -16,11 +16,11 @@ import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScann
 /** @author Stephen Samuel */
 @Controller
 @Autowired
-@RequestMapping(Array("backoffice/type/{id}"))
-class TypeEditController(val typeDao: TypeDao,
-                         val markupDao: MarkupDao,
-                         val sectionDao: SectionDao,
-                         val context: ScalapressContext) extends MarkupPopulator {
+@RequestMapping(Array("backoffice/type/{id}", "backoffice/itemtype/{id}"))
+class ItemTypeEditController(val typeDao: TypeDao,
+                             val markupDao: MarkupDao,
+                             val sectionDao: SectionDao,
+                             val context: ScalapressContext) extends MarkupPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("type") t: ItemType) = "admin/object/type/edit.vm"
@@ -39,7 +39,7 @@ class TypeEditController(val typeDao: TypeDao,
     section.init(context)
     t.sections.add(section)
     typeDao.save(t)
-    "redirect:/backoffice/type/" + t.id
+    "redirect:/backoffice/itemtype/" + t.id
   }
 
   @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
@@ -63,7 +63,7 @@ class TypeEditController(val typeDao: TypeDao,
         section.item = null
         typeDao.save(t)
     }
-    "redirect:/backoffice/type/"
+    "redirect:/backoffice/itemtype/"
   }
 
   @RequestMapping(Array("/attribute/create"))
@@ -81,7 +81,7 @@ class TypeEditController(val typeDao: TypeDao,
       typeDao.save(t)
     })
 
-    "redirect:/backoffice/type/" + t.id
+    "redirect:/backoffice/itemtype/" + t.id
   }
 
   @RequestMapping(value = Array("/attribute/order"), method = Array(RequestMethod.POST))

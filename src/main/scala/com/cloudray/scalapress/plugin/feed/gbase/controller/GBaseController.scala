@@ -10,13 +10,12 @@ import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(value = Array("backoffice/feed/gbase/{id}"))
-class GBaseController {
-
-  @Autowired var context: ScalapressContext = _
-  @Autowired var feedDao: GBaseFeedDao = _
-  @Autowired var objectDao: ItemDao = _
-  @Autowired var installationDao: InstallationDao = _
+class GBaseController(context: ScalapressContext,
+                      feedDao: GBaseFeedDao,
+                      objectDao: ItemDao,
+                      installationDao: InstallationDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   def edit(@ModelAttribute("feed") feed: GBaseFeed) = "admin/feed/gbase/edit.vm"

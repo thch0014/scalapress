@@ -8,6 +8,7 @@ import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, Order}
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderQuery, OrderDao}
+import com.cloudray.scalapress.plugin.ecommerce.reports.SalesReporter
 
 /** @author Stephen Samuel */
 

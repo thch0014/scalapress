@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 /** @author Stephen Samuel */
 @Controller
 @Autowired
-@RequestMapping(Array("/backoffice/type"))
-class TypeListController(typeDao: TypeDao) {
+@RequestMapping(Array("/backoffice/type", "/backoffice/itemtype"))
+class ItemTypeListController(typeDao: TypeDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/object/type/list.vm"
@@ -28,7 +28,7 @@ class TypeListController(typeDao: TypeDao) {
     val t = new ItemType
     t.name = "new object type"
     typeDao.save(t)
-    "redirect:/backoffice/type"
+    "redirect:/backoffice/itemtype"
   }
 
   @ModelAttribute("types")

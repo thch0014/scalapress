@@ -9,7 +9,6 @@ import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import scala.collection.JavaConverters._
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderQuery
 
 /** @author Stephen Samuel */
 

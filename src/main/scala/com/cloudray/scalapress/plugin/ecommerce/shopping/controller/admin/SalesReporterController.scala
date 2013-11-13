@@ -13,9 +13,9 @@ import org.apache.commons.io.IOUtils
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
 import com.cloudray.scalapress.framework.ScalapressContext
-import com.cloudray.scalapress.plugin.ecommerce.shopping.{SalesReporter, SalesReportCsvWriter}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
 import java.io.ByteArrayInputStream
+import com.cloudray.scalapress.plugin.ecommerce.reports.{SalesReportCsvWriter, SalesReporter}
 
 /** @author Stephen Samuel */
 @Controller

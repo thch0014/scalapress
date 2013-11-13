@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletResponse
-import com.cloudray.scalapress.plugin.ecommerce.shopping.EmailReportService
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.reports.EmailReportService
 
 /** @author Stephen Samuel */
 @Controller

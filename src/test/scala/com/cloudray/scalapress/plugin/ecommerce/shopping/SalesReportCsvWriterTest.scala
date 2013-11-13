@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.csvreader.CsvReader
 import java.nio.charset.Charset
 import java.io.ByteArrayInputStream
+import com.cloudray.scalapress.plugin.ecommerce.reports.{SalesReportCsvWriter, ReportLine}
 
 /** @author Stephen Samuel */
 
