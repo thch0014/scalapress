@@ -7,7 +7,7 @@ import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
-class LabelsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
+class TagsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
 
     val o = new Item
     o.id = 123
@@ -19,7 +19,7 @@ class LabelsTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
     val sreq = ScalapressRequest(req, context).withItem(o)
 
     test("labels rendering") {
-        val actual = new LabelsTag().render(sreq, Map.empty)
+        val actual = new TagsTag().render(sreq, Map.empty)
         assert("<span class='label'>superman</span><br/><span class='label'>batman</span>" === actual.get)
     }
 }
