@@ -65,7 +65,7 @@
 </div>
 
 #paging($paging)
-
+exit
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
@@ -81,7 +81,7 @@
           <td><a href="/backoffice/order/$o.id">$o.id</a></td>
           <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
           <td>$!o.status</td>
-          <td>$!o.account.name</td>
+          <td><a href="/backoffice/account/$!o.account.id">$!o.account.name</a></td>
           <td>$!o.description().get()</td>
           <td>$o.total()</td>
           <td>

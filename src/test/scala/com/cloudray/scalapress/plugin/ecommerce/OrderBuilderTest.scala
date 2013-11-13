@@ -65,9 +65,9 @@ class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTes
 
     val order = builder._order(account, basket, req)
     assert(2 === order.lines.size)
-    assert(4 === order.sortedLines.find(_.item == bl1.obj).get.qty)
-    assert(4500 === order.sortedLines.find(_.item == bl1.obj).get.price)
-    assert(1 === order.sortedLines.find(_.item == bl2.obj).get.qty)
-    assert(1999 === order.sortedLines.find(_.item == bl2.obj).get.price)
+    assert(4 === order.sortedLines.find(_.item == bl1.obj.id).get.qty)
+    assert(4500 === order.sortedLines.find(_.item == bl1.obj.id).get.price)
+    assert(1 === order.sortedLines.find(_.item == bl2.obj.id).get.qty)
+    assert(1999 === order.sortedLines.find(_.item == bl2.obj.id).get.price)
   }
 }
