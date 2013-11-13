@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.search.facet
 
-import com.cloudray.scalapress.framework.ScalapressRequest
+import com.cloudray.scalapress.framework.{ScalapressContext, ScalapressRequest}
 import javax.persistence._
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
@@ -43,7 +43,7 @@ class FacetSection extends SearchResultsSection {
     val items = getItems(result, sreq.context.itemDao)
     val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
 
-    renderSelectedFacets(selections, uri) +
+    renderSelectedFacets(selections, uri, sreq.context) +
       renderFacets(facetsWithMultipleTerms, uri) +
       renderItems(items, sreq)
   }
@@ -63,14 +63,20 @@ class FacetSection extends SearchResultsSection {
     }
   }
 
-  private def renderSelectedFacets(selected: Seq[FacetSelection], uri: Uri): String = {
-    "<div class='search-selected-facets clearfix'>" + selected.map(renderSelectedFacet(_, uri)).mkString("\n") + "</div>"
+  private def renderSelectedFacets(selected: Seq[FacetSelection], uri: Uri, context: ScalapressContext): String = {
+    "<div class='search-selected-facets clearfix'>" + selected
+      .map(renderSelectedFacet(_, uri, context))
+      .mkString("\n") + "</div>"
   }
 
-  private def renderSelectedFacet(selected: FacetSelection, uri: Uri): String = {
+  private def renderSelectedFacet(selected: FacetSelection, uri: Uri, context: ScalapressContext): String = {
     val urlWithFacetRemoved = uri.removeParams(selected.field.key)
+    val name = selected.field match {
+      case TagsFacetField => "Tag"
+      case AttributeFacetField(i) => context.attributeDao.find(i).name
+    }
     "<div class='search-selected-facet'>" +
-      selected.value + " <a href=\"" + urlWithFacetRemoved + "\">x</a>" +
+      name + ": " + selected.value + " <a href=\"" + urlWithFacetRemoved + "\">x</a>" +
       "</div>"
   }
 
