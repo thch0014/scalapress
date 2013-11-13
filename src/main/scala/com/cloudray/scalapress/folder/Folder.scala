@@ -60,6 +60,10 @@ class Folder extends SortedSections with HtmlMeta {
   @Index(name = "name_index")
   @BeanProperty var name: String = _
 
+  @Column(name = "hideWidgets", nullable = false)
+  @BeanProperty
+  var hideWidgets: Boolean = false
+
   @Column(name = "subcategoryordering")
   @Enumerated(EnumType.STRING)
   @BeanProperty var folderOrdering: FolderOrdering = FolderOrdering.Alphabetical

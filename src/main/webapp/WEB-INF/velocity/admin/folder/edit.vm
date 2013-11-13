@@ -54,6 +54,14 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-lg-2 control-label">Hide widgets</label>
+
+                    <div class="col-lg-8">
+                      #springFormCheckbox("folder.hideWidgets", "")
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-lg-2 control-label">Theme</label>
 
                     <div class="col-lg-8">
