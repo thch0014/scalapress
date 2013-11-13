@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.payments
+package com.cloudray.scalapress.payments.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Controller
 import com.googlecode.genericdao.search.Search
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.payments.{Transaction, TransactionDao}
 
 /** @author Stephen Samuel */
 @Controller

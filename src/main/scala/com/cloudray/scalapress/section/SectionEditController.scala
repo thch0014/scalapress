@@ -3,7 +3,6 @@ package com.cloudray.scalapress.section
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, PathVariable, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import scala.Array
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.item.ItemDao

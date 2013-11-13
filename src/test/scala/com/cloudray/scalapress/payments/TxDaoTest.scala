@@ -3,6 +3,7 @@ package com.cloudray.scalapress.payments
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
+import com.cloudray.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 class TxDaoTest extends FunSuite with MockitoSugar {

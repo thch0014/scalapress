@@ -1,10 +1,11 @@
-package com.cloudray.scalapress.payments
+package com.cloudray.scalapress.payments.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.bind.annotation.{RequestMapping, ResponseBody}
 import org.springframework.stereotype.Controller
 import com.cloudray.scalapress.framework.Logging
+import com.cloudray.scalapress.payments.PaymentCallbackService
 
 /** @author Stephen Samuel */
 @Controller

@@ -14,8 +14,8 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping
 @Autowired
+@RequestMapping
 class LoginController(themeService: ThemeService,
                       context: ScalapressContext,
                       accountPluginDao: AccountPluginDao) {

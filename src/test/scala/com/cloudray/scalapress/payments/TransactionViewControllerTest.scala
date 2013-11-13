@@ -4,6 +4,8 @@ import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import org.springframework.ui.ModelMap
 import org.mockito.Mockito
+import com.cloudray.scalapress.payments.controller.TransactionViewController
+import com.cloudray.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 class TransactionViewControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

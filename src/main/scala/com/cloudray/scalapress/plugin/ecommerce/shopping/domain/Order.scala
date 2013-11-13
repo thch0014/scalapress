@@ -3,13 +3,13 @@ package com.cloudray.scalapress.plugin.ecommerce.domain
 import javax.persistence._
 import org.joda.time.{DateTime, DateTimeZone}
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.payments.Transaction
 import scala.collection.JavaConverters._
 import org.hibernate.annotations._
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.CascadeType
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 @Entity

@@ -16,13 +16,16 @@ class SearchPlugin {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @ManyToOne
   @JoinColumn(name = "markup")
-  @BeanProperty var markup: Markup = _
+  @BeanProperty
+  var markup: Markup = _
 
-  @BeanProperty var noResultsText: String = _
+  @BeanProperty
+  var noResultsText: String = _
 }
 
 trait SearchPluginDao extends GenericDao[SearchPlugin, java.lang.Long] {

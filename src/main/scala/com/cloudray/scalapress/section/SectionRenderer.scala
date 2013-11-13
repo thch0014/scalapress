@@ -2,7 +2,7 @@ package com.cloudray.scalapress.section
 
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.folder.{Folder}
+import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest}
 
 /** @author Stephen Samuel */

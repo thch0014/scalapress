@@ -5,8 +5,8 @@ import org.joda.time.{DateTimeZone, DateTime}
 import scala.beans.BeanProperty
 
 /** @author Stephen Samuel */
-@Table(name = "payments")
 @Entity
+@Table(name = "payments")
 class Transaction {
 
   @Id

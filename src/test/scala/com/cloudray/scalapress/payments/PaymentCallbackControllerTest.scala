@@ -4,6 +4,7 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.mockito.Mockito
+import com.cloudray.scalapress.payments.controller.PaymentCallbackController
 
 /** @author Stephen Samuel */
 class PaymentCallbackControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
