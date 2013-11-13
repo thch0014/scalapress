@@ -22,16 +22,19 @@ class Folder extends SortedSections with HtmlMeta {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
+  @BeanProperty
+  var id: Long = _
 
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
-  @BeanProperty var objects: java.util.Set[Item] = new java.util.HashSet[Item]()
+  @BeanProperty
+  var objects: java.util.Set[Item] = new java.util.HashSet[Item]()
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
   @Fetch(FetchMode.SUBSELECT)
   @BatchSize(size = 40)
-  @BeanProperty var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
+  @BeanProperty
+  var subfolders: java.util.Set[Folder] = new java.util.HashSet[Folder]()
 
   // has to be array to work with velocity
   def sortedSubfolders: Array[Folder] = {
@@ -51,14 +54,17 @@ class Folder extends SortedSections with HtmlMeta {
   @JoinColumn(name = "parent")
   @Fetch(FetchMode.JOIN)
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var parent: Folder = _
+  @BeanProperty
+  var parent: Folder = _
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "theme")
-  @BeanProperty var theme: Theme = _
+  @BeanProperty
+  var theme: Theme = _
 
   @Index(name = "name_index")
-  @BeanProperty var name: String = _
+  @BeanProperty
+  var name: String = _
 
   @Column(name = "hideWidgets", nullable = false)
   @BeanProperty
@@ -66,7 +72,8 @@ class Folder extends SortedSections with HtmlMeta {
 
   @Column(name = "subcategoryordering")
   @Enumerated(EnumType.STRING)
-  @BeanProperty var folderOrdering: FolderOrdering = FolderOrdering.Alphabetical
+  @BeanProperty
+  var folderOrdering: FolderOrdering = FolderOrdering.Alphabetical
 
   def fullName(folder: Folder, count: Int): String =
     Option(folder.parent) match {

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.item.controller.admin.attribute
+package com.cloudray.scalapress.item.attr.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, PathVariable, ModelAttribute, RequestMethod, RequestMapping}

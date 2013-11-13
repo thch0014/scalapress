@@ -17,8 +17,19 @@ trait AttributeOptionDao extends GenericDao[AttributeOption, java.lang.Long]
 @Transactional
 class AttributeOptionDaoImpl extends GenericDaoImpl[AttributeOption, java.lang.Long] with AttributeOptionDao
 
-trait AttributeValueDao extends GenericDao[AttributeValue, java.lang.Long]
+trait AttributeValueDao extends GenericDao[AttributeValue, java.lang.Long] {
+  def updateValues(attribute: Attribute, oldValue: String, newValue: String): Int
+}
 
 @Component
 @Transactional
-class AttributeValueDaoImpl extends GenericDaoImpl[AttributeValue, java.lang.Long] with AttributeValueDao
+class AttributeValueDaoImpl extends GenericDaoImpl[AttributeValue, java.lang.Long] with AttributeValueDao {
+  def updateValues(attribute: Attribute, oldValue: String, newValue: String): Int = {
+    getSession
+      .createSQLQuery("UPDATE attributes_values SET value=? WHERE value=? AND attribute=?")
+      .setString(0, oldValue)
+      .setString(1, newValue)
+      .setLong(2, attribute.id)
+      .executeUpdate()
+  }
+}
