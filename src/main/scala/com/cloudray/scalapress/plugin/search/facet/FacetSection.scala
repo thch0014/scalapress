@@ -44,7 +44,7 @@ class FacetSection extends SearchResultsSection {
     val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
 
     renderSelectedFacets(selections, uri, sreq.context) +
-      renderFacets(facetsWithMultipleTerms, uri) +
+      (if (facetsWithMultipleTerms.isEmpty) "" else renderFacets(facetsWithMultipleTerms, uri)) +
       renderItems(items, sreq)
   }
 
