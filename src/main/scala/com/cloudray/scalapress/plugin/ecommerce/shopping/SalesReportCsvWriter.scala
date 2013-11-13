@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping
 
 import java.io.ByteArrayOutputStream
 import com.csvreader.CsvWriter
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ListBuffer, ArrayBuffer}
 import org.joda.time.{DateTimeZone, DateTime}
 import java.nio.charset.Charset
 
@@ -36,7 +36,7 @@ object SalesReportCsvWriter {
   }
 
   def _row(line: ReportLine): Array[String] = {
-    val buffer = new ArrayBuffer[String]
+    val buffer = new ListBuffer[String]
     buffer.append(line.orderId)
     buffer.append(new DateTime(line.datePlaced, DateTimeZone.UTC).toString("dd-MM-yyyy"))
     buffer.append(line.name)
@@ -45,7 +45,8 @@ object SalesReportCsvWriter {
     buffer.append(line.subtotal.toString)
     buffer.append(line.vat.toString)
     buffer.append(line.total.toString)
-    buffer.append(line.note)
+    buffer.append(line.note.orNull)
+    buffer.append(line.details.mkString(","))
     buffer.toArray
   }
 }

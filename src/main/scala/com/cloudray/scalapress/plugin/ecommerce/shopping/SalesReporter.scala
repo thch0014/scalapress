@@ -27,7 +27,8 @@ class SalesReporter(orderDao: OrderDao) {
         order.subtotal,
         order.vat,
         order.total,
-        order.customerNote))
+        Option(order.customerNote),
+        order.descriptions))
   }
 }
 
@@ -39,4 +40,5 @@ case class ReportLine(orderId: String,
                       subtotal: Double,
                       vat: Double,
                       total: Double,
-                      note: String)
+                      note: Option[String],
+                      details: Seq[String])
