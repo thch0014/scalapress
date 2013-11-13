@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import javax.mail.internet.AddressException
 
 /** @author Stephen Samuel */
 @Component
@@ -42,7 +43,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     val replyAddress = "donotreply@" + nowww
 
     val message = new SimpleMailMessage()
-    message.setFrom(s"${installation.name} <$replyAddress>")
+    message.setFrom(replyAddress)
     message.setTo(order.account.email)
 
     val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
@@ -55,6 +56,12 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     try {
       mailSender.send(message)
     } catch {
+      case e: AddressException =>
+        logger.warn(e.toString)
+        logger.warn("to: " + order.account.email)
+        logger.warn("bcc:" + bcc.mkString(","))
+        logger.warn("from: " + replyAddress)
+        logger.warn("replyAddress: " + replyAddress)
       case e: Exception => logger.warn(e.toString)
     }
   }
