@@ -4,7 +4,7 @@ import attr.AttributeValue
 import java.util
 import javax.persistence._
 import com.cloudray.scalapress.section.{SortedSections, Section}
-import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.folder.{HtmlMeta, Folder}
 import org.joda.time.{DateTimeZone, DateTime}
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -19,7 +19,7 @@ import javax.persistence.Column
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "items")
-class Item extends SortedSections with java.io.Serializable {
+class Item extends SortedSections with java.io.Serializable with HtmlMeta {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -138,18 +138,6 @@ class Item extends SortedSections with java.io.Serializable {
   @Column(name = "reference", length = 5000)
   @BeanProperty
   var exernalReference: String = _
-
-  @Column(name = "descriptionTag", length = 500)
-  @BeanProperty
-  var descriptionTag: String = _
-
-  @Column(name = "titleTag", length = 500)
-  @BeanProperty
-  var titleTag: String = _
-
-  @Column(name = "keywords", length = 500)
-  @BeanProperty
-  var keywordsTag: String = _
 
   @Column(length = 5000)
   @BeanProperty

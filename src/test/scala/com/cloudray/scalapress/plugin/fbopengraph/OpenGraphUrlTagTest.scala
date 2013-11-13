@@ -5,6 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.meta.fbopengraph.{OpenGraphTitleTag, OpenGraphUrlTag}
 
 /** @author Stephen Samuel */
 class OpenGraphUrlTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

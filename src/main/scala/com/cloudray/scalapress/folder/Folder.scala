@@ -18,7 +18,7 @@ import scala.Some
 /** @author Stephen Samuel */
 @Entity
 @Table(name = "categories")
-class Folder extends SortedSections {
+class Folder extends SortedSections with HtmlMeta {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -90,12 +90,6 @@ class Folder extends SortedSections {
   @BeanProperty var position: Int = _
 
   @BeanProperty var hidden: Boolean = false
-
-  @BeanProperty var titleTag: String = _
-  @BeanProperty var descriptionTag: String = _
-
-  @Column(name = "keywords")
-  @BeanProperty var keywordsTag: String = _
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)

@@ -8,6 +8,7 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.meta.fbopengraph.OpenGraphImageTag
 
 /** @author Stephen Samuel */
 class OpenGraphImageTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
