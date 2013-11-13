@@ -12,6 +12,7 @@ import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
 trait ItemDao extends GenericDao[Item, java.lang.Long] {
+  def count: Int
   def recent(i: Int): Seq[Item]
   def findBulk(longs: Seq[Long]): Seq[Item]
   def search(query: ItemQuery): Page[Item]
@@ -23,6 +24,8 @@ trait ItemDao extends GenericDao[Item, java.lang.Long] {
 @Component
 @Transactional
 class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with Logging {
+
+  override def count = super._count(classOf[Item])
 
   override def recent(i: Int): Seq[Item] =
     search(new Search(classOf[Item])

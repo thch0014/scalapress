@@ -56,7 +56,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
     )
   }
 
-  def _createTx(params: Map[String, String]) = {
+  def createTx(params: Map[String, String]) = {
 
     val status = params.get("Status").getOrElse("NoStatus")
     val transactionId = params.get("VPSTxId").orNull
@@ -133,7 +133,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
           case true => None
           case false =>
 
-            val tx = _createTx(p)
+            val tx = createTx(p)
             logger.info("Created transaction [{}]", tx)
 
             val sessionId = _sessionId(p)

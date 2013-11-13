@@ -12,16 +12,15 @@ import com.cloudray.scalapress.framework.Logging
 /** @author Stephen Samuel */
 object GoogleBaseService extends Logging {
 
-  def run(objectDao: ItemDao,
+  def run(itemDao: ItemDao,
           gfeedDao: GBaseFeedDao,
           installation: Installation,
           feed: GBaseFeed,
           assetStore: AssetStore) = {
     logger.debug("Running GBASE feed")
 
-    val objs = _objects(objectDao)
-
-    val file = new GoogleBaseBuilder(installation.domain, feed.productCategory, assetStore).csv(objs, feed)
+    val items = _objects(itemDao)
+    val file = new GoogleBaseBuilder(installation.domain, feed.productCategory, assetStore).csv(items, feed)
     logger.debug("Gbase file generated [{}]", file)
 
     upload(file, feed) match {
@@ -34,15 +33,16 @@ object GoogleBaseService extends Logging {
     gfeedDao.save(feed)
   }
 
-  def _objects(objectDao: ItemDao): Seq[Item] = {
+  def _objects(itemDao: ItemDao): Seq[Item] = {
+
     val q = new ItemQuery
     q.pageSize = 100000
     q.status = Some(Item.STATUS_LIVE)
     q.minPrice = Some(1)
 
-    val objs = objectDao.search(q).results
-    logger.debug("Retrieved {} objects", objs.size)
-    objs
+    val items = itemDao.search(q).results
+    logger.debug("Retrieved {} objects", items.size)
+    items
   }
 
   def upload(file: File, feed: GBaseFeed): Boolean = {

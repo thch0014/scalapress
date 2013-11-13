@@ -32,20 +32,24 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     override def deliveryAddress: Option[Address] = Some(address)
   }
 
-  test("given a parameter map with valid paypal fields then a transaction is created") {
-    val params = Map("VPSTxId" -> "transactionid6655",
+  test("given a parameter map with valid sage fields then a transaction is created") {
+    val params = Map(
+      "VPSTxId" -> "transactionid6655",
       "TxAuthNo" -> "authyauthy2523",
       "Amount" -> "1567.89",
-      "mc_currency" -> "GBP",
-      "txn_id" -> "739653939S128390K",
-      "mc_gross" -> "20.00",
-      "custom" -> "0a1d74c2-f809-4815-a53b-60a28e8da6a0")
+      "AVSCV2" -> "AllMatch",
+      "CardType" -> "Visa",
+      "StatusDetail" -> "Auth Success"
+    )
 
-    val tx = processor._createTx(params)
+    val tx = processor.createTx(params)
     assert(tx.transactionId === "transactionid6655")
     assert(tx.authCode === "authyauthy2523")
     assert(tx.amount === 156789)
     assert(tx.processor === "SagePayForm")
+    assert(tx.securityCheck === "AllMatch")
+    assert(tx.cardType === "Visa")
+    assert(tx.details === "Auth Success")
   }
 
   test("the processor is enabled iff the plugin sagePayVendorName is not null") {
