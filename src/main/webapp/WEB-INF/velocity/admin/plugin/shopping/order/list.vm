@@ -65,7 +65,7 @@
 </div>
 
 #paging($paging)
-exit
+
 <table class="table table-condensed table-hover">
     <tr>
         <th>Id</th>
