@@ -26,7 +26,7 @@ class Attribute {
 
   @ManyToOne
   @JoinColumn(name = "itemType", nullable = true)
-  @Index(name = "objecttype_index")
+  @Index(name = "itemtype_index")
   @BeanProperty
   var objectType: ItemType = _
 

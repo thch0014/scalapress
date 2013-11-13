@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.tag
+package com.cloudray.scalapress.plugin.ecommerce.shopping.tag
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar

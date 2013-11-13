@@ -111,7 +111,7 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   @BeanProperty
   var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
-  @Index(name = "objecttype_index")
+  @Index(name = "itemtype_index")
   @ManyToOne
   @JoinColumn(name = "itemType")
   @NotFound(action = NotFoundAction.IGNORE)
@@ -195,7 +195,7 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   def updateLastModified() {
     dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
   }
-  override def toString: String = s"Obj [id=$id, name=$name, status=$status]"
+  override def toString: String = s"Item [id=$id, name=$name, status=$status]"
 
   def isDeleted = Item.STATUS_DELETED.equalsIgnoreCase(status)
   def isDisabled = Item.STATUS_DISABLED.equalsIgnoreCase(status)
@@ -211,7 +211,7 @@ object Item {
 
     val obj = new Item
     obj.itemType = t
-    obj.name = "new object"
+    obj.name = "new item"
     obj.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
     obj.dateUpdated = obj.dateCreated
     obj.status = STATUS_LIVE

@@ -4,7 +4,10 @@ import com.cloudray.scalapress.item.attr.{Attribute, AttributeFuncs}
 import scala.util.Random
 import com.cloudray.scalapress.search.Sort
 
-/** @author Stephen Samuel */
+/**
+ * Sorts a collection of items based on a sort type
+ *
+ * @author Stephen Samuel */
 object ItemSorter {
 
   def sort(objs: Iterable[Item],

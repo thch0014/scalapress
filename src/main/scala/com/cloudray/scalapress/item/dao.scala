@@ -39,9 +39,9 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
     }
   }
 
-  override def save(obj: Item): Boolean = {
-    obj.dateUpdated = System.currentTimeMillis()
-    super.save(obj)
+  override def save(item: Item): Boolean = {
+    item.dateUpdated = System.currentTimeMillis
+    super.save(item)
   }
 
   override def search(q: ItemQuery): Page[Item] = {

@@ -6,7 +6,7 @@ import org.apache.commons.io.{IOUtils, FileUtils}
 import com.cloudray.scalapress.item.attr.AttributeFuncs
 
 /** @author Stephen Samuel */
-class ItemImporter(objectDao: ItemDao, objectType: ItemType) {
+class ItemImporter(itemDao: ItemDao, itemType: ItemType) {
 
   def doImport(in: InputStream) {
     doImport(IOUtils.toString(in, "UTF8"))
@@ -27,46 +27,46 @@ class ItemImporter(objectDao: ItemDao, objectType: ItemType) {
   def doRow(csv: CsvReader) {
     try {
       val id = csv.get("id").toLong
-      Option(objectDao.find(id)) match {
+      Option(itemDao.find(id)) match {
         case None =>
-        case Some(obj) =>
-          setValues(obj, csv)
-          objectDao.save(obj)
+        case Some(item) =>
+          setValues(item, csv)
+          itemDao.save(item)
       }
     } catch {
       case e: Exception =>
     }
   }
 
-  def setValues(obj: Item, csv: CsvReader) {
-    obj.name = csv.get("name")
-    obj.status = csv.get("status")
+  def setValues(item: Item, csv: CsvReader) {
+    item.name = csv.get("name")
+    item.status = csv.get("status")
     try {
-      obj.price = (csv.get("price").toDouble * 100.0).toInt
+      item.price = (csv.get("price").toDouble * 100.0).toInt
     } catch {
       case e: Exception =>
     }
     try {
-      obj.stock = csv.get("stock").toInt
+      item.stock = csv.get("stock").toInt
     } catch {
       case e: Exception =>
     }
     try {
-      obj.rrp = (csv.get("rrp").toDouble * 100.0).toInt
+      item.rrp = (csv.get("rrp").toDouble * 100.0).toInt
     } catch {
       case e: Exception =>
     }
     try {
-      obj.costPrice = (csv.get("cost").toDouble * 100.0).toInt
+      item.costPrice = (csv.get("cost").toDouble * 100.0).toInt
     } catch {
       case e: Exception =>
     }
 
-    obj.attributeValues.clear()
+    item.attributeValues.clear()
 
-    for ( attribute <- objectType.sortedAttributes ) {
+    for ( attribute <- itemType.sortedAttributes ) {
       val values = Option(csv.get(attribute.name))
-      values.foreach(_.split('|').foreach(AttributeFuncs.addAttributeValue(obj, attribute, _)))
+      values.foreach(_.split('|').foreach(AttributeFuncs.addAttributeValue(item, attribute, _)))
     }
   }
 }
