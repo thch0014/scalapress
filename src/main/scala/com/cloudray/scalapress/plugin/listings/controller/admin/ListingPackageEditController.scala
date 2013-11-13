@@ -13,7 +13,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
-class ListingPackageEditController(val objectTypeDao: TypeDao,
+class ListingPackageEditController(val itemTypeDao: TypeDao,
                                    listingPackageDao: ListingPackageDao,
                                    context: ScalapressContext) extends ItemTypePopulator {
 

@@ -55,7 +55,8 @@ class SavedSearch {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "itemType")
   @NotFound(action = NotFoundAction.IGNORE)
-  @BeanProperty var objectType: ItemType = _
+  @BeanProperty
+  var itemType: ItemType = _
 
   @Column(name = "inStockOnly", nullable = false)
   @BeanProperty var inStockOnly: Boolean = _

@@ -54,7 +54,7 @@ object Search {
     new Search(status = Option(saved.status),
       name = Option(saved.name).map(_.trim).filterNot(_.isEmpty),
       prefix = Option(saved.prefix).filterNot(_.trim.isEmpty),
-      itemTypeId = Option(saved.objectType).map(_.id),
+      itemTypeId = Option(saved.itemType).map(_.id),
       folders = folders,
       attributeValues = saved.attributeValues.asScala.map(av => AttributeSelection(av.id.toString, av.value)),
       hasAttributes = hasAttributes,

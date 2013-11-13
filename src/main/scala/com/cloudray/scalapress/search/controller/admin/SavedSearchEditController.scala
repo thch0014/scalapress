@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 @Controller
 @RequestMapping(Array("backoffice/savedsearch/{id}"))
 @Autowired
-class SavedSearchEditController(val objectTypeDao: TypeDao,
+class SavedSearchEditController(val itemTypeDao: TypeDao,
                                 val folderDao: FolderDao,
                                 val markupDao: MarkupDao,
                                 val savedSearchDao: SavedSearchDao)
@@ -32,10 +32,10 @@ class SavedSearchEditController(val objectTypeDao: TypeDao,
   @RequestMapping(method = Array(RequestMethod.GET))
   def edit(@ModelAttribute("search") search: SavedSearch, model: ModelMap) = {
 
-    if (search.objectType != null) {
-      model.put("attributesMap", attributesMap(search.objectType.sortedAttributes))
+    if (search.itemType != null) {
+      model.put("attributesMap", attributesMap(search.itemType.sortedAttributes))
       model.put("attributesWithValues",
-        attributeEditMap(search.objectType.sortedAttributes, search.attributeValues.asScala.toSeq))
+        attributeEditMap(search.itemType.sortedAttributes, search.attributeValues.asScala.toSeq))
     }
 
     "admin/savedsearch/edit.vm"
@@ -45,8 +45,8 @@ class SavedSearchEditController(val objectTypeDao: TypeDao,
   def save(@ModelAttribute("search") search: SavedSearch, req: HttpServletRequest) = {
 
     search.attributeValues.clear()
-    if (search.objectType != null)
-      for ( a <- search.objectType.attributes.asScala ) {
+    if (search.itemType != null)
+      for ( a <- search.itemType.attributes.asScala ) {
 
         val values = req.getParameterValues("attributeValues" + a.id)
         if (values != null) {
@@ -68,5 +68,6 @@ class SavedSearchEditController(val objectTypeDao: TypeDao,
     "redirect:/backoffice/savedsearch/" + search.id
   }
 
-  @ModelAttribute("search") def _search(@PathVariable("id") id: Long) = savedSearchDao.find(id)
+  @ModelAttribute("search")
+  def _search(@PathVariable("id") id: Long) = savedSearchDao.find(id)
 }

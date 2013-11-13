@@ -20,13 +20,13 @@
     <label class="col-lg-3 control-label">Item Type</label>
 
     <div class="col-lg-8">
-        <select id="objectType" name="objectType" class="form-control">
-          #foreach($option in $objectTypesMap.keySet())
+        <select id="itemType" name="itemType" class="form-control">
+          #foreach($option in $itemTypesMap.keySet())
               <option value="${option}"
-                #if("$!search.objectType.id" == "$option")
+                #if("$!search.itemType.id" == "$option")
                       selected="selected"
                 #end>
-                ${objectTypesMap.get($option)}</option>
+                ${itemTypesMap.get($option)}</option>
           #end
         </select>
     </div>

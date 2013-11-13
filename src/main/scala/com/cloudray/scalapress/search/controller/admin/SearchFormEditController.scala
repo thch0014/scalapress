@@ -14,7 +14,7 @@ import com.cloudray.scalapress.util.{ItemTypePopulator, SortPopulator}
 @Controller
 @RequestMapping(Array("backoffice/searchform/{id}"))
 @Autowired
-class SearchFormEditController(val objectTypeDao: TypeDao,
+class SearchFormEditController(val itemTypeDao: TypeDao,
                                val markupDao: MarkupDao,
                                val searchFormDao: SearchFormDao)
   extends MarkupPopulator with ItemTypePopulator with SortPopulator {

@@ -11,10 +11,10 @@ import scala.collection.JavaConverters._
 
 trait ItemTypePopulator {
 
-  val objectTypeDao: TypeDao
+  val itemTypeDao: TypeDao
 
   @ModelAttribute def objectTypes(model: ModelMap) {
-    val objectTypes = objectTypeDao.findAll
+    val objectTypes = itemTypeDao.findAll
 
     val map = new util.LinkedHashMap[String, String]
     map.put("", "-None-")
@@ -23,6 +23,7 @@ trait ItemTypePopulator {
     })
 
     model.put("objectTypesMap", map)
+    model.put("itemTypesMap", map)
   }
 }
 
