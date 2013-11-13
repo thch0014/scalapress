@@ -15,7 +15,8 @@ import com.cloudray.scalapress.widgets.controller.WidgetEditController
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/widget/media/{id}"))
-class MediaWidgetController(assetStore: AssetStore, widgetDao: WidgetDao) extends WidgetEditController(widgetDao) {
+class MediaWidgetController(assetStore: AssetStore,
+                            widgetDao: WidgetDao) extends WidgetEditController(widgetDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
   override def edit(@ModelAttribute("widget") w: Widget, model: ModelMap) = {

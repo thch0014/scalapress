@@ -8,8 +8,8 @@ import org.apache.commons.io.IOUtils
 
 /** @author Stephen Samuel */
 @Controller
-@RequestMapping(Array("asset"))
 @Autowired
+@RequestMapping(Array("asset"))
 class AssetController(assetStore: AssetStore) {
 
   @ExceptionHandler(Array(classOf[RuntimeException]))

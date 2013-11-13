@@ -4,13 +4,17 @@ import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import org.springframework.ui.ModelMap
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.ecommerce.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.{ShoppingPluginDao, OrderDao}
+import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
 class OrderSearchControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
 
-  val controller = new OrderSearchController
-  controller.orderDao = mock[OrderDao]
+  val shoppingPluginDao = mock[ShoppingPluginDao]
+  val orderDao = mock[OrderDao]
+  val context = new ScalapressContext
+
+  val controller = new OrderSearchController(shoppingPluginDao, orderDao, context)
   val pageNumber = 1
   val req = mock[HttpServletRequest]
 

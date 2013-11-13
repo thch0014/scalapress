@@ -10,11 +10,10 @@ import com.sksamuel.scrimage.Format
 import com.cloudray.scalapress.framework.Logging
 
 @Controller
+@Autowired
 @RequestMapping(Array("images"))
-class ImageController extends Logging with OpType {
-
-  @Autowired var assetStore: AssetStore = _
-  @Autowired var thumbnailService: ThumbnailService = _
+class ImageController(assetStore: AssetStore,
+                      thumbnailService: ThumbnailService) extends Logging with OpType {
 
   @ResponseBody
   @RequestMapping(value = Array("{w:\\d+}/{h:\\d+}/{filename}"))
