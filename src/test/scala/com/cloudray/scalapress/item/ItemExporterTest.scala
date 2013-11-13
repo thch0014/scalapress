@@ -3,6 +3,7 @@ package com.cloudray.scalapress.item
 import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
+import com.cloudray.scalapress.settings.InstallationDao
 
 /** @author Stephen Samuel */
 class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -42,9 +43,15 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   item.attributeValues.add(av1)
   item.attributeValues.add(av2)
 
+  val itemTypeDao = mock[TypeDao]
+  val itemDao = mock[ItemDao]
+  val installationDao = mock[InstallationDao]
+
+  val exporter = new ItemExporter(itemTypeDao, itemDao, installationDao)
+
   test("header happy path") {
 
-    val header = new ItemExporter()._header(attributes)
+    val header = exporter._header(attributes)
     assert(Array("id",
       "date",
       "name",
@@ -63,7 +70,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
 
   test("row happy path") {
 
-    val row = new ItemExporter()._row(item, attributes, "mysite.com")
+    val row = exporter._row(item, attributes, "mysite.com")
     assert(Array[String]("123",
       "11-04-2013",
       "coldplay tickets",
@@ -80,7 +87,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     item.stock = 0
     item.rrp = 0
 
-    val row = new ItemExporter()._row(item, attributes, "mysite.com")
+    val row = exporter._row(item, attributes, "mysite.com")
     assert(Array[String]("123",
       "11-04-2013",
       "coldplay tickets", "super status",
@@ -97,7 +104,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     av3.value = "Apple"
     item.attributeValues.add(av3)
 
-    val row = new ItemExporter()._row(item, attributes, "mysite.com")
+    val row = exporter._row(item, attributes, "mysite.com")
     assert("Apple|Samsung" === row(12))
   }
 }

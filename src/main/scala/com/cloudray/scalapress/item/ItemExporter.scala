@@ -13,11 +13,10 @@ import com.cloudray.scalapress.util.UrlGenerator
 
 /** @author Stephen Samuel */
 @Component
-class ItemExporter {
-
-  @Autowired var itemTypeDao: TypeDao = _
-  @Autowired var itemDao: ItemDao = _
-  @Autowired var installationDao: InstallationDao = _
+@Autowired
+class ItemExporter(itemTypeDao: TypeDao,
+                   itemDao: ItemDao,
+                   installationDao: InstallationDao) {
 
   def export(itemTypeId: Long): File = {
 

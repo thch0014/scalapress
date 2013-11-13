@@ -14,7 +14,7 @@ trait ItemInterceptor {
    * If a interceptor does abort then it should take steps to handle the request,
    * typically sending a HTTP error or writing a custom response.
    *
-   * @param obj the item being executed
+   * @param item the item being executed
    * @param request current HTTP request
    * @param response current HTTP response
    * @return true if the execution chain should proceed with the

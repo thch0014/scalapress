@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.folder
+package com.cloudray.scalapress.section
 
 import com.cloudray.scalapress.section.Section
 

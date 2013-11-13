@@ -63,7 +63,7 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     service._send(order, "body")
     Mockito.verify(mailSender).send(captor.capture)
     val msg = captor.getValue
-    assert(msg.getFrom === "big man tshirts <donotreply@coldplay.com>")
+    assert(msg.getFrom === "donotreply@coldplay.com")
   }
 
   test("that the message subject contains the order id") {
