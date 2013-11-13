@@ -31,7 +31,7 @@ class OrderEditController extends OrderStatusPopulator with DeliveryOptionPopula
   @Autowired var notificationService: OrderCustomerNotificationService = _
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute order: Order) = "admin/plugin/shopping/order/edit.vm"
+  def edit(@ModelAttribute order: Order) = "admin/plugin/ecommerce/shopping/order/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute order: Order,

@@ -17,7 +17,7 @@ class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
                                    context: ScalapressContext) {
 
   @RequestMapping
-  def list = "admin/plugin/shopping/delivery/list.vm"
+  def list = "admin/plugin/ecommerce/shopping/delivery/list.vm"
 
   @RequestMapping(value = Array("create"))
   def create = {

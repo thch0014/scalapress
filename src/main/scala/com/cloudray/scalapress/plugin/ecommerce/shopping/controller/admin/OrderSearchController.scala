@@ -50,7 +50,7 @@ class OrderSearchController(var shoppingPluginDao: ShoppingPluginDao,
           model.put("orders", orders.java)
           model.put("paging", Paging(req, orders))
         }
-        "admin/plugin/shopping/order/list.vm"
+        "admin/plugin/ecommerce/shopping/order/list.vm"
     }
   }
 

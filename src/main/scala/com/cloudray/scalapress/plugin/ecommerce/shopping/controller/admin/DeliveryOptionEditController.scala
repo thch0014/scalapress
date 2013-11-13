@@ -16,7 +16,7 @@ class DeliveryOptionEditController(deliveryOptionDao: DeliveryOptionDao,
                                    context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute("form") form: Form) = "admin/plugin/shopping/delivery/edit.vm"
+  def edit(@ModelAttribute("form") form: Form) = "admin/plugin/ecommerce/shopping/delivery/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("form") form: Form) = {
