@@ -13,6 +13,9 @@ Removed images from the codebase
 Improved galleries and introduced a new common gallery system for plugins to follow
 Fixed tags in bootstrap 3
 Fixes galore around the object->item conversion
+Added dublin core plugin
+Updated order system to include more details on list page
+Refactored ecommerce plugins
 
 ##### 0.40
 

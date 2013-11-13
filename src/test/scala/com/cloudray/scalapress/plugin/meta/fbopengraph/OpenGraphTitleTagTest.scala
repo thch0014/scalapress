@@ -1,11 +1,10 @@
-package com.cloudray.scalapress.plugin.fbopengraph
+package com.cloudray.scalapress.plugin.meta.fbopengraph
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.plugin.meta.fbopengraph.OpenGraphTitleTag
 
 /** @author Stephen Samuel */
 class OpenGraphTitleTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
