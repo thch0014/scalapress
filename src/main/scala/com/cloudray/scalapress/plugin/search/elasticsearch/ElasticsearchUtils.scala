@@ -40,8 +40,8 @@ trait ElasticsearchUtils {
   def attributeUnescape(value: String): String = value.replace("_", " ")
 
   def _maxResults(search: Search) = {
-    if (search.maxResults < 1) DEFAULT_MAX_RESULTS
-    else if (search.maxResults > MAX_RESULTS_HARD_LIMIT) MAX_RESULTS_HARD_LIMIT
-    else search.maxResults
+    if (search.page.pageSize < 1) DEFAULT_MAX_RESULTS
+    else if (search.page.pageSize > MAX_RESULTS_HARD_LIMIT) MAX_RESULTS_HARD_LIMIT
+    else search.page.pageSize
   }
 }

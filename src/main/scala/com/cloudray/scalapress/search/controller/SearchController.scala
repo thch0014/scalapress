@@ -16,6 +16,7 @@ import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.search.widget.SearchFormWidget
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.item.attr.AttributeSelection
+import com.cloudray.scalapress.util.PageUrlUtils
 
 /** @author Stephen Samuel */
 @Controller
@@ -55,10 +56,9 @@ class SearchController extends Logging {
              @RequestParam(value = "type", required = false) t: String,
              @RequestParam(value = "objectType", required = false) itemTypeId: String,
              @RequestParam(value = "distance", required = false, defaultValue = "100") distance: Int,
-             @RequestParam(value = "location", required = false) location: String,
-             @RequestParam(value = "pageSize", required = false, defaultValue = "20") pageSize: Int,
-             @RequestParam(value = "pageNumber", required = false,
-               defaultValue = "1") pageNumber: Int): ScalapressPage = {
+             @RequestParam(value = "location", required = false) location: String): ScalapressPage = {
+
+    val page = PageUrlUtils.parse(req)
 
     val attributeValues = req.getParameterMap.asScala
       .filter(arg => _isAttributeParameter(arg._1.toString))
@@ -73,8 +73,7 @@ class SearchController extends Logging {
       itemTypeId = Option(itemTypeId).map(_.toLong),
       distance = distance,
       location = Option(location),
-      maxResults = pageSize,
-      pageNumber = pageNumber,
+      page = page,
       sort = sort
     )
 
@@ -94,7 +93,7 @@ class SearchController extends Logging {
       .withLocation(location)
       .withSearchResult(result)
     val theme = themeService.default
-    val page = ScalapressPage(theme, sreq)
+    val spage = ScalapressPage(theme, sreq)
 
     val plugin = searchPluginDao.get
 
@@ -110,30 +109,30 @@ class SearchController extends Logging {
         .map(_.noResultsText)
       val noResultsText = section.orElse(widget).orElse(Option(plugin.noResultsText))
 
-      page.body("<!-- search results: no objects found -->")
-      noResultsText.foreach(page body _)
+      spage.body("<!-- search results: no objects found -->")
+      noResultsText.foreach(spage body _)
 
     } else {
 
-      page.body("<!-- search results: " + objects.size + " objects found -->")
+      spage.body("<!-- search results: " + objects.size + " objects found -->")
 
-      val p = Page(objects, pageNumber, pageSize, result.count.toInt)
+      val p = Page(objects, page.pageNumber, page.pageSize, result.count.toInt)
       val paging = Paging(req, p)
 
       Option(objects.head.itemType.objectListMarkup) match {
         case None =>
           logger.debug("No markup available")
-          page.body("<!-- search results: no object list markup found -->")
+          spage.body("<!-- search results: no object list markup found -->")
 
         case Some(markup) =>
           logger.debug("Using markup {}", markup)
 
-          if (paging.totalPages > 1) page.body(PagingRenderer.render(paging))
-          page.body(MarkupRenderer.renderObjects(objects, markup, sreq))
-          if (paging.totalPages > 1) page.body(PagingRenderer.render(paging))
+          if (paging.totalPages > 1) spage.body(PagingRenderer.render(paging))
+          spage.body(MarkupRenderer.renderObjects(objects, markup, sreq))
+          if (paging.totalPages > 1) spage.body(PagingRenderer.render(paging))
       }
     }
-    page
+    spage
   }
 
   @ResponseBody

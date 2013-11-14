@@ -3,6 +3,7 @@ package com.cloudray.scalapress.item
 import com.sksamuel.scoot.soa.PagedQuery
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.search.Sort
+import com.cloudray.scalapress.util.Page
 
 /** @author Stephen Samuel */
 class ItemQuery extends PagedQuery {
@@ -51,8 +52,14 @@ class ItemQuery extends PagedQuery {
     this
   }
 
+  @deprecated
   def withPageSize(i: Int): ItemQuery = {
     this.pageSize = i
+    this
+  }
+
+  def withPage(page: Page): ItemQuery = {
+    this.pageSize = page.pageSize
     this
   }
 }

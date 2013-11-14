@@ -6,7 +6,7 @@ import com.cloudray.scalapress.search.{Search, Sort}
 import com.cloudray.scalapress.item.{Item, ItemType}
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.util.Scalate
+import com.cloudray.scalapress.util.{Page, Scalate}
 import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
@@ -37,10 +37,10 @@ class CalendarWidget extends Widget {
   def search = Search(
     itemTypeId = Option(objectType).map(_.id),
     status = Option(Item.STATUS_LIVE),
-    maxResults = 1000,
     sort = Sort.AttributeDesc,
     sortAttribute = Option(startDateAttribute),
-    hasAttributes = List(startDateAttribute.id.toString)
+    hasAttributes = List(startDateAttribute.id.toString),
+    page = Page(1, 1000)
   )
 
   override def backoffice = "/backoffice/plugin/calendar/widget/" + id

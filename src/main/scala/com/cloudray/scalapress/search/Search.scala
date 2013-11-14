@@ -2,6 +2,7 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.item.attr.{AttributeSelection, Attribute}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.util.Page
 
 /** @author Stephen Samuel */
 case class Search(status: Option[String] = None,
@@ -24,8 +25,7 @@ case class Search(status: Option[String] = None,
                   facets: Iterable[FacetField] = Nil, // the facets to return
                   sort: Sort = Sort.Name,
                   sortAttribute: Option[Attribute] = None,
-                  pageNumber: Int = 1,
-                  maxResults: Int = Search.DEFAULT_MAX_RESULTS)
+                  page: Page = Page.empty)
 
 object Search {
 
@@ -52,6 +52,8 @@ object Search {
       case Some(ids) => ids.split(",").map(_.trim).toSeq
     }
 
+    val pageSize = if (saved.maxResults <= 0) DEFAULT_MAX_RESULTS else saved.maxResults
+
     new Search(status = Option(saved.status),
       name = Option(saved.name).map(_.trim).filterNot(_.isEmpty),
       prefix = Option(saved.prefix).filterNot(_.trim.isEmpty),
@@ -71,8 +73,7 @@ object Search {
       facets = Nil,
       sort = Option(saved.sortType).getOrElse(Sort.Name),
       sortAttribute = Option(saved.sortAttribute),
-      pageNumber = 1,
-      maxResults = if (saved.maxResults <= 0) DEFAULT_MAX_RESULTS else saved.maxResults
+      page = Page(1, pageSize)
     )
   }
 }

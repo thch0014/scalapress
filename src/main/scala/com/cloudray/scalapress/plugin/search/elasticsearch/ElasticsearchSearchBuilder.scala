@@ -30,8 +30,8 @@ object ElasticsearchSearchBuilder extends ElasticsearchUtils {
     val _sort = sort(search)
     val sorts = if (search.ignorePriority) List(_sort) else List(_priority, _sort)
 
-    select in (INDEX -> TYPE) searchType QueryAndFetch from (search
-      .pageNumber - 1) * limit size limit sort (sorts: _*) query q facets {
+    select in (INDEX -> TYPE) searchType QueryAndFetch from search
+      .page.offset size limit sort (sorts: _*) query q facets {
       facets(search)
     }
   }

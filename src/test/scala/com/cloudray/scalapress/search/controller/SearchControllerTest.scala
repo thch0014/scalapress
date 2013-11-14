@@ -42,7 +42,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
-    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null, 20, 1)
+    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null)
     assert(!page.render.contains("pagination"))
   }
 
@@ -53,7 +53,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj).padTo(20, obj))
 
-    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null, 20, 1)
+    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null)
     assert(page.render.contains("pagination"))
   }
 
@@ -63,7 +63,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
-    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null, 20, 1)
+    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null)
     assert(!page.render.contains("pagination"))
     assert(!page.render.contains("Parachutes"))
   }
@@ -74,7 +74,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
-    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null, 20, 1)
+    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null)
     assert(!page.render.contains("pagination"))
     assert(page.render.contains("Parachutes"))
   }
@@ -86,7 +86,7 @@ class SearchControllerTest extends FunSuite with OneInstancePerTest with Mockito
     Mockito.when(controller.searchService.search(Matchers.any[Search])).thenReturn(result)
     Mockito.when(controller.objectDao.findBulk(Matchers.any[Seq[Long]])).thenReturn(Seq(obj))
 
-    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null, 20, 1)
+    val page = controller.search(req, null, null, null, "coldplay", null, null, null, 0, null)
     assert(!page.render.contains("Parachutes"))
   }
 }

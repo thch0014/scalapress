@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.search.{Search, SearchService}
 import com.cloudray.scalapress.item.{ItemDao, TypeDao}
 import scala.collection.JavaConverters._
+import com.cloudray.scalapress.util.Page
 
 /** @author Stephen Samuel */
 @Controller
@@ -19,7 +20,7 @@ class BackofficeSearchController(service: SearchService,
   @RequestMapping
   def test(@RequestParam("q") q: String, model: ModelMap) = {
 
-    val s = Search(name = Option(q), maxResults = 50)
+    val s = Search(name = Option(q), page = Page(1, 50))
     val result = service.search(s)
 
     val results = result.refs.map(ref => {

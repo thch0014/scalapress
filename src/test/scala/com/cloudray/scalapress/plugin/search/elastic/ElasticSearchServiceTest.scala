@@ -7,6 +7,7 @@ import com.cloudray.scalapress.item.attr._
 import com.cloudray.scalapress.search.{Search, Sort}
 import com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService
 import com.cloudray.scalapress.folder.Folder
+import com.cloudray.scalapress.util.Page
 
 /** @author Stephen Samuel */
 class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
@@ -400,19 +401,19 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
   }
 
   test("search max results of 0 changes to default") {
-    val search = Search(maxResults = 0)
+    val search = Search(page = Page(1, 0))
     val max = service._maxResults(search)
     assert(service.DEFAULT_MAX_RESULTS === max)
   }
 
   test("search max results cannot exceed hard limit") {
-    val search = Search(maxResults = service.MAX_RESULTS_HARD_LIMIT + 1)
+    val search = Search(page = Page(1, service.MAX_RESULTS_HARD_LIMIT + 1))
     val max = service._maxResults(search)
     assert(service.MAX_RESULTS_HARD_LIMIT === max)
   }
 
-  test("acceptable search max results is used") {
-    val search = Search(maxResults = 7)
+  test("acceptable search pagesize is used") {
+    val search = Search(page = Page(1, 7))
     val max = service._maxResults(search)
     assert(7 === max)
   }
