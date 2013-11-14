@@ -39,7 +39,7 @@
         <compiler.version.source>1.6</compiler.version.source>
         <compiler.version.target>1.6</compiler.version.target>
 
-        <aspectj.version>1.6.10</aspectj.version>
+        <aspectj.version>1.7.4</aspectj.version>
         <aws.version>1.6.5</aws.version>
 
         <commons.httpcore.version>4.2.5</commons.httpcore.version>
@@ -54,7 +54,7 @@
         <commons.sanselan.version>0.97-incubator</commons.sanselan.version>
         <commons.validator.version>1.4.0</commons.validator.version>
 
-        <cglib.version>2.2.2</cglib.version>
+        <cglib.version>3.0</cglib.version>
 
         <edtftpj.version>1.5.3</edtftpj.version>
         <ehcache.version>2.6.6</ehcache.version>
