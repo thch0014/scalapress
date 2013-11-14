@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping
 
-import org.springframework.mail.{MailSender, SimpleMailMessage}
+import org.springframework.mail.{MailParseException, MailSender, SimpleMailMessage}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
@@ -56,7 +56,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     try {
       mailSender.send(message)
     } catch {
-      case e: AddressException =>
+      case e@(_: AddressException | _: MailParseException) =>
         logger.warn(e.toString)
         logger.warn("to: " + order.account.email)
         logger.warn("bcc:" + bcc.mkString(","))
