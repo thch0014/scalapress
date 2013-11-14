@@ -35,8 +35,8 @@ class FacetSection extends SearchResultsSection {
 
     val uri = UrlParser.parse(sreq)
     val selections = SearchUrlUtils.facets(sreq)
-    val search = createSearch(folder, selections, facetFields)
     val sort = SearchUrlUtils.sort(sreq)
+    val search = createSearch(folder, selections, facetFields).copy(sort = sort)
 
     val searchService = sreq.context.bean[SearchService]
     val result = searchService.search(search)
@@ -44,7 +44,8 @@ class FacetSection extends SearchResultsSection {
     val items = getItems(result, sreq.context.itemDao)
     val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
 
-    renderSelectedFacets(selections, uri, sreq.context) +
+    ResultsBar.render(result, sreq) +
+      renderSelectedFacets(selections, uri, sreq.context) +
       (if (facetsWithMultipleTerms.isEmpty) "" else renderFacets(facetsWithMultipleTerms, uri)) +
       renderItems(items, sreq)
   }
