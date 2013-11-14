@@ -82,7 +82,7 @@
           <td>$o.datePlacedLondon().toString("MMM dd yyyy, HH:mm")</td>
           <td>$!o.status</td>
           <td><a href="/backoffice/account/$!o.account.id">$!o.account.name</a></td>
-          <td>$!o.description().orNull()</td>
+          <td>#if ($!o.description().isDefined()) $!o.description().get() #end</td>
           <td>$o.total()</td>
           <td>
               <a href="/backoffice/order/$o.id" role="button" class="btn btn-xs btn-default">
