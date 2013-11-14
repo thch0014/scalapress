@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.search
 
 import com.sksamuel.scoot.soa.Paging
-import scala.xml.Utility
+import scala.xml.{Node, Utility}
 import com.cloudray.scalapress.util.{UrlParser, PageUrlUtils, Pages}
 import com.github.theon.uri.Uri
 import javax.servlet.http.HttpServletRequest
@@ -10,10 +10,11 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 /** @author Stephen Samuel */
 object PagingRenderer {
 
-  def render(pages: Pages, k: Int, sreq: ScalapressRequest): String = render(pages, k, sreq.request)
-  def render(pages: Pages, k: Int, req: HttpServletRequest): String = render(pages, k, UrlParser(req))
-  def render(pages: Pages, k: Int, uri: Uri): String = {
-    pages.range(k).map(page => {
+  def render(pages: Pages, k: Int, sreq: ScalapressRequest): Node = render(pages, k, sreq.request)
+  def render(pages: Pages, k: Int, req: HttpServletRequest): Node = render(pages, k, UrlParser(req))
+  def render(pages: Pages, k: Int, uri: Uri): Node = {
+
+    val lis = pages.range(k).map(page => {
       val url = PageUrlUtils.append(uri, page)
       val css = if (page.pageNumber == pages.current.pageNumber) "active" else ""
       <li class={css}>
@@ -21,7 +22,13 @@ object PagingRenderer {
           {page.pageNumber}
         </a>
       </li>
-    }).mkString
+    })
+
+    <div class="pagination">
+      <ul>
+        {lis}
+      </ul>
+    </div>
   }
 
   @deprecated

@@ -65,10 +65,17 @@ case class Pages(current: Page, totalPages: Int) {
   def range(k: Int): Seq[Page] = (previous(k) :+ current) ++ next(k)
 }
 
+object Pages {
+  def apply(result: PagedResult[_]): Pages = {
+    Pages(result.page, scala.math.ceil(result.totalResults.toFloat / result.page.pageSize).toInt)
+  }
+}
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 case class PagedResult[T](results: Seq[T], page: Page, totalResults: Int) {
   @JsonIgnore def java = if (results == null) new util.ArrayList[T]() else results.asJava
   override def toString = ToStringBuilder.reflectionToString(this)
+  def pages = Pages(this)
 }
 
 object PagedResult {
@@ -100,7 +107,11 @@ object PagedResult {
    * @return the new Page of results
    */
   def apply[T](results: Iterable[T], totalResults: Int): PagedResult[T] = {
-    PagedResult(results.toSeq, Page(FirstPage, results.size), totalResults)
+    apply(results, Page(FirstPage, results.size), totalResults)
+  }
+
+  def apply[T](results: Iterable[T], page: Page, totalResults: Int): PagedResult[T] = {
+    PagedResult(results.toSeq, page, totalResults)
   }
 }
 

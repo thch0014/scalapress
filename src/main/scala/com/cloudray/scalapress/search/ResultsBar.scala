@@ -2,7 +2,8 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.framework.ScalapressRequest
 import scala.xml.Node
-import com.cloudray.scalapress.util.{PagedResult, UrlParser}
+import com.cloudray.scalapress.util.{PageUrlUtils, PagedResult, UrlParser}
+import com.github.theon.uri.Uri
 
 /** @author Stephen Samuel */
 object ResultsBar {
@@ -15,25 +16,32 @@ object ResultsBar {
   )
 
   def render(result: SearchResult, sreq: ScalapressRequest): Node = {
+    val url = UrlParser(sreq)
+    val page = PageUrlUtils.parse(url)
+    val pagedResult = PagedResult(result.refs, page, result.count)
     <div class="search-results-bar">
-      {sort(sreq)}{resultCount(result)}
+      {paging(pagedResult, url)}{sort(sreq, url)}{resultCount(pagedResult)}
     </div>
   }
 
-  def resultCount(result: SearchResult): Node = {
-    val pagedResults = PagedResult(result.refs, result.count)
+  def paging(pagedResult: PagedResult[ItemRef], url: Uri): Node = {
+    <div class="search-result-paging" style="float:float">
+      {PagingRenderer.render(pagedResult.pages, 4, url)}
+    </div>
+  }
+
+  def resultCount(pagedResult: PagedResult[ItemRef]): Node = {
     <div class="search-result-count" style="float:float">
-      {pagedResults.page.first}
+      {pagedResult.page.first}
       -
-      {pagedResults.page.last}
+      {pagedResult.page.last}
       from
-      {result.count}
+      {pagedResult.totalResults}
       Results
     </div>
   }
 
-  def sort(sreq: ScalapressRequest): Node = {
-    val url = UrlParser(sreq)
+  def sort(sreq: ScalapressRequest, url: Uri): Node = {
     val sort = SearchUrlUtils.sort(sreq)
     val options = ResultsBar.sortsMap.map(entry => {
       val selected = if (entry._2 == sort) "true" else null
