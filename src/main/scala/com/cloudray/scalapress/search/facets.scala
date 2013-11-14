@@ -52,10 +52,18 @@ object FacetSelections {
   }
 }
 
-object FacetSelectionParser {
-  def parse(sreq: ScalapressRequest): Seq[FacetSelection] = parse(sreq.request)
-  def parse(req: HttpServletRequest): Seq[FacetSelection] = parse(UrlParser.parse(req))
-  def parse(uri: Uri): Seq[FacetSelection] = {
+object SearchUrlUtils {
+
+  def sort(sreq: ScalapressRequest): Sort = sort(sreq.request)
+  def sort(req: HttpServletRequest): Sort = try {
+    Sort.valueOf(UrlParser.parse(req).query.params("sort").headOption.getOrElse("Name"))
+  } catch {
+    case e: Exception => Sort.Name
+  }
+
+  def facets(sreq: ScalapressRequest): Seq[FacetSelection] = facets(sreq.request)
+  def facets(req: HttpServletRequest): Seq[FacetSelection] = facets(UrlParser.parse(req))
+  def facets(uri: Uri): Seq[FacetSelection] = {
     uri.query.params
       .filter(param => FacetField.create.isDefinedAt(param._1))
       .map(param => FacetSelection(FacetField.create(param._1), param._2.head))
