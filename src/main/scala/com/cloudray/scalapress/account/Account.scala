@@ -11,6 +11,7 @@ import org.hibernate.annotations.{Index, NotFoundAction, NotFound}
 class Account {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @BeanProperty
   var id: Long = _
 
@@ -65,7 +66,6 @@ object Account {
     require(t != null)
 
     val a = new Account
-    a.id = System.currentTimeMillis() % 10000000
     a.accountType = t
     a.name = "new account"
     a.dateCreated = new DateTime(DateTimeZone.UTC).getMillis

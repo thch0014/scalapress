@@ -47,12 +47,12 @@ object PageUrlUtils {
 }
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-case class Page2[T](results: Seq[T], page: Page, totalResults: Int) {
+case class PagedResult[T](results: Seq[T], page: Page, totalResults: Int) {
   @JsonIgnore def java = if (results == null) new util.ArrayList[T]() else results.asJava
   override def toString = ToStringBuilder.reflectionToString(this)
 }
 
-object Page2 {
+object PagedResult {
 
   val FirstPage = 1
   val DefaultPageSize = 20
@@ -60,7 +60,7 @@ object Page2 {
   /**
    * Returns an empty Page which pageNumber 1, pageSize 20 and and totalResults 0
    */
-  def empty[T]: Page2[T] = apply(Nil)
+  def empty[T]: PagedResult[T] = apply(Nil)
 
   /**
    * Creates a new Page from a given collection of results when it is assumed that those
@@ -70,7 +70,7 @@ object Page2 {
    * @param results the set of results that is to be assumed to be all available results
    * @return the new Page of results
    */
-  def apply[T](results: Iterable[T]): Page2[T] = apply(results, results.size)
+  def apply[T](results: Iterable[T]): PagedResult[T] = apply(results, results.size)
 
   /**
    * Creates a new Page from a given collection of results, when the size of the results
@@ -80,8 +80,9 @@ object Page2 {
    * @param totalResults the total number of results
    * @return the new Page of results
    */
-  def apply[T](results: Iterable[T], totalResults: Int): Page2[T] =
-    Page2(results.toSeq, Page(FirstPage, results.size), totalResults)
+  def apply[T](results: Iterable[T], totalResults: Int): PagedResult[T] = {
+    PagedResult(results.toSeq, Page(FirstPage, results.size), totalResults)
+  }
 }
 
 case class PagedRequest(page: Page) {
