@@ -53,7 +53,10 @@ class Account {
   def updatedDateUpdated(): Unit = dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
 
   @PrePersist
-  def updateDateCreated(): Unit = if (dateCreated == null) dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+  def updateDateCreated(): Unit = {
+    if (dateCreated == null || dateCreated.longValue() == 0)
+      dateCreated = new DateTime(DateTimeZone.UTC).getMillis
+  }
 
   override def toString: String = s"Account [id=$id, status=$status, name=$name]"
 }
