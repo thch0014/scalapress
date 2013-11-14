@@ -47,7 +47,8 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     message.setTo(order.account.email)
 
     val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
-    message.setBcc(bcc)
+    if (bcc.size > 0)
+      message.setBcc(bcc)
 
     message.setReplyTo(replyAddress)
     message.setSubject("Order #" + order.id)
