@@ -51,6 +51,20 @@ object PageUrlUtils {
   }
 }
 
+case class Pages(page: Page, totalPages: Int) {
+  def before(max: Int): Range = scala.math.max(1, page.pageNumber - max).to(page.pageNumber - 1)
+  def after(max: Int): Range = (page.pageNumber + 1).to(scala.math.min(page.pageNumber + max, totalPages))
+  def range(dist: Int): Range = before(dist).start.to(after(dist).end)
+  def hasPrevious: Boolean = page.pageNumber > 1
+  def hasNext: Boolean = page.pageNumber < totalPages
+  def isFirst: Boolean = page.pageNumber == 1
+  def isLast: Boolean = page.pageNumber == totalPages
+  def previous = page.previous
+  def previous(k: Int): Seq[Page] = before(k).map(Page(_, page.pageSize))
+  def next = page.next
+  def next(k: Int): Seq[Page] = after(k).map(Page(_, page.pageSize))
+}
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 case class PagedResult[T](results: Seq[T], page: Page, totalResults: Int) {
   @JsonIgnore def java = if (results == null) new util.ArrayList[T]() else results.asJava
@@ -93,4 +107,3 @@ object PagedResult {
 case class PagedRequest(page: Page) {
   def offset: Int = (page.pageNumber - 1) * page.pageSize
 }
-
