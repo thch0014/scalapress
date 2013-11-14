@@ -51,18 +51,18 @@ object PageUrlUtils {
   }
 }
 
-case class Pages(page: Page, totalPages: Int) {
-  def before(max: Int): Range = scala.math.max(1, page.pageNumber - max).to(page.pageNumber - 1)
-  def after(max: Int): Range = (page.pageNumber + 1).to(scala.math.min(page.pageNumber + max, totalPages))
-  def range(dist: Int): Range = before(dist).start.to(after(dist).end)
-  def hasPrevious: Boolean = page.pageNumber > 1
-  def hasNext: Boolean = page.pageNumber < totalPages
-  def isFirst: Boolean = page.pageNumber == 1
-  def isLast: Boolean = page.pageNumber == totalPages
-  def previous = page.previous
-  def previous(k: Int): Seq[Page] = before(k).map(Page(_, page.pageSize))
-  def next = page.next
-  def next(k: Int): Seq[Page] = after(k).map(Page(_, page.pageSize))
+case class Pages(current: Page, totalPages: Int) {
+  def before(k: Int): Range = scala.math.max(1, current.pageNumber - k).to(current.pageNumber - 1)
+  def after(k: Int): Range = (current.pageNumber + 1).to(scala.math.min(current.pageNumber + k, totalPages))
+  def hasPrevious: Boolean = current.pageNumber > 1
+  def hasNext: Boolean = current.pageNumber < totalPages
+  def isFirst: Boolean = current.pageNumber == 1
+  def isLast: Boolean = current.pageNumber == totalPages
+  def previous = current.previous
+  def previous(k: Int): Seq[Page] = before(k).map(Page(_, current.pageSize))
+  def next = current.next
+  def next(k: Int): Seq[Page] = after(k).map(Page(_, current.pageSize))
+  def range(k: Int): Seq[Page] = (previous(k) :+ current) ++ next(k)
 }
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
