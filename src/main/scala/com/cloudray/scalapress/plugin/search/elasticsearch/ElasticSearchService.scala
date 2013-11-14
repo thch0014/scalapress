@@ -161,7 +161,7 @@ class ElasticSearchService(attributeDao: AttributeDao)
     resp.getHits.asScala.map(arg => {
       val id = arg.id.toLong
       val itemTypeId = arg.getSource.get(FIELD_ITEM_TYPE_ID).toString.toLong
-      val prioritized = arg.getSource.get(FIELD_PRIORITIZED) == "1"
+      val prioritized = arg.getSource.get(FIELD_PRIORITIZED).toString == "1"
       val n = arg.getSource.get(FIELD_NAME_NOT_ANALYSED).toString
       val status = arg.getSource.get(FIELD_STATUS).toString
       val attributes = arg.getSource.asScala.filter(_._2 != null).filter(_._1.startsWith(FIELD_ATTRIBUTE))

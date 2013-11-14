@@ -13,18 +13,16 @@ class AccountDaoTest extends FunSuite with MockitoSugar {
     acc.name = "super account"
     acc.email = "email@domain.com"
     acc.status = "status"
-    acc.id = 10
 
     TestDatabaseContext.accountDao.save(acc)
 
-    val acc2 = TestDatabaseContext.accountDao.find(10)
+    val acc2 = TestDatabaseContext.accountDao.find(acc.id)
     assert("super account" === acc2.name)
   }
 
   test("email lookup happy path") {
 
     val acc = new Account
-    acc.id = 11
     acc.name = "name"
     acc.email = "sammy@sambo.com"
     acc.status = "status"
