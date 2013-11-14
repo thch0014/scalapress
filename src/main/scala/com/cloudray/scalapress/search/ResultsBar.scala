@@ -16,12 +16,12 @@ object ResultsBar {
 
   def render(result: SearchResult, sreq: ScalapressRequest): Node = {
     <div class="search-results-bar">
-      {resultCount(result)}{sort(sreq)}
+      {sort(sreq)}{resultCount(result)}
     </div>
   }
 
   def resultCount(result: SearchResult): Node = {
-    <div class='search-result-count'>
+    <div class="search-result-count" style="float:float">
       {result.count}
       Results
     </div>
@@ -40,14 +40,15 @@ object ResultsBar {
     val params = url.query.removeParams("sort").params.flatMap(param => param._2.map(value => {
         <input type="hidden" name={param._1} value={value}/>
     }))
-    <form method="GET" action={url}>
-      {params}<div class='search-result-sort' onChange="submit()">
-      Sort by:
-      <select name="sort">
-        {options}
-      </select>
+    <div class="search-result-sort" style="float:right">
+      <form method="GET" action={url}>
+        {params}
+        Sort by:
+        <select name="sort" onChange="submit()">
+          {options}
+        </select>
+      </form>
     </div>
-    </form>
   }
 }
 
