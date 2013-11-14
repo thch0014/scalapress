@@ -88,7 +88,6 @@
     </div>
 </div>
 
-
   #if ($search.sortType == "Attribute" || $search.sortType == "AttributeDesc")
   <div class="form-group">
       <label class="col-lg-3 control-label">Sort Attribute</label>
@@ -105,6 +104,15 @@
       </div>
   </div>
   #end
+
+
+<div class="form-group">
+    <label class="col-lg-2 control-label">In stock only</label>
+
+    <div class="col-lg-8">
+      #springFormCheckbox("settings.inStockOnly", "")
+    </div>
+</div>
 
 
 <div class="form-group">
