@@ -57,5 +57,17 @@ class AttributeEditController(attributeOptionDao: AttributeOptionDao,
   def options(@PathVariable("id") id: Long) = attributeDao.find(id).options.asScala.sortBy(_.position).asJava
 
   @ModelAttribute("attributeTypeMap")
-  def types = populate(AttributeType.values)
+  def types = populate(Array(
+    AttributeType.Association,
+    AttributeType.Date,
+    AttributeType.DateTime,
+    AttributeType.Email,
+    AttributeType.Image,
+    AttributeType.Link,
+    AttributeType.Numerical,
+    AttributeType.Postcode,
+    AttributeType.Selection,
+    AttributeType.Text,
+    AttributeType.TextArea)
+  )
 }

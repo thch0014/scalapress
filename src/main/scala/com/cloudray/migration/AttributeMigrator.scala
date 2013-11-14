@@ -4,13 +4,15 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.attr.{AttributeOption, AttributeType, AttributeDao}
 import javax.annotation.PostConstruct
+import org.springframework.transaction.annotation.Transactional
 
 /** @author Stephen Samuel */
 @Component
 @Autowired
-class AttributeMigrator(attributeDao: AttributeDao) {
+class AttributeMigrator(attributeDao: AttributeDao) extends Runnable {
 
   @PostConstruct
+  @Transactional
   def run() {
     attributeDao.findAll.foreach(attr => {
       attr.attributeType match {
@@ -27,8 +29,8 @@ class AttributeMigrator(attributeDao: AttributeDao) {
           no.position = 1
           no.value = "No"
 
-          attr.options.add(yes)
-          attr.options.add(no)
+          import scala.collection.JavaConverters._
+          attr.options = List(yes, no).asJava
 
           attributeDao.save(attr)
 

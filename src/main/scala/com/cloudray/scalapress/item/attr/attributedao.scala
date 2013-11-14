@@ -27,8 +27,8 @@ class AttributeValueDaoImpl extends GenericDaoImpl[AttributeValue, java.lang.Lon
   def updateValues(attribute: Attribute, oldValue: String, newValue: String): Int = {
     getSession
       .createSQLQuery("UPDATE attributes_values SET value=? WHERE value=? AND attribute=?")
-      .setString(0, oldValue)
-      .setString(1, newValue)
+      .setString(0, newValue)
+      .setString(1, oldValue)
       .setLong(2, attribute.id)
       .executeUpdate()
   }
