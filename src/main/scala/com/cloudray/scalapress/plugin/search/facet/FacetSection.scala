@@ -36,7 +36,7 @@ class FacetSection extends SearchResultsSection {
     val uri = UrlParser(sreq)
     val selections = SearchUrlUtils.facets(sreq)
     val sort = SearchUrlUtils.sort(sreq)
-    val search = createSearch(folder, selections, facetFields).copy(sort = sort)
+    val search = createSearch(folder, selections, facetFields).copy(sort = sort, ignorePriority = true)
 
     val searchService = sreq.context.bean[SearchService]
     val result = searchService.search(search)

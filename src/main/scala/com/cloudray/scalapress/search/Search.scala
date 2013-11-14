@@ -20,6 +20,7 @@ case class Search(status: Option[String] = None,
                   maxPrice: Int = 0,
                   ignorePast: Option[Attribute] = None,
                   newerThanTimestamp: Long = 0,
+                  ignorePriority: Boolean = false,
                   facets: Iterable[FacetField] = Nil, // the facets to return
                   sort: Sort = Sort.Name,
                   sortAttribute: Option[Attribute] = None,

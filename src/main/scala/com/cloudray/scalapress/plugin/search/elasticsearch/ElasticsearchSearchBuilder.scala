@@ -26,12 +26,12 @@ object ElasticsearchSearchBuilder extends ElasticsearchUtils {
     }
 
     val limit = _maxResults(search)
-    val prioritized = by field FIELD_PRIORITIZED order SortOrder.DESC
+    val _priority = by field FIELD_PRIORITIZED order SortOrder.DESC
+    val _sort = sort(search)
+    val sorts = if (search.ignorePriority) List(_sort) else List(_priority, _sort)
 
-    select in (INDEX -> TYPE) searchType QueryAndFetch from (search.pageNumber - 1) * limit size limit sort(
-      prioritized,
-      sort(search)
-      ) query q facets {
+    select in (INDEX -> TYPE) searchType QueryAndFetch from (search
+      .pageNumber - 1) * limit size limit sort (sorts: _*) query q facets {
       facets(search)
     }
   }
