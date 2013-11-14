@@ -111,7 +111,8 @@ object PagedResult {
   }
 
   def apply[T](results: Iterable[T], page: Page, totalResults: Int): PagedResult[T] = {
-    PagedResult(results.toSeq, page, totalResults)
+    val _page = if (page.last > totalResults) Page(1, page.pageSize) else page
+    PagedResult(results.toSeq, _page, totalResults)
   }
 }
 

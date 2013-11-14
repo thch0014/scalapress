@@ -90,7 +90,7 @@ class FacetSection extends SearchResultsSection {
         "/com/cloudray/scalapress/search/section/facetterm.ssp",
         Map("count" -> term.count,
           "value" -> term.value,
-          "url" -> uri.replaceParams(facet.field.key, term.value).toString())
+          "url" -> uri.replaceParams(facet.field.key, term.value).replaceParams("pageNumber", 1).toString())
       )
     )
     <div class="search-facet clearfix">
