@@ -115,6 +115,11 @@ class Transaction {
   @BeanProperty
   var ipAddress: String = _
 
+  // Our reference used on callbacks
+  @Column(name = "reference")
+  @BeanProperty
+  var reference: String = _
+
   override def toString: String = s"Transaction [transactionId=$transactionId amount=$amount processor=$processor date=$date]"
 }
 

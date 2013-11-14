@@ -43,8 +43,10 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
 
   @BeanProperty
   var expiry: Long = 0
+
   @BeanProperty
   var labels: String = _
+
   @BeanProperty
   var prioritized: Boolean = _
 
@@ -192,9 +194,8 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   var backorders: Boolean = _
 
   @PrePersist
-  def updateLastModified() {
-    dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
-  }
+  def updateLastModified(): Unit = dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+
   override def toString: String = s"Item [id=$id, name=$name, status=$status]"
 
   def isDeleted = Item.STATUS_DELETED.equalsIgnoreCase(status)

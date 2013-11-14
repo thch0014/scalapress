@@ -39,7 +39,8 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
       "Amount" -> "1567.89",
       "AVSCV2" -> "AllMatch",
       "CardType" -> "Visa",
-      "StatusDetail" -> "Auth Success"
+      "StatusDetail" -> "Auth Success",
+      "VendorTxCode" -> "Order-45558"
     )
 
     val tx = processor.createTx(params)
@@ -50,6 +51,7 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     assert(tx.securityCheck === "AllMatch")
     assert(tx.cardType === "Visa")
     assert(tx.details === "Auth Success")
+    assert(tx.reference === "Order-45558")
   }
 
   test("the processor is enabled iff the plugin sagePayVendorName is not null") {

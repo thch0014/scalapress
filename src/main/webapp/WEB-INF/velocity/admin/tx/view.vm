@@ -74,6 +74,16 @@
       </div>
   #end
 
+  #if ($tx.reference)
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Reference</label>
+
+          <div class="col-lg-8">
+            #springFormInput("tx.reference", "class='form-control'")
+          </div>
+      </div>
+  #end
+
   #if ($tx.cardType)
       <div class="form-group">
           <label class="col-lg-2 control-label">Card Type</label>
