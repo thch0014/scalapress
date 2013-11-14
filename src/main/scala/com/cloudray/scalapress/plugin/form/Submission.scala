@@ -5,7 +5,7 @@ import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.folder.Folder
 import scala.beans.BeanProperty
 import org.hibernate.annotations.{NotFoundAction, NotFound}
-import com.cloudray.scalapress.util.Page
+import com.cloudray.scalapress.util.{WebPage, Page}
 
 /** @author Stephen Samuel */
 @Entity
@@ -48,9 +48,9 @@ class Submission {
   @BeanProperty
   var attachments: java.util.Set[String] = new java.util.HashSet[String]
 
-  def page: Option[Page] = {
-    if (obj != null) Some(Page(obj))
-    else if (folder != null) Some(Page(folder))
+  def page: Option[WebPage] = {
+    if (obj != null) Some(WebPage(obj))
+    else if (folder != null) Some(WebPage(folder))
     else None
   }
 }
