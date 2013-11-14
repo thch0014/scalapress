@@ -4,6 +4,7 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 import scala.xml.Node
 import com.cloudray.scalapress.util.{PageUrlUtils, PagedResult, UrlParser}
 import com.github.theon.uri.Uri
+import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
 object ResultsBar {
@@ -16,11 +17,18 @@ object ResultsBar {
   )
 
   def render(result: SearchResult, sreq: ScalapressRequest): Node = {
+
     val url = UrlParser(sreq)
     val page = PageUrlUtils.parse(url)
     val pagedResult = PagedResult(result.refs, page, result.count)
+
+    val components = new ListBuffer[Node]
+    components.append(sort(sreq, url))
+    if (pagedResult.pages.multiple) components.append(paging(pagedResult, url))
+    components.append(resultCount(pagedResult))
+
     <div class="search-results-bar">
-      {paging(pagedResult, url)}{sort(sreq, url)}{resultCount(pagedResult)}
+      {components}
     </div>
   }
 

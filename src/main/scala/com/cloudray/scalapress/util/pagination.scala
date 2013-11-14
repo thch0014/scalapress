@@ -63,6 +63,7 @@ case class Pages(current: Page, totalPages: Int) {
   def next = current.next
   def next(k: Int): Seq[Page] = after(k).map(Page(_, current.pageSize))
   def range(k: Int): Seq[Page] = (previous(k) :+ current) ++ next(k)
+  val multiple = totalPages > 1
 }
 
 object Pages {
