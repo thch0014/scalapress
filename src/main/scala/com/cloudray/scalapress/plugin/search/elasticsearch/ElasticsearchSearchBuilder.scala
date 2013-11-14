@@ -50,6 +50,8 @@ object ElasticsearchSearchBuilder extends ElasticsearchUtils {
     case Sort.AttributeDesc if search.sortAttribute.isDefined =>
       by field attributeField(search.sortAttribute.get) order SortOrder.DESC missing "_last"
     case Sort.Name => by field FIELD_NAME_NOT_ANALYSED order SortOrder.ASC
+    case Sort.Price => by field FIELD_PRICE order SortOrder.ASC
+    case Sort.PriceHigh => by field FIELD_PRICE order SortOrder.ASC
     case Sort.Oldest => by field FIELD_ITEM_ID order SortOrder.ASC
     case _ => by field FIELD_ITEM_ID order SortOrder.DESC
   }

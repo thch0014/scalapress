@@ -28,7 +28,8 @@ object ElasticsearchIndexBuilder extends ElasticsearchUtils with Logging {
             FIELD_NAME -> normalize(item.name),
             FIELD_NAME_NOT_ANALYSED -> item.name,
             FIELD_STATUS -> item.status,
-            FIELD_PRIORITIZED -> (if (item.prioritized) 1 else 0)
+            FIELD_PRIORITIZED -> (if (item.prioritized) 1 else 0),
+            FIELD_PRICE -> item.price
           )
 
           Option(item.labels).foreach(tags => tags.split(",").foreach(tag => _fields.append(FIELD_TAGS -> tag)))

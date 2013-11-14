@@ -65,6 +65,7 @@ class ElasticSearchService(attributeDao: AttributeDao)
     fields.append(FIELD_TAGS typed StringType analyzer KeywordAnalyzer)
     fields.append(FIELD_PRIORITIZED typed IntegerType index "not_analyzed")
     fields.append(FIELD_LOCATION typed GeoPointType)
+    fields.append(FIELD_PRICE typed IntegerType)
 
     attributes.foreach(attribute => {
       val t = attribute.attributeType match {

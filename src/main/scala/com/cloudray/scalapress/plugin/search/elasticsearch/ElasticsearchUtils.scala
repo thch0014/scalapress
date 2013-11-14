@@ -30,6 +30,7 @@ trait ElasticsearchUtils {
   val FIELD_PRIORITIZED = "prioritized"
   val FIELD_HAS_IMAGE = "hasImage"
   val FIELD_ATTRIBUTE = "attribute_"
+  val FIELD_PRICE = "price"
 
   def attributeField(attribute: Attribute): String = attributeField(attribute.id)
   def attributeField(id: Any): String = FIELD_ATTRIBUTE + id

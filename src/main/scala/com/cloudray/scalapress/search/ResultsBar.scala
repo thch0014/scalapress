@@ -2,6 +2,7 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.framework.ScalapressRequest
 import scala.xml.Node
+import com.cloudray.scalapress.util.UrlParser
 
 /** @author Stephen Samuel */
 object ResultsBar {
@@ -27,20 +28,26 @@ object ResultsBar {
   }
 
   def sort(sreq: ScalapressRequest): Node = {
-
+    val url = UrlParser(sreq)
     val sort = SearchUrlUtils.sort(sreq)
     val options = ResultsBar.sortsMap.map(entry => {
-      val selected = entry._2 == sort
-      <option value={entry._2.name} selected={selected.toString}>
+      val selected = if (entry._2 == sort) "true" else null
+      <option value={entry._2.name} selected={selected}>
         {entry._1}
       </option>
     })
 
-    <div class='search-result-sort'>Sort by:
+    val params = url.query.removeParams("sort").params.flatMap(param => param._2.map(value => {
+        <input type="hidden" name={param._1} value={value}/>
+    }))
+    <form method="GET" action={url}>
+      {params}<div class='search-result-sort' onChange="submit()">
+      Sort by:
       <select name="sort">
         {options}
       </select>
     </div>
+    </form>
   }
 }
 

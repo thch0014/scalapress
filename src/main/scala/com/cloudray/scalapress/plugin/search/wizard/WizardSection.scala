@@ -34,7 +34,7 @@ class WizardSection extends SearchResultsSection {
 
   private def render(folder: Folder, sreq: ScalapressRequest): String = {
 
-    val uri = UrlParser.parse(sreq)
+    val uri = UrlParser(sreq)
     val selections = SearchUrlUtils.facets(sreq)
 
     val searchService = sreq.context.bean[SearchService]

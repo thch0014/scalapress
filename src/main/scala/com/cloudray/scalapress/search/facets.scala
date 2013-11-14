@@ -56,13 +56,13 @@ object SearchUrlUtils {
 
   def sort(sreq: ScalapressRequest): Sort = sort(sreq.request)
   def sort(req: HttpServletRequest): Sort = try {
-    Sort.valueOf(UrlParser.parse(req).query.params("sort").headOption.getOrElse("Name"))
+    Sort.valueOf(UrlParser(req).query.params("sort").headOption.getOrElse("Name"))
   } catch {
     case e: Exception => Sort.Name
   }
 
   def facets(sreq: ScalapressRequest): Seq[FacetSelection] = facets(sreq.request)
-  def facets(req: HttpServletRequest): Seq[FacetSelection] = facets(UrlParser.parse(req))
+  def facets(req: HttpServletRequest): Seq[FacetSelection] = facets(UrlParser(req))
   def facets(uri: Uri): Seq[FacetSelection] = {
     uri.query.params
       .filter(param => FacetField.create.isDefinedAt(param._1))

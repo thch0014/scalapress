@@ -9,8 +9,8 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 /** @author Stephen Samuel */
 object UrlParser {
 
-  def parse(sreq: ScalapressRequest): Uri = parse(sreq.request)
-  def parse(req: HttpServletRequest): Uri = {
+  def apply(sreq: ScalapressRequest): Uri = apply(sreq.request)
+  def apply(req: HttpServletRequest): Uri = {
     var uri = parseUri(req.getRequestURL.toString)
     Option(req.getQueryString).foreach(_.split("&").foreach(param => {
       val kv = URLDecoder.decode(param).split("=")

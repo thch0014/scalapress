@@ -33,7 +33,7 @@ class FacetSection extends SearchResultsSection {
 
   private def render(folder: Folder, sreq: ScalapressRequest): String = {
 
-    val uri = UrlParser.parse(sreq)
+    val uri = UrlParser(sreq)
     val selections = SearchUrlUtils.facets(sreq)
     val sort = SearchUrlUtils.sort(sreq)
     val search = createSearch(folder, selections, facetFields).copy(sort = sort)
