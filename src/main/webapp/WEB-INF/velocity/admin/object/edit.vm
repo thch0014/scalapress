@@ -153,7 +153,7 @@
           <label class="col-lg-2 control-label">Listing Account</label>
 
           <div class="col-lg-8">
-            <input type="text" name="account" class="form-control" value="$!form.o.account.id"/>
+              <input type="text" name="account" class="form-control" value="$!form.o.account.id"/>
               <a href="/backoffice/account/$form.o.account.id">$!form.o.account.name</a>
           </div>
       </div>
@@ -374,6 +374,7 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Visibility</th>
             <th></th>
         </tr>
       #foreach ($s in $sections)
@@ -381,11 +382,19 @@
               <td>$!s.name()</td>
               <td>$s.desc()</td>
               <td>
+                #if ($s.visible)
+                    <span class="label label-success">Visible</span>
+                #else
+                    <span class="label label-warning">Hidden</span>
+                #end
+              </td>
+              <td>
                   <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
                       <i class="glyphicon glyphicon-pencil"></i>
                   </a>
 
-                  <a href="/backoffice/item/$form.o.id/section/$s.id/delete" role="button" class="btn btn-xs btn-danger">
+                  <a href="/backoffice/item/$form.o.id/section/$s.id/delete" role="button"
+                     class="btn btn-xs btn-danger">
                       <i class="glyphicon glyphicon-trash"></i>
                   </a>
               </td>
