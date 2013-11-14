@@ -25,13 +25,13 @@ object ElasticsearchSearchBuilder extends ElasticsearchUtils {
       case Some(f) => filteredQuery.query(ElasticsearchQueryBuilder.build(search)).filter(f)
     }
 
-    val limit = _maxResults(search)
+    val _offset = search.page.offset
+    val _limit = _maxResults(search)
     val _priority = by field FIELD_PRIORITIZED order SortOrder.DESC
     val _sort = sort(search)
     val sorts = if (search.ignorePriority) List(_sort) else List(_priority, _sort)
 
-    select in (INDEX -> TYPE) searchType QueryAndFetch from search
-      .page.offset size limit sort (sorts: _*) query q facets {
+    select in (INDEX -> TYPE) searchType QueryAndFetch from _offset size _limit sort (sorts: _*) query q facets {
       facets(search)
     }
   }

@@ -11,10 +11,8 @@ import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel
-  *
   *         Shows the results of a saved search
-  *
-  **/
+  * */
 @Entity
 @Table(name = "blocks_highlighted_items")
 class SearchResultsSection extends Section with Logging {

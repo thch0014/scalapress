@@ -108,16 +108,16 @@ class ElasticSearchService(attributeDao: AttributeDao)
     }
   }
 
-  override def count: Long = {
+  override def count: Int = {
     client.sync.execute {
       countall from INDEX
-    }.getCount
+    }.getCount.toInt
   }
 
-  def _count(search: Search): Long = {
+  def _count(search: Search): Int = {
     client.sync.execute {
       ElasticsearchCountBuilder.build(search)
-    }.getCount
+    }.getCount.toInt
   }
 
   override def search(search: Search): SearchResult = {

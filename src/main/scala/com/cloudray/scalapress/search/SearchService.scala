@@ -14,7 +14,7 @@ trait SearchService {
    * Returns the total number (or best estimate in the case of distributed search systems)
    * of items in the index.
    */
-  def count: Long
+  def count: Int
 
   /**
    * Executes a search and returns a SearchResult

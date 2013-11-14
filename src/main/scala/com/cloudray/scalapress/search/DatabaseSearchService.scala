@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired
 /** @author Stephen Samuel
   *
   *         An implementation of SearchService that simply defers to the backing database.
-  * */
+  **/
 @Autowired
 class DatabaseSearchService(objectDao: ItemDao) extends SearchService {
 
-  override def count: Long = objectDao.count(new com.googlecode.genericdao.search.Search(classOf[Item]))
+  override def count: Int = objectDao.count(new com.googlecode.genericdao.search.Search(classOf[Item]))
   override def exists(id: String): Boolean = objectDao.find(id.toLong) != null
 
   override def search(search: Search): SearchResult = {

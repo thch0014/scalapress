@@ -9,7 +9,7 @@ import com.cloudray.scalapress.theme.MarkupRenderer
 import com.cloudray.scalapress.item.{ItemBulkLoader, Item}
 import scala.xml.{Unparsed, Node}
 import com.github.theon.uri.Uri
-import com.cloudray.scalapress.util.{PageUrlUtils, Scalate, UrlParser}
+import com.cloudray.scalapress.util.{PagedResult, PageUrlUtils, Scalate, UrlParser}
 import com.cloudray.scalapress.search.section.SearchResultsSection
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
@@ -39,12 +39,13 @@ class FacetSection extends SearchResultsSection {
     val search = createSearch(folder, selections, facetFields).copy(sort = sort, ignorePriority = true, page = page)
 
     val searchService = sreq.context.bean[SearchService]
-    val result = searchService.search(search)
+    val searchResult = searchService.search(search)
 
-    val items = new ItemBulkLoader(sreq.context.itemDao).load(result.refs.map(_.id))
-    val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
+    val items = new ItemBulkLoader(sreq.context.itemDao).loadFromRefs(searchResult.refs)
 
-    ResultsBar.render(result, sreq) +
+    val facetsWithMultipleTerms = searchResult.facets.filter(_.terms.size > 1)
+
+    ResultsBar.render(searchResult, sreq) +
       renderSelectedFacets(selections, uri, sreq.context) +
       (if (facetsWithMultipleTerms.isEmpty) "" else renderFacets(facetsWithMultipleTerms, uri)) +
       renderItems(items, sreq)

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.search
 
 import com.cloudray.scalapress.framework.ScalapressRequest
 import scala.xml.Node
-import com.cloudray.scalapress.util.UrlParser
+import com.cloudray.scalapress.util.{PagedResult, UrlParser}
 
 /** @author Stephen Samuel */
 object ResultsBar {
@@ -21,7 +21,12 @@ object ResultsBar {
   }
 
   def resultCount(result: SearchResult): Node = {
+    val pagedResults = PagedResult(result.refs, result.count)
     <div class="search-result-count" style="float:float">
+      {pagedResults.page.first}
+      -
+      {pagedResults.page.last}
+      from
       {result.count}
       Results
     </div>

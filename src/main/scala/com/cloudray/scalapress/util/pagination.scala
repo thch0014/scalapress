@@ -10,10 +10,15 @@ import com.github.theon.uri.Uri
 
 /** @author Stephen Samuel */
 case class Page(pageNumber: Int, pageSize: Int) {
+  require(pageNumber > 0)
   def next = copy(pageNumber = pageNumber + 1)
   def previous = if (pageNumber <= 0) this else copy(pageNumber = pageNumber - 1)
-  // returns the index for first element on this page starting at 0
+  // returns the index of the first result on this page. 0 indexed
   def offset: Int = (pageNumber - 1) * pageSize
+  // returns the position of the first result on this page. 1 indexed
+  def first: Int = offset + 1
+  // returns the position of the last result on this page. 1 indexed
+  def last: Int = offset + pageSize
 }
 
 object Page {
@@ -39,7 +44,7 @@ object PageUrlUtils {
       case e: NumberFormatException => Page.DefaultPageSize
     }
 
-    Page(pageNumber, pageSize)
+    Page(if (pageNumber < 1) 1 else pageNumber, pageSize)
   }
   def append(uri: Uri, page: Page) = {
     uri.replaceParams("pageNumber", page.pageNumber).replaceParams("pageSize", page.pageSize)
