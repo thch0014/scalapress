@@ -6,7 +6,7 @@ import scala.beans.BeanProperty
 import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.theme.MarkupRenderer
-import com.cloudray.scalapress.item.{Item, ItemDao}
+import com.cloudray.scalapress.item.{ItemBulkLoader, Item}
 import scala.xml.{Unparsed, Node}
 import com.github.theon.uri.Uri
 import com.cloudray.scalapress.util.{Scalate, UrlParser}
@@ -14,7 +14,6 @@ import com.cloudray.scalapress.search.section.SearchResultsSection
 import com.cloudray.scalapress.search.AttributeFacetField
 import com.cloudray.scalapress.search.Facet
 import scala.Some
-import com.cloudray.scalapress.search.SearchResult
 import com.cloudray.scalapress.search.FacetSelection
 
 /** @author Stephen Samuel */
@@ -41,7 +40,7 @@ class FacetSection extends SearchResultsSection {
     val searchService = sreq.context.bean[SearchService]
     val result = searchService.search(search)
 
-    val items = getItems(result, sreq.context.itemDao)
+    val items = new ItemBulkLoader(sreq.context.itemDao).load(result.refs.map(_.id))
     val facetsWithMultipleTerms = result.facets.filter(_.terms.size > 1)
 
     ResultsBar.render(result, sreq) +
@@ -49,8 +48,6 @@ class FacetSection extends SearchResultsSection {
       (if (facetsWithMultipleTerms.isEmpty) "" else renderFacets(facetsWithMultipleTerms, uri)) +
       renderItems(items, sreq)
   }
-
-  def getItems(result: SearchResult, dao: ItemDao): Seq[Item] = dao.findBulk(result.refs.map(_.id))
 
   private def createSearch(folder: Folder,
                            selections: Iterable[FacetSelection],

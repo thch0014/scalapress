@@ -24,7 +24,7 @@ object ElasticsearchIndexBuilder extends ElasticsearchUtils with Logging {
         case LIVE =>
           val _fields = ListBuffer[(String, Any)](
             FIELD_ITEM_ID -> item.id,
-            FIELD_ITEM_TYPE_ID -> item.itemType.id.toString,
+            FIELD_ITEM_TYPE_ID -> item.itemType.id,
             FIELD_NAME -> normalize(item.name),
             FIELD_NAME_NOT_ANALYSED -> item.name,
             FIELD_STATUS -> item.status,
