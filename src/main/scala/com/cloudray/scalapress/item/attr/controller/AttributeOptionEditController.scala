@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, Re
 import scala.Array
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.attr.{AttributeOptionRenameService, AttributeOptionDao, AttributeOption}
+import javax.servlet.http.HttpServletRequest
 
 /** @author Stephen Samuel */
 @Controller
@@ -23,13 +24,16 @@ class AttributeOptionEditController(attributeOptionDao: AttributeOptionDao,
   }
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute("option") option: AttributeOption) = {
-    val old = attributeOptionDao.find(option.id)
-    attributeOptionRenameService.rename(option.attribute, old.value, option.value)
+  def save(@ModelAttribute("optid") id: Long,
+           req: HttpServletRequest) = {
+    val option = attributeOptionDao.find(id)
+    val old = option.value
+    option.value = req.getParameter("value")
+    attributeOptionRenameService.rename(option.attribute, old, option.value)
     attributeOptionDao.save(option)
     "redirect:/backoffice/attribute/" + option.attribute.id
   }
 
   @ModelAttribute("option")
-  def att(@PathVariable("optid") id: Long) = attributeOptionDao.find(id)
+  def option(@PathVariable("optid") id: Long) = attributeOptionDao.find(id)
 }
