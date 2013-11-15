@@ -13,6 +13,7 @@ class AccountDaoTest extends FunSuite with MockitoSugar {
     acc.name = "super account"
     acc.email = "email@domain.com"
     acc.status = "status"
+    acc.id = 10
 
     TestDatabaseContext.accountDao.save(acc)
 
@@ -26,6 +27,7 @@ class AccountDaoTest extends FunSuite with MockitoSugar {
     acc.name = "name"
     acc.email = "sammy@sambo.com"
     acc.status = "status"
+    acc.id = 11
 
     TestDatabaseContext.accountDao.save(acc)
 
