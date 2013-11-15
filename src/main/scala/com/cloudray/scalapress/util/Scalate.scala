@@ -9,8 +9,8 @@ object Scalate {
   val engine = new TemplateEngine
 
   def layout(uri: String): String = layout(uri, Map.empty)
-  def layout(uri: String, map: Map[String, Any]): String = engine.layout(uri, map)
-  def layout(uri: String, loader: ClassLoader, map: Map[String, Object]): String = {
+  def layout(uri: String, map: Map[String, Any]): String = layout(uri, getClass.getClassLoader, map)
+  def layout(uri: String, loader: ClassLoader, map: Map[String, Any]): String = {
     val string = IOUtils.toString(loader.getResourceAsStream(uri))
     val source = new StringTemplateSource(uri, string)
     engine.layout(source, map)
