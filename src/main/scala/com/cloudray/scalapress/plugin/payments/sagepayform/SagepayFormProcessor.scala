@@ -28,7 +28,7 @@ class SagepayFormProcessor(plugin: SagepayFormPlugin) extends PaymentProcessor w
   }
 
   def decryptParams(base64: String): Map[String, String] = {
-    val encrypted = Base64.decodeBase64(base64.getBytes)
+    val encrypted = Base64.decodeBase64(base64.replaceAll("\\s", "+").getBytes)
     val x = xor(encrypted, plugin.sagePayEncryptionPassword)
     val decrypted = new String(x)
     _splitResponseString(decrypted)

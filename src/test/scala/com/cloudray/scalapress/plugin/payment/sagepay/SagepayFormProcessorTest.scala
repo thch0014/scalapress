@@ -140,6 +140,19 @@ class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstan
     assert("Order-102727" === params("VendorTxCode"))
   }
 
+  test("test decrypting params with spaces") {
+    val base64 = "Hi4fCVhHYwo2WBQxcCshAy05XFkCAA5AU2EgBxkcGgN1MEBbdXMBRzABXWB JWFKcHwwWxoGBEdFGkQXeVcWJgt RFoPc0pUJkMRIDgXbigDbSIZVkFCATFSBDUkCG5XeHtBTQ0VYxoQFzEhOQw8FSE4EBleWllSAlYDdB4RMAQtOAILQlkZVCFPMSE5DB0IdXNHXA4HAkNNAVYVGzcQMXp2Iih0YGU7IW5QFwIgFkcFCiUufxV4PDluVhUpACECOzgjCERAWwZIejEADiwWI24bHh\n5DdlgWEGUVJzgIJ1oGBCUgdmF0OjBzVhcbVgECOz4dGQp4diY2fzUQayM6ATwKGAkKBRFBMWQVNzgWNjQ8KgUYRAh4OVN0MQIbWRImCQkzJVBiYDM0djEXDiMGNRISMCx2dHYzNApWFywWNzMxOxRQc3B7JjQRPDU EGcjISwYGUQIBEFAAFYVIAsmCTx2Q1wDGw5K"
+    plugin.sagePayEncryptionPassword = "HKqm757ru7pTMdSg"
+    val params = processor.decryptParams(base64)
+    println(params)
+    assert(7 === params.size)
+    assert("OK" === params("Status"))
+    assert("861925186" === params("TxAuthNo"))
+    assert("Order-45592" === params("VendorTxCode"))
+    assert("{16BF65E6-43A2-87A6-3350-4C43EAC5578F}" === params("VPSTxId"))
+    assert("SECURITY CODE MATCH ONLY" === params("AVSCV2"))
+  }
+
   test("test callback") {
     val base64 = "OxweBRwBIxcxCwkcTS4BFxIdX1VdS0dTRFUhPyEwFTAUXAhFNi5EIChKM0wxRU5bX1MsQUBMRjE2LF9dWz1EJDVCNldLXFkEVjIHEgMaAVkiMlYyBxIDGgEgCA0RCB9OR19CVE1DUDUbFlcuBxAFFgIIABIDBh0KTQ4RElMgAgwRAR4KFhQfXVE7CiUYDRgvHE5PXUNXXE9EVUtVNjkhJztLTTI2MCI9OzA0WTMuNzZXIjMwLjFQLj0/LkkzAAkLFRIAIRIcBwgZRD4uJz42OzEsKD1WMRwAAywdAAgrFRIGHwNSPyU5OjgkN1U0OUA2CAoFDQdOOi4mJyU8NEc0GhEbMw0JREBHQDckChERHxwjFRIHAhxPKyZfMyAlJUouMyUvO0UnKRA2LjMlLxQpDR8fAC4zJSw4MSBOVTQOAAA5AAAETiU+PDNCIRgDFUc3HggbEB5EQFdGS1EuHwsYFwRcRkpZWEI="
     plugin.sagePayEncryptionPassword = "mypassword"
