@@ -18,6 +18,7 @@ import scala.Some
 import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDao, BasketDao, AddressDao, DeliveryOptionDao}
 import com.cloudray.scalapress.plugin.ecommerce.controller.CheckoutTitles
+import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers.CheckoutCompletedRenderer
 
 /** @author Stephen Samuel */
 @Controller
@@ -194,22 +195,23 @@ class CheckoutController extends Logging {
     val shoppingPlugin = shoppingPluginDao.get
 
     val order = sreq.basket.order
+    logger.debug("Completed order [{}]", order)
+
+    paymentCallbackService.callbacks(req)
+    _cleanup(sreq.basket)
+
+    val theme = themeService.default
+    val page = ScalapressPage(theme, sreq)
+    page.body(shoppingPlugin.checkoutConfirmationScripts)
+    page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep).toString())
+
     if (order == null) {
       logger.warn("Showing completed page with null order [basket={}]", sreq.basket)
-      showConfirmation(req)
+      page.body("Thank you for your order")
     } else {
-      paymentCallbackService.callbacks(req)
-
-      _cleanup(sreq.basket)
-
-      val theme = themeService.default
-      val page = ScalapressPage(theme, sreq)
-      page.body(shoppingPlugin.checkoutConfirmationScripts)
-      page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep).toString())
       page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
-
-      page
     }
+    page
   }
 
   def _cleanup(basket: Basket) {

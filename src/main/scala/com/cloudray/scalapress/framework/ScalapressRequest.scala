@@ -26,7 +26,7 @@ case class ScalapressRequest(request: HttpServletRequest,
                              location: Option[String] = None,
                              paging: Option[Paging] = None,
                              scripts: ListBuffer[String] = new ListBuffer(),
-                             styles: ListBuffer[String] = new ListBuffer()) {
+                             styles: ListBuffer[String] = new ListBuffer()) extends Logging {
 
   if (request.getAttribute("outgoingCookies") == null) {
     request.setAttribute("outgoingCookies", new ListBuffer[Cookie])
@@ -97,6 +97,7 @@ case class ScalapressRequest(request: HttpServletRequest,
         val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
         val basket = Option(context.bean[BasketDao].find(sessionId)) match {
           case None =>
+            logger.warn("Could not locate basket [sessionId={}]", sessionId)
             val b = new Basket
             b.sessionId = sessionId
             context.bean[BasketDao].save(b)

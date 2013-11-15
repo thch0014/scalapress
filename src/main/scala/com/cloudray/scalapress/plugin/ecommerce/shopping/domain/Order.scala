@@ -86,6 +86,8 @@ class Order {
   def vat: Double = if (vatable) linesVat + deliveryVat else 0.0
   def subtotal: Double = linesSubtotal + deliveryEx
   def total: Double = ((linesTotal + deliveryInc) * 100).toInt / 100.0
+
+  override def toString: String = s"Order [id=$id status=$status date=$datePlaced account=$account]"
 }
 
 object Order {
