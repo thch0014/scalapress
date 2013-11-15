@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderer
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.controller.renderers.CheckoutCompletedRenderer
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers.CheckoutCompletedRenderer
 
 /** @author Stephen Samuel */
 class CheckoutCompletedRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
