@@ -266,7 +266,7 @@
   #foreach ($tx in $order.payments)
       <tr>
           <td>$!tx.processor</td>
-          <td>$tx.transactionId</td>
+          <td><a href="/backoffice/tx/$tx.id">$tx.transactionId</a></td>
           <td>$datetool.format($tx.date)</td>
           <td>$number.number($tx.amountDecimal())</td>
       </tr>
