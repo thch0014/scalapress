@@ -8,7 +8,6 @@ import com.googlecode.genericdao.search.Search
 import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.payments.controller.TransactionListController
-import com.cloudray.scalapress.payments.Transaction
 
 /** @author Stephen Samuel */
 class TransactionListControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

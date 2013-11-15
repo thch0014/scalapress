@@ -16,6 +16,7 @@ Fixes galore around the object->item conversion
 Added dublin core plugin
 Updated order system to include more details on list page
 Refactored ecommerce plugins
+Added Facet Section plugin
 
 ##### 0.40
 
