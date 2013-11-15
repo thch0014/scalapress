@@ -33,7 +33,7 @@ class ItemListSectionController(val markupDao: MarkupDao,
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("section") section: ItemListSection, model: ModelMap, req: HttpServletRequest) = {
     sectionDao.save(section)
-    edit(section, model, req)
+    "redirect:/backoffice/section/itemlist/" + section.id
   }
 
   @ModelAttribute("section") def section(@PathVariable("id") id: Long): ItemListSection =

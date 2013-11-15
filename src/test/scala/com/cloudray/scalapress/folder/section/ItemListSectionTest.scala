@@ -10,7 +10,7 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.theme.Markup
 import com.cloudray.scalapress.search.Sort
-import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.framework.{ScalapressConstants, ScalapressRequest, ScalapressContext}
 
 /** @author Stephen Samuel */
 class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -47,6 +47,7 @@ class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePer
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com"))
   val context = new ScalapressContext()
   val sreq = ScalapressRequest(req, context)
+  Mockito.doReturn("abc-ses").when(req).getAttribute(ScalapressConstants.RequestAttributeKey_SessionId)
 
   val settings = new FolderSettings
   context.folderSettingsDao = mock[FolderPluginDao]
