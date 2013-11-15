@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest
 import java.util.Properties
 import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
-import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderTotal
 
@@ -41,13 +39,13 @@ class DashboardController(context: ScalapressContext) {
   def indexed = context.searchService.count
 
   @ModelAttribute("user")
-  def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
+  def user(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
 
   @ModelAttribute("folderCount")
   def folderCount = context.folderDao.count
 
   @ModelAttribute("orderCount")
-  def orderCount = context.orderDao.count(new Search(classOf[Order]))
+  def orderCount = context.orderDao.count
 
   @ModelAttribute("recentObjects")
   def recentObjects: java.util.List[Item] = context.itemDao.recent(8).asJava

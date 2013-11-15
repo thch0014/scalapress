@@ -24,6 +24,16 @@ class DashboardControllerTest extends FlatSpec with MockitoSugar with OneInstanc
     Mockito.verify(context.itemDao).recent(8)
   }
 
+  it should "include 180 days of orders" in {
+    controller.orderTotals
+    Mockito.verify(context.orderDao).ordersPerDay(180)
+  }
+
+  it should "include orders count" in {
+    controller.orderCount
+    Mockito.verify(context.orderDao).count
+  }
+
   it should "include folders count" in {
     controller.folderCount
     Mockito.verify(context.folderDao).count

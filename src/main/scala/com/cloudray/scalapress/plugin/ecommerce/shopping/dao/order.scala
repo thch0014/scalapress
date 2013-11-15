@@ -13,6 +13,7 @@ import org.joda.time.format.DateTimeFormat
 /** @author Stephen Samuel */
 
 trait OrderDao extends GenericDao[Order, java.lang.Long] {
+  def count: Int
   def search(q: OrderQuery): Page[Order]
   def emails: Seq[String]
   def ordersPerDay(limit: Int): Seq[OrderTotal]
@@ -23,6 +24,7 @@ case class OrderTotal(date: LocalDate, total: Int)
 @Component
 @Transactional
 class OrderDaoImpl extends GenericDaoImpl[Order, java.lang.Long] with OrderDao {
+
   def search(q: OrderQuery): Page[Order] = {
 
     val s = new Search(classOf[Order]).setMaxResults(q.pageSize).setFirstResult(q.offset).addSort("id", true)
