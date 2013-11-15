@@ -37,7 +37,7 @@ class DeliverySelectTagTest extends FlatSpec with MockitoSugar with OneInstanceP
   val basket = new Basket
   basket.deliveryOption = new DeliveryOption
   basket.deliveryOption.id = 516
-  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
 
   "a delivery select tag" should "use the delivery option in the basket for current delivery id" in {
     assert(516 === tag.currentDeliveryId(basket))

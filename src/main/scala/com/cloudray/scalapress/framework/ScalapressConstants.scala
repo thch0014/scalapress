@@ -2,7 +2,7 @@ package com.cloudray.scalapress.framework
 
 /** @author Stephen Samuel */
 object ScalapressConstants {
-  val SessionCookieName = "_scalapress_session_cookie"
-  val SessionIdKey = "_scalapress_sessionid"
-  val BasketKey: String = "_scalapress_basket"
+  val CookieName_ScalapressSession = "_scalapress_session_cookie"
+  val RequestAttributeKey_SessionId = "_scalapress_sessionid"
+  val RequestAttributeKey_Basket: String = "_scalapress_basket"
 }

@@ -12,38 +12,38 @@ import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, 
 /** @author Stephen Samuel */
 class BasketLineCountTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val line1 = new BasketLine
-    line1.obj = new Item
-    line1.qty = 2
-    line1.obj.price = 1000
-    line1.obj.vatRate = 10.00
+  val line1 = new BasketLine
+  line1.obj = new Item
+  line1.qty = 2
+  line1.obj.price = 1000
+  line1.obj.vatRate = 10.00
 
-    val line2 = new BasketLine
-    line2.obj = new Item
-    line2.qty = 1
-    line2.obj.price = 2000
-    line2.obj.vatRate = 20.00
+  val line2 = new BasketLine
+  line2.obj = new Item
+  line2.qty = 1
+  line2.obj.price = 2000
+  line2.obj.vatRate = 20.00
 
-    val basket = new Basket
-    basket.lines.add(line1)
-    basket.lines.add(line2)
+  val basket = new Basket
+  basket.lines.add(line1)
+  basket.lines.add(line2)
 
-    val tag = new BasketLineCountTag()
+  val tag = new BasketLineCountTag()
 
-    val req = mock[HttpServletRequest]
-    val context = mock[ScalapressContext]
-    val sreq = new ScalapressRequest(req, context)
+  val req = mock[HttpServletRequest]
+  val context = mock[ScalapressContext]
+  val sreq = new ScalapressRequest(req, context)
 
-    Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
 
-    test("basket line count returns correct count on baskets with multiple lines") {
-        val actual = tag.render(sreq)
-        assert("2" === actual.get)
-    }
+  test("basket line count returns correct count on baskets with multiple lines") {
+    val actual = tag.render(sreq)
+    assert("2" === actual.get)
+  }
 
-    test("basket line count returns correct count on baskets that are empty") {
-        basket.lines.clear()
-        val actual = tag.render(sreq)
-        assert("0" === actual.get)
-    }
+  test("basket line count returns correct count on baskets that are empty") {
+    basket.lines.clear()
+    val actual = tag.render(sreq)
+    assert("0" === actual.get)
+  }
 }

@@ -34,7 +34,7 @@ class BasketTotalTagTest extends FunSuite with MockitoSugar with OneInstancePerT
   val context = mock[ScalapressContext]
   val sreq = new ScalapressRequest(req, context)
 
-  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
 
   test("given param of ex then price is ex vat") {
     val actual = tag.render(sreq, Map("ex" -> "1"))

@@ -56,7 +56,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com:8080"))
   Mockito.when(controller.context.paymentPluginDao.enabled).thenReturn(Nil)
   Mockito.when(controller.shoppingPluginDao.get).thenReturn(plugin)
-  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
 
   test("that show address uses the address step from the wizard") {
     val page = controller.showAddress(req, basket, errors)
@@ -71,7 +71,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
   test("that showPayments uses the correct title") {
     val basket = new Basket
     basket.order = new Order
-    Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+    Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
     val page = controller.showPayments(req)
     assert(CheckoutTitles.PAYMENT === page.sreq.title.get)
   }

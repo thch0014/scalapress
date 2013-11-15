@@ -34,7 +34,7 @@ class DeliveryOptionsTagTest extends FunSuite with MockitoSugar with OneInstance
   val sreq = new ScalapressRequest(req, context)
 
   val basket = new Basket
-  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
+  Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.RequestAttributeKey_Basket)
 
   test("delivery option tag happy path") {
     val actual = tag.render(sreq, Map.empty)

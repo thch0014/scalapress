@@ -3,7 +3,6 @@ package com.cloudray.scalapress.framework
 import javax.servlet.http.{Cookie, HttpServletRequest}
 import com.sksamuel.scoot.soa.Paging
 import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
-import java.util.UUID
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.item.Item
@@ -90,21 +89,22 @@ case class ScalapressRequest(request: HttpServletRequest,
     request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
   }
 
+  /**
+   * Retrieves a basket for this request.
+   * If no basket yet exists, then one will be created and persisted.
+   */
   def basket: Basket = {
-    Option(request.getAttribute(ScalapressConstants.BasketKey)) match {
+    // we store the basket in the http request
+    Option(request.getAttribute(ScalapressConstants.RequestAttributeKey_Basket)) match {
       case Some(value) => value.asInstanceOf[Basket]
       case None =>
-        val sessionId = request.getAttribute(ScalapressConstants.SessionIdKey).asInstanceOf[String]
-        val basket = Option(context.bean[BasketDao].find(sessionId)) match {
-          case None =>
-            logger.warn("Could not locate basket [sessionId={}]", sessionId)
-            val b = new Basket
-            b.sessionId = sessionId
-            context.bean[BasketDao].save(b)
-            b
-          case Some(b) => b
-        }
-        request.setAttribute(ScalapressConstants.BasketKey, basket)
+        val basket = context.bean[BasketDao].get(sessionId).getOrElse({
+          val b = new Basket
+          b.sessionId = sessionId
+          context.bean[BasketDao].save(b)
+          b
+        })
+        request.setAttribute(ScalapressConstants.RequestAttributeKey_Basket, basket)
         basket
     }
   }
@@ -118,7 +118,9 @@ case class ScalapressRequest(request: HttpServletRequest,
   def hasErrors = !errors.isEmpty
   def hasError(key: String) = errors.contains(key)
 
-  def sessionId = Option(request.getAttribute(ScalapressConstants.SessionIdKey)).getOrElse(UUID.randomUUID).toString
+  def sessionId: String = {
+    request.getAttribute(ScalapressConstants.RequestAttributeKey_SessionId).asInstanceOf[String]
+  }
 
   def withPaging(paging: Paging): ScalapressRequest = copy(paging = Option(paging))
   def withLocation(location: String): ScalapressRequest = copy(location = Option(location))
