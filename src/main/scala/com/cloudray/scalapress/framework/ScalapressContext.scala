@@ -57,11 +57,11 @@ class ScalapressContext extends ServletContextAware {
 
   @Autowired var themeService: ThemeService = _
 
-  def beans[T: Manifest]: Iterable[T] =
-    WebApplicationContextUtils
-      .getRequiredWebApplicationContext(servletContext)
-      .getBeansOfType(manifest.runtimeClass.asInstanceOf[Class[T]])
-      .values.asScala
+  def beans[T: Manifest]: Iterable[T] = {
+    WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext)
+      .getBeansOfType(manifest.runtimeClass.asInstanceOf[Class[T]]).values.asScala
+  }
+
   def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
   def bean[T: Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
 

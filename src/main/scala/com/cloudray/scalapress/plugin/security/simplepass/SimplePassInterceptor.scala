@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.security.simplepass
 
-import com.cloudray.scalapress.folder.{Folder}
+import com.cloudray.scalapress.folder.Folder
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._

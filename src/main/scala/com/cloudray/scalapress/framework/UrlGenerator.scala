@@ -20,13 +20,13 @@ object UrlGenerator {
   }
 
   def url(folder: Folder): String = strategy.url(folder)
-  def url(obj: Item): String = strategy.url(obj)
+  def url(item: Item): String = strategy.url(item)
 
-  // creates a link that uses the object name as the label
-  def link(obj: Item): String = link(obj, obj.name)
+  // creates a link that uses the item name as the label
+  def link(item: Item): String = link(item, item.name)
   // creates a link that uses the specified label
-  def link(obj: Item, label: String): String =
-    Utility.trim(<a href={url(obj)}>
+  def link(item: Item, label: String): String =
+    Utility.trim(<a href={url(item)}>
       {label}
     </a>).toString()
 
@@ -41,5 +41,5 @@ object UrlGenerator {
 
 object DefaultUrlStrategy extends UrlStrategy {
   def url(folder: Folder): String = "/folder/" + folder.id
-  def url(obj: Item): String = "/item/" + obj.id
+  def url(item: Item): String = "/item/" + item.id
 }

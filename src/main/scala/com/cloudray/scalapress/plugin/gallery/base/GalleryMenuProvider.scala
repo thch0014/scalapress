@@ -4,11 +4,7 @@ import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuI
 
 /** @author Stephen Samuel */
 class GalleryMenuProvider extends MenuProvider {
-
-  def menu(context: ScalapressContext): (String, Seq[MenuItem]) = {
-    ("Galleries",
-      Seq(
-        MenuItem("Galleries", Some("glyphicon glyphicon-picture"), "/backoffice/plugin/gallery")
-      ))
+  def menu(context: ScalapressContext): Option[MenuItem] = {
+    Some(MenuItem("Galleries", "Galleries", Some("glyphicon glyphicon-picture"), "/backoffice/plugin/gallery"))
   }
 }

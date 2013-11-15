@@ -4,10 +4,7 @@ import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuI
 
 /** @author Stephen Samuel */
 class GBaseFeedMenuProvider extends MenuProvider {
-
-  def menu(context: ScalapressContext): (String, Seq[MenuItem]) =
-    ("Feeds",
-      Seq(
-        MenuItem(" Google Base", Some("icon-google-plus"), "/backoffice/feed")
-      ))
+  def menu(context: ScalapressContext): Option[MenuItem] = {
+    Some(MenuItem("Feeds", " Google Base", Some("icon-google-plus"), "/backoffice/feed"))
+  }
 }

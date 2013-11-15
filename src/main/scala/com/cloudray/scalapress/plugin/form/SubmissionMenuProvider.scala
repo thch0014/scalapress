@@ -4,8 +4,8 @@ import scala.Some
 import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuItem}
 
 /** @author Stephen Samuel */
-class FormMenuProvider extends MenuProvider {
+class SubmissionMenuProvider extends MenuProvider {
   def menu(context: ScalapressContext): Option[MenuItem] = {
-    Some(MenuItem("Forms", "Forms", Some("glyphicon glyphicon-list-alt"), "/backoffice/form"))
+    Some(MenuItem("Forms", "Submissions", Some("glyphicon glyphicon-check"), "/backoffice/submission"))
   }
 }

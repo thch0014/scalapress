@@ -5,11 +5,10 @@ import com.cloudray.scalapress.framework.{ScalapressContext, MenuProvider, MenuI
 
 /** @author Stephen Samuel */
 class EmailReportMenuProvider extends MenuProvider {
-
-  def menu(context: ScalapressContext): (String, Seq[MenuItem]) = {
-    ("Shopping",
-      Seq(
-        MenuItem("Email Report", Some("glyphicon glyphicon-envelope"), "/backoffice/plugin/ecommerce/report/email")
-      ))
+  def menu(context: ScalapressContext): Option[MenuItem] = {
+    Some(MenuItem("Shopping",
+      "Email Report",
+      Some("glyphicon glyphicon-envelope"),
+      "/backoffice/plugin/ecommerce/report/email"))
   }
 }
