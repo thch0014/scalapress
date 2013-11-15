@@ -46,154 +46,101 @@
 
 <div class="row">
     <div class="col-md-6">
-        <legend>Delivery Address</legend>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Name</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.name</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Company</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.company</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Address</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.address1</span>
-            </div>
-        </div>
-        <div class="form-group">
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.address2</span>
-            </div>
-        </div>
-        <div class="form-group">
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.address3</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">City</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.town</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Postcode</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.postcode</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Country</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.country</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Telephone</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.telephone</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Instructions</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.deliveryAddress.instructions</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Change Delivery Address</label>
-
-            <div class="col-lg-8">
-              #springFormSingleSelect("form.changeDeliveryAddress", $addressesMap, "class='form-control'")
-            </div>
-        </div>
+        <legend>Billing Address</legend>
+        <table class="table table-condensed">
+            <tr>
+                <th>Name</th>
+                <td>$!order.billingAddress.name</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>$!order.billingAddress.company</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>$!order.billingAddress.address1<br/>
+                  $!order.billingAddress.address2<br/>
+                  $!order.billingAddress.address3</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>$!order.billingAddress.town</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>$!order.billingAddress.postcode</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>$!order.billingAddress.country</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>$!order.billingAddress.telephone</td>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <th>Update</th>
+                <td>#springFormSingleSelect("form.changeBillingAddress", $addressesMap, "class='form-control'")<br/>
+                    <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=billing"
+                       role="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> Add billing address
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="col-md-6">
-        <legend>Billing Address</legend>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Name</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.name</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Company</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.company</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Address</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.address1</span>
-            </div>
-        </div>
-        <div class="form-group">
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.address2</span>
-            </div>
-        </div>
-        <div class="form-group">
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.address3</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">City</label>
-
-            <div class="col-lg-8">
-                <span class="input-lg uneditable-input">$!order.billingAddress.town</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Postcode</label>
-
-            <div class="col-lg-8">
-                <span class="input-medium uneditable-input">$!order.billingAddress.postcode</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Country</label>
-
-            <div class="col-lg-8">
-                <span class="input-lg uneditable-input">$!order.billingAddress.country</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Telephone</label>
-
-            <div class="col-lg-8">
-                <span class="form-control-static">$!order.billingAddress.telephone</span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Change Billing Address</label>
-
-            <div class="col-lg-8">
-              #springFormSingleSelect("form.changeBillingAddress", $addressesMap,"class='form-control'")
-            </div>
-        </div>
+        <legend>Delivery Address</legend>
+        <table class="table table-condensed">
+            <tr>
+                <th>Name</th>
+                <td>$!order.deliveryAddress.name</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>$!order.deliveryAddress.company</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>$!order.deliveryAddress.address1<br/>
+                  $!order.deliveryAddress.address2<br/>
+                  $!order.deliveryAddress.address3</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>$!order.deliveryAddress.town</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>$!order.deliveryAddress.postcode</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>$!order.deliveryAddress.country</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>$!order.deliveryAddress.telephone</td>
+            </tr>
+            <tr>
+                <th>Delivery notes</th>
+                <td>$!order.deliveryAddress.instructions</td>
+            </tr>
+            <tr>
+                <th>Update</th>
+                <td>#springFormSingleSelect("form.changeDeliveryAddress", $addressesMap, "class='form-control'")<br/>
+                    <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=delivery"
+                       role="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> Add delivery address
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
@@ -256,10 +203,6 @@
         <button type="submit" class="btn btn-primary">
             <i class="glyphicon glyphicon-save"></i> Save changes
         </button>
-        <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=billing"
-           role="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-plus"></i> Add delivery address
-        </a>
         <a href="/backoffice/invoice/$order.id" class="btn btn-default" role="button">
             <i class="glyphicon glyphicon-print"></i> Print Invoice
         </a>

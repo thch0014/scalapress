@@ -60,8 +60,10 @@ class Address {
   @BeanProperty
   var instructions: String = _
 
-  @BeanProperty var state: String = _
+  @BeanProperty
+  var state: String = _
 
+  @Column(name = "active", nullable = false)
   @BeanProperty
   var active: Boolean = _
 
