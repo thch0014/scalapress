@@ -8,7 +8,7 @@ import com.sksamuel.elastic4s.ElasticDsl._
 /** @author Stephen Samuel */
 object ElasticsearchQueryBuilder extends ElasticsearchUtils {
 
-  def escapeName(name: String) = name.replace("+", " ").replace("\\", "").replace("-", " ").trim
+  def escapeName(name: String) = name.replace("+", " ").replace("\\", "").replace("-", " ").replace('"', ' ').trim
 
   def build(search: Search): QueryDefinition = {
 
