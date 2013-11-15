@@ -20,6 +20,6 @@ class ScalaPressPageMessageConverter(renderer: ScalapressPageRenderer)
   override def canRead(mt: MediaType): Boolean = mt == MediaType.TEXT_HTML
   override def canRead(clazz: Class[_], mt: MediaType): Boolean = supports(clazz) && canRead(mt)
   override def canWrite(mt: MediaType): Boolean = mt == MediaType.TEXT_HTML
-  override def canWrite(clazz: Class[_], mt: MediaType): Boolean = supports(clazz) && canRead(mt)
+  override def canWrite(clazz: Class[_], mt: MediaType): Boolean = supports(clazz) && canWrite(mt)
   override def getDefaultContentType(t: ScalapressPage): MediaType = MediaType.TEXT_HTML
 }

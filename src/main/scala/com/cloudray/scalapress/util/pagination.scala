@@ -87,7 +87,7 @@ object PagedResult {
   /**
    * Returns an empty Page which pageNumber 1, pageSize 20 and and totalResults 0
    */
-  def empty[T]: PagedResult[T] = apply(Nil)
+  def empty[T]: PagedResult[T] = apply(Nil, Page(FirstPage, DefaultPageSize), 0)
 
   /**
    * Creates a new Page from a given collection of results when it is assumed that those

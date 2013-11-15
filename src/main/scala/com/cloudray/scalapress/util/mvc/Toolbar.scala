@@ -8,7 +8,9 @@ class Toolbar(name: String, url: Option[String]) {
 
   def render: String = {
     Scalate.layout("/com/cloudray/scalapress/util/mvc/toolbar.ssp",
-      Map("name" -> name, "editUrl" -> url.getOrElse(""), "editLabel" -> url.map(_ => "Edit This Page").getOrElse("")))
+      Map("name" -> name,
+        "editUrl" -> url.getOrElse(""),
+        "editLabel" -> url.map(_ => "Edit This Page").getOrElse("")))
   }
 }
 

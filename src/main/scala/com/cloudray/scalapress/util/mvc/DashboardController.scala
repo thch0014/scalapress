@@ -11,29 +11,26 @@ import org.apache.commons.io.IOUtils
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
-import com.cloudray.scalapress.folder.Folder
 import com.cloudray.scalapress.framework.ScalapressContext
-import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderTotal, OrderDao}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderTotal
 
 /** @author Stephen Samuel */
 @Controller
+@Autowired
 @RequestMapping(Array("backoffice"))
-class DashboardController {
+class DashboardController(context: ScalapressContext) {
 
   val in = getClass.getResourceAsStream("/buildNumber.properties")
   val props = new Properties()
   props.load(in)
   IOUtils.closeQuietly(in)
 
-  @Autowired var context: ScalapressContext = _
-  @Autowired var orderDao: OrderDao = _
-
   @RequestMapping(produces = Array("text/html"))
   def dashboard = "admin/dashboard.vm"
 
   @ModelAttribute("orderTotals")
   def orderTotals: java.util.List[OrderTotal] = {
-    val orders = orderDao.ordersPerDay(180)
+    val orders = context.orderDao.ordersPerDay(180)
     orders.asJava
   }
 
@@ -47,7 +44,7 @@ class DashboardController {
   def indexed(req: HttpServletRequest) = SpringSecurityResolver.getAdminDetails(req).user
 
   @ModelAttribute("folderCount")
-  def folderCount = context.folderDao.count(new Search(classOf[Folder]))
+  def folderCount = context.folderDao.count
 
   @ModelAttribute("orderCount")
   def orderCount = context.orderDao.count(new Search(classOf[Order]))

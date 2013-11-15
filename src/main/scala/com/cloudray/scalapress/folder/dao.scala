@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.hibernate.criterion.Restrictions
-import com.googlecode.genericdao.search.ISearch
+import com.googlecode.genericdao.search.{Search, ISearch}
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
@@ -16,6 +16,7 @@ trait FolderDao extends GenericDao[Folder, java.lang.Long] {
   def root: Folder
   def tree: Array[Folder]
   def exposeSearch[T](search: ISearch): Seq[T]
+  def count: Int
 }
 
 @Component

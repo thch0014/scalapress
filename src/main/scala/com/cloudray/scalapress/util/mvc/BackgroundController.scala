@@ -2,7 +2,6 @@ package com.cloudray.scalapress.util.mvc
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestMapping}
-import util.Random
 import javax.servlet.http.HttpServletResponse
 import org.apache.commons.io.IOUtils
 
@@ -16,8 +15,8 @@ class BackgroundController {
   @ResponseBody
   @RequestMapping(produces = Array("image/jpeg"))
   def background(resp: HttpServletResponse) {
-    val random = Random.nextInt(IMAGE_COUNT - 1) + 1
-    val input = getClass.getResourceAsStream("/background/loginbg" + random + ".jpg")
+    val imageNumber = System.currentTimeMillis % IMAGE_COUNT + 1
+    val input = getClass.getResourceAsStream("/background/loginbg" + imageNumber + ".jpg")
     IOUtils.copy(input, resp.getOutputStream)
   }
 }
