@@ -8,6 +8,8 @@ import com.sksamuel.elastic4s.ElasticDsl._
 /** @author Stephen Samuel */
 object ElasticsearchQueryBuilder extends ElasticsearchUtils {
 
+  def escapeName(name: String) = name.replace("+", " ").replace("\\", "").replace("-", " ").trim
+
   def build(search: Search): QueryDefinition = {
 
     val queries = new ListBuffer[QueryDefinition]
@@ -17,7 +19,7 @@ object ElasticsearchQueryBuilder extends ElasticsearchUtils {
     search.folders.map(termQuery(FIELD_FOLDERS, _)).foreach(queries append _)
 
     search.name
-      .map(_.replace("+", " ").replace("\\", "").trim)
+      .map(escapeName)
       .filterNot(_.isEmpty)
       .foreach(_
       .split(" ")

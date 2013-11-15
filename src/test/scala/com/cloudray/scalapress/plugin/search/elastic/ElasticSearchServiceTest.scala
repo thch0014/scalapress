@@ -525,6 +525,16 @@ class ElasticSearchServiceTest extends FunSuite with MockitoSugar {
     assert(1 === results2.refs.size)
   }
 
+  test("ignore - character in search queries") {
+    val q1 = Search("captain - tony")
+    val results1 = service.search(q1)
+    assert(1 === results1.refs.size)
+
+    val q2 = Search("captain-tony")
+    val results2 = service.search(q2)
+    assert(1 === results2.refs.size)
+  }
+
   //  test("strings are tokenized at letter/digit boundaries") {
   //    val q = new SavedSearch
   //    q.name = "1986"
