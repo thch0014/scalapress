@@ -18,6 +18,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
   def orderConfirmation(order: Order) {
     Option(shoppingPluginDao.get.orderConfirmationMessageBody) match {
       case None =>
+        logger.warn("Cannot send email confirmation: No orderConfirmationMessageBody set")
       case Some(body) =>
         val markedup = OrderMarkupService.resolve(order, body)
         _send(order, markedup)
@@ -27,6 +28,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
   def orderCompleted(order: Order) {
     Option(shoppingPluginDao.get.orderCompletionMessageBody) match {
       case None =>
+        logger.warn("Cannot send email completion: No orderCompletionMessageBody set")
       case Some(body) =>
         val markedup = OrderMarkupService.resolve(order, body)
         _send(order, markedup)
@@ -46,7 +48,11 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     message.setFrom(from)
     message.setTo(order.account.email.trim)
 
-    val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
+    val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc)
+      .getOrElse("")
+      .split(",")
+      .map(_.trim)
+      .filterNot(_.isEmpty)
     if (bcc.size > 0)
       message.setBcc(bcc)
 
@@ -54,6 +60,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     message.setText(body)
 
     try {
+      logger.info("Sending message [{}]", message)
       mailSender.send(message)
     } catch {
       case e@(_: AddressException | _: MailParseException) =>

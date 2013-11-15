@@ -97,7 +97,7 @@
         <scalatra.version>2.2.1</scalatra.version>
         <scalate.version>1.6.1</scalate.version>
         <scrimage.version>1.3.7</scrimage.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.6.6</slf4j.version>
         <scala.test.version>2.0</scala.test.version>
         <scala.version>2.10.3</scala.version>
         <spring.version>3.2.5.RELEASE</spring.version>

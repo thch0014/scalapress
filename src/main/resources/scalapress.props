@@ -3,5 +3,4 @@ sendgrid.username=sksamuel
 sendgrid.password=cahoot99
 
 hibernate.showqueries=false
-
 search.service.implementation=com.cloudray.scalapress.plugin.search.elasticsearch.ElasticSearchService

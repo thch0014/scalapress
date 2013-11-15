@@ -118,4 +118,13 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
     val msg = captor.getValue
     assert(Array("sammy@sambo.com", "chris@coldplay.com") === msg.getBcc)
   }
+
+  test("that empty string in bcc is ignored") {
+    plugin.orderConfirmationMessageBody = "lovely order is #[order_id]"
+    plugin.orderConfirmationBcc = ""
+    val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+    service.orderConfirmation(order)
+    Mockito.verify(mailSender).send(captor.capture)
+    assert(captor.getValue.getBcc == null)
+  }
 }
