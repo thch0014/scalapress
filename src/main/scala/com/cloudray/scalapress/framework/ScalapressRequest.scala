@@ -81,12 +81,14 @@ case class ScalapressRequest(request: HttpServletRequest,
     lazy val folderRoot = context.folderDao.root
   }
 
-  val errors = if (request.getAttribute("errors") == null) {
-    val e = scala.collection.mutable.Map.empty[String, String]
-    request.setAttribute("errors", e)
-    e
-  } else {
-    request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
+  val errors = {
+    if (request.getAttribute("errors") == null) {
+      val e = scala.collection.mutable.Map.empty[String, String]
+      request.setAttribute("errors", e)
+      e
+    } else {
+      request.getAttribute("errors").asInstanceOf[scala.collection.mutable.Map[String, String]]
+    }
   }
 
   /**
