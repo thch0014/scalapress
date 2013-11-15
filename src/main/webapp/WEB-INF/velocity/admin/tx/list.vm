@@ -13,9 +13,9 @@
         <th>Date</th>
         <th>Transaction ID</th>
         <th>Status</th>
+        <th>Details</th>
         <th>Processor</th>
         <th>Amount</th>
-        <th>Currency</th>
     </tr>
   #foreach ($tx in $results)
       <tr>
@@ -23,9 +23,9 @@
           <td>$datetool.format("dd-MM-yyyy", $tx.date)</td>
           <td>$!tx.transactionId</td>
           <td>$!tx.status</td>
-          <td>$!tx.paymentProcessor</td>
+          <td>$!tx.details</td>
+          <td>$!tx.processor</td>
           <td>$tx.amountDecimal()</td>
-          <td>$!tx.currency</td>
       </tr>
   #end
 </table>
