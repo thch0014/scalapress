@@ -40,17 +40,16 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     val installation = context.installationDao.get
     val domain = Option(installation.domain).getOrElse("localhost")
     val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
-    val replyAddress = "donotreply@" + nowww
+    val from = "donotreply@" + nowww
 
     val message = new SimpleMailMessage()
-    message.setFrom(replyAddress)
+    message.setFrom(from)
     message.setTo(order.account.email)
 
     val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
     if (bcc.size > 0)
       message.setBcc(bcc)
 
-    message.setReplyTo(replyAddress)
     message.setSubject("Order #" + order.id)
     message.setText(body)
 
@@ -61,8 +60,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
         logger.warn(e.toString)
         logger.warn("to: " + order.account.email)
         logger.warn("bcc:" + bcc.mkString(","))
-        logger.warn("from: " + replyAddress)
-        logger.warn("replyAddress: " + replyAddress)
+        logger.warn("from: " + from)
       case e: Exception => logger.warn(e.toString)
     }
   }

@@ -40,8 +40,16 @@ class OrderCustomerNotificationServiceTest extends FunSuite with MockitoSugar wi
 
     val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
     Mockito.verify(mailSender).send(captor.capture)
-    val msg = captor.getValue
-    assert(msg.getReplyTo === "donotreply@localhost")
+    assert(captor.getValue.getFrom === "donotreply@localhost")
+  }
+
+  test("that reply to is not set") {
+    plugin.orderCompletionMessageBody = "go go go"
+    service.orderCompleted(order)
+
+    val captor = ArgumentCaptor.forClass(classOf[SimpleMailMessage])
+    Mockito.verify(mailSender).send(captor.capture)
+    assert(captor.getValue.getReplyTo === null)
   }
 
   test("that a message is sent via mail sender") {
