@@ -77,7 +77,7 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession
-      .createSQLQuery("select a.id, a.name from items a WHERE a.name like ?")
+      .createSQLQuery( """select "items"."id", "items"."name" from "items" WHERE "items"."name" like ?""")
       .setString(0, query + "%")
       .setMaxResults(20).list().asScala.map(arg => {
       val values = arg.asInstanceOf[Array[_]]

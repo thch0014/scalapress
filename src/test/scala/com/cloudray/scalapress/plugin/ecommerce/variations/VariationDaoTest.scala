@@ -13,7 +13,7 @@ class VariationDaoTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.name = "dress"
 
-    TestDatabaseContext.objectDao.save(obj)
+    TestDatabaseContext.itemDao.save(obj)
     assert(obj.id > 0)
 
     val v = new Variation
@@ -35,7 +35,7 @@ class VariationDaoTest extends FunSuite with MockitoSugar {
     val obj = new Item
     obj.name = "dress"
 
-    TestDatabaseContext.objectDao.save(obj)
+    TestDatabaseContext.itemDao.save(obj)
     assert(obj.id > 0)
 
     val v = new Variation

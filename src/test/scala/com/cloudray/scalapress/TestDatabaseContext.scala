@@ -58,7 +58,7 @@ object TestDatabaseContext {
     .createBean(classOf[AccountDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[AccountDao]
 
-  val objectDao = context
+  val itemDao = context
     .getAutowireCapableBeanFactory
     .createBean(classOf[ItemDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
     .asInstanceOf[ItemDao]

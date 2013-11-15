@@ -53,6 +53,7 @@ class ItemController(itemDao: ItemDao,
 
     Option(item.itemType.objectViewMarkup) match {
       case None =>
+        page.body("<!-- no item view markup set -->")
       case Some(m) =>
         val main = MarkupRenderer.render(item, m, sreq)
         page.body("<!-- start object markup -->")

@@ -25,11 +25,11 @@ class GoogleBaseServiceTest extends FunSuite with MockitoSugar {
     obj3.status = Item.STATUS_LIVE
     obj3.price = 0
 
-    TestDatabaseContext.objectDao.save(obj1)
-    TestDatabaseContext.objectDao.save(obj2)
-    TestDatabaseContext.objectDao.save(obj3)
+    TestDatabaseContext.itemDao.save(obj1)
+    TestDatabaseContext.itemDao.save(obj2)
+    TestDatabaseContext.itemDao.save(obj3)
 
-    val objs = GoogleBaseService._objects(TestDatabaseContext.objectDao)
+    val objs = GoogleBaseService._objects(TestDatabaseContext.itemDao)
     assert(objs.exists(_.id == obj1.id))
     assert(!objs.exists(_.id == obj2.id))
     assert(!objs.exists(_.id == obj3.id))

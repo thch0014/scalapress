@@ -8,13 +8,9 @@ import com.cloudray.scalapress.item.attr.AttributeFuncs
 /** @author Stephen Samuel */
 class ItemImporter(itemDao: ItemDao, itemType: ItemType) {
 
-  def doImport(in: InputStream) {
-    doImport(IOUtils.toString(in, "UTF8"))
-  }
+  def doImport(in: InputStream): Unit = doImport(IOUtils.toString(in, "UTF8"))
 
-  def doImport(file: File) {
-    doImport(FileUtils.readFileToString(file, "UTF8"))
-  }
+  def doImport(file: File): Unit = doImport(FileUtils.readFileToString(file, "UTF8"))
 
   def doImport(string: String) {
     val csv = new CsvReader(new StringReader(string), ',')
