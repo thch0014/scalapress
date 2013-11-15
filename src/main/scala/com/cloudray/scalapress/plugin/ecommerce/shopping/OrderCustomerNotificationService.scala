@@ -40,11 +40,11 @@ class OrderCustomerNotificationService(mailSender: MailSender,
     val installation = context.installationDao.get
     val domain = Option(installation.domain).getOrElse("localhost")
     val nowww = if (domain.startsWith("www.")) domain.drop(4) else domain
-    val from = "donotreply@" + nowww
+    val from = "donotreply@" + nowww.trim
 
     val message = new SimpleMailMessage()
     message.setFrom(from)
-    message.setTo(order.account.email)
+    message.setTo(order.account.email.trim)
 
     val bcc = Option(shoppingPluginDao.get.orderConfirmationBcc).map(_.split(",")).getOrElse(Array[String]())
     if (bcc.size > 0)
