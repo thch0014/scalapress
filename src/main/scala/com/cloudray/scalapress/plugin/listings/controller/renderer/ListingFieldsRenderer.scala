@@ -138,18 +138,6 @@ object ListingFieldsRenderer {
     </div>
   }
 
-  def _yesno(attr: Attribute) =
-    <div>
-      <label class="control-label">
-        {Unparsed(attr.name)}
-      </label>
-      <div class="controls">
-        <label class="checkbox">
-          <input type="checkbox" name={"attributeValue_" + attr.id}/>
-        </label>
-      </div>
-    </div>
-
   def _sectionAttributes(attributes: Iterable[Attribute], attributeValues: Iterable[AttributeValue]) = {
 
     val filtered = attributes.toSeq
@@ -173,7 +161,6 @@ object ListingFieldsRenderer {
       val value = attributeValues.find(av => av.attribute.id == attr.id).map(_.value)
       attr.attributeType match {
         case AttributeType.Postcode | AttributeType.Numerical => _text(attr, "input-sm", value)
-        case AttributeType.Boolean => _yesno(attr)
         case AttributeType.Selection if attr.multipleValues => _multipleSelection(attr)
         case AttributeType.Selection => _singleSelection(attr)
         case _ => _text(attr, "input-xlarge", value)

@@ -17,7 +17,6 @@ class AttributeMigrator(attributeDao: AttributeDao) extends Runnable {
     attributeDao.findAll.foreach(attr => {
       attr.attributeType match {
         case AttributeType.Boolean =>
-          attr.attributeType = AttributeType.Selection
 
           val yes = new AttributeOption
           yes.attribute = attr
@@ -31,7 +30,7 @@ class AttributeMigrator(attributeDao: AttributeDao) extends Runnable {
 
           import scala.collection.JavaConverters._
           attr.options = List(yes, no).asJava
-
+          attr.attributeType = AttributeType.Selection
           attributeDao.save(attr)
 
         case _ =>
