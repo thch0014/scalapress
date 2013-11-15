@@ -10,6 +10,7 @@ import theme.{ThemeDao, MarkupDao}
 import com.cloudray.scalapress.item.attr.AttributeDao
 import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{AddressDao, DeliveryOptionDao}
+import com.cloudray.scalapress.plugin.gallery.base.GalleryDao
 
 /** @author Stephen Samuel */
 class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -48,6 +49,12 @@ class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest 
     val themeDao = mock[ThemeDao]
     new StringToThemeConverter(themeDao).convert("2")
     Mockito.verify(themeDao).find(2)
+  }
+
+  test("string to gallery happy path") {
+    val galleryDao = mock[GalleryDao]
+    new StringToGalleryConverter(galleryDao).convert("2")
+    Mockito.verify(galleryDao).find(2)
   }
 
   test("string to del option happy path") {

@@ -25,7 +25,7 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
   override def typeAhead(query: String): Array[Datum] = {
     getSession
       .createSQLQuery(
-      "select a.id, a.name from accounts a WHERE a.name like ?")
+      "SELECT \"accounts\".\"id\", \"accounts\".\"name\" FROM \"accounts\" WHERE \"accounts\".\"name\" like ?")
       .setString(0, query + "%")
       .setMaxResults(20)
       .list()

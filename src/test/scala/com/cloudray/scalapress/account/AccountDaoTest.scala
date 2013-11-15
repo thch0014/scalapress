@@ -3,6 +3,8 @@ package com.cloudray.scalapress.account
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.TestDatabaseContext
+import com.cloudray.scalapress.account.controller.Datum
+import scala.util.Random
 
 /** @author Stephen Samuel */
 class AccountDaoTest extends FunSuite with MockitoSugar {
@@ -67,5 +69,28 @@ class AccountDaoTest extends FunSuite with MockitoSugar {
     val page = TestDatabaseContext.accountDao.search(q)
     assert(page.results.size === 1)
     assert(acc.id === page.results(0).id)
+  }
+
+  test("typeahead happy path") {
+
+    val acc1 = new Account
+    acc1.id = Math.abs(Random.nextInt())
+    acc1.name = "mr merlot"
+
+    val acc2 = new Account
+    acc2.id = Math.abs(Random.nextInt())
+    acc2.name = "dr cab"
+
+    val acc3 = new Account
+    acc3.id = Math.abs(Random.nextInt())
+    acc3.name = "mr shiraz"
+
+    TestDatabaseContext.accountDao.save(acc1)
+    TestDatabaseContext.accountDao.save(acc2)
+    TestDatabaseContext.accountDao.save(acc3)
+
+    val datums = TestDatabaseContext.accountDao.typeAhead("mr")
+    assert(2 === datums.size)
+    assert(datums === Array(Datum(acc1.name, acc1.id.toString), Datum(acc3.name, acc3.id.toString)))
   }
 }
