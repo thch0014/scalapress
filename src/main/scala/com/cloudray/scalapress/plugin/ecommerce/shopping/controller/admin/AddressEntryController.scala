@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestParam, PathVariable, RequestMethod, ModelAttribute, RequestMapping}
+import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, ModelAttribute, RequestMapping}
 import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import scala.Array
 import javax.validation.Valid
@@ -14,16 +14,16 @@ import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.AddressDao
 /** @author Stephen Samuel */
 @Controller
 @Autowired
-@RequestMapping(Array("backoffice/plugin/shopping/address/{id}"))
+@RequestMapping(Array("backoffice/plugin/shopping/address"))
 class AddressEntryController(context: ScalapressContext,
                              addressDao: AddressDao,
                              objectDao: ItemDao) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit = "admin/plugin/shopping/address/entry.vm"
+  def edit = "admin/plugin/ecommerce/shopping/address/entry.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def submit(@PathVariable("id") accountId: Long,
+  def submit(@RequestParam("accountId") accountId: Long,
              @RequestParam("orderId") orderId: Long,
              @Valid @ModelAttribute("address") address: Address,
              errors: Errors) = {
@@ -31,6 +31,7 @@ class AddressEntryController(context: ScalapressContext,
     if (errors.hasErrors)
       edit
     else {
+      address.id = 0
       address.active = true
       address.account = accountId.toString
       addressDao.save(address)
@@ -38,6 +39,9 @@ class AddressEntryController(context: ScalapressContext,
     }
   }
 
-  @ModelAttribute("orderId") def orderId(@RequestParam("orderId") orderId: Long) = orderId
-  @ModelAttribute("address") def address = new Address()
+  @ModelAttribute("orderId")
+  def orderId(@RequestParam("orderId") orderId: Long) = orderId
+
+  @ModelAttribute("address")
+  def address = new Address()
 }

@@ -59,8 +59,7 @@
             <tr>
                 <th>Address</th>
                 <td>$!order.billingAddress.address1<br/>
-                  $!order.billingAddress.address2<br/>
-                  $!order.billingAddress.address3</td>
+                  $!order.billingAddress.address2</td>
             </tr>
             <tr>
                 <th>City</th>
@@ -85,7 +84,7 @@
             <tr>
                 <th>Update</th>
                 <td>#springFormSingleSelect("form.changeBillingAddress", $addressesMap, "class='form-control'")<br/>
-                    <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=billing"
+                    <a href="/backoffice/plugin/shopping/address?accountId=${order.account.id}&orderId=${order.id}&set=billing"
                        role="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> Add billing address
                     </a>
@@ -108,8 +107,7 @@
             <tr>
                 <th>Address</th>
                 <td>$!order.deliveryAddress.address1<br/>
-                  $!order.deliveryAddress.address2<br/>
-                  $!order.deliveryAddress.address3</td>
+                  $!order.deliveryAddress.address2</td>
             </tr>
             <tr>
                 <th>City</th>
@@ -133,8 +131,9 @@
             </tr>
             <tr>
                 <th>Update</th>
-                <td>#springFormSingleSelect("form.changeDeliveryAddress", $addressesMap, "class='form-control'")<br/>
-                    <a href="/backoffice/plugin/shopping/address/$order.account.id?orderId=$order.id&set=delivery"
+                <td>#springFormSingleSelect("form.changeDeliveryAddress", $addressesMap, "class='form-control'")
+                    <br/>
+                    <a href="/backoffice/plugin/shopping/address?accountId=${order.account.id}&orderId=${order.id}&set=delivery"
                        role="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> Add delivery address
                     </a>
@@ -160,7 +159,8 @@
       <tr>
           <td>$l.description</td>
           <td>
-              <input type="text" name="linePrice$l.id" class="form-control" value="$number.number($l.priceExVat())"/>
+              <input type="text" name="linePrice$l.id" class="form-control"
+                     value="$number.number($l.priceExVat())"/>
           </td>
           <td>
               <input type="text" name="lineQty$l.id" class="form-control" value="$l.qty()"/>
