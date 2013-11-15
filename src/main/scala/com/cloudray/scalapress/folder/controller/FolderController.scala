@@ -67,7 +67,10 @@ class FolderController(folderDao: FolderDao,
       .orElse(Option(folderPluginDao.head.footer))
       .map(new ImageResolver(context).resolve)
 
-    val sreq = ScalapressRequest(folder, req, context).withTitle(folder.name)
+    val sreq = {
+      if (folder.hideTitle) ScalapressRequest(folder, req, context)
+      else ScalapressRequest(folder, req, context).withTitle(folder.name)
+    }
     val theme = themeService.theme(folder)
     val page = ScalapressPage(theme, sreq)
 

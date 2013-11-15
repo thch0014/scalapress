@@ -30,6 +30,7 @@ class FolderControllerTest extends FlatSpec with MockitoSugar with OneInstancePe
   val resp = mock[HttpServletResponse]
 
   val folder = new Folder
+  folder.name = "big super smashing lovely folder"
   folder.header = "lovely header"
   folder.footer = "big feet"
 
@@ -83,5 +84,17 @@ class FolderControllerTest extends FlatSpec with MockitoSugar with OneInstancePe
     evaluating {
       controller.view(folder, req, resp)
     } should produce[FolderInterceptorException]
+  }
+
+  it should "set title when hideTitle is false" in {
+    folder.hideTitle = false
+    val page = controller.view(folder, req, resp)
+    assert(page.sreq.title.get === "big super smashing lovely folder")
+  }
+
+  it should "not set title when hideTitle is true" in {
+    folder.hideTitle = true
+    val page = controller.view(folder, req, resp)
+    assert(page.sreq.title.isEmpty)
   }
 }

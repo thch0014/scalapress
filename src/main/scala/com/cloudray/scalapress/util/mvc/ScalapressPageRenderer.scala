@@ -12,8 +12,8 @@ class ScalapressPageRenderer(context: ScalapressContext) {
   def render(page: ScalapressPage): String = {
 
     val toolbar = page._toolbar.map(_.render).getOrElse("")
-    val header = TagRenderer.render(page.theme.header, page.req)
-    val footer = TagRenderer.render(page.theme.footer, page.req)
+    val header = TagRenderer.render(page.theme.header, page.sreq)
+    val footer = TagRenderer.render(page.theme.footer, page.sreq)
 
     val sb = new StringBuilder()
 

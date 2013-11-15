@@ -210,6 +210,6 @@ class AddListingControllerTest extends FunSuite with OneInstancePerTest with Moc
     process.listingPackage.folders = "5,6"
     process.listingPackage.maxFolders = 2
     val page = controller.showFolders(process, errors, req)
-    assert(page.req.title.get === ListingTitles.CHOOSE_FOLDERS)
+    assert(page.sreq.title.get === ListingTitles.CHOOSE_FOLDERS)
   }
 }

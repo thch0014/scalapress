@@ -65,7 +65,7 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
 
   test("that showAddress uses the correct title") {
     val page = controller.showAddress(req, basket, errors)
-    assert(CheckoutTitles.ADDRESS === page.req.title.get)
+    assert(CheckoutTitles.ADDRESS === page.sreq.title.get)
   }
 
   test("that showPayments uses the correct title") {
@@ -73,19 +73,19 @@ class CheckoutControllerTest extends FunSuite with MockitoSugar with OneInstance
     basket.order = new Order
     Mockito.doReturn(basket).when(req).getAttribute(ScalapressConstants.BasketKey)
     val page = controller.showPayments(req)
-    assert(CheckoutTitles.PAYMENT === page.req.title.get)
+    assert(CheckoutTitles.PAYMENT === page.sreq.title.get)
   }
 
   test("that showConfirmation uses the correct title") {
     basket.deliveryOption = del1
     val page = controller.showConfirmation(req)
-    assert(CheckoutTitles.CONFIRMATION === page.req.title.get)
+    assert(CheckoutTitles.CONFIRMATION === page.sreq.title.get)
   }
 
   test("that completed uses the correct title") {
     basket.order = order
     val page = controller.completed(req)
-    assert(CheckoutTitles.COMPLETED === page.req.title.get)
+    assert(CheckoutTitles.COMPLETED === page.sreq.title.get)
   }
 
   test("that a completed order empties the basket") {

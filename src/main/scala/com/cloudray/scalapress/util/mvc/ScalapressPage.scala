@@ -5,7 +5,7 @@ import com.cloudray.scalapress.theme.Theme
 import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
-class ScalapressPage(val theme: Theme, val req: ScalapressRequest) {
+class ScalapressPage(val theme: Theme, val sreq: ScalapressRequest) {
 
   val _body = new ListBuffer[Any]()
   var _toolbar: Option[Toolbar] = None

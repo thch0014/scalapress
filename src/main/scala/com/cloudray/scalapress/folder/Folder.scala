@@ -66,6 +66,10 @@ class Folder extends SortedSections with HtmlMeta {
   @BeanProperty
   var name: String = _
 
+  @Column(name = "hideTitle", nullable = false)
+  @BeanProperty
+  var hideTitle: Boolean = false
+
   @Column(name = "hideWidgets", nullable = false)
   @BeanProperty
   var hideWidgets: Boolean = false
