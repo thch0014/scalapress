@@ -31,15 +31,15 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   @BeanProperty
   var name: String = _
 
-  @deprecated
-  @Column(name = "email")
-  @BeanProperty
-  var email_deprecated: String = _
-
-  @deprecated
-  @BeanProperty
-  @Column(name = "passwordHash")
-  var password_deprecated: String = _
+  //  @deprecated
+  //  @Column(name = "email")
+  //  @BeanProperty
+  //  var email_deprecated: String = _
+  //
+  //  @deprecated
+  //  @BeanProperty
+  //  @Column(name = "passwordHash")
+  //  var password_deprecated: String = _
 
   @BeanProperty
   var expiry: Long = 0
@@ -161,9 +161,11 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   @BeanProperty def sellPriceDecimal = "%.2f" format price / 100.0
   def profit = price - costPrice
 
+  @Column(name = "vatRate")
   @BeanProperty
   var vatRate: Double = _
 
+  @Column(name = "costPrice")
   @BeanProperty
   var costPrice: Int = _
 
@@ -175,9 +177,11 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   @BeanProperty
   var status: String = _
 
+  @Column(name = "inStockMsg")
   @BeanProperty
   var inStockMsg: String = _
 
+  @Column(name = "outStockMsg")
   @BeanProperty
   var outStockMsg: String = _
 
@@ -186,10 +190,11 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
   var stock: Int = _
   def available = stock > 0
 
-  @Column(name = "brochure")
+  @Column(name = "brochure", nullable = false)
   @BeanProperty
   var orderable: Boolean = false
 
+  @Column(name = "backorders", nullable = false)
   @BeanProperty
   var backorders: Boolean = _
 

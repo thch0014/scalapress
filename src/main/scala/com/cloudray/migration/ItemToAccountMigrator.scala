@@ -3,12 +3,11 @@ package com.cloudray.migration
 import com.cloudray.scalapress.item.{TypeDao, ItemQuery, ItemDao}
 import com.cloudray.scalapress.account.{AccountType, AccountTypeDao, AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 import com.cloudray.scalapress.framework.Logging
 
 /** @author Stephen Samuel */
-@Component
+//@Component
 @Autowired
 class ItemToAccountMigrator(accountDao: AccountDao,
                             objectDao: ItemDao,
@@ -38,11 +37,11 @@ class ItemToAccountMigrator(accountDao: AccountDao,
         objects.foreach(obj => {
           val account = new Account
           account.id = obj.id
-          account.passwordHash = obj.password_deprecated
+          //account.passwordHash = obj.password_deprecated
           account.dateCreated = obj.dateCreated
           account.dateUpdated = obj.dateUpdated
           account.status = Account.STATUS_ACTIVE
-          account.email = obj.email_deprecated
+          //account.email = obj.email_deprecated
           account.name = obj.name
           account.accountType = accountType
           try {

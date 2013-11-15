@@ -99,7 +99,7 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
     obj3.itemType = obj1.itemType
     obj3.status = Item.STATUS_LIVE
 
-    TestDatabaseContext.typeDao.save(obj1.objectType)
+    TestDatabaseContext.typeDao.save(obj1.itemType)
     TestDatabaseContext.objectDao.save(obj1)
     TestDatabaseContext.objectDao.save(obj2)
     TestDatabaseContext.objectDao.save(obj3)
