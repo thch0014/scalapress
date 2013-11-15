@@ -91,6 +91,7 @@ class AccountDaoTest extends FunSuite with MockitoSugar {
 
     val datums = TestDatabaseContext.accountDao.typeAhead("mr")
     assert(2 === datums.size)
-    assert(datums === Array(Datum(acc1.name, acc1.id.toString), Datum(acc3.name, acc3.id.toString)))
+    assert(datums.contains(Datum(acc1.name, acc1.id.toString)))
+    assert(datums.contains(Datum(acc3.name, acc3.id.toString)))
   }
 }
