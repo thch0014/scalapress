@@ -154,11 +154,11 @@ class CheckoutController extends Logging {
     val sreq = ScalapressRequest(req, context)
     val order = orderBuilder.build(sreq)
     orderDao.save(order)
-    logger.debug("Order created and saved [{}]", order)
+    logger.info("Order created [{}]", order)
 
     sreq.basket.order = order
     basketDao.save(sreq.basket)
-    logger.debug("Order set on basket")
+    logger.info("Order set on basket [{}]", sreq.basket)
 
     orderAdminNotificationService.orderConfirmed(order)
 
