@@ -18,8 +18,9 @@ class OrderCallbackProcessor extends PaymentCallback with Logging {
   @Autowired var orderDao: OrderDao = _
   @Autowired var orderCustomerNotificationService: OrderCustomerNotificationService = _
 
-  override def callback(tx: Transaction, id: String) {
-    val order = orderDao.find(id.toLong)
+  override def callback(tx: Transaction, orderId: String) {
+    logger.info("Beginning Order Callback [Tx={}, orderId={}]", tx, orderId)
+    val order = orderDao.find(orderId.toLong)
     callback(tx, order)
   }
 
@@ -29,10 +30,11 @@ class OrderCallbackProcessor extends PaymentCallback with Logging {
   }
 
   def _assignTx(tx: Transaction, order: Order) {
-    logger.debug("Setting order [{}] as paid and associating tx [{}]", order.id, tx.id)
+    logger.info("Setting order [{}] as paid and associating tx [{}]", order.id, tx.id)
     if (order.status == Order.STATUS_NEW) {
       order.status = Order.STATUS_PAID
     }
+    tx.order = order.id.toString
     order.payments.add(tx)
     orderDao.save(order)
   }

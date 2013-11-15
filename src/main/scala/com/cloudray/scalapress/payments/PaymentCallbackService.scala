@@ -30,7 +30,7 @@ class PaymentCallbackService(context: ScalapressContext) extends Logging {
   }
 
   def _processResult(result: CallbackResult) {
-    logger.info("Saving tx [{}]", result.tx)
+    logger.info("Processing Callback Result [{}]", result)
     context.transactionDao.save(result.tx)
 
     val callbackClass = ComponentClassScanner.callbacks
