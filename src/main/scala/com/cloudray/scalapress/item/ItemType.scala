@@ -25,14 +25,17 @@ class ItemType extends SortedSections with java.io.Serializable {
   @BeanProperty
   var name: String = _
 
+  @Column(name = "deleted", nullable = false)
   @BeanProperty
   var deleted: Boolean = false
 
+  @Column(name = "hidden", nullable = false)
   @BeanProperty
   var hidden: Boolean = false
 
   def searchable: Boolean = !hidden
 
+  @Column(name = "prices", nullable = false)
   @BeanProperty
   var prices: Boolean = false
 

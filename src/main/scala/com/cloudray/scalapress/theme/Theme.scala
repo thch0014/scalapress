@@ -25,7 +25,7 @@ class Theme {
   @BeanProperty
   var footer: String = _
 
-  @Column(name = "dfault")
+  @Column(name = "dfault", nullable = false)
   @BeanProperty
   var default: Boolean = _
 

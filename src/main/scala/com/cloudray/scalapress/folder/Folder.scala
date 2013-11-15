@@ -94,17 +94,23 @@ class Folder extends SortedSections with HtmlMeta {
   @BeanProperty var dateUpdated: java.lang.Long = _
 
   @Column(name = "footer", length = 100000)
-  @BeanProperty var footer: String = _
+  @BeanProperty
+  var footer: String = _
 
   @Column(name = "header", length = 100000)
-  @BeanProperty var header: String = _
+  @BeanProperty
+  var header: String = _
 
   @Column(name = "forwardUrl")
-  @BeanProperty var redirect: String = _
+  @BeanProperty
+  var redirect: String = _
 
-  @BeanProperty var position: Int = _
+  @BeanProperty
+  var position: Int = _
 
-  @BeanProperty var hidden: Boolean = false
+  @Column(name = "hidden", nullable = false)
+  @BeanProperty
+  var hidden: Boolean = false
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)

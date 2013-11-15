@@ -21,7 +21,7 @@ abstract class Section {
   @BeanProperty
   var id: Long = _
 
-  @Column(name = "visible")
+  @Column(name = "visible", nullable = false)
   @BeanProperty
   var visible: Boolean = _
 

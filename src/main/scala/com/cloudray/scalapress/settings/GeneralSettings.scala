@@ -12,12 +12,27 @@ class GeneralSettings {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @BeanProperty var id: Long = _
-  @BeanProperty var toolbar: Boolean = false
-  @BeanProperty var offlineMessage: String = null
-  @BeanProperty var offline: Boolean = _
+  @BeanProperty
+  var id: Long = _
 
-  @BeanProperty var maxImageWidth: Int = _
-  @BeanProperty var maxImageHeight: Int = _
+  @Column(name = "toolbar", nullable = false)
+  @BeanProperty
+  var toolbar: Boolean = false
+
+  @Column(name = "offlineMessage", length = 10000)
+  @BeanProperty
+  var offlineMessage: String = null
+
+  @Column(name = "offline", nullable = false)
+  @BeanProperty
+  var offline: Boolean = _
+
+  @Column(name = "maxImageWidth")
+  @BeanProperty
+  var maxImageWidth: Int = _
+
+  @Column(name = "maxImageHeight")
+  @BeanProperty
+  var maxImageHeight: Int = _
 
 }

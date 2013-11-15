@@ -16,7 +16,7 @@ class Installation extends java.io.Serializable {
   var id: Long = _
 
   // email for the software to send emails to
-  @Column(length = 1000)
+  @Column(name = "adminEmail", length = 1000)
   @BeanProperty
   var adminEmail: String = _
 
@@ -24,14 +24,14 @@ class Installation extends java.io.Serializable {
   var postcode: String = _
 
   // public contact email
-  @Column(length = 1000)
+  @Column(name = "email", length = 1000)
   @BeanProperty
   var email: String = _
 
   @BeanProperty
   var telephone: String = _
 
-  @Column(length = 1000)
+  @Column(name = "address", length = 1000)
   @BeanProperty
   var address: String = _
 
@@ -43,6 +43,7 @@ class Installation extends java.io.Serializable {
   var vatNumber: String = _
   def vatEnabled: Boolean = Option(vatNumber).filter(_.trim.length > 0).isDefined
 
+  @Column(name = "companyNumber")
   @BeanProperty
   var companyNumber: String = _
 
