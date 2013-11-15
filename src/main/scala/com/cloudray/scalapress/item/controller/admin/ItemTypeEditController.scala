@@ -7,7 +7,7 @@ import scala.Array
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.item.{TypeDao, ItemType}
+import com.cloudray.scalapress.item.{ItemTypeDao, ItemType}
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.attr.{AttributeType, Attribute}
 import scala.collection.mutable
@@ -17,7 +17,7 @@ import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScann
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/type/{id}", "backoffice/itemtype/{id}"))
-class ItemTypeEditController(val typeDao: TypeDao,
+class ItemTypeEditController(val typeDao: ItemTypeDao,
                              val markupDao: MarkupDao,
                              val sectionDao: SectionDao,
                              val context: ScalapressContext) extends MarkupPopulator {

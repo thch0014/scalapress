@@ -5,14 +5,14 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.search.{SearchFormDao, SearchForm, SearchFormField}
 import org.mockito.Mockito
 import com.cloudray.scalapress.theme.MarkupDao
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 
 /** @author Stephen Samuel */
 class SearchFormEditControllerTest extends FlatSpec with OneInstancePerTest with MockitoSugar {
 
   val searchFormDao = mock[SearchFormDao]
   val markupDao = mock[MarkupDao]
-  val typeDao = mock[TypeDao]
+  val typeDao = mock[ItemTypeDao]
 
   val controller = new SearchFormEditController(typeDao, markupDao, searchFormDao)
   val form = new SearchForm

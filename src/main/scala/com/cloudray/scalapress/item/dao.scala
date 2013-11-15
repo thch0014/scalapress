@@ -89,14 +89,14 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
     .createSQLQuery("delete from items where itemType=" + id).executeUpdate()
 }
 
-trait TypeDao extends GenericDao[ItemType, java.lang.Long] {
+trait ItemTypeDao extends GenericDao[ItemType, java.lang.Long] {
   @deprecated
   def getAccount: Option[ItemType]
 }
 
 @Component
 @Transactional
-class TypeDaoImpl extends GenericDaoImpl[ItemType, java.lang.Long] with TypeDao {
+class ItemTypeDaoImpl extends GenericDaoImpl[ItemType, java.lang.Long] with ItemTypeDao {
   @deprecated
   def getAccount: Option[ItemType] =
     findAll.find(t => t.name.toLowerCase == "account" || t.name.toLowerCase == "accounts")

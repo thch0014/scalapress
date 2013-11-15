@@ -43,7 +43,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   item.attributeValues.add(av1)
   item.attributeValues.add(av2)
 
-  val itemTypeDao = mock[TypeDao]
+  val itemTypeDao = mock[ItemTypeDao]
   val itemDao = mock[ItemDao]
   val installationDao = mock[InstallationDao]
 

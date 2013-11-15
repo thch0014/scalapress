@@ -2,7 +2,7 @@ package com.cloudray.scalapress
 
 import folder.{FolderDao, Folder}
 import com.cloudray.scalapress.item.attr.{AttributeDao, Attribute}
-import item.{TypeDao, ItemType}
+import item.{ItemTypeDao, ItemType}
 import org.springframework.core.convert.converter.Converter
 import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
@@ -18,7 +18,7 @@ class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Fold
     else folderDao.find(source.toLong)
 }
 
-class StringItemTypeConverter(objectTypeDao: TypeDao) extends Converter[String, ItemType] {
+class StringItemTypeConverter(objectTypeDao: ItemTypeDao) extends Converter[String, ItemType] {
   def convert(source: String): ItemType =
     if (source == null || source.trim.isEmpty || source == "0") null
     else objectTypeDao.find(source.toLong)

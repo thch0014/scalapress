@@ -16,7 +16,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 @Autowired
 @RequestMapping(Array("backoffice/item"))
 class ItemSearchController(objectDao: ItemDao,
-                             typeDao: TypeDao,
+                             typeDao: ItemTypeDao,
                              context: ScalapressContext) extends ItemStatusPopulator {
 
   @RequestMapping

@@ -14,7 +14,7 @@ import com.cloudray.scalapress.payments.{PaymentPluginDao, TransactionDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.{AccountTypeDao, AccountDao}
 import com.cloudray.scalapress.search.{SavedSearchDao, SearchFormDao, SearchService}
-import com.cloudray.scalapress.item.{TypeDao, ItemDao}
+import com.cloudray.scalapress.item.{ItemTypeDao, ItemDao}
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.widgets.WidgetDao
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
@@ -43,7 +43,7 @@ class ScalapressContext extends ServletContextAware {
   @Autowired var attributeDao: AttributeDao = _
 
   @Autowired var itemDao: ItemDao = _
-  @Autowired var itemTypeDao: TypeDao = _
+  @Autowired var itemTypeDao: ItemTypeDao = _
 
   @Autowired var accountDao: AccountDao = _
   @Autowired var accountTypeDao: AccountTypeDao = _

@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import com.cloudray.scalapress.widgets.WidgetDao
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
@@ -13,7 +13,7 @@ class AttributeWidgetEditControllerTest extends FunSuite with MockitoSugar with 
 
   val dao = mock[WidgetDao]
   val context = new ScalapressContext
-  val objectTypeDao = mock[TypeDao]
+  val objectTypeDao = mock[ItemTypeDao]
   val controller = new AttributeWidgetEditController(dao, context, objectTypeDao)
 
   test("controller loads instance of AttributeWidget") {

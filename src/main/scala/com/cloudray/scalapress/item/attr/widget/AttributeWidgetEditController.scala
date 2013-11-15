@@ -7,7 +7,7 @@ import com.cloudray.scalapress.widgets.WidgetDao
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.widgets.controller.WidgetContainerMapPopulator
 import com.cloudray.scalapress.util.AllAttributesPopulator
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.framework.ScalapressContext
 
 /** @author Stephen Samuel */
@@ -16,7 +16,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 @RequestMapping(Array("backoffice/widget/attribute/{id}"))
 class AttributeWidgetEditController(widgetDao: WidgetDao,
                                     context: ScalapressContext,
-                                    var objectTypeDao: TypeDao)
+                                    var objectTypeDao: ItemTypeDao)
   extends WidgetContainerMapPopulator with AllAttributesPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))

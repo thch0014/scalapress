@@ -7,7 +7,7 @@ import com.cloudray.scalapress.theme.{MarkupDao, MarkupDaoImpl, ThemeDao, ThemeD
 import com.cloudray.scalapress.search.{SearchFormDao, SearchFormDaoImpl, SavedSearchDao, SavedSearchDaoImpl}
 import com.cloudray.scalapress.plugin.listings.{ListingProcessDao, ListingProcessDaoImpl, ListingPackageDao, ListingPackageDaoImpl}
 import com.cloudray.scalapress.plugin.form.{FormFieldDao, FormFieldDaoImpl, FormDao, FormDaoImpl}
-import com.cloudray.scalapress.item.{TypeDao, TypeDaoImpl, ItemDao, ItemDaoImpl}
+import com.cloudray.scalapress.item.{ItemTypeDao, ItemTypeDaoImpl, ItemDao, ItemDaoImpl}
 import com.cloudray.scalapress.user.{UserDao, UserDaoImpl}
 import com.cloudray.scalapress.folder.{FolderDao, FolderDaoImpl}
 import org.hibernate.SessionFactory
@@ -45,8 +45,8 @@ object TestDatabaseContext {
 
   val typeDao = context
     .getAutowireCapableBeanFactory
-    .createBean(classOf[TypeDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
-    .asInstanceOf[TypeDao]
+    .createBean(classOf[ItemTypeDaoImpl], AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true)
+    .asInstanceOf[ItemTypeDao]
 
   val userDao = context
     .getAutowireCapableBeanFactory

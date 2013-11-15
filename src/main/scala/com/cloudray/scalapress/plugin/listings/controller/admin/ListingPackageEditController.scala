@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.util.ItemTypePopulator
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import com.cloudray.scalapress.framework.ScalapressContext
@@ -13,7 +13,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/plugin/listings/package/{id}"))
-class ListingPackageEditController(val itemTypeDao: TypeDao,
+class ListingPackageEditController(val itemTypeDao: ItemTypeDao,
                                    listingPackageDao: ListingPackageDao,
                                    context: ScalapressContext) extends ItemTypePopulator {
 

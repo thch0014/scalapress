@@ -1,6 +1,6 @@
 package com.cloudray.migration
 
-import com.cloudray.scalapress.item.{TypeDao, ItemQuery, ItemDao}
+import com.cloudray.scalapress.item.{ItemTypeDao, ItemQuery, ItemDao}
 import com.cloudray.scalapress.account.{AccountType, AccountTypeDao, AccountDao, Account}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.annotation.PostConstruct
@@ -11,7 +11,7 @@ import com.cloudray.scalapress.framework.Logging
 @Autowired
 class ItemToAccountMigrator(accountDao: AccountDao,
                             objectDao: ItemDao,
-                            typeDao: TypeDao,
+                            typeDao: ItemTypeDao,
                             accountTypeDao: AccountTypeDao) extends Logging {
 
   @PostConstruct

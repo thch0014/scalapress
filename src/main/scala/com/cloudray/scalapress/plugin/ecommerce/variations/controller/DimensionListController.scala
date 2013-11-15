@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValueDao, DimensionDao}
 import com.cloudray.scalapress.framework.ScalapressContext
 
@@ -14,7 +14,7 @@ import com.cloudray.scalapress.framework.ScalapressContext
 class DimensionListController {
 
   @Autowired var dimensionDao: DimensionDao = _
-  @Autowired var objectTypeDao: TypeDao = _
+  @Autowired var objectTypeDao: ItemTypeDao = _
   @Autowired var context: ScalapressContext = _
   @Autowired var dimensionValueDao: DimensionValueDao = _
 

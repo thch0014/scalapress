@@ -15,7 +15,7 @@ import org.springframework.http.converter.xml.{SourceHttpMessageConverter, XmlAw
 import java.nio.charset.Charset
 import javax.xml.transform.Source
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.theme.{MarkupDao, ThemeDao}
 import com.cloudray.scalapress.settings.{GeneralSettingsDao, InstallationDao}
 import util.mvc._
@@ -40,7 +40,7 @@ class WebConfig extends WebMvcConfigurationSupport {
 
   @Autowired var context: ScalapressContext = _
   @Autowired var folderDao: FolderDao = _
-  @Autowired var typeDao: TypeDao = _
+  @Autowired var typeDao: ItemTypeDao = _
   @Autowired var accountTypeDao: AccountTypeDao = _
   @Autowired var basketDao: BasketDao = _
   @Autowired var markupDao: MarkupDao = _

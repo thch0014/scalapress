@@ -14,7 +14,7 @@ import com.cloudray.scalapress.framework.UrlGenerator
 /** @author Stephen Samuel */
 @Component
 @Autowired
-class ItemExporter(itemTypeDao: TypeDao,
+class ItemExporter(itemTypeDao: ItemTypeDao,
                    itemDao: ItemDao,
                    installationDao: InstallationDao) {
 

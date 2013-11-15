@@ -8,7 +8,7 @@ import scala.collection.JavaConverters._
 import com.cloudray.scalapress.search._
 import com.cloudray.scalapress.section.SectionDao
 import com.cloudray.scalapress.search.section.SearchFormSection
-import com.cloudray.scalapress.item.{Item, ItemDao, TypeDao}
+import com.cloudray.scalapress.item.{Item, ItemDao, ItemTypeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import com.sksamuel.scoot.soa.{Paging, Page}
@@ -26,7 +26,7 @@ class SearchController extends Logging {
   @Autowired var savedSearchDao: SavedSearchDao = _
   @Autowired var searchService: SearchService = _
   @Autowired var objectDao: ItemDao = _
-  @Autowired var typeDao: TypeDao = _
+  @Autowired var typeDao: ItemTypeDao = _
   @Autowired var themeService: ThemeService = _
   @Autowired var context: ScalapressContext = _
   @Autowired var searchPluginDao: SearchPluginDao = _

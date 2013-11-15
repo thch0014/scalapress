@@ -2,7 +2,7 @@ package com.cloudray.scalapress.item.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, ModelAttribute, RequestMapping}
-import com.cloudray.scalapress.item.{TypeDao, ItemType}
+import com.cloudray.scalapress.item.{ItemTypeDao, ItemType}
 import scala.collection.JavaConverters._
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 @Controller
 @Autowired
 @RequestMapping(Array("/backoffice/type", "/backoffice/itemtype"))
-class ItemTypeListController(typeDao: TypeDao) {
+class ItemTypeListController(typeDao: ItemTypeDao) {
 
   @RequestMapping(produces = Array("text/html"))
   def list = "admin/object/type/list.vm"

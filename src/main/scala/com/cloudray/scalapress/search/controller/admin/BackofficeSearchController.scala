@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{RequestParam, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.search.{Search, SearchService}
-import com.cloudray.scalapress.item.{ItemDao, TypeDao}
+import com.cloudray.scalapress.item.{ItemDao, ItemTypeDao}
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.util.Page
 
@@ -15,7 +15,7 @@ import com.cloudray.scalapress.util.Page
 @Autowired
 class BackofficeSearchController(service: SearchService,
                                  objectDao: ItemDao,
-                                 typeDao: TypeDao) {
+                                 typeDao: ItemTypeDao) {
 
   @RequestMapping
   def test(@RequestParam("q") q: String, model: ModelMap) = {

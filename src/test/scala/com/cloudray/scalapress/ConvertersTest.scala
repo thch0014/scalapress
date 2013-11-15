@@ -1,6 +1,6 @@
 package com.cloudray.scalapress
 
-import item.TypeDao
+import item.ItemTypeDao
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
@@ -21,7 +21,7 @@ class ConvertersTest extends FunSuite with MockitoSugar with OneInstancePerTest 
   }
 
   test("string to object type happy path") {
-    val objectTypeDao = mock[TypeDao]
+    val objectTypeDao = mock[ItemTypeDao]
     new StringItemTypeConverter(objectTypeDao).convert("2")
     Mockito.verify(objectTypeDao).find(2)
   }

@@ -2,7 +2,7 @@ package com.cloudray.scalapress.util.mvc.interceptor
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.item.{ItemType, TypeDao}
+import com.cloudray.scalapress.item.{ItemType, ItemTypeDao}
 import org.mockito.Mockito
 import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel */
 class ItemTypesInterceptorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  val dao = mock[TypeDao]
+  val dao = mock[ItemTypeDao]
   val interceptor = new ItemTypesInterceptor(dao)
 
   val req = mock[HttpServletRequest]

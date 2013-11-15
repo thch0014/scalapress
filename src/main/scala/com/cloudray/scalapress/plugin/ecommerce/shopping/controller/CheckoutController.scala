@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import java.net.URL
-import com.cloudray.scalapress.item.{ItemDao, TypeDao}
+import com.cloudray.scalapress.item.{ItemDao, ItemTypeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.plugin.ecommerce.controller.renderers._
@@ -32,7 +32,7 @@ class CheckoutController extends Logging {
   @Autowired var context: ScalapressContext = _
   @Autowired var themeService: ThemeService = _
   @Autowired var shoppingPluginDao: ShoppingPluginDao = _
-  @Autowired var typeDao: TypeDao = _
+  @Autowired var typeDao: ItemTypeDao = _
   @Autowired var paymentCallbackService: PaymentCallbackService = _
   @Autowired var validator: Validator = _
   @Autowired var orderBuilder: OrderBuilder = _

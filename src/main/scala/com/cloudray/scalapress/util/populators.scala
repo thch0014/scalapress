@@ -3,7 +3,7 @@ package com.cloudray.scalapress.util
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.ui.ModelMap
 import java.util
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.JavaConverters._
 
@@ -11,7 +11,7 @@ import scala.collection.JavaConverters._
 
 trait ItemTypePopulator {
 
-  val itemTypeDao: TypeDao
+  val itemTypeDao: ItemTypeDao
 
   @ModelAttribute def objectTypes(model: ModelMap) {
     val objectTypes = itemTypeDao.findAll
@@ -41,7 +41,7 @@ trait AttributePopulator {
 
 trait AllAttributesPopulator {
 
-  var objectTypeDao: TypeDao
+  var objectTypeDao: ItemTypeDao
 
   @ModelAttribute("attributesMap") def allAttributesMap: java.util.Map[Long, String] = {
 

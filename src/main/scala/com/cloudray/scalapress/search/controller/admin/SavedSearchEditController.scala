@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, P
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.search.{SavedSearch, SavedSearchDao}
 import com.cloudray.scalapress.folder.FolderDao
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.attr.{AttributeType, AttributeValue}
 import com.cloudray.scalapress.item.controller.admin.{FolderPopulator, MarkupPopulator}
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 @Controller
 @RequestMapping(Array("backoffice/savedsearch/{id}"))
 @Autowired
-class SavedSearchEditController(val itemTypeDao: TypeDao,
+class SavedSearchEditController(val itemTypeDao: ItemTypeDao,
                                 val folderDao: FolderDao,
                                 val markupDao: MarkupDao,
                                 val savedSearchDao: SavedSearchDao)

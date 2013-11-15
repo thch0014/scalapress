@@ -3,7 +3,7 @@ package com.cloudray.scalapress.plugin.variations
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{Matchers, Mockito}
-import com.cloudray.scalapress.item.{ItemType, TypeDao}
+import com.cloudray.scalapress.item.{ItemType, ItemTypeDao}
 import com.cloudray.scalapress.plugin.variations.controller.DimensionListController
 
 /** @author Stephen Samuel */
@@ -11,7 +11,7 @@ class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneIns
 
   val controller = new DimensionListController
   controller.dimensionDao = mock[DimensionDao]
-  controller.objectTypeDao = mock[TypeDao]
+  controller.objectTypeDao = mock[ItemTypeDao]
 
   "a dimension list controller" should "persist the dimension when creating a dimension" in {
     controller.create(45)

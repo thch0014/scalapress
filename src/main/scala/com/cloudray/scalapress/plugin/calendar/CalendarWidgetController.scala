@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.{ModelAttribute, RequestMethod, R
 import com.cloudray.scalapress.widgets.{WidgetDao, Widget}
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.util.{ItemTypePopulator, AttributePopulator}
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import org.springframework.beans.factory.annotation.Autowired
 
 /** @author Stephen Samuel */
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/plugin/calendar/widget/{id}"))
-class CalendarWidgetController(val itemTypeDao: TypeDao,
+class CalendarWidgetController(val itemTypeDao: ItemTypeDao,
                                widgetDao: WidgetDao)
   extends WidgetEditController(widgetDao) with AttributePopulator with ItemTypePopulator {
 

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.search.{SearchFieldType, SearchFormDao, SearchFormField, SearchForm}
-import com.cloudray.scalapress.item.TypeDao
+import com.cloudray.scalapress.item.ItemTypeDao
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.theme.MarkupDao
 import com.cloudray.scalapress.item.controller.admin.MarkupPopulator
@@ -14,7 +14,7 @@ import com.cloudray.scalapress.util.{ItemTypePopulator, SortPopulator}
 @Controller
 @RequestMapping(Array("backoffice/searchform/{id}"))
 @Autowired
-class SearchFormEditController(val itemTypeDao: TypeDao,
+class SearchFormEditController(val itemTypeDao: ItemTypeDao,
                                val markupDao: MarkupDao,
                                val searchFormDao: SearchFormDao)
   extends MarkupPopulator with ItemTypePopulator with SortPopulator {
