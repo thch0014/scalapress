@@ -61,6 +61,7 @@ class OrderCustomerNotificationService(mailSender: MailSender,
         logger.warn("to: " + order.account.email)
         logger.warn("bcc:" + bcc.mkString(","))
         logger.warn("from: " + from)
+        logger.warn(message.toString)
       case e: Exception => logger.warn(e.toString)
     }
   }
