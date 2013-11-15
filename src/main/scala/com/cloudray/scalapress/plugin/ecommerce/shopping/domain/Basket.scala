@@ -88,4 +88,5 @@ class Basket {
     total
   }
   def vat: Double = linesVat + Option(deliveryOption).map(_.chargeVat).getOrElse(0)
+  override def toString: String = s"Basket [sessionId=$sessionId order=$order accountEmail=$accountEmail]"
 }

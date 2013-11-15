@@ -194,17 +194,22 @@ class CheckoutController extends Logging {
     val shoppingPlugin = shoppingPluginDao.get
 
     val order = sreq.basket.order
-    paymentCallbackService.callbacks(req)
+    if (order == null) {
+      logger.warn("Showing completed page with null order [basket={}]", sreq.basket)
+      showConfirmation(req)
+    } else {
+      paymentCallbackService.callbacks(req)
 
-    _cleanup(sreq.basket)
+      _cleanup(sreq.basket)
 
-    val theme = themeService.default
-    val page = ScalapressPage(theme, sreq)
-    page.body(shoppingPlugin.checkoutConfirmationScripts)
-    page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep).toString())
-    page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
+      val theme = themeService.default
+      val page = ScalapressPage(theme, sreq)
+      page.body(shoppingPlugin.checkoutConfirmationScripts)
+      page.body(CheckoutWizardRenderer.render(CheckoutWizardRenderer.CompletionStep).toString())
+      page.body(CheckoutCompletedRenderer.render(shoppingPlugin.checkoutConfirmationText, order))
 
-    page
+      page
+    }
   }
 
   def _cleanup(basket: Basket) {
