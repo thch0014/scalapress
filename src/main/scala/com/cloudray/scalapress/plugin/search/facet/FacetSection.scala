@@ -42,11 +42,11 @@ class FacetSection extends SearchResultsSection {
     val searchResult = searchService.search(search)
 
     val items = new ItemBulkLoader(sreq.context.itemDao).loadFromRefs(searchResult.refs)
-    val facetsWithMultipleTerms = searchResult.facets.filter(_.terms.size > 1)
+    val facetsWithTerms = searchResult.facets.filter(_.terms.size > 0)
 
     ResultsBar.render(searchResult, sreq) +
       renderSelectedFacets(selections, uri, sreq.context) +
-      (if (facetsWithMultipleTerms.isEmpty) "" else renderFacets(facetsWithMultipleTerms, uri)) +
+      (if (facetsWithTerms.isEmpty) "" else renderFacets(facetsWithTerms, uri)) +
       renderItems(items, sreq)
   }
 
