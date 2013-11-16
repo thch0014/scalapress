@@ -8,7 +8,7 @@ import org.scalatest.mock.MockitoSugar
 /** @author Stephen Samuel */
 class SimpleUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-  test("object friendly url happy path") {
+  test("item friendly url happy path") {
     val obj = new Item
     obj.id = 1234
     obj.name = "boro for the champo"

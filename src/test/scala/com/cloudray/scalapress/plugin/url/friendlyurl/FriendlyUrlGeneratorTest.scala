@@ -10,10 +10,10 @@ import com.cloudray.scalapress.framework.UrlGenerator
 class FriendlyUrlGeneratorTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
   test("item friendly url happy path") {
-    val obj = new Item
-    obj.id = 1234
-    obj.name = "boro for the champo"
-    assert("/item-1234-boro-for-the-champo" === UrlGenerator.url(obj))
+    val item = new Item
+    item.id = 1234
+    item.name = "boro for the champo"
+    assert("/item-1234-boro-for-the-champo" === UrlGenerator.url(item))
   }
 
   test("folder friendly url happy path") {
