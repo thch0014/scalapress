@@ -62,8 +62,15 @@ class ScalapressContext extends ServletContextAware {
       .getBeansOfType(manifest.runtimeClass.asInstanceOf[Class[T]]).values.asScala
   }
 
-  def bean[T](c: Class[T]): T = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
-  def bean[T: Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
+  def bean[T >: Null](c: Class[T]): T = {
+    try {
+      WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).getBean(c)
+    } catch {
+      case _: Exception => null
+    }
+  }
+
+  def bean[T >: Null : Manifest]: T = bean[T](manifest.runtimeClass.asInstanceOf[Class[T]])
 
   var servletContext: ServletContext = _
   def setServletContext(servletContext: ServletContext) {

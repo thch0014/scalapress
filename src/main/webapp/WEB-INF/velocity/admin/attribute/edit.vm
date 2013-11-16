@@ -86,37 +86,39 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Facet</label>
+##    <div class="form-group">
+##        <label class="col-lg-2 control-label">Facet</label>
+##
+##        <div class="col-lg-8">
+##          #springFormCheckbox("attribute.facet", "")
+##        </div>
+##    </div>
+##
+##    <div class="form-group">
+##        <label class="col-lg-2 control-label">Facet Size</label>
+##
+##        <div class="col-lg-8">
+##          #springFormInput("attribute.facetSize", "class='form-control'")
+##        </div>
+##    </div>
 
-        <div class="col-lg-8">
-          #springFormCheckbox("attribute.facet", "")
-        </div>
-    </div>
+  #if ($attribute.attributeType == "Email")
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Bcc</label>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Facet Size</label>
+          <div class="col-lg-8">
+            #springFormInput("attribute.bcc", "class='form-control'")
+          </div>
+      </div>
 
-        <div class="col-lg-8">
-          #springFormInput("attribute.facetSize", "class='form-control'")
-        </div>
-    </div>
+      <div class="form-group">
+          <label class="col-lg-2 control-label">Cc</label>
 
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Bcc</label>
-
-        <div class="col-lg-8">
-          #springFormInput("attribute.bcc", "class='form-control'")
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Cc</label>
-
-        <div class="col-lg-8">
-          #springFormInput("attribute.cc", "class='form-control'")
-        </div>
-    </div>
+          <div class="col-lg-8">
+            #springFormInput("attribute.cc", "class='form-control'")
+          </div>
+      </div>
+  #end
 
     <div class="panel panel-default">
         <div class="panel-body">
