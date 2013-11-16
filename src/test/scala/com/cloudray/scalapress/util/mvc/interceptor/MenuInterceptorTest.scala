@@ -27,4 +27,10 @@ class MenuInterceptorTest extends FlatSpec with MockitoSugar with OneInstancePer
     val menus = mav.getModel.get(MenuInterceptor.KEY_PLUGINMENU).toString
     assert(!menus.contains("Simple Pass"))
   }
+
+  it should "render headers in alpha order" in {
+    interceptor.postHandle(req, resp, null, mav)
+    val menus = mav.getModel.get(MenuInterceptor.KEY_PLUGINMENU).toString
+    assert(menus.matches(".*?Accounts.*?Payments.*?Shopping.*?"))
+  }
 }

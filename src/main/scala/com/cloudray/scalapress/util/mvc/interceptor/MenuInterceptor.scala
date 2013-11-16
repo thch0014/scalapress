@@ -3,8 +3,9 @@ package com.cloudray.scalapress.util.mvc.interceptor
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.springframework.web.servlet.ModelAndView
-import com.cloudray.scalapress.framework.{ScalapressContext, ComponentClassScanner}
+import com.cloudray.scalapress.framework.{MenuItem, ScalapressContext, ComponentClassScanner}
 import com.cloudray.scalapress.util.mvc.BootstrapMenuRenderer
+import scala.collection.immutable.TreeMap
 
 /** @author Stephen Samuel */
 class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdapter {
@@ -17,7 +18,7 @@ class MenuInterceptor(context: ScalapressContext) extends HandlerInterceptorAdap
                           handler: Any,
                           modelAndView: ModelAndView) {
     if (modelAndView != null) {
-      val menuItems = providers.flatMap(_.menu(context)).groupBy(_.header)
+      val menuItems = TreeMap.empty[String, Seq[MenuItem]] ++ providers.flatMap(_.menu(context)).groupBy(_.header)
       val rendered = renderer.render(menuItems)
       modelAndView.getModelMap.put(MenuInterceptor.KEY_PLUGINMENU, rendered)
     }
