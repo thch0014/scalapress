@@ -65,32 +65,32 @@ class ItemExporter(itemTypeDao: ItemTypeDao,
     buffer.toArray
   }
 
-  def _row(obj: Item, attributes: Seq[Attribute], domain: String): Array[String] = {
+  def _row(item: Item, attributes: Seq[Attribute], domain: String): Array[String] = {
 
     val buffer = new ArrayBuffer[String]
 
-    buffer.append(obj.id.toString)
-    buffer.append(new DateTime(obj.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
-    buffer.append(obj.name)
-    buffer.append(obj.status)
-    buffer.append("http://" + domain + UrlGenerator.url(obj))
+    buffer.append(item.id.toString)
+    buffer.append(new DateTime(item.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
+    buffer.append(item.name)
+    buffer.append(item.status)
+    buffer.append("http://" + domain + UrlGenerator.url(item))
 
-    val price = "%1.2f".format(obj.price / 100.0)
-    val priceInc = "%1.2f".format(obj.sellPriceInc / 100.0)
-    val cost = "%1.2f".format(obj.costPrice / 100.0)
-    val rrp = "%1.2f".format(obj.rrp / 100.0)
-    val profit = "%1.2f".format(obj.profit / 100.0)
+    val price = "%1.2f".format(item.price / 100.0)
+    val priceInc = "%1.2f".format(item.sellPriceInc / 100.0)
+    val cost = "%1.2f".format(item.costPrice / 100.0)
+    val rrp = "%1.2f".format(item.rrp / 100.0)
+    val profit = "%1.2f".format(item.profit / 100.0)
 
     buffer.append(price)
-    buffer.append(obj.vatRate.toString)
+    buffer.append(item.vatRate.toString)
     buffer.append(priceInc)
     buffer.append(rrp)
     buffer.append(cost)
     buffer.append(profit)
-    buffer.append(obj.stock.toString)
+    buffer.append(item.stock.toString)
 
     for ( attribute <- attributes ) {
-      val values = AttributeFuncs.attributeValues(obj, attribute).mkString("|")
+      val values = AttributeFuncs.attributeValues(item, attribute).mkString("|")
       buffer.append(values)
     }
     buffer.toArray

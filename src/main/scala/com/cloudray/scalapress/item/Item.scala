@@ -208,6 +208,9 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
 }
 
 object Item {
+  val STATUS_DELETED_LOWER = "deleted"
+  val STATUS_LIVE_LOWER = "live"
+  val STATUS_DISABLED_LOWER = "disabled"
   val STATUS_DELETED = "Deleted"
   val STATUS_LIVE = "Live"
   val STATUS_DISABLED = "Disabled"

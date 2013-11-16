@@ -26,12 +26,6 @@
               <a href="/backoffice/submission/$s.id" role="button" class="btn btn-xs btn-default">
                   <i class="glyphicon glyphicon-eye-open"></i>
               </a>
-
-              <a onClick="bootbox.confirm('Confirm delete', function(result) {
-                      if (result) {
-                      window.location='/backoffice/submission/$s.id/delete';
-                      }})" role="button" class="btn btn-danger btn-xs">
-                  <i class="glyphicon glyphicon-trash"></i></a>
           </td>
       </tr>
   #end

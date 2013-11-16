@@ -36,7 +36,11 @@ class ItemImporter(itemDao: ItemDao, itemType: ItemType) {
 
   def setValues(item: Item, csv: CsvReader) {
     item.name = csv.get("name")
-    item.status = csv.get("status")
+    item.status = Option(csv.get("status")).getOrElse(Item.STATUS_LIVE).toLowerCase match {
+      case Item.STATUS_DELETED_LOWER => Item.STATUS_DELETED
+      case Item.STATUS_DISABLED_LOWER => Item.STATUS_DISABLED
+      case _ => Item.STATUS_LIVE
+    }
     try {
       item.price = (csv.get("price").toDouble * 100.0).toInt
     } catch {

@@ -29,6 +29,12 @@ class ItemImporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     assert(Item.STATUS_DELETED === obj.status)
   }
 
+  test("importer defaults to live if status not known") {
+    Mockito.when(csv.get("status")).thenReturn("bollocks")
+    importer.setValues(obj, csv)
+    assert(Item.STATUS_LIVE === obj.status)
+  }
+
   test("importer sets price on item") {
     Mockito.when(csv.get("price")).thenReturn("45.56")
     importer.setValues(obj, csv)
@@ -61,7 +67,7 @@ class ItemImporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     importer.doImport(string)
     assert(12 === obj.id)
     assert("coldplay tickets" === obj.name)
-    assert("live" === obj.status)
+    assert("Live" === obj.status)
     assert(2999 === obj.price)
   }
 

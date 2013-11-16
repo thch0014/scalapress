@@ -255,6 +255,7 @@
     </div>
 </div>
 
+#if ($order.payments.size() > 0)
 <legend>Transactions</legend>
 <table class="table table-condensed table-hover">
     <tr>
@@ -272,7 +273,7 @@
       </tr>
   #end
 </table>
-
+#end
 
 <legend>Comments</legend>
 <table class="table table-condensed table-hover">
