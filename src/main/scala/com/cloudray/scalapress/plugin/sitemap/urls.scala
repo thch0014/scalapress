@@ -3,15 +3,20 @@ package com.cloudray.scalapress.plugin.sitemap
 import collection.mutable.ListBuffer
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.item.ItemQuery
-import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext}
+import com.cloudray.scalapress.framework.{Logging, UrlGenerator, ScalapressContext}
 
 /** @author Stephen Samuel */
-object UrlBuilder {
+object UrlBuilder extends Logging {
 
   def build(context: ScalapressContext): Seq[Url] = {
-
-    val domain = "http://" + context.installationDao.get.domain.replace("http://", "")
-    folders(context, domain) ++ objects(context, domain)
+    Option(context.installationDao.get.domain) match {
+      case None =>
+        logger.warn("No domain set on installation; cannot generate site map urls")
+        Nil
+      case Some(domain) =>
+        val d = "http://" + domain.replace("http://", "")
+        folders(context, d) ++ objects(context, d)
+    }
   }
 
   def objects(context: ScalapressContext, domain: String): List[Url] = {
