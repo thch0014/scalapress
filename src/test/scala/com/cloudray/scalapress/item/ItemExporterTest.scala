@@ -4,6 +4,7 @@ import org.scalatest.{FunSuite, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.attr.{AttributeValue, Attribute}
 import com.cloudray.scalapress.settings.InstallationDao
+import com.cloudray.scalapress.folder.Folder
 
 /** @author Stephen Samuel */
 class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -47,6 +48,13 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
   val itemDao = mock[ItemDao]
   val installationDao = mock[InstallationDao]
 
+  val folder3 = new Folder
+  folder3.id = 3
+  val folder6 = new Folder
+  folder6.id = 6
+  item.folders.add(folder3)
+  item.folders.add(folder6)
+
   val exporter = new ItemExporter(itemTypeDao, itemDao, installationDao)
 
   test("header happy path") {
@@ -56,6 +64,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
       "date",
       "name",
       "status",
+      "folders",
       "url",
       "price",
       "vat rate",
@@ -74,7 +83,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     assert(Array[String]("123",
       "11-04-2013",
       "coldplay tickets",
-      "super status",
+      "super status", "3|6",
       "http://mysite.com/item-123-coldplay-tickets", "5.99", "10.0", "6.58", "19.99", "4.50", "1.49", "5",
       "Samsung",
       "GalaxyS") === row)
@@ -90,7 +99,7 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     val row = exporter._row(item, attributes, "mysite.com")
     assert(Array[String]("123",
       "11-04-2013",
-      "coldplay tickets", "super status",
+      "coldplay tickets", "super status", "3|6",
       "http://mysite.com/item-123-coldplay-tickets", "0.00", "10.0", "0.00", "0.00", "0.00", "0.00", "0",
       "Samsung",
       "GalaxyS") === row)
@@ -105,7 +114,12 @@ class ItemExporterTest extends FunSuite with OneInstancePerTest with MockitoSuga
     item.attributeValues.add(av3)
 
     val row = exporter._row(item, attributes, "mysite.com")
-    assert("Apple|Samsung" === row(12))
+    assert("Apple|Samsung" === row(13))
+  }
+
+  test("export includes folders") {
+    val row = exporter._row(item, attributes, "mysite.com")
+    assert("3|6" === row(4))
   }
 }
 

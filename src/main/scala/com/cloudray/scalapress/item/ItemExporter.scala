@@ -3,13 +3,13 @@ package com.cloudray.scalapress.item
 import com.cloudray.scalapress.item.attr.{AttributeFuncs, Attribute}
 import scala.collection.mutable.ArrayBuffer
 import org.joda.time.{DateTimeZone, DateTime}
-import scala.collection.JavaConverters._
 import java.io.{BufferedWriter, FileWriter, File}
 import com.csvreader.CsvWriter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.settings.InstallationDao
 import com.cloudray.scalapress.framework.UrlGenerator
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Component
@@ -51,6 +51,7 @@ class ItemExporter(itemTypeDao: ItemTypeDao,
     buffer.append("date")
     buffer.append("name")
     buffer.append("status")
+    buffer.append("folders")
     buffer.append("url")
     buffer.append("price")
     buffer.append("vat rate")
@@ -73,6 +74,7 @@ class ItemExporter(itemTypeDao: ItemTypeDao,
     buffer.append(new DateTime(item.dateCreated, DateTimeZone.UTC).toString("dd-MM-yyyy"))
     buffer.append(item.name)
     buffer.append(item.status)
+    buffer.append(item.folders.asScala.map(_.id.toString).mkString("|"))
     buffer.append("http://" + domain + UrlGenerator.url(item))
 
     val price = "%1.2f".format(item.price / 100.0)
