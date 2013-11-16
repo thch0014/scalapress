@@ -4,9 +4,12 @@ import java.io.{InputStream, StringReader, File}
 import com.csvreader.CsvReader
 import org.apache.commons.io.{IOUtils, FileUtils}
 import com.cloudray.scalapress.item.attr.AttributeFuncs
+import com.cloudray.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
-class ItemImporter(itemDao: ItemDao, itemType: ItemType) {
+class ItemImporter(itemDao: ItemDao,
+                   folderDao: FolderDao,
+                   itemType: ItemType) {
 
   def doImport(in: InputStream): Unit = doImport(IOUtils.toString(in, "UTF8"))
 
@@ -61,6 +64,22 @@ class ItemImporter(itemDao: ItemDao, itemType: ItemType) {
     } catch {
       case e: Exception =>
     }
+
+    import scala.collection.JavaConverters._
+    item.folders.asScala.foreach(folder => {
+      folder.items.remove(item)
+      item.folders.remove(folder)
+    })
+    val folders = Option(csv.get("folders"))
+      .getOrElse("")
+      .split('|')
+      .map(_.trim)
+      .filterNot(_.isEmpty)
+      .filter(_.matches("[0-9]+"))
+    folders.flatMap(id => Option(folderDao.find(id.toLong))).foreach(folder => {
+      item.folders.add(folder)
+      folder.items.add(item)
+    })
 
     item.attributeValues.clear()
 

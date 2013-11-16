@@ -28,7 +28,7 @@ class Folder extends SortedSections with HtmlMeta {
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "folders", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
   @BeanProperty
-  var objects: java.util.Set[Item] = new java.util.HashSet[Item]()
+  var items: java.util.Set[Item] = new java.util.HashSet[Item]()
 
   @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
   @Fetch(FetchMode.SUBSELECT)

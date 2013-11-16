@@ -10,14 +10,16 @@ import com.cloudray.scalapress.item._
 import scala.beans.BeanProperty
 import org.springframework.web.multipart.MultipartFile
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.folder.FolderDao
 
 /** @author Stephen Samuel */
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/item"))
-class ItemSearchController(objectDao: ItemDao,
-                             typeDao: ItemTypeDao,
-                             context: ScalapressContext) extends ItemStatusPopulator {
+class ItemSearchController(itemDao: ItemDao,
+                           typeDao: ItemTypeDao,
+                           folderDao: FolderDao,
+                           context: ScalapressContext) extends ItemStatusPopulator {
 
   @RequestMapping
   def search(@ModelAttribute("form") form: SearchForm,
@@ -33,7 +35,7 @@ class ItemSearchController(objectDao: ItemDao,
     query.name = Option(form.name)
     query.typeId = Option(typeId).filter(_ > 0)
 
-    val page = objectDao.search(query)
+    val page = itemDao.search(query)
     model.put("objects", page.java)
     model.put("paging", Paging(req, page))
 
@@ -45,7 +47,7 @@ class ItemSearchController(objectDao: ItemDao,
 
     val t = typeDao.find(typeId)
     val obj = Item(t)
-    objectDao.save(obj)
+    itemDao.save(obj)
 
     "redirect:/backoffice/item/" + obj.id
   }
@@ -56,7 +58,7 @@ class ItemSearchController(objectDao: ItemDao,
     val t = typeDao.find(typeId)
     val obj = Item(t)
     obj.name = name
-    objectDao.save(obj)
+    itemDao.save(obj)
 
     "redirect:/backoffice/item/" + obj.id
   }
@@ -66,7 +68,7 @@ class ItemSearchController(objectDao: ItemDao,
           @RequestParam("upload") upload: MultipartFile): String = {
 
     val t = typeDao.find(typeId)
-    val importer = new ItemImporter(objectDao, t)
+    val importer = new ItemImporter(itemDao, folderDao, t)
     importer.doImport(upload.getInputStream)
 
     "redirect:/backoffice/item?typeId=" + typeId

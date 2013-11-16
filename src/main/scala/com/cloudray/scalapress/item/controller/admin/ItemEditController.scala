@@ -11,7 +11,7 @@ import java.net.URLConnection
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.search.SearchService
 import com.cloudray.scalapress.section.{SectionDao, Section}
-import com.cloudray.scalapress.util.{EnumPopulator}
+import com.cloudray.scalapress.util.EnumPopulator
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.{ItemCloner, ItemDao, Item}
 import com.cloudray.scalapress.folder.FolderDao
@@ -95,13 +95,13 @@ class ItemEditController(val assetStore: AssetStore,
       case e: Exception =>
     }
 
-    form.o.folders.asScala.foreach(folder => folder.objects.remove(form.o))
+    form.o.folders.asScala.foreach(folder => folder.items.remove(form.o))
     form.o.folders.clear()
     for ( id <- form.folderIds ) {
       val folder = folderDao.find(id)
       if (folder != null) {
         form.o.folders.add(folder)
-        folder.objects.add(form.o)
+        folder.items.add(form.o)
       }
     }
 

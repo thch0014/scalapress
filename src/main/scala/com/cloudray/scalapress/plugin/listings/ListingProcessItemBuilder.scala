@@ -21,7 +21,7 @@ class ListingProcessItemBuilder(context: ScalapressContext) extends Logging {
 
     process.folders.foreach(folderId => {
       val folder = context.folderDao.find(folderId)
-      folder.objects.add(item)
+      folder.items.add(item)
       item.folders.add(folder)
     })
     context.itemDao.save(item)

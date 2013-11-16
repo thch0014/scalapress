@@ -37,11 +37,11 @@ class ItemListSectionTest extends FunSuite with MockitoSugar with OneInstancePer
   val section = new ItemListSection()
   section.folder = new Folder
   section.markup = new Markup
-  section.folder.objects = new util.HashSet()
+  section.folder.items = new util.HashSet()
 
-  section.folder.objects.add(obj1)
-  section.folder.objects.add(obj2)
-  section.folder.objects.add(obj3)
+  section.folder.items.add(obj1)
+  section.folder.items.add(obj2)
+  section.folder.items.add(obj3)
 
   val req = mock[HttpServletRequest]
   Mockito.when(req.getRequestURL).thenReturn(new StringBuffer("http://domain.com"))

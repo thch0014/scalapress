@@ -53,7 +53,7 @@ class ItemListSection extends Section {
   def _objects(sreq: ScalapressRequest): Seq[Item] = {
 
     val objects = try {
-      folder.objects.asScala.toSeq
+      folder.items.asScala.toSeq
     } catch {
       case e: Exception => Nil
     }

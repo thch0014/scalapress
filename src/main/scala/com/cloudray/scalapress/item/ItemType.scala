@@ -48,7 +48,7 @@ class ItemType extends SortedSections with java.io.Serializable {
   @NotFound(action = NotFoundAction.IGNORE)
   @BeanProperty
   var attributes: java.util.Set[Attribute] = new util.HashSet[Attribute]()
-  def sortedAttributes = attributes.asScala.toSeq.sortBy(_.id).sortBy(_.position)
+  def sortedAttributes: Seq[Attribute] = attributes.asScala.toSeq.sortBy(_.id).sortBy(_.position)
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "objectType", cascade = Array(CascadeType.ALL))
   @Fetch(FetchMode.SELECT)
