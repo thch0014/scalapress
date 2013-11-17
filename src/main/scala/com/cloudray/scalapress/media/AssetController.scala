@@ -13,9 +13,7 @@ import org.apache.commons.io.IOUtils
 class AssetController(assetStore: AssetStore) {
 
   @ExceptionHandler(Array(classOf[RuntimeException]))
-  def handleException1(e: RuntimeException, resp: HttpServletResponse) {
-    resp.setStatus(404)
-  }
+  def handleException1(e: RuntimeException, resp: HttpServletResponse): Unit = resp.setStatus(404)
 
   @RequestMapping(value = Array("{key}"))
   @ResponseBody

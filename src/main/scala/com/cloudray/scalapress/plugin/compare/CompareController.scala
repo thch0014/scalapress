@@ -29,7 +29,7 @@ class CompareController(itemDao: ItemDao,
     val sreq = ScalapressRequest(req, context)
     val theme = themeService.default
     val page = ScalapressPage(theme, sreq)
-    page body CompareRenderer.render(items)
+    page.body(new CompareRenderer(context.assetStore).render(items))
     page
   }
 }
