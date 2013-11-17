@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import collection.mutable.ArrayBuffer
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.hibernate.criterion.Restrictions
-import com.googlecode.genericdao.search.{Search, ISearch}
+import com.googlecode.genericdao.search.ISearch
 
 /** @author Stephen Samuel */
 trait FolderDao extends GenericDao[Folder, java.lang.Long] {
+  def delete(id: Long): Unit
   def findTopLevel: Array[Folder]
   def root: Folder
   def tree: Array[Folder]
@@ -23,6 +24,7 @@ trait FolderDao extends GenericDao[Folder, java.lang.Long] {
 @Transactional
 class FolderDaoImpl extends GenericDaoImpl[Folder, java.lang.Long] with FolderDao {
 
+  def delete(id: Long): Unit = super.getSession.createSQLQuery("DELETE FROM categories WHERE id=" + id).executeUpdate
   def exposeSearch[T](search: ISearch): Seq[T] = super._search(search).asInstanceOf[java.util.List[T]].asScala
 
   override def tree: Array[Folder] = _tree(root).toArray

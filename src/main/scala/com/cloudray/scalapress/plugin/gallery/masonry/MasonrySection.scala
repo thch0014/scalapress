@@ -17,10 +17,6 @@ import scala.beans.BeanProperty
 @Table(name = "plugin_gallery_masonry")
 class MasonrySection extends Section {
 
-  private val SSP_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry_image.ssp"
-  private val CONTAINER_START = "<div class=\"masonry-container\">"
-  private val CONTAINER_END = "</div>"
-
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "gallery")
   @NotFound(action = NotFoundAction.IGNORE)
@@ -44,9 +40,9 @@ class MasonrySection extends Section {
       "</script><style>",
       MasonrySection.css.replace("COLWIDTH", (100 / cols - 1).toString),
       "</style>",
-      CONTAINER_START,
+      MasonrySection.CONTAINER_START,
       rows,
-      CONTAINER_END)
+      MasonrySection.CONTAINER_END)
     Some(components.mkString("\n"))
   }
 
@@ -54,7 +50,7 @@ class MasonrySection extends Section {
     */
   def imageHtml(assetStore: AssetStore, image: Image): String = {
     val url = assetStore.link(image.key)
-    Scalate.layout(SSP_RESOURCE, Map("caption" -> Option(image.description), "imageUrl" -> url))
+    Scalate.layout(MasonrySection.SSP_RESOURCE, Map("caption" -> Option(image.description), "imageUrl" -> url))
   }
 
   /** Returns the images that this section should render. Will use images set on the section
@@ -67,6 +63,11 @@ class MasonrySection extends Section {
 }
 
 object MasonrySection {
+
+  private val SSP_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry_image.ssp"
+  private val CONTAINER_START = "<div class=\"masonry-container\">"
+  private val CONTAINER_END = "</div>"
+
   private val JS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.js"
   private val CSS_RESOURCE = "/com/cloudray/scalapress/plugin/gallery/masonry/masonry.css"
   val js = IOUtils.toString(getClass.getResourceAsStream(JS_RESOURCE))

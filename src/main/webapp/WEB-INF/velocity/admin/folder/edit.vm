@@ -7,209 +7,214 @@
 
 <form class="form-horizontal" method="POST">
 
-    <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab1" data-toggle="tab">Folder Details</a></li>
-            <li><a href="#tab2" data-toggle="tab">Metadata</a></li>
-            <li><a href="#tab3" data-toggle="tab">Sections</a></li>
-            <li><a href="#tab4" data-toggle="tab">Header & Footer</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab1">
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Folder Details</a></li>
+        <li><a href="#tab2" data-toggle="tab">Metadata</a></li>
+        <li><a href="#tab3" data-toggle="tab">Sections</a></li>
+        <li><a href="#tab4" data-toggle="tab">Header & Footer</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
 
-                <br/>
+            <br/>
 
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Name</label>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Name</label>
 
-                    <div class="col-lg-8">
-                      #springFormInput("folder.name", "class='form-control'")
-                    </div>
+                <div class="col-lg-8">
+                  #springFormInput("folder.name", "class='form-control'")
                 </div>
+            </div>
 
-              #if ($folder.id > 1)
-                  <div class="form-group">
-                      <label class="col-lg-2 control-label">Parent</label>
+          #if ($folder.id > 1)
+              <div class="form-group">
+                  <label class="col-lg-2 control-label">Parent</label>
 
-                      <div class="col-lg-8">
-                          <select id="parent" name="parent" class="form-control">
-                            #foreach($option in $parents.keySet())
-                                <option value="${option}"
-                                  #if("$!folder.parent.id" == "$option")
-                                        selected="selected"
-                                  #end>
-                                  ${parents.get($option)}</option>
-                            #end
-                          </select>
-                      </div>
+                  <div class="col-lg-8">
+                      <select id="parent" name="parent" class="form-control">
+                        #foreach($option in $parents.keySet())
+                            <option value="${option}"
+                              #if("$!folder.parent.id" == "$option")
+                                    selected="selected"
+                              #end>
+                              ${parents.get($option)}</option>
+                        #end
+                      </select>
                   </div>
-              #end
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Hidden</label>
-
-                    <div class="col-lg-8">
-                      #springFormCheckbox("folder.hidden", "")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Hide title</label>
-
-                    <div class="col-lg-8">
-                      #springFormCheckbox("folder.hideTitle", "")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Hide widgets</label>
-
-                    <div class="col-lg-8">
-                      #springFormCheckbox("folder.hideWidgets", "")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Theme</label>
-
-                    <div class="col-lg-8">
-                        <select id="theme" name="theme" class="form-control">
-                          #foreach($option in $themesMap.keySet())
-                              <option value="${option}"
-                                #if("$!folder.theme.id" == "$option")
-                                      selected="selected"
-                                #end>
-                                ${themesMap.get($option)}</option>
-                          #end
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Subfolder Ordering</label>
-
-                    <div class="col-lg-8">
-                      #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap, "class='form-control'")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Redirect</label>
-
-                    <div class="col-lg-8">
-                      #springFormInput("folder.redirect", "class='form-control'")
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="tab-pane" id="tab2">
-
-                <br/>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Title Tag</label>
-
-                    <div class="col-lg-8">
-                      #springFormInput("folder.titleTag", "class='form-control'")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Description Tag</label>
-
-                    <div class="col-lg-8">
-                      #springFormInput("folder.descriptionTag", "class='form-control'")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Keywords Tag</label>
-
-                    <div class="col-lg-8">
-                      #springFormInput("folder.keywordsTag", "class='form-control'")
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="tab-pane" id="tab3">
-
-                <br/>
-
-                <table class="table table-condensed table-hover" id="sections-table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Visible</th>
-                        <th></th>
-                    </tr>
-                  #foreach ($s in $sections)
-                      <tr data-section-id="$s.id" class="section-row">
-                          <td>$!s.name()</td>
-                          <td>$s.desc()</td>
-                          <td>
-                            #if ($s.visible)
-                                <span class="label label-success">Visible</span>
-                            #else
-                                <span class="label label-warning">Hidden</span>
-                            #end
-                          </td>
-                          <td>
-                              <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
-                                  <i class="glyphicon glyphicon-pencil"></i>
-                              </a>
-                              <a href="/backoffice/folder/${folder.id}/section/${s.id}/delete" role="button"
-                                 class="btn btn-xs btn-danger">
-                                  <i class="glyphicon glyphicon-trash glyphicon"></i></a>
-                          </td>
-                      </tr>
-                  #end
-                </table>
-
-            </div>
-
-            <div class="tab-pane" id="tab4">
-
-                <br/>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Header</label>
-
-                    <div class="col-lg-8">
-                      #springFormTextarea("folder.header", "rows='8' class='form-control htmleditor'")
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">Footer</label>
-
-                    <div class="col-lg-8">
-                      #springFormTextarea("folder.footer", "rows='8' class='form-control htmleditor'")
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <button type="submit" class="btn btn-primary">
-                <i class="glyphicon glyphicon-save"></i> Save changes
-            </button>
-          #if ($folder.folderOrdering == "Manual")
-              <a href="/backoffice/folder/$folder.id/suborder" class="btn btn-default">
-                  Edit Subfolder Order
-              </a>
+              </div>
           #end
-            <a href="/backoffice/folder" class="btn btn-default">
-                <i class="glyphicon glyphicon-arrow-left"></i> Return to list
-            </a>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Hidden</label>
+
+                <div class="col-lg-8">
+                  #springFormCheckbox("folder.hidden", "")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Hide title</label>
+
+                <div class="col-lg-8">
+                  #springFormCheckbox("folder.hideTitle", "")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Hide widgets</label>
+
+                <div class="col-lg-8">
+                  #springFormCheckbox("folder.hideWidgets", "")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Theme</label>
+
+                <div class="col-lg-8">
+                    <select id="theme" name="theme" class="form-control">
+                      #foreach($option in $themesMap.keySet())
+                          <option value="${option}"
+                            #if("$!folder.theme.id" == "$option")
+                                  selected="selected"
+                            #end>
+                            ${themesMap.get($option)}</option>
+                      #end
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Subfolder Ordering</label>
+
+                <div class="col-lg-8">
+                  #springFormSingleSelect("folder.folderOrdering", $folderOrderingMap, "class='form-control'")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Redirect</label>
+
+                <div class="col-lg-8">
+                  #springFormInput("folder.redirect", "class='form-control'")
+                </div>
+            </div>
+
+
+        </div>
+        <div class="tab-pane" id="tab2">
+
+            <br/>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Title Tag</label>
+
+                <div class="col-lg-8">
+                  #springFormInput("folder.titleTag", "class='form-control'")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Description Tag</label>
+
+                <div class="col-lg-8">
+                  #springFormInput("folder.descriptionTag", "class='form-control'")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Keywords Tag</label>
+
+                <div class="col-lg-8">
+                  #springFormInput("folder.keywordsTag", "class='form-control'")
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="tab3">
+
+            <br/>
+
+            <table class="table table-condensed table-hover" id="sections-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Visible</th>
+                    <th></th>
+                </tr>
+              #foreach ($s in $sections)
+                  <tr data-section-id="$s.id" class="section-row">
+                      <td>$!s.name()</td>
+                      <td>$s.desc()</td>
+                      <td>
+                        #if ($s.visible)
+                            <span class="label label-success">Visible</span>
+                        #else
+                            <span class="label label-warning">Hidden</span>
+                        #end
+                      </td>
+                      <td>
+                          <a href="$s.backoffice()" role="button" class="btn btn-xs btn-default">
+                              <i class="glyphicon glyphicon-pencil"></i>
+                          </a>
+                          <a href="/backoffice/folder/${folder.id}/section/${s.id}/delete" role="button"
+                             class="btn btn-xs btn-danger">
+                              <i class="glyphicon glyphicon-trash glyphicon"></i></a>
+                      </td>
+                  </tr>
+              #end
+            </table>
+
+        </div>
+
+        <div class="tab-pane" id="tab4">
+
+            <br/>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Header</label>
+
+                <div class="col-lg-8">
+                  #springFormTextarea("folder.header", "rows='8' class='form-control htmleditor'")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Footer</label>
+
+                <div class="col-lg-8">
+                  #springFormTextarea("folder.footer", "rows='8' class='form-control htmleditor'")
+                </div>
+            </div>
+
+
         </div>
     </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button type="submit" class="btn btn-primary">
+            <i class="glyphicon glyphicon-save"></i> Save changes
+        </button>
+      #if ($folder.folderOrdering == "Manual")
+          <a href="/backoffice/folder/$folder.id/suborder" class="btn btn-default">
+              Edit Subfolder Order
+          </a>
+      #end
+      #if ($folder.subfolders.size() == 0)
+          <a href="/backoffice/folder/$folder.id/delete" class="btn btn-danger">
+              Delete Folder
+          </a>
+      #end
+        <a href="/backoffice/folder" class="btn btn-default">
+            <i class="glyphicon glyphicon-arrow-left"></i> Return to list
+        </a>
+    </div>
+</div>
 
 </form>
 

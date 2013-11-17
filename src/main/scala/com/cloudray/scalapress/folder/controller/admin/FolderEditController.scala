@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.ui.ModelMap
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.util.{EnumPopulator}
+import com.cloudray.scalapress.util.EnumPopulator
 import collection.mutable
 import com.cloudray.scalapress.section.{SectionDao, Section}
 import com.cloudray.scalapress.folder.{FolderOrdering, FolderDao, Folder}
@@ -16,6 +16,7 @@ import scala.Some
 import scala.collection.immutable.ListMap
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext, ComponentClassScanner}
+import com.cloudray.scalapress.item.ItemDao
 
 /** @author Stephen Samuel */
 @Controller
@@ -23,6 +24,7 @@ import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext, Compo
 @RequestMapping(Array("backoffice/folder/{id}"))
 class FolderEditController(val assetStore: AssetStore,
                            val folderDao: FolderDao,
+                           val itemDao: ItemDao,
                            val themeDao: ThemeDao,
                            val sectionDao: SectionDao,
                            val context: ScalapressContext)
@@ -35,18 +37,37 @@ class FolderEditController(val assetStore: AssetStore,
   }
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute folder: Folder) = "admin/folder/edit.vm"
+  def edit(@ModelAttribute folder: Folder): String = "admin/folder/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
-  def save(@ModelAttribute folder: Folder) = {
-    if (folder.id == 1)
-      folder.parent = null
+  def save(@ModelAttribute folder: Folder): String = {
+    if (folder.id == 1) folder.parent = null
     folderDao.save(folder)
-    edit(folder)
+    "redirect:/backoffice/folder/" + folder.id
+  }
+
+  @RequestMapping(value = Array("delete"))
+  def delete(@ModelAttribute folder: Folder): String = {
+    if (folder.subfolders.isEmpty) {
+      val sections = folder.sections.asScala
+      sections.foreach(section => section.folder = null)
+      sections.clear()
+      sections.foreach(section => sectionDao.remove(section))
+      folderDao.save(folder)
+
+      val items = folder.items.asScala
+      items.foreach(item => item.folders.remove(folder))
+      folder.items.clear()
+      items.foreach(item => itemDao.remove(item))
+      folderDao.save(folder)
+
+      folderDao.delete(folder.id)
+    }
+    "redirect:/backoffice/folder/"
   }
 
   @RequestMapping(Array("section/create"))
-  def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String) = {
+  def createSection(@ModelAttribute folder: Folder, @RequestParam("class") cls: String): String = {
     val section = Class.forName(cls).newInstance.asInstanceOf[Section]
     section.folder = folder
     section.name = "new " + Class.forName(cls).getSimpleName

@@ -112,7 +112,7 @@ class Folder extends SortedSections with HtmlMeta {
   @BeanProperty
   var hidden: Boolean = false
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL))
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "folder", cascade = Array(CascadeType.ALL), orphanRemoval = true)
   @Fetch(FetchMode.SELECT)
   @BeanProperty var sections: java.util.Set[Section] = new util.HashSet[Section]()
 
@@ -151,7 +151,7 @@ object Folder {
     folder.sections.add(section3)
 
     folder.dateCreated = new DateTime(DateTimeZone.UTC).getMillis
-    folder.dateUpdated = new DateTime(DateTimeZone.UTC).getMillis
+    folder.dateUpdated = folder.dateCreated
     folder
   }
 }
