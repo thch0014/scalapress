@@ -18,7 +18,7 @@ class FriendlyUrlForwardController {
   }
 
   @RequestMapping(Array("item-{id:\\d+}-{name}"))
-  def item(@PathVariable("id") id: Int): String = "forward:/object/" + id
+  def item(@PathVariable("id") id: Int): String = "forward:/item/" + id
 
   @RequestMapping(Array("folder-{id:\\d+}-{name}"))
   def folder(@PathVariable("id") id: Int): String = "forward:/folder/" + id

@@ -4,8 +4,8 @@ import com.cloudray.scalapress.framework.ScalapressRequest
 
 /** @author Stephen Samuel */
 trait ScalapressTag {
-  def render(request: ScalapressRequest, params: Map[String, String]): Option[String]
-  def render(request: ScalapressRequest): Option[String] = render(request, Map.empty)
+  def render(sreq: ScalapressRequest, params: Map[String, String]): Option[String]
+  def render(sreq: ScalapressRequest): Option[String] = render(sreq, Map.empty)
 }
 
 trait TagBuilder {

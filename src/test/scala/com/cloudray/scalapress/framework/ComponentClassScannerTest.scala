@@ -15,4 +15,9 @@ class ComponentClassScannerTest extends FlatSpec with MockitoSugar with OneInsta
     val sections = ComponentClassScanner.sections
     assert(19 === sections.size)
   }
+
+  it should "detect all tags" in {
+    val tags = ComponentClassScanner.tags
+    assert(103 === tags.size)
+  }
 }
