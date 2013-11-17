@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.domain
+package com.cloudray.scalapress.plugin.ecommerce.shopping.domain
 
 import javax.persistence.{JoinColumn, ManyToOne, Column, Table, Entity, GenerationType, GeneratedValue, Id}
 import com.cloudray.scalapress.item.Item

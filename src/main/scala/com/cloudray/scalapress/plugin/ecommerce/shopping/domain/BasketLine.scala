@@ -1,10 +1,10 @@
-package com.cloudray.scalapress.plugin.ecommerce.domain
+package com.cloudray.scalapress.plugin.ecommerce.shopping.domain
 
 import javax.persistence.{GenerationType, GeneratedValue, Id, JoinColumn, ManyToOne, Entity, Table}
 import com.cloudray.scalapress.item.Item
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.plugin.variations.Variation
 import org.hibernate.annotations.{NotFoundAction, NotFound}
+import com.cloudray.scalapress.plugin.ecommerce.variations.Variation
 
 /** @author Stephen Samuel */
 @Entity

@@ -5,9 +5,9 @@ import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.{StockMethod, Item}
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.variations.{Variation, VariationDao}
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.variations.{Variation, VariationDao}
 
 /** @author Stephen Samuel */
 class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoSugar {
@@ -42,7 +42,7 @@ class AvailabilityTagTest extends FunSuite with OneInstancePerTest with MockitoS
     Mockito.when(variationDao.findByItemId(15)).thenReturn(Seq(new Variation))
     val sreq = ScalapressRequest(req, context).withItem(obj)
     val actual = tag.render(sreq, Map.empty)
-//    assert(actual.isEmpty)
+    //    assert(actual.isEmpty)
   }
 
   test("given stock > 0 then the in stock message renders") {

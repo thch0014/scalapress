@@ -2,11 +2,10 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
 import org.mockito.Mockito
 import com.cloudray.scalapress.framework.ScalapressContext
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, ShoppingPluginDao, ShoppingPlugin}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
 import com.cloudray.scalapress.payments.Transaction
 

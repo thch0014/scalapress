@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import org.springframework.stereotype.Component

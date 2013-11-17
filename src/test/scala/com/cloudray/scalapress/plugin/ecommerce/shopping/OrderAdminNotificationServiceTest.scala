@@ -4,11 +4,10 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.springframework.mail.{SimpleMailMessage, MailSender}
 import com.cloudray.scalapress.settings.{Installation, InstallationDao}
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.framework.ScalapressContext
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, ShoppingPluginDao, ShoppingPlugin}
 
 /** @author Stephen Samuel */
 class OrderAdminNotificationServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

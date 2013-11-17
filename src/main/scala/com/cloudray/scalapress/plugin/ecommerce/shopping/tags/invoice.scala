@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.tags
+package com.cloudray.scalapress.plugin.ecommerce.shopping.tags
 
 import org.joda.time.{DateTimeZone, DateTime}
 import com.cloudray.scalapress.theme.MarkupRenderer

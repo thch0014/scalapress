@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
@@ -6,7 +6,7 @@ import com.cloudray.scalapress.item.{Item, ItemType, ItemDao}
 import org.springframework.ui.ModelMap
 import org.mockito.{Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.variations.controller.VariationsController
+import com.cloudray.scalapress.plugin.ecommerce.variations.controller.VariationsController
 
 /** @author Stephen Samuel */
 class VariationsControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

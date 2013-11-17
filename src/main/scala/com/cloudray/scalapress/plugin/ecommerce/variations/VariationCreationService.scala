@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.Item

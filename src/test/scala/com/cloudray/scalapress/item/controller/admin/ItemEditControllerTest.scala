@@ -9,7 +9,7 @@ import com.cloudray.scalapress.folder.FolderDao
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.folder.section.{SubfolderSection, FolderContentSection}
-import com.cloudray.scalapress.media.{AssetStore}
+import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.search.SearchService
 import org.springframework.security.authentication.encoding.PasswordEncoder
 import com.cloudray.scalapress.account.AccountDao

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.controller.renderers
+package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers
 
 import com.cloudray.scalapress.util.{WizardStep, WizardRenderer}
 

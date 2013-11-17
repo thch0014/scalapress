@@ -2,14 +2,15 @@ package com.cloudray.scalapress.framework
 
 import javax.servlet.http.{Cookie, HttpServletRequest}
 import com.sksamuel.scoot.soa.Paging
-import com.cloudray.scalapress.search.{SearchResult, CorpusResult}
 import com.cloudray.scalapress.item.attr.Attribute
 import scala.collection.mutable.ListBuffer
 import com.cloudray.scalapress.item.Item
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Basket, BasketLine, OrderLine, Order}
 import com.cloudray.scalapress.folder.Folder
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain._
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.BasketDao
+import scala.Some
+import com.cloudray.scalapress.search.CorpusResult
+import com.cloudray.scalapress.search.SearchResult
 
 /** @author Stephen Samuel */
 case class ScalapressRequest(request: HttpServletRequest,

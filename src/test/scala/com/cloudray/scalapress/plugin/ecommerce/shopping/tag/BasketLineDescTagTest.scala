@@ -3,11 +3,11 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.tag
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketLineDescTag
-import com.cloudray.scalapress.plugin.ecommerce.domain.BasketLine
 import com.cloudray.scalapress.item.Item
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValue, Variation}
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.BasketLine
+import com.cloudray.scalapress.plugin.ecommerce.variations.{Variation, Dimension, DimensionValue}
 
 /** @author Stephen Samuel */
 class BasketLineDescTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

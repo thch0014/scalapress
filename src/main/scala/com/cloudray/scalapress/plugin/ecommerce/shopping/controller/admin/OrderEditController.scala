@@ -3,8 +3,6 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestParam, PathVariable, RequestMethod, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, DeliveryOption, OrderLine, OrderComment, Order}
-import scala.collection.JavaConverters._
 import javax.servlet.http.HttpServletRequest
 import org.springframework.ui.ModelMap
 import com.cloudray.scalapress.security.SpringSecurityResolver
@@ -14,8 +12,10 @@ import org.joda.time.{DateTimeZone, DateTime}
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.OrderCustomerNotificationService
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain._
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDao, AddressDao, DeliveryOptionDao}
+import scala.collection.JavaConverters._
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller

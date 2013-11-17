@@ -2,7 +2,6 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestParam, RequestMethod, ModelAttribute, RequestMapping}
-import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import scala.Array
 import javax.validation.Valid
 import org.springframework.validation.Errors
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.AddressDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Address
 
 /** @author Stephen Samuel */
 @Controller

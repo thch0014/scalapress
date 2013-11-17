@@ -1,10 +1,10 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{Matchers, Mockito}
 import com.cloudray.scalapress.item.{ItemType, ItemTypeDao}
-import com.cloudray.scalapress.plugin.variations.controller.DimensionListController
+import com.cloudray.scalapress.plugin.ecommerce.variations.controller.DimensionListController
 
 /** @author Stephen Samuel */
 class DimensionListControllerTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

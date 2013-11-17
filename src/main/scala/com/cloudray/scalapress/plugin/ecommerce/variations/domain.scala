@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.item.{ItemType, Item}
@@ -14,7 +14,7 @@ import scala.collection.JavaConverters._
 /** @author Stephen Samuel
   *
   *         Eg, color or size
-  **/
+  * */
 @Entity
 @Table(name = "plugin_variations_dimensions")
 class Dimension {

@@ -3,9 +3,9 @@ package com.cloudray.scalapress.plugin.payment.sagepay
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.payments.sagepayform.{SagepayFormProcessor, SagepayFormPlugin}
-import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, DeliveryOption, Basket, Address}
 import com.cloudray.scalapress.payments.Purchase
 import com.cloudray.scalapress.item.Item
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{BasketLine, DeliveryOption, Basket, Address}
 
 /** @author Stephen Samuel */
 class SagepayFormProcessorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

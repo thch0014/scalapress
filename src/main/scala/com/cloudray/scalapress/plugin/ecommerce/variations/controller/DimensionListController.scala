@@ -1,12 +1,12 @@
-package com.cloudray.scalapress.plugin.variations.controller
+package com.cloudray.scalapress.plugin.ecommerce.variations.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{PathVariable, RequestParam, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.item.ItemTypeDao
-import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionValueDao, DimensionDao}
 import com.cloudray.scalapress.framework.ScalapressContext
+import com.cloudray.scalapress.plugin.ecommerce.variations.{Dimension, DimensionDao, DimensionValueDao}
 
 /** @author Stephen Samuel */
 @Controller

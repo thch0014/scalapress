@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.tags
 
 import com.cloudray.scalapress.theme.tag.ScalapressTag
 import scala.xml.{Elem, Unparsed, Utility}
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Basket, DeliveryOption}
 import com.cloudray.scalapress.framework.{ScalapressRequest, Tag}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.DeliveryOptionDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{DeliveryOption, Basket}
 
 /** @author Stephen Samuel */
 @Tag("delivery_options")

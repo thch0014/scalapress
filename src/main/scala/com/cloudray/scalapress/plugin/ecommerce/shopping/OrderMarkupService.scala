@@ -1,6 +1,6 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 object OrderMarkupService {

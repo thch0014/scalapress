@@ -8,40 +8,40 @@ import com.cloudray.scalapress.plugin.listings.controller.renderer.ListingsRende
 /** @author Stephen Samuel */
 class ListingsRendererTest extends FunSuite with MockitoSugar with OneInstancePerTest {
 
-    val obj1 = new Item
-    obj1.id = 63
-    obj1.name = "coldplay"
-    obj1.status = "live"
-    val obj2 = new Item
-    obj2.id = 15
-    obj2.name = "jethro tull"
-    obj2.status = "statto"
+  val obj1 = new Item
+  obj1.id = 63
+  obj1.name = "coldplay"
+  obj1.status = "live"
+  val obj2 = new Item
+  obj2.id = 15
+  obj2.name = "jethro tull"
+  obj2.status = "statto"
 
-    test("rendering contains listing names") {
-        val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
+  test("rendering contains listing names") {
+    val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
 
-        assert(actual.contains("coldplay"))
-        assert(actual.contains("jethro tull"))
-    }
+    assert(actual.contains("coldplay"))
+    assert(actual.contains("jethro tull"))
+  }
 
-    test("rendering contains listing statuses") {
-        val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
+  test("rendering contains listing statuses") {
+    val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
 
-        assert(actual.contains("live"))
-        assert(actual.contains("statto"))
-    }
+    assert(actual.contains("live"))
+    assert(actual.contains("statto"))
+  }
 
-    test("rendering contains headings") {
-        val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
+  test("rendering contains headings") {
+    val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
 
-        assert(actual.contains("Listing"))
-        assert(actual.contains("Expiry Date"))
-    }
+    assert(actual.contains("Listing"))
+    assert(actual.contains("Expiry Date"))
+  }
 
-    test("rendering contains edit link") {
-        val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
+  test("rendering contains edit link") {
+    val actual = ListingsRenderer.myListings(List(obj1, obj2)).toString()
 
-        assert(actual.contains("/listing/" + obj1.id))
-        assert(actual.contains("/listing/" + obj2.id))
-    }
+    assert(actual.contains("/listing/" + obj1.id))
+    assert(actual.contains("/listing/" + obj2.id))
+  }
 }

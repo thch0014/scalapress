@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, RequestMethod, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
-import com.cloudray.scalapress.plugin.ecommerce.domain.DeliveryOption
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.DeliveryOptionDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.DeliveryOption
 
 /** @author Stephen Samuel */
 @Controller

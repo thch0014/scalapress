@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.domain
+package com.cloudray.scalapress.plugin.ecommerce.shopping.domain
 
 import org.hibernate.validator.constraints.NotEmpty
 import javax.persistence.{Column, Entity, Table, GenerationType, GeneratedValue, Id}

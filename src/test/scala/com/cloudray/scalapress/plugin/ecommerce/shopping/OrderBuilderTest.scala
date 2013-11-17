@@ -1,6 +1,5 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Address, DeliveryOption, Basket}
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.Item
@@ -9,6 +8,7 @@ import org.mockito.Mockito
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDao, BasketDao}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{BasketLine, Address, DeliveryOption, Basket}
 
 /** @author Stephen Samuel */
 class OrderBuilderTest extends FunSuite with MockitoSugar with OneInstancePerTest {

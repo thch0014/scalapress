@@ -4,12 +4,12 @@ import folder.{FolderDao, Folder}
 import com.cloudray.scalapress.item.attr.{AttributeDao, Attribute}
 import item.{ItemTypeDao, ItemType}
 import org.springframework.core.convert.converter.Converter
-import plugin.ecommerce.domain.{Address, DeliveryOption}
 import plugin.form.{Form, FormDao}
 import search.{SearchFormDao, SearchForm}
 import theme.{Theme, Markup, MarkupDao, ThemeDao}
 import com.cloudray.scalapress.plugin.gallery.base.{Gallery, GalleryDao}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{AddressDao, DeliveryOptionDao}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{DeliveryOption, Address}
 
 /** @author Stephen Samuel */
 class StringFolderConverter(folderDao: FolderDao) extends Converter[String, Folder] {

@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.plugin.ecommerce.domain.{OrderLine, Basket, Order}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{BasketDao, OrderDao}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{OrderLine, Basket, Order}
 
 /** @author Stephen Samuel
   *
   *         Creates an order from the basket
   *
-  * */
+  **/
 @Component
 @Autowired
 class OrderBuilder(orderDao: OrderDao,

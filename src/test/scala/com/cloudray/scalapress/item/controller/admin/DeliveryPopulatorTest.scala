@@ -4,8 +4,8 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import org.springframework.ui.ModelMap
-import com.cloudray.scalapress.plugin.ecommerce.domain.DeliveryOption
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.DeliveryOptionDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.DeliveryOption
 
 /** @author Stephen Samuel */
 class DeliveryPopulatorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

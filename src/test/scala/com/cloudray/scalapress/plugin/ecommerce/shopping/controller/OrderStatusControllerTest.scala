@@ -5,10 +5,10 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.theme.{Theme, ThemeService}
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 class OrderStatusControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

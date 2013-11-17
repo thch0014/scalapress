@@ -13,9 +13,9 @@ import com.cloudray.scalapress.folder.{FolderDao, FolderDaoImpl}
 import org.hibernate.SessionFactory
 import com.cloudray.scalapress.section.{SectionDao, SectionDaoImpl}
 import com.cloudray.scalapress.item.attr.{AttributeValueDao, AttributeValueDaoImpl, AttributeDao, AttributeDaoImpl}
-import com.cloudray.scalapress.plugin.variations._
 import com.cloudray.scalapress.account.{AccountDao, AccountDaoImpl, AccountPluginDaoImpl, AccountPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDaoImpl, OrderDao}
+import com.cloudray.scalapress.plugin.ecommerce.variations._
 
 /** @author Stephen Samuel */
 object TestDatabaseContext {

@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar

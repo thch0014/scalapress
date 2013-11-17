@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, Order}
 import com.cloudray.scalapress.account.Account
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Address, Order}
 
 /** @author Stephen Samuel */
 class OrderPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {

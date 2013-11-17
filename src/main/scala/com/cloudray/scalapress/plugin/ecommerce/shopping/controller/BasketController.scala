@@ -5,15 +5,14 @@ import org.springframework.web.bind.annotation._
 import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.plugin.ecommerce.domain.{BasketLine, Basket}
 import com.cloudray.scalapress.item.ItemDao
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.{ThemeService, MarkupRenderer}
 import scala.Some
-import com.cloudray.scalapress.plugin.variations.VariationDao
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{BasketLine, Basket, ShoppingPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.BasketDao
+import com.cloudray.scalapress.plugin.ecommerce.variations.VariationDao
 
 /** @author Stephen Samuel */
 @Controller

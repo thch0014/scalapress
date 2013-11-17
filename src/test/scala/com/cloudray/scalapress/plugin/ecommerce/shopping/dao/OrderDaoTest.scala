@@ -2,8 +2,8 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.dao
 
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.TestDatabaseContext
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 class OrderDaoTest extends FunSuite with MockitoSugar {

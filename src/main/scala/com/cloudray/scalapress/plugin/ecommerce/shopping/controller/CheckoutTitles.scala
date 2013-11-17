@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.controller
+package com.cloudray.scalapress.plugin.ecommerce.shopping.controller
 
 /** @author Stephen Samuel */
 object CheckoutTitles {

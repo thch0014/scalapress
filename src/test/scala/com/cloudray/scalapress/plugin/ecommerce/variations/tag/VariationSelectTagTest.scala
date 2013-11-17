@@ -1,13 +1,13 @@
-package com.cloudray.scalapress.plugin.variations.tag
+package com.cloudray.scalapress.plugin.ecommerce.variations.tag
 
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.item.{ItemType, Item}
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.variations._
 import scala.xml.Utility
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
+import com.cloudray.scalapress.plugin.ecommerce.variations._
 
 /** @author Stephen Samuel */
 class VariationSelectTagTest extends FlatSpec with MockitoSugar with OneInstancePerTest {

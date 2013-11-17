@@ -4,21 +4,18 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, ModelAttribute, ResponseBody, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, Basket}
 import org.springframework.validation.{Validator, Errors}
 import java.net.URL
 import com.cloudray.scalapress.item.{ItemDao, ItemTypeDao}
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.ecommerce.controller.renderers._
 import com.cloudray.scalapress.payments.{PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.framework.{Logging, ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.shopping._
-import scala.Some
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Address, Basket, ShoppingPluginDao}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{OrderDao, BasketDao, AddressDao, DeliveryOptionDao}
-import com.cloudray.scalapress.plugin.ecommerce.controller.CheckoutTitles
-import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers.CheckoutCompletedRenderer
+import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers._
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller

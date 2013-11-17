@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.util.mvc.ScalapressPage
 import com.cloudray.scalapress.theme.ThemeService
-import com.cloudray.scalapress.plugin.ecommerce.controller.renderers.OrderStatusRenderer
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers.OrderStatusRenderer
 
 /** @author Stephen Samuel */
 @Controller

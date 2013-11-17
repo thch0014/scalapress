@@ -4,8 +4,7 @@ import org.springframework.mail.{MailSender, SimpleMailMessage}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, ShoppingPluginDao}
 
 /** @author Stephen Samuel */
 @Component

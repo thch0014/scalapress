@@ -1,9 +1,8 @@
-package com.cloudray.scalapress.plugin.ecommerce.controller.renderers
+package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.Basket
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.util.{BootstrapHelpers, CountrySelectOptions}
-import scala.xml.Unparsed
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Basket
 
 /** @author Stephen Samuel */
 object CheckoutAddressRenderer {

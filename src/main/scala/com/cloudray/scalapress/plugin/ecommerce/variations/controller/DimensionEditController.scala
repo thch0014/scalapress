@@ -1,9 +1,9 @@
-package com.cloudray.scalapress.plugin.variations.controller
+package com.cloudray.scalapress.plugin.ecommerce.variations.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.variations.{Dimension, DimensionDao}
+import com.cloudray.scalapress.plugin.ecommerce.variations.{Dimension, DimensionDao}
 
 /** @author Stephen Samuel */
 @Controller

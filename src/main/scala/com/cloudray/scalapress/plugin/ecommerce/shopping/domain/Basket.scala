@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.domain
+package com.cloudray.scalapress.plugin.ecommerce.shopping.domain
 
 import javax.persistence._
 import java.util
@@ -24,9 +24,9 @@ class Basket {
   var sessionId: String = _
 
   // the completed order
-  @OneToOne(targetEntity = classOf[com.cloudray.scalapress.plugin.ecommerce.domain.Order])
+  @OneToOne(targetEntity = classOf[com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order])
   @BeanProperty
-  var order: com.cloudray.scalapress.plugin.ecommerce.domain.Order = _
+  var order: com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order = _
 
   @NotEmpty
   @BeanProperty

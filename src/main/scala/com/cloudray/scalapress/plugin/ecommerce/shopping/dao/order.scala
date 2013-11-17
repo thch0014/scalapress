@@ -2,13 +2,13 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.dao
 
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.googlecode.genericdao.search.Search
 import com.sksamuel.scoot.soa.Page
 import com.cloudray.scalapress.util.{GenericDaoImpl, GenericDao}
 import scala.collection.JavaConverters._
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 

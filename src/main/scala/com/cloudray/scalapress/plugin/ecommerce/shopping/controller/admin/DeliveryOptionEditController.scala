@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.admin
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{RequestMethod, PathVariable, ModelAttribute, RequestMapping}
 import org.springframework.beans.factory.annotation.Autowired
-import com.cloudray.scalapress.plugin.ecommerce.domain.DeliveryOption
 import scala.beans.BeanProperty
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.DeliveryOptionDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.DeliveryOption
 
 /** @author Stephen Samuel */
 @Controller

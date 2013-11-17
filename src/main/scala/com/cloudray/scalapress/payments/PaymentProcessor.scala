@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.payments
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.Address
 import com.cloudray.scalapress.plugin.vouchers.Voucher
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Address
 
 /** @author Stephen Samuel */
 trait PaymentProcessor {

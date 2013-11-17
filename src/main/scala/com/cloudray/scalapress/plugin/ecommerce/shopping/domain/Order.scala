@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.ecommerce.domain
+package com.cloudray.scalapress.plugin.ecommerce.shopping.domain
 
 import javax.persistence._
 import org.joda.time.{DateTime, DateTimeZone}

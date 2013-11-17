@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.{Address, Order}
 import com.cloudray.scalapress.payments.Purchase
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, Address}
 
 /** @author Stephen Samuel */
 class OrderPurchase(val order: Order, val domain: String) extends Purchase {

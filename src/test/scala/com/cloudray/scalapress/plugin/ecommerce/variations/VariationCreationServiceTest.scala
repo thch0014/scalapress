@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.variations
+package com.cloudray.scalapress.plugin.ecommerce.variations
 
 import com.cloudray.scalapress.item.{Item, ItemType}
 import org.scalatest.{OneInstancePerTest, FlatSpec}

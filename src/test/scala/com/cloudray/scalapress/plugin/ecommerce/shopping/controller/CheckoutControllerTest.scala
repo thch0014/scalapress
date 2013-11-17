@@ -4,15 +4,13 @@ import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.{ArgumentCaptor, Matchers, Mockito}
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.ecommerce.domain._
 import org.springframework.validation.Errors
 import com.cloudray.scalapress.theme.ThemeService
 import com.cloudray.scalapress.payments.{Purchase, PaymentPluginDao, PaymentFormRenderer, PaymentCallbackService}
 import com.cloudray.scalapress.account.Account
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, ScalapressConstants}
 import com.cloudray.scalapress.plugin.ecommerce.shopping._
-import com.cloudray.scalapress.plugin.ecommerce.controller.CheckoutTitles
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain._
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{BasketDao, DeliveryOptionDao, OrderDao}
 
 /** @author Stephen Samuel */

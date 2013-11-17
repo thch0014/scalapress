@@ -3,10 +3,10 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.tag
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.plugin.ecommerce.tags.BasketDeliveryChargeTag
-import com.cloudray.scalapress.plugin.ecommerce.domain.{DeliveryOption, Basket}
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito
 import com.cloudray.scalapress.framework.{ScalapressRequest, ScalapressContext, ScalapressConstants}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{DeliveryOption, Basket}
 
 /** @author Stephen Samuel */
 class BasketDeliveryChargeTagTest extends FunSuite with MockitoSugar with OneInstancePerTest {

@@ -4,8 +4,7 @@ import org.springframework.mail.{MailParseException, MailSender, SimpleMailMessa
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import com.cloudray.scalapress.framework.{Logging, ScalapressContext}
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, ShoppingPluginDao}
 import javax.mail.internet.AddressException
 
 /** @author Stephen Samuel */

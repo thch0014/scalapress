@@ -2,13 +2,13 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.mockito.Mockito
 import com.cloudray.scalapress.item.{Item, ItemDao}
 import javax.servlet.http.HttpServletRequest
 import com.cloudray.scalapress.plugin.ecommerce.shopping.OrderCustomerNotificationService
 import com.cloudray.scalapress.plugin.ecommerce.shopping.controller.admin.{OrderEditForm, OrderEditController}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.OrderDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 class OrderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {

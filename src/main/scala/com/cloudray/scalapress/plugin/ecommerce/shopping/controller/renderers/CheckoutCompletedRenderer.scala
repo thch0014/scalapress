@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers
 
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import com.cloudray.scalapress.plugin.ecommerce.shopping.OrderMarkupService
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Order
 
 /** @author Stephen Samuel */
 object CheckoutCompletedRenderer {

@@ -3,9 +3,8 @@ package com.cloudray.scalapress.plugin.ecommerce.shopping.controller
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.controller.admin.OrderStatusPopulator
-import com.cloudray.scalapress.plugin.ecommerce.domain.Order
 import org.mockito.Mockito
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{ShoppingPluginDao, ShoppingPlugin}
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Order, ShoppingPluginDao, ShoppingPlugin}
 
 /** @author Stephen Samuel */
 class OrderStatusPopulatorTest extends FunSuite with MockitoSugar with OneInstancePerTest {

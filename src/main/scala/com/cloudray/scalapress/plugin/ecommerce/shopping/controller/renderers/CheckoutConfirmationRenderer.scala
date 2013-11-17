@@ -1,9 +1,8 @@
-package com.cloudray.scalapress.plugin.ecommerce.controller.renderers
+package com.cloudray.scalapress.plugin.ecommerce.shopping.controller.renderers
 
-import com.cloudray.scalapress.plugin.ecommerce.domain._
 import scala.collection.JavaConverters._
 import scala.xml.Unparsed
-import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.ShoppingPluginDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.{Basket, BasketLine, Address, ShoppingPluginDao}
 
 /** @author Stephen Samuel */
 object CheckoutConfirmationRenderer {

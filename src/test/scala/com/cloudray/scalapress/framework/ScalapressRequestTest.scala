@@ -3,9 +3,9 @@ package com.cloudray.scalapress.framework
 import org.scalatest.{OneInstancePerTest, FlatSpec}
 import org.scalatest.mock.MockitoSugar
 import javax.servlet.http.HttpServletRequest
-import com.cloudray.scalapress.plugin.ecommerce.domain.Basket
 import org.mockito.{ArgumentCaptor, Mockito}
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.BasketDao
+import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.Basket
 
 /** @author Stephen Samuel */
 class ScalapressRequestTest extends FlatSpec with MockitoSugar with OneInstancePerTest {
