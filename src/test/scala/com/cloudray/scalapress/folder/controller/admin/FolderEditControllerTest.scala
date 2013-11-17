@@ -3,14 +3,14 @@ package com.cloudray.scalapress.folder.controller.admin
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.folder.{Folder, FolderDao}
-import com.cloudray.scalapress.folder.section.{FolderContentSection, SubfolderSection}
+import com.cloudray.scalapress.folder.section.{ItemListSection, FolderContentSection, SubfolderSection}
 import org.mockito.Mockito
 import com.cloudray.scalapress.section.SectionDao
 import javax.servlet.http.HttpServletResponse
 import com.cloudray.scalapress.theme.ThemeDao
 import com.cloudray.scalapress.media.AssetStore
 import com.cloudray.scalapress.framework.ScalapressContext
-import com.cloudray.scalapress.item.ItemDao
+import com.cloudray.scalapress.item.{Item, ItemDao}
 
 /** @author Stephen Samuel */
 class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstancePerTest {
@@ -119,5 +119,33 @@ class FolderEditControllerTest extends FunSuite with MockitoSugar with OneInstan
     val folder = new Folder
     controller.createSection(folder, classOf[FolderContentSection].getName)
     Mockito.verify(controller.folderDao).save(folder)
+  }
+
+  test("deleting a folder removes all sections") {
+    val folder = new Folder
+    val section1 = new FolderContentSection
+    section1.folder = folder
+    val section2 = new ItemListSection
+    section2.folder = folder
+    folder.sections.add(section1)
+    folder.sections.add(section2)
+
+    assert(2 === folder.sections.size)
+    controller.delete(folder)
+    assert(0 === folder.sections.size)
+  }
+
+  test("deleting a folder removes all items") {
+    val folder = new Folder
+    val item1 = new Item
+    item1.folders.add(folder)
+    val item2 = new Item
+    item2.folders.add(folder)
+    folder.items.add(item1)
+    folder.items.add(item2)
+
+    assert(2 === folder.items.size)
+    controller.delete(folder)
+    assert(0 === folder.items.size)
   }
 }
