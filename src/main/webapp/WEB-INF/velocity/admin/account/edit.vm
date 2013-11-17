@@ -81,27 +81,25 @@
 </table>
 #end
 
-
 #if ($addresses.size() > 0)
 <h4>Addresses</h4>
 <table class="table table-condensed table-hover">
     <tr>
-        <th>Id</th>
-        <th>Date Placed</th>
-        <th>Status</th>
-        <th>Total</th>
-        <th></th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Postcode</th>
+        <th>Country</th>
     </tr>
-  #foreach ($order in $orders)
+  #foreach ($add in $addresses)
       <tr>
-          <td><a href="/backoffice/order/$order.id">$order.id</a></td>
-          <td>$!datetool.format($order.datePlaced)</td>
-          <td>$order.status()</td>
-          <td>$order.total()</td>
-          <td>
-              <a href="/backoffice/order/$order.id" role="button" class="btn btn-xs btn-default">
-                  <i class="glyphicon  glyphicon-pencil"></i></a>
-          </td>
+          <td>$!add.name</td>
+          <td>$!add.company</td>
+          <td>$!add.address1 $!add.address2</td>
+          <td>$!add.city</td>
+          <td>$!add.postcode</td>
+          <td>$!add.country</td>
       </tr>
   #end
 </table>

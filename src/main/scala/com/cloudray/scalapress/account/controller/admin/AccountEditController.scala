@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.cloudray.scalapress.item.controller.admin.AccountStatusPopulator
 import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.{AddressDao, OrderQuery}
+import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 @Controller
@@ -22,11 +23,7 @@ class AccountEditController(accountDao: AccountDao,
                             context: ScalapressContext) extends AccountStatusPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute("form") form: EditForm, @ModelAttribute model: ModelMap): String = {
-    val addresses = addressDao.findFromAccountId(form.account.id)
-    model.put("addresses", addresses)
-    "admin/account/edit.vm"
-  }
+  def edit(@ModelAttribute("form") form: EditForm): String = "admin/account/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute("form") form: EditForm, req: HttpServletRequest): String = {
@@ -52,6 +49,9 @@ class AccountEditController(accountDao: AccountDao,
 
   @ModelAttribute("orders")
   def orders(@PathVariable("id") id: Long) = context.orderDao.search(new OrderQuery().withAccountId(id)).java
+
+  @ModelAttribute("addresses")
+  def addresses(@PathVariable("id") id: Long) = context.bean[AddressDao].findFromAccountId(id).asJava
 }
 
 class EditForm {
