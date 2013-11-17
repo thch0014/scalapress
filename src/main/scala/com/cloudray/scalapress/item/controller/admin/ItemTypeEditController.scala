@@ -23,7 +23,7 @@ class ItemTypeEditController(val typeDao: ItemTypeDao,
                              val context: ScalapressContext) extends MarkupPopulator {
 
   @RequestMapping(method = Array(RequestMethod.GET), produces = Array("text/html"))
-  def edit(@ModelAttribute("type") t: ItemType) = "admin/object/type/edit.vm"
+  def edit(@ModelAttribute("type") t: ItemType) = "admin/item/type/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST), produces = Array("text/html"))
   def save(@ModelAttribute("type") t: ItemType) = {

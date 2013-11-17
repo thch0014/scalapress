@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class ItemTypeListController(typeDao: ItemTypeDao) {
 
   @RequestMapping(produces = Array("text/html"))
-  def list = "admin/object/type/list.vm"
+  def list = "admin/item/type/list.vm"
 
   @RequestMapping(produces = Array("text/html"), value = Array("{typeId}/delete"))
   def delete(@PathVariable("typeId") typeId: Long) = {

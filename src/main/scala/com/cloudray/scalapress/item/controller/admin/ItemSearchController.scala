@@ -39,7 +39,7 @@ class ItemSearchController(itemDao: ItemDao,
     model.put("objects", page.java)
     model.put("paging", Paging(req, page))
 
-    "admin/object/list.vm"
+    "admin/item/list.vm"
   }
 
   @RequestMapping(value = Array("create"), params = Array("typeId"))
