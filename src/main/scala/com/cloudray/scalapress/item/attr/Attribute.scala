@@ -69,6 +69,10 @@ class Attribute {
   @BeanProperty
   var public: Boolean = _
 
+  @Column(name = "compare", nullable = false)
+  @BeanProperty
+  var compare: Boolean = _
+
   @BeanProperty
   var placeholder: String = _
 

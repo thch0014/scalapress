@@ -47,6 +47,14 @@
     </div>
 
     <div class="form-group">
+        <label class="col-lg-2 control-label">Compare</label>
+
+        <div class="col-lg-8">
+          #springFormCheckbox("attribute.compare", "")
+        </div>
+    </div>
+
+    <div class="form-group">
         <label class="col-lg-2 control-label">User Editable</label>
 
         <div class="col-lg-8">

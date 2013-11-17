@@ -8,7 +8,7 @@ import com.cloudray.scalapress.item.attr.AttributeFuncs
 object CompareRenderer {
 
   def render(items: Seq[Item]): Node = {
-    val attributes = items.head.itemType.sortedAttributes.filter(_.public)
+    val attributes = items.head.itemType.sortedAttributes.filter(_.public).filter(_.compare)
     <table class="compare-items-table">
       <tr>
         <th></th>{items.map(item => <th>
