@@ -110,7 +110,13 @@
       <tr>
           <td><a href="/backoffice/item/$o.id">$o.id</a></td>
           <td>$o.name</td>
-          <td>$!o.status</td>
+          <td>
+            #if ($o.status && $o.status.toLowerCase() == "live")
+                <div class="label label-success">$!o.status</div>
+            #else
+                <div class="label label-warning">$!o.status</div>
+            #end
+          </td>
           <td>$!datetool.format($o.dateCreated)</td>
           <td>
               <a href="/backoffice/item/$o.id" role="button" class="btn btn-xs btn-default">

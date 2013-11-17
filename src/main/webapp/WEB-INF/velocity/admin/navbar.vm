@@ -33,7 +33,7 @@
                     <ul class="dropdown-menu">
                         <li role="presentation" class="dropdown-header">Items</li>
                         <li>
-                            <a href="/backoffice/type">
+                            <a href="/backoffice/itemtype">
                                 <i class="glyphicon glyphicon-th"></i> All Item Types
                             </a>
                         </li>
