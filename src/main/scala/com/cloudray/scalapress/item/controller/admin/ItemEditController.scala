@@ -1,7 +1,7 @@
 package com.cloudray.scalapress.item.controller.admin
 
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestBody, RequestParam, PathVariable, ModelAttribute, RequestMethod, RequestMapping}
+import org.springframework.web.bind.annotation._
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import org.springframework.web.multipart.MultipartFile
@@ -24,12 +24,12 @@ import org.joda.time.DateTimeZone
 import org.apache.commons.lang.WordUtils
 import com.cloudray.scalapress.folder.controller.admin.SectionSorting
 import scala.beans.BeanProperty
-import com.cloudray.scalapress.media.Asset
-import scala.Some
 import com.cloudray.scalapress.plugin.listings.ListingPackageDao
 import com.cloudray.scalapress.account.AccountDao
 import com.cloudray.scalapress.framework.{UrlGenerator, ScalapressContext, ComponentClassScanner}
 import com.cloudray.migration.ImageDao
+import com.cloudray.scalapress.media.Asset
+import scala.Some
 
 /** @author Stephen Samuel */
 @Controller
@@ -150,8 +150,11 @@ class ItemEditController(val assetStore: AssetStore,
     "redirect:/backoffice/item/" + form.o.id
   }
 
+  @ResponseBody
   @RequestMapping(value = Array("/image/order"), method = Array(RequestMethod.POST))
-  def reorderImages(@RequestBody order: String, @ModelAttribute("form") form: EditForm): String = {
+  def reorderImages(@RequestBody order: String,
+                    @ModelAttribute("form") form: EditForm,
+                    resp: HttpServletResponse) {
     val ids = order.split("-")
     if (ids.size == form.o.images.size)
       form.o.images.asScala.foreach(img => {
@@ -159,15 +162,16 @@ class ItemEditController(val assetStore: AssetStore,
         //      img.position = pos
         //    imageDao.save(img)
       })
-    "ok"
+    resp.setStatus(HttpServletResponse.SC_OK)
   }
 
+  @ResponseBody
   @RequestMapping(value = Array("/section/order"), method = Array(RequestMethod.POST))
   def reorderSections(@RequestBody order: String,
                       @ModelAttribute("form") form: EditForm,
-                      response: HttpServletResponse) {
+                      resp: HttpServletResponse) {
     reorderSections(order, form.o.sections.asScala)
-    response.setStatus(HttpServletResponse.SC_OK)
+    resp.setStatus(HttpServletResponse.SC_OK)
   }
 
   @RequestMapping(value = Array("association/{associationId}/delete"))

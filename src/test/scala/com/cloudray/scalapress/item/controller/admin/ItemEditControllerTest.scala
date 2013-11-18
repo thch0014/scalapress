@@ -41,7 +41,7 @@ class ItemEditControllerTest extends FlatSpec with MockitoSugar with OneInstance
     serviceSearch,
     passwordEncoder)
 
-  val response = mock[HttpServletResponse]
+  val resp = mock[HttpServletResponse]
 
   val section1 = new FolderContentSection
   section1.id = 6
@@ -70,12 +70,22 @@ class ItemEditControllerTest extends FlatSpec with MockitoSugar with OneInstance
   }
 
   it should "section re-ordering persists updated positions" in {
-    controller.reorderSections("4-15-6", form, response)
+    controller.reorderSections("4-15-6", form, resp)
     Mockito.verify(controller.sectionDao).save(section1)
     Mockito.verify(controller.sectionDao).save(section2)
     Mockito.verify(controller.sectionDao).save(section3)
     assert(0 === section2.position)
     assert(1 === section3.position)
     assert(2 === section1.position)
+  }
+
+  it should "return 200 for section re-ordering" in {
+    controller.reorderSections("4-15-6", form, resp)
+    Mockito.verify(resp).setStatus(200)
+  }
+
+  it should "return 200 for image re-ordering" in {
+    controller.reorderImages("4-15-6", form, resp)
+    Mockito.verify(resp).setStatus(200)
   }
 }

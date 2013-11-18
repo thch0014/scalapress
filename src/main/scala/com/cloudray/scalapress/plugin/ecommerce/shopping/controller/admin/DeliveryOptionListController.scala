@@ -5,16 +5,15 @@ import org.springframework.web.bind.annotation.{ResponseBody, RequestBody, Reque
 import org.springframework.beans.factory.annotation.Autowired
 import scala.Array
 import scala.collection.JavaConverters._
-import com.cloudray.scalapress.framework.ScalapressContext
 import com.cloudray.scalapress.plugin.ecommerce.shopping.dao.DeliveryOptionDao
 import com.cloudray.scalapress.plugin.ecommerce.shopping.domain.DeliveryOption
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
 @Autowired
 @RequestMapping(Array("backoffice/delivery"))
-class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
-                                   context: ScalapressContext) {
+class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao) {
 
   @RequestMapping
   def list = "admin/plugin/ecommerce/shopping/delivery/list.vm"
@@ -28,7 +27,7 @@ class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
 
   @ResponseBody
   @RequestMapping(value = Array("/order"), method = Array(RequestMethod.POST))
-  def reorder(@RequestBody order: String): String = {
+  def reorder(@RequestBody order: String, resp: HttpServletResponse) {
 
     val ids = order.split("-")
     deliveryOptionDao.findAll.foreach(d => {
@@ -36,7 +35,7 @@ class DeliveryOptionListController(deliveryOptionDao: DeliveryOptionDao,
       d.position = pos
       deliveryOptionDao.save(d)
     })
-    "ok"
+    resp.setStatus(HttpServletResponse.SC_OK)
   }
 
   @ModelAttribute("options") def options = deliveryOptionDao.findAll.sortBy(_.position).asJava

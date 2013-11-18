@@ -8,6 +8,7 @@ import scala.collection.JavaConverters._
 import org.springframework.ui.ModelMap
 import scala.Some
 import com.cloudray.scalapress.framework.ScalapressContext
+import javax.servlet.http.HttpServletResponse
 
 /** @author Stephen Samuel */
 @Controller
@@ -49,8 +50,9 @@ class FormEditController(submissionDao: SubmissionDao,
     "redirect:/backoffice/form/" + form.id
   }
 
+  @ResponseBody
   @RequestMapping(value = Array("field/order"), method = Array(RequestMethod.POST))
-  def reorderFields(@ModelAttribute form: Form, @RequestBody order: String): String = {
+  def reorderFields(@ModelAttribute form: Form, @RequestBody order: String, resp: HttpServletResponse) {
 
     val ids = order.split("-")
     form.fields.asScala.foreach(field => {
@@ -58,7 +60,7 @@ class FormEditController(submissionDao: SubmissionDao,
       field.position = pos
       context.bean[FormFieldDao].save(field)
     })
-    "ok"
+    resp.setStatus(HttpServletResponse.SC_OK)
   }
 
   @ModelAttribute def folder(@PathVariable("id") id: Long, model: ModelMap) {
