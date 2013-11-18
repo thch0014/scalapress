@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils
 @RequestMapping(Array("loginbackground"))
 class BackgroundController {
 
-  val IMAGE_COUNT = 28
+  val IMAGE_COUNT = 31
 
   @ResponseBody
   @RequestMapping(produces = Array("image/jpeg"))
