@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.vouchers
+package com.cloudray.scalapress.plugin.ecommerce.vouchers
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.{ModelAttribute, RequestMapping}
@@ -13,7 +13,7 @@ class VoucherListController(voucherDao: VoucherDao,
                             voucherCodeGenerator: VoucherCodeGenerator) {
 
   @RequestMapping
-  def list = "admin/plugin/voucher/list.vm"
+  def list = "admin/plugin/ecommerce/voucher/list.vm"
 
   @RequestMapping(value = Array("create"))
   def create: String = {

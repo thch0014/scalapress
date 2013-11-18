@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.vouchers
+package com.cloudray.scalapress.plugin.ecommerce.vouchers
 
 import javax.persistence._
 import scala.beans.BeanProperty

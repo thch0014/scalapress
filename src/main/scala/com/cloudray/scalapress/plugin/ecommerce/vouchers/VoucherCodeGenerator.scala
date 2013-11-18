@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.vouchers
+package com.cloudray.scalapress.plugin.ecommerce.vouchers
 
 import org.apache.commons.lang.RandomStringUtils
 import org.springframework.stereotype.Component

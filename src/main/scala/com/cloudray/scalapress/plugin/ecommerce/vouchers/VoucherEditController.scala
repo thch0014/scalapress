@@ -1,4 +1,4 @@
-package com.cloudray.scalapress.plugin.vouchers
+package com.cloudray.scalapress.plugin.ecommerce.vouchers
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
@@ -17,7 +17,7 @@ class VoucherEditController(submissionDao: SubmissionDao,
                             context: ScalapressContext) {
 
   @RequestMapping(method = Array(RequestMethod.GET))
-  def edit(@ModelAttribute voucher: Voucher) = "admin/plugin/voucher/edit.vm"
+  def edit(@ModelAttribute voucher: Voucher) = "admin/plugin/ecommerce/voucher/edit.vm"
 
   @RequestMapping(method = Array(RequestMethod.POST))
   def save(@ModelAttribute voucher: Voucher,
