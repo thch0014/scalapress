@@ -64,9 +64,9 @@ class OrderSearchController(var shoppingPluginDao: ShoppingPluginDao,
         account
       case _ => context.accountDao.find(accountId)
     }
-    val u = Order(req.getRemoteAddr, account)
-    orderDao.save(u)
-    "redirect:/backoffice/order"
+    val order = Order(req.getRemoteAddr, account)
+    orderDao.save(order)
+    "redirect:/backoffice/order/" + order.id
   }
 
   @ModelAttribute("form") def form = new SearchForm()
