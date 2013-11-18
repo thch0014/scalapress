@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.listings
 
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.payments.Purchase
-import com.cloudray.scalapress.plugin.vouchers.Voucher
+import com.cloudray.scalapress.plugin.ecommerce.vouchers.Voucher
 
 /** @author Stephen Samuel */
 class ListingPurchase(listing: Item, _voucher: Option[Voucher], domain: String) extends Purchase {

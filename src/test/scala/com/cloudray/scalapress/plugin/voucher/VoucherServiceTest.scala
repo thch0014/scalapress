@@ -2,9 +2,9 @@ package com.cloudray.scalapress.plugin.voucher
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.vouchers.{Voucher, VoucherDao, VoucherService}
 import scala.concurrent.duration._
 import org.mockito.Mockito
+import com.cloudray.scalapress.plugin.ecommerce.vouchers.{VoucherDao, VoucherService, Voucher}
 
 /** @author Stephen Samuel */
 class VoucherServiceTest extends FunSuite with MockitoSugar with OneInstancePerTest {

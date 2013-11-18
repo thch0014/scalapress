@@ -2,7 +2,7 @@ package com.cloudray.scalapress.plugin.voucher
 
 import org.scalatest.{OneInstancePerTest, FunSuite}
 import org.scalatest.mock.MockitoSugar
-import com.cloudray.scalapress.plugin.vouchers.{VoucherCodeGenerator, Voucher}
+import com.cloudray.scalapress.plugin.ecommerce.vouchers.{VoucherCodeGenerator, Voucher}
 
 /** @author Stephen Samuel */
 class VoucherTest extends FunSuite with MockitoSugar with OneInstancePerTest {

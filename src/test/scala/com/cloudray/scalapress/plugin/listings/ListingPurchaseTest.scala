@@ -5,7 +5,7 @@ import org.scalatest.mock.MockitoSugar
 import com.cloudray.scalapress.item.Item
 import com.cloudray.scalapress.plugin.listings.domain.ListingPackage
 import com.cloudray.scalapress.account.Account
-import com.cloudray.scalapress.plugin.vouchers.Voucher
+import com.cloudray.scalapress.plugin.ecommerce.vouchers.Voucher
 
 /** @author Stephen Samuel */
 class ListingPurchaseTest extends FunSuite with OneInstancePerTest with MockitoSugar {
