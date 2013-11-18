@@ -15,11 +15,13 @@ class ItemRestController(itemDao: ItemDao) {
 
   @ResponseBody
   @RequestMapping(value = Array("{id}"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-  def get(@PathVariable("id") id: Long): Item = itemDao.find(id)
+  def get(@PathVariable("id") id: Long): Item = {
+    Option(itemDao.find(id)).filter(_.isLive).getOrElse(throw new RuntimeException)
+  }
 
   @ResponseBody
   @RequestMapping(value = Array("{id}/image"), produces = Array(MediaType.APPLICATION_JSON_VALUE))
-  def objects(@PathVariable("id") id: Long): Array[String] = itemDao.find(id).sortedImages.toArray
+  def images(@PathVariable("id") id: Long): Array[String] = itemDao.find(id).sortedImages.toArray
 
   @ResponseBody
   @RequestMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))

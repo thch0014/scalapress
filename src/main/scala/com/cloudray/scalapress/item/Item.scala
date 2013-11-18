@@ -205,6 +205,7 @@ class Item extends SortedSections with java.io.Serializable with HtmlMeta {
 
   def isDeleted = Item.STATUS_DELETED.equalsIgnoreCase(status)
   def isDisabled = Item.STATUS_DISABLED.equalsIgnoreCase(status)
+  def isLive = Item.STATUS_LIVE.equalsIgnoreCase(status)
 }
 
 object Item {
