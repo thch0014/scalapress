@@ -9,6 +9,7 @@ import com.googlecode.genericdao.search.Search
 import com.cloudray.scalapress.search.Sort
 import com.cloudray.scalapress.account.controller.Datum
 import com.cloudray.scalapress.framework.Logging
+import org.hibernate.criterion.{MatchMode, Projections, Restrictions}
 
 /** @author Stephen Samuel */
 trait ItemDao extends GenericDao[Item, java.lang.Long] {
@@ -77,12 +78,18 @@ class ItemDaoImpl extends GenericDaoImpl[Item, java.lang.Long] with ItemDao with
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession
-      .createSQLQuery("select `items`.`id`, `items`.`name` from `items` WHERE `items`.`name` like ? AND status='Live'")
-      .setString(0, query + "%")
-      .setMaxResults(20).list().asScala.map(arg => {
+      .createCriteria(classOf[Item])
+      .add(Restrictions.eq("status", Item.STATUS_LIVE))
+      .add(Restrictions.like("name", query, MatchMode.START))
+      .setProjection(Projections.projectionList().add(Projections.property("id")).add(Projections.property("name")))
+      .setMaxResults(20)
+      .list()
+      .asScala
+      .map(arg => {
       val values = arg.asInstanceOf[Array[_]]
       Datum(value = values(1).toString, id = values(0).toString)
-    }).toArray
+    })
+      .toArray
   }
 
   override def removeByType(id: Long): Unit = getSession

@@ -9,6 +9,7 @@ import com.cloudray.scalapress.search.Sort
 import scala.collection.JavaConverters._
 import com.cloudray.scalapress.account.controller.Datum
 import com.cloudray.scalapress.framework.Logging
+import org.hibernate.criterion.{Projections, MatchMode, Restrictions}
 
 /** @author Stephen Samuel */
 trait AccountDao extends GenericDao[Account, java.lang.Long] {
@@ -24,9 +25,9 @@ class AccountDaoImpl extends GenericDaoImpl[Account, java.lang.Long] with Accoun
 
   override def typeAhead(query: String): Array[Datum] = {
     getSession
-      .createSQLQuery(
-      "SELECT `accounts`.`id`, `accounts`.`name` FROM `accounts` WHERE `accounts`.`name` like ?")
-      .setString(0, query + "%")
+      .createCriteria(classOf[Account])
+      .add(Restrictions.like("name", query, MatchMode.START))
+      .setProjection(Projections.projectionList().add(Projections.property("id")).add(Projections.property("name")))
       .setMaxResults(20)
       .list()
       .asScala

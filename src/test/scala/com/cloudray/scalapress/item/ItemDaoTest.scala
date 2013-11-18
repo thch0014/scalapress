@@ -160,18 +160,27 @@ class ItemDaoTest extends FunSuite with MockitoSugar {
     val item1 = new Item
     item1.id = Math.abs(Random.nextInt())
     item1.name = "mr merlot"
+    item1.status = Item.STATUS_LIVE
 
     val item2 = new Item
     item2.id = Math.abs(Random.nextInt())
     item2.name = "dr cab"
+    item2.status = Item.STATUS_LIVE
 
     val item3 = new Item
     item3.id = Math.abs(Random.nextInt())
     item3.name = "mr shiraz"
+    item3.status = Item.STATUS_LIVE
+
+    val item4 = new Item
+    item4.id = Math.abs(Random.nextInt())
+    item4.name = "mr malbec"
+    item4.status = Item.STATUS_DELETED
 
     TestDatabaseContext.itemDao.save(item1)
     TestDatabaseContext.itemDao.save(item2)
     TestDatabaseContext.itemDao.save(item3)
+    TestDatabaseContext.itemDao.save(item4)
 
     val datums = TestDatabaseContext.itemDao.typeAhead("mr")
     assert(2 === datums.size)
