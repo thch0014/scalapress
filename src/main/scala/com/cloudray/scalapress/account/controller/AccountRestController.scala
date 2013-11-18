@@ -18,6 +18,7 @@ class AccountRestController(accountDao: AccountDao) {
 }
 
 case class Datum(value: String, id: String)
+
 //
 //@Component
 //@Autowired
